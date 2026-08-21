@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing StageReview v6",
+  "type": "object",
+  "required": [
+    "stage",
+    "stage_contract_id",
+    "drawing_state_sha256",
+    "drawing_artifact_sha256",
+    "history_cursor",
+    "pass_memory_digest",
+    "parent_review_digest",
+    "carried_concerns",
+    "inter_pass_action_ids",
+    "reference_authority_order",
+    "subject_reference",
+    "grammar_exemplar",
+    "contract_findings",
+    "subject_findings",
+    "exemplar_findings",
+    "drawing_findings",
+    "remaining_concerns",
+    "decision"
+  ],
+  "properties": {
+    "pass_memory_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_review_digest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "carried_concerns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "inter_pass_action_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "task_stage_target": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reference_authority_order": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "contract_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "task_target_findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "subject_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "exemplar_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "drawing_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "remaining_concerns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "corrections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "decision": {
+      "enum": [
+        "revise",
+        "advance"
+      ]
+    },
+    "advance_rationale": {
+      "type": "string"
+    },
+    "local_review_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "task_stage_target": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_stage_target"
+        ]
+      },
+      "then": {
+        "required": [
+          "task_target_findings"
+        ],
+        "properties": {
+          "task_target_findings": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Observation v2",
+  "type": "object",
+  "required": [
+    "subject_summary"
+  ],
+  "properties": {
+    "subject_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "global_relations": {
+      "type": "object"
+    },
+    "parts": {
+      "type": "object"
+    }
+  }
+}

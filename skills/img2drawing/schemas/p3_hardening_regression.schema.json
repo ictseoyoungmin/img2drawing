@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing P3 Hardening Regression v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "stage",
+    "predecessor",
+    "grammar_exemplar_audit",
+    "pass1",
+    "pass2",
+    "pass3",
+    "pass4",
+    "pass5",
+    "pass6",
+    "pass2_memory",
+    "pass3_memory",
+    "pass4_memory",
+    "pass5_memory",
+    "pass6_memory",
+    "review_chain",
+    "current_stage",
+    "autonomy_note",
+    "visual_qa_note"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.p3_hardening_regression.v1"
+    },
+    "stage": {
+      "const": "P3_primary_masses"
+    },
+    "grammar_exemplar_audit": {
+      "const": "pass"
+    },
+    "pass1": {
+      "properties": {
+        "decision": {
+          "const": "revise"
+        }
+      }
+    },
+    "pass2": {
+      "properties": {
+        "decision": {
+          "const": "revise"
+        }
+      }
+    },
+    "pass3": {
+      "properties": {
+        "decision": {
+          "const": "revise"
+        }
+      }
+    },
+    "pass4": {
+      "properties": {
+        "decision": {
+          "const": "revise"
+        }
+      }
+    },
+    "pass5": {
+      "properties": {
+        "decision": {
+          "const": "revise"
+        }
+      }
+    },
+    "pass6": {
+      "required": [
+        "decision",
+        "remaining_concerns",
+        "advance_rationale"
+      ],
+      "properties": {
+        "decision": {
+          "const": "advance"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "current_stage": {
+      "const": "P4_structural_connections"
+    }
+  }
+}

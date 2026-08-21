@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing Grammar Exemplar Manifest v3",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "purpose",
+    "stages",
+    "contract_registry",
+    "contract_audit_status",
+    "contracts",
+    "audit_manifest",
+    "audit_summary"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.exemplar_manifest.v3"
+    },
+    "purpose": {
+      "const": "representation_only"
+    },
+    "contract_audit_status": {
+      "enum": [
+        "audited",
+        "audited_with_failures"
+      ]
+    },
+    "stages": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "contracts": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "audit_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_summary": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "pass",
+          "fail"
+        ]
+      }
+    }
+  }
+}

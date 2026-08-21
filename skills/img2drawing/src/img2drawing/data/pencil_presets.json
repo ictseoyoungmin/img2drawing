@@ -1,0 +1,16 @@
+{
+  "schema": "img2drawing.pencil_presets.v1",
+  "default_grade": "HB",
+  "grades": {
+    "4H": {"target_hardness": 0.97, "target_grain": 0.18, "graphite_release": 0.56, "contact_spread": 0.88},
+    "2H": {"target_hardness": 0.90, "target_grain": 0.22, "graphite_release": 0.68, "contact_spread": 0.91},
+    "H":  {"target_hardness": 0.82, "target_grain": 0.25, "graphite_release": 0.82, "contact_spread": 0.95},
+    "F":  {"target_hardness": 0.74, "target_grain": 0.28, "graphite_release": 0.92, "contact_spread": 0.98},
+    "HB": {"target_hardness": 0.66, "target_grain": 0.30, "graphite_release": 1.00, "contact_spread": 1.00},
+    "B":  {"target_hardness": 0.54, "target_grain": 0.34, "graphite_release": 1.10, "contact_spread": 1.03},
+    "2B": {"target_hardness": 0.40, "target_grain": 0.38, "graphite_release": 1.20, "contact_spread": 1.06},
+    "4B": {"target_hardness": 0.22, "target_grain": 0.46, "graphite_release": 1.38, "contact_spread": 1.12},
+    "6B": {"target_hardness": 0.15, "target_grain": 0.54, "graphite_release": 1.52, "contact_spread": 1.18},
+    "8B": {"target_hardness": 0.09, "target_grain": 0.60, "graphite_release": 1.66, "contact_spread": 1.24}
+  }
+}

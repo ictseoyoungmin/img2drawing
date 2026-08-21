@@ -1,0 +1,60 @@
+{
+  "schema": "img2drawing.release_manifest.r21.v1",
+  "version": "0.5.2.dev21",
+  "slice": "R21_fresh_worker_defect_closure_subject_only",
+  "closure": "CLOSED",
+  "r20_fresh_worker_e2e": {
+    "autonomy": "CLOSED",
+    "workflow_complete": true,
+    "mechanical_audit": "PASS",
+    "task_stage_targets_used": false,
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "reported_defects": "CLOSED_BY_R21"
+  },
+  "subject_only": {
+    "default_mode": true,
+    "same_subject_stage_targets_required": false,
+    "benchmark": "full_body_croquis_subject_only",
+    "required_stages": [
+      "P1_gesture",
+      "P2_primary_axes",
+      "P3_primary_masses",
+      "P4_structural_connections",
+      "P5_clean_blockin"
+    ]
+  },
+  "defect_closure": {
+    "version_provenance": "PASS",
+    "mutation_resume_durability": "PASS",
+    "scalar_findings_normalization": "PASS",
+    "quickstart_current": "PASS",
+    "benchmark_p1_to_p5": "PASS",
+    "skill_only_audit_tool": "PASS"
+  },
+  "validation": {
+    "r21_release_validator": "PASS",
+    "fresh_worker_readiness": "PASS",
+    "r19_regression": "PASS",
+    "subject_only_benchmark_smoke": "PASS",
+    "unit_tests": {
+      "passed": 29,
+      "failed": 0
+    },
+    "clean_install": "PASS",
+    "zip_integrity": "PASS",
+    "historical_full_integration_matrix": "NOT_RERUN"
+  },
+  "zip": {
+    "path": "img2drawing-skill-0.5.2-r21.zip",
+    "sha256": "cdf439826c73aff12407dcc10c9ee2d4d5aef7984c362411c10f0b9667836fbf",
+    "entries": 143,
+    "package_boundary": "img2drawing skill folder only"
+  },
+  "wheel": {
+    "path": "img2drawing-0.5.2.dev21-py3-none-any.whl",
+    "sha256": "c24b60ead2cbe814e39f94d8f02441bbe943d8698d35dce422f1c6ae658514b5"
+  }
+}

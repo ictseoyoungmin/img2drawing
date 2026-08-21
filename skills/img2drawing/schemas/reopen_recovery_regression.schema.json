@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing Reopen Recovery Regression v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "seeded_fault",
+    "abandoned_branch",
+    "reopen",
+    "corrected_p2",
+    "rebuilt_p3",
+    "active_action_ids",
+    "current_stage",
+    "policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.reopen_recovery_regression.v1"
+    },
+    "policy": {
+      "const": "reopen_earliest_responsible_stage"
+    },
+    "reopen": {
+      "type": "object",
+      "required": [
+        "target_stage",
+        "discovered_in_stage",
+        "invalidated_stages",
+        "abandoned_action_ids"
+      ],
+      "properties": {
+        "target_stage": {
+          "const": "P2_primary_axes"
+        },
+        "discovered_in_stage": {
+          "const": "P3_primary_masses"
+        },
+        "invalidated_stages": {
+          "type": "array",
+          "contains": {
+            "const": "P3_primary_masses"
+          }
+        }
+      }
+    },
+    "corrected_p2": {
+      "type": "object",
+      "required": [
+        "memory_state",
+        "reopen_role",
+        "decision"
+      ],
+      "properties": {
+        "memory_state": {
+          "const": "reopen_restart"
+        },
+        "reopen_role": {
+          "const": "reopened_target"
+        },
+        "decision": {
+          "const": "advance"
+        }
+      }
+    },
+    "rebuilt_p3": {
+      "type": "object",
+      "required": [
+        "memory_state",
+        "reopen_role",
+        "decision"
+      ],
+      "properties": {
+        "memory_state": {
+          "const": "reopen_restart"
+        },
+        "reopen_role": {
+          "const": "invalidated_downstream"
+        },
+        "decision": {
+          "const": "advance"
+        }
+      }
+    },
+    "current_stage": {
+      "const": "P4_structural_connections"
+    }
+  }
+}

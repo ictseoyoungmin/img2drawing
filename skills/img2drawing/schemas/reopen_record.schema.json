@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing ReopenRecord v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "reopen_id",
+    "target_stage",
+    "discovered_in_stage",
+    "reason",
+    "findings",
+    "source_cursor",
+    "restored_cursor",
+    "source_state_sha256",
+    "restored_state_sha256",
+    "invalidated_stages",
+    "abandoned_review_digests",
+    "abandoned_local_review_ids",
+    "abandoned_action_ids",
+    "trigger_review_digest",
+    "archive_dir",
+    "policy",
+    "semantic_authority"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.reopen_record.v1"
+    },
+    "reopen_id": {
+      "type": "string",
+      "pattern": "^reopen_[0-9]{2,}$"
+    },
+    "target_stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "discovered_in_stage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_cursor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "restored_cursor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_state_sha256": {
+      "type": "string",
+      "minLength": 32
+    },
+    "restored_state_sha256": {
+      "type": "string",
+      "minLength": 32
+    },
+    "invalidated_stages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "abandoned_review_digests": {
+      "type": "object"
+    },
+    "abandoned_local_review_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "abandoned_action_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "trigger_review_digest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "archive_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy": {
+      "const": "reopen_earliest_responsible_stage"
+    },
+    "semantic_authority": {
+      "const": "agent"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+# Reference index
+- `worker/autonomous-worker-contract.md`: when a fresh worker should act independently vs escalate.
+- `stages/stage-contracts.md`: frozen P1–P5 representation boundaries.
+- `stages/`: stage-specific expert guidance and hardening lessons.
+- `review/reference-authority.md`: subject / task-stage-target / grammar-exemplar authority separation.
+- `review/worker-pass-memory.md`: pass-to-pass concern/correction continuity without semantic auto-judgement.
+- `review/local-review-api.md`: Agent-selected ROI comparison and state binding.
+- `review/`: comparison and correction loop.
+- `figure/`: gesture, joints, attached objects.
+- `observation/`: visual-observation policy.
+- `pencil/`: material guidance.
+- `../../docs/audits/R03_EXEMPLAR_AUDIT.md`: frozen-contract audit of bundled P1–P5 grammar exemplars.

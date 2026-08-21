@@ -1,0 +1,191 @@
+{
+  "schema": "img2drawing.exemplar_audit_registry.v1",
+  "overall_status": "audited_with_failures",
+  "records": [
+    {
+      "stage_id": "P1_gesture",
+      "contract_id": "full_body_croquis.P1.v1",
+      "exemplar_path": "p1_gesture.png",
+      "exemplar_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+      "status": "fail",
+      "must_show_observed": [
+        "dominant whole-body gesture",
+        "head construction",
+        "weight landing point"
+      ],
+      "may_show_observed": [
+        "shoulder rhythm",
+        "pelvis rhythm",
+        "minimal ground cue"
+      ],
+      "forbidden_observed": [],
+      "findings": [
+        {
+          "finding_id": "P1-A01",
+          "kind": "missing_required",
+          "description": "The exemplar shows only one long lower-body path and does not establish a distinct counterbalance-leg flow, so support versus counterbalance is not readable.",
+          "contract_clause": "exemplar.must_show: support/counterbalance relationship",
+          "severity": "major"
+        },
+        {
+          "finding_id": "P1-A02",
+          "kind": "missing_required",
+          "description": "The visually dominant body gesture begins at the chin/neck instead of being carried from the crown through a curved facial centre into the neck, so the craniofacial centre gesture is not demonstrated by the exemplar.",
+          "contract_clause": "owns: craniofacial centre gesture; allowed: dominant crown→face→neck→spine→pelvis→support gesture",
+          "severity": "major"
+        },
+        {
+          "finding_id": "P1-A03",
+          "kind": "scope_warning",
+          "description": "The head reads as a nearly closed oval construction; it does not clearly teach two subordinate open envelope arcs around an asymmetric facial centre.",
+          "contract_clause": "allowed: open head-envelope arcs",
+          "severity": "minor"
+        }
+      ],
+      "note": "R03 audit finds the bundled P1 grammar exemplar insufficient for the 0.5.2 P1 contract. Do not copy its neck-origin gesture."
+    },
+    {
+      "stage_id": "P2_primary_axes",
+      "contract_id": "full_body_croquis.P2.v1",
+      "exemplar_path": "p2_axes.png",
+      "exemplar_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
+      "status": "pass",
+      "must_show_observed": [
+        "preserved P1 crown→face→spine→support gesture",
+        "head direction axis",
+        "shoulder axis",
+        "pelvis axis",
+        "major arm direction chains",
+        "major leg direction chains"
+      ],
+      "may_show_observed": [
+        "open head envelope",
+        "tiny endpoint ticks"
+      ],
+      "forbidden_observed": [],
+      "findings": [
+        {
+          "finding_id": "P2-R04-01",
+          "kind": "quality_note",
+          "description": "The corrected exemplar uses single arm/leg direction chains and no paired limb contours, torso mass closure, foot blocks, joint anatomy, clothing block-in, or shading.",
+          "contract_clause": "full_body_croquis.P2.v1 allowed/forbidden representation boundary",
+          "severity": "minor"
+        },
+        {
+          "finding_id": "P2-R04-02",
+          "kind": "quality_note",
+          "description": "The crown-to-support gesture remains visually dominant while P2 head/shoulder/pelvis/limb axes are readable but subordinate.",
+          "contract_clause": "exemplar.must_show: preserved P1 gesture + primary axes",
+          "severity": "minor"
+        }
+      ],
+      "note": "R04 replaced the over-developed P2 image with a deterministic direct-stroke axes-only exemplar generated from sources/p2_axes_v2.json."
+    },
+    {
+      "stage_id": "P3_primary_masses",
+      "contract_id": "full_body_croquis.P3.v1",
+      "exemplar_path": "p3_masses.png",
+      "exemplar_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+      "status": "pass",
+      "must_show_observed": [
+        "connected ribcage and pelvis masses",
+        "torso bridge",
+        "tapered limb masses",
+        "preserved underlying axes"
+      ],
+      "may_show_observed": [
+        "head mass",
+        "simple foot endpoints"
+      ],
+      "forbidden_observed": [],
+      "findings": [
+        {
+          "finding_id": "P3-A01",
+          "kind": "quality_note",
+          "description": "The simple foot endpoints are somewhat descriptive, but remain within the contract’s allowed simple endpoint vocabulary and do not add articulated joint detail.",
+          "contract_clause": "exemplar.may_show: simple hand/foot endpoints",
+          "severity": "minor"
+        }
+      ],
+      "note": "P3 is the only bundled exemplar that currently matches the frozen representation boundary closely enough to PASS."
+    },
+    {
+      "stage_id": "P4_structural_connections",
+      "contract_id": "full_body_croquis.P4.v1",
+      "exemplar_path": "p4_structure.png",
+      "exemplar_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+      "status": "fail",
+      "must_show_observed": [
+        "connected mannequin limb chains",
+        "hand/foot blocks",
+        "major body masses"
+      ],
+      "may_show_observed": [
+        "simple footwear blocks"
+      ],
+      "forbidden_observed": [],
+      "findings": [
+        {
+          "finding_id": "P4-A01",
+          "kind": "missing_required",
+          "description": "Elbows, knees and several other joints are represented primarily as dots on line chains rather than as directional structural transitions between connected masses.",
+          "contract_clause": "exemplar.must_show: joint transitions; owns: elbow/wrist transitions and knee/ankle transitions",
+          "severity": "blocker"
+        },
+        {
+          "finding_id": "P4-A02",
+          "kind": "missing_required",
+          "description": "Hip-to-thigh and shoulder insertion relationships are only weakly explained; the exemplar relies on markers more than insertion geometry.",
+          "contract_clause": "owns: shoulder insertion / hip-to-thigh insertion",
+          "severity": "major"
+        }
+      ],
+      "note": "The exemplar demonstrates joint locations but not the structural transition grammar required by the P4 contract."
+    },
+    {
+      "stage_id": "P5_clean_blockin",
+      "contract_id": "full_body_croquis.P5.v1",
+      "exemplar_path": "p5_clean_blockin.png",
+      "exemplar_sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "status": "fail",
+      "must_show_observed": [
+        "readable whole silhouette",
+        "clean clothing/body contour",
+        "major internal contour breaks"
+      ],
+      "may_show_observed": [
+        "major pockets/accessory shapes",
+        "hair grouping"
+      ],
+      "forbidden_observed": [
+        "rendered shading",
+        "micro texture",
+        "micro clothing folds"
+      ],
+      "findings": [
+        {
+          "finding_id": "P5-A01",
+          "kind": "forbidden_present",
+          "description": "The exemplar contains extensive tonal hatching/shading across hair, clothing and trousers, exceeding clean block-in scope.",
+          "contract_clause": "forbidden: rendered tonal shading",
+          "severity": "blocker"
+        },
+        {
+          "finding_id": "P5-A02",
+          "kind": "forbidden_present",
+          "description": "Numerous micro folds and texture marks appear in sleeves, trousers and shoes.",
+          "contract_clause": "forbidden: micro clothing folds / micro texture",
+          "severity": "blocker"
+        },
+        {
+          "finding_id": "P5-A03",
+          "kind": "scope_warning",
+          "description": "Facial and hair rendering are developed enough to read as a finished sketch rather than a clean structural block-in.",
+          "contract_clause": "detail ceiling: clean block-in / major internal structure only",
+          "severity": "major"
+        }
+      ],
+      "note": "P5 currently demonstrates a finished pencil illustration, not the frozen clean-block-in stage."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing P2 Hardening Regression v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "stage",
+    "predecessor",
+    "grammar_exemplar_audit",
+    "pass1",
+    "pass2_memory",
+    "pass2",
+    "pass3_memory",
+    "pass3",
+    "review_chain",
+    "current_stage",
+    "autonomy_note"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.p2_hardening_regression.v1"
+    },
+    "stage": {
+      "const": "P2_primary_axes"
+    },
+    "grammar_exemplar_audit": {
+      "const": "pass"
+    },
+    "pass1": {
+      "type": "object",
+      "required": [
+        "decision",
+        "remaining_concerns"
+      ],
+      "properties": {
+        "decision": {
+          "const": "revise"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "minItems": 1
+        }
+      }
+    },
+    "pass2_memory": {
+      "type": "object",
+      "required": [
+        "carried_concerns",
+        "correction_action_ids"
+      ],
+      "properties": {
+        "correction_action_ids": {
+          "type": "array",
+          "contains": {
+            "const": "R09-P2-R1"
+          }
+        }
+      }
+    },
+    "pass2": {
+      "type": "object",
+      "required": [
+        "decision",
+        "remaining_concerns"
+      ],
+      "properties": {
+        "decision": {
+          "const": "revise"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "minItems": 1
+        }
+      }
+    },
+    "pass3_memory": {
+      "type": "object",
+      "required": [
+        "carried_concerns",
+        "correction_action_ids"
+      ],
+      "properties": {
+        "correction_action_ids": {
+          "type": "array",
+          "contains": {
+            "const": "R09-P2-R4"
+          }
+        }
+      }
+    },
+    "pass3": {
+      "type": "object",
+      "required": [
+        "decision",
+        "remaining_concerns",
+        "advance_rationale"
+      ],
+      "properties": {
+        "decision": {
+          "const": "advance"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "current_stage": {
+      "const": "P3_primary_masses"
+    }
+  }
+}

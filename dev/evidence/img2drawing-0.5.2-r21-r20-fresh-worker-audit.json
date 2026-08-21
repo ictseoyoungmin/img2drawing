@@ -1,0 +1,59 @@
+{
+  "schema": "img2drawing.fresh_worker_mechanical_audit.v1",
+  "img2drawing_version": "0.5.2.dev21",
+  "run_dir": "/mnt/data/r20_results_extract/img2drawing_dogfood_r20",
+  "complete": true,
+  "stage_summary": {
+    "P1_gesture": {
+      "review_count": 2,
+      "decisions": [
+        "revise",
+        "advance"
+      ],
+      "latest_digest": "8ad0bf5d28aa54d42fcb243bb736a4a7bb859b1362b72a2cf975fafa4f7eb957"
+    },
+    "P2_primary_axes": {
+      "review_count": 1,
+      "decisions": [
+        "advance"
+      ],
+      "latest_digest": "984f8d824fb064ee696b368fe5a76b04966b255d8fdf474356e11dbda799d380"
+    },
+    "P3_primary_masses": {
+      "review_count": 2,
+      "decisions": [
+        "revise",
+        "advance"
+      ],
+      "latest_digest": "d9e0ed83453a159e2b0de45c770d7268de955e51acaa4e47b75629dcabb6ad96"
+    },
+    "P4_structural_connections": {
+      "review_count": 2,
+      "decisions": [
+        "revise",
+        "advance"
+      ],
+      "latest_digest": "8e0397588949a60aeff85bb4d34628b1d39feac22ce72749d72103cb193c8782"
+    },
+    "P5_clean_blockin": {
+      "review_count": 3,
+      "decisions": [
+        "revise",
+        "revise",
+        "advance"
+      ],
+      "latest_digest": "b66f9a2659aab1deca1a8992c3b65883e9630d06a07fa08fd24d84693e39d7d3"
+    }
+  },
+  "revision_count": 5,
+  "direct_stroke_actions": 85,
+  "correction_actions": 60,
+  "reopens": [],
+  "historical_dogfood_action_ids_found": false,
+  "final_artifacts_present": true,
+  "report_present": true,
+  "warnings": [
+    "No upstream reopen occurred. This is not a failure; later visual audit must verify that no downstream compensation hid an earlier defect."
+  ],
+  "semantic_visual_audit_required": true
+}\n

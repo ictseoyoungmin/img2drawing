@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "img2drawing"
+dynamic = ["version"]
+description = "Observation-first agent drawing runtime with dual-reference stage review"
+authors = [{name = "ictseoyoungmin"}]
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24","Pillow>=10","svgwrite>=1.4","jsonschema>=4.18"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.dynamic]
+version = {attr = "img2drawing._version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["img2drawing*"]
+
+[tool.setuptools.package-data]
+"img2drawing.data" = ["*.json", "exemplars/full_body_croquis/*.png", "exemplars/full_body_croquis/*.json"]

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing ExemplarAudit v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "stage_id",
+    "contract_id",
+    "exemplar_path",
+    "exemplar_sha256",
+    "status",
+    "findings"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.exemplar_audit.v1"
+    },
+    "stage_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exemplar_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exemplar_sha256": {
+      "type": "string",
+      "minLength": 64
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding_id",
+          "kind",
+          "description",
+          "contract_clause",
+          "severity"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "missing_required",
+              "forbidden_present",
+              "scope_warning",
+              "quality_note"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

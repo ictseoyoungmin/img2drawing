@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing StageContract v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "contract_id",
+    "stage_id",
+    "tier",
+    "representation_name",
+    "owns",
+    "inherits_from",
+    "must_preserve",
+    "allowed_representation",
+    "forbidden_representation",
+    "detail_ceiling",
+    "next_stage_unlocks",
+    "exemplar_contract"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.stage_contract.v1"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "representation_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "inherits_from": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "must_preserve": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowed_representation": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "forbidden_representation": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "detail_ceiling": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "next_stage_unlocks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "exemplar_contract": {
+      "type": "object",
+      "required": [
+        "must_show",
+        "may_show",
+        "must_not_show"
+      ],
+      "properties": {
+        "must_show": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "may_show": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "must_not_show": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

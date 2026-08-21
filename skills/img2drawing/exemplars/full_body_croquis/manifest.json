@@ -1,0 +1,39 @@
+{
+  "schema": "img2drawing.exemplar_manifest.v3",
+  "id": "full_body_croquis.standard.v1",
+  "purpose": "representation_only",
+  "warning": "Grammar exemplars are representation-only. R04 corrected P2 to the frozen axes-only contract. P1/P4/P5 still have known contract defects and must not redefine their StageContracts.",
+  "stages": {
+    "P1_gesture": "p1_gesture.png",
+    "P2_primary_axes": "p2_axes.png",
+    "P3_primary_masses": "p3_masses.png",
+    "P4_structural_connections": "p4_structure.png",
+    "P5_clean_blockin": "p5_clean_blockin.png"
+  },
+  "contract_registry": "full_body_croquis.contracts.v1",
+  "contract_audit_status": "audited_with_failures",
+  "contracts": {
+    "P1_gesture": "full_body_croquis.P1.v1",
+    "P2_primary_axes": "full_body_croquis.P2.v1",
+    "P3_primary_masses": "full_body_croquis.P3.v1",
+    "P4_structural_connections": "full_body_croquis.P4.v1",
+    "P5_clean_blockin": "full_body_croquis.P5.v1"
+  },
+  "audit_manifest": "audit_manifest.json",
+  "audit_summary": {
+    "P1_gesture": "fail",
+    "P2_primary_axes": "pass",
+    "P3_primary_masses": "pass",
+    "P4_structural_connections": "fail",
+    "P5_clean_blockin": "fail"
+  },
+  "correction_history": {
+    "P2_primary_axes": {
+      "slice": "R04",
+      "source": "sources/p2_axes_v2.json",
+      "generator": "tools/build_p2_axes_exemplar.py",
+      "sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
+      "result": "pass"
+    }
+  }
+}

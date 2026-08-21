@@ -1,0 +1,12 @@
+{
+  "schema": "img2drawing.registration_profile.v1",
+  "comparison": {
+    "landmark_delta_hint": 0.025,
+    "segment_similarity_hint": 0.65,
+    "roi_padding_cells": 1
+  },
+  "notes": {
+    "authority": "These values only route visual review. They never define artistic pass/fail.",
+    "coordinates": "All distances are canvas-normalized. Uncertainty on observations suppresses false precision."
+  }
+}

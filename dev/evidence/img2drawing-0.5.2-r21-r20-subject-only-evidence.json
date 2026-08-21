@@ -1,0 +1,42 @@
+{
+  "schema": "img2drawing.r21_r20_subject_only_evidence.v1",
+  "r20_task_stage_targets": {},
+  "stages": {
+    "P1_gesture": {
+      "task_stage_target": null,
+      "reference_authority_order": [
+        "subject_reference",
+        "grammar_exemplar"
+      ]
+    },
+    "P2_primary_axes": {
+      "task_stage_target": null,
+      "reference_authority_order": [
+        "subject_reference",
+        "grammar_exemplar"
+      ]
+    },
+    "P3_primary_masses": {
+      "task_stage_target": null,
+      "reference_authority_order": [
+        "subject_reference",
+        "grammar_exemplar"
+      ]
+    },
+    "P4_structural_connections": {
+      "task_stage_target": null,
+      "reference_authority_order": [
+        "subject_reference",
+        "grammar_exemplar"
+      ]
+    },
+    "P5_clean_blockin": {
+      "task_stage_target": null,
+      "reference_authority_order": [
+        "subject_reference",
+        "grammar_exemplar"
+      ]
+    }
+  },
+  "conclusion": "R20 fresh-worker dogfood already ran without same-subject stage target images; its stage images were generic grammar exemplars plus self-produced review artifacts."
+}

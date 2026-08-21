@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing StagePassMemory v2",
+  "type": "object",
+  "required": [
+    "schema",
+    "stage",
+    "next_pass_index",
+    "state",
+    "prior_review_count",
+    "previous_review_digest",
+    "previous_decision",
+    "previous_remaining_concerns",
+    "previous_reported_corrections",
+    "carried_concerns",
+    "inter_pass_actions",
+    "inter_pass_correction_actions",
+    "concern_history",
+    "correction_history",
+    "reopen_context",
+    "memory_policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.stage_pass_memory.v2"
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "next_pass_index": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "state": {
+      "enum": [
+        "cold_start",
+        "revision_continuation",
+        "reopen_restart"
+      ]
+    },
+    "prior_review_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "previous_review_digest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "previous_decision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "revise"
+      ]
+    },
+    "previous_remaining_concerns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previous_reported_corrections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "carried_concerns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inter_pass_actions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "inter_pass_correction_actions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "concern_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "correction_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "reopen_context": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "memory_policy": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "reopen_restart"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "reopen_context": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

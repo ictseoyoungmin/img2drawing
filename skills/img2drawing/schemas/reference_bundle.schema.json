@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing ReferenceBundle v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "authority_policy",
+    "subject_reference",
+    "task_stage_targets",
+    "grammar_exemplars"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.reference_bundle.v1"
+    },
+    "authority_policy": {
+      "type": "object"
+    },
+    "subject_reference": {
+      "type": "object",
+      "required": [
+        "role",
+        "path",
+        "sha256",
+        "authority"
+      ],
+      "properties": {
+        "role": {
+          "const": "subject_reference"
+        },
+        "authority": {
+          "const": "geometry_truth"
+        }
+      }
+    },
+    "task_stage_targets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "role",
+          "stage_id",
+          "path",
+          "sha256",
+          "authority"
+        ],
+        "properties": {
+          "role": {
+            "const": "task_stage_target"
+          },
+          "authority": {
+            "const": "task_stage_truth"
+          }
+        }
+      }
+    },
+    "grammar_exemplars": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "role",
+          "stage_id",
+          "path",
+          "sha256",
+          "purpose",
+          "authority"
+        ],
+        "properties": {
+          "role": {
+            "const": "grammar_exemplar"
+          },
+          "purpose": {
+            "const": "representation_only"
+          },
+          "authority": {
+            "const": "representation_guidance"
+          }
+        }
+      }
+    }
+  }
+}

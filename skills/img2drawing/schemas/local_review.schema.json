@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing LocalReviewArtifacts v2",
+  "type": "object",
+  "required": [
+    "schema",
+    "local_review_id",
+    "stage",
+    "pass_name",
+    "label",
+    "intent",
+    "selection_authority",
+    "auto_detection_used",
+    "drawing_state_sha256",
+    "drawing_artifact_sha256",
+    "history_cursor",
+    "crops",
+    "comparisons"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.local_review_artifacts.v2"
+    },
+    "selection_authority": {
+      "const": "agent_explicit_boxes"
+    },
+    "auto_detection_used": {
+      "const": false
+    },
+    "crops": {
+      "type": "object",
+      "required": [
+        "subject",
+        "drawing",
+        "grammar",
+        "task_target"
+      ]
+    },
+    "comparisons": {
+      "type": "object",
+      "required": [
+        "subject_vs_drawing",
+        "grammar_vs_drawing",
+        "task_target_vs_drawing",
+        "subject_drawing_overlay",
+        "subject_drawing_absdiff",
+        "overview"
+      ]
+    }
+  }
+}

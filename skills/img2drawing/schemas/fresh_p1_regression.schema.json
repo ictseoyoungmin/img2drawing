@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing Fresh P1 Regression v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "canvas",
+    "canonical_canvas",
+    "independence",
+    "p1_start_semantics",
+    "pass1",
+    "pass2_memory",
+    "pass2",
+    "review_chain",
+    "current_stage"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.fresh_p1_regression.v1"
+    },
+    "p1_start_semantics": {
+      "const": "crown"
+    },
+    "canvas": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "canonical_canvas": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "independence": {
+      "type": "object",
+      "required": [
+        "canonical_example_imported",
+        "canonical_run_called",
+        "action_prefix",
+        "coordinate_plan"
+      ],
+      "properties": {
+        "canonical_example_imported": {
+          "const": false
+        },
+        "canonical_run_called": {
+          "const": false
+        },
+        "action_prefix": {
+          "const": "R08-FRESH"
+        },
+        "coordinate_plan": {
+          "const": "fresh_subject_specific_noncanonical_canvas"
+        }
+      }
+    },
+    "pass1": {
+      "type": "object",
+      "required": [
+        "decision",
+        "remaining_concerns",
+        "local_review_ids"
+      ],
+      "properties": {
+        "decision": {
+          "const": "revise"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "minItems": 1
+        },
+        "local_review_ids": {
+          "type": "array",
+          "minItems": 2
+        }
+      }
+    },
+    "pass2_memory": {
+      "type": "object",
+      "required": [
+        "state",
+        "carried_concerns",
+        "inter_pass_correction_action_ids",
+        "previous_review_digest"
+      ],
+      "properties": {
+        "state": {
+          "const": "revision_continuation"
+        },
+        "inter_pass_correction_action_ids": {
+          "type": "array",
+          "contains": {
+            "const": "R08-FRESH-R1"
+          }
+        }
+      }
+    },
+    "pass2": {
+      "type": "object",
+      "required": [
+        "decision",
+        "remaining_concerns",
+        "advance_rationale",
+        "local_review_ids"
+      ],
+      "properties": {
+        "decision": {
+          "const": "advance"
+        },
+        "remaining_concerns": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "local_review_ids": {
+          "type": "array",
+          "minItems": 2
+        }
+      }
+    },
+    "current_stage": {
+      "const": "P2_primary_axes"
+    }
+  }
+}

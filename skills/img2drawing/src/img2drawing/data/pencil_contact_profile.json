@@ -1,0 +1,44 @@
+{
+  "schema": "img2drawing.pencil_contact_profile.v1",
+  "name": "natural-graphite-v1",
+  "trajectory_spacing": 0.42,
+  "grain": {
+    "coarse_cell": 1.15,
+    "fine_cell": 0.48,
+    "strength": 0.34,
+    "thin_width_reference": 1.75,
+    "thin_texture_floor": 0.08,
+    "min_modulation": 0.7,
+    "max_modulation": 1.42
+  },
+  "paper": {
+    "strength": 0.68,
+    "valley_band": 0.13,
+    "valley_depth": 0.2,
+    "thin_width_reference": 1.85,
+    "thin_texture_floor": 0.05,
+    "min_modulation": 0.72,
+    "max_modulation": 1.42
+  },
+  "hand": {
+    "pressure_cadence_strength": 0.04,
+    "pressure_cadence_frequency_min": 2.2,
+    "pressure_cadence_frequency_span": 2.4,
+    "tip_span": 0.14,
+    "taper_in_strength": 0.22,
+    "taper_out_strength": 0.24
+  },
+  "edge": {
+    "soft_halo_radius": 0.3,
+    "soft_halo_strength": 0.28
+  },
+  "material": {
+    "deposition_floor": 0.12,
+    "deposition_exponent": 1.28,
+    "width_base": 0.76,
+    "width_pressure_gain": 0.24,
+    "min_width": 0.2,
+    "continuity_floor_ratio": 0.68,
+    "continuity_min_coverage": 0.085
+  }
+}
