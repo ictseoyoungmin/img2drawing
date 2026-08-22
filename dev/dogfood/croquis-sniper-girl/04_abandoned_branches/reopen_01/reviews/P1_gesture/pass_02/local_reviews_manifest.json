@@ -1,0 +1,163 @@
+{
+  "auto_detection_used": false,
+  "pass_name": "pass_02",
+  "reviews": [
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 150,
+            "left": 150,
+            "right": 310,
+            "top": 25
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/drawing.png",
+          "crop_sha256": "3cdbec0c5e0b244a10c9180292eb7dd9a306ade33e400245b7d5e0bbb41fc6ff",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/current_drawing.png",
+          "source_sha256": "09b143dd98cbeb4fe87dd92b6ec28e4929afea9891679b0404461d051bf8fe73",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 290,
+            "left": 30,
+            "right": 260,
+            "top": 20
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/grammar.png",
+          "crop_sha256": "31bc4de81bb1a1bd4c19a2a56e5e0027b95d60751224b272211fdac89aec6797",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+          "source_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 300,
+            "left": 300,
+            "right": 620,
+            "top": 50
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/subject.png",
+          "crop_sha256": "c28ce0e0c09351e082e58ff151a0bd88be07d579be45e46f1eef26af73e8fdb1",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "09b143dd98cbeb4fe87dd92b6ec28e4929afea9891679b0404461d051bf8fe73",
+      "drawing_state_sha256": "8bbf8995de5ef4eaefd4b618d19c5a9b8534eec5bb73b74be09d7b85a43dbe74",
+      "history_cursor": 19,
+      "intent": "Re-check carried concerns: badge closure and facial-centre direction after P1-R1..R4.",
+      "label": "head_face",
+      "local_review_id": "P1_gesture:pass_02:head_face",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 140,
+            "right": 380,
+            "top": 350
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "513bd92f11dc6ca4118c28d5f0bb1fa360c045e928a07535878a8d8e1e041dda",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/current_drawing.png",
+          "source_sha256": "09b143dd98cbeb4fe87dd92b6ec28e4929afea9891679b0404461d051bf8fe73",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1080,
+            "left": 15,
+            "right": 275,
+            "top": 400
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/crops/grammar.png",
+          "crop_sha256": "ffb1d39dc61fc53777da16887fd1970b2feb0121089aec3a0888c5c01077c3a4",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+          "source_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 280,
+            "right": 760,
+            "top": 700
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_02/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "3719caada6f67f8d2e5cc7c8ddc7cb515055840e59ed54cb7cd9922d7d2a7846",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "09b143dd98cbeb4fe87dd92b6ec28e4929afea9891679b0404461d051bf8fe73",
+      "drawing_state_sha256": "8bbf8995de5ef4eaefd4b618d19c5a9b8534eec5bb73b74be09d7b85a43dbe74",
+      "history_cursor": 19,
+      "intent": "Re-check carried concerns: hip transfer curve and counterbalance readability after P1-R1/R5.",
+      "label": "pelvis_legs",
+      "local_review_id": "P1_gesture:pass_02:pelvis_legs",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    }
+  ],
+  "schema": "img2drawing.local_review_manifest.v1",
+  "selection_authority": "agent_explicit_boxes",
+  "stage": "P1_gesture"
+}

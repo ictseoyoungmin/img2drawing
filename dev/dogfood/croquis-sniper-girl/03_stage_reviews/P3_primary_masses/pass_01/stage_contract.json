@@ -1,0 +1,87 @@
+{
+  "allowed_representation": [
+    "dominant crown→face→neck→spine→pelvis→support gesture",
+    "head cross-axis",
+    "shoulder axis",
+    "pelvis axis",
+    "major limb axes",
+    "attached-object extent/breadth axis",
+    "head/hair mass",
+    "ribcage mass contour",
+    "pelvis mass contour",
+    "torso bridge",
+    "tapered limb masses",
+    "attached-object mass"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P3.v1",
+  "detail_ceiling": [
+    "organic connected volumes",
+    "limb taper",
+    "major overlap",
+    "major negative space",
+    "no articulated joint detail"
+  ],
+  "exemplar_contract": {
+    "may_show": [
+      "head/hair mass",
+      "attached-object mass",
+      "simple hand/foot endpoints"
+    ],
+    "must_not_show": [
+      "articulated elbow anatomy",
+      "articulated knee anatomy",
+      "detailed hand block",
+      "detailed boot block",
+      "clothing folds",
+      "clean final contour"
+    ],
+    "must_show": [
+      "connected ribcage and pelvis masses",
+      "torso bridge",
+      "tapered limb masses",
+      "preserved underlying axes"
+    ]
+  },
+  "forbidden_representation": [
+    "detailed shoulder insertion",
+    "elbow joint plane construction",
+    "knee joint plane construction",
+    "ankle articulation",
+    "hand/finger detail",
+    "boot detail",
+    "clothing folds",
+    "final cleaned silhouette",
+    "rendered shading"
+  ],
+  "inherits_from": "P2_primary_axes",
+  "must_preserve": [
+    "P1 gesture and weight path",
+    "P2 head/shoulder/pelvis axes",
+    "P2 limb directions",
+    "P2 attached-object axes"
+  ],
+  "next_stage_unlocks": [
+    "shoulder insertion",
+    "elbow transition",
+    "wrist transition",
+    "hip-to-thigh insertion",
+    "knee transition",
+    "ankle-to-foot transition",
+    "hand/foot block",
+    "strap/holster/prop attachment"
+  ],
+  "owns": [
+    "head/hair mass",
+    "ribcage mass",
+    "pelvis mass",
+    "torso bridge",
+    "tapered limb masses",
+    "attached-object mass",
+    "major negative spaces"
+  ],
+  "representation_name": "connected_primary_masses",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P3_primary_masses",
+  "tier": 3
+}

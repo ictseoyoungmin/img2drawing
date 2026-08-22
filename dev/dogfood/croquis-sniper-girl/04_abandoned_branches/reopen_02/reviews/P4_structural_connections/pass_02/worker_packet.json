@@ -1,0 +1,554 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "drawing": {
+      "artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+      "history_cursor": 92,
+      "path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/current_drawing.png",
+      "stage": "P4_structural_connections",
+      "state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9"
+    },
+    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/grammar_vs_drawing.png",
+    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P4_structural_connections",
+    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/subject_drawing_overlay.png",
+    "subject_reference": "/home/claude/work/subject.png",
+    "subject_split": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/subject_split.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before interpreting the exemplar.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image.",
+    "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use a grammar exemplar as pose/coordinate truth.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.38,
+    "minimum_visible_pressure": 0.34,
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P4_structural_connections"
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box",
+      "grammar_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "shoulder+elbow",
+      "pelvis+knee",
+      "ankle+foot",
+      "prop/strap attachment"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "grammar_vs_drawing",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 2,
+  "pass_memory": {
+    "carried_concerns": [
+      "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+      "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+      "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+    ],
+    "concern_history": [
+      {
+        "decision": "revise",
+        "pass_index": 1,
+        "remaining_concerns": [
+          "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+          "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+          "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+        ],
+        "review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965"
+      }
+    ],
+    "correction_history": [
+      {
+        "pass_index": 1,
+        "reported_corrections": [],
+        "review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965"
+      }
+    ],
+    "inter_pass_actions": [
+      {
+        "action_id": "P4-X1",
+        "history_cursor": 83,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "knee_plane_left",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "knee_plane_left"
+      },
+      {
+        "action_id": "P4-X2",
+        "history_cursor": 84,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "knee_plane_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "knee_plane_right"
+      },
+      {
+        "action_id": "P4-X3",
+        "history_cursor": 85,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "ankle_bridge_left",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "ankle_bridge_left"
+      },
+      {
+        "action_id": "P4-X4",
+        "history_cursor": 86,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "ankle_bridge_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "ankle_bridge_right"
+      },
+      {
+        "action_id": "P4-X5",
+        "history_cursor": 87,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "elbow_transition_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "elbow_transition_right"
+      },
+      {
+        "action_id": "P4-X6",
+        "history_cursor": 88,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "elbow_transition_right_inner",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "elbow_transition_right_inner"
+      },
+      {
+        "action_id": "P4-X7",
+        "history_cursor": 89,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hip_thigh_insert_left",
+        "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hip_thigh_insert_left"
+      },
+      {
+        "action_id": "P4-X8",
+        "history_cursor": 90,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hip_thigh_insert_right",
+        "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hip_thigh_insert_right"
+      },
+      {
+        "action_id": "P4-X9",
+        "history_cursor": 91,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hand_block_right",
+        "reason": "Carried concern: the hand read as a closed faceted mitten polygon.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hand_block_right"
+      },
+      {
+        "action_id": "P4-X10",
+        "history_cursor": 92,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hand_pocket_overlap_right",
+        "reason": "Shortened with the hand block so the pocket overlap is a handoff mark rather than a band under the hand.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hand_pocket_overlap_right"
+      }
+    ],
+    "inter_pass_correction_actions": [
+      {
+        "action_id": "P4-X1",
+        "history_cursor": 83,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "knee_plane_left",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "knee_plane_left"
+      },
+      {
+        "action_id": "P4-X2",
+        "history_cursor": 84,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "knee_plane_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "knee_plane_right"
+      },
+      {
+        "action_id": "P4-X3",
+        "history_cursor": 85,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "ankle_bridge_left",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "ankle_bridge_left"
+      },
+      {
+        "action_id": "P4-X4",
+        "history_cursor": 86,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "ankle_bridge_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "ankle_bridge_right"
+      },
+      {
+        "action_id": "P4-X5",
+        "history_cursor": 87,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "elbow_transition_right",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "elbow_transition_right"
+      },
+      {
+        "action_id": "P4-X6",
+        "history_cursor": 88,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "elbow_transition_right_inner",
+        "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "elbow_transition_right_inner"
+      },
+      {
+        "action_id": "P4-X7",
+        "history_cursor": 89,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hip_thigh_insert_left",
+        "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hip_thigh_insert_left"
+      },
+      {
+        "action_id": "P4-X8",
+        "history_cursor": 90,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hip_thigh_insert_right",
+        "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hip_thigh_insert_right"
+      },
+      {
+        "action_id": "P4-X9",
+        "history_cursor": 91,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hand_block_right",
+        "reason": "Carried concern: the hand read as a closed faceted mitten polygon.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hand_block_right"
+      },
+      {
+        "action_id": "P4-X10",
+        "history_cursor": 92,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "hand_pocket_overlap_right",
+        "reason": "Shortened with the hand block so the pocket overlap is a handoff mark rather than a band under the hand.",
+        "stage": "P4_structural_connections",
+        "target_stroke_id": "hand_pocket_overlap_right"
+      }
+    ],
+    "memory_policy": [
+      "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+      "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+      "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+      "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+    ],
+    "next_pass_index": 2,
+    "previous_decision": "revise",
+    "previous_remaining_concerns": [
+      "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+      "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+      "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+    ],
+    "previous_reported_corrections": [],
+    "previous_review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965",
+    "prior_review_count": 1,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P4_structural_connections",
+    "state": "revision_continuation"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "grammar_exemplar": {
+      "audit_contract_id": "full_body_croquis.P4.v1",
+      "audit_findings": [
+        "Elbows, knees and several other joints are represented primarily as dots on line chains rather than as directional structural transitions between connected masses.",
+        "Hip-to-thigh and shoulder insertion relationships are only weakly explained; the exemplar relies on markers more than insertion geometry."
+      ],
+      "audit_note": "The exemplar demonstrates joint locations but not the structural transition grammar required by the P4 contract.",
+      "audit_status": "fail",
+      "authority": "representation_guidance",
+      "decides": [
+        "stage abstraction vocabulary",
+        "stroke economy",
+        "line hierarchy",
+        "detail budget",
+        "construction convention"
+      ],
+      "must_not_decide": [
+        "subject pose",
+        "subject coordinates",
+        "subject-specific proportions",
+        "subject-specific perspective"
+      ],
+      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+      "purpose": "representation_only",
+      "role": "grammar_exemplar",
+      "sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+      "stage_id": "P4_structural_connections"
+    },
+    "reference_mode": "subject_only",
+    "stage_id": "P4_structural_connections",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "/home/claude/work/subject.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "Major joint transitions are structurally readable without becoming dots, bands or final clothing detail.",
+      "Limb chains, hand/foot blocks and attachments remain consistent from whole view and local crops.",
+      "A fresh residual-mismatch sweep finds no major connection-level mismatch or upstream mass error."
+    ],
+    "avoid": [
+      "joint dots without form transition",
+      "full-width elbow/knee bands that read as clothing stripes",
+      "faceted detached hand/foot polygons",
+      "final shading",
+      "texture",
+      "decorative detail"
+    ],
+    "draw": [
+      "limb chains",
+      "partial directional joint planes",
+      "joint transitions",
+      "hands/feet blocks",
+      "overlap corrections",
+      "attachment relationships"
+    ],
+    "exemplar_key": "p4_structure",
+    "index": 4,
+    "intent": "Clarify functional joint transitions and how masses connect through the limb chains.",
+    "observe": [
+      "shoulder insertion",
+      "elbow turn",
+      "wrist direction",
+      "hip-to-thigh",
+      "knee plane",
+      "ankle-to-foot",
+      "prop overlap and attachment"
+    ],
+    "review_questions": [
+      "Can each arm be followed shoulder→elbow→wrist as a connected chain?",
+      "Can each leg be followed pelvis→knee→ankle as a connected chain?",
+      "Do joints explain directional change with local transitions rather than dots or full-width decorative bands?",
+      "If loose clothing hides a joint, is the functional transition readable without drawing a naked joint or a decorative full-width stripe?",
+      "Do simple hand blocks attach to the wrist and respect occlusion instead of floating beside the sleeve?",
+      "Are feet/boots smoothly connected to the ankle, directionally credible and grounded?",
+      "Are holsters/straps/props physically attached rather than floating?"
+    ],
+    "stage_id": "P4_structural_connections",
+    "suggested_crops": [
+      "shoulder+elbow",
+      "pelvis+knee",
+      "ankle+foot",
+      "prop/strap attachment"
+    ],
+    "title": "Structural Connections"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "head/hair mass",
+      "ribcage mass contour",
+      "pelvis mass contour",
+      "torso bridge",
+      "tapered limb masses",
+      "attached-object mass",
+      "shoulder insertion",
+      "elbow transition",
+      "wrist transition",
+      "hip-to-thigh insertion",
+      "knee transition",
+      "ankle-to-foot transition",
+      "hand/foot block",
+      "strap/holster/prop attachment"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P4.v1",
+    "detail_ceiling": [
+      "functional mannequin articulation",
+      "attachment/overlap",
+      "simple hands/feet",
+      "no polish rendering"
+    ],
+    "exemplar_contract": {
+      "may_show": [
+        "simple clothing envelope where needed for attachment",
+        "major accessory block"
+      ],
+      "must_not_show": [
+        "polished clothing contour",
+        "micro folds",
+        "surface texture",
+        "tonal shading"
+      ],
+      "must_show": [
+        "connected mannequin limb chains",
+        "joint transitions",
+        "hand/foot blocks",
+        "major prop attachments/overlaps"
+      ]
+    },
+    "forbidden_representation": [
+      "final polished clothing silhouette",
+      "micro clothing folds",
+      "surface texture",
+      "tonal rendering",
+      "micro facial detail"
+    ],
+    "inherits_from": "P3_primary_masses",
+    "must_preserve": [
+      "P1 gesture and weight",
+      "P2 axes",
+      "P3 connected masses",
+      "P3 negative spaces"
+    ],
+    "next_stage_unlocks": [
+      "decisive outer contour",
+      "major clothing silhouette",
+      "major internal contour breaks",
+      "construction-line retirement"
+    ],
+    "owns": [
+      "shoulder insertion",
+      "elbow/wrist transitions",
+      "hip-to-thigh insertion",
+      "knee/ankle transitions",
+      "hand/foot blocks",
+      "prop/strap/holster attachment and overlap"
+    ],
+    "representation_name": "mannequin_connections",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P4_structural_connections",
+    "tier": 4
+  }
+}

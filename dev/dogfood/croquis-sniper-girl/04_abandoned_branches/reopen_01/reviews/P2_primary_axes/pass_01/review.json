@@ -1,0 +1,71 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The pass contains axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains and prop extent/breadth. No mass contour, limb thickness, hand/foot block, joint anatomy or clothing entered P2."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "0aec2f819e5a1219e3b0b365c34c5b4fa9ee4a738b5bc45bf4a935569122fa73",
+  "drawing_findings": [
+    "The pelvis_legs crop shows the P2 braced-leg axis and the inherited P1 counterbalance flow running as two separated near-parallel lines down the thigh, which reads as a pant-leg contour rail: the specific anti-pattern the P2 reference forbids.",
+    "The rail is not a P2 authoring error. The subject-derived P2 axis is correct; the inherited P1 counterbalance flow sits roughly 9 canvas pixels too far image-right through the upper thigh.",
+    "Moving the P2 axis onto the P1 flow would be compensating downstream for a wrong upstream line, so the earliest-responsible-stage rule applies and P1 must be reopened instead.",
+    "Head cross-axis, shoulder axis, pelvis axis, both arm chains and the support-leg chain all agree with the subject and need no change."
+  ],
+  "drawing_state_sha256": "4e27285eb0842005f1d78413ccb2ac9fe5b3fda8314c216c099889c4edf93268",
+  "exemplar_findings": [
+    "The P2 grammar exemplar is the audited PASS exemplar and was used only for axis vocabulary and detail budget; no coordinates were taken from it."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "history_cursor": 39,
+  "inter_pass_action_ids": [
+    "P2-A1",
+    "P2-A2",
+    "P2-A3",
+    "P2-A4",
+    "P2-A5",
+    "P2-A6",
+    "P2-A7",
+    "P2-A8",
+    "P2-A9",
+    "P2-A10"
+  ],
+  "local_review_ids": [
+    "P2_primary_axes:pass_01:pelvis_legs",
+    "P2_primary_axes:pass_01:head_shoulders"
+  ],
+  "observations": [
+    "The pass contains axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains and prop extent/breadth. No mass contour, limb thickness, hand/foot block, joint anatomy or clothing entered P2.",
+    "Re-measured the subject's braced right thigh directly: its visible skin band centres near canvas x=258-264 between canvas y=415 and y=460, not near x=267-273.",
+    "The subject's support leg centre stays near canvas x=182-190 for its whole length, confirming the near-vertical weight-bearing chain.",
+    "The subject's eye line drops toward image-right and compresses on the far side; the drawn head cross-axis matches.",
+    "The P2 grammar exemplar is the audited PASS exemplar and was used only for axis vocabulary and detail budget; no coordinates were taken from it.",
+    "The pelvis_legs crop shows the P2 braced-leg axis and the inherited P1 counterbalance flow running as two separated near-parallel lines down the thigh, which reads as a pant-leg contour rail: the specific anti-pattern the P2 reference forbids.",
+    "The rail is not a P2 authoring error. The subject-derived P2 axis is correct; the inherited P1 counterbalance flow sits roughly 9 canvas pixels too far image-right through the upper thigh.",
+    "Moving the P2 axis onto the P1 flow would be compensating downstream for a wrong upstream line, so the earliest-responsible-stage rule applies and P1 must be reopened instead.",
+    "Head cross-axis, shoulder axis, pelvis axis, both arm chains and the support-leg chain all agree with the subject and need no change."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "d687a9bd70f80cf5c3cd5976be75cd34905a86e349be2622bbfe0dd434d038b9",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "inherited P1 counterbalance flow is ~9px too far image-right through the upper thigh, producing a doubled pant-leg rail at P2"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "subject_findings": [
+    "Re-measured the subject's braced right thigh directly: its visible skin band centres near canvas x=258-264 between canvas y=415 and y=460, not near x=267-273.",
+    "The subject's support leg centre stays near canvas x=182-190 for its whole length, confirming the near-vertical weight-bearing chain.",
+    "The subject's eye line drops toward image-right and compresses on the far side; the drawn head cross-axis matches."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

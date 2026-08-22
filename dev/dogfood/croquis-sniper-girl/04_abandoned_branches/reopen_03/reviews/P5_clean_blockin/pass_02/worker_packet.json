@@ -1,0 +1,443 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "drawing": {
+      "artifact_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+      "history_cursor": 187,
+      "path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/current_drawing.png",
+      "stage": "P5_clean_blockin",
+      "state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0"
+    },
+    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
+    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P5_clean_blockin",
+    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_drawing_overlay.png",
+    "subject_reference": "/home/claude/work/subject.png",
+    "subject_split": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_split.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before interpreting the exemplar.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image.",
+    "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use a grammar exemplar as pose/coordinate truth.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.48,
+    "minimum_visible_pressure": 0.42,
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P5_clean_blockin"
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box",
+      "grammar_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "whole silhouette",
+      "head+torso",
+      "pelvis+legs",
+      "prop integration"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "grammar_vs_drawing",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 2,
+  "pass_memory": {
+    "carried_concerns": [
+      "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+      "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+    ],
+    "concern_history": [
+      {
+        "decision": "revise",
+        "pass_index": 1,
+        "remaining_concerns": [
+          "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+          "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+        ],
+        "review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1"
+      }
+    ],
+    "correction_history": [
+      {
+        "pass_index": 1,
+        "reported_corrections": [
+          "Stated the full P5 contour, then retired 69 construction strokes with replayable soft_lift at stage-appropriate strengths."
+        ],
+        "review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1"
+      }
+    ],
+    "inter_pass_actions": [
+      {
+        "action_id": "P5-H1",
+        "history_cursor": 182,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "contour_rifle_left",
+        "reason": "Carried concern: the prop and the garment crossed as two full-weight outer contours. The prop's outer ownership is now terminated at the handoff near canvas y=224.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_rifle_left"
+      },
+      {
+        "action_id": "P5-H2",
+        "history_cursor": 183,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "overlap_rifle_left_inside_garment",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P5-H3",
+        "history_cursor": 184,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "contour_jacket_left",
+        "reason": "Carried concern: the garment edge was drawn at full outer weight where the prop still owned the silhouette. It now begins at the handoff and owns the outer edge from there down.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_jacket_left"
+      },
+      {
+        "action_id": "P5-H4",
+        "history_cursor": 185,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "overlap_jacket_left_behind_prop",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P5-H5",
+        "history_cursor": 186,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "overlap_hair_tip_right_on_shoulder",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P5-H6",
+        "history_cursor": 187,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "overlap_hair_tip_left_on_shoulder",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [
+      {
+        "action_id": "P5-H1",
+        "history_cursor": 182,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "contour_rifle_left",
+        "reason": "Carried concern: the prop and the garment crossed as two full-weight outer contours. The prop's outer ownership is now terminated at the handoff near canvas y=224.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_rifle_left"
+      },
+      {
+        "action_id": "P5-H3",
+        "history_cursor": 184,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "contour_jacket_left",
+        "reason": "Carried concern: the garment edge was drawn at full outer weight where the prop still owned the silhouette. It now begins at the handoff and owns the outer edge from there down.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_jacket_left"
+      }
+    ],
+    "memory_policy": [
+      "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+      "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+      "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+      "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+    ],
+    "next_pass_index": 2,
+    "previous_decision": "revise",
+    "previous_remaining_concerns": [
+      "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+      "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+    ],
+    "previous_reported_corrections": [
+      "Stated the full P5 contour, then retired 69 construction strokes with replayable soft_lift at stage-appropriate strengths."
+    ],
+    "previous_review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+    "prior_review_count": 1,
+    "reopen_context": {
+      "abandoned_review_digests": [
+        "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+      ],
+      "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_02",
+      "discovered_in_stage": "P5_clean_blockin",
+      "findings": [
+        "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
+        "Inherited P3 rifle mass sits up to 16px right of that edge through the middle of the prop.",
+        "Inherited P3 torso-left contour underfills the observed occupied volume by about 12px over the same range.",
+        "Silhouette ownership handoff from prop to garment occurs near canvas y=205."
+      ],
+      "reason": "P5 cleanup preflight proves the verified left outer silhouette cannot be stated without contradicting the inherited P3 prop and torso-left envelopes. The prop axis and extent are credible, so the underfilled P3 envelope, not P2 or P1, is the earliest responsible stage.",
+      "reopen_id": "reopen_02",
+      "role": "invalidated_downstream",
+      "stage": "P5_clean_blockin",
+      "target_stage": "P3_primary_masses",
+      "trigger_review_digest": "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+    },
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P5_clean_blockin",
+    "state": "revision_continuation"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "grammar_exemplar": {
+      "audit_contract_id": "full_body_croquis.P5.v1",
+      "audit_findings": [
+        "The exemplar contains extensive tonal hatching/shading across hair, clothing and trousers, exceeding clean block-in scope.",
+        "Numerous micro folds and texture marks appear in sleeves, trousers and shoes.",
+        "Facial and hair rendering are developed enough to read as a finished sketch rather than a clean structural block-in."
+      ],
+      "audit_note": "P5 currently demonstrates a finished pencil illustration, not the frozen clean-block-in stage.",
+      "audit_status": "fail",
+      "authority": "representation_guidance",
+      "decides": [
+        "stage abstraction vocabulary",
+        "stroke economy",
+        "line hierarchy",
+        "detail budget",
+        "construction convention"
+      ],
+      "must_not_decide": [
+        "subject pose",
+        "subject coordinates",
+        "subject-specific proportions",
+        "subject-specific perspective"
+      ],
+      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "purpose": "representation_only",
+      "role": "grammar_exemplar",
+      "sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "stage_id": "P5_clean_blockin"
+    },
+    "reference_mode": "subject_only",
+    "stage_id": "P5_clean_blockin",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "/home/claude/work/subject.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The figure and attached objects are immediately readable from silhouette and major internal breaks.",
+      "Construction is subordinate and no major structural error is being hidden by cleanup.",
+      "No major block-in mismatch remains, and P5 did not draw outside P3/P4 merely to hide an upstream error."
+    ],
+    "avoid": [
+      "tone rendering",
+      "micro-detail",
+      "accidental contour welding between independent masses",
+      "beautification that hides structural error",
+      "cleaning a wrong structure instead of reopening it"
+    ],
+    "draw": [
+      "decisive outer contour",
+      "major internal breaks",
+      "major attached-object subpart topology",
+      "explicit silhouette-owner handoffs",
+      "overlap contours",
+      "only necessary surviving construction"
+    ],
+    "exemplar_key": "p5_clean_blockin",
+    "index": 5,
+    "intent": "State a readable silhouette from verified structure while keeping construction subordinate.",
+    "observe": [
+      "whole silhouette",
+      "head/body proportion",
+      "torso-pelvis relation",
+      "stance",
+      "negative space",
+      "prop alignment",
+      "line hierarchy"
+    ],
+    "review_questions": [
+      "Does the final block-in preserve the verified P1-P4 structure?",
+      "Is the main silhouette readable without construction noise?",
+      "Are head/body/leg/prop proportions credible against the subject?",
+      "Has rejected construction receded through replayable retirement rather than accumulating as dead lines?",
+      "At hair/garment/limb/attached-object handoffs, does each visible contour keep one semantic owner instead of visually welding two masses together?",
+      "If a large attached object changes the silhouette, are its major width changes/subparts readable without micro-detail?"
+    ],
+    "stage_id": "P5_clean_blockin",
+    "suggested_crops": [
+      "whole silhouette",
+      "head+torso",
+      "pelvis+legs",
+      "prop integration"
+    ],
+    "title": "Clean Block-in"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "head/hair mass",
+      "major clothing silhouette",
+      "decisive outer contour",
+      "major internal contour breaks",
+      "overlap contour between adjacent masses",
+      "silhouette-owner handoff with a visible break or occlusion",
+      "joint/attachment-informed contour",
+      "hand/foot silhouette",
+      "clean attached-object silhouette",
+      "construction-line retirement"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P5.v1",
+    "detail_ceiling": [
+      "clean block-in",
+      "readable silhouette",
+      "major internal structure only",
+      "no tonal finish"
+    ],
+    "exemplar_contract": {
+      "may_show": [
+        "major pockets/accessory shapes",
+        "simple hair grouping",
+        "clean prop silhouette"
+      ],
+      "must_not_show": [
+        "rendered shading",
+        "micro texture",
+        "micro fold rendering"
+      ],
+      "must_show": [
+        "readable whole silhouette",
+        "clean major clothing/body contour",
+        "major internal contour breaks",
+        "subordinated construction"
+      ]
+    },
+    "forbidden_representation": [
+      "rendered tonal shading",
+      "micro texture",
+      "micro clothing folds",
+      "accidental contour welding between independent semantic masses",
+      "beautification that changes verified structure"
+    ],
+    "inherits_from": "P4_structural_connections",
+    "must_preserve": [
+      "P1 gesture and weight",
+      "P2 directional axes",
+      "P3 masses/negative spaces",
+      "P4 joint/attachment logic"
+    ],
+    "next_stage_unlocks": [],
+    "owns": [
+      "decisive outer silhouette",
+      "major clothing silhouette",
+      "major internal contour breaks",
+      "construction-line retirement",
+      "silhouette-owner handoff",
+      "clean attached-object silhouette"
+    ],
+    "representation_name": "clean_blockin_contour",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P5_clean_blockin",
+    "tier": 5
+  }
+}

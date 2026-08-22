@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 350,
+        "left": 125,
+        "right": 215,
+        "top": 120
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/crops/drawing.png",
+      "crop_sha256": "38e437046fdc741aec1bcac506ba6ed780f103fc078e726b251912596e1a4ca7",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/current_drawing.png",
+      "source_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1086,
+        "left": 0,
+        "right": 289,
+        "top": 0
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/crops/grammar.png",
+      "crop_sha256": "416efcfea15c8c80b3fe40bd7c953ec09663c5a669a1b6273c6ecb61887a15b1",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "source_sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 700,
+        "left": 250,
+        "right": 430,
+        "top": 240
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/handoff_prop_garment/crops/subject.png",
+      "crop_sha256": "38945df8aae9846b29e19ae32e1f70a543286dd45f8bb01f98e1c3dc3edc6993",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+  "drawing_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
+  "history_cursor": 187,
+  "intent": "Re-check the carried handoff concern between prop and garment.",
+  "label": "handoff_prop_garment",
+  "local_review_id": "P5_clean_blockin:pass_02:handoff_prop_garment",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P5_clean_blockin"
+}

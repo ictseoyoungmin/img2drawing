@@ -1,0 +1,87 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [
+    "whole drawing is too faint and has no dominant-gesture hierarchy",
+    "head envelope closes into a badge instead of segmented open arcs",
+    "facial centre is too straight to carry face direction",
+    "pelvis-to-support transfer is an angular kink rather than a weight-bearing curve",
+    "counterbalance leg is too weak to read as a distinct role"
+  ],
+  "contract_findings": [
+    "The corrections changed line material and gesture geometry only; no P2+ vocabulary entered the artifact.",
+    "Head construction is still two open envelope arcs plus a separate crown arc, with no facial features."
+  ],
+  "corrections": [
+    "P1-R1 re-authored the dominant gesture with a real image-right facial bow and a curved hip handoff.",
+    "P1-R2/R3/R4 re-cut the cranial arcs so crown and temporal arcs no longer weld into a badge.",
+    "P1-R5..R9 raised subordinate strokes, but not enough."
+  ],
+  "decision": "revise",
+  "drawing_artifact_sha256": "09b143dd98cbeb4fe87dd92b6ec28e4929afea9891679b0404461d051bf8fe73",
+  "drawing_findings": [
+    "Carried concern 'facial centre too straight' is CLEARED: the head_face crop now shows an asymmetric right-bowing centre.",
+    "Carried concern 'head envelope closes into a badge' is CLEARED: crown, left temporal and right temporal arcs now show visible gaps and unequal masses.",
+    "Carried concern 'pelvis-to-support transfer is an angular kink' is CLEARED: the pelvis_legs crop shows a rounded weight-bearing curve.",
+    "Carried concern 'no dominant-gesture hierarchy' is only PARTLY cleared: the dominant gesture is now clearly dominant, but the correction did not lift the subordinate strokes far enough.",
+    "Carried concern 'counterbalance leg too weak' SURVIVES: at whole view and in the pelvis_legs crop the braced leg still reads as a ghost line rather than a structural role.",
+    "Fresh residual sweep: the crown arc in particular has almost no presence, and the shoulder and pelvis rhythms sit far below the skill's minor-stroke calibration ratio relative to the reference gesture."
+  ],
+  "drawing_state_sha256": "8bbf8995de5ef4eaefd4b618d19c5a9b8534eec5bb73b74be09d7b85a43dbe74",
+  "exemplar_findings": [
+    "The failed P1 exemplar still teaches nothing usable for craniofacial continuity; the skill's own line-hierarchy calibration guidance was used instead."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "history_cursor": 19,
+  "inter_pass_action_ids": [
+    "P1-R1",
+    "P1-R2",
+    "P1-R3",
+    "P1-R4",
+    "P1-R5",
+    "P1-R6",
+    "P1-R7",
+    "P1-R8",
+    "P1-R9"
+  ],
+  "local_review_ids": [
+    "P1_gesture:pass_02:head_face",
+    "P1_gesture:pass_02:pelvis_legs"
+  ],
+  "observations": [
+    "The corrections changed line material and gesture geometry only; no P2+ vocabulary entered the artifact.",
+    "Head construction is still two open envelope arcs plus a separate crown arc, with no facial features.",
+    "Re-observed: the subject's facial centre bows toward image-right between brow and cheek, then returns left into the chin; the corrected stroke now matches that shape.",
+    "Re-observed: the subject's weight passes through a rounded hip, not a corner; the corrected transfer matches.",
+    "The subject's braced image-right leg is a clearly distinct structural role, not a faint echo of the support leg.",
+    "The failed P1 exemplar still teaches nothing usable for craniofacial continuity; the skill's own line-hierarchy calibration guidance was used instead.",
+    "Carried concern 'facial centre too straight' is CLEARED: the head_face crop now shows an asymmetric right-bowing centre.",
+    "Carried concern 'head envelope closes into a badge' is CLEARED: crown, left temporal and right temporal arcs now show visible gaps and unequal masses.",
+    "Carried concern 'pelvis-to-support transfer is an angular kink' is CLEARED: the pelvis_legs crop shows a rounded weight-bearing curve.",
+    "Carried concern 'no dominant-gesture hierarchy' is only PARTLY cleared: the dominant gesture is now clearly dominant, but the correction did not lift the subordinate strokes far enough.",
+    "Carried concern 'counterbalance leg too weak' SURVIVES: at whole view and in the pelvis_legs crop the braced leg still reads as a ghost line rather than a structural role.",
+    "Fresh residual sweep: the crown arc in particular has almost no presence, and the shoulder and pelvis rhythms sit far below the skill's minor-stroke calibration ratio relative to the reference gesture."
+  ],
+  "parent_review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+  "pass_memory_digest": "2d1726a6bf94859514f52808ba5e64b9d5d253eaca86e6aa32f6001e0dfc802a",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "counterbalance leg still reads as a ghost line rather than a distinct structural role",
+    "crown arc, shoulder rhythm and pelvis rhythm sit below a readable subordinate weight"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "subject_findings": [
+    "Re-observed: the subject's facial centre bows toward image-right between brow and cheek, then returns left into the chin; the corrected stroke now matches that shape.",
+    "Re-observed: the subject's weight passes through a rounded hip, not a corner; the corrected transfer matches.",
+    "The subject's braced image-right leg is a clearly distinct structural role, not a faint echo of the support leg."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

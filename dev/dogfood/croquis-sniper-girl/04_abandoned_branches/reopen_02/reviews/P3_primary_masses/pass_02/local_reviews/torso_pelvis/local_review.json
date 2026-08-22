@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 430,
+        "left": 140,
+        "right": 350,
+        "top": 140
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/crops/drawing.png",
+      "crop_sha256": "4491abe9c60b8174209b5d017b50f8e981bb63a287356db2a05835bd69d0563a",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/current_drawing.png",
+      "source_sha256": "9ae82b0fab7bbfbe14cd434326ef3efd062aa8a8da68a3d42285c5ccce5d489f",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1050,
+        "left": 15,
+        "right": 275,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/crops/grammar.png",
+      "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+      "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 860,
+        "left": 280,
+        "right": 700,
+        "top": 280
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_02/local_reviews/torso_pelvis/crops/subject.png",
+      "crop_sha256": "45e7a33907eaa313a3ccee63598b9b525adb039b04c5eec6af3e3d40234693a3",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "9ae82b0fab7bbfbe14cd434326ef3efd062aa8a8da68a3d42285c5ccce5d489f",
+  "drawing_state_sha256": "afadb55855441240e08a9e80c8128085d9b23253cea62381368827ba294db0bd",
+  "history_cursor": 57,
+  "intent": "Residual sweep: clothed occupied volume, sleeve breadth and basin-to-thigh flow.",
+  "label": "torso_pelvis",
+  "local_review_id": "P3_primary_masses:pass_02:torso_pelvis",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses"
+}

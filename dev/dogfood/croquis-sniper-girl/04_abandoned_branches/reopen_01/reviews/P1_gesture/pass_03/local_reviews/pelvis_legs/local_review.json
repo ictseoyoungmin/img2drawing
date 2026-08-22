@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 760,
+        "left": 140,
+        "right": 380,
+        "top": 350
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/crops/drawing.png",
+      "crop_sha256": "301ff7e64b03fb082c588cba7fa5b43c948459ed4c1196e88e478f59983c2a22",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/current_drawing.png",
+      "source_sha256": "a6dcd146c6bc4c6b9633c11fe1a6f96e3845894b60a9a9063b48120b05d189b3",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1080,
+        "left": 15,
+        "right": 275,
+        "top": 400
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/crops/grammar.png",
+      "crop_sha256": "ffb1d39dc61fc53777da16887fd1970b2feb0121089aec3a0888c5c01077c3a4",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+      "source_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 1520,
+        "left": 280,
+        "right": 760,
+        "top": 700
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/pelvis_legs/crops/subject.png",
+      "crop_sha256": "3719caada6f67f8d2e5cc7c8ddc7cb515055840e59ed54cb7cd9922d7d2a7846",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "a6dcd146c6bc4c6b9633c11fe1a6f96e3845894b60a9a9063b48120b05d189b3",
+  "drawing_state_sha256": "fbaaaca709e10ba6f56a246e8148e701200a211d92ac033a35871224f70cac8b",
+  "history_cursor": 27,
+  "intent": "Fresh sweep: is the braced leg now a distinct structural role at readable weight?",
+  "label": "pelvis_legs",
+  "local_review_id": "P1_gesture:pass_03:pelvis_legs",
+  "pass_name": "pass_03",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

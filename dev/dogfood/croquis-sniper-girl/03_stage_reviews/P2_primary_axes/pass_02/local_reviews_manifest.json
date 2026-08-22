@@ -1,0 +1,240 @@
+{
+  "auto_detection_used": false,
+  "pass_name": "pass_02",
+  "reviews": [
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 220,
+            "left": 150,
+            "right": 330,
+            "top": 80
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/crops/drawing.png",
+          "crop_sha256": "7c082163845792be07d552f6a05d59533348e45c725443c7c6f10bf46588e1d4",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 340,
+            "left": 20,
+            "right": 270,
+            "top": 60
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/crops/grammar.png",
+          "crop_sha256": "f1d6f3e824c8cf3cb4a665a265fb765671f0e8e820a61421ea762decd8c6dc48",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+          "source_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 440,
+            "left": 300,
+            "right": 660,
+            "top": 160
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/crops/subject.png",
+          "crop_sha256": "55e66eccfc1d17958ee77f6ff38cacf3a921f27d3068540cfabdbd960c506e51",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Re-check the carried shoulder-axis concern after P2B-R1.",
+      "label": "head_shoulders",
+      "local_review_id": "P2_primary_axes:pass_02:head_shoulders",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 140,
+            "right": 350,
+            "top": 130
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/crops/drawing.png",
+          "crop_sha256": "9c5e6199cd102e1f7045cfffc42e8df7a5786b3ab9a13c714069464b8467177d",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 700,
+            "left": 10,
+            "right": 280,
+            "top": 160
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/crops/grammar.png",
+          "crop_sha256": "ea1fc768955a74a237955ed77bc532f362a57932108240b0b2cf3af719a0da61",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+          "source_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 280,
+            "right": 700,
+            "top": 260
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/crops/subject.png",
+          "crop_sha256": "f3b29e92058e37783f87ccdc0849c8931b8b83ce3af1a2a49ca3b33e7fa963c8",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Residual sweep: do shoulder and pelvis axes together explain the same twist P1 established?",
+      "label": "torso_pelvis",
+      "local_review_id": "P2_primary_axes:pass_02:torso_pelvis",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 100,
+            "right": 280,
+            "top": 30
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/crops/drawing.png",
+          "crop_sha256": "60f070e73b91921dd49d1841b477da447ff3d1763144d9b11b53544ccf72b718",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 540,
+            "left": 10,
+            "right": 270,
+            "top": 30
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/crops/grammar.png",
+          "crop_sha256": "ee6571e8d18e0a3c33c2c8132e5f4692bbb109d3d1b8d1f92b17f9981687078d",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+          "source_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 200,
+            "right": 560,
+            "top": 60
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/crops/subject.png",
+          "crop_sha256": "e5f9696cbf10890add3444f061a7dc08d25a619deebec8327fd95761466a0185",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Residual sweep: do the prop extent and the two breadth axes agree with the subject's rifle without becoming a contour?",
+      "label": "prop_overlap",
+      "local_review_id": "P2_primary_axes:pass_02:prop_overlap",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    }
+  ],
+  "schema": "img2drawing.local_review_manifest.v1",
+  "selection_authority": "agent_explicit_boxes",
+  "stage": "P2_primary_axes"
+}

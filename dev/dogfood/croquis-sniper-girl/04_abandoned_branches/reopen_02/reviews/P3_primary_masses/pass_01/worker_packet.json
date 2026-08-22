@@ -1,0 +1,602 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "drawing": {
+      "artifact_sha256": "5194194e0f62ed437d6ea6fc55e8d0ec735acf9760d2addde35421d96fc7d10c",
+      "history_cursor": 53,
+      "path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+      "stage": "P3_primary_masses",
+      "state_sha256": "4e15d1d4ced7f32ef5cdc17d61cc63be67bc1795fc7129c0e9c989c7165f9e67"
+    },
+    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/grammar_vs_drawing.png",
+    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P3_primary_masses",
+    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "/home/claude/work/subject.png",
+    "subject_split": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/subject_split.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before interpreting the exemplar.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image.",
+    "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use a grammar exemplar as pose/coordinate truth.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.34,
+    "minimum_visible_pressure": 0.3,
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P3_primary_masses"
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box",
+      "grammar_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "torso+pelvis",
+      "shoulder+arm",
+      "pelvis+thighs",
+      "prop overlap"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "grammar_vs_drawing",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "P3-H1",
+        "history_cursor": 27,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_mass_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-H2",
+        "history_cursor": 28,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_mass_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-H3",
+        "history_cursor": 29,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hairline_bangs_edge",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-H4",
+        "history_cursor": 30,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "face_jaw_mass",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-H5",
+        "history_cursor": 31,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "head_cross_contour_brow",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-N1",
+        "history_cursor": 32,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "neck_mass_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-N2",
+        "history_cursor": 33,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "neck_mass_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T1",
+        "history_cursor": 34,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_mass_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T2",
+        "history_cursor": 35,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_mass_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T3",
+        "history_cursor": 36,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_cross_contour_chest",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T4",
+        "history_cursor": 37,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_cross_contour_waist",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T5",
+        "history_cursor": 38,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_torso_separation_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-T6",
+        "history_cursor": 39,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_mass_left_inner",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-P1",
+        "history_cursor": 40,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "pelvis_basin_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-P2",
+        "history_cursor": 41,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "pelvis_basin_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-P3",
+        "history_cursor": 42,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shorts_hem_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-P4",
+        "history_cursor": 43,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shorts_hem_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-L1",
+        "history_cursor": 44,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_support_outer",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-L2",
+        "history_cursor": 45,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_support_inner",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-L3",
+        "history_cursor": 46,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_brace_outer",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-L4",
+        "history_cursor": 47,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_brace_inner",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-B1",
+        "history_cursor": 48,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_mass_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-B2",
+        "history_cursor": 49,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_mass_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-R1",
+        "history_cursor": 50,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_mass_left",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-R2",
+        "history_cursor": 51,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_mass_right",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-R3",
+        "history_cursor": 52,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_cross_contour_receiver",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P3-R4",
+        "history_cursor": 53,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_cross_contour_stock",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P3_primary_masses",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "grammar_exemplar": {
+      "audit_contract_id": "full_body_croquis.P3.v1",
+      "audit_findings": [
+        "The simple foot endpoints are somewhat descriptive, but remain within the contract’s allowed simple endpoint vocabulary and do not add articulated joint detail."
+      ],
+      "audit_note": "P3 is the only bundled exemplar that currently matches the frozen representation boundary closely enough to PASS.",
+      "audit_status": "pass",
+      "authority": "representation_guidance",
+      "decides": [
+        "stage abstraction vocabulary",
+        "stroke economy",
+        "line hierarchy",
+        "detail budget",
+        "construction convention"
+      ],
+      "must_not_decide": [
+        "subject pose",
+        "subject coordinates",
+        "subject-specific proportions",
+        "subject-specific perspective"
+      ],
+      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+      "purpose": "representation_only",
+      "role": "grammar_exemplar",
+      "sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+      "stage_id": "P3_primary_masses"
+    },
+    "reference_mode": "subject_only",
+    "stage_id": "P3_primary_masses",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "/home/claude/work/subject.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The figure is readable as connected masses at a glance.",
+      "The subject silhouette and major negative spaces are credible at mass level.",
+      "No major mass/connection mismatch remains."
+    ],
+    "avoid": [
+      "joint dots as substitutes for structure",
+      "box assembly that breaks spinal flow",
+      "clothing folds",
+      "rendered facial features"
+    ],
+    "draw": [
+      "head mass",
+      "ribcage mass",
+      "pelvis mass",
+      "torso bridge",
+      "tapered limb masses",
+      "attached-object mass"
+    ],
+    "exemplar_key": "p3_masses",
+    "index": 3,
+    "intent": "Turn verified axes into connected organic masses while preserving the P1/P2 rhythm.",
+    "observe": [
+      "ribcage volume",
+      "pelvis wedge",
+      "torso bridge",
+      "limb taper",
+      "overlap",
+      "head/hair mass",
+      "attached-object mass"
+    ],
+    "review_questions": [
+      "Do ribcage and pelvis read as connected organic masses rather than boxes?",
+      "Does the torso bridge preserve spinal rhythm and twist?",
+      "Do limbs taper and emerge from the pelvis/shoulder masses naturally?",
+      "Does the attached object read as an integrated long mass rather than a floating object?"
+    ],
+    "stage_id": "P3_primary_masses",
+    "suggested_crops": [
+      "torso+pelvis",
+      "shoulder+arm",
+      "pelvis+thighs",
+      "prop overlap"
+    ],
+    "title": "Primary Masses"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "dominant crown→face→neck→spine→pelvis→support gesture",
+      "head cross-axis",
+      "shoulder axis",
+      "pelvis axis",
+      "major limb axes",
+      "attached-object extent/breadth axis",
+      "head/hair mass",
+      "ribcage mass contour",
+      "pelvis mass contour",
+      "torso bridge",
+      "tapered limb masses",
+      "attached-object mass"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P3.v1",
+    "detail_ceiling": [
+      "organic connected volumes",
+      "limb taper",
+      "major overlap",
+      "major negative space",
+      "no articulated joint detail"
+    ],
+    "exemplar_contract": {
+      "may_show": [
+        "head/hair mass",
+        "attached-object mass",
+        "simple hand/foot endpoints"
+      ],
+      "must_not_show": [
+        "articulated elbow anatomy",
+        "articulated knee anatomy",
+        "detailed hand block",
+        "detailed boot block",
+        "clothing folds",
+        "clean final contour"
+      ],
+      "must_show": [
+        "connected ribcage and pelvis masses",
+        "torso bridge",
+        "tapered limb masses",
+        "preserved underlying axes"
+      ]
+    },
+    "forbidden_representation": [
+      "detailed shoulder insertion",
+      "elbow joint plane construction",
+      "knee joint plane construction",
+      "ankle articulation",
+      "hand/finger detail",
+      "boot detail",
+      "clothing folds",
+      "final cleaned silhouette",
+      "rendered shading"
+    ],
+    "inherits_from": "P2_primary_axes",
+    "must_preserve": [
+      "P1 gesture and weight path",
+      "P2 head/shoulder/pelvis axes",
+      "P2 limb directions",
+      "P2 attached-object axes"
+    ],
+    "next_stage_unlocks": [
+      "shoulder insertion",
+      "elbow transition",
+      "wrist transition",
+      "hip-to-thigh insertion",
+      "knee transition",
+      "ankle-to-foot transition",
+      "hand/foot block",
+      "strap/holster/prop attachment"
+    ],
+    "owns": [
+      "head/hair mass",
+      "ribcage mass",
+      "pelvis mass",
+      "torso bridge",
+      "tapered limb masses",
+      "attached-object mass",
+      "major negative spaces"
+    ],
+    "representation_name": "connected_primary_masses",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P3_primary_masses",
+    "tier": 3
+  }
+}

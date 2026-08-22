@@ -1,0 +1,316 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "drawing": {
+      "artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+      "history_cursor": 94,
+      "path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+      "stage": "P5_clean_blockin",
+      "state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9"
+    },
+    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P5_clean_blockin",
+    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "/home/claude/work/subject.png",
+    "subject_split": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_split.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before interpreting the exemplar.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image.",
+    "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use a grammar exemplar as pose/coordinate truth.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.48,
+    "minimum_visible_pressure": 0.42,
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P5_clean_blockin"
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box",
+      "grammar_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "whole silhouette",
+      "head+torso",
+      "pelvis+legs",
+      "prop integration"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "grammar_vs_drawing",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P5_clean_blockin",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "grammar_exemplar": {
+      "audit_contract_id": "full_body_croquis.P5.v1",
+      "audit_findings": [
+        "The exemplar contains extensive tonal hatching/shading across hair, clothing and trousers, exceeding clean block-in scope.",
+        "Numerous micro folds and texture marks appear in sleeves, trousers and shoes.",
+        "Facial and hair rendering are developed enough to read as a finished sketch rather than a clean structural block-in."
+      ],
+      "audit_note": "P5 currently demonstrates a finished pencil illustration, not the frozen clean-block-in stage.",
+      "audit_status": "fail",
+      "authority": "representation_guidance",
+      "decides": [
+        "stage abstraction vocabulary",
+        "stroke economy",
+        "line hierarchy",
+        "detail budget",
+        "construction convention"
+      ],
+      "must_not_decide": [
+        "subject pose",
+        "subject coordinates",
+        "subject-specific proportions",
+        "subject-specific perspective"
+      ],
+      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "purpose": "representation_only",
+      "role": "grammar_exemplar",
+      "sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "stage_id": "P5_clean_blockin"
+    },
+    "reference_mode": "subject_only",
+    "stage_id": "P5_clean_blockin",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "/home/claude/work/subject.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The figure and attached objects are immediately readable from silhouette and major internal breaks.",
+      "Construction is subordinate and no major structural error is being hidden by cleanup.",
+      "No major block-in mismatch remains, and P5 did not draw outside P3/P4 merely to hide an upstream error."
+    ],
+    "avoid": [
+      "tone rendering",
+      "micro-detail",
+      "accidental contour welding between independent masses",
+      "beautification that hides structural error",
+      "cleaning a wrong structure instead of reopening it"
+    ],
+    "draw": [
+      "decisive outer contour",
+      "major internal breaks",
+      "major attached-object subpart topology",
+      "explicit silhouette-owner handoffs",
+      "overlap contours",
+      "only necessary surviving construction"
+    ],
+    "exemplar_key": "p5_clean_blockin",
+    "index": 5,
+    "intent": "State a readable silhouette from verified structure while keeping construction subordinate.",
+    "observe": [
+      "whole silhouette",
+      "head/body proportion",
+      "torso-pelvis relation",
+      "stance",
+      "negative space",
+      "prop alignment",
+      "line hierarchy"
+    ],
+    "review_questions": [
+      "Does the final block-in preserve the verified P1-P4 structure?",
+      "Is the main silhouette readable without construction noise?",
+      "Are head/body/leg/prop proportions credible against the subject?",
+      "Has rejected construction receded through replayable retirement rather than accumulating as dead lines?",
+      "At hair/garment/limb/attached-object handoffs, does each visible contour keep one semantic owner instead of visually welding two masses together?",
+      "If a large attached object changes the silhouette, are its major width changes/subparts readable without micro-detail?"
+    ],
+    "stage_id": "P5_clean_blockin",
+    "suggested_crops": [
+      "whole silhouette",
+      "head+torso",
+      "pelvis+legs",
+      "prop integration"
+    ],
+    "title": "Clean Block-in"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "head/hair mass",
+      "major clothing silhouette",
+      "decisive outer contour",
+      "major internal contour breaks",
+      "overlap contour between adjacent masses",
+      "silhouette-owner handoff with a visible break or occlusion",
+      "joint/attachment-informed contour",
+      "hand/foot silhouette",
+      "clean attached-object silhouette",
+      "construction-line retirement"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P5.v1",
+    "detail_ceiling": [
+      "clean block-in",
+      "readable silhouette",
+      "major internal structure only",
+      "no tonal finish"
+    ],
+    "exemplar_contract": {
+      "may_show": [
+        "major pockets/accessory shapes",
+        "simple hair grouping",
+        "clean prop silhouette"
+      ],
+      "must_not_show": [
+        "rendered shading",
+        "micro texture",
+        "micro fold rendering"
+      ],
+      "must_show": [
+        "readable whole silhouette",
+        "clean major clothing/body contour",
+        "major internal contour breaks",
+        "subordinated construction"
+      ]
+    },
+    "forbidden_representation": [
+      "rendered tonal shading",
+      "micro texture",
+      "micro clothing folds",
+      "accidental contour welding between independent semantic masses",
+      "beautification that changes verified structure"
+    ],
+    "inherits_from": "P4_structural_connections",
+    "must_preserve": [
+      "P1 gesture and weight",
+      "P2 directional axes",
+      "P3 masses/negative spaces",
+      "P4 joint/attachment logic"
+    ],
+    "next_stage_unlocks": [],
+    "owns": [
+      "decisive outer silhouette",
+      "major clothing silhouette",
+      "major internal contour breaks",
+      "construction-line retirement",
+      "silhouette-owner handoff",
+      "clean attached-object silhouette"
+    ],
+    "representation_name": "clean_blockin_contour",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P5_clean_blockin",
+    "tier": 5
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P1-A1",
+      "history_cursor": 2,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "crown_face_spine_support",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A2",
+      "history_cursor": 3,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_crown_arc",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A3",
+      "history_cursor": 4,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A4",
+      "history_cursor": 5,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A5",
+      "history_cursor": 6,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_rhythm",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A6",
+      "history_cursor": 7,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_rhythm",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A7",
+      "history_cursor": 8,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "counterbalance_leg",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A8",
+      "history_cursor": 9,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_major_axis",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1-A9",
+      "history_cursor": 10,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ground_weight_cue",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "cold_start"
+}

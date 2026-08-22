@@ -1,0 +1,444 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "drawing": {
+      "artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+      "history_cursor": 11,
+      "path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/current_drawing.png",
+      "stage": "P1_gesture",
+      "state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9"
+    },
+    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/grammar_vs_drawing.png",
+    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P1_gesture",
+    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "/home/claude/work/subject.png",
+    "subject_split": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_split.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before interpreting the exemplar.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image.",
+    "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use a grammar exemplar as pose/coordinate truth.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.18,
+    "minimum_visible_pressure": 0.18,
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P1_gesture"
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box",
+      "grammar_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "head/face",
+      "torso+pelvis",
+      "pelvis+both legs",
+      "attached object + shoulder when present"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "grammar_vs_drawing",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "P1B-A1",
+        "history_cursor": 3,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "crown_face_spine_support",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A2",
+        "history_cursor": 4,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cranial_crown_arc",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A3",
+        "history_cursor": 5,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cranial_left_temporal_jaw",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A4",
+        "history_cursor": 6,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cranial_right_temporal_jaw",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A5",
+        "history_cursor": 7,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shoulder_rhythm",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A6",
+        "history_cursor": 8,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "pelvis_rhythm",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A7",
+        "history_cursor": 9,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "counterbalance_leg",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A8",
+        "history_cursor": 10,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_major_axis",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P1B-A9",
+        "history_cursor": 11,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "ground_weight_cue",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+      "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+      "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": {
+      "abandoned_review_digests": [
+        "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+        "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+        "d3a297212c2893fac59d9d1ee87df9c3ac8765d6640dfb4c195ff780e2b4ef74"
+      ],
+      "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_01",
+      "discovered_in_stage": "P2_primary_axes",
+      "findings": [
+        "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+        "P1 counterbalance stroke sits at x~267-273 over the same range.",
+        "Result at P2 is a two-line pant-leg rail down the thigh."
+      ],
+      "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+      "reopen_id": "reopen_01",
+      "role": "reopened_target",
+      "stage": "P1_gesture",
+      "target_stage": "P1_gesture",
+      "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+    },
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P1_gesture",
+    "state": "reopen_restart"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference",
+      "grammar_exemplar"
+    ],
+    "grammar_exemplar": {
+      "audit_contract_id": "full_body_croquis.P1.v1",
+      "audit_findings": [
+        "The exemplar shows only one long lower-body path and does not establish a distinct counterbalance-leg flow, so support versus counterbalance is not readable.",
+        "The visually dominant body gesture begins at the chin/neck instead of being carried from the crown through a curved facial centre into the neck, so the craniofacial centre gesture is not demonstrated by the exemplar.",
+        "The head reads as a nearly closed oval construction; it does not clearly teach two subordinate open envelope arcs around an asymmetric facial centre."
+      ],
+      "audit_note": "R03 audit finds the bundled P1 grammar exemplar insufficient for the 0.5.2 P1 contract. Do not copy its neck-origin gesture.",
+      "audit_status": "fail",
+      "authority": "representation_guidance",
+      "decides": [
+        "stage abstraction vocabulary",
+        "stroke economy",
+        "line hierarchy",
+        "detail budget",
+        "construction convention"
+      ],
+      "must_not_decide": [
+        "subject pose",
+        "subject coordinates",
+        "subject-specific proportions",
+        "subject-specific perspective"
+      ],
+      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+      "purpose": "representation_only",
+      "role": "grammar_exemplar",
+      "sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+      "stage_id": "P1_gesture"
+    },
+    "reference_mode": "subject_only",
+    "stage_id": "P1_gesture",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "/home/claude/work/subject.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "A viewer can infer the subject's head/face direction from the curved craniofacial centre line and head-envelope relationship.",
+      "The full dominant weight path is readable from crown to the support landing point.",
+      "Support and counterbalance roles are unambiguous.",
+      "Large subject proportions (head/shoulder/pelvis/leg spread) are credible at P1 abstraction.",
+      "Secondary construction supports the dominant gesture instead of competing with it.",
+      "No major visible P1 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "starting the main gesture at the neck instead of the crown",
+      "straight geometric face centre that carries no face-direction information",
+      "closed polygon/circle head symbol that overwhelms the face-axis relationship",
+      "independent torso and leg sticks that break the neck→spine→pelvis→support path",
+      "joint anatomy",
+      "clothing detail",
+      "final contour",
+      "facial features"
+    ],
+    "draw": [
+      "one dominant continuous stroke from crown through curved facial centre, chin, neck, spine, pelvis and support leg to the weight landing point",
+      "open cranial/jaw envelope arcs; use a separate short crown arc when needed so the head does not collapse into one closed egg",
+      "subordinate shoulder rhythm",
+      "subordinate pelvis rhythm",
+      "secondary counterbalance-leg flow",
+      "restrained attached-object major axis when relevant",
+      "minimal ground/weight cue only if needed"
+    ],
+    "exemplar_key": "p1_gesture",
+    "index": 1,
+    "intent": "Capture the full craniofacial-to-ground gesture: face direction, spinal rhythm, pelvis transfer, support leg and counterbalance before anatomy.",
+    "observe": [
+      "crown and top of cranium",
+      "curved facial centre line and unequal left/right head halves",
+      "chin-to-neck exit",
+      "neck-to-spine flow",
+      "pelvis centre and tilt",
+      "support-side hip and weight-bearing leg",
+      "counterbalance leg",
+      "shoulder rhythm",
+      "major attached-object axis when it changes the global envelope"
+    ],
+    "review_questions": [
+      "Does the dominant gesture start at the crown, not at the neck?",
+      "Inside the head, does the centre line curve asymmetrically and do the open crown/temporal/jaw arcs avoid reconstructing a closed badge?",
+      "Does that same dominant intention continue through chin→neck→spine→pelvis→support leg without a conceptual break?",
+      "Does the pelvis visibly transfer weight into one support leg instead of feeding two equivalent sticks?",
+      "Does the opposite leg read as counterbalance?",
+      "Are head width/height, shoulder span and pelvis breadth derived from the subject rather than copied from the exemplar?",
+      "Is the dominant gesture materially/visually stronger than secondary construction?",
+      "Did the worker avoid P2/P3 anatomy, clothing and contour detail?",
+      "If a large attached object changes balance or silhouette, is its major axis already present but subordinate?"
+    ],
+    "stage_id": "P1_gesture",
+    "suggested_crops": [
+      "head/face",
+      "torso+pelvis",
+      "pelvis+both legs",
+      "attached object + shoulder when present"
+    ],
+    "title": "Gesture / Weight Path"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "dominant crown→face→neck→spine→pelvis→support gesture",
+      "open head-envelope arcs, including segmented crown/temporal/jaw arcs",
+      "shoulder rhythm",
+      "pelvis rhythm",
+      "counterbalance-leg flow",
+      "major attached-object axis",
+      "minimal landing/ground cue"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P1.v1",
+    "detail_ceiling": [
+      "global gesture",
+      "face-direction cue",
+      "weight relationship",
+      "major prop direction only"
+    ],
+    "exemplar_contract": {
+      "may_show": [
+        "shoulder rhythm",
+        "pelvis rhythm",
+        "minimal ground cue",
+        "major attached-object axis"
+      ],
+      "must_not_show": [
+        "ribcage mass contour",
+        "pelvis mass contour",
+        "full limb thickness",
+        "joint anatomy",
+        "clothing silhouette",
+        "facial features"
+      ],
+      "must_show": [
+        "dominant whole-body gesture",
+        "head direction construction",
+        "support/counterbalance relationship"
+      ]
+    },
+    "forbidden_representation": [
+      "anatomical joint construction",
+      "ribcage/pelvis mass contour",
+      "full limb thickness",
+      "clothing contour",
+      "facial features",
+      "rendered shading"
+    ],
+    "inherits_from": null,
+    "must_preserve": [
+      "subject-derived head direction",
+      "subject-derived support side",
+      "whole-body energy"
+    ],
+    "next_stage_unlocks": [
+      "head cross-axis",
+      "shoulder axis",
+      "pelvis axis",
+      "major limb axes",
+      "attached-object extent/breadth axis"
+    ],
+    "owns": [
+      "craniofacial centre gesture",
+      "whole-body line of action",
+      "pelvis weight transfer",
+      "support vs counterbalance role",
+      "major attached-object axis when silhouette/balance requires it"
+    ],
+    "representation_name": "gesture_and_weight_path",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P1_gesture",
+    "tier": 1
+  }
+}

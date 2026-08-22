@@ -1,0 +1,103 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "CONTRACT VIOLATION FOUND: strokes P3-B1 and P3-B2 authored explicit boot masses. The frozen P3 contract forbids hand/foot construction blocks, which belong to P4. They must be removed rather than kept as a head start.",
+    "Everything else stays inside the P3 boundary: head/hair mass, neck bridge, clothed torso mass with two shallow cross-contours, pelvis basin, tapered limb masses and one attached-object mass with two cross-contours.",
+    "No articulated joint blocks, clothing folds, seams, facial features, final silhouette or shading were introduced."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "5194194e0f62ed437d6ea6fc55e8d0ec735acf9760d2addde35421d96fc7d10c",
+  "drawing_findings": [
+    "head_neck: the hair mass registers with the subject's bob on both sides, the bangs edge separates hair from face, and the jaw plane closes on the chin without any features. The neck bridge connects head to collar.",
+    "torso_pelvis: the clothed torso reads as one occupied volume that matches the observed jacket silhouette on the right and the jacket/arm shared edge on the left; the two cross-contours explain the back-three-quarter turn and the waist, and the basin flows into both thigh roots rather than closing an ellipse.",
+    "pelvis_legs: both leg masses taper asymmetrically and the negative space between them is a credible tall wedge, but the braced leg's outer contour shows an abrupt step near canvas y=470 where a smooth swell is what the subject actually shows.",
+    "pelvis_legs: the two boot masses are the contract violation noted above and additionally overshoot the subject on the image-right side.",
+    "prop_overlap: the rifle mass registers along its length and its width transitions read, and it overlaps the torso mass instead of floating beside it.",
+    "Fresh residual sweep of the whole artifact: the figure reads as a connected mass system at a glance; no egg-torso, box assembly, polygonal pelvis or parallel-rail limbs are present, and no mass underfills the observed clothed volume."
+  ],
+  "drawing_state_sha256": "4e15d1d4ced7f32ef5cdc17d61cc63be67bc1795fc7129c0e9c989c7165f9e67",
+  "exemplar_findings": [
+    "The P3 grammar exemplar is an audited PASS exemplar; its abstraction level and detail budget were followed.",
+    "Its bare-body mass vocabulary was deliberately NOT copied, because the clothed-mass policy requires the observed clothing bulk to define the envelope here."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "history_cursor": 53,
+  "inter_pass_action_ids": [
+    "P3-H1",
+    "P3-H2",
+    "P3-H3",
+    "P3-H4",
+    "P3-H5",
+    "P3-N1",
+    "P3-N2",
+    "P3-T1",
+    "P3-T2",
+    "P3-T3",
+    "P3-T4",
+    "P3-T5",
+    "P3-T6",
+    "P3-P1",
+    "P3-P2",
+    "P3-P3",
+    "P3-P4",
+    "P3-L1",
+    "P3-L2",
+    "P3-L3",
+    "P3-L4",
+    "P3-B1",
+    "P3-B2",
+    "P3-R1",
+    "P3-R2",
+    "P3-R3",
+    "P3-R4"
+  ],
+  "local_review_ids": [
+    "P3_primary_masses:pass_01:head_neck",
+    "P3_primary_masses:pass_01:torso_pelvis",
+    "P3_primary_masses:pass_01:pelvis_legs",
+    "P3_primary_masses:pass_01:prop_overlap"
+  ],
+  "observations": [
+    "CONTRACT VIOLATION FOUND: strokes P3-B1 and P3-B2 authored explicit boot masses. The frozen P3 contract forbids hand/foot construction blocks, which belong to P4. They must be removed rather than kept as a head start.",
+    "Everything else stays inside the P3 boundary: head/hair mass, neck bridge, clothed torso mass with two shallow cross-contours, pelvis basin, tapered limb masses and one attached-object mass with two cross-contours.",
+    "No articulated joint blocks, clothing folds, seams, facial features, final silhouette or shading were introduced.",
+    "The subject's loose jacket, not a fitted body, defines the torso occupied volume; its widest point is at the near sleeve elbow around canvas y=340.",
+    "The subject's bob is a genuine mass, wider than the cranium on both sides and slightly narrower on the turned image-right side.",
+    "Measured leg extents confirm the support leg is the slimmer, more vertical volume and the braced leg is wider and leans image-right for its whole length.",
+    "The subject's rifle is not a uniform rail: a fat suppressor steps down to a thin barrel, then widens at the scope/receiver and again at the skeleton buttstock.",
+    "The P3 grammar exemplar is an audited PASS exemplar; its abstraction level and detail budget were followed.",
+    "Its bare-body mass vocabulary was deliberately NOT copied, because the clothed-mass policy requires the observed clothing bulk to define the envelope here.",
+    "head_neck: the hair mass registers with the subject's bob on both sides, the bangs edge separates hair from face, and the jaw plane closes on the chin without any features. The neck bridge connects head to collar.",
+    "torso_pelvis: the clothed torso reads as one occupied volume that matches the observed jacket silhouette on the right and the jacket/arm shared edge on the left; the two cross-contours explain the back-three-quarter turn and the waist, and the basin flows into both thigh roots rather than closing an ellipse.",
+    "pelvis_legs: both leg masses taper asymmetrically and the negative space between them is a credible tall wedge, but the braced leg's outer contour shows an abrupt step near canvas y=470 where a smooth swell is what the subject actually shows.",
+    "pelvis_legs: the two boot masses are the contract violation noted above and additionally overshoot the subject on the image-right side.",
+    "prop_overlap: the rifle mass registers along its length and its width transitions read, and it overlaps the torso mass instead of floating beside it.",
+    "Fresh residual sweep of the whole artifact: the figure reads as a connected mass system at a glance; no egg-torso, box assembly, polygonal pelvis or parallel-rail limbs are present, and no mass underfills the observed clothed volume."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "f5be3115fe2df975bb7d974a6a3a7e0a34baac6a2d28d45979014da4ab0d4efb",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "boot masses P3-B1/P3-B2 violate the frozen P3 contract and must be removed so P4 can own them",
+    "braced-leg outer contour has an abrupt step near canvas y=470 instead of a smooth swell"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses",
+  "stage_contract_id": "full_body_croquis.P3.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "subject_findings": [
+    "The subject's loose jacket, not a fitted body, defines the torso occupied volume; its widest point is at the near sleeve elbow around canvas y=340.",
+    "The subject's bob is a genuine mass, wider than the cranium on both sides and slightly narrower on the turned image-right side.",
+    "Measured leg extents confirm the support leg is the slimmer, more vertical volume and the braced leg is wider and leans image-right for its whole length.",
+    "The subject's rifle is not a uniform rail: a fat suppressor steps down to a thin barrel, then widens at the scope/receiver and again at the skeleton buttstock."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

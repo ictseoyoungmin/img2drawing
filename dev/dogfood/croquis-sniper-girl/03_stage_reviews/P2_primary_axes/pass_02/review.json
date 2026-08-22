@@ -1,0 +1,67 @@
+{
+  "advance_rationale": "Fresh pass-2 evidence clears the single carried concern, and an independent residual sweep of head/shoulders, torso/pelvis, prop and whole view finds no remaining axis-level mismatch. The axes clarify the P1 pose without replacing it and no P3 volume vocabulary has leaked in, so primary masses can now be built.",
+  "carried_concerns": [
+    "shoulder axis sits ~13px above the observed far shoulder joint"
+  ],
+  "contract_findings": [
+    "The correction changed one axis endpoint pair only; the stage still holds axes exclusively and nothing from P3 volume vocabulary has entered."
+  ],
+  "corrections": [
+    "P2B-R1 lowered the shoulder axis onto the observed joint line."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+  "drawing_findings": [
+    "Carried concern 'shoulder axis ~13px high' is CLEARED: the head_shoulders crop now shows the axis running at deltoid-joint level, clearly distinct from the arcing P1 shoulder rhythm rather than doubling it.",
+    "torso_pelvis residual sweep: shoulder and pelvis axes counter-tilt and explain the same pose P1 established; neither reads as an unrelated horizontal bar.",
+    "prop_overlap residual sweep: extent axis plus two short breadth axes state the rifle's direction and width changes without becoming a contour or a closed mass.",
+    "Whole-view residual sweep: both arm chains, both leg chains and the head cross-axis remain correct, the P1 gesture is still the dominant mark, and support versus counterbalance is still unambiguous.",
+    "No new axis-level mismatch was found."
+  ],
+  "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+  "exemplar_findings": [
+    "The audited PASS P2 exemplar's line hierarchy was matched: the axes stay lighter than the inherited P1 gesture."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "history_cursor": 24,
+  "inter_pass_action_ids": [
+    "P2B-R1"
+  ],
+  "local_review_ids": [
+    "P2_primary_axes:pass_02:head_shoulders",
+    "P2_primary_axes:pass_02:torso_pelvis",
+    "P2_primary_axes:pass_02:prop_overlap"
+  ],
+  "observations": [
+    "The correction changed one axis endpoint pair only; the stage still holds axes exclusively and nothing from P3 volume vocabulary has entered.",
+    "Re-measured shoulder joints confirm a shallow drop toward the near image-right shoulder; the corrected axis reproduces it.",
+    "Shoulder axis and pelvis axis run in opposite senses on the subject, which is what carries the mild torso twist of the back-three-quarter turn.",
+    "The rifle's two widest points on the subject, the scope/receiver and the skeleton buttstock, sit where the two breadth axes were placed.",
+    "The audited PASS P2 exemplar's line hierarchy was matched: the axes stay lighter than the inherited P1 gesture.",
+    "Carried concern 'shoulder axis ~13px high' is CLEARED: the head_shoulders crop now shows the axis running at deltoid-joint level, clearly distinct from the arcing P1 shoulder rhythm rather than doubling it.",
+    "torso_pelvis residual sweep: shoulder and pelvis axes counter-tilt and explain the same pose P1 established; neither reads as an unrelated horizontal bar.",
+    "prop_overlap residual sweep: extent axis plus two short breadth axes state the rifle's direction and width changes without becoming a contour or a closed mass.",
+    "Whole-view residual sweep: both arm chains, both leg chains and the head cross-axis remain correct, the P1 gesture is still the dominant mark, and support versus counterbalance is still unambiguous.",
+    "No new axis-level mismatch was found."
+  ],
+  "parent_review_digest": "aa96b07cd38c97759642c55a6c8d25bb3b5465e04bda0a9992bf93b42ccbc68f",
+  "pass_memory_digest": "b69cb0c086ef3bafaee821b37858bec5a79acc3485248f3e999184ad7219b5bf",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "subject_findings": [
+    "Re-measured shoulder joints confirm a shallow drop toward the near image-right shoulder; the corrected axis reproduces it.",
+    "Shoulder axis and pelvis axis run in opposite senses on the subject, which is what carries the mild torso twist of the back-three-quarter turn.",
+    "The rifle's two widest points on the subject, the scope/receiver and the skeleton buttstock, sit where the two breadth axes were placed."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

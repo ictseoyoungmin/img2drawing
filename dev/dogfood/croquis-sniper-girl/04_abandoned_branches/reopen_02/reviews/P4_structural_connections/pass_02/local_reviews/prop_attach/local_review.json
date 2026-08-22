@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 450,
+        "left": 160,
+        "right": 280,
+        "top": 140
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/crops/drawing.png",
+      "crop_sha256": "860f2385a4951b97d3968499468d6ad8fc55fbab97e98fb5f3b51981faf181c9",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/current_drawing.png",
+      "source_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1050,
+        "left": 15,
+        "right": 275,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/crops/grammar.png",
+      "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+      "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+      "source_size": [
+        289,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 900,
+        "left": 330,
+        "right": 560,
+        "top": 280
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/prop_attach/crops/subject.png",
+      "crop_sha256": "70ba69759f571b8fb8f045d42e6ac70c097d6ef95abc8a1702164ac3ac1dd74a",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+  "drawing_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+  "history_cursor": 92,
+  "intent": "Residual sweep: is the rifle physically attached and overlapping rather than floating?",
+  "label": "prop_attach",
+  "local_review_id": "P4_structural_connections:pass_02:prop_attach",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections"
+}

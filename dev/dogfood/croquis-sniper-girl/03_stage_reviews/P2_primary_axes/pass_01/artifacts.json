@@ -1,0 +1,29 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P2_primary_axes",
+  "drawing": {
+    "stage": "P2_primary_axes",
+    "path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/current_drawing.png",
+    "artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+    "state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+    "history_cursor": 23
+  },
+  "authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
+  "subject_split": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_split.png",
+  "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
+  "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+  "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
+  "three_way": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
+}

@@ -1,0 +1,293 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P3-H1",
+      "history_cursor": 27,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-H2",
+      "history_cursor": 28,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-H3",
+      "history_cursor": 29,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hairline_bangs_edge",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-H4",
+      "history_cursor": 30,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "face_jaw_mass",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-H5",
+      "history_cursor": 31,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "head_cross_contour_brow",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-N1",
+      "history_cursor": 32,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "neck_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-N2",
+      "history_cursor": 33,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "neck_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T1",
+      "history_cursor": 34,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T2",
+      "history_cursor": 35,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T3",
+      "history_cursor": 36,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_cross_contour_chest",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T4",
+      "history_cursor": 37,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_cross_contour_waist",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T5",
+      "history_cursor": 38,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_torso_separation_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-T6",
+      "history_cursor": 39,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_mass_left_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-P1",
+      "history_cursor": 40,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_basin_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-P2",
+      "history_cursor": 41,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_basin_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-P3",
+      "history_cursor": 42,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shorts_hem_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-P4",
+      "history_cursor": 43,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shorts_hem_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-L1",
+      "history_cursor": 44,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_support_outer",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-L2",
+      "history_cursor": 45,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_support_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-L3",
+      "history_cursor": 46,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_brace_outer",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-L4",
+      "history_cursor": 47,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_brace_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-B1",
+      "history_cursor": 48,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-B2",
+      "history_cursor": 49,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-R1",
+      "history_cursor": 50,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-R2",
+      "history_cursor": 51,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-R3",
+      "history_cursor": 52,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_cross_contour_receiver",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3-R4",
+      "history_cursor": 53,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_cross_contour_stock",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P3_primary_masses",
+  "state": "cold_start"
+}

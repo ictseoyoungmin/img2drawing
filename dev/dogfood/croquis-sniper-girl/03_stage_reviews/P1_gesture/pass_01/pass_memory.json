@@ -1,0 +1,133 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P1B-A1",
+      "history_cursor": 3,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "crown_face_spine_support",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A2",
+      "history_cursor": 4,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_crown_arc",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A3",
+      "history_cursor": 5,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A4",
+      "history_cursor": 6,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A5",
+      "history_cursor": 7,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_rhythm",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A6",
+      "history_cursor": 8,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_rhythm",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A7",
+      "history_cursor": 9,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "counterbalance_leg",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A8",
+      "history_cursor": 10,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_major_axis",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P1B-A9",
+      "history_cursor": 11,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ground_weight_cue",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+    "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+    "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+      "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+      "d3a297212c2893fac59d9d1ee87df9c3ac8765d6640dfb4c195ff780e2b4ef74"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_01",
+    "discovered_in_stage": "P2_primary_axes",
+    "findings": [
+      "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+      "P1 counterbalance stroke sits at x~267-273 over the same range.",
+      "Result at P2 is a two-line pant-leg rail down the thigh."
+    ],
+    "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+    "reopen_id": "reopen_01",
+    "role": "reopened_target",
+    "stage": "P1_gesture",
+    "target_stage": "P1_gesture",
+    "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "reopen_restart"
+}

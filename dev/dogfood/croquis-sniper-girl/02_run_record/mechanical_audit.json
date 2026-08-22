@@ -1,0 +1,78 @@
+{
+  "schema": "img2drawing.fresh_worker_mechanical_audit.v1",
+  "img2drawing_version": "0.5.2",
+  "run_dir": "/home/claude/work/croquis/out",
+  "complete": true,
+  "stage_summary": {
+    "P1_gesture": {
+      "review_count": 1,
+      "decisions": [
+        "advance"
+      ],
+      "latest_digest": "031a831718b5ec7fb798dde16a256079b927f1b9c0131e60ad33502c04ad803c"
+    },
+    "P2_primary_axes": {
+      "review_count": 2,
+      "decisions": [
+        "revise",
+        "advance"
+      ],
+      "latest_digest": "c40171be7e7e81c5a6e09ccc5e5b7d3e5a9dc8d8ac2488f5a25142f73d3207f2"
+    },
+    "P3_primary_masses": {
+      "review_count": 1,
+      "decisions": [
+        "advance"
+      ],
+      "latest_digest": "b166ce9fe8c1f1ec979c6442aa14b2283aa4934ceaefb2a209667a05b2c1ea19"
+    },
+    "P4_structural_connections": {
+      "review_count": 1,
+      "decisions": [
+        "advance"
+      ],
+      "latest_digest": "b412b6205970dae1b1e35539f7250a2f987ec2166299566391dffc4c40450d10"
+    },
+    "P5_clean_blockin": {
+      "review_count": 1,
+      "decisions": [
+        "advance"
+      ],
+      "latest_digest": "667b085f59ab193895449bffe8f9329d51fb0156a674da3e52512c47b44b1292"
+    }
+  },
+  "revision_count": 1,
+  "direct_stroke_actions": 364,
+  "correction_actions": 242,
+  "reopens": [
+    {
+      "target_stage": "P1_gesture",
+      "discovered_in_stage": "P2_primary_axes",
+      "invalidated_stages": [
+        "P1_gesture",
+        "P2_primary_axes"
+      ]
+    },
+    {
+      "target_stage": "P3_primary_masses",
+      "discovered_in_stage": "P5_clean_blockin",
+      "invalidated_stages": [
+        "P3_primary_masses",
+        "P4_structural_connections",
+        "P5_clean_blockin"
+      ]
+    },
+    {
+      "target_stage": "P5_clean_blockin",
+      "discovered_in_stage": null,
+      "invalidated_stages": [
+        "P5_clean_blockin"
+      ]
+    }
+  ],
+  "historical_dogfood_action_ids_found": false,
+  "final_artifacts_present": true,
+  "report_present": true,
+  "warnings": [],
+  "semantic_visual_audit_required": true
+}\n

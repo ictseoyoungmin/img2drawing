@@ -1,0 +1,303 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P3C-H1",
+      "history_cursor": 28,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-H2",
+      "history_cursor": 29,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-H3",
+      "history_cursor": 30,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hairline_bangs_edge",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-H4",
+      "history_cursor": 31,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "face_jaw_mass",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-H5",
+      "history_cursor": 32,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "head_cross_contour_brow",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-N1",
+      "history_cursor": 33,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "neck_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-N2",
+      "history_cursor": 34,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "neck_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T1",
+      "history_cursor": 35,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T2",
+      "history_cursor": 36,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T3",
+      "history_cursor": 37,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_cross_contour_chest",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T4",
+      "history_cursor": 38,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_cross_contour_waist",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T5",
+      "history_cursor": 39,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_torso_separation_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-T6",
+      "history_cursor": 40,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_mass_left_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-P1",
+      "history_cursor": 41,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_basin_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-P2",
+      "history_cursor": 42,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_basin_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-P3",
+      "history_cursor": 43,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shorts_hem_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-P4",
+      "history_cursor": 44,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shorts_hem_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-L1",
+      "history_cursor": 45,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_support_outer",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-L2",
+      "history_cursor": 46,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_support_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-L3",
+      "history_cursor": 47,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_brace_outer",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-L4",
+      "history_cursor": 48,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_brace_inner",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-P5",
+      "history_cursor": 49,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "thigh_holster_mass",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-R1",
+      "history_cursor": 50,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_mass_left",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-R2",
+      "history_cursor": 51,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_mass_right",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-R3",
+      "history_cursor": 52,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_cross_contour_receiver",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P3C-R4",
+      "history_cursor": 53,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_cross_contour_stock",
+      "reason": null,
+      "stage": "P3_primary_masses",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+    "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+    "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee",
+      "fbfc17fc39002f28274020872a7cd112c9ea9cce1536520131cb9dc07e84ca6c"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_02",
+    "discovered_in_stage": "P5_clean_blockin",
+    "findings": [
+      "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
+      "Inherited P3 rifle mass sits up to 16px right of that edge through the middle of the prop.",
+      "Inherited P3 torso-left contour underfills the observed occupied volume by about 12px over the same range.",
+      "Silhouette ownership handoff from prop to garment occurs near canvas y=205."
+    ],
+    "reason": "P5 cleanup preflight proves the verified left outer silhouette cannot be stated without contradicting the inherited P3 prop and torso-left envelopes. The prop axis and extent are credible, so the underfilled P3 envelope, not P2 or P1, is the earliest responsible stage.",
+    "reopen_id": "reopen_02",
+    "role": "reopened_target",
+    "stage": "P3_primary_masses",
+    "target_stage": "P3_primary_masses",
+    "trigger_review_digest": "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P3_primary_masses",
+  "state": "reopen_restart"
+}

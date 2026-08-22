@@ -1,0 +1,91 @@
+{
+  "allowed_representation": [
+    "dominant crown→face→neck→spine→pelvis→support gesture",
+    "open head-envelope arcs",
+    "shoulder rhythm",
+    "pelvis rhythm",
+    "counterbalance-leg flow",
+    "major attached-object axis",
+    "minimal landing/ground cue",
+    "head cross-axis",
+    "shoulder axis",
+    "pelvis axis",
+    "major limb axes",
+    "attached-object extent/breadth axis"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P2.v1",
+  "detail_ceiling": [
+    "axis relationships",
+    "tilt and twist direction",
+    "foreshortening direction",
+    "prop extent/breadth",
+    "no volume closure"
+  ],
+  "exemplar_contract": {
+    "may_show": [
+      "open head envelope",
+      "minimal pelvis/shoulder rhythms from P1",
+      "attached-object extent/breadth axis",
+      "tiny endpoint ticks"
+    ],
+    "must_not_show": [
+      "ribcage side contour",
+      "closed torso mass",
+      "closed pelvis mass",
+      "full limb thickness",
+      "hand block",
+      "foot/boot block",
+      "joint anatomy",
+      "clothing silhouette"
+    ],
+    "must_show": [
+      "head direction axis",
+      "shoulder axis",
+      "pelvis axis",
+      "major arm and leg axes",
+      "preserved P1 gesture"
+    ]
+  },
+  "forbidden_representation": [
+    "ribcage side contour",
+    "ribcage mass contour",
+    "pelvis side contour",
+    "pelvis mass contour",
+    "full arm thickness",
+    "full thigh/shin thickness",
+    "constructed hand block",
+    "constructed foot/boot block",
+    "joint anatomy",
+    "clothing block-in",
+    "final silhouette",
+    "rendered shading"
+  ],
+  "inherits_from": "P1_gesture",
+  "must_preserve": [
+    "P1 crown-to-support gesture",
+    "P1 face direction",
+    "P1 support/counterbalance roles",
+    "P1 weight landing"
+  ],
+  "next_stage_unlocks": [
+    "head/hair mass",
+    "ribcage mass contour",
+    "pelvis mass contour",
+    "torso bridge",
+    "tapered limb masses",
+    "attached-object mass"
+  ],
+  "owns": [
+    "head cross-axis",
+    "shoulder axis",
+    "pelvis axis",
+    "major arm direction chains",
+    "major leg direction chains",
+    "attached-object extent/breadth axis"
+  ],
+  "representation_name": "primary_axes",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P2_primary_axes",
+  "tier": 2
+}

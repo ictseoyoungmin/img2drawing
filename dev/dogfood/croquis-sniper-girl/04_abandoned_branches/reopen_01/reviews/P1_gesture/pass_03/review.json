@@ -1,0 +1,83 @@
+{
+  "advance_rationale": "Fresh pass-3 evidence clears both carried concerns and an independent residual sweep of head, legs, prop and whole view finds no remaining P1-purpose mismatch: the crown-origin gesture is continuous and dominant, face direction is carried by the bowed facial centre against unequal open arcs, and support versus counterbalance is unambiguous. P2 primary axes may now be introduced.",
+  "carried_concerns": [
+    "counterbalance leg still reads as a ghost line rather than a distinct structural role",
+    "crown arc, shoulder rhythm and pelvis rhythm sit below a readable subordinate weight"
+  ],
+  "contract_findings": [
+    "The artifact still contains only gesture, open head-envelope arcs, shoulder/pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+    "Nothing from next_stage_unlocks (head cross-axis, shoulder/pelvis axes, limb axes, prop breadth) has leaked into P1."
+  ],
+  "corrections": [
+    "P1-R10 raised the counterbalance leg to major-stroke calibration.",
+    "P1-R11..R13 raised the three cranial arcs while keeping the near-side arc heavier than the far side.",
+    "P1-R14..R17 raised shoulder rhythm, pelvis rhythm, prop axis and ground cue to readable subordinate weight."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "a6dcd146c6bc4c6b9633c11fe1a6f96e3845894b60a9a9063b48120b05d189b3",
+  "drawing_findings": [
+    "Carried concern 'counterbalance leg reads as a ghost line' is CLEARED: in the pelvis_legs crop the braced leg now carries near-major weight and reads as its own structural role, still lighter than the dominant gesture.",
+    "Carried concern 'crown arc, shoulder and pelvis rhythm below readable weight' is CLEARED: all three are now legible subordinate strokes in the whole view.",
+    "Fresh residual sweep of the whole artifact: the dominant crown-to-landing path is continuous, is the darkest element, and no secondary stroke competes with it.",
+    "Fresh residual sweep of the head: crown arc, left temporal arc and right temporal arc remain three separate open marks with unequal masses; the head does not read as a badge in isolation.",
+    "Fresh residual sweep of the prop: the rifle axis sits on the subject's rifle in registered overlay and stays lighter than the body gesture.",
+    "No new stage-purpose mismatch was found at P1 abstraction."
+  ],
+  "drawing_state_sha256": "fbaaaca709e10ba6f56a246e8148e701200a211d92ac033a35871224f70cac8b",
+  "exemplar_findings": [
+    "Only stroke economy was taken from the failed P1 grammar exemplar; its neck-origin gesture, closed oval head and undifferentiated legs were all rejected.",
+    "The skill's line-hierarchy calibration ratios, not the exemplar, decided the final subordinate stroke weights."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "history_cursor": 27,
+  "inter_pass_action_ids": [
+    "P1-R10",
+    "P1-R11",
+    "P1-R12",
+    "P1-R13",
+    "P1-R14",
+    "P1-R15",
+    "P1-R16",
+    "P1-R17"
+  ],
+  "local_review_ids": [
+    "P1_gesture:pass_03:head_face",
+    "P1_gesture:pass_03:pelvis_legs",
+    "P1_gesture:pass_03:prop_shoulder"
+  ],
+  "observations": [
+    "The artifact still contains only gesture, open head-envelope arcs, shoulder/pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+    "Nothing from next_stage_unlocks (head cross-axis, shoulder/pelvis axes, limb axes, prop breadth) has leaked into P1.",
+    "Whole-view registration against the subject confirms head height, shoulder span, pelvis breadth, leg length and both landing heights are subject-derived and credible.",
+    "The subject's rifle axis angle and its suppressor-tip and buttstock endpoints agree with the drawn axis.",
+    "The subject's support side remains the far image-left leg; the near image-right leg remains braced and wider.",
+    "Only stroke economy was taken from the failed P1 grammar exemplar; its neck-origin gesture, closed oval head and undifferentiated legs were all rejected.",
+    "The skill's line-hierarchy calibration ratios, not the exemplar, decided the final subordinate stroke weights.",
+    "Carried concern 'counterbalance leg reads as a ghost line' is CLEARED: in the pelvis_legs crop the braced leg now carries near-major weight and reads as its own structural role, still lighter than the dominant gesture.",
+    "Carried concern 'crown arc, shoulder and pelvis rhythm below readable weight' is CLEARED: all three are now legible subordinate strokes in the whole view.",
+    "Fresh residual sweep of the whole artifact: the dominant crown-to-landing path is continuous, is the darkest element, and no secondary stroke competes with it.",
+    "Fresh residual sweep of the head: crown arc, left temporal arc and right temporal arc remain three separate open marks with unequal masses; the head does not read as a badge in isolation.",
+    "Fresh residual sweep of the prop: the rifle axis sits on the subject's rifle in registered overlay and stays lighter than the body gesture.",
+    "No new stage-purpose mismatch was found at P1 abstraction."
+  ],
+  "parent_review_digest": "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+  "pass_memory_digest": "79154372a97cdf35526d1d511d434f60e81e8295c731bbb65e6eac42e7ea1fe9",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "subject_findings": [
+    "Whole-view registration against the subject confirms head height, shoulder span, pelvis breadth, leg length and both landing heights are subject-derived and credible.",
+    "The subject's rifle axis angle and its suppressor-tip and buttstock endpoints agree with the drawn axis.",
+    "The subject's support side remains the far image-left leg; the near image-right leg remains braced and wider."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

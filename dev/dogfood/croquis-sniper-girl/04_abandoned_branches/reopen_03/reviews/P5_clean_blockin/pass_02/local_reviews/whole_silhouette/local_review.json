@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 760,
+        "left": 100,
+        "right": 390,
+        "top": 20
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/crops/drawing.png",
+      "crop_sha256": "a1b94df2a6e7432b195588af2ed7957cdfee80f4b97a1ff91bbf748944a0a600",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/current_drawing.png",
+      "source_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1086,
+        "left": 0,
+        "right": 289,
+        "top": 0
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/crops/grammar.png",
+      "crop_sha256": "416efcfea15c8c80b3fe40bd7c953ec09663c5a669a1b6273c6ecb61887a15b1",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "source_sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 1520,
+        "left": 200,
+        "right": 780,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/local_reviews/whole_silhouette/crops/subject.png",
+      "crop_sha256": "b2aae2349c0b1fa91ff602b5eacadcc7480d9352677b47364748bd3ad66dc883",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+  "drawing_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
+  "history_cursor": 187,
+  "intent": "Residual sweep of the whole clean block-in against the subject.",
+  "label": "whole_silhouette",
+  "local_review_id": "P5_clean_blockin:pass_02:whole_silhouette",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P5_clean_blockin"
+}

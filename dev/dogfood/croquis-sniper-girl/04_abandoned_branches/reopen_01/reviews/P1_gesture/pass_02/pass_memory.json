@@ -1,0 +1,236 @@
+{
+  "carried_concerns": [
+    "whole drawing is too faint and has no dominant-gesture hierarchy",
+    "head envelope closes into a badge instead of segmented open arcs",
+    "facial centre is too straight to carry face direction",
+    "pelvis-to-support transfer is an angular kink rather than a weight-bearing curve",
+    "counterbalance leg is too weak to read as a distinct role"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "whole drawing is too faint and has no dominant-gesture hierarchy",
+        "head envelope closes into a badge instead of segmented open arcs",
+        "facial centre is too straight to carry face direction",
+        "pelvis-to-support transfer is an angular kink rather than a weight-bearing curve",
+        "counterbalance leg is too weak to read as a distinct role"
+      ],
+      "review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P1-R1",
+      "history_cursor": 11,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "crown_face_spine_support",
+      "reason": "Pass-1 concerns: no dominant hierarchy, straight facial centre, and an angular pelvis kink. Re-authored as one heavier stroke with a real image-right facial bow and a curved rather than cornered hip handoff.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "crown_face_spine_support"
+    },
+    {
+      "action_id": "P1-R2",
+      "history_cursor": 12,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_crown_arc",
+      "reason": "Crown arc closed into the side arcs; shortened and pulled clear so a visible gap remains.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P1-R3",
+      "history_cursor": 13,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": "Left arc met the crown arc and welded into a badge; started lower with a visible gap and stopped before the chin.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R4",
+      "history_cursor": 14,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": "Right arc closed the egg; started below the crown arc and terminated above the jaw exit.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R5",
+      "history_cursor": 15,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "counterbalance_leg",
+      "reason": "Counterbalance leg was too faint to read as a distinct role and too straight; strengthened and given the outward brace curve seen in the subject.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P1-R6",
+      "history_cursor": 16,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_rhythm",
+      "reason": "Shoulder rhythm was invisible against the new gesture weight; raised to a readable subordinate level.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P1-R7",
+      "history_cursor": 17,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_rhythm",
+      "reason": "Pelvis rhythm was invisible; raised to a readable subordinate level so the tilt supports the transfer.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P1-R8",
+      "history_cursor": 18,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "rifle_major_axis",
+      "reason": "Prop axis was invisible although it defines the global envelope; raised but kept below the body gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P1-R9",
+      "history_cursor": 19,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ground_weight_cue",
+      "reason": "Ground cue was invisible; raised just enough to state the two landing heights.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "ground_weight_cue"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P1-R1",
+      "history_cursor": 11,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "crown_face_spine_support",
+      "reason": "Pass-1 concerns: no dominant hierarchy, straight facial centre, and an angular pelvis kink. Re-authored as one heavier stroke with a real image-right facial bow and a curved rather than cornered hip handoff.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "crown_face_spine_support"
+    },
+    {
+      "action_id": "P1-R2",
+      "history_cursor": 12,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_crown_arc",
+      "reason": "Crown arc closed into the side arcs; shortened and pulled clear so a visible gap remains.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P1-R3",
+      "history_cursor": 13,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": "Left arc met the crown arc and welded into a badge; started lower with a visible gap and stopped before the chin.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R4",
+      "history_cursor": 14,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": "Right arc closed the egg; started below the crown arc and terminated above the jaw exit.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R5",
+      "history_cursor": 15,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "counterbalance_leg",
+      "reason": "Counterbalance leg was too faint to read as a distinct role and too straight; strengthened and given the outward brace curve seen in the subject.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P1-R6",
+      "history_cursor": 16,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_rhythm",
+      "reason": "Shoulder rhythm was invisible against the new gesture weight; raised to a readable subordinate level.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P1-R7",
+      "history_cursor": 17,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_rhythm",
+      "reason": "Pelvis rhythm was invisible; raised to a readable subordinate level so the tilt supports the transfer.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P1-R8",
+      "history_cursor": 18,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "rifle_major_axis",
+      "reason": "Prop axis was invisible although it defines the global envelope; raised but kept below the body gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P1-R9",
+      "history_cursor": 19,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ground_weight_cue",
+      "reason": "Ground cue was invisible; raised just enough to state the two landing heights.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "ground_weight_cue"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "whole drawing is too faint and has no dominant-gesture hierarchy",
+    "head envelope closes into a badge instead of segmented open arcs",
+    "facial centre is too straight to carry face direction",
+    "pelvis-to-support transfer is an angular kink rather than a weight-bearing curve",
+    "counterbalance leg is too weak to read as a distinct role"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "revision_continuation"
+}

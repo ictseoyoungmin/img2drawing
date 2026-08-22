@@ -1,0 +1,85 @@
+{
+  "carried_concerns": [
+    "shoulder axis sits ~13px above the observed far shoulder joint"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "shoulder axis sits ~13px above the observed far shoulder joint"
+      ],
+      "review_digest": "aa96b07cd38c97759642c55a6c8d25bb3b5465e04bda0a9992bf93b42ccbc68f"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [
+        "Rebuilt P2 on the corrected P1 branch with both leg chains authored on the verified P1 paths."
+      ],
+      "review_digest": "aa96b07cd38c97759642c55a6c8d25bb3b5465e04bda0a9992bf93b42ccbc68f"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P2B-R1",
+      "history_cursor": 24,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_axis",
+      "reason": "Carried concern: the shoulder axis sat about 13 canvas pixels above the observed far shoulder joint and read as a collar line.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "shoulder_axis"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P2B-R1",
+      "history_cursor": 24,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_axis",
+      "reason": "Carried concern: the shoulder axis sat about 13 canvas pixels above the observed far shoulder joint and read as a collar line.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "shoulder_axis"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "shoulder axis sits ~13px above the observed far shoulder joint"
+  ],
+  "previous_reported_corrections": [
+    "Rebuilt P2 on the corrected P1 branch with both leg chains authored on the verified P1 paths."
+  ],
+  "previous_review_digest": "aa96b07cd38c97759642c55a6c8d25bb3b5465e04bda0a9992bf93b42ccbc68f",
+  "prior_review_count": 1,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_01",
+    "discovered_in_stage": "P2_primary_axes",
+    "findings": [
+      "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+      "P1 counterbalance stroke sits at x~267-273 over the same range.",
+      "Result at P2 is a two-line pant-leg rail down the thigh."
+    ],
+    "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+    "reopen_id": "reopen_01",
+    "role": "invalidated_downstream",
+    "stage": "P2_primary_axes",
+    "target_stage": "P1_gesture",
+    "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P2_primary_axes",
+  "state": "revision_continuation"
+}

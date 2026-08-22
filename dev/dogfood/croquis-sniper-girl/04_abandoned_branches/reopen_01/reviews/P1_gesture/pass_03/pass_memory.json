@@ -1,0 +1,232 @@
+{
+  "carried_concerns": [
+    "counterbalance leg still reads as a ghost line rather than a distinct structural role",
+    "crown arc, shoulder rhythm and pelvis rhythm sit below a readable subordinate weight"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "whole drawing is too faint and has no dominant-gesture hierarchy",
+        "head envelope closes into a badge instead of segmented open arcs",
+        "facial centre is too straight to carry face direction",
+        "pelvis-to-support transfer is an angular kink rather than a weight-bearing curve",
+        "counterbalance leg is too weak to read as a distinct role"
+      ],
+      "review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7"
+    },
+    {
+      "decision": "revise",
+      "pass_index": 2,
+      "remaining_concerns": [
+        "counterbalance leg still reads as a ghost line rather than a distinct structural role",
+        "crown arc, shoulder rhythm and pelvis rhythm sit below a readable subordinate weight"
+      ],
+      "review_digest": "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7"
+    },
+    {
+      "pass_index": 2,
+      "reported_corrections": [
+        "P1-R1 re-authored the dominant gesture with a real image-right facial bow and a curved hip handoff.",
+        "P1-R2/R3/R4 re-cut the cranial arcs so crown and temporal arcs no longer weld into a badge.",
+        "P1-R5..R9 raised subordinate strokes, but not enough."
+      ],
+      "review_digest": "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P1-R10",
+      "history_cursor": 20,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "counterbalance_leg",
+      "reason": "Carried concern: the braced leg still read as a ghost line. Raised to major-stroke calibration (~0.90 of the reference gesture) so support and counterbalance are two visibly distinct roles.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P1-R11",
+      "history_cursor": 21,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_crown_arc",
+      "reason": "Carried concern: the crown arc had almost no presence, so the crown origin of the gesture was not supported.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P1-R12",
+      "history_cursor": 22,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": "Raised with the crown arc so the open head envelope stays legible against the darker gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R13",
+      "history_cursor": 23,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": "Raised with the crown arc; the near-side arc stays slightly heavier than the far side to keep the masses unequal.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R14",
+      "history_cursor": 24,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_rhythm",
+      "reason": "Carried concern: shoulder rhythm sat below readable subordinate weight.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P1-R15",
+      "history_cursor": 25,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_rhythm",
+      "reason": "Carried concern: pelvis rhythm sat below readable subordinate weight and could not support the transfer.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P1-R16",
+      "history_cursor": 26,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "rifle_major_axis",
+      "reason": "The prop defines the global envelope but was invisible; raised to minor-stroke calibration, still below the body gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P1-R17",
+      "history_cursor": 27,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ground_weight_cue",
+      "reason": "Ground cue was invisible; raised just enough to state the two landing heights without competing.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "ground_weight_cue"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P1-R10",
+      "history_cursor": 20,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "counterbalance_leg",
+      "reason": "Carried concern: the braced leg still read as a ghost line. Raised to major-stroke calibration (~0.90 of the reference gesture) so support and counterbalance are two visibly distinct roles.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P1-R11",
+      "history_cursor": 21,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_crown_arc",
+      "reason": "Carried concern: the crown arc had almost no presence, so the crown origin of the gesture was not supported.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P1-R12",
+      "history_cursor": 22,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_left_temporal_jaw",
+      "reason": "Raised with the crown arc so the open head envelope stays legible against the darker gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R13",
+      "history_cursor": 23,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "cranial_right_temporal_jaw",
+      "reason": "Raised with the crown arc; the near-side arc stays slightly heavier than the far side to keep the masses unequal.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P1-R14",
+      "history_cursor": 24,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "shoulder_rhythm",
+      "reason": "Carried concern: shoulder rhythm sat below readable subordinate weight.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P1-R15",
+      "history_cursor": 25,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_rhythm",
+      "reason": "Carried concern: pelvis rhythm sat below readable subordinate weight and could not support the transfer.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P1-R16",
+      "history_cursor": 26,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "rifle_major_axis",
+      "reason": "The prop defines the global envelope but was invisible; raised to minor-stroke calibration, still below the body gesture.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P1-R17",
+      "history_cursor": 27,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ground_weight_cue",
+      "reason": "Ground cue was invisible; raised just enough to state the two landing heights without competing.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "ground_weight_cue"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 3,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "counterbalance leg still reads as a ghost line rather than a distinct structural role",
+    "crown arc, shoulder rhythm and pelvis rhythm sit below a readable subordinate weight"
+  ],
+  "previous_reported_corrections": [
+    "P1-R1 re-authored the dominant gesture with a real image-right facial bow and a curved hip handoff.",
+    "P1-R2/R3/R4 re-cut the cranial arcs so crown and temporal arcs no longer weld into a badge.",
+    "P1-R5..R9 raised subordinate strokes, but not enough."
+  ],
+  "previous_review_digest": "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+  "prior_review_count": 2,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "revision_continuation"
+}

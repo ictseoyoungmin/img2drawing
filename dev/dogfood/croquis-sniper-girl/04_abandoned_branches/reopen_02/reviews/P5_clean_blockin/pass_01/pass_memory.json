@@ -1,0 +1,22 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P5_clean_blockin",
+  "state": "cold_start"
+}

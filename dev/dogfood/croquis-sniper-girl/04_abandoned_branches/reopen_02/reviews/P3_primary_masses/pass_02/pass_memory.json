@@ -1,0 +1,127 @@
+{
+  "carried_concerns": [
+    "boot masses P3-B1/P3-B2 violate the frozen P3 contract and must be removed so P4 can own them",
+    "braced-leg outer contour has an abrupt step near canvas y=470 instead of a smooth swell"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "boot masses P3-B1/P3-B2 violate the frozen P3 contract and must be removed so P4 can own them",
+        "braced-leg outer contour has an abrupt step near canvas y=470 instead of a smooth swell"
+      ],
+      "review_digest": "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P3-D1",
+      "history_cursor": 54,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Carried concern: hand/foot construction blocks are forbidden at P3 and belong to P4.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "boot_mass_left"
+    },
+    {
+      "action_id": "P3-D2",
+      "history_cursor": 55,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Carried concern: hand/foot construction blocks are forbidden at P3 and belong to P4.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "boot_mass_right"
+    },
+    {
+      "action_id": "P3-R5",
+      "history_cursor": 56,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_brace_outer",
+      "reason": "Carried concern: the braced-leg outer contour stepped abruptly near canvas y=470 where the subject shows a smooth swell into the sock.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_brace_outer"
+    },
+    {
+      "action_id": "P3-R6",
+      "history_cursor": 57,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_support_outer",
+      "reason": "Matched to the same smoothing so the support leg does not keep a harder sock step than its neighbour, and carried to a tapered ankle.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_support_outer"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P3-D1",
+      "history_cursor": 54,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Carried concern: hand/foot construction blocks are forbidden at P3 and belong to P4.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "boot_mass_left"
+    },
+    {
+      "action_id": "P3-D2",
+      "history_cursor": 55,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Carried concern: hand/foot construction blocks are forbidden at P3 and belong to P4.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "boot_mass_right"
+    },
+    {
+      "action_id": "P3-R5",
+      "history_cursor": 56,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_brace_outer",
+      "reason": "Carried concern: the braced-leg outer contour stepped abruptly near canvas y=470 where the subject shows a smooth swell into the sock.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_brace_outer"
+    },
+    {
+      "action_id": "P3-R6",
+      "history_cursor": 57,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_support_outer",
+      "reason": "Matched to the same smoothing so the support leg does not keep a harder sock step than its neighbour, and carried to a tapered ankle.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_support_outer"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "boot masses P3-B1/P3-B2 violate the frozen P3 contract and must be removed so P4 can own them",
+    "braced-leg outer contour has an abrupt step near canvas y=470 instead of a smooth swell"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P3_primary_masses",
+  "state": "revision_continuation"
+}

@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 420,
+        "left": 125,
+        "right": 210,
+        "top": 120
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/crops/drawing.png",
+      "crop_sha256": "8e61f6f157f5c6769ead424202adbb58f2b85bcf4a9068861978346a49e7b9f2",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+      "source_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 560,
+        "left": 10,
+        "right": 150,
+        "top": 120
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/crops/grammar.png",
+      "crop_sha256": "1a4001b49eff19960b8688605be293ea977758eee9f3aaa8b5603adb531cb223",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "source_sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 840,
+        "left": 250,
+        "right": 420,
+        "top": 240
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/local_reviews/left_flank_preflight/crops/subject.png",
+      "crop_sha256": "525bc89bcb56cf841a5b57fc56da07c914e5a1076a5d7a808aed82c26165296e",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+  "drawing_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+  "history_cursor": 94,
+  "intent": "P5 cleanup preflight: can the verified left silhouette be stated without contradicting the P3 prop and torso envelopes?",
+  "label": "left_flank_preflight",
+  "local_review_id": "P5_clean_blockin:pass_01:left_flank_preflight",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P5_clean_blockin"
+}

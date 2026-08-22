@@ -1,0 +1,100 @@
+{
+  "advance_rationale": "The reopen target is repaired at its own stage: prop and torso envelopes now match the measured left outer silhouette, so P5 will not have to clean a wrong structure. A fresh residual sweep of flank, torso, legs and head finds no remaining mass-level mismatch, so structural connections can be rebuilt on this corrected branch.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The rebuilt branch holds P3 vocabulary only: head/hair mass, neck bridge, clothed torso with two cross-contours, pelvis basin, tapered limb masses, one small hanging-pouch mass and the attached-object mass with two cross-contours.",
+    "No foot or hand block, joint block, fold, seam, facial feature or shading was reintroduced."
+  ],
+  "corrections": [
+    "Rebuilt every P3 mass on the reopened branch.",
+    "Re-authored the prop's left contour to the measured, more vertical handguard edge.",
+    "Widened the torso-left contour to the observed occupied volume.",
+    "Added the thigh pouch as its own small mass so the image-right silhouette is explained."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+  "drawing_findings": [
+    "Reopen context honoured: the archived P3 and P4 reviews were treated as an abandoned branch and every mass was re-authored rather than resurrected.",
+    "left_flank: the corrected prop contour now sits on the measured rifle edge for its whole length, and the corrected torso-left contour now reaches the observed jacket edge instead of underfilling it by about 12 pixels. The registered overlay shows both edges on the subject.",
+    "left_flank: the prop-to-garment ownership handoff near canvas y=205 is visible as a crossing of two separate contours, not as one welded line.",
+    "torso_pelvis: the widened flank did not overshoot the silhouette on the opposite side; the image-right contour is unchanged and still matches.",
+    "pelvis_legs: leg taper and negative space are unchanged and still correct, and the thigh pouch now accounts for the image-right silhouette bulge that the leg mass alone could not explain.",
+    "head_neck: hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+    "Fresh residual sweep of the whole rebuilt artifact: it reads as one connected occupied-volume system with no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass."
+  ],
+  "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+  "exemplar_findings": [
+    "The PASS P3 exemplar decided abstraction level and detail budget only; its bare-body mass vocabulary was again rejected in favour of the clothed-mass policy."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "history_cursor": 53,
+  "inter_pass_action_ids": [
+    "P3C-H1",
+    "P3C-H2",
+    "P3C-H3",
+    "P3C-H4",
+    "P3C-H5",
+    "P3C-N1",
+    "P3C-N2",
+    "P3C-T1",
+    "P3C-T2",
+    "P3C-T3",
+    "P3C-T4",
+    "P3C-T5",
+    "P3C-T6",
+    "P3C-P1",
+    "P3C-P2",
+    "P3C-P3",
+    "P3C-P4",
+    "P3C-L1",
+    "P3C-L2",
+    "P3C-L3",
+    "P3C-L4",
+    "P3C-P5",
+    "P3C-R1",
+    "P3C-R2",
+    "P3C-R3",
+    "P3C-R4"
+  ],
+  "local_review_ids": [
+    "P3_primary_masses:pass_01:left_flank",
+    "P3_primary_masses:pass_01:torso_pelvis",
+    "P3_primary_masses:pass_01:pelvis_legs",
+    "P3_primary_masses:pass_01:head_neck"
+  ],
+  "observations": [
+    "The rebuilt branch holds P3 vocabulary only: head/hair mass, neck bridge, clothed torso with two cross-contours, pelvis basin, tapered limb masses, one small hanging-pouch mass and the attached-object mass with two cross-contours.",
+    "No foot or hand block, joint block, fold, seam, facial feature or shading was reintroduced.",
+    "Brightness-lifted measurement of the left flank gives the outer edge as canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396, with ownership passing from prop to garment near y=205.",
+    "The subject's rifle handguard tapers along its own length and is far more vertical than a straight axis interpolation implies.",
+    "The subject's thigh pouch, not the thigh, owns the image-right silhouette between canvas y=405 and y=470.",
+    "The PASS P3 exemplar decided abstraction level and detail budget only; its bare-body mass vocabulary was again rejected in favour of the clothed-mass policy.",
+    "Reopen context honoured: the archived P3 and P4 reviews were treated as an abandoned branch and every mass was re-authored rather than resurrected.",
+    "left_flank: the corrected prop contour now sits on the measured rifle edge for its whole length, and the corrected torso-left contour now reaches the observed jacket edge instead of underfilling it by about 12 pixels. The registered overlay shows both edges on the subject.",
+    "left_flank: the prop-to-garment ownership handoff near canvas y=205 is visible as a crossing of two separate contours, not as one welded line.",
+    "torso_pelvis: the widened flank did not overshoot the silhouette on the opposite side; the image-right contour is unchanged and still matches.",
+    "pelvis_legs: leg taper and negative space are unchanged and still correct, and the thigh pouch now accounts for the image-right silhouette bulge that the leg mass alone could not explain.",
+    "head_neck: hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+    "Fresh residual sweep of the whole rebuilt artifact: it reads as one connected occupied-volume system with no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "4e235603aaf90ce5f3e96df7e523e5010eec93cd2b2940643214bff24209d907",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses",
+  "stage_contract_id": "full_body_croquis.P3.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "subject_findings": [
+    "Brightness-lifted measurement of the left flank gives the outer edge as canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396, with ownership passing from prop to garment near y=205.",
+    "The subject's rifle handguard tapers along its own length and is far more vertical than a straight axis interpolation implies.",
+    "The subject's thigh pouch, not the thigh, owns the image-right silhouette between canvas y=405 and y=470."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

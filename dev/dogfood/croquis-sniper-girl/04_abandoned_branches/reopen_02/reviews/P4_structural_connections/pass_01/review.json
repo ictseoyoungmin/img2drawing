@@ -1,0 +1,96 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The pass holds P4 vocabulary only: shoulder insertions, elbow and knee transitions, wrist/ankle bridges, hand and boot blocks, hip-to-thigh insertions and prop attachment/overlap.",
+    "No shading, texture, decorative detail, clothing folds or facial features were introduced, and the P1 gesture, P2 axes and P3 masses are all preserved."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "d52ba0e4e4d3873134e69096ce77778dff1f9f86930aeeaf35a2db1762fc79b7",
+  "drawing_findings": [
+    "boots_ground: both boot blocks register with the subject's boots, attach to their ankles rather than floating, and preserve the differing sole heights that carry the support-versus-brace reading.",
+    "knee_ankle: a real defect. The knee planes span roughly 169-197 and 268-300 while the leg masses there span 166-199 and 262-301, so both read as full-width stripes across the leg rather than partial directional planes. Both ankle bridges have the same problem.",
+    "shoulder_elbow: the same defect on the near elbow, whose transition spans 279-299 across a sleeve that spans 280-300.",
+    "shoulder_elbow: the shoulder insertions themselves are correct partial curves that carry the arm out of the torso.",
+    "hand_pocket: the hand block registers with the subject's glove but is authored as a closed faceted blob, which reads as a mitten polygon rather than as a smooth wrist-to-palm volume cut off by the pocket.",
+    "The hip-to-thigh insertions duplicate the P3 shorts hems at nearly full width, adding a second parallel band instead of explaining the insertion.",
+    "Fresh residual sweep: no joint requires moving a P3 mass, so this is a P4 authoring problem and does not justify reopening upstream."
+  ],
+  "drawing_state_sha256": "69f154a75d793944871431661a22dd1eceb4533a6db4796f007fe080f5e19a55",
+  "exemplar_findings": [
+    "The bundled P4 grammar exemplar carries a KNOWN AUDIT FAILURE for under-explained structural transitions, so it was used only for detail budget and not as a model for how to connect masses."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "history_cursor": 82,
+  "inter_pass_action_ids": [
+    "P4-S1",
+    "P4-S2",
+    "P4-E1",
+    "P4-E2",
+    "P4-E3",
+    "P4-W1",
+    "P4-W2",
+    "P4-W3",
+    "P4-W4",
+    "P4-P1",
+    "P4-P2",
+    "P4-K1",
+    "P4-K2",
+    "P4-A1",
+    "P4-F1",
+    "P4-F2",
+    "P4-A2",
+    "P4-F3",
+    "P4-F4",
+    "P4-R1",
+    "P4-R2",
+    "P4-R3",
+    "P4-R4"
+  ],
+  "local_review_ids": [
+    "P4_structural_connections:pass_01:shoulder_elbow",
+    "P4_structural_connections:pass_01:hand_pocket",
+    "P4_structural_connections:pass_01:knee_ankle",
+    "P4_structural_connections:pass_01:boots_ground"
+  ],
+  "observations": [
+    "The pass holds P4 vocabulary only: shoulder insertions, elbow and knee transitions, wrist/ankle bridges, hand and boot blocks, hip-to-thigh insertions and prop attachment/overlap.",
+    "No shading, texture, decorative detail, clothing folds or facial features were introduced, and the P1 gesture, P2 axes and P3 masses are all preserved.",
+    "The subject's boots are two distinct grounded volumes whose soles land at different heights, and both toes swing image-right.",
+    "The subject's near hand disappears into the hip pocket, so only a partial wrist-to-palm volume is actually visible.",
+    "The subject's joints are hidden under loose clothing everywhere except the bare thigh, so only functional transitions are observable, never anatomical joint shapes.",
+    "The bundled P4 grammar exemplar carries a KNOWN AUDIT FAILURE for under-explained structural transitions, so it was used only for detail budget and not as a model for how to connect masses.",
+    "boots_ground: both boot blocks register with the subject's boots, attach to their ankles rather than floating, and preserve the differing sole heights that carry the support-versus-brace reading.",
+    "knee_ankle: a real defect. The knee planes span roughly 169-197 and 268-300 while the leg masses there span 166-199 and 262-301, so both read as full-width stripes across the leg rather than partial directional planes. Both ankle bridges have the same problem.",
+    "shoulder_elbow: the same defect on the near elbow, whose transition spans 279-299 across a sleeve that spans 280-300.",
+    "shoulder_elbow: the shoulder insertions themselves are correct partial curves that carry the arm out of the torso.",
+    "hand_pocket: the hand block registers with the subject's glove but is authored as a closed faceted blob, which reads as a mitten polygon rather than as a smooth wrist-to-palm volume cut off by the pocket.",
+    "The hip-to-thigh insertions duplicate the P3 shorts hems at nearly full width, adding a second parallel band instead of explaining the insertion.",
+    "Fresh residual sweep: no joint requires moving a P3 mass, so this is a P4 authoring problem and does not justify reopening upstream."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "a29df624af7281a89bfe099413a50816191350caad158282b39a4cdd28229ef0",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+    "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+    "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections",
+  "stage_contract_id": "full_body_croquis.P4.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "subject_findings": [
+    "The subject's boots are two distinct grounded volumes whose soles land at different heights, and both toes swing image-right.",
+    "The subject's near hand disappears into the hip pocket, so only a partial wrist-to-palm volume is actually visible.",
+    "The subject's joints are hidden under loose clothing everywhere except the bare thigh, so only functional transitions are observable, never anatomical joint shapes."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

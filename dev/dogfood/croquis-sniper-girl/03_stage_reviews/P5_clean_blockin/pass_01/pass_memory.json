@@ -1,0 +1,1813 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P5-C1",
+      "history_cursor": 83,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_hair_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C2",
+      "history_cursor": 84,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_hair_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C3",
+      "history_cursor": 85,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_jacket_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C4",
+      "history_cursor": 86,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_jacket_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C5",
+      "history_cursor": 87,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_shorts_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C6",
+      "history_cursor": 88,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_pouch_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C7",
+      "history_cursor": 89,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_leg_brace_outer",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C8",
+      "history_cursor": 90,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_boot_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C9",
+      "history_cursor": 91,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_leg_support_outer",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C10",
+      "history_cursor": 92,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_boot_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C11",
+      "history_cursor": 93,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_leg_support_inner",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C12",
+      "history_cursor": 94,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_leg_brace_inner",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C13",
+      "history_cursor": 95,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_rifle_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C14",
+      "history_cursor": 96,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_rifle_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-C15",
+      "history_cursor": 97,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "contour_rifle_butt",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B1",
+      "history_cursor": 98,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_bangs_grouping",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B2",
+      "history_cursor": 99,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_jaw_chin",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B3",
+      "history_cursor": 100,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_collar",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B4",
+      "history_cursor": 101,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_jacket_hem",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B5",
+      "history_cursor": 102,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_belt",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B6",
+      "history_cursor": 103,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_shorts_hem_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B7",
+      "history_cursor": 104,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_shorts_hem_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B8",
+      "history_cursor": 105,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_sock_top_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B9",
+      "history_cursor": 106,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_sock_top_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B10",
+      "history_cursor": 107,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_boot_top_left",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B11",
+      "history_cursor": 108,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_boot_top_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B12",
+      "history_cursor": 109,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_sleeve_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B13",
+      "history_cursor": 110,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_hand_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B14",
+      "history_cursor": 111,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_scope",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B15",
+      "history_cursor": 112,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_stock_opening",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-B16",
+      "history_cursor": 113,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "break_sling",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H1",
+      "history_cursor": 114,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_rifle_left",
+      "reason": "Prop outer ownership terminates at the measured handoff near canvas y=224 instead of crossing the garment edge at equal weight.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_rifle_left"
+    },
+    {
+      "action_id": "P5-H2",
+      "history_cursor": 115,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_rifle_left_inside_garment",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H3",
+      "history_cursor": 116,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_jacket_left",
+      "reason": "Garment outer ownership begins at the handoff so only one contour owns the edge at any height.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_jacket_left"
+    },
+    {
+      "action_id": "P5-H4",
+      "history_cursor": 117,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_jacket_left_behind_prop",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H5",
+      "history_cursor": 118,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_hair_tip_right_on_shoulder",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H6",
+      "history_cursor": 119,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_hair_tip_left_on_shoulder",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-L01",
+      "history_cursor": 120,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "head_cross_axis"
+    },
+    {
+      "action_id": "P5-L02",
+      "history_cursor": 121,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_axis"
+    },
+    {
+      "action_id": "P5-L03",
+      "history_cursor": 122,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_axis"
+    },
+    {
+      "action_id": "P5-L04",
+      "history_cursor": 123,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_chain_right"
+    },
+    {
+      "action_id": "P5-L05",
+      "history_cursor": 124,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_chain_left"
+    },
+    {
+      "action_id": "P5-L06",
+      "history_cursor": 125,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_chain_left_support"
+    },
+    {
+      "action_id": "P5-L07",
+      "history_cursor": 126,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_chain_right_brace"
+    },
+    {
+      "action_id": "P5-L08",
+      "history_cursor": 127,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_extent_axis"
+    },
+    {
+      "action_id": "P5-L09",
+      "history_cursor": 128,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_breadth_receiver"
+    },
+    {
+      "action_id": "P5-L10",
+      "history_cursor": 129,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_breadth_stock"
+    },
+    {
+      "action_id": "P5-L11",
+      "history_cursor": 130,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P5-L12",
+      "history_cursor": 131,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P5-L13",
+      "history_cursor": 132,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P5-L14",
+      "history_cursor": 133,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P5-L15",
+      "history_cursor": 134,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P5-L16",
+      "history_cursor": 135,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P5-L17",
+      "history_cursor": 136,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P5-L18",
+      "history_cursor": 137,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ground_weight_cue"
+    },
+    {
+      "action_id": "P5-L19",
+      "history_cursor": 138,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "The dominant P1 gesture is kept faintly visible because it still explains the weight path.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "crown_face_spine_support"
+    },
+    {
+      "action_id": "P5-L20",
+      "history_cursor": 139,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hair_mass_left"
+    },
+    {
+      "action_id": "P5-L21",
+      "history_cursor": 140,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hair_mass_right"
+    },
+    {
+      "action_id": "P5-L22",
+      "history_cursor": 141,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_mass_left"
+    },
+    {
+      "action_id": "P5-L23",
+      "history_cursor": 142,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_mass_right"
+    },
+    {
+      "action_id": "P5-L24",
+      "history_cursor": 143,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_basin_left"
+    },
+    {
+      "action_id": "P5-L25",
+      "history_cursor": 144,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_basin_right"
+    },
+    {
+      "action_id": "P5-L26",
+      "history_cursor": 145,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_support_outer"
+    },
+    {
+      "action_id": "P5-L27",
+      "history_cursor": 146,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_support_inner"
+    },
+    {
+      "action_id": "P5-L28",
+      "history_cursor": 147,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_brace_outer"
+    },
+    {
+      "action_id": "P5-L29",
+      "history_cursor": 148,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_brace_inner"
+    },
+    {
+      "action_id": "P5-L30",
+      "history_cursor": 149,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "thigh_holster_mass"
+    },
+    {
+      "action_id": "P5-L31",
+      "history_cursor": 150,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_mass_left"
+    },
+    {
+      "action_id": "P5-L32",
+      "history_cursor": 151,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_mass_right"
+    },
+    {
+      "action_id": "P5-L33",
+      "history_cursor": 152,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shorts_hem_left"
+    },
+    {
+      "action_id": "P5-L34",
+      "history_cursor": 153,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shorts_hem_right"
+    },
+    {
+      "action_id": "P5-L35",
+      "history_cursor": 154,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hairline_bangs_edge"
+    },
+    {
+      "action_id": "P5-L36",
+      "history_cursor": 155,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "face_jaw_mass"
+    },
+    {
+      "action_id": "P5-L37",
+      "history_cursor": 156,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_torso_separation_right"
+    },
+    {
+      "action_id": "P5-L38",
+      "history_cursor": 157,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_mass_left_inner"
+    },
+    {
+      "action_id": "P5-L39",
+      "history_cursor": 158,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "neck_mass_left"
+    },
+    {
+      "action_id": "P5-L40",
+      "history_cursor": 159,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "neck_mass_right"
+    },
+    {
+      "action_id": "P5-L41",
+      "history_cursor": 160,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "head_cross_contour_brow"
+    },
+    {
+      "action_id": "P5-L42",
+      "history_cursor": 161,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_cross_contour_chest"
+    },
+    {
+      "action_id": "P5-L43",
+      "history_cursor": 162,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_cross_contour_waist"
+    },
+    {
+      "action_id": "P5-L44",
+      "history_cursor": 163,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_cross_contour_receiver"
+    },
+    {
+      "action_id": "P5-L45",
+      "history_cursor": 164,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_cross_contour_stock"
+    },
+    {
+      "action_id": "P5-L46",
+      "history_cursor": 165,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_insert_right"
+    },
+    {
+      "action_id": "P5-L47",
+      "history_cursor": 166,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_insert_left"
+    },
+    {
+      "action_id": "P5-L48",
+      "history_cursor": 167,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_left"
+    },
+    {
+      "action_id": "P5-L49",
+      "history_cursor": 168,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "wrist_right"
+    },
+    {
+      "action_id": "P5-L50",
+      "history_cursor": 169,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_block_right"
+    },
+    {
+      "action_id": "P5-L51",
+      "history_cursor": 170,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_pocket_overlap_right"
+    },
+    {
+      "action_id": "P5-L52",
+      "history_cursor": 171,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_block_left_occluded"
+    },
+    {
+      "action_id": "P5-L53",
+      "history_cursor": 172,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hip_thigh_insert_left"
+    },
+    {
+      "action_id": "P5-L54",
+      "history_cursor": 173,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hip_thigh_insert_right"
+    },
+    {
+      "action_id": "P5-L55",
+      "history_cursor": 174,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ankle_bridge_left"
+    },
+    {
+      "action_id": "P5-L56",
+      "history_cursor": 175,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ankle_bridge_right"
+    },
+    {
+      "action_id": "P5-L57",
+      "history_cursor": 176,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_block_left"
+    },
+    {
+      "action_id": "P5-L58",
+      "history_cursor": 177,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_sole_left"
+    },
+    {
+      "action_id": "P5-L59",
+      "history_cursor": 178,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_block_right"
+    },
+    {
+      "action_id": "P5-L60",
+      "history_cursor": 179,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_sole_right"
+    },
+    {
+      "action_id": "P5-L61",
+      "history_cursor": 180,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "sling_strap_upper"
+    },
+    {
+      "action_id": "P5-L62",
+      "history_cursor": 181,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "sling_strap_lower"
+    },
+    {
+      "action_id": "P5-L63",
+      "history_cursor": 182,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_body_overlap"
+    },
+    {
+      "action_id": "P5-L64",
+      "history_cursor": 183,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_stock_hip_overlap"
+    },
+    {
+      "action_id": "P5-L65",
+      "history_cursor": 184,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pouch_strap_thigh"
+    },
+    {
+      "action_id": "P5-L66",
+      "history_cursor": 185,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_right_inner"
+    },
+    {
+      "action_id": "P5-L67",
+      "history_cursor": 186,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "knee_plane_left"
+    },
+    {
+      "action_id": "P5-L68",
+      "history_cursor": 187,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "knee_plane_right"
+    },
+    {
+      "action_id": "P5-L69",
+      "history_cursor": 188,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_right"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P5-H1",
+      "history_cursor": 114,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_rifle_left",
+      "reason": "Prop outer ownership terminates at the measured handoff near canvas y=224 instead of crossing the garment edge at equal weight.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_rifle_left"
+    },
+    {
+      "action_id": "P5-H3",
+      "history_cursor": 116,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_jacket_left",
+      "reason": "Garment outer ownership begins at the handoff so only one contour owns the edge at any height.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_jacket_left"
+    },
+    {
+      "action_id": "P5-L01",
+      "history_cursor": 120,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "head_cross_axis"
+    },
+    {
+      "action_id": "P5-L02",
+      "history_cursor": 121,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_axis"
+    },
+    {
+      "action_id": "P5-L03",
+      "history_cursor": 122,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_axis"
+    },
+    {
+      "action_id": "P5-L04",
+      "history_cursor": 123,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_chain_right"
+    },
+    {
+      "action_id": "P5-L05",
+      "history_cursor": 124,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_chain_left"
+    },
+    {
+      "action_id": "P5-L06",
+      "history_cursor": 125,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_chain_left_support"
+    },
+    {
+      "action_id": "P5-L07",
+      "history_cursor": 126,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_chain_right_brace"
+    },
+    {
+      "action_id": "P5-L08",
+      "history_cursor": 127,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_extent_axis"
+    },
+    {
+      "action_id": "P5-L09",
+      "history_cursor": 128,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_breadth_receiver"
+    },
+    {
+      "action_id": "P5-L10",
+      "history_cursor": 129,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P2 axis: its direction is now carried by the stated contour, so it recedes to a faint trace.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "prop_breadth_stock"
+    },
+    {
+      "action_id": "P5-L11",
+      "history_cursor": 130,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_crown_arc"
+    },
+    {
+      "action_id": "P5-L12",
+      "history_cursor": 131,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_left_temporal_jaw"
+    },
+    {
+      "action_id": "P5-L13",
+      "history_cursor": 132,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "cranial_right_temporal_jaw"
+    },
+    {
+      "action_id": "P5-L14",
+      "history_cursor": 133,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_rhythm"
+    },
+    {
+      "action_id": "P5-L15",
+      "history_cursor": 134,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_rhythm"
+    },
+    {
+      "action_id": "P5-L16",
+      "history_cursor": 135,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "counterbalance_leg"
+    },
+    {
+      "action_id": "P5-L17",
+      "history_cursor": 136,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_major_axis"
+    },
+    {
+      "action_id": "P5-L18",
+      "history_cursor": 137,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P1 subordinate construction, superseded by the stated contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ground_weight_cue"
+    },
+    {
+      "action_id": "P5-L19",
+      "history_cursor": 138,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "The dominant P1 gesture is kept faintly visible because it still explains the weight path.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "crown_face_spine_support"
+    },
+    {
+      "action_id": "P5-L20",
+      "history_cursor": 139,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hair_mass_left"
+    },
+    {
+      "action_id": "P5-L21",
+      "history_cursor": 140,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hair_mass_right"
+    },
+    {
+      "action_id": "P5-L22",
+      "history_cursor": 141,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_mass_left"
+    },
+    {
+      "action_id": "P5-L23",
+      "history_cursor": 142,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_mass_right"
+    },
+    {
+      "action_id": "P5-L24",
+      "history_cursor": 143,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_basin_left"
+    },
+    {
+      "action_id": "P5-L25",
+      "history_cursor": 144,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pelvis_basin_right"
+    },
+    {
+      "action_id": "P5-L26",
+      "history_cursor": 145,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_support_outer"
+    },
+    {
+      "action_id": "P5-L27",
+      "history_cursor": 146,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_support_inner"
+    },
+    {
+      "action_id": "P5-L28",
+      "history_cursor": 147,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_brace_outer"
+    },
+    {
+      "action_id": "P5-L29",
+      "history_cursor": 148,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "leg_brace_inner"
+    },
+    {
+      "action_id": "P5-L30",
+      "history_cursor": 149,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "thigh_holster_mass"
+    },
+    {
+      "action_id": "P5-L31",
+      "history_cursor": 150,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_mass_left"
+    },
+    {
+      "action_id": "P5-L32",
+      "history_cursor": 151,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_mass_right"
+    },
+    {
+      "action_id": "P5-L33",
+      "history_cursor": 152,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shorts_hem_left"
+    },
+    {
+      "action_id": "P5-L34",
+      "history_cursor": 153,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shorts_hem_right"
+    },
+    {
+      "action_id": "P5-L35",
+      "history_cursor": 154,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hairline_bangs_edge"
+    },
+    {
+      "action_id": "P5-L36",
+      "history_cursor": 155,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "face_jaw_mass"
+    },
+    {
+      "action_id": "P5-L37",
+      "history_cursor": 156,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_torso_separation_right"
+    },
+    {
+      "action_id": "P5-L38",
+      "history_cursor": 157,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "arm_mass_left_inner"
+    },
+    {
+      "action_id": "P5-L39",
+      "history_cursor": 158,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "neck_mass_left"
+    },
+    {
+      "action_id": "P5-L40",
+      "history_cursor": 159,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 mass guide replaced on the same path by the decisive P5 contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "neck_mass_right"
+    },
+    {
+      "action_id": "P5-L41",
+      "history_cursor": 160,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "head_cross_contour_brow"
+    },
+    {
+      "action_id": "P5-L42",
+      "history_cursor": 161,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_cross_contour_chest"
+    },
+    {
+      "action_id": "P5-L43",
+      "history_cursor": 162,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "torso_cross_contour_waist"
+    },
+    {
+      "action_id": "P5-L44",
+      "history_cursor": 163,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_cross_contour_receiver"
+    },
+    {
+      "action_id": "P5-L45",
+      "history_cursor": 164,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P3 cross-contour recedes but stays faintly readable because it still explains volume.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_cross_contour_stock"
+    },
+    {
+      "action_id": "P5-L46",
+      "history_cursor": 165,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_insert_right"
+    },
+    {
+      "action_id": "P5-L47",
+      "history_cursor": 166,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "shoulder_insert_left"
+    },
+    {
+      "action_id": "P5-L48",
+      "history_cursor": 167,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_left"
+    },
+    {
+      "action_id": "P5-L49",
+      "history_cursor": 168,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "wrist_right"
+    },
+    {
+      "action_id": "P5-L50",
+      "history_cursor": 169,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_block_right"
+    },
+    {
+      "action_id": "P5-L51",
+      "history_cursor": 170,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_pocket_overlap_right"
+    },
+    {
+      "action_id": "P5-L52",
+      "history_cursor": 171,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hand_block_left_occluded"
+    },
+    {
+      "action_id": "P5-L53",
+      "history_cursor": 172,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hip_thigh_insert_left"
+    },
+    {
+      "action_id": "P5-L54",
+      "history_cursor": 173,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "hip_thigh_insert_right"
+    },
+    {
+      "action_id": "P5-L55",
+      "history_cursor": 174,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ankle_bridge_left"
+    },
+    {
+      "action_id": "P5-L56",
+      "history_cursor": 175,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "ankle_bridge_right"
+    },
+    {
+      "action_id": "P5-L57",
+      "history_cursor": 176,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_block_left"
+    },
+    {
+      "action_id": "P5-L58",
+      "history_cursor": 177,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_sole_left"
+    },
+    {
+      "action_id": "P5-L59",
+      "history_cursor": 178,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_block_right"
+    },
+    {
+      "action_id": "P5-L60",
+      "history_cursor": 179,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "boot_sole_right"
+    },
+    {
+      "action_id": "P5-L61",
+      "history_cursor": 180,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "sling_strap_upper"
+    },
+    {
+      "action_id": "P5-L62",
+      "history_cursor": 181,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "sling_strap_lower"
+    },
+    {
+      "action_id": "P5-L63",
+      "history_cursor": 182,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_body_overlap"
+    },
+    {
+      "action_id": "P5-L64",
+      "history_cursor": 183,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "rifle_stock_hip_overlap"
+    },
+    {
+      "action_id": "P5-L65",
+      "history_cursor": 184,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "pouch_strap_thigh"
+    },
+    {
+      "action_id": "P5-L66",
+      "history_cursor": 185,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 connection mark superseded by the stated silhouette or internal break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_right_inner"
+    },
+    {
+      "action_id": "P5-L67",
+      "history_cursor": 186,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "knee_plane_left"
+    },
+    {
+      "action_id": "P5-L68",
+      "history_cursor": 187,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "knee_plane_right"
+    },
+    {
+      "action_id": "P5-L69",
+      "history_cursor": 188,
+      "is_correction_action": true,
+      "kind": "soft_lift",
+      "part": null,
+      "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "elbow_transition_right"
+    }
+  ],
+  "memory_policy": [
+    "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+    "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+    "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+      "80e48879003530c271c9175f2aac30f4dbcc2d17696013f9b9ec3dac58673638"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_03",
+    "discovered_in_stage": null,
+    "findings": [
+      "Belt upper edge measured at canvas (215,309) to (281,334); the stated break was horizontal at y=318-334.",
+      "Jacket hem measured at canvas (162,332) rising to (214,313); the stated break sat at y=352-366.",
+      "Face contour measured to canvas (273,107) with the chin at (247,143); the stated break turned back at (260,128) with the chin at (240,140)."
+    ],
+    "reason": "Close-range re-observation for the identity finishing pass proves three P5 internal breaks are misplaced: the belt is diagonal, not horizontal; the jacket hem sits at the belt rather than 30 canvas pixels below it; and the jaw/chin break stops well short of the observed face contour. The outer silhouette and all upstream structure are unaffected, so P5 itself is the earliest responsible stage.",
+    "reopen_id": "reopen_03",
+    "role": "reopened_target",
+    "stage": "P5_clean_blockin",
+    "target_stage": "P5_clean_blockin",
+    "trigger_review_digest": null
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P5_clean_blockin",
+  "state": "reopen_restart"
+}

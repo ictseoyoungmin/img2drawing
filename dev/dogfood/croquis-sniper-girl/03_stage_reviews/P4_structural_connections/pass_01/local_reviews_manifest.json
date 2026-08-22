@@ -1,0 +1,394 @@
+{
+  "auto_detection_used": false,
+  "pass_name": "pass_01",
+  "reviews": [
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 360,
+            "left": 140,
+            "right": 330,
+            "top": 140
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/crops/drawing.png",
+          "crop_sha256": "75db3723a872dea4cfa3e4f7c050b5fce40ad2e59c6fd212bae5be6117b96b22",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/crops/grammar.png",
+          "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+          "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 700,
+            "left": 300,
+            "right": 660,
+            "top": 290
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/crops/subject.png",
+          "crop_sha256": "0f64fae1569bfe09e4e006930cdddc4943b4a8bdf43a1735064516e2721d11b6",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check both arm chains on the rebuilt branch, with the far chain now on the corrected flank.",
+      "label": "shoulder_elbow",
+      "local_review_id": "P4_structural_connections:pass_01:shoulder_elbow",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 395,
+            "left": 255,
+            "right": 320,
+            "top": 285
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/crops/drawing.png",
+          "crop_sha256": "b4164dc6d762b384bb284cf989208c0b521fd384ca88f7510f1acce0530f0467",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/crops/grammar.png",
+          "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+          "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 780,
+            "left": 500,
+            "right": 680,
+            "top": 580
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/crops/subject.png",
+          "crop_sha256": "4f690205c439c757c3cdf56b0720c143fc41bf85f1f42b487609fa360d79ecc0",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check the near hand block and its pocket occlusion.",
+      "label": "hand_pocket",
+      "local_review_id": "P4_structural_connections:pass_01:hand_pocket",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 655,
+            "left": 150,
+            "right": 335,
+            "top": 495
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/drawing.png",
+          "crop_sha256": "f9cc3c7c87ce3e07341338c880abf7d47b5136b3bfcfb69ea5e09af4edaa5e25",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/grammar.png",
+          "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+          "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1300,
+            "left": 300,
+            "right": 660,
+            "top": 1000
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/subject.png",
+          "crop_sha256": "3d981f9e09c35d759fe72fc2d4d81da9259dacaaa4bbddfc49058cdaa261d7ce",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check knee planes and ankle bridges for banding.",
+      "label": "knee_ankle",
+      "local_review_id": "P4_structural_connections:pass_01:knee_ankle",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 150,
+            "right": 380,
+            "top": 610
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/crops/drawing.png",
+          "crop_sha256": "6d204dea18408a9c55ac664705fdec4eb8a80f46ed4d0c4694d2e5075c910f95",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/crops/grammar.png",
+          "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+          "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1500,
+            "left": 300,
+            "right": 760,
+            "top": 1220
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/crops/subject.png",
+          "crop_sha256": "c8436013a84d960999b69f5d668432cc9fb1f5687cdf6844a0dbc1552b8852fc",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check both boot blocks, attachment and landing heights.",
+      "label": "boots_ground",
+      "local_review_id": "P4_structural_connections:pass_01:boots_ground",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 480,
+            "left": 160,
+            "right": 320,
+            "top": 140
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/crops/drawing.png",
+          "crop_sha256": "f8b5e0a52d4536c384a875b8aa9f80aeceace087dcc610cd8692b929f7629ced",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/crops/grammar.png",
+          "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+          "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+          "source_size": [
+            289,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 960,
+            "left": 330,
+            "right": 640,
+            "top": 280
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/crops/subject.png",
+          "crop_sha256": "8e7a9257a4450451164be4410ece9d1d72ccdbb21935bb4ed6f4d179b1e72a62",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check the sling, the prop overlap marks and the new pouch strap on the corrected branch.",
+      "label": "prop_attach",
+      "local_review_id": "P4_structural_connections:pass_01:prop_attach",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    }
+  ],
+  "schema": "img2drawing.local_review_manifest.v1",
+  "selection_authority": "agent_explicit_boxes",
+  "stage": "P4_structural_connections"
+}

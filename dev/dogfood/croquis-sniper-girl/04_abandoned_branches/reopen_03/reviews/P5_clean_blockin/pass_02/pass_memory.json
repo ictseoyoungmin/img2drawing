@@ -1,0 +1,149 @@
+{
+  "carried_concerns": [
+    "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+    "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+        "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+      ],
+      "review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [
+        "Stated the full P5 contour, then retired 69 construction strokes with replayable soft_lift at stage-appropriate strengths."
+      ],
+      "review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P5-H1",
+      "history_cursor": 182,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_rifle_left",
+      "reason": "Carried concern: the prop and the garment crossed as two full-weight outer contours. The prop's outer ownership is now terminated at the handoff near canvas y=224.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_rifle_left"
+    },
+    {
+      "action_id": "P5-H2",
+      "history_cursor": 183,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_rifle_left_inside_garment",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H3",
+      "history_cursor": 184,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_jacket_left",
+      "reason": "Carried concern: the garment edge was drawn at full outer weight where the prop still owned the silhouette. It now begins at the handoff and owns the outer edge from there down.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_jacket_left"
+    },
+    {
+      "action_id": "P5-H4",
+      "history_cursor": 185,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_jacket_left_behind_prop",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H5",
+      "history_cursor": 186,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_hair_tip_right_on_shoulder",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P5-H6",
+      "history_cursor": 187,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "overlap_hair_tip_left_on_shoulder",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P5-H1",
+      "history_cursor": 182,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_rifle_left",
+      "reason": "Carried concern: the prop and the garment crossed as two full-weight outer contours. The prop's outer ownership is now terminated at the handoff near canvas y=224.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_rifle_left"
+    },
+    {
+      "action_id": "P5-H3",
+      "history_cursor": 184,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "contour_jacket_left",
+      "reason": "Carried concern: the garment edge was drawn at full outer weight where the prop still owned the silhouette. It now begins at the handoff and owns the outer edge from there down.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "contour_jacket_left"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+    "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+  ],
+  "previous_reported_corrections": [
+    "Stated the full P5 contour, then retired 69 construction strokes with replayable soft_lift at stage-appropriate strengths."
+  ],
+  "previous_review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+  "prior_review_count": 1,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_02",
+    "discovered_in_stage": "P5_clean_blockin",
+    "findings": [
+      "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
+      "Inherited P3 rifle mass sits up to 16px right of that edge through the middle of the prop.",
+      "Inherited P3 torso-left contour underfills the observed occupied volume by about 12px over the same range.",
+      "Silhouette ownership handoff from prop to garment occurs near canvas y=205."
+    ],
+    "reason": "P5 cleanup preflight proves the verified left outer silhouette cannot be stated without contradicting the inherited P3 prop and torso-left envelopes. The prop axis and extent are credible, so the underfilled P3 envelope, not P2 or P1, is the earliest responsible stage.",
+    "reopen_id": "reopen_02",
+    "role": "invalidated_downstream",
+    "stage": "P5_clean_blockin",
+    "target_stage": "P3_primary_masses",
+    "trigger_review_digest": "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P5_clean_blockin",
+  "state": "revision_continuation"
+}

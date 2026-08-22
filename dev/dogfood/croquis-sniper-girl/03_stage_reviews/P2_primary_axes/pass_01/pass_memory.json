@@ -1,0 +1,141 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P2B-A1",
+      "history_cursor": 14,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "head_cross_axis",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A2",
+      "history_cursor": 15,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_axis",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A3",
+      "history_cursor": 16,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_axis",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A4",
+      "history_cursor": 17,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_chain_right",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A5",
+      "history_cursor": 18,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_chain_left",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A6",
+      "history_cursor": 19,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_chain_left_support",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A7",
+      "history_cursor": 20,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_chain_right_brace",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A8",
+      "history_cursor": 21,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "prop_extent_axis",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A9",
+      "history_cursor": 22,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "prop_breadth_receiver",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P2B-A10",
+      "history_cursor": 23,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "prop_breadth_stock",
+      "reason": null,
+      "stage": "P2_primary_axes",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+    "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+    "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+    ],
+    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_01",
+    "discovered_in_stage": "P2_primary_axes",
+    "findings": [
+      "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+      "P1 counterbalance stroke sits at x~267-273 over the same range.",
+      "Result at P2 is a two-line pant-leg rail down the thigh."
+    ],
+    "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+    "reopen_id": "reopen_01",
+    "role": "invalidated_downstream",
+    "stage": "P2_primary_axes",
+    "target_stage": "P1_gesture",
+    "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P2_primary_axes",
+  "state": "reopen_restart"
+}

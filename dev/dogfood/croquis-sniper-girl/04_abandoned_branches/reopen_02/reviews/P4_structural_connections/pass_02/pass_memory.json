@@ -1,0 +1,250 @@
+{
+  "carried_concerns": [
+    "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+    "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+    "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+        "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+        "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+      ],
+      "review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P4-X1",
+      "history_cursor": 83,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "knee_plane_left",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "knee_plane_left"
+    },
+    {
+      "action_id": "P4-X2",
+      "history_cursor": 84,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "knee_plane_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "knee_plane_right"
+    },
+    {
+      "action_id": "P4-X3",
+      "history_cursor": 85,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ankle_bridge_left",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "ankle_bridge_left"
+    },
+    {
+      "action_id": "P4-X4",
+      "history_cursor": 86,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ankle_bridge_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "ankle_bridge_right"
+    },
+    {
+      "action_id": "P4-X5",
+      "history_cursor": 87,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "elbow_transition_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "elbow_transition_right"
+    },
+    {
+      "action_id": "P4-X6",
+      "history_cursor": 88,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "elbow_transition_right_inner",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "elbow_transition_right_inner"
+    },
+    {
+      "action_id": "P4-X7",
+      "history_cursor": 89,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hip_thigh_insert_left",
+      "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hip_thigh_insert_left"
+    },
+    {
+      "action_id": "P4-X8",
+      "history_cursor": 90,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hip_thigh_insert_right",
+      "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hip_thigh_insert_right"
+    },
+    {
+      "action_id": "P4-X9",
+      "history_cursor": 91,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hand_block_right",
+      "reason": "Carried concern: the hand read as a closed faceted mitten polygon.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hand_block_right"
+    },
+    {
+      "action_id": "P4-X10",
+      "history_cursor": 92,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hand_pocket_overlap_right",
+      "reason": "Shortened with the hand block so the pocket overlap is a handoff mark rather than a band under the hand.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hand_pocket_overlap_right"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P4-X1",
+      "history_cursor": 83,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "knee_plane_left",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "knee_plane_left"
+    },
+    {
+      "action_id": "P4-X2",
+      "history_cursor": 84,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "knee_plane_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "knee_plane_right"
+    },
+    {
+      "action_id": "P4-X3",
+      "history_cursor": 85,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ankle_bridge_left",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "ankle_bridge_left"
+    },
+    {
+      "action_id": "P4-X4",
+      "history_cursor": 86,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ankle_bridge_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "ankle_bridge_right"
+    },
+    {
+      "action_id": "P4-X5",
+      "history_cursor": 87,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "elbow_transition_right",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "elbow_transition_right"
+    },
+    {
+      "action_id": "P4-X6",
+      "history_cursor": 88,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "elbow_transition_right_inner",
+      "reason": "Carried concern: this transition spanned the full width of its limb mass and read as a clothing stripe. Re-authored as a partial directional plane that starts and stops inside the mass.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "elbow_transition_right_inner"
+    },
+    {
+      "action_id": "P4-X7",
+      "history_cursor": 89,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hip_thigh_insert_left",
+      "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hip_thigh_insert_left"
+    },
+    {
+      "action_id": "P4-X8",
+      "history_cursor": 90,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hip_thigh_insert_right",
+      "reason": "Carried concern: this insertion duplicated the P3 shorts hem as a second full-width band.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hip_thigh_insert_right"
+    },
+    {
+      "action_id": "P4-X9",
+      "history_cursor": 91,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hand_block_right",
+      "reason": "Carried concern: the hand read as a closed faceted mitten polygon.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hand_block_right"
+    },
+    {
+      "action_id": "P4-X10",
+      "history_cursor": 92,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "hand_pocket_overlap_right",
+      "reason": "Shortened with the hand block so the pocket overlap is a handoff mark rather than a band under the hand.",
+      "stage": "P4_structural_connections",
+      "target_stroke_id": "hand_pocket_overlap_right"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "knee planes, ankle bridges and the near elbow transition are full-width bands that read as clothing stripes",
+    "hip-to-thigh insertions duplicate the shorts hems as a second full-width band",
+    "near hand is a closed faceted mitten blob instead of a smooth occluded wrist-to-palm block"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P4_structural_connections",
+  "state": "revision_continuation"
+}

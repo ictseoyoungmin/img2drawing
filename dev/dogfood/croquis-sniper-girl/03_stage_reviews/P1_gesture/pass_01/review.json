@@ -1,0 +1,75 @@
+{
+  "advance_rationale": "The reopen target is repaired at its own stage: the counterbalance flow now agrees with the subject's braced-leg centre, so no downstream axis has to compensate. A fresh residual sweep of head, legs, prop and whole view finds no remaining P1-purpose mismatch, so P2 can be rebuilt on this corrected branch.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The rebuilt branch contains only gesture, three open head arcs, shoulder rhythm, pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+    "No axis, mass, joint, clothing or facial-feature vocabulary was carried back from the abandoned P2 branch."
+  ],
+  "corrections": [
+    "Rebuilt every P1 stroke on the reopened branch with a re-measured counterbalance chain."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+  "drawing_findings": [
+    "Reopen context honoured: the three archived P1 reviews were treated as evidence of an abandoned branch, not as current truth, and every stroke was re-authored rather than resurrected.",
+    "The pelvis_legs crop and a registered whole-view overlay both show the corrected counterbalance flow running down the centre of the subject's braced leg into its boot; the upstream cause of the P2 pant-leg rail is gone.",
+    "The head_face crop shows the crown arc and the two temporal arcs still separated by visible gaps with unequal masses, and the facial centre still bows image-right.",
+    "The prop_shoulder crop shows the rifle axis sitting on the subject's rifle and staying lighter than the dominant gesture.",
+    "Fresh residual sweep of the whole rebuilt artifact: the crown-to-landing path is continuous and dominant, support and counterbalance are unambiguous and no longer parallel, and no secondary stroke competes with the gesture."
+  ],
+  "drawing_state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9",
+  "exemplar_findings": [
+    "The bundled P1 exemplar remains a KNOWN-DEFECT exemplar; nothing was imitated from it on the rebuilt branch."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "history_cursor": 11,
+  "inter_pass_action_ids": [
+    "P1B-A1",
+    "P1B-A2",
+    "P1B-A3",
+    "P1B-A4",
+    "P1B-A5",
+    "P1B-A6",
+    "P1B-A7",
+    "P1B-A8",
+    "P1B-A9"
+  ],
+  "local_review_ids": [
+    "P1_gesture:pass_01:pelvis_legs",
+    "P1_gesture:pass_01:head_face",
+    "P1_gesture:pass_01:prop_shoulder"
+  ],
+  "observations": [
+    "The rebuilt branch contains only gesture, three open head arcs, shoulder rhythm, pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+    "No axis, mass, joint, clothing or facial-feature vocabulary was carried back from the abandoned P2 branch.",
+    "The subject's braced-leg centre runs near canvas x=261-265 through the upper thigh before swinging image-right toward knee and ankle; the rebuilt flow follows that measurement.",
+    "The support leg centre stays near canvas x=182-190 for its whole length and lands under the far boot.",
+    "Head turn, shoulder rhythm, pelvis tilt, prop angle and both landing heights are unchanged from the verified observations and still agree with the subject.",
+    "The bundled P1 exemplar remains a KNOWN-DEFECT exemplar; nothing was imitated from it on the rebuilt branch.",
+    "Reopen context honoured: the three archived P1 reviews were treated as evidence of an abandoned branch, not as current truth, and every stroke was re-authored rather than resurrected.",
+    "The pelvis_legs crop and a registered whole-view overlay both show the corrected counterbalance flow running down the centre of the subject's braced leg into its boot; the upstream cause of the P2 pant-leg rail is gone.",
+    "The head_face crop shows the crown arc and the two temporal arcs still separated by visible gaps with unequal masses, and the facial centre still bows image-right.",
+    "The prop_shoulder crop shows the rifle axis sitting on the subject's rifle and staying lighter than the dominant gesture.",
+    "Fresh residual sweep of the whole rebuilt artifact: the crown-to-landing path is continuous and dominant, support and counterbalance are unambiguous and no longer parallel, and no secondary stroke competes with the gesture."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "c0521fb44410c84f506e31cd9190591fdbd4fde7df551655338277d3fd3d24fe",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "subject_findings": [
+    "The subject's braced-leg centre runs near canvas x=261-265 through the upper thigh before swinging image-right toward knee and ankle; the rebuilt flow follows that measurement.",
+    "The support leg centre stays near canvas x=182-190 for its whole length and lands under the far boot.",
+    "Head turn, shoulder rhythm, pelvis tilt, prop angle and both landing heights are unchanged from the verified observations and still agree with the subject."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

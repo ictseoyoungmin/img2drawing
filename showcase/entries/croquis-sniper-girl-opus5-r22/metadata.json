@@ -1,0 +1,24 @@
+{
+  "id": "croquis-sniper-girl-opus5-r22",
+  "title": "Sniper Girl — Full-body Croquis",
+  "model": "Claude Opus 5",
+  "skill": {
+    "name": "img2drawing",
+    "version": "0.5.2",
+    "release_slice": "R22"
+  },
+  "prompting": {
+    "mode": "single_initial_prompt",
+    "user_correction_rounds": 0
+  },
+  "artifacts": {
+    "timelapse": "croquis_timelapse.gif",
+    "final": "croquis_final.png"
+  },
+  "source_run": "../../../dev/dogfood/croquis-sniper-girl",
+  "continuation": {
+    "supported": true,
+    "recommended_reading": "selective stage/action/reopen queries",
+    "do_not_load_full_checkpoint": true
+  }
+}

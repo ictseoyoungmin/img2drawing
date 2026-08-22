@@ -1,0 +1,80 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "Axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains, prop extent and two prop breadth axes.",
+    "No closed ribcage or pelvis mass, no paired limb contour, no hand/foot block, no joint anatomy, no clothing block-in and no shading were introduced."
+  ],
+  "corrections": [
+    "Rebuilt P2 on the corrected P1 branch with both leg chains authored on the verified P1 paths."
+  ],
+  "decision": "revise",
+  "drawing_artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+  "drawing_findings": [
+    "The pelvis_legs crop confirms the pant-leg rail is gone: both leg chains now coincide with the verified P1 paths and reinforce them instead of running parallel to them.",
+    "The arms crop confirms both arm chains sit on the observed sleeve centres, and the far chain reads as an occluded direction rather than a floating stick.",
+    "The head_shoulders crop shows the head cross-axis passing through the near eye and compressing toward the far temple, which matches the subject's tilt and turn.",
+    "The head_shoulders crop also shows a real mismatch: the shoulder axis sits about 13 canvas pixels above the subject's far shoulder joint, so it reads closer to the collar than to the joint line.",
+    "The P1 gesture, support/counterbalance roles and prop axis are all preserved and unchanged by this stage."
+  ],
+  "drawing_state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+  "exemplar_findings": [
+    "The P2 grammar exemplar is the audited PASS exemplar; it was consulted for axis vocabulary and detail budget only.",
+    "Its richer-looking limb construction was not imitated, because the frozen P2 boundary forbids limb thickness."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "history_cursor": 23,
+  "inter_pass_action_ids": [
+    "P2B-A1",
+    "P2B-A2",
+    "P2B-A3",
+    "P2B-A4",
+    "P2B-A5",
+    "P2B-A6",
+    "P2B-A7",
+    "P2B-A8",
+    "P2B-A9",
+    "P2B-A10"
+  ],
+  "local_review_ids": [
+    "P2_primary_axes:pass_01:head_shoulders",
+    "P2_primary_axes:pass_01:arms",
+    "P2_primary_axes:pass_01:pelvis_legs"
+  ],
+  "observations": [
+    "Axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains, prop extent and two prop breadth axes.",
+    "No closed ribcage or pelvis mass, no paired limb contour, no hand/foot block, no joint anatomy, no clothing block-in and no shading were introduced.",
+    "The subject's far image-left shoulder joint sits at roughly canvas (186,163) and the near image-right joint at roughly canvas (272,172): a shallow drop toward the near shoulder, not a steep one.",
+    "The subject's near arm runs down the loose sleeve centre to an elbow at the widest jacket point near canvas y=300, then turns forward into a hand resting at the hip pocket near canvas (287,346).",
+    "The subject's far arm is fully occluded by the slung rifle, but the jacket silhouette left of the rifle body confirms its outer contour near canvas x=155 at y=300, so the chain centre belongs near x=166.",
+    "The P2 grammar exemplar is the audited PASS exemplar; it was consulted for axis vocabulary and detail budget only.",
+    "Its richer-looking limb construction was not imitated, because the frozen P2 boundary forbids limb thickness.",
+    "The pelvis_legs crop confirms the pant-leg rail is gone: both leg chains now coincide with the verified P1 paths and reinforce them instead of running parallel to them.",
+    "The arms crop confirms both arm chains sit on the observed sleeve centres, and the far chain reads as an occluded direction rather than a floating stick.",
+    "The head_shoulders crop shows the head cross-axis passing through the near eye and compressing toward the far temple, which matches the subject's tilt and turn.",
+    "The head_shoulders crop also shows a real mismatch: the shoulder axis sits about 13 canvas pixels above the subject's far shoulder joint, so it reads closer to the collar than to the joint line.",
+    "The P1 gesture, support/counterbalance roles and prop axis are all preserved and unchanged by this stage."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "f9890fdfb02dec8babd09af3f477419ed293b659d9ecfae8302642050021bb2a",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "shoulder axis sits ~13px above the observed far shoulder joint"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "subject_findings": [
+    "The subject's far image-left shoulder joint sits at roughly canvas (186,163) and the near image-right joint at roughly canvas (272,172): a shallow drop toward the near shoulder, not a steep one.",
+    "The subject's near arm runs down the loose sleeve centre to an elbow at the widest jacket point near canvas y=300, then turns forward into a hand resting at the hip pocket near canvas (287,346).",
+    "The subject's far arm is fully occluded by the slung rifle, but the jacket silhouette left of the rifle body confirms its outer contour near canvas x=155 at y=300, so the chain centre belongs near x=166."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

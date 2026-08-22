@@ -1,0 +1,60 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "No P5 contour was committed in this pass. This is the cleanup preflight the P5 reference requires before any silhouette is stated."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+  "drawing_findings": [
+    "Preflight result: the verified subject silhouette CANNOT be stated on top of the current structure. The inherited P3 rifle mass drifts up to 16 canvas pixels right of the measured prop edge through the middle of its length, and the inherited P3 torso-left contour underfills the observed occupied volume by about 12 pixels over the same range.",
+    "Drawing the correct P5 contour there would leave the P3 envelope stranded inside it, which is precisely the 'cleaning a wrong structure' failure the P5 reference forbids.",
+    "The prop's axis and overall extent remain credible, and the P1 gesture and P2 axes are unaffected, so the earliest responsible stage is P3, not P2 or P1.",
+    "Everything on the right side of the figure, the head, both legs and both boots matched the subject in this preflight and needs no upstream change."
+  ],
+  "drawing_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+  "exemplar_findings": [
+    "The bundled P5 exemplar carries a KNOWN AUDIT FAILURE for exceeding the clean-block-in ceiling with shading, folds and texture, so it cannot be imitated and only its silhouette-first ordering is useful."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "history_cursor": 94,
+  "inter_pass_action_ids": [],
+  "local_review_ids": [
+    "P5_clean_blockin:pass_01:left_flank_preflight",
+    "P5_clean_blockin:pass_01:whole_silhouette_preflight"
+  ],
+  "observations": [
+    "No P5 contour was committed in this pass. This is the cleanup preflight the P5 reference requires before any silhouette is stated.",
+    "Brightness-lifted inspection of the subject's left flank resolves the composite outer edge that ordinary viewing could not: the rifle owns the outer silhouette from the suppressor down to roughly canvas y=205, and the jacket/sling mass owns it below that.",
+    "The measured left outer edge runs canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340 and 163 at y=396.",
+    "The rifle's own left edge is far more vertical than a straight interpolation of its axis suggests, because the handguard tapers along its length.",
+    "The bundled P5 exemplar carries a KNOWN AUDIT FAILURE for exceeding the clean-block-in ceiling with shading, folds and texture, so it cannot be imitated and only its silhouette-first ordering is useful.",
+    "Preflight result: the verified subject silhouette CANNOT be stated on top of the current structure. The inherited P3 rifle mass drifts up to 16 canvas pixels right of the measured prop edge through the middle of its length, and the inherited P3 torso-left contour underfills the observed occupied volume by about 12 pixels over the same range.",
+    "Drawing the correct P5 contour there would leave the P3 envelope stranded inside it, which is precisely the 'cleaning a wrong structure' failure the P5 reference forbids.",
+    "The prop's axis and overall extent remain credible, and the P1 gesture and P2 axes are unaffected, so the earliest responsible stage is P3, not P2 or P1.",
+    "Everything on the right side of the figure, the head, both legs and both boots matched the subject in this preflight and needs no upstream change."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "c1730e2b2d1815cd28607317d02016e9d9aad7aa0f3674b176932dd93b823036",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [
+    "P3 prop mass and torso-left mass underfill the measured left outer silhouette by 12-16 canvas pixels"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P5_clean_blockin",
+  "stage_contract_id": "full_body_croquis.P5.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "subject_findings": [
+    "Brightness-lifted inspection of the subject's left flank resolves the composite outer edge that ordinary viewing could not: the rifle owns the outer silhouette from the suppressor down to roughly canvas y=205, and the jacket/sling mass owns it below that.",
+    "The measured left outer edge runs canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340 and 163 at y=396.",
+    "The rifle's own left edge is far more vertical than a straight interpolation of its axis suggests, because the handguard tapers along its length."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

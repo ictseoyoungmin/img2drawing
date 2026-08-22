@@ -1,0 +1,74 @@
+{
+  "advance_rationale": "Both carried concerns are cleared on fresh evidence and an independent residual sweep of head, torso, legs and whole view finds no remaining mass-level mismatch. The figure reads as a connected occupied-volume system that matches the clothed subject, so structural connections can now be explained.",
+  "carried_concerns": [
+    "boot masses P3-B1/P3-B2 violate the frozen P3 contract and must be removed so P4 can own them",
+    "braced-leg outer contour has an abrupt step near canvas y=470 instead of a smooth swell"
+  ],
+  "contract_findings": [
+    "The contract violation is closed: both boot masses were hard-deleted, so no hand/foot construction block remains at P3.",
+    "The corrections touched limb mass contours only; no P4 or P5 vocabulary entered the artifact."
+  ],
+  "corrections": [
+    "P3-D1/P3-D2 hard-deleted the out-of-contract boot masses.",
+    "P3-R5/P3-R6 re-authored both leg outer contours with smooth swells and tapered ankle terminations."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "9ae82b0fab7bbfbe14cd434326ef3efd062aa8a8da68a3d42285c5ccce5d489f",
+  "drawing_findings": [
+    "Carried concern 'boot masses violate the P3 contract' is CLEARED: the pelvis_legs crop shows both limb masses now terminating in tapered ankles with no foot block.",
+    "Carried concern 'abrupt step in the braced-leg outer contour' is CLEARED: that contour now swells smoothly from thigh into calf and matches the subject's edge.",
+    "Residual sweep, torso_pelvis: the torso still fills the observed clothed volume rather than a fitted underlayer, the near sleeve reads as its own tapered mass, and the pelvis basin flows into both thigh roots.",
+    "Residual sweep, head_neck: the hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+    "Residual sweep, whole view: the figure reads as one connected mass system at a glance; no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass is present, and the rifle reads as an integrated long mass with real width transitions.",
+    "The only note carried forward as information, not as a concern, is that the near sleeve's inner separation is at the conservative edge of the observed sleeve width; P4 will resolve that boundary when it explains the shoulder-elbow-wrist chain."
+  ],
+  "drawing_state_sha256": "afadb55855441240e08a9e80c8128085d9b23253cea62381368827ba294db0bd",
+  "exemplar_findings": [
+    "The PASS P3 exemplar's abstraction level is matched: connected organic masses with a small number of cross-contours and no joint or clothing detail."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "history_cursor": 57,
+  "inter_pass_action_ids": [
+    "P3-D1",
+    "P3-D2",
+    "P3-R5",
+    "P3-R6"
+  ],
+  "local_review_ids": [
+    "P3_primary_masses:pass_02:pelvis_legs",
+    "P3_primary_masses:pass_02:torso_pelvis",
+    "P3_primary_masses:pass_02:head_neck"
+  ],
+  "observations": [
+    "The contract violation is closed: both boot masses were hard-deleted, so no hand/foot construction block remains at P3.",
+    "The corrections touched limb mass contours only; no P4 or P5 vocabulary entered the artifact.",
+    "The subject's legs swell continuously through the sock top rather than stepping, and both taper to slim ankles before the boot volume begins.",
+    "The subject's clothed occupied volume is unchanged by the corrections and still governs the torso, sleeve, pelvis and limb envelopes.",
+    "The PASS P3 exemplar's abstraction level is matched: connected organic masses with a small number of cross-contours and no joint or clothing detail.",
+    "Carried concern 'boot masses violate the P3 contract' is CLEARED: the pelvis_legs crop shows both limb masses now terminating in tapered ankles with no foot block.",
+    "Carried concern 'abrupt step in the braced-leg outer contour' is CLEARED: that contour now swells smoothly from thigh into calf and matches the subject's edge.",
+    "Residual sweep, torso_pelvis: the torso still fills the observed clothed volume rather than a fitted underlayer, the near sleeve reads as its own tapered mass, and the pelvis basin flows into both thigh roots.",
+    "Residual sweep, head_neck: the hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+    "Residual sweep, whole view: the figure reads as one connected mass system at a glance; no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass is present, and the rifle reads as an integrated long mass with real width transitions.",
+    "The only note carried forward as information, not as a concern, is that the near sleeve's inner separation is at the conservative edge of the observed sleeve width; P4 will resolve that boundary when it explains the shoulder-elbow-wrist chain."
+  ],
+  "parent_review_digest": "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee",
+  "pass_memory_digest": "34690187387cc7101f39b8c173707dfe1ca415e7468fb6be7d2c7afdd641ca1a",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses",
+  "stage_contract_id": "full_body_croquis.P3.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "subject_findings": [
+    "The subject's legs swell continuously through the sock top rather than stepping, and both taper to slim ankles before the boot volume begins.",
+    "The subject's clothed occupied volume is unchanged by the corrections and still governs the torso, sleeve, pelvis and limb envelopes."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

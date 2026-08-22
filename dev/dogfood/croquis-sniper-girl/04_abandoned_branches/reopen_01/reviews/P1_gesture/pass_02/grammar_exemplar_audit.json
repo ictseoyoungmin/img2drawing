@@ -1,0 +1,13 @@
+{
+  "contract_id": "full_body_croquis.P1.v1",
+  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "exemplar_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
+  "findings": [
+    "The exemplar shows only one long lower-body path and does not establish a distinct counterbalance-leg flow, so support versus counterbalance is not readable.",
+    "The visually dominant body gesture begins at the chin/neck instead of being carried from the crown through a curved facial centre into the neck, so the craniofacial centre gesture is not demonstrated by the exemplar.",
+    "The head reads as a nearly closed oval construction; it does not clearly teach two subordinate open envelope arcs around an asymmetric facial centre."
+  ],
+  "note": "R03 audit finds the bundled P1 grammar exemplar insufficient for the 0.5.2 P1 contract. Do not copy its neck-origin gesture.",
+  "stage_id": "P1_gesture",
+  "status": "fail"
+}

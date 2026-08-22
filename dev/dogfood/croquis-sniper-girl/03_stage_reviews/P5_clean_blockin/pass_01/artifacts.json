@@ -1,0 +1,29 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P5_clean_blockin",
+  "drawing": {
+    "stage": "P5_clean_blockin",
+    "path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+    "artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+    "state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
+    "history_cursor": 188
+  },
+  "authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+  "subject_split": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_split.png",
+  "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
+  "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+  "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
+  "three_way": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
+}

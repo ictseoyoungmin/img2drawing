@@ -1,0 +1,94 @@
+{
+  "advance_rationale": "The invalidated downstream stage has been rebuilt and freshly reviewed on the corrected branch. Both limb chains, both boots and every attachment are readable from whole view and local crops, no banding or floating part remains, and no upstream mass error is implied, so the clean block-in can now be stated over a structure that matches the subject.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The rebuilt branch holds P4 vocabulary only: shoulder insertions, partial elbow and knee planes, wrist and ankle bridges, hand and boot blocks, hip-to-thigh insertions and prop/pouch attachment marks.",
+    "No full-width band, faceted mitten hand, detached foot polygon, shading, texture or facial feature was reintroduced, and the corrected P1-P3 branch is preserved."
+  ],
+  "corrections": [
+    "Rebuilt every P4 connection on the corrected P3 branch, moving the far arm chain and the far hand block onto the widened flank and adding the pouch attachment plane."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+  "drawing_findings": [
+    "shoulder_elbow: both arm chains follow shoulder to elbow to wrist without a break; the far chain now sits on the corrected wider flank instead of floating inside it, which was the point of rebuilding this stage.",
+    "hand_pocket: the near hand is a smooth occluded wrist-to-palm volume, not a mitten polygon.",
+    "knee_ankle: both knee planes and both ankle bridges are short partial transitions that begin and end inside their limb masses.",
+    "boots_ground: both boots attach to their ankles, are directionally credible with toes swinging image-right, and keep the differing sole heights that carry support versus brace.",
+    "prop_attach: the sling reaches the near shoulder, the two prop overlap marks state the rifle-body relationship on the corrected branch, and the pouch strap fixes the pouch to the braced thigh.",
+    "Fresh residual sweep: each limb chain is continuous, nothing floats, and no connection requires moving a P3 mass, so no further upstream reopen is warranted."
+  ],
+  "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+  "exemplar_findings": [
+    "The KNOWN-DEFECT P4 exemplar under-explains transitions, so the frozen contract and the stage reference decided how much articulation each joint needed."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "history_cursor": 79,
+  "inter_pass_action_ids": [
+    "P4C-S1",
+    "P4C-S2",
+    "P4C-E1",
+    "P4C-E2",
+    "P4C-E3",
+    "P4C-W1",
+    "P4C-W2",
+    "P4C-W3",
+    "P4C-W4",
+    "P4C-P1",
+    "P4C-P2",
+    "P4C-K1",
+    "P4C-K2",
+    "P4C-A1",
+    "P4C-F1",
+    "P4C-F2",
+    "P4C-A2",
+    "P4C-F3",
+    "P4C-F4",
+    "P4C-R1",
+    "P4C-R2",
+    "P4C-R3",
+    "P4C-R4",
+    "P4C-R5"
+  ],
+  "local_review_ids": [
+    "P4_structural_connections:pass_01:shoulder_elbow",
+    "P4_structural_connections:pass_01:hand_pocket",
+    "P4_structural_connections:pass_01:knee_ankle",
+    "P4_structural_connections:pass_01:boots_ground",
+    "P4_structural_connections:pass_01:prop_attach"
+  ],
+  "observations": [
+    "The rebuilt branch holds P4 vocabulary only: shoulder insertions, partial elbow and knee planes, wrist and ankle bridges, hand and boot blocks, hip-to-thigh insertions and prop/pouch attachment marks.",
+    "No full-width band, faceted mitten hand, detached foot polygon, shading, texture or facial feature was reintroduced, and the corrected P1-P3 branch is preserved.",
+    "Every joint on this subject is either bare thigh or hidden under loose clothing, so only partial functional transitions are observable.",
+    "The subject's thigh pouch is strapped to the braced leg and needs an attachment plane for the same reason the rifle needs a sling.",
+    "The subject's near hand disappears into the hip pocket, so only a partial wrist-to-palm volume has a real edge.",
+    "The KNOWN-DEFECT P4 exemplar under-explains transitions, so the frozen contract and the stage reference decided how much articulation each joint needed.",
+    "shoulder_elbow: both arm chains follow shoulder to elbow to wrist without a break; the far chain now sits on the corrected wider flank instead of floating inside it, which was the point of rebuilding this stage.",
+    "hand_pocket: the near hand is a smooth occluded wrist-to-palm volume, not a mitten polygon.",
+    "knee_ankle: both knee planes and both ankle bridges are short partial transitions that begin and end inside their limb masses.",
+    "boots_ground: both boots attach to their ankles, are directionally credible with toes swinging image-right, and keep the differing sole heights that carry support versus brace.",
+    "prop_attach: the sling reaches the near shoulder, the two prop overlap marks state the rifle-body relationship on the corrected branch, and the pouch strap fixes the pouch to the braced thigh.",
+    "Fresh residual sweep: each limb chain is continuous, nothing floats, and no connection requires moving a P3 mass, so no further upstream reopen is warranted."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "9c4e4fbbb91a0a1f04342e765ccf53e2d8538cac60c56a9cbde2ba2f579ebdd5",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections",
+  "stage_contract_id": "full_body_croquis.P4.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "subject_findings": [
+    "Every joint on this subject is either bare thigh or hidden under loose clothing, so only partial functional transitions are observable.",
+    "The subject's thigh pouch is strapped to the braced leg and needs an attachment plane for the same reason the rifle needs a sling.",
+    "The subject's near hand disappears into the hip pocket, so only a partial wrist-to-palm volume has a real edge."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

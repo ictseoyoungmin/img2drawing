@@ -1,0 +1,72 @@
+{
+  "allowed_representation": [
+    "dominant crown→face→neck→spine→pelvis→support gesture",
+    "open head-envelope arcs, including segmented crown/temporal/jaw arcs",
+    "shoulder rhythm",
+    "pelvis rhythm",
+    "counterbalance-leg flow",
+    "major attached-object axis",
+    "minimal landing/ground cue"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P1.v1",
+  "detail_ceiling": [
+    "global gesture",
+    "face-direction cue",
+    "weight relationship",
+    "major prop direction only"
+  ],
+  "exemplar_contract": {
+    "may_show": [
+      "shoulder rhythm",
+      "pelvis rhythm",
+      "minimal ground cue",
+      "major attached-object axis"
+    ],
+    "must_not_show": [
+      "ribcage mass contour",
+      "pelvis mass contour",
+      "full limb thickness",
+      "joint anatomy",
+      "clothing silhouette",
+      "facial features"
+    ],
+    "must_show": [
+      "dominant whole-body gesture",
+      "head direction construction",
+      "support/counterbalance relationship"
+    ]
+  },
+  "forbidden_representation": [
+    "anatomical joint construction",
+    "ribcage/pelvis mass contour",
+    "full limb thickness",
+    "clothing contour",
+    "facial features",
+    "rendered shading"
+  ],
+  "inherits_from": null,
+  "must_preserve": [
+    "subject-derived head direction",
+    "subject-derived support side",
+    "whole-body energy"
+  ],
+  "next_stage_unlocks": [
+    "head cross-axis",
+    "shoulder axis",
+    "pelvis axis",
+    "major limb axes",
+    "attached-object extent/breadth axis"
+  ],
+  "owns": [
+    "craniofacial centre gesture",
+    "whole-body line of action",
+    "pelvis weight transfer",
+    "support vs counterbalance role",
+    "major attached-object axis when silhouette/balance requires it"
+  ],
+  "representation_name": "gesture_and_weight_path",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P1_gesture",
+  "tier": 1
+}

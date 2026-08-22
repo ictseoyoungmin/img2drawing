@@ -1,0 +1,317 @@
+{
+  "auto_detection_used": false,
+  "pass_name": "pass_01",
+  "reviews": [
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 430,
+            "left": 125,
+            "right": 215,
+            "top": 100
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/crops/drawing.png",
+          "crop_sha256": "12b368454122113b3d815b2576443f1b031b3c738fd35d84389497c9c53ea9de",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/crops/grammar.png",
+          "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+          "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 860,
+            "left": 250,
+            "right": 430,
+            "top": 200
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/crops/subject.png",
+          "crop_sha256": "abb14a7c9977a535e92b3e964e0a3ff54e4d149bb8177b3b8ce187c990f14fa1",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Verify the reopen fix: do the corrected prop and torso-left envelopes now reach the measured left outer silhouette?",
+      "label": "left_flank",
+      "local_review_id": "P3_primary_masses:pass_01:left_flank",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 140,
+            "right": 350,
+            "top": 140
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/crops/drawing.png",
+          "crop_sha256": "528598959230b84ab735438ffd06898fc1edc228e12dcd7282f1bd49de443142",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/crops/grammar.png",
+          "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+          "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 280,
+            "right": 700,
+            "top": 280
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/crops/subject.png",
+          "crop_sha256": "40b9bef859f83b1bbf2e83cdb24455f7096d32134bd39eb2d3104a2b04b6425a",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: clothed occupied volume, cross-contours and basin-to-thigh flow after the correction.",
+      "label": "torso_pelvis",
+      "local_review_id": "P3_primary_masses:pass_01:torso_pelvis",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 768,
+            "left": 140,
+            "right": 390,
+            "top": 380
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "3537a57504e39dbe3e06b72dcea44f76aae75b5cfea31b36791ed1d6596a20ab",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/crops/grammar.png",
+          "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+          "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 280,
+            "right": 780,
+            "top": 760
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "5aead4db0897e92b408097b7fdfa1547ab88d9c3574a09e03d5e56b3835a9a3d",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: leg taper, negative space and the newly stated thigh pouch.",
+      "label": "pelvis_legs",
+      "local_review_id": "P3_primary_masses:pass_01:pelvis_legs",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/grammar_vs_drawing.png",
+        "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/local_reference_overview.png",
+        "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 180,
+            "left": 150,
+            "right": 330,
+            "top": 20
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/drawing.png",
+          "crop_sha256": "1d6cd036c3dd85864efc6098607cb0f9c8f37183cede271f07f8b887234d8048",
+          "role": "current_drawing",
+          "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "grammar": {
+          "box": {
+            "bottom": 1050,
+            "left": 15,
+            "right": 275,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/grammar.png",
+          "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+          "role": "grammar_exemplar",
+          "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+          "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+          "source_size": [
+            290,
+            1086
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 360,
+            "left": 300,
+            "right": 660,
+            "top": 40
+          },
+          "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/subject.png",
+          "crop_sha256": "6ba5dc38954b65ec5210d6926d13338a40ccb81eeff748945b8f76198bc5a533",
+          "role": "subject_reference",
+          "source_path": "/home/claude/work/subject.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: hair mass, face plane and neck bridge on the rebuilt branch.",
+      "label": "head_neck",
+      "local_review_id": "P3_primary_masses:pass_01:head_neck",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    }
+  ],
+  "schema": "img2drawing.local_review_manifest.v1",
+  "selection_authority": "agent_explicit_boxes",
+  "stage": "P3_primary_masses"
+}

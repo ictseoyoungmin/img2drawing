@@ -1,0 +1,12 @@
+{
+  "contract_id": "full_body_croquis.P4.v1",
+  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "exemplar_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+  "findings": [
+    "Elbows, knees and several other joints are represented primarily as dots on line chains rather than as directional structural transitions between connected masses.",
+    "Hip-to-thigh and shoulder insertion relationships are only weakly explained; the exemplar relies on markers more than insertion geometry."
+  ],
+  "note": "The exemplar demonstrates joint locations but not the structural transition grammar required by the P4 contract.",
+  "stage_id": "P4_structural_connections",
+  "status": "fail"
+}

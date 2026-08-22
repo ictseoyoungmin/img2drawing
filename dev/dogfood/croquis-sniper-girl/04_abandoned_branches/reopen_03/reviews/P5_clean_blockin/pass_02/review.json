@@ -1,0 +1,76 @@
+{
+  "advance_rationale": "Both carried handoff concerns are cleared on fresh contour-contact and visual evidence, and an independent residual sweep finds the figure and prop immediately readable from silhouette, with construction subordinate and no structural error hidden by cleanup. The five-stage croquis is closed.",
+  "carried_concerns": [
+    "prop-to-garment ownership change is drawn as two full-weight contours crossing, not as an explicit handoff",
+    "hair edge stops at the shoulder instead of continuing inside the garment as an overlap contour"
+  ],
+  "contract_findings": [
+    "The corrections added ownership handoffs only; no tone, texture, folds, seams, fingers, boot panels, facial features or shading entered the stage.",
+    "All retirement remains replayable soft_lift on named strokes."
+  ],
+  "corrections": [
+    "P5-H1/H3 split prop and garment outer ownership at the measured handoff.",
+    "P5-H2/H4 restated the non-owning halves as lighter overlap contours.",
+    "P5-H5/H6 continued both bob tips inside the garment as overlap contours."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
+  "drawing_findings": [
+    "Carried concern 'prop and garment cross as two full-weight contours' is CLEARED: the prop contour now terminates its outer ownership at the handoff and continues inside the garment as a lighter overlap contour, while the garment edge begins at the handoff and owns the outer edge below it. The handoff_prop_garment crop shows one outer owner at every height.",
+    "Carried concern 'hair edge stops at the shoulder' is CLEARED: both bob tips now continue inside the garment as separate overlap contours, so the hair reads as resting on the shoulder instead of turning into it.",
+    "whole_silhouette residual sweep: the registered overlay puts the stated contour on the subject's silhouette from crown to both soles, including hair, jacket, shorts, pouch, both legs, both boots and the slung rifle. Proportions, stance and negative spaces are credible.",
+    "whole_silhouette residual sweep: no retired construction is dark enough to compete with the contour, and the dominant P1 gesture survives only as a faint trace that still explains the weight path.",
+    "prop_topology residual sweep: the rifle reads through suppressor step, tapered handguard, scope, receiver widening and buttstock cutout, and it keeps its own contour ownership where it crosses the torso.",
+    "No cleanup changed verified structure and no major clothing or hair envelope was omitted."
+  ],
+  "drawing_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
+  "exemplar_findings": [
+    "The KNOWN-DEFECT P5 exemplar was used only for silhouette-first ordering; its shading, folds and texture stay outside this stage's ceiling."
+  ],
+  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "history_cursor": 187,
+  "inter_pass_action_ids": [
+    "P5-H1",
+    "P5-H2",
+    "P5-H3",
+    "P5-H4",
+    "P5-H5",
+    "P5-H6"
+  ],
+  "local_review_ids": [
+    "P5_clean_blockin:pass_02:handoff_prop_garment",
+    "P5_clean_blockin:pass_02:handoff_hair_shoulder",
+    "P5_clean_blockin:pass_02:whole_silhouette",
+    "P5_clean_blockin:pass_02:prop_topology"
+  ],
+  "observations": [
+    "The corrections added ownership handoffs only; no tone, texture, folds, seams, fingers, boot panels, facial features or shading entered the stage.",
+    "All retirement remains replayable soft_lift on named strokes.",
+    "The subject confirms the prop owns the outer left silhouette above roughly canvas y=225 and the jacket below, and that both bob tips rest on top of the shoulders.",
+    "The KNOWN-DEFECT P5 exemplar was used only for silhouette-first ordering; its shading, folds and texture stay outside this stage's ceiling.",
+    "Carried concern 'prop and garment cross as two full-weight contours' is CLEARED: the prop contour now terminates its outer ownership at the handoff and continues inside the garment as a lighter overlap contour, while the garment edge begins at the handoff and owns the outer edge below it. The handoff_prop_garment crop shows one outer owner at every height.",
+    "Carried concern 'hair edge stops at the shoulder' is CLEARED: both bob tips now continue inside the garment as separate overlap contours, so the hair reads as resting on the shoulder instead of turning into it.",
+    "whole_silhouette residual sweep: the registered overlay puts the stated contour on the subject's silhouette from crown to both soles, including hair, jacket, shorts, pouch, both legs, both boots and the slung rifle. Proportions, stance and negative spaces are credible.",
+    "whole_silhouette residual sweep: no retired construction is dark enough to compete with the contour, and the dominant P1 gesture survives only as a faint trace that still explains the weight path.",
+    "prop_topology residual sweep: the rifle reads through suppressor step, tapered handguard, scope, receiver widening and buttstock cutout, and it keeps its own contour ownership where it crosses the torso.",
+    "No cleanup changed verified structure and no major clothing or hair envelope was omitted."
+  ],
+  "parent_review_digest": "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+  "pass_memory_digest": "ae54d5edb1d3bd90bb6228ebbfc8ad651a9301e64dc6637aa3e2bd62ff14e682",
+  "reference_authority_order": [
+    "subject_reference",
+    "grammar_exemplar"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P5_clean_blockin",
+  "stage_contract_id": "full_body_croquis.P5.v1",
+  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "subject_findings": [
+    "The subject confirms the prop owns the outer left silhouette above roughly canvas y=225 and the jacket below, and that both bob tips rest on top of the shoulders."
+  ],
+  "subject_reference": "/home/claude/work/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

@@ -9,6 +9,21 @@ Given one reference photo, the agent works through a five-stage construction pip
 rendering and re-inspecting its own drawing after every stage, revising until each
 stage genuinely holds up, before moving on.
 
+![Sniper Girl croquis timelapse](showcase/entries/croquis-sniper-girl-opus5-r22/croquis_timelapse.gif)
+
+- **Model:** Claude Opus 5
+- **Skill:** img2drawing `0.5.2` · release slice `R22`
+- **Prompting:** single initial prompt
+
+This is the result of an autonomous run started from a single user prompt. The work does
+not end with the finished drawing: the same or another agent can continue editing it using
+the JSON action log and checkpoint. Because `checkpoint.json` contains more than 43,000
+lines, agents should query only the required stage/action/reopen ranges instead of reading
+the entire file.
+
+[Detailed showcase entry](showcase/entries/croquis-sniper-girl-opus5-r22/README.md) ·
+[Full showcase](showcase/README.md)
+
 ![img2drawing subject-only P1→P5 progression](dev/dogfood/target-subject/img2drawing-r21-target-progression.png)
 
 ## Why this exists
@@ -80,16 +95,23 @@ python skills/img2drawing/benchmarks/stage_reconstruction/full_body_croquis_subj
 
 ```
 .
+├── showcase/          # curated, human-facing results and comparison pages
+│   ├── README.md      # showcase index
+│   └── entries/       # one page and its display assets per result
 ├── skills/
 │   └── img2drawing/   # the deployable skill: SKILL.md, runtime source, references,
 │                       # playbooks, schemas, benchmarks — everything that ships
-└── dev/                # release builds, dogfood runs, verification evidence,
-                         # and the changelog — not part of the shipped skill
+├── dev/                # release builds, dogfood runs, verification evidence,
+│   ├── dogfood/        # persistent reproducible runs and continuation records
+│   └── ...             # release artifacts, audits, and the changelog
+└── temp/               # ignored scratch space for unpromoted runs
 ```
 
 `skills/img2drawing/` is self-contained and independently packageable; everything
-under `dev/` supports developing and releasing it but never ships inside the skill
-itself.
+under `dev/` supports developing, reproducing, and releasing it but never ships inside
+the skill itself. `showcase/` contains lightweight curated copies of selected outputs;
+the corresponding full run records live under `dev/dogfood/`. `temp/` is disposable and
+should not be used as the long-term source of a showcase entry or a continuation run.
 
 ## Contributing
 

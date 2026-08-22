@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 360,
+        "left": 150,
+        "right": 330,
+        "top": 140
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/crops/drawing.png",
+      "crop_sha256": "cd089a4b9be1a2408be27a47a4c43e71c350a5582b097076c78e0fd288dd1c7c",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/current_drawing.png",
+      "source_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1050,
+        "left": 15,
+        "right": 275,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/crops/grammar.png",
+      "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+      "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
+      "source_size": [
+        289,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 700,
+        "left": 430,
+        "right": 660,
+        "top": 290
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_02/local_reviews/shoulder_elbow/crops/subject.png",
+      "crop_sha256": "a0413bc8ff31e742fd90f2020198bb82c9d82de3a8473818e8b7d2e5cfc39c12",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "ac644df2171329e6bed470cc639d47119f65cc6a7c57ccea59d95fd156de16b3",
+  "drawing_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+  "history_cursor": 92,
+  "intent": "Re-check the carried full-width-band concern on the near arm chain.",
+  "label": "shoulder_elbow",
+  "local_review_id": "P4_structural_connections:pass_02:shoulder_elbow",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections"
+}

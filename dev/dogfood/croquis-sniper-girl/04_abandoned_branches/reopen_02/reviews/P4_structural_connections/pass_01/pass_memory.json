@@ -1,0 +1,253 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "P4-S1",
+      "history_cursor": 60,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_insert_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-S2",
+      "history_cursor": 61,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_insert_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-E1",
+      "history_cursor": 62,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "elbow_transition_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-E2",
+      "history_cursor": 63,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "elbow_transition_right_inner",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-E3",
+      "history_cursor": 64,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "elbow_transition_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-W1",
+      "history_cursor": 65,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "wrist_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-W2",
+      "history_cursor": 66,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hand_block_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-W3",
+      "history_cursor": 67,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hand_pocket_overlap_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-W4",
+      "history_cursor": 68,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hand_block_left_occluded",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-P1",
+      "history_cursor": 69,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hip_thigh_insert_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-P2",
+      "history_cursor": 70,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hip_thigh_insert_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-K1",
+      "history_cursor": 71,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "knee_plane_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-K2",
+      "history_cursor": 72,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "knee_plane_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-A1",
+      "history_cursor": 73,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ankle_bridge_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-F1",
+      "history_cursor": 74,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_block_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-F2",
+      "history_cursor": 75,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_sole_left",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-A2",
+      "history_cursor": 76,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ankle_bridge_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-F3",
+      "history_cursor": 77,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_block_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-F4",
+      "history_cursor": 78,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "boot_sole_right",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-R1",
+      "history_cursor": 79,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "sling_strap_upper",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-R2",
+      "history_cursor": 80,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "sling_strap_lower",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-R3",
+      "history_cursor": 81,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_body_overlap",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "P4-R4",
+      "history_cursor": 82,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "rifle_stock_hip_overlap",
+      "reason": null,
+      "stage": "P4_structural_connections",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P4_structural_connections",
+  "state": "cold_start"
+}

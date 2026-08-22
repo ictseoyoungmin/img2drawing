@@ -1,0 +1,77 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/grammar_vs_drawing.png",
+    "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/local_reference_overview.png",
+    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 180,
+        "left": 150,
+        "right": 330,
+        "top": 20
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/drawing.png",
+      "crop_sha256": "5afeb00ccfaa46f4b6ebc1fce4cbb9c246a0d67512cdfa06a0849f7bcdb66661",
+      "role": "current_drawing",
+      "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+      "source_sha256": "5194194e0f62ed437d6ea6fc55e8d0ec735acf9760d2addde35421d96fc7d10c",
+      "source_size": [
+        512,
+        768
+      ]
+    },
+    "grammar": {
+      "box": {
+        "bottom": 1050,
+        "left": 15,
+        "right": 275,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/grammar.png",
+      "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
+      "role": "grammar_exemplar",
+      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+      "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
+      "source_size": [
+        290,
+        1086
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 360,
+        "left": 300,
+        "right": 660,
+        "top": 40
+      },
+      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/subject.png",
+      "crop_sha256": "6ba5dc38954b65ec5210d6926d13338a40ccb81eeff748945b8f76198bc5a533",
+      "role": "subject_reference",
+      "source_path": "/home/claude/work/subject.png",
+      "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+      "source_size": [
+        1024,
+        1536
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "5194194e0f62ed437d6ea6fc55e8d0ec735acf9760d2addde35421d96fc7d10c",
+  "drawing_state_sha256": "4e15d1d4ced7f32ef5cdc17d61cc63be67bc1795fc7129c0e9c989c7165f9e67",
+  "history_cursor": 53,
+  "intent": "Check the head/hair mass, the face plane and the neck bridge into the torso.",
+  "label": "head_neck",
+  "local_review_id": "P3_primary_masses:pass_01:head_neck",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses"
+}
