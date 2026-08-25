@@ -1,0 +1,33 @@
+{
+  "schema": "img2drawing.region_envelope.fixture.v1",
+  "region_id": "near_arm",
+  "observation_lock_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "reference": {
+    "source_surface": "reference",
+    "observation_id": "reference-near-arm-01",
+    "source_artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "axis_start": [0.5, 0.2],
+    "axis_end": [0.5, 0.7],
+    "stations": [
+      {"t": 0.2, "width_canvas": 0.1, "width_local_axis": 0.2},
+      {"t": 0.5, "width_canvas": 0.08, "width_local_axis": 0.16},
+      {"t": 0.8, "width_canvas": 0.06, "width_local_axis": 0.12}
+    ],
+    "visible_fraction": 1.0
+  },
+  "drawing": {
+    "source_surface": "drawing",
+    "observation_id": "drawing-near-arm-01",
+    "source_artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "source_state_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "axis_start": [0.5, 0.2],
+    "axis_end": [0.5, 0.7],
+    "stations": [
+      {"t": 0.2, "width_canvas": 0.04, "width_local_axis": 0.08},
+      {"t": 0.5, "width_canvas": 0.03, "width_local_axis": 0.06},
+      {"t": 0.8, "width_canvas": 0.025, "width_local_axis": 0.05}
+    ],
+    "visible_fraction": 0.62
+  },
+  "evidence_note": "The axis is retained while the drawing envelope is substantially narrower at upper/mid/lower stations."
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/region_envelope.schema.json",
+  "title": "Region envelope evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "region_id",
+    "side_role",
+    "axis_start",
+    "axis_end",
+    "stations",
+    "visible_fraction",
+    "occlusion",
+    "source_surface",
+    "observation_id",
+    "source_artifact_sha256",
+    "observation_lock_digest"
+  ],
+  "properties": {
+    "schema": {"const": "img2drawing.region_envelope.v1"},
+    "region_id": {"type": "string", "minLength": 1},
+    "side_role": {"enum": ["near", "far", "unknown"]},
+    "axis_start": {"$ref": "#/$defs/point"},
+    "axis_end": {"$ref": "#/$defs/point"},
+    "stations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/station"}
+    },
+    "visible_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "occlusion": {"type": "array", "items": {"type": "string"}},
+    "source_surface": {"enum": ["reference", "drawing"]},
+    "observation_id": {"type": "string", "minLength": 1},
+    "source_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "source_state_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "subject_height": {"anyOf": [{"type": "number", "exclusiveMinimum": 0}, {"type": "null"}]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "point": {
+      "type": "array",
+      "prefixItems": [{"type": "number", "minimum": 0, "maximum": 1}, {"type": "number", "minimum": 0, "maximum": 1}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t", "contour_a", "contour_b", "visibility", "occlusion", "uncertainty_radius"],
+      "properties": {
+        "t": {"type": "number", "minimum": 0, "maximum": 1},
+        "contour_a": {"$ref": "#/$defs/point"},
+        "contour_b": {"$ref": "#/$defs/point"},
+        "visibility": {"enum": ["visible", "partial", "occluded", "unknown"]},
+        "occlusion": {"type": "array", "items": {"type": "string"}},
+        "uncertainty_radius": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}

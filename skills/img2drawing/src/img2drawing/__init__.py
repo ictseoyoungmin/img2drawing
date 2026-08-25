@@ -33,6 +33,11 @@ from .review import (
     DualReferenceReviewArtifacts,
     StaleReviewError,
 )
+from .registration import (
+    EnvelopeStation, RegionEnvelopeObservation, RegionEnvelopeIntegrityError,
+    EnvelopeIntegrity, AxisEnvelopeEvidence, StationEnvelopeEvidence,
+    RegionGeometryComparison, compare_region_envelopes,
+)
 
 __all__=[
     "DrawingRun","DrawingRunResult",
@@ -46,5 +51,8 @@ __all__=[
     "CropBox","LocalReviewError","LocalReviewArtifacts",
     "ActionMemory","StagePassMemory","ReopenRecord",
     "StaleReviewError",
+    "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
+    "EnvelopeIntegrity","AxisEnvelopeEvidence","StationEnvelopeEvidence",
+    "RegionGeometryComparison","compare_region_envelopes",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
 ]

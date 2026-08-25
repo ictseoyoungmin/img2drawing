@@ -103,6 +103,17 @@ Legacy checkpoints without a lock remain readable, but they cannot start a new
 stage or draw on the current branch until the worker explicitly reopens P1 and
 creates a lock.
 
+## Region envelope evidence
+
+When a landmark axis looks plausible but a part is too thin, use the
+agent-authored `RegionEnvelopeObservation` utility. Select the region axis
+independently on the subject and drawing, record paired contour points at
+increasing normalized stations (upper/mid/lower for an arm), visible fraction,
+and occlusion. `compare_region_envelopes()` reports geometric discrepancy and
+provenance integrity only; it is not an artistic score or stage decision. A
+drawing profile must include its current drawing-state digest so stale evidence
+cannot be reused after a correction.
+
 
 ## Grammar Exemplar Audit
 Bundled grammar exemplars are audited against the frozen StageContract and bound to their image SHA-256.

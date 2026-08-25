@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S01 종료, 다음 slice 미활성화)
-SKELETON: S02 Region Envelope Evidence부터 S09 Exemplar Ablation까지
+ACTIVE: S02 Region Envelope Evidence: near-arm vertical slice (구현 중)
+SKELETON: S03 Blind Visual Fidelity Review부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock
-NEXT GATE: S01 capsule 검토 후 S02 Region Envelope Evidence 활성화
+NEXT GATE: S02 public contract, provenance integrity, near-arm fixture, 100 ms comparison test
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -340,6 +340,8 @@ S01의 `FrozenObservationRecord` schema, replacement/invalidation semantics, leg
 
 ### S02 — Region Envelope Evidence: near-arm vertical slice
 
+Status: `ACTIVE` (S01 capsule consumed; implementation in progress)
+
 책임:
 
 - generic `RegionEnvelopeObservation`과 `RegionGeometryComparison`을 정의한다.
@@ -353,6 +355,28 @@ S01의 `FrozenObservationRecord` schema, replacement/invalidation semantics, leg
 - reference/drawing artifact provenance clone과 stale drawing을 거부한다.
 - unit fixture와 dogfood visual board가 있다.
 - 최대 16 stations/region의 comparison은 선형이며 100 ms budget 안에서 동작한다.
+
+### S02 public surface and Definition of Closed
+
+```python
+station = EnvelopeStation(t=0.5, contour_a=(...), contour_b=(...))
+profile = RegionEnvelopeObservation(..., stations=(...))
+comparison = compare_region_envelopes(
+    reference_profile,
+    drawing_profile,
+    current_drawing_state_sha256=current_state,
+)
+```
+
+- [ ] normalized axis와 2~16개의 strictly increasing station contour pair를 검증한다.
+- [ ] near/far/unknown side, visible fraction, occlusion, uncertainty를 보존한다.
+- [ ] local-axis 및 선택적 subject-height 기준 width evidence와 visible-fraction drift를 산출한다.
+- [ ] reference/drawing observation id, artifact hash, frozen observation digest를 독립적으로 검증한다.
+- [ ] 현재 drawing-state digest가 stale하면 비교를 거부한다.
+- [ ] 비교 결과는 evidence-only authority를 유지하고 artistic `PASS/FAIL`을 만들지 않는다.
+- [ ] near-arm upper/mid/lower fixture가 얇아진 drawing을 수치로 드러낸다.
+- [ ] schema, unit/integration test, dogfood visual board와 context capsule이 작성된다.
+- [ ] 16 station comparison이 100 ms budget 안에서 동작하고 S01 lock digest를 소비한다.
 
 활성화 전 disposable spike:
 

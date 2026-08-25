@@ -29,3 +29,33 @@ occupied envelope. An arm can have a plausible shoulder→elbow axis while its
 upper/mid/lower widths or visible length are badly under-drawn. Record those as
 separate region evidence; do not let a landmark delta stand in for silhouette
 measurement.
+
+The S02 evidence utility uses an evaluator-selected normalized axis and paired
+contour samples at up to 16 increasing stations:
+
+```python
+from img2drawing import EnvelopeStation, RegionEnvelopeObservation
+
+near_arm = RegionEnvelopeObservation(
+    region_id="near_arm",
+    side_role="near",
+    axis_start=(0.5, 0.2),
+    axis_end=(0.5, 0.7),
+    stations=(
+        EnvelopeStation(0.2, (0.45, 0.3), (0.55, 0.3)),
+        EnvelopeStation(0.5, (0.46, 0.45), (0.54, 0.45)),
+        EnvelopeStation(0.8, (0.47, 0.6), (0.53, 0.6)),
+    ),
+    visible_fraction=0.9,
+    occlusion=(),
+    source_surface="reference",  # use "drawing" for the independent drawing profile
+    observation_id="reference-near-arm-01",
+    source_artifact_sha256="...64 lowercase hex characters...",
+    observation_lock_digest="...the frozen pre-draw lock digest...",
+)
+```
+
+`compare_region_envelopes()` returns width ratios, local-axis normalized widths,
+visible-fraction drift, and occlusion-order changes. It is evidence only: it
+does not emit an artistic `PASS` or `FAIL`. Drawing evidence must carry a
+current drawing-state digest when compared, so stale measurements are rejected.
