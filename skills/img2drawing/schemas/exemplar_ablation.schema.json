@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/exemplar_ablation.schema.json",
+  "title": "Exemplar A/B/C ablation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "conditions", "trials", "best_condition", "recommendation", "metric_order", "rationale", "authority"],
+  "properties": {
+    "schema": {"const": "img2drawing.exemplar_ablation.v1"},
+    "conditions": {"const": ["A_subject_contract", "B_full_body_exemplar", "C_modular_cards"]},
+    "trials": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/trial"}},
+    "best_condition": {"enum": ["A_subject_contract", "B_full_body_exemplar", "C_modular_cards"]},
+    "recommendation": {"enum": ["adopt_modular_cards", "retain_subject_contract", "unproven"]},
+    "metric_order": {"type": "array", "minItems": 4, "items": {"type": "string"}},
+    "rationale": {"type": "string", "minLength": 1},
+    "authority": {"const": "structural_metrics_not_prettiness"}
+  },
+  "$defs": {
+    "trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "region_blockers", "reopen_count", "residual_discrepancy", "p4_structural_errors", "p4_tracked", "evidence_refs", "notes"],
+      "properties": {
+        "condition": {"enum": ["A_subject_contract", "B_full_body_exemplar", "C_modular_cards"]},
+        "region_blockers": {"type": "integer", "minimum": 0},
+        "reopen_count": {"type": "integer", "minimum": 0},
+        "residual_discrepancy": {"type": "number", "minimum": 0},
+        "p4_structural_errors": {"type": "integer", "minimum": 0},
+        "p4_tracked": {"const": true},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

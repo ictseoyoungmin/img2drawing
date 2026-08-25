@@ -29,6 +29,10 @@ from .exemplar.sync import (
     DEFAULT_EXEMPLAR_FILES, ExemplarTreeSyncReport, ExemplarTreeSyncError,
     compare_exemplar_trees, assert_exemplar_trees_synced,
 )
+from .exemplar.ablation import (
+    ABLATION_CONDITIONS, ModularGrammarCard, AblationTrial,
+    ExemplarAblationReport, run_exemplar_ablation,
+)
 from .review import (
     CropBox, LocalReviewError, LocalReviewArtifacts,
     ActionMemory, StagePassMemory, ReopenRecord,
@@ -84,4 +88,6 @@ __all__=[
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",
+    "ABLATION_CONDITIONS","ModularGrammarCard","AblationTrial",
+    "ExemplarAblationReport","run_exemplar_ablation",
 ]

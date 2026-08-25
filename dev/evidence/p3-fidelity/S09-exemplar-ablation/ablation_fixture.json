@@ -1,0 +1,9 @@
+{
+  "schema": "img2drawing.exemplar_ablation.fixture.v1",
+  "metric_order": ["region_blockers", "reopen_count", "residual_discrepancy", "p4_structural_errors"],
+  "A_subject_contract": {"region_blockers": 4, "reopen_count": 3, "residual_discrepancy": 0.4, "p4_structural_errors": 3},
+  "B_full_body_exemplar": {"region_blockers": 5, "reopen_count": 4, "residual_discrepancy": 0.55, "p4_structural_errors": 4},
+  "C_modular_cards": {"region_blockers": 2, "reopen_count": 1, "residual_discrepancy": 0.2, "p4_structural_errors": 1},
+  "recommendation": "adopt_modular_cards",
+  "note": "This is a structural transfer fixture, not a prettiness score."
+}
