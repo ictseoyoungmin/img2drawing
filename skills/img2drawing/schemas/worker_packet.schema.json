@@ -82,6 +82,20 @@
     },
     "checkpoint_resume": {
       "type": "object"
+    },
+    "grammar_cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["card_id", "stage", "digest"],
+        "properties": {
+          "card_id": {"type": "string", "minLength": 1},
+          "stage": {"type": "string", "minLength": 1},
+          "digest": {"type": "string", "minLength": 1},
+          "scope": {"type": "array", "items": {"type": "string"}},
+          "transfer_mapping": {"type": "array", "items": {"type": "string"}}
+        }
+      }
     }
   }
 }

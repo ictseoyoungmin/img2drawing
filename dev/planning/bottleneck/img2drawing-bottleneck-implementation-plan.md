@@ -11,7 +11,7 @@ SYSTEM: sketched / cross-slice contract frozen
 ACTIVE: S10 Full Integration + P2/P3 Semantic Residual Gate
 SKELETON: 없음
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology; S09 Exemplar Ablation
-NEXT GATE: upstream P1/P2/P3 correction and repeat blind review; retain matched-detail ablation as the condition baseline
+NEXT GATE: matched B replay + blind B/card-driven-C comparison, then upstream P1/P2/P3 correction and repeat blind review
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -665,6 +665,9 @@ Status: `ACTIVE` (S09 implementation is closed; s1s9 dogfood exposed unresolved 
 - [ ] mechanical audit와 visual finding이 같은 artifact/state/lock digest에 bind된다.
 - [x] torso turn, head/hair identity, near-arm width, prop topology에 대한 residual blocker와 earliest responsible stage가 명시된다.
 - [x] mismatch가 남으면 P5 polish가 아니라 P2/P3 reopen decision을 기록한다.
+- [x] C modular cards가 `DrawingRun` action provenance와 worker packet/checkpoint/session/review manifest에 strict bind된다.
+- [x] C `transfer_mapping`이 실제 stroke-plan 입력으로 소비되고 166/166 point geometry가 subject observation에 고정된다.
+- [ ] matched B와 card-driven C가 시각적으로 분리되는 independent blind run이 있다.
 - [ ] 통합 report, visual/mechanical evidence, context capsule, tests/smoke가 작성된다.
 
 초기 evidence:
@@ -680,10 +683,16 @@ dev/evidence/p3-fidelity/S10-integration/
 `head_hair`, `torso_orientation`, `near_arm`, `pelvis`, `attached_object`가
 렌더된 결과에서 막혀 있다. 최초 비교의 detail budget confound는 B/C를 A와
 동등한 identity-detail inventory/budget(각 82 action)으로 재실행해 제거했다.
-정규화 blind 결과도 A가 가장 강하고 Bn/Cn은 generic하며 Cn의 가시적 개선이
-없었다. 따라서 이 표본에서는 modular-card의 관찰 가능한 이득을 확인하지
-못했지만, 통계적 인과로 확대하지 않는다. S09에 남아 있던 ablation fixture는
-정책 fixture로 분리해 두고, 이번 S10 real-subject 결과와 혼동하지 않는다.
+정규화 blind 결과도 A가 가장 강하고 Bn/Cn은 generic했지만, Cn 카드는
+`DrawingRun`에 runtime 주입되지 않았으므로 modular-card 효과의 근거로
+사용할 수 없다. 이후 bound-v2에서는 authored draw/replace 166/166개, worker
+packet 9개, checkpoint/session/review manifest에 strict binding을 확인했다.
+카드-driven C는 이제 `transfer_mapping` 166/166개를 실제 stroke plan에
+소비했고, point array는 bound-v2와 166/166 동일한 채 line material만
+달라져 raster SHA가 바뀌었다. 그러나 아직 B와의 matched blind 비교가
+없으므로 likeness gain은 미확정이다. 다음 병목은 matched B replay와
+독립 blind B/C 비교다. S09에 남아 있던 ablation fixture는 정책 fixture로
+분리해 두고, 이번 S10 real-subject 결과와 혼동하지 않는다.
 기존 P3 evaluator의 worker 독립성도 입증되지 않았으므로 S10을 `CLOSED`로
 선언하지 않는다. 다음 작업은 P1/P2 → P3 reopen과 반복 blind fidelity
 review다.

@@ -1,0 +1,29 @@
+{
+  "schema": "img2drawing.s10_card_driven_stroke_plan.v1",
+  "condition": "C_modular_cards_card_driven",
+  "subject": "dev/dogfood/s1s9/subject.png",
+  "run_dir": "drawings/s10-ablation/C_modular_grammar_cards_card_driven",
+  "actions": 182,
+  "authored_draw_replace_actions": 166,
+  "identity_role_actions": 82,
+  "grammar_card_bound_actions": 166,
+  "grammar_card_consumed_actions": 166,
+  "consumed_by_stage": {
+    "P1_gesture": 10,
+    "P2_primary_axes": 10,
+    "P3_primary_masses": 27,
+    "P4_structural_connections": 16,
+    "P5_clean_blockin": 103
+  },
+  "worker_packets_with_stage_card": 9,
+  "review_manifest_cards": 5,
+  "require_grammar_card_bindings": true,
+  "geometry_points_equal_to_bound_v2_actions": 166,
+  "geometry_mutation": "forbidden",
+  "final_sha256": "80534c5043c3257dbd00f5183c563f545a22b1a98b280b177c40631e4c5b2788",
+  "bound_v2_control_sha256": "80a2c760b22432df07d5d6c52f7b72edb67c66d123c065b1f367729b2e16e4e4",
+  "mechanical_audit": "pass",
+  "timelapse": {"mode": "every_n", "every_n": 4, "frame_count": 47},
+  "visual_effect_status": "raster_changed_by_line_material; blind_B_comparison_pending",
+  "decision": "revise"
+}

@@ -1,5 +1,12 @@
 # S10 real subject A/B/C ablation comparison
 
+> Historical record: the original C runner serialized modular cards as
+> condition metadata but did not bind them to the `DrawingRun` action path.
+> Therefore the C-over-B raster comparison below is descriptive only, not a
+> test of the modular-card effect. The corrected strict-binding run is recorded
+> in `blind_normalized_ablation_report.md` and
+> `drawings/s10-ablation/C_modular_grammar_cards_bound_v2/`.
+
 ## Conditions
 
 - **A** — subject + frozen stage contract
@@ -44,7 +51,9 @@ The image-only evaluator inspected only the subject and the three final rasters.
   identity strokes, but the final raster does not make the bob, readable face,
   tactical garment topology, near-arm width, boots, or rifle components
   reliably visible.
-- **C shows no visible improvement over B** in this single-subject trial.
+- **C shows no visible improvement over B** in this historical single-subject
+  trial; because C cards were not runtime-bound, this cannot be attributed to
+  the card policy.
 
 The condition result is therefore `REVISE` for A, B, and C. This is an
 image-only sample result, not a statistical causal claim. Expected modular-card

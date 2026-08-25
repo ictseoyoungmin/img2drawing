@@ -1,5 +1,10 @@
 # S10 blind A/B/C report
 
+> Historical pre-binding comparison. C's modular cards were present in the
+> condition metadata but were not consumed by the `DrawingRun` action path, so
+> this report cannot estimate their visual effect. See the strict bound-v2
+> verification in `blind_normalized_ablation_report.md`.
+
 This report was authored from the subject and the three final drawing rasters
 only; condition metadata, run reports, exemplar verdicts, and prior findings
 were withheld.
@@ -21,5 +26,6 @@ results, with no visible C-over-B gain.**
 
 The evidence supports the following condition-level conclusion: subject-only A
 preserved more subject-specific identity than B or C in this sample. It does
-not show that modular cards improve the final raster over the full-body
-exemplar. All conditions require upstream P1/P2/P3 correction before closure.
+not establish whether modular cards improve the final raster over the full-body
+exemplar because C was not runtime-bound. All conditions require upstream
+P1/P2/P3 correction before closure.

@@ -1,4 +1,4 @@
-# S10 normalized A/B/C blind visual comparison
+# S10 normalized A/B/C blind visual comparison (pre-binding run)
 
 ## Method and scope
 
@@ -6,6 +6,11 @@ This comparison used only the subject raster and three final drawing rasters.
 The evaluator did not consult run metadata, reports, scripts, stage rationales,
 exemplar verdicts, or prior findings. The candidates were treated as A, Bn, and
 Cn only from their supplied paths.
+
+Important implementation qualification: the original Cn runner serialized its
+modular cards to metadata but did not bind them to the `DrawingRun` action path.
+This remains a valid image-only description of those rasters, but it is **not**
+a valid estimate of modular-card visual effect.
 
 ## Overall verdict
 
@@ -40,18 +45,37 @@ topology.
 
 ## Bn versus Cn under equal detail budget
 
-Both normalized conditions contain exactly 82 identity-role actions. **Cn shows
-no visible improvement over Bn.** They retain the same generic head/torso/leg
-construction and omit the subject's defining hair, near-arm width, tactical
-clothing identity, and rifle topology. Bn may have slightly clearer sparse
+Both normalized conditions contain exactly 82 identity-role actions. The rasters
+show no visible Cn improvement over Bn, but this is not attributable to cards:
+the Cn cards were not runtime-bound, and the two runs share most of the same
+hard-coded subject-derived scaffold. Bn may have slightly clearer sparse
 face/bang/collar marks; Cn's more prominent long-object lines do not improve
 identification.
 
 This equal-budget result is a useful single-sample outcome check, not proof of
 statistical causality. Replicated runs or a matched-stroke controlled study are
-still needed to claim that the condition itself caused the observed gap. The
-cautious conclusion is: **A is visibly better; Cn provides no observable final-
-fidelity advantage over Bn.**
+still needed to claim that the condition itself caused the observed gap. Because
+Cn did not receive its intended runtime treatment, the cautious conclusion is
+only: **A is visibly better; the modular-card effect is unresolved.**
+
+## Post-run binding verification
+
+The corrected C runner was executed separately at
+`drawings/s10-ablation/C_modular_grammar_cards_bound_v2/`. All 166 authored
+draw/replace actions carry the stage card ID (P1 10, P2 10, P3 27, P4 16, P5
+103), all nine worker packets carry the current card, and checkpoint/session/
+review-manifest persistence is enabled. Its final SHA256 is identical to Cn's
+because this slice adds provenance enforcement; it does not rewrite the
+hard-coded geometry plan. A new card-driven stroke-plan run is required before
+making a visual causal claim.
+
+That card-driven run is now recorded at
+`drawings/s10-ablation/C_modular_grammar_cards_card_driven/`. It consumed all
+166 stage-bound cards in the stroke plan, kept all 166 point arrays equal to the
+bound-v2 control, and changed only line material; its final SHA is
+`80534c5043c3257dbd00f5183c563f545a22b1a98b280b177c40631e4c5b2788`. This is a
+runtime-consumption proof and a raster-effect measurement, not yet a likeness
+claim: the matched B replay and independent blind comparison are still pending.
 
 ## Earliest blockers and decision
 
