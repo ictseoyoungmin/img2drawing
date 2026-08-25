@@ -3,11 +3,25 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from img2drawing import DrawingRun, ObservationContract, ViewObservation
+import pytest
+
+from img2drawing import DrawingRun, ModularGrammarCard, ObservationContract, ViewObservation
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SUBJECT = ROOT / "examples" / "full_body_croquis" / "subject.png"
+
+CARDS = tuple(
+    ModularGrammarCard(
+        card_id=f"test-{stage}",
+        stage=stage,
+        polarity="positive",
+        scope=("representation",),
+        transfer_mapping=("subject endpoints",),
+        source_audit_status="pass",
+    )
+    for stage in ("P1_gesture", "P2_primary_axes", "P3_primary_masses", "P4_structural_connections", "P5_clean_blockin")
+)
 
 
 def _run(tmp_path: Path, stage_index: int, suffix: str) -> DrawingRun:
@@ -74,3 +88,65 @@ def test_p3_exemplar_is_marked_unproven_until_ablation(tmp_path: Path):
     assert audit["mandatory_path_policy"] == "unproven_until_ablation"
     assert "grammar_vs_drawing" not in packet["mandatory_review_views"]
     assert "grammar_exemplar_unproven_warning" in packet["mandatory_review_views"]
+
+
+def test_modular_cards_bind_to_action_provenance_and_worker_packet(tmp_path: Path):
+    run = DrawingRun.create(
+        SUBJECT,
+        tmp_path / "cards",
+        width=96,
+        height=144,
+        working_supersample=2,
+        session_id="test-modular-card-binding",
+        grammar_cards=CARDS,
+        require_grammar_card_bindings=True,
+    )
+    run.lock_observation(
+        ObservationContract(
+            subject_summary="Card binding test subject.",
+            view=ViewObservation(
+                body_view="unknown",
+                torso_turn="unknown",
+                near_side="unknown",
+                arm_visibility={"subject_left": "unknown", "subject_right": "unknown"},
+                arm_occlusion={"subject_left": (), "subject_right": ()},
+            ),
+        )
+    )
+    run.stage_start("P1_gesture")
+    run.draw({
+        "action_id": "card-bound-stroke",
+        "kind": "draw_stroke",
+        "stage": "P1_gesture",
+        "role": "gesture",
+        "part": "card_test",
+        "points": [[20, 20], [32, 48], [44, 80]],
+        "stroke_id": "card_test",
+        "tool": {"preset": "construction_pencil", "grade": "HB", "overrides": {"pressure": 0.3, "width": 1.2, "opacity": 0.4}},
+        "observation_id": "card-test-observation",
+        "source_observation": "Card binding test observation.",
+    })
+    event = run.session.history.to_dict()["actions"][-1]
+    binding = event["provenance"]["metadata"]
+    assert binding["grammar_card_ids"] == ["test-P1_gesture"]
+    assert binding["grammar_card"]["stage"] == "P1_gesture"
+    run.prepare_stage_review()
+    packet = _packet(run)
+    assert packet["grammar_cards"][0]["card_id"] == "test-P1_gesture"
+    resumed = DrawingRun.resume(run.output_dir)
+    assert resumed.require_grammar_card_bindings is True
+    assert resumed.grammar_cards[0]["card_id"] == "test-P1_gesture"
+
+
+def test_strict_modular_card_binding_requires_one_card_per_stage(tmp_path: Path):
+    with pytest.raises(ValueError, match="exactly one card per stage"):
+        DrawingRun.create(
+            SUBJECT,
+            tmp_path / "missing",
+            width=96,
+            height=144,
+            working_supersample=2,
+            session_id="test-modular-card-missing-stage",
+            grammar_cards=CARDS[:1],
+            require_grammar_card_bindings=True,
+        )

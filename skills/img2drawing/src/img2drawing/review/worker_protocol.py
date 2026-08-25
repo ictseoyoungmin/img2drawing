@@ -22,6 +22,7 @@ class AutonomousWorkerPacket:
     autonomous_loop: tuple[str, ...]
     autonomy_policy: tuple[str, ...]
     escalation_policy: tuple[str, ...]
+    grammar_cards: tuple[dict[str, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -39,6 +40,7 @@ class AutonomousWorkerPacket:
             "autonomous_loop":list(self.autonomous_loop),
             "autonomy_policy":list(self.autonomy_policy),
             "escalation_policy":list(self.escalation_policy),
+            "grammar_cards":[dict(card) for card in self.grammar_cards],
         }
 
     def save_json(self,path: str|Path) -> Path:
@@ -242,6 +244,18 @@ class AutonomousWorkerPacket:
         lines += ["", "## Autonomous loop"] + [f"{i+1}. {x}" for i,x in enumerate(self.autonomous_loop)]
         lines += ["", "## Autonomy policy"] + [f"- {x}" for x in self.autonomy_policy]
         lines += ["", "## Escalation policy"] + [f"- {x}" for x in self.escalation_policy]
+        lines += ["", "## Bound modular grammar cards"]
+        if self.grammar_cards:
+            lines += [
+                f"- `{card['card_id']}` / `{card['stage']}` — digest `{card['digest']}`"
+                for card in self.grammar_cards
+            ]
+            lines.append(
+                "These cards are representation guidance only; subject geometry remains authoritative. "
+                "Every authored stroke in this stage retains the bound card id in provenance."
+            )
+        else:
+            lines.append("- _none bound for this condition_")
 
         p.write_text("\n".join(lines)+"\n",encoding="utf-8")
         return p
@@ -257,6 +271,7 @@ def build_worker_packet(
     pass_index: int,
     canvas_scale_guidance,
     checkpoint_resume,
+    grammar_cards=(),
 ) -> AutonomousWorkerPacket:
     mandatory=[]
     if references.task_stage_target is not None:
@@ -343,4 +358,5 @@ def build_worker_packet(
             "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
             "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first.",
         ),
+        grammar_cards=tuple(dict(card) for card in grammar_cards),
     )

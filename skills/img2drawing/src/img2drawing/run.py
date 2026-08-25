@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
-from dataclasses import dataclass
+from dataclasses import dataclass, replace as dataclass_replace
 from importlib import resources
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -32,6 +32,53 @@ from .review.pass_memory import ActionMemory, build_stage_pass_memory, make_acti
 from .review.reopen import ReopenRecord
 from .stages import StageProgress, get_stage_registry, get_stage_contract_registry
 from ._version import __version__, RELEASE_REVISION, RELEASE_SLICE, PUBLIC_API, DEFAULT_SESSION_ID
+
+
+def _normalize_grammar_cards(cards):
+    """Normalize stage-scoped grammar cards for runtime provenance binding.
+
+    Cards are deliberately treated as representation guidance, not geometry.
+    The runtime only records which audited card was active for a stage so a
+    condition cannot claim card usage from metadata written after the drawing.
+    """
+    if cards is None:
+        return ()
+    normalized = []
+    seen_ids = set()
+    seen_stages = set()
+    for raw in cards:
+        if hasattr(raw, "to_dict"):
+            raw = raw.to_dict()
+        if not isinstance(raw, Mapping):
+            raise TypeError("grammar_cards entries must be mappings or expose to_dict()")
+        card = {
+            "schema": str(raw.get("schema", "img2drawing.modular_grammar_card.v1")),
+            "card_id": str(raw.get("card_id", "")).strip(),
+            "stage": str(raw.get("stage", "")).strip(),
+            "polarity": str(raw.get("polarity", "")).strip(),
+            "scope": [str(item).strip() for item in raw.get("scope", ()) if str(item).strip()],
+            "transfer_mapping": [
+                str(item).strip() for item in raw.get("transfer_mapping", ()) if str(item).strip()
+            ],
+            "source_audit_status": str(raw.get("source_audit_status", "not_audited")).strip(),
+        }
+        if not card["card_id"] or not card["stage"]:
+            raise ValueError("grammar card requires card_id and stage")
+        if card["card_id"] in seen_ids:
+            raise ValueError(f"duplicate grammar card id: {card['card_id']}")
+        if card["stage"] in seen_stages:
+            raise ValueError(f"multiple grammar cards bound to stage: {card['stage']}")
+        if card["polarity"] not in {"positive", "negative"}:
+            raise ValueError("grammar card polarity must be positive or negative")
+        if card["polarity"] == "positive" and card["source_audit_status"] == "fail":
+            raise ValueError("FAIL exemplar cannot become a positive grammar card")
+        if not card["scope"] or not card["transfer_mapping"]:
+            raise ValueError("grammar card requires scope and transfer_mapping")
+        card["digest"] = sha256_obj(card)
+        normalized.append(card)
+        seen_ids.add(card["card_id"])
+        seen_stages.add(card["stage"])
+    return tuple(normalized)
 
 
 @dataclass(frozen=True)
@@ -65,6 +112,8 @@ class DrawingRun:
         stage_registry="full_body_croquis",
         grammar_exemplar_dir=None,
         exemplar_dir=None,
+        grammar_cards=None,
+        require_grammar_card_bindings=False,
         task_stage_targets: Mapping[str, str | Path] | None = None,
         stage_targets: Mapping[str, str | Path] | None = None,
         working_supersample=3,
@@ -105,6 +154,19 @@ class DrawingRun:
         self.grammar_exemplar_dir=Path(str(grammar_exemplar_dir)).resolve()
         # 0.5.1 compatibility
         self.exemplar_dir=self.grammar_exemplar_dir
+        self.grammar_cards=_normalize_grammar_cards(grammar_cards)
+        self._grammar_cards_by_stage={card["stage"]: card for card in self.grammar_cards}
+        self.require_grammar_card_bindings=bool(require_grammar_card_bindings)
+        if self.require_grammar_card_bindings:
+            expected_stages={spec.stage_id for spec in self.stage_specs}
+            actual_stages=set(self._grammar_cards_by_stage)
+            if actual_stages != expected_stages:
+                missing=sorted(expected_stages-actual_stages)
+                extra=sorted(actual_stages-expected_stages)
+                raise ValueError(
+                    "strict grammar-card binding requires exactly one card per stage; "
+                    f"missing={missing}, extra={extra}"
+                )
 
         self.references: ReferenceBundle=build_reference_bundle(
             subject_reference=self.reference_path,
@@ -124,6 +186,8 @@ class DrawingRun:
                 "public_api":PUBLIC_API,
                 "reference_path":str(self.reference_path),
                 "reference_bundle":self.references.to_dict(),
+                "grammar_cards":[dict(card) for card in self.grammar_cards],
+                "require_grammar_card_bindings":self.require_grammar_card_bindings,
             },
         )
         self.canvas=CanvasRuntime(self.session.history)
@@ -217,6 +281,34 @@ class DrawingRun:
                 f"drawing action belongs to {normalized.stage}, "
                 f"current stage is {self.current_stage}"
             )
+
+        card = self._grammar_cards_by_stage.get(normalized.stage)
+        binding_kinds={"draw_stroke", "replace_stroke", "replace_segment"}
+        if self.require_grammar_card_bindings and normalized.kind in binding_kinds and card is None:
+            raise RuntimeError(f"no grammar card is bound to stage {normalized.stage!r}")
+        if card is not None and normalized.kind in binding_kinds:
+            metadata = dict(normalized.metadata or {})
+            existing = metadata.get("grammar_card")
+            if existing is not None:
+                existing_id = existing.get("card_id") if isinstance(existing, Mapping) else None
+                if existing_id != card["card_id"]:
+                    raise ValueError(
+                        f"action grammar card {existing_id!r} does not match bound stage card {card['card_id']!r}"
+                    )
+            existing_ids=metadata.get("grammar_card_ids")
+            if existing_ids is not None and list(existing_ids) != [card["card_id"]]:
+                raise ValueError(
+                    f"action grammar_card_ids {existing_ids!r} do not match bound stage card {card['card_id']!r}"
+                )
+            metadata["grammar_card_ids"] = [card["card_id"]]
+            metadata["grammar_card"] = {
+                "card_id": card["card_id"],
+                "stage": card["stage"],
+                "digest": card["digest"],
+                "scope": list(card["scope"]),
+                "transfer_mapping": list(card["transfer_mapping"]),
+            }
+            normalized = dataclass_replace(normalized, metadata=metadata)
 
         result=self.session.execute(normalized)
         self.canvas.sync(self.session.history)
@@ -581,6 +673,8 @@ class DrawingRun:
                 "atomic_replace":True,
                 "resume_method":"DrawingRun.resume",
             },
+            grammar_cards=(self._grammar_cards_by_stage[stage],)
+            if stage in self._grammar_cards_by_stage else (),
         )
         packet.save_json(out/"worker_packet.json")
         packet.save_markdown(out/"worker_packet.md")
@@ -1025,6 +1119,8 @@ class DrawingRun:
                 "task_stage_targets":{
                     k:str(v.path) for k,v in self.references.task_stage_targets.items()
                 },
+                "grammar_cards":[dict(card) for card in self.grammar_cards],
+                "require_grammar_card_bindings":self.require_grammar_card_bindings,
                 "working_supersample":self.working_supersample,
             },
             "agent_session":self.session.to_dict(),
@@ -1078,6 +1174,8 @@ class DrawingRun:
         *,
         reference=None,
         grammar_exemplar_dir=None,
+        grammar_cards=None,
+        require_grammar_card_bindings=None,
     ):
         """Resume a partially reviewed DrawingRun from a current-version checkpoint.
 
@@ -1105,12 +1203,20 @@ class DrawingRun:
             Path(grammar_exemplar_dir).expanduser().resolve()
             if grammar_exemplar_dir is not None else Path(init["grammar_exemplar_dir"]).expanduser().resolve()
         )
+        cards = grammar_cards if grammar_cards is not None else init.get("grammar_cards")
+        strict_cards = (
+            bool(require_grammar_card_bindings)
+            if require_grammar_card_bindings is not None
+            else bool(init.get("require_grammar_card_bindings", False))
+        )
         targets={k:Path(v) for k,v in (init.get("task_stage_targets") or {}).items()}
         obj=cls(
             reference_path=ref, output_dir=init["output_dir"], session_id=init["session_id"],
             width=int(init["width"]), height=int(init["height"]),
             stage_registry=init.get("stage_registry","full_body_croquis"),
             grammar_exemplar_dir=grammar, task_stage_targets=targets,
+            grammar_cards=cards,
+            require_grammar_card_bindings=strict_cards,
             working_supersample=int(init.get("working_supersample",3)),
         )
         obj.session=AgentDrawingSession.from_dict(data["agent_session"])
@@ -1214,6 +1320,8 @@ class DrawingRun:
                 "slice":RELEASE_SLICE,
                 "reference_sha256":self.references.subject.sha256,
                 "reference_bundle":self.references.to_dict(),
+                "grammar_cards":[dict(card) for card in self.grammar_cards],
+                "require_grammar_card_bindings":self.require_grammar_card_bindings,
                 "stage_contract_registry":self.stage_contracts.to_dict(),
                 "stage_reviews":{k:[r.to_dict() for r in v] for k,v in self._reviews.items()},
                 "local_reviews":{k:v.to_dict() for k,v in self._local_reviews.items()},
