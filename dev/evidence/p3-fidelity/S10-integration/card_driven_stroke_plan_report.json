@@ -24,6 +24,6 @@
   "bound_v2_control_sha256": "80a2c760b22432df07d5d6c52f7b72edb67c66d123c065b1f367729b2e16e4e4",
   "mechanical_audit": "pass",
   "timelapse": {"mode": "every_n", "every_n": 4, "frame_count": 47},
-  "visual_effect_status": "raster_changed_by_line_material; blind_B_comparison_pending",
+  "visual_effect_status": "raster_changed_by_line_material; blind_review_complete",
   "decision": "revise"
 }

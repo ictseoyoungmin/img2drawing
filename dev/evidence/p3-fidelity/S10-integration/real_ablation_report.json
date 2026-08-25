@@ -94,7 +94,17 @@
     "geometry_points_equal_to_bound_v2_actions": 166,
     "final_sha256": "80534c5043c3257dbd00f5183c563f545a22b1a98b280b177c40631e4c5b2788",
     "mechanical_audit": "pass",
-    "visual_effect_status": "raster_changed_by_line_material; blind_B_comparison_pending"
+    "visual_effect_status": "raster_changed_by_line_material; blind_review_complete"
+  },
+  "blind_card_driven_vs_b": {
+    "candidate_01": "B_full_body_exemplar_normalized",
+    "candidate_02": "C_modular_cards_card_driven",
+    "candidate_02_overall_edge": "slight",
+    "candidate_02_region_edges": ["head_hair_face", "pelvis_legs", "boots"],
+    "candidate_01_region_edges": ["near_arm_width"],
+    "ties_with_blockers": ["torso_orientation", "tactical_clothing", "prop_topology"],
+    "decision": "revise",
+    "authority": "independent_neutral_candidate_raster_review"
   },
   "authority": "independent_image_only_comparison; not statistical causality",
   "overall_decision": "revise"

@@ -35,9 +35,18 @@ arrays are identical to bound-v2 (geometry mutation remains forbidden), while
 line-material changes produce a new final SHA
 `80534c5043c3257dbd00f5183c563f545a22b1a98b280b177c40631e4c5b2788`.
 This proves card consumption and a measurable raster effect, but not a
-subject-fidelity gain. S10 remains `REVISE`: the next experiment must replay B
-with the matched budget and run an independent blind B-versus-card-driven-C
-comparison.
+subject-fidelity gain. S10 remains `REVISE` until the matched blind comparison
+is considered alongside the upstream residual gate.
+
+That blind comparison is now complete with neutral `candidate_01/02` inputs.
+After unblinding, candidate 02 is card-driven C and has a slight edge in
+head/hair/face, pelvis/legs, boots, and overall preference; candidate 01 (B)
+has a slight near-arm-width edge. Torso orientation, tactical clothing, and
+rifle topology are ties with substantial blockers in both. The independent
+decision is `REVISE`, so this slice records a small regional grammar effect,
+not professional likeness closure. The next bottleneck is P1/P2/P3 correction
+for the shared torso-turn, clothing, and prop residuals, followed by a repeat
+blind comparison.
 
 ## Evidence
 
@@ -54,6 +63,7 @@ comparison.
 - `drawings/s10-ablation/C_modular_grammar_cards_bound_v2/` (strict binding dogfood)
 - `card_driven_stroke_plan_report.json`
 - `drawings/s10-ablation/C_modular_grammar_cards_card_driven/` (card consumption dogfood)
+- `blind_card_driven_vs_b_report.md` (neutral-candidate independent review)
 
 Mechanical smoke also passes for all three isolated runs with strict JSON audit
 artifacts under each `croquis_run/mechanical_audit.json`; all three audits retain
