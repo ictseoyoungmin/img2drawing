@@ -1,11 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Observation v2",
+  "$id": "https://img2drawing.local/schemas/observation.schema.json",
+  "title": "Observation v3",
   "type": "object",
-  "required": [
-    "subject_summary"
-  ],
+  "required": ["subject_summary"],
   "properties": {
+    "schema": {
+      "enum": ["img2drawing.observation.v2", "img2drawing.observation.v3"]
+    },
+    "semantic_authority": {"const": "agent"},
+    "automatic_semantic_inference": {"const": false},
     "subject_summary": {
       "type": "string",
       "minLength": 1
@@ -13,8 +17,85 @@
     "global_relations": {
       "type": "object"
     },
-    "parts": {
-      "type": "object"
+    "parts": {"type": "object"},
+    "uncertainties": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "drawing_priorities": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "view": {
+      "type": "object",
+      "required": [
+        "body_view",
+        "torso_turn",
+        "near_side",
+        "arm_visibility",
+        "arm_occlusion",
+        "prop_overlap_order",
+        "uncertainties"
+      ],
+      "properties": {
+        "body_view": {
+          "enum": [
+            "front",
+            "back",
+            "side",
+            "three_quarter",
+            "back_three_quarter",
+            "front_three_quarter",
+            "unknown"
+          ]
+        },
+        "torso_turn": {
+          "enum": ["left", "right", "none", "unknown"]
+        },
+        "near_side": {
+          "enum": [
+            "subject_left",
+            "subject_right",
+            "image_left",
+            "image_right",
+            "unknown"
+          ]
+        },
+        "arm_visibility": {
+          "type": "object",
+          "required": ["subject_left", "subject_right"],
+          "properties": {
+            "subject_left": {"$ref": "#/$defs/armVisibility"},
+            "subject_right": {"$ref": "#/$defs/armVisibility"}
+          },
+          "additionalProperties": false
+        },
+        "arm_occlusion": {
+          "type": "object",
+          "required": ["subject_left", "subject_right"],
+          "properties": {
+            "subject_left": {"$ref": "#/$defs/stringArray"},
+            "subject_right": {"$ref": "#/$defs/stringArray"}
+          },
+          "additionalProperties": false
+        },
+        "prop_overlap_order": {"$ref": "#/$defs/stringArray"},
+        "uncertainties": {"$ref": "#/$defs/stringArray"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "armVisibility": {
+      "enum": ["visible", "partial", "occluded", "unknown"]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string"}
     }
   }
 }

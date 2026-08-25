@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/observation_reopen.schema.json",
+  "title": "img2drawing Observation Reopen v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "reopen_id",
+    "reason",
+    "previous_observation_digest",
+    "replacement_observation_digest",
+    "source_cursor",
+    "restored_cursor",
+    "target_stage",
+    "invalidated_stages"
+  ],
+  "properties": {
+    "schema": {"const": "img2drawing.observation_reopen.v1"},
+    "reopen_id": {"type": "string", "minLength": 1},
+    "reason": {"type": "string", "minLength": 1},
+    "previous_observation_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "replacement_observation_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_cursor": {"type": "integer", "minimum": 0},
+    "restored_cursor": {"type": "integer", "minimum": 0},
+    "target_stage": {"type": "string", "minLength": 1},
+    "invalidated_stages": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false
+}

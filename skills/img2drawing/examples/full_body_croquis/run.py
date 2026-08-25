@@ -5,7 +5,7 @@ import json
 import shutil
 from pathlib import Path
 
-from img2drawing import DrawingRun
+from img2drawing import DrawingRun, ObservationContract, ViewObservation
 
 
 HERE=Path(__file__).resolve().parent
@@ -110,6 +110,25 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         working_supersample=3,
         session_id="canonical-full-body-croquis-r07",
     )
+    run.lock_observation(ObservationContract(
+        subject_summary="Full-body subject reference for the canonical stage workflow.",
+        view=ViewObservation(
+            body_view="unknown",
+            torso_turn="unknown",
+            near_side="unknown",
+            arm_visibility={
+                "subject_left":"unknown",
+                "subject_right":"unknown",
+            },
+            arm_occlusion={
+                "subject_left":(),
+                "subject_right":(),
+            },
+            uncertainties=(
+                "The canonical example demonstrates review lifecycle; pose-side labels remain subject-observation inputs.",
+            ),
+        ),
+    ))
 
     # ------------------------------------------------------------------
     # P1 / PASS 1

@@ -1,11 +1,19 @@
 from pathlib import Path
 import json
-from img2drawing import DrawingRun
+from img2drawing import DrawingRun, ObservationContract, ViewObservation
 
 HERE=Path(__file__).resolve().parent
 cfg=json.loads((HERE/'benchmark.json').read_text(encoding='utf-8'))
 out=HERE/'_smoke_output'
 run=DrawingRun.create(HERE/cfg['subject'],out,working_supersample=2)
+run.lock_observation(ObservationContract(
+    subject_summary="Subject-only packaging benchmark observation smoke.",
+    view=ViewObservation(
+        arm_visibility={"subject_left":"unknown","subject_right":"unknown"},
+        arm_occlusion={"subject_left":(),"subject_right":()},
+        uncertainties=("This benchmark checks lifecycle binding, not pose semantics.",),
+    ),
+))
 
 if run.references.task_stage_targets:
     raise SystemExit('subject-only benchmark unexpectedly contains task stage targets')

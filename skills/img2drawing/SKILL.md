@@ -23,7 +23,7 @@ Ask the user only if the source is missing/unreadable, the target itself is ambi
 ## Authority model
 `DrawingRun` is the only orchestration authority.
 - `core/`: strokes, actions, history, session.
-- `observation/`: agent-authored semantic observations.
+- `observation/`: agent-authored semantic observations and the immutable pre-draw observation lock.
 - `stages/`: stage intent and expert drawing guidance, never semantic judgement.
 - `review/`: artifact-bound dual-reference review and autonomous worker packet.
 - `canvas/`: inspect and edit the current drawing.
@@ -57,7 +57,7 @@ Do not sweep through them in one pass. Harden the current stage before moving on
 ## Autonomous hardening loop
 For every stage:
 
-`read stage brief → observe subject whole → draw bounded strokes → prepare_stage_review() → inspect mandatory views/crops → write concrete findings → revise highest-impact issues → fresh review → advance`
+`read stage brief → observe subject whole → lock pre-draw view observation → draw bounded strokes → prepare_stage_review() → inspect mandatory views/crops → write concrete findings → revise highest-impact issues → fresh review → advance`
 
 `prepare_stage_review()` writes both `worker_packet.json` and `worker_packet.md`. Those packets contain:
 - stage intent;
@@ -83,6 +83,25 @@ A review should separately record:
 - a concrete `advance_rationale`.
 
 This is process integrity, not an automatic artistic score.
+
+## Pre-draw observation lock
+
+Before the first `stage_start()` or drawing action in a new run, create an
+agent-authored `ObservationContract` with a typed `ViewObservation` and call
+`DrawingRun.lock_observation()`. The lock records the subject reference hash,
+observation id, digest, view/orientation, near-side role, arm visibility and
+occlusion, and major prop overlap order.
+
+The lock is semantic evidence, not automatic pose inference. It is immutable
+through ordinary drawing mutations and is persisted in both
+`observation/pre_draw_observation.json` and the resumable checkpoint. If the
+observation changes after drawing starts, call `reopen_observation()`; the
+runtime must reopen P1 and invalidate downstream drawing/review evidence rather
+than silently changing the observation basis.
+
+Legacy checkpoints without a lock remain readable, but they cannot start a new
+stage or draw on the current branch until the worker explicitly reopens P1 and
+creates a lock.
 
 
 ## Grammar Exemplar Audit

@@ -2,7 +2,12 @@ from ._version import __version__
 
 from .run import DrawingRun, DrawingRunResult
 from .core import DrawingAction, AgentDrawingSession, Stroke, StrokeIR, CanvasHistory
-from .observation import ObservationContract
+from .observation import (
+    ObservationContract,
+    ViewObservation,
+    FrozenObservationRecord,
+    ObservationReopenRecord,
+)
 from .stages import (
     StageSpec, StageContract, StageContractRegistry, StageContractError,
     ExemplarContract, get_stage_registry, get_stage_contract_registry,
@@ -32,7 +37,8 @@ from .review import (
 __all__=[
     "DrawingRun","DrawingRunResult",
     "DrawingAction","AgentDrawingSession","Stroke","StrokeIR","CanvasHistory",
-    "ObservationContract","StageSpec","StageContract","StageContractRegistry","StageContractError","ExemplarContract",
+    "ObservationContract","ViewObservation","FrozenObservationRecord","ObservationReopenRecord",
+    "StageSpec","StageContract","StageContractRegistry","StageContractError","ExemplarContract",
     "get_stage_registry","get_stage_contract_registry",
     "SubjectReference","TaskStageTarget","GrammarExemplar","StageReferenceView",
     "ReferenceBundle","ReferenceBundleError","build_reference_bundle",

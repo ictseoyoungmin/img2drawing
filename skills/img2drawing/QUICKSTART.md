@@ -3,9 +3,20 @@
 The default real-world path assumes **one subject image only**.
 
 ```python
-from img2drawing import DrawingRun
+from img2drawing import DrawingRun, ObservationContract, ViewObservation
 
 run = DrawingRun.create("subject.png", "out")
+run.lock_observation(ObservationContract(
+    subject_summary="Agent-authored whole-subject observation.",
+    view=ViewObservation(
+        body_view="unknown",
+        torso_turn="unknown",
+        near_side="unknown",
+        arm_visibility={"subject_left":"unknown", "subject_right":"unknown"},
+        arm_occlusion={"subject_left":(), "subject_right":()},
+        uncertainties=("Fill view facts from the actual subject before drawing.",),
+    ),
+))
 run.stage_start("P1_gesture")
 ```
 
@@ -30,7 +41,7 @@ supplies `task_stage_targets={...}`. They are not required for ordinary use.
 
 For every stage:
 
-`observe subject → author explicit strokes → prepare_stage_review() → inspect whole/local evidence → revise → fresh review → advance`
+`observe subject → lock view observation → author explicit strokes → prepare_stage_review() → inspect whole/local evidence → revise → fresh review → advance`
 
 After any successful drawing mutation, the runtime atomically checkpoints the run. A
 successful `prepare_stage_review()` also guarantees its rendered drawing state is

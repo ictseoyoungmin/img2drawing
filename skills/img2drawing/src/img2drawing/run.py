@@ -17,6 +17,7 @@ from .provenance.timelapse import export_timelapse, select_cursors
 from .reference import ReferenceBundle, build_reference_bundle
 from .render.pillow_pencil_contact import RENDERER_ID, render as render_pencil
 from .render.scale_guidance import canvas_scale_guidance
+from .observation import ObservationContract, FrozenObservationRecord, ObservationReopenRecord
 from .review.artifact import DrawingArtifact, sha256_file
 from .review.correction import assert_review_artifact_current, assert_review_current, assert_local_review_current
 from .review.record import StageReviewRecord, record_from_artifacts, normalize_findings
@@ -132,6 +133,8 @@ class DrawingRun:
         self._action_events=[]
         self._reopens: list[ReopenRecord]=[]
         self._reopen_contexts: dict[str,dict[str,Any]]={}
+        self._observation_lock: FrozenObservationRecord | None = None
+        self._observation_reopens: list[ObservationReopenRecord] = []
 
     @classmethod
     def create(
@@ -178,6 +181,7 @@ class DrawingRun:
         return self.stage_contracts.for_stage(sid)
 
     def stage_start(self,stage: str):
+        self._require_observation_lock()
         self.progress.require_current(stage)
         self.progress.mark_started(stage,self.session.history.cursor)
         self.session.history.marker(
@@ -190,6 +194,7 @@ class DrawingRun:
         self.save_checkpoint()
 
     def _execute_draw(self,action: DrawingAction|dict[str,Any]):
+        self._require_observation_lock()
         if self.current_stage is None:
             raise RuntimeError("all stages already advanced")
 
@@ -223,6 +228,7 @@ class DrawingRun:
         return result
 
     def draw_many(self,actions: Iterable[DrawingAction|dict[str,Any]]):
+        self._require_observation_lock()
         results=[self._execute_draw(a) for a in actions]
         # Batch durability without N checkpoint writes.
         self.save_checkpoint()
@@ -230,6 +236,145 @@ class DrawingRun:
 
     def _state_sha(self):
         return sha256_obj(strokeir_canonical_dict(self.session.current_ir()))
+
+    @property
+    def observation_lock(self) -> FrozenObservationRecord | None:
+        return self._observation_lock
+
+    @property
+    def observation_reopens(self) -> tuple[ObservationReopenRecord, ...]:
+        return tuple(self._observation_reopens)
+
+    def _require_observation_lock(self) -> FrozenObservationRecord:
+        if self._observation_lock is None:
+            raise RuntimeError(
+                "pre-draw observation lock is required before stage_start or draw; "
+                "call DrawingRun.lock_observation() first"
+            )
+        return self._observation_lock
+
+    def _write_json_atomic(self, path: str | Path, payload: Mapping[str, Any]) -> Path:
+        p=Path(path).resolve()
+        p.parent.mkdir(parents=True,exist_ok=True)
+        tmp=p.with_name(p.name+".tmp")
+        tmp.write_text(
+            json.dumps(payload,indent=2,ensure_ascii=False,sort_keys=True),
+            encoding="utf-8",
+        )
+        os.replace(tmp,p)
+        return p
+
+    def _persist_observation_artifacts(self) -> None:
+        if self._observation_lock is not None:
+            self._write_json_atomic(
+                self.output_dir/"observation"/"pre_draw_observation.json",
+                self._observation_lock.to_dict(),
+            )
+        if self._observation_reopens:
+            self._write_json_atomic(
+                self.output_dir/"observation"/"observation_reopens.json",
+                {
+                    "schema":"img2drawing.observation_reopens.v1",
+                    "records":[item.to_dict() for item in self._observation_reopens],
+                },
+            )
+
+    def lock_observation(self, observation: ObservationContract) -> FrozenObservationRecord:
+        """Freeze the agent-authored pre-draw observation for this run.
+
+        A lock is allowed only before the first stage marker or drawing action.  A
+        later correction must use ``reopen_observation`` so downstream evidence is
+        audibly invalidated instead of silently changing its semantic basis.
+        """
+        if not isinstance(observation, ObservationContract):
+            raise TypeError("lock_observation requires an ObservationContract")
+        if observation.view is None:
+            raise ValueError("lock_observation requires typed ViewObservation data")
+        if self._observation_lock is not None:
+            raise RuntimeError(
+                "observation is already locked; use reopen_observation() for a replacement"
+            )
+        legacy_adoption = bool(
+            self._reopens
+            and self.current_stage == "P1_gesture"
+            and "P1_gesture" not in self.progress.started_cursor
+            and self._reopens[-1].target_stage == "P1_gesture"
+        )
+        if (self.session.history.cursor or self.progress.started_cursor) and not legacy_adoption:
+            raise RuntimeError(
+                "observation can only be initially locked before stage_start or draw; "
+                "reopen P1 before replacing a legacy/unlocked run"
+            )
+        observation_id = f"{self.session_id}:observation:01"
+        if legacy_adoption:
+            observation_id = f"{self.session_id}:observation:legacy-adoption:01"
+        record=FrozenObservationRecord.create(
+            observation,
+            subject_reference_sha256=self.references.subject.sha256,
+            observation_id=observation_id,
+            locked_at_cursor=self.session.history.cursor,
+            locked_at_stage=self.current_stage or "P1_gesture",
+        )
+        self._observation_lock=record
+        self._persist_observation_artifacts()
+        self.save_checkpoint()
+        return record
+
+    def reopen_observation(
+        self,
+        *,
+        reason: str,
+        replacement: ObservationContract,
+    ) -> ObservationReopenRecord:
+        """Replace a frozen observation and invalidate affected drawing evidence."""
+        old=self._require_observation_lock()
+        reason=str(reason).strip()
+        if not reason:
+            raise ValueError("observation replacement requires a concrete reason")
+        if not isinstance(replacement, ObservationContract):
+            raise TypeError("replacement requires an ObservationContract")
+        if replacement.view is None:
+            raise ValueError("replacement requires typed ViewObservation data")
+
+        source_cursor=int(self.session.history.cursor)
+        stage_reopen=None
+        if source_cursor or self.progress.started_cursor:
+            if "P1_gesture" not in self.progress.started_cursor:
+                raise RuntimeError(
+                    "observation replacement requires an explicitly started P1 so "
+                    "reopen_stage can invalidate the drawing branch"
+                )
+            stage_reopen=self.reopen_stage(
+                "P1_gesture",
+                reason=reason,
+                discovered_in_stage=self.current_stage,
+                findings=("pre-draw observation lock replaced",),
+            )
+
+        replacement_record=FrozenObservationRecord.create(
+            replacement,
+            subject_reference_sha256=self.references.subject.sha256,
+            observation_id=f"{self.session_id}:observation:{len(self._observation_reopens)+2:02d}",
+            locked_at_cursor=self.session.history.cursor,
+            locked_at_stage=self.current_stage or "P1_gesture",
+            replacement_of=old.observation_digest,
+        )
+        self._observation_lock=replacement_record
+        reopen_record=ObservationReopenRecord(
+            reopen_id=f"observation_reopen_{len(self._observation_reopens)+1:02d}",
+            reason=reason,
+            previous_observation_digest=old.observation_digest,
+            replacement_observation_digest=replacement_record.observation_digest,
+            source_cursor=source_cursor,
+            restored_cursor=int(self.session.history.cursor),
+            target_stage="P1_gesture",
+            invalidated_stages=()
+            if stage_reopen is None else tuple(stage_reopen.invalidated_stages),
+        )
+        self._observation_reopens.append(reopen_record)
+        self._persist_observation_artifacts()
+        self.save_checkpoint()
+        return reopen_record
 
     def _stage_exemplar_path(self,stage: str) -> Path:
         """0.5.1 compatibility alias for the grammar exemplar."""
@@ -706,7 +851,7 @@ class DrawingRun:
 
     def _checkpoint_payload(self):
         return {
-            "schema":"img2drawing.run_checkpoint.v1",
+            "schema":"img2drawing.run_checkpoint.v2",
             "version":__version__,
             "slice":RELEASE_SLICE,
             "init":{
@@ -735,6 +880,10 @@ class DrawingRun:
             "action_memory_events":[x.to_dict() for x in self._action_events],
             "reopens":[x.to_dict() for x in self._reopens],
             "reopen_contexts":self._reopen_contexts,
+            "observation_lock":(
+                None if self._observation_lock is None else self._observation_lock.to_dict()
+            ),
+            "observation_reopens":[x.to_dict() for x in self._observation_reopens],
         }
 
     def save_checkpoint(self,path: str|Path|None=None) -> Path:
@@ -772,7 +921,10 @@ class DrawingRun:
         base=Path(checkpoint_or_output_dir).expanduser().resolve()
         checkpoint=base/"session"/"checkpoint.json" if base.is_dir() else base
         data=json.loads(checkpoint.read_text(encoding="utf-8"))
-        if data.get("schema")!="img2drawing.run_checkpoint.v1":
+        if data.get("schema") not in {
+            "img2drawing.run_checkpoint.v1",
+            "img2drawing.run_checkpoint.v2",
+        }:
             raise ValueError(f"unsupported run checkpoint schema: {data.get('schema')!r}")
         init=data["init"]
         ref=Path(reference).expanduser().resolve() if reference is not None else Path(init["reference_path"]).expanduser().resolve()
@@ -813,6 +965,14 @@ class DrawingRun:
         obj._action_events=[ActionMemory.from_dict(x) for x in data.get("action_memory_events",())]
         obj._reopens=[ReopenRecord.from_dict(x) for x in data.get("reopens",())]
         obj._reopen_contexts={str(k):dict(v) for k,v in (data.get("reopen_contexts") or {}).items()}
+        lock_data=data.get("observation_lock")
+        obj._observation_lock=(
+            None if lock_data is None else FrozenObservationRecord.from_dict(lock_data)
+        )
+        obj._observation_reopens=[
+            ObservationReopenRecord.from_dict(x)
+            for x in data.get("observation_reopens",())
+        ]
         obj._prepared={}
         obj._prepared_memory={}
         obj.canvas.sync(obj.session.history)
@@ -869,6 +1029,10 @@ class DrawingRun:
                 "local_reviews":{k:v.to_dict() for k,v in self._local_reviews.items()},
                 "action_memory_events":[x.to_dict() for x in self._action_events],
                 "reopens":[x.to_dict() for x in self._reopens],
+                "observation_lock":(
+                    None if self._observation_lock is None else self._observation_lock.to_dict()
+                ),
+                "observation_reopens":[x.to_dict() for x in self._observation_reopens],
             },
         )
         session_dir=self.output_dir/"session"; session_dir.mkdir(parents=True,exist_ok=True)
@@ -876,7 +1040,7 @@ class DrawingRun:
 
         manifest=self.output_dir/"review_manifest.json"
         manifest.write_text(json.dumps({
-            "schema":"img2drawing.review_manifest.v7",
+            "schema":"img2drawing.review_manifest.v8",
             "version":__version__,
             "slice":RELEASE_SLICE,
             "reference_bundle":self.references.to_dict(),
@@ -885,6 +1049,10 @@ class DrawingRun:
             "reviews":{k:[r.to_dict() for r in v] for k,v in self._reviews.items()},
             "local_reviews":{k:v.to_dict() for k,v in self._local_reviews.items()},
             "reopens":[x.to_dict() for x in self._reopens],
+            "observation_lock":(
+                None if self._observation_lock is None else self._observation_lock.to_dict()
+            ),
+            "observation_reopens":[x.to_dict() for x in self._observation_reopens],
         },indent=2,ensure_ascii=False,sort_keys=True),encoding="utf-8")
 
         tl_manifest=None; tl_gif=None; tl_status="disabled"
