@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S07 종료, 다음 slice 미활성화)
-SKELETON: S08 Generic Prop Topology부터 S09 Exemplar Ablation까지
+ACTIVE: S08 Generic Prop Topology (구현 중)
+SKELETON: S09 Exemplar Ablation
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure
-NEXT GATE: S07 capsule 검토 후 S08 Generic Prop Topology 활성화
+NEXT GATE: S08 generic topology API, rifle/non-rifle fixture, overlap/width regression
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -575,6 +575,8 @@ dev/planning/capsules/S07-head-hair.md
 
 ### S08 — Generic prop topology
 
+Status: `ACTIVE` (S07 capsule consumed; implementation in progress)
+
 책임:
 
 - rifle 전용 명칭 대신 `major_axis`, `width_change_points`, `terminal_masses`, `body_overlap_points`, `visible_interruptions`, `occlusion_order`를 구현한다.
@@ -584,6 +586,14 @@ dev/planning/capsules/S07-head-hair.md
 - rifle fixture와 비총기 fixture 하나가 같은 schema/API를 사용한다.
 - gross axis만 맞고 폭 변화/overlap이 틀린 prop은 closed되지 않는다.
 - 기존 P5 attached-object 규칙과 중복 owner를 만들지 않는다.
+
+### S08 Definition of Closed
+
+- [ ] rifle와 비총기 prop이 동일 generic topology schema/API를 사용한다.
+- [ ] major axis, width-change points, terminal masses, body overlap points, visible interruptions, occlusion order를 독립 기록한다.
+- [ ] gross axis가 맞아도 폭 변화/overlap/topology가 틀린 fixture가 evidence로 드러난다.
+- [ ] distinct provenance/stale drawing/evidence-only authority와 schema/tests를 닫는다.
+- [ ] visual board와 capsule이 작성되고 기존 P5 attached-object owner와 중복되지 않는다.
 
 ### S09 — Modular grammar cards + A/B/C ablation
 

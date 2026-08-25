@@ -1,0 +1,15 @@
+{
+  "schema": "img2drawing.prop_topology.fixture.v1",
+  "observation_lock_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "shared_api_examples": ["rifle", "guitar"],
+  "rifle": {
+    "reference_width_change_points": [0.10, 0.06, 0.03],
+    "drawing_width_change_points": [0.10, 0.10, 0.10],
+    "reference_overlap_order": ["prop", "torso", "near_arm"],
+    "drawing_overlap_order": ["torso", "prop", "near_arm"]
+  },
+  "guitar": {
+    "same_schema": true,
+    "note": "Non-rifle object uses the same major-axis/width/mass/overlap vocabulary."
+  }
+}

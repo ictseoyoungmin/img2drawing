@@ -82,3 +82,8 @@ For head identity at primary-mass level, use `HeadHairObservation` before face
 features: head top/chin, left/right cranial and jaw contours, head bounds, bob
 hair envelope, hair occlusion, and anatomical uncertainty. This separates a
 large spherical head or helmet-like hair mass from later eye/nose/mouth detail.
+
+Attached objects use `PropTopologyObservation`, never rifle-specific semantics:
+record the major axis, width-change points, terminal masses, body overlap points,
+visible interruptions, and occlusion order. A prop axis that matches while its
+width transitions or body overlap changes is still unresolved topology.

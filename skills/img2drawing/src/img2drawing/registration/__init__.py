@@ -19,6 +19,11 @@ from .head_hair import (
     HeadHairObservation, HeadHairIntegrityError, HeadHairComparison,
     compare_head_hair,
 )
+from .prop_topology import (
+    PropWidthChangePoint, PropTerminalMass, PropBodyOverlapPoint,
+    PropTopologyObservation, PropTopologyIntegrityError,
+    PropTopologyComparison, compare_prop_topology,
+)
 __all__=["RegistrationLandmark","RegistrationConnection","RegistrationGraph","GridSpec",
          "StructuralComparison","compare_registrations","RegistrationIntegrityError","make_human_pose_registration",
          "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
@@ -29,4 +34,7 @@ __all__=["RegistrationLandmark","RegistrationConnection","RegistrationGraph","Gr
          "LowerBodyObservation","LowerBodyIntegrityError","LowerBodyComparison",
          "compare_lower_body",
          "HeadHairObservation","HeadHairIntegrityError","HeadHairComparison",
-         "compare_head_hair"]
+         "compare_head_hair",
+         "PropWidthChangePoint","PropTerminalMass","PropBodyOverlapPoint",
+         "PropTopologyObservation","PropTopologyIntegrityError",
+         "PropTopologyComparison","compare_prop_topology"]

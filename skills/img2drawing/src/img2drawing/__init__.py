@@ -50,6 +50,9 @@ from .registration import (
     compare_lower_body,
     HeadHairObservation, HeadHairIntegrityError, HeadHairComparison,
     compare_head_hair,
+    PropWidthChangePoint, PropTerminalMass, PropBodyOverlapPoint,
+    PropTopologyObservation, PropTopologyIntegrityError,
+    PropTopologyComparison, compare_prop_topology,
 )
 
 __all__=[
@@ -75,6 +78,9 @@ __all__=[
     "compare_lower_body",
     "HeadHairObservation","HeadHairIntegrityError","HeadHairComparison",
     "compare_head_hair",
+    "PropWidthChangePoint","PropTerminalMass","PropBodyOverlapPoint",
+    "PropTopologyObservation","PropTopologyIntegrityError",
+    "PropTopologyComparison","compare_prop_topology",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",

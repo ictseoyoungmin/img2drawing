@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430">
+  <rect width="900" height="430" fill="#fbfaf7"/>
+  <text x="36" y="34" font-family="sans-serif" font-size="22" fill="#222">S08 generic prop topology evidence</text>
+  <text x="36" y="59" font-family="sans-serif" font-size="13" fill="#666">same major axis does not prove width transitions or body overlap</text>
+  <g transform="translate(85,100)">
+    <g stroke="#b45f06" fill="none">
+      <line x1="20" y1="200" x2="340" y2="30" stroke-width="5"/>
+      <path d="M60 172 L92 155 L115 141" stroke-width="18"/>
+      <path d="M165 116 L205 94" stroke-width="11"/>
+      <path d="M260 65 L310 38" stroke-width="6"/>
+      <circle cx="20" cy="200" r="18" stroke-width="4"/><circle cx="340" cy="30" r="13" stroke-width="4"/>
+      <text x="58" y="250" stroke="none" fill="#8a4a00" font-family="sans-serif" font-size="15">reference: width transitions + terminal masses</text>
+    </g>
+    <g transform="translate(430,0)" stroke="#315b9a" fill="none">
+      <line x1="20" y1="200" x2="340" y2="30" stroke-width="5"/>
+      <path d="M60 172 L92 155 L115 141" stroke-width="18"/>
+      <path d="M165 116 L205 94" stroke-width="18"/>
+      <path d="M260 65 L310 38" stroke-width="18"/>
+      <circle cx="20" cy="200" r="18" stroke-width="4"/><circle cx="340" cy="30" r="13" stroke-width="4"/>
+      <text x="30" y="250" stroke="none" fill="#244c88" font-family="sans-serif" font-size="15">drawing: gross axis only / width drift</text>
+    </g>
+    <text x="238" y="315" font-family="sans-serif" font-size="14" fill="#333">rifle and guitar use the same topology contract</text>
+  </g>
+</svg>
