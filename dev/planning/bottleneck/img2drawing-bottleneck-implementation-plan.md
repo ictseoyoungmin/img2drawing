@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S07 Head and Hair Closure (구현 중)
+ACTIVE: 없음 (S07 종료, 다음 slice 미활성화)
 SKELETON: S08 Generic Prop Topology부터 S09 Exemplar Ablation까지
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure
-NEXT GATE: S07 head/hair contour profile, bob-hair fixture, provenance/stale test
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure
+NEXT GATE: S07 capsule 검토 후 S08 Generic Prop Topology 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -545,7 +545,7 @@ dev/planning/capsules/S06-pelvis-legs.md
 
 ### S07 — Head and hair closure
 
-Status: `ACTIVE` (S06 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, fixture, and capsule complete)
 
 책임:
 
@@ -558,11 +558,20 @@ Status: `ACTIVE` (S06 capsule consumed; implementation in progress)
 
 ### S07 Definition of Closed
 
-- [ ] head top/chin, cranial/jaw contours, head bounds와 hair envelope를 독립 기록한다.
-- [ ] head/hair width-height/asymmetry와 hair occlusion evidence를 비교한다.
-- [ ] feature detail 없이도 과대 구형 head/helmet hair drift가 드러난다.
-- [ ] provenance, stale drawing, evidence-only authority와 schema/tests를 닫는다.
-- [ ] bob-hair fixture와 visual board/capsule이 작성된다.
+- [x] head top/chin, cranial/jaw contours, head bounds와 hair envelope를 독립 기록한다.
+- [x] head/hair width-height/asymmetry와 hair occlusion evidence를 비교한다.
+- [x] feature detail 없이도 과대 구형 head/helmet hair drift가 드러난다.
+- [x] provenance, stale drawing, evidence-only authority와 schema/tests를 닫는다.
+- [x] bob-hair fixture와 visual board/capsule이 작성된다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_head_hair.py
+skills/img2drawing/schemas/head_hair.schema.json
+dev/evidence/p3-fidelity/S07-head-hair/
+dev/planning/capsules/S07-head-hair.md
+```
 
 ### S08 — Generic prop topology
 
