@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S03 Blind Visual Fidelity Review + P3 dual gate (구현 중)
+ACTIVE: 없음 (S03 종료, 다음 slice 미활성화)
 SKELETON: S04 Exemplar Mandatory-Path Cleanup부터 S09 Exemplar Ablation까지
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence
-NEXT GATE: S03 blind packet, eight-region manifest, dual-gate lifecycle test
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate
+NEXT GATE: S03 capsule 검토 후 S04 Exemplar Mandatory-Path Cleanup 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -394,7 +394,7 @@ dev/planning/capsules/S02-region-envelope-evidence.md
 
 ### S03 — Blind Visual Fidelity Review + P3 dual gate
 
-Status: `ACTIVE` (S02 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, and capsule complete)
 
 책임:
 
@@ -425,14 +425,25 @@ visual = run.submit_visual_fidelity_review(
 run.submit_stage_review(..., decision="advance", advance_rationale="...")
 ```
 
-- [ ] blind packet에 frozen observation, stage contract, current drawing, region refs만 남고 worker rationale/exemplar verdict는 노출되지 않는다.
-- [ ] eight required region에 subject finding, drawing finding, independent evidence ref, closure decision이 모두 있다.
-- [ ] blocker, `revise`, 누락 region, stale state/artifact, lock mismatch가 있으면 visual advance와 P3 advance가 모두 거부된다.
-- [ ] `accept-with-rationale`는 uncertainty/occlusion 근거 없이는 생성되지 않는다.
-- [ ] mechanical/process review와 visual review가 동일한 drawing/observation digest에 bind된다.
-- [ ] checkpoint/resume와 review manifest에 visual records가 보존된다.
-- [ ] P3 dual gate가 통합 테스트되고 non-P3 stage progression은 유지된다.
-- [ ] S03 closure evidence와 context capsule이 작성된다.
+- [x] blind packet에 frozen observation, stage contract, current drawing, region refs만 남고 worker rationale/exemplar verdict는 노출되지 않는다.
+- [x] eight required region에 subject finding, drawing finding, independent evidence ref, closure decision이 모두 있다.
+- [x] blocker, `revise`, 누락 region, stale state/artifact, lock mismatch가 있으면 visual advance와 P3 advance가 모두 거부된다.
+- [x] `accept-with-rationale`는 uncertainty/occlusion 근거 없이는 생성되지 않는다.
+- [x] mechanical/process review와 visual review가 동일한 drawing/observation digest에 bind된다.
+- [x] checkpoint/resume와 review manifest에 visual records가 보존된다.
+- [x] P3 dual gate가 통합 테스트되고 non-P3 stage progression은 유지된다.
+- [x] S03 closure evidence와 context capsule이 작성된다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_fidelity.py
+skills/img2drawing/schemas/region_closure.schema.json
+skills/img2drawing/schemas/visual_fidelity_review.schema.json
+skills/img2drawing/schemas/blind_visual_packet.schema.json
+dev/evidence/p3-fidelity/S03-blind-visual-fidelity/
+dev/planning/capsules/S03-blind-visual-fidelity.md
+```
 
 ### S04 — Exemplar mandatory-path cleanup
 
