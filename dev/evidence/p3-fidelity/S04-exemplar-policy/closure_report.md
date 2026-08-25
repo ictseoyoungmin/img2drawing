@@ -12,23 +12,22 @@ Implementation commit: `359afee` (`feat: clean exemplar mandatory review paths`)
 - `py_compile` passed for reference, exemplar sync, review, and run modules.
 - `git diff --check` passed.
 
-## Gates covered
+## Historical gates and current policy
 
-- P1/P4/P5 FAIL exemplars omit `grammar_vs_drawing` from mandatory views and
-  emit only a negative/reference warning.
-- P2 PASS exemplar remains the mandatory positive control.
-- P3 PASS exemplar is explicitly `unproven_until_ablation` in worker packet and
-  audit artifact, so it is not silently treated as validated positive grammar.
-- top-level `skills/img2drawing/exemplars/full_body_croquis/` is declared the
-  authoring owner; packaged bytes are checked as a derived copy.
-- packaged hash drift and missing-file drift are rejected by
-  `assert_exemplar_trees_synced()`.
-- FAIL exemplar paths still produce subject-first review packets without
-  creating a mandatory grammar comparison board.
+The gates below document the earlier S04 policy. The current subject-only mode
+does not require a local representation comparison or any editable answer-image
+tree. Runtime metadata is retained only as an internal compatibility resource;
+it remains subordinate to the subject contract and cannot donate pose,
+coordinates, or proportions.
+
+- FAIL and unproven reference artifacts are warnings, not mandatory positive
+  controls.
+- packaged reference metadata is validated through the runtime manifest.
+- subject-first review packets remain available without a reference comparison
+  board.
 
 ## Evidence locations
 
 - `skills/img2drawing/tests/test_exemplar_policy.py`
-- `skills/img2drawing/tests/test_exemplar_sync.py`
-- `skills/img2drawing/exemplars/AUTHORING_OWNER.md`
-- `skills/img2drawing/src/img2drawing/exemplar/sync.py`
+- `skills/img2drawing/tests/test_packaged_reference_policy.py`
+- `skills/img2drawing/src/img2drawing/reference/loader.py`

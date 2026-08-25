@@ -126,26 +126,15 @@ orientation and near/far arm exposure explicit. A plausible torso width does not
 cancel a wrong view label or a missing near-arm exposure.
 
 
-## Grammar Exemplar Audit
-Bundled grammar exemplars are audited against the frozen StageContract and bound to their image SHA-256.
+## Subject-only reference policy
+This repository intentionally ships no editable authoring or answer-image trees.
+A fresh worker must not search for local answer drawings or copy from them. Use
+the subject image, frozen StageContract, and verified prior drawing state as the
+evidence chain.
 
-Audit is **Agent-authored visual judgement**. Runtime code does not look at pixels and auto-decide PASS/FAIL; it only verifies that the stored audit still points to the same image and contract.
-
-Current full-body audit (canonical status: `exemplars/full_body_croquis/audit_manifest.json`):
-- `P1_gesture`: **FAIL** — does not adequately demonstrate crown→facial-centre continuity or support/counterbalance grammar.
-- `P2_primary_axes`: **PASS**.
-- `P3_primary_masses`: **PASS**.
-- `P4_structural_connections`: **FAIL** — joint locations are shown, but structural transitions are under-explained.
-- `P5_clean_blockin`: **FAIL** — shading, micro folds and texture exceed clean-block-in scope.
-
-When an exemplar audit is `FAIL`, `worker_packet.md` contains a **KNOWN GRAMMAR EXEMPLAR DEFECT** warning. The worker must obey the frozen StageContract and use the failed exemplar only with the listed hazards in mind.
-
-FAIL exemplars are excluded from the mandatory `grammar_vs_drawing` path and
-remain negative/reference warnings only. The P2 PASS exemplar is the current
-positive control; the P3 PASS exemplar is marked `unproven_until_ablation` until
-an A/B/C experiment tracks its effect through P4. The canonical authoring tree
-is `exemplars/full_body_croquis/`; packaged copies are derived and must pass
-`compare_exemplar_trees()` hash synchronization.
+The runtime package may retain representation-only reference metadata for
+backward-compatible packet schemas. That internal data is not a task target,
+does not supply coordinates, and must not replace fresh subject observation.
 
 
 ## Fresh-worker E2E Defect Closure
@@ -211,8 +200,8 @@ Read `references/stages/p3-primary-masses.md`.
 ## P2 Hardening
 P2 is dogfooded as a complete autonomous hardening slice.
 
-Use the corrected PASS P2 grammar exemplar plus subject geometry, local review, and
-pass memory.
+Use the frozen P2 StageContract plus subject geometry, local review, and pass
+memory. No local P2 answer image is required.
 
 Recommended review order:
 1. preserve the closed P1 gesture;
@@ -231,12 +220,12 @@ P2 typically closes only after several revise/correct/re-review cycles:
 Read `references/stages/p2-primary-axes.md`.
 
 ## Fresh P1 Regression
-The canonical example is not sufficient evidence by itself. A fresh-worker regression
+The canonical smoke is not sufficient evidence by itself. A fresh-worker regression
 must independently re-author P1 on a different working canvas and still recover the
 required hardening behavior.
 
 The regression should use a working canvas different from the canonical
-**368×576** canvas, and must not import or call the canonical example. Its trace
+**368×576** canvas, and must not import or call the canonical smoke. Its trace
 follows `schemas/fresh_p1_regression.schema.json`.
 
 The regression must demonstrate:
@@ -253,20 +242,20 @@ The regression must demonstrate:
 This is a regression of P1 capability, not permission to copy the dogfood coordinates
 into future subjects.
 
-## Canonical Example
-The official workflow example is:
+## Canonical Subject-Only Smoke
+The official executable validation is:
 
-`examples/full_body_croquis/run.py`
+`benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_smoke.py`
 
-A fresh worker should treat this example as the canonical executable demonstration
-of the hardening loop, not as subject-coordinate heuristics.
+A fresh worker should use this subject-only smoke as the canonical runtime check,
+not import a pre-authored drawing or subject-coordinate heuristics.
 
 It demonstrates:
 
 `crown-origin P1 → prepare review → Agent-selected local reviews → REVISE →
 explicit replace_stroke → fresh review → pass-memory continuation → ADVANCE`
 
-Required properties of the canonical example:
+Required properties of the canonical smoke:
 - the dominant centre gesture begins at the crown, never at the neck;
 - the facial-centre segment carries face direction before continuing through
   chin → neck → spine → pelvis → support leg;
@@ -325,24 +314,12 @@ After any drawing mutation, both the stage review and its local reviews are stal
 
 Read `references/review/local-review-api.md`.
 
-## Corrected P2 grammar exemplar
-The active P2 grammar exemplar passes the frozen axes-only contract.
-
-P2 workers may use it for:
-- preserved P1 gesture;
-- head cross-axis;
-- shoulder/pelvis axes;
-- major arm/leg direction chains;
-- line hierarchy and detail budget.
-
-The corrected exemplar contains no torso/pelvis mass closure, paired limb thickness,
-hand/foot blocks, joint anatomy, clothing block-in, final silhouette or shading.
-
-Its source is explicit and reproducible:
-`exemplars/full_body_croquis/sources/p2_axes_v2.json`.
-
-P1, P4 and P5 exemplars still carry known audit failures (see the grammar exemplar
-audit above) — do not assume they are safe to imitate.
+## P2 representation boundary
+P2 workers may introduce only the axes listed by the frozen StageContract:
+preserved P1 gesture, head cross-axis, shoulder/pelvis axes, major arm/leg
+direction chains, and the major attached-object axis. Do not import a local
+answer image to justify richer representation; record any contract uncertainty
+and keep geometry subject-derived.
 
 ## Frozen Stage Contract
 The current stage has a machine-readable `StageContract`.
@@ -365,7 +342,8 @@ Every structured review must include `contract_findings`.
 ### P2 boundary is frozen
 P2 is primary axes only. Ribcage/pelvis mass contours, full limb thickness, hand/foot blocks, joint anatomy and clothing block-in belong downstream.
 
-If the current P2 grammar exemplar appears richer than this contract, do not expand P2. Record the exemplar/contract mismatch in the grammar exemplar audit.
+If any internal representation metadata appears richer than this contract, do
+not expand P2. Record the contract mismatch in the stage review.
 
 Read `references/stages/stage-contracts.md`.
 
@@ -374,18 +352,19 @@ Before reviewing a stage, classify every image by role:
 
 - `subject_reference`: geometry truth.
 - `task_stage_target`: optional same-task/same-stage truth.
-- `grammar_exemplar`: representation-only guidance.
+- `runtime_representation_hint`: optional representation-only guidance.
 - `current_drawing`: the artifact being judged.
 
 If a same-task stage target exists, the review priority is:
 
-`task_stage_target > subject_reference > grammar_exemplar`
+`task_stage_target > subject_reference > runtime_representation_hint`
 
 Otherwise:
 
-`subject_reference > grammar_exemplar`
+`subject_reference > runtime_representation_hint`
 
-This does **not** allow a task target to override contradictory subject geometry, and it never allows a grammar exemplar to donate pose or coordinates.
+This does **not** allow a task target to override contradictory subject geometry,
+and it never allows an internal representation hint to donate pose or coordinates.
 
 Use:
 ```python
@@ -559,9 +538,9 @@ explicitly supplied through `task_stage_targets`.
 
 In ordinary subject-only mode the authority is:
 
-`subject_reference > grammar_exemplar`
+`subject_reference > frozen StageContract > verified prior drawing`
 
-The grammar exemplars are generic teaching references. They decide only:
+Any optional runtime representation hint decides only:
 - stage abstraction vocabulary;
 - construction convention;
 - stroke economy / line hierarchy;

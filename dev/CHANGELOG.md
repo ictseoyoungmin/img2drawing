@@ -22,11 +22,8 @@ version is this" — nothing else should hardcode it.
 `SKILL.md` and eight `references/` files were rewritten to drop release-codename
 framing (`## R09 P2 Hardening` → `## P2 Hardening`, etc.) and state rules
 directly instead of as "RXX does X" narrative. Purely historical dogfood
-anecdotes were moved here. While doing this, an internal inconsistency was
-found and fixed: `SKILL.md`'s grammar-exemplar audit table still listed
-`P2_primary_axes` as `FAIL`, even though the R04 entry below it (and
-`exemplars/full_body_croquis/audit_manifest.json`) already recorded it as
-corrected and passing. The table now reflects the manifest's actual status.
+anecdotes were moved here. The current operational docs now use a subject-only
+reference policy and no longer require editable answer-image trees.
 
 Two dead tool references were also found and removed: `SKILL.md` pointed to
 `tools/validate_canonical_example.py` and `dev/dogfood/r08_fresh_p1_regression.py`,
@@ -129,14 +126,14 @@ established the recommended head→pelvis→arms→legs review order.
 
 ## R08 — Fresh P1 regression
 Required an independently re-authored P1 regression on a working canvas
-different from the canonical example's, to prove the hardening behavior
+different from the canonical smoke's, to prove the hardening behavior
 generalizes rather than being memorized from the canonical coordinates.
 
-## R07 — Canonical example
-Established `examples/full_body_croquis/run.py` as the canonical executable
-demonstration of the hardening loop (crown-origin P1 → review → REVISE →
-correction → ADVANCE), deliberately stopping at `P2_primary_axes` rather than
-claiming a full P1→P5 drawing.
+## R07 — Canonical workflow smoke
+Established the subject-only benchmark smoke as the canonical executable
+validation of the hardening loop (crown-origin P1 → review → REVISE → correction
+→ ADVANCE), deliberately stopping at `P2_primary_axes` rather than claiming a
+full P1→P5 drawing.
 
 ## R06 — Worker pass memory
 Added `pass_memory.json` / `carried_concerns` so a worker doesn't mentally

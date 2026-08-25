@@ -17,7 +17,7 @@ from img2drawing import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SUBJECT = ROOT / "examples" / "full_body_croquis" / "subject.png"
+SUBJECT = ROOT / "benchmarks" / "stage_reconstruction" / "full_body_croquis_subject_only" / "subject.png"
 SCHEMAS = ROOT / "schemas"
 
 

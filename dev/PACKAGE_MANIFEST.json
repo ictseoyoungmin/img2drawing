@@ -94,66 +94,6 @@
       "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
     },
     {
-      "path": "img2drawing/examples/full_body_croquis/README.md",
-      "bytes": 1521,
-      "sha256": "c8d14a854c1d02adc0e36a324e5ad50bc0d9831f1c1070c100f40d9cec2b9716"
-    },
-    {
-      "path": "img2drawing/examples/full_body_croquis/run.py",
-      "bytes": 14032,
-      "sha256": "b9aa34d02a17ffb27872a8150d40ccd2543c9ee1309ff749e9dfcd53f95946a8"
-    },
-    {
-      "path": "img2drawing/examples/full_body_croquis/subject.png",
-      "bytes": 374704,
-      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/audit_manifest.json",
-      "bytes": 8078,
-      "sha256": "db2aaf01614971dfee1808fad3eec67ceb3fa6c4ab53e75abee95b8f936fd974"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/manifest.json",
-      "bytes": 1466,
-      "sha256": "909421ea861ddf4bdaa8dd57816ca209fe425f809ce85dd714f9c8f4129e5987"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/p1_gesture.png",
-      "bytes": 383412,
-      "sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/p2_axes.png",
-      "bytes": 25375,
-      "sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/p3_masses.png",
-      "bytes": 431885,
-      "sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/p4_structure.png",
-      "bytes": 453173,
-      "sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/p5_clean_blockin.png",
-      "bytes": 535994,
-      "sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf"
-    },
-    {
-      "path": "img2drawing/exemplars/full_body_croquis/sources/p2_axes_v2.json",
-      "bytes": 11597,
-      "sha256": "559f890b7e6ba3f5a9ccb6b4b8c70b7a8aa5e70c6bd0abf04107c62f1bf7779e"
-    },
-    {
-      "path": "img2drawing/exemplars/schemas/exemplar_manifest.schema.json",
-      "bytes": 974,
-      "sha256": "d1718e707e6d4d970ead3023de6a55c81d7e544a1e4f76473351b733123d5ee4"
-    },
-    {
       "path": "img2drawing/playbooks/autonomous-stage-hardening.md",
       "bytes": 2043,
       "sha256": "d50347bb8371d6dfbbb18b0779f49e9e92faadcb33aa0b97c6fb88366b27834d"

@@ -47,5 +47,6 @@ The worker should answer:
 - Did downstream vocabulary leak in early?
 - Does the grammar exemplar itself appear to violate the frozen contract?
 
-The bundled P1–P5 exemplar images are audited against these contracts; see the
-grammar exemplar audit in `SKILL.md` and `exemplars/full_body_croquis/audit_manifest.json`.
+The default subject-only workflow does not require local stage answer images.
+Any runtime representation metadata is subordinate to these contracts and must
+not donate pose, coordinates, or subject proportions.
