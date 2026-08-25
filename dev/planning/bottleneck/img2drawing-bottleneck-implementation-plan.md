@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S05 Torso Orientation Closure (구현 중)
+ACTIVE: 없음 (S05 종료, 다음 slice 미활성화)
 SKELETON: S06 Pelvis and Legs Closure부터 S09 Exemplar Ablation까지
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup
-NEXT GATE: S05 orientation evidence, arm exposure fixture, provenance/stale test
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure
+NEXT GATE: S05 capsule 검토 후 S06 Pelvis and Legs Closure 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -482,7 +482,7 @@ dev/planning/capsules/S04-exemplar-mandatory-path-cleanup.md
 
 ### S05 — Torso orientation closure
 
-Status: `ACTIVE` (S04 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, fixture, and capsule complete)
 
 책임:
 
@@ -496,12 +496,21 @@ Status: `ACTIVE` (S04 capsule consumed; implementation in progress)
 
 ### S05 Definition of Closed
 
-- [ ] subject/drawing orientation labels, shoulder envelope, torso bounds, near/far arm exposure를 독립 기록한다.
-- [ ] side/3-quarter mismatch와 arm dominance drift가 evidence로 산출된다.
-- [ ] 동일 lock digest, distinct artifact/observation id, stale drawing state를 검증한다.
-- [ ] evidence utility는 artistic PASS/FAIL을 만들지 않는다.
-- [ ] torso 폭이 비슷하지만 orientation/near-arm exposure가 틀린 fixture가 수치로 드러난다.
-- [ ] schema, tests, visual board와 capsule이 작성된다.
+- [x] subject/drawing orientation labels, shoulder envelope, torso bounds, near/far arm exposure를 독립 기록한다.
+- [x] side/3-quarter mismatch와 arm dominance drift가 evidence로 산출된다.
+- [x] 동일 lock digest, distinct artifact/observation id, stale drawing state를 검증한다.
+- [x] evidence utility는 artistic PASS/FAIL을 만들지 않는다.
+- [x] torso 폭이 비슷하지만 orientation/near-arm exposure가 틀린 fixture가 수치로 드러난다.
+- [x] schema, tests, visual board와 capsule이 작성된다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_orientation.py
+skills/img2drawing/schemas/torso_orientation.schema.json
+dev/evidence/p3-fidelity/S05-torso-orientation/
+dev/planning/capsules/S05-torso-orientation.md
+```
 
 ### S06 — Pelvis and legs closure
 
