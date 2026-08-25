@@ -1,0 +1,21 @@
+{
+  "schema": "img2drawing.torso_orientation.fixture.v1",
+  "observation_lock_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "reference": {
+    "body_view": "side",
+    "torso_turn": "right",
+    "near_side": "image_right",
+    "torso_width": 0.38,
+    "near_arm_exposure": 0.9,
+    "far_arm_exposure": 0.35
+  },
+  "drawing": {
+    "body_view": "back_three_quarter",
+    "torso_turn": "right",
+    "near_side": "image_right",
+    "torso_width": 0.38,
+    "near_arm_exposure": 0.22,
+    "far_arm_exposure": 0.35
+  },
+  "evidence_note": "Torso width is unchanged, but the view label and near-arm exposure drift materially."
+}

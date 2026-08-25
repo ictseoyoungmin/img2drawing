@@ -44,6 +44,8 @@ from .registration import (
     EnvelopeStation, RegionEnvelopeObservation, RegionEnvelopeIntegrityError,
     EnvelopeIntegrity, AxisEnvelopeEvidence, StationEnvelopeEvidence,
     RegionGeometryComparison, compare_region_envelopes,
+    TorsoOrientationObservation, TorsoOrientationIntegrityError,
+    TorsoOrientationComparison, compare_torso_orientation,
 )
 
 __all__=[
@@ -63,6 +65,8 @@ __all__=[
     "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
     "EnvelopeIntegrity","AxisEnvelopeEvidence","StationEnvelopeEvidence",
     "RegionGeometryComparison","compare_region_envelopes",
+    "TorsoOrientationObservation","TorsoOrientationIntegrityError",
+    "TorsoOrientationComparison","compare_torso_orientation",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",

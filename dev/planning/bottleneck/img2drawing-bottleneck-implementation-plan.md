@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S04 종료, 다음 slice 미활성화)
-SKELETON: S05 Torso Orientation Closure부터 S09 Exemplar Ablation까지
+ACTIVE: S05 Torso Orientation Closure (구현 중)
+SKELETON: S06 Pelvis and Legs Closure부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup
-NEXT GATE: S04 capsule 검토 후 S05 Torso Orientation Closure 활성화
+NEXT GATE: S05 orientation evidence, arm exposure fixture, provenance/stale test
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -482,6 +482,8 @@ dev/planning/capsules/S04-exemplar-mandatory-path-cleanup.md
 
 ### S05 — Torso orientation closure
 
+Status: `ACTIVE` (S04 capsule consumed; implementation in progress)
+
 책임:
 
 - frozen body view/near-far observation과 shoulder/torso envelope를 연결한다.
@@ -491,6 +493,15 @@ dev/planning/capsules/S04-exemplar-mandatory-path-cleanup.md
 
 - torso 폭이 맞아도 회전/near-side exposure가 틀린 fixture가 blocker evidence를 만든다.
 - `torso_orientation`, `near_arm`, `far_arm`의 contour ownership이 중복되지 않는다.
+
+### S05 Definition of Closed
+
+- [ ] subject/drawing orientation labels, shoulder envelope, torso bounds, near/far arm exposure를 독립 기록한다.
+- [ ] side/3-quarter mismatch와 arm dominance drift가 evidence로 산출된다.
+- [ ] 동일 lock digest, distinct artifact/observation id, stale drawing state를 검증한다.
+- [ ] evidence utility는 artistic PASS/FAIL을 만들지 않는다.
+- [ ] torso 폭이 비슷하지만 orientation/near-arm exposure가 틀린 fixture가 수치로 드러난다.
+- [ ] schema, tests, visual board와 capsule이 작성된다.
 
 ### S06 — Pelvis and legs closure
 

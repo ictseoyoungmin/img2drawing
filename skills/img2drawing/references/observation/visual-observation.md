@@ -66,3 +66,9 @@ At P3, feed region evidence into all eight required region entries
 the frozen observation, current drawing, stage contract, and evidence refs; it
 does not receive worker rationale or exemplar verdict. Process PASS and visual
 PASS remain separate until the runtime's dual gate checks both.
+
+For side/three-quarter ambiguity, add `TorsoOrientationObservation` evidence:
+record the view label, torso turn, near-side role, shoulder pair, torso bounds,
+and independent near/far arm exposure. A similar torso width with a large
+orientation or exposure delta is still a structural discrepancy; do not let
+width alone close the region.

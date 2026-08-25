@@ -121,6 +121,10 @@ advance may `DrawingRun.submit_stage_review(..., decision="advance")` advance
 P3. Missing regions, blockers, revise decisions, lock mismatches, or stale
 artifacts fail closed.
 
+For side/three-quarter subjects, `TorsoOrientationObservation` keeps torso
+orientation and near/far arm exposure explicit. A plausible torso width does not
+cancel a wrong view label or a missing near-arm exposure.
+
 
 ## Grammar Exemplar Audit
 Bundled grammar exemplars are audited against the frozen StageContract and bound to their image SHA-256.

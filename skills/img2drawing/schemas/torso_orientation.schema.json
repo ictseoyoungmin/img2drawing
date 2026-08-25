@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/torso_orientation.schema.json",
+  "title": "Torso orientation evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "body_view", "torso_turn", "near_side", "left_shoulder", "right_shoulder", "torso_bounds", "near_arm_exposure", "far_arm_exposure", "contour_owners", "source_surface", "observation_id", "source_artifact_sha256", "observation_lock_digest", "source_state_sha256", "uncertainty_notes"],
+  "properties": {
+    "schema": {"const": "img2drawing.torso_orientation.v1"},
+    "body_view": {"enum": ["front", "back", "side", "three_quarter", "back_three_quarter", "front_three_quarter", "unknown"]},
+    "torso_turn": {"enum": ["left", "right", "none", "unknown"]},
+    "near_side": {"enum": ["subject_left", "subject_right", "image_left", "image_right", "unknown"]},
+    "left_shoulder": {"$ref": "#/$defs/point"},
+    "right_shoulder": {"$ref": "#/$defs/point"},
+    "torso_bounds": {"$ref": "#/$defs/bounds"},
+    "near_arm_exposure": {"type": "number", "minimum": 0, "maximum": 1},
+    "far_arm_exposure": {"type": "number", "minimum": 0, "maximum": 1},
+    "contour_owners": {"type": "array", "items": {"type": "string"}},
+    "source_surface": {"enum": ["reference", "drawing"]},
+    "observation_id": {"type": "string", "minLength": 1},
+    "source_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "source_state_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "uncertainty_notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "point": {
+      "type": "array",
+      "prefixItems": [{"type": "number", "minimum": 0, "maximum": 1}, {"type": "number", "minimum": 0, "maximum": 1}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "bounds": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1}
+      ],
+      "minItems": 4,
+      "maxItems": 4
+    }
+  }
+}
