@@ -29,8 +29,13 @@ def audit(run_dir: Path) -> dict:
     if not cp_path.is_file():
         fail(f'missing checkpoint: {cp_path}')
     cp=json.loads(cp_path.read_text(encoding='utf-8'))
-    if cp.get('schema')!='img2drawing.run_checkpoint.v1':
-        fail(f'unsupported checkpoint schema: {cp.get("schema")!r}')
+    checkpoint_schema=cp.get('schema')
+    if checkpoint_schema not in {
+        'img2drawing.run_checkpoint.v1',
+        'img2drawing.run_checkpoint.v2',
+        'img2drawing.run_checkpoint.v3',
+    }:
+        fail(f'unsupported checkpoint schema: {checkpoint_schema!r}')
 
     progress=cp.get('progress') or {}
     if int(progress.get('current_index',-1)) != len(STAGES):
@@ -76,6 +81,27 @@ def audit(run_dir: Path) -> dict:
             missing_files=sorted(name for name in required if not (pd/name).is_file())
             if missing_files:
                 fail(f'{pd}: missing review evidence {missing_files}')
+
+        # Current P3 closure is deliberately dual: process review alone is not
+        # sufficient.  Legacy v1 runs remain auditable, but a v2/v3 run must
+        # carry the region manifest and independent visual record in its latest
+        # pass and checkpoint.
+        if stage == 'P3_primary_masses' and checkpoint_schema in {
+            'img2drawing.run_checkpoint.v2',
+            'img2drawing.run_checkpoint.v3',
+        }:
+            if not (latest.get('decision') == 'advance'):
+                fail('P3 latest process review is not ADVANCE')
+            visual=cp.get('visual_fidelity_reviews', {}).get(stage)
+            manifest=cp.get('region_closure_manifests', {}).get(stage)
+            if not visual or visual.get('decision') != 'advance':
+                fail('P3 v2/v3 run is missing independent visual ADVANCE')
+            if not manifest or manifest.get('blockers'):
+                fail('P3 v2/v3 run is missing blocker-free region closure')
+            latest_pass=pass_dirs[len(rows)-1]
+            for name in ('blind_visual_packet.json', 'region_closure_manifest.json', 'visual_fidelity_review.json'):
+                if not (latest_pass/name).is_file():
+                    fail(f'{latest_pass}: missing P3 dual-gate evidence {name}')
 
     history=((cp.get('agent_session') or {}).get('history') or {})
     actions=history.get('actions') or []
