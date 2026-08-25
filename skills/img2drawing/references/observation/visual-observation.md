@@ -72,3 +72,8 @@ record the view label, torso turn, near-side role, shoulder pair, torso bounds,
 and independent near/far arm exposure. A similar torso width with a large
 orientation or exposure delta is still a structural discrepancy; do not let
 width alone close the region.
+
+For lower-body review, keep pelvis bounds/turn, `leg_A` and `leg_B` station
+profiles, support leg, counterbalance direction, and inter-leg negative-space
+stations in one `LowerBodyObservation`. Parallel rails can preserve two leg
+axes while collapsing both taper and the negative space between them.

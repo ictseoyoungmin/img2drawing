@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S05 종료, 다음 slice 미활성화)
-SKELETON: S06 Pelvis and Legs Closure부터 S09 Exemplar Ablation까지
+ACTIVE: S06 Pelvis and Legs Closure (구현 중)
+SKELETON: S07 Head and Hair Closure부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure
-NEXT GATE: S05 capsule 검토 후 S06 Pelvis and Legs Closure 활성화
+NEXT GATE: S06 lower-body profile, parallel-rail fixture, negative-space regression
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -514,6 +514,8 @@ dev/planning/capsules/S05-torso-orientation.md
 
 ### S06 — Pelvis and legs closure
 
+Status: `ACTIVE` (S05 capsule consumed; implementation in progress)
+
 책임:
 
 - pelvis breadth/turn, 두 다리의 다중 width profile, inter-leg negative space, support/counterbalance를 하나의 lower-body chain으로 닫는다.
@@ -523,6 +525,14 @@ dev/planning/capsules/S05-torso-orientation.md
 - parallel rails fixture를 검출한다.
 - leg_A/leg_B의 side role과 width evidence가 뒤바뀌지 않는다.
 - P4로 진행한 뒤에도 P3 taper/negative-space 개선이 유지되는 regression이 있다.
+
+### S06 Definition of Closed
+
+- [ ] pelvis bounds/turn, leg_A/leg_B multi-station envelope와 side role을 독립 기록한다.
+- [ ] inter-leg negative-space profile 및 support/counterbalance 관계를 비교한다.
+- [ ] parallel-rail fixture와 side-role swap/provenance/stale drawing을 검출한다.
+- [ ] evidence-only authority와 ≤16-station linear budget을 유지한다.
+- [ ] schema, tests, visual board, P4 regression fixture와 capsule이 작성된다.
 
 ### S07 — Head and hair closure
 

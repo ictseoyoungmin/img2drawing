@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430">
+  <rect width="900" height="430" fill="#fbfaf7"/>
+  <text x="36" y="34" font-family="sans-serif" font-size="22" fill="#222">S06 lower-body envelope evidence</text>
+  <text x="36" y="59" font-family="sans-serif" font-size="13" fill="#666">parallel rails can keep axes while destroying taper and negative space</text>
+  <g transform="translate(115,88)">
+    <g transform="translate(0,0)" stroke="#b45f06" fill="none">
+      <path d="M125 35 L235 35 L220 275 L170 275 Z" stroke-width="13"/>
+      <path d="M270 35 L365 35 L380 275 L330 275 Z" stroke-width="11"/>
+      <path d="M235 70 L270 70 M238 145 L267 145 M242 220 L264 220" stroke="#555" stroke-width="3" stroke-dasharray="4 4"/>
+      <text x="100" y="315" font-family="sans-serif" font-size="14" stroke="none" fill="#8a4a00">reference: tapered legs + open negative space</text>
+    </g>
+    <g transform="translate(430,0)" stroke="#315b9a" fill="none">
+      <path d="M125 35 L235 35 L225 275 L175 275 Z" stroke-width="10"/>
+      <path d="M270 35 L365 35 L375 275 L325 275 Z" stroke-width="10"/>
+      <path d="M235 70 L270 70 M238 145 L267 145 M242 220 L264 220" stroke="#555" stroke-width="3" stroke-dasharray="4 4"/>
+      <text x="65" y="315" font-family="sans-serif" font-size="14" stroke="none" fill="#244c88">drawing: parallel rails + collapsed gap</text>
+    </g>
+    <text x="262" y="365" font-family="sans-serif" font-size="14" fill="#333">axis similarity does not close lower-body envelope</text>
+  </g>
+</svg>

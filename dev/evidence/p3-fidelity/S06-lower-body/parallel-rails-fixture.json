@@ -1,0 +1,17 @@
+{
+  "schema": "img2drawing.lower_body.fixture.v1",
+  "observation_lock_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "reference": {
+    "leg_A_width_local": [0.24, 0.18, 0.12],
+    "leg_B_width_local": [0.20, 0.16, 0.10],
+    "negative_space": [0.16, 0.12, 0.10],
+    "support_leg": "leg_A"
+  },
+  "drawing": {
+    "leg_A_width_local": [0.16, 0.16, 0.16],
+    "leg_B_width_local": [0.16, 0.16, 0.16],
+    "negative_space": [0.04, 0.04, 0.04],
+    "support_leg": "leg_B"
+  },
+  "evidence_note": "Parallel rails preserve axes but lose taper, negative space, and support-side asymmetry."
+}

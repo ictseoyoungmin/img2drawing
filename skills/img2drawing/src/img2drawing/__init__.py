@@ -46,6 +46,8 @@ from .registration import (
     RegionGeometryComparison, compare_region_envelopes,
     TorsoOrientationObservation, TorsoOrientationIntegrityError,
     TorsoOrientationComparison, compare_torso_orientation,
+    LowerBodyObservation, LowerBodyIntegrityError, LowerBodyComparison,
+    compare_lower_body,
 )
 
 __all__=[
@@ -67,6 +69,8 @@ __all__=[
     "RegionGeometryComparison","compare_region_envelopes",
     "TorsoOrientationObservation","TorsoOrientationIntegrityError",
     "TorsoOrientationComparison","compare_torso_orientation",
+    "LowerBodyObservation","LowerBodyIntegrityError","LowerBodyComparison",
+    "compare_lower_body",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",

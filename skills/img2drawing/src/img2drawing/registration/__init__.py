@@ -11,10 +11,16 @@ from .orientation import (
     TorsoOrientationObservation, TorsoOrientationIntegrityError,
     TorsoOrientationComparison, compare_torso_orientation,
 )
+from .lower_body import (
+    LowerBodyObservation, LowerBodyIntegrityError, LowerBodyComparison,
+    compare_lower_body,
+)
 __all__=["RegistrationLandmark","RegistrationConnection","RegistrationGraph","GridSpec",
          "StructuralComparison","compare_registrations","RegistrationIntegrityError","make_human_pose_registration",
          "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
          "EnvelopeIntegrity","AxisEnvelopeEvidence","StationEnvelopeEvidence",
          "RegionGeometryComparison","compare_region_envelopes",
          "TorsoOrientationObservation","TorsoOrientationIntegrityError",
-         "TorsoOrientationComparison","compare_torso_orientation"]
+         "TorsoOrientationComparison","compare_torso_orientation",
+         "LowerBodyObservation","LowerBodyIntegrityError","LowerBodyComparison",
+         "compare_lower_body"]
