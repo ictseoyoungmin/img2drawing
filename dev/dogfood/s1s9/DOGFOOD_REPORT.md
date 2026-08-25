@@ -12,6 +12,7 @@ Run output: [`croquis_run/`](croquis_run/)
 - P5 residual mismatch recovery through `reopen_01`, archived review evidence, and a fresh clean-block-in review;
 - final drawing, checkpoint/session, comparison board, and full timelapse GIF.
 - mechanical audit: `FRESH_WORKER_MECHANICAL_AUDIT_PASS` (4 REVISE passes, 74 direct strokes, 10 correction/retirement actions, 1 P5 reopen);
+- regenerated with the canonical `finish()` default: `mode=every_n`, `every_n=4`, 89 logged actions → 24 GIF frames, final-frame/session hash match true;
 
 ## Visual result
 

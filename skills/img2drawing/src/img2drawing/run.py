@@ -1164,13 +1164,17 @@ class DrawingRun:
         final_supersample=4,
         allow_incomplete=False,
         timelapse="auto",
+        timelapse_mode="every_n",
+        timelapse_every_n=4,
         max_timelapse_pixel_work=20_000_000,
     ) -> DrawingRunResult:
         """Persist a reliable closeout before optional expensive timelapse work.
 
-        `timelapse="auto"` keeps the old GIF behavior for small jobs, but skips the
-        expensive export when estimated raster work exceeds the budget. Use
-        `timelapse="full"` to force export or `timelapse="none"` to skip it.
+        `timelapse="auto"` keeps the bounded export policy, but the default GIF
+        samples the persisted action log every four actions. Use
+        ``timelapse_mode="stage"`` for a sparse stage summary, or
+        ``timelapse_mode="action"`` for every action cursor. ``timelapse="full"``
+        forces export; ``timelapse="none"`` skips it.
         """
         if self.current_stage is not None and not allow_incomplete:
             raise RuntimeError(
@@ -1180,6 +1184,14 @@ class DrawingRun:
         policy=str(timelapse).lower().strip()
         if policy not in {"auto","full","none"}:
             raise ValueError("timelapse must be 'auto', 'full', or 'none'")
+        mode=str(timelapse_mode).lower().strip()
+        if mode not in {"stage", "action", "every_n", "critic"}:
+            raise ValueError(
+                "timelapse_mode must be 'stage', 'action', 'every_n', or 'critic'"
+            )
+        every_n=int(timelapse_every_n)
+        if every_n < 1:
+            raise ValueError("timelapse_every_n must be >= 1")
 
         # Checkpoint first: a later optional timelapse failure must never erase the job.
         self.save_checkpoint()
@@ -1248,14 +1260,14 @@ class DrawingRun:
         tl_manifest=None; tl_gif=None; tl_status="disabled"
         tl_dir=self.output_dir/"timelapse"; tl_dir.mkdir(parents=True,exist_ok=True)
         frame_ss=2
-        frame_count=len(select_cursors(persisted,"stage"))
+        frame_count=len(select_cursors(persisted,mode,every_n=every_n))
         pixel_work=self.session.width*self.session.height*(frame_ss**2)*frame_count
         should_export=(policy=="full") or (policy=="auto" and pixel_work<=int(max_timelapse_pixel_work))
         if should_export:
             make_gif=(policy=="full") or (self.session.width*self.session.height < 500_000)
             try:
                 tl=export_timelapse(
-                    session_path,tl_dir,mode="stage",gif=make_gif,
+                    session_path,tl_dir,mode=mode,every_n=every_n,gif=make_gif,
                     renderer=render_pencil,renderer_kwargs={"supersample":frame_ss},
                     final_renderer_kwargs={"supersample":int(final_supersample)},
                     renderer_id=RENDERER_ID,expected_final_path=final_path,
