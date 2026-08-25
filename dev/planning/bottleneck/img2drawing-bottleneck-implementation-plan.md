@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S02 Region Envelope Evidence: near-arm vertical slice (구현 중)
+ACTIVE: 없음 (S02 종료, 다음 slice 미활성화)
 SKELETON: S03 Blind Visual Fidelity Review부터 S09 Exemplar Ablation까지
-CLOSED: S01 Pre-draw Observation Lock
-NEXT GATE: S02 public contract, provenance integrity, near-arm fixture, 100 ms comparison test
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence
+NEXT GATE: S02 capsule 검토 후 S03 Blind Visual Fidelity Review 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -340,7 +340,7 @@ S01의 `FrozenObservationRecord` schema, replacement/invalidation semantics, leg
 
 ### S02 — Region Envelope Evidence: near-arm vertical slice
 
-Status: `ACTIVE` (S01 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, fixture, and capsule complete)
 
 책임:
 
@@ -368,15 +368,24 @@ comparison = compare_region_envelopes(
 )
 ```
 
-- [ ] normalized axis와 2~16개의 strictly increasing station contour pair를 검증한다.
-- [ ] near/far/unknown side, visible fraction, occlusion, uncertainty를 보존한다.
-- [ ] local-axis 및 선택적 subject-height 기준 width evidence와 visible-fraction drift를 산출한다.
-- [ ] reference/drawing observation id, artifact hash, frozen observation digest를 독립적으로 검증한다.
-- [ ] 현재 drawing-state digest가 stale하면 비교를 거부한다.
-- [ ] 비교 결과는 evidence-only authority를 유지하고 artistic `PASS/FAIL`을 만들지 않는다.
-- [ ] near-arm upper/mid/lower fixture가 얇아진 drawing을 수치로 드러낸다.
-- [ ] schema, unit/integration test, dogfood visual board와 context capsule이 작성된다.
-- [ ] 16 station comparison이 100 ms budget 안에서 동작하고 S01 lock digest를 소비한다.
+- [x] normalized axis와 2~16개의 strictly increasing station contour pair를 검증한다.
+- [x] near/far/unknown side, visible fraction, occlusion, uncertainty를 보존한다.
+- [x] local-axis 및 선택적 subject-height 기준 width evidence와 visible-fraction drift를 산출한다.
+- [x] reference/drawing observation id, artifact hash, frozen observation digest를 독립적으로 검증한다.
+- [x] 현재 drawing-state digest가 stale하면 비교를 거부한다.
+- [x] 비교 결과는 evidence-only authority를 유지하고 artistic `PASS/FAIL`을 만들지 않는다.
+- [x] near-arm upper/mid/lower fixture가 얇아진 drawing을 수치로 드러낸다.
+- [x] schema, unit/integration test, dogfood visual board와 context capsule이 작성된다.
+- [x] 16 station comparison이 100 ms budget 안에서 동작하고 S01 lock digest를 소비한다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_region_envelope.py
+skills/img2drawing/schemas/region_envelope.schema.json
+dev/evidence/p3-fidelity/S02-region-envelope/
+dev/planning/capsules/S02-region-envelope-evidence.md
+```
 
 활성화 전 disposable spike:
 
