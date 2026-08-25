@@ -1348,6 +1348,8 @@ class DrawingRun:
             "version":__version__,
             "slice":RELEASE_SLICE,
             "reference_bundle":self.references.to_dict(),
+            "grammar_cards":[dict(card) for card in self.grammar_cards],
+            "require_grammar_card_bindings":self.require_grammar_card_bindings,
             "stage_contract_registry":self.stage_contracts.to_dict(),
             "progress":{"current_stage":self.current_stage,"advanced_reviews":self.progress.advanced_reviews},
             "reviews":{k:[r.to_dict() for r in v] for k,v in self._reviews.items()},
