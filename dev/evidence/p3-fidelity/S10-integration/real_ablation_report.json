@@ -1,0 +1,41 @@
+{
+  "schema": "img2drawing.real_subject_ablation_report.v1",
+  "subject": "dev/dogfood/s1s9/subject.png",
+  "conditions": ["A_subject_contract", "B_full_body_exemplar", "C_modular_cards"],
+  "trials": [
+    {
+      "condition": "A_subject_contract",
+      "run_dir": "drawings/s10-ablation/A_subject_contract",
+      "actions": 331,
+      "identity_role_actions": 82,
+      "stage_review_passes": {"P1": 2, "P2": 2, "P3": 3, "P4": 3, "P5": 2},
+      "reopen_count": 0,
+      "final_sha256": "5dba644104b81eb8b11f9733914867392e07e5910bcff311498f05d40e8fbb71",
+      "blind_decision": "revise"
+    },
+    {
+      "condition": "B_full_body_exemplar",
+      "run_dir": "drawings/s10-ablation/B_full_body_exemplar",
+      "actions": 121,
+      "identity_role_actions": 22,
+      "stage_review_passes": {"P1": 2, "P2": 2, "P3": 2, "P4": 2, "P5": 1},
+      "reopen_count": 0,
+      "final_sha256": "3a2d0a85768920d71e4e6252367fd49bccbbabd1d42a561d59cf6df2255ae59e",
+      "blind_decision": "revise"
+    },
+    {
+      "condition": "C_modular_cards",
+      "run_dir": "drawings/s10-ablation/C_modular_grammar_cards",
+      "actions": 122,
+      "identity_role_actions": 22,
+      "stage_review_passes": {"P1": 2, "P2": 2, "P3": 2, "P4": 2, "P5": 1},
+      "reopen_count": 0,
+      "final_sha256": "3c9fc4ea2ff5981ddfb40d978fe7cc905168c01cbb07ba929dc1944757557928",
+      "blind_decision": "revise"
+    }
+  ],
+  "strongest_condition": "A_subject_contract",
+  "c_over_b_visible_gain": false,
+  "authority": "independent_image_only_comparison; not statistical causality",
+  "overall_decision": "revise"
+}

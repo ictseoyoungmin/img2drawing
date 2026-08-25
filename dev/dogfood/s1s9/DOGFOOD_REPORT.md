@@ -56,3 +56,4 @@ Key artifacts:
 - Reopen record: [`croquis_run/reopens/reopen_01.json`](croquis_run/reopens/reopen_01.json)
 - S10 blind review: [`../../evidence/p3-fidelity/S10-integration/blind_visual_report.md`](../../evidence/p3-fidelity/S10-integration/blind_visual_report.md)
 - S10 residual gate: [`../../evidence/p3-fidelity/S10-integration/residual_gate.json`](../../evidence/p3-fidelity/S10-integration/residual_gate.json)
+- S10 real A/B/C comparison: [`../../evidence/p3-fidelity/S10-integration/ablation_comparison.md`](../../evidence/p3-fidelity/S10-integration/ablation_comparison.md)
