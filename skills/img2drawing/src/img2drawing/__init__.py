@@ -30,7 +30,7 @@ from .exemplar.sync import (
     compare_exemplar_trees, assert_exemplar_trees_synced,
 )
 from .exemplar.ablation import (
-    ABLATION_CONDITIONS, ModularGrammarCard, AblationTrial,
+    ABLATION_CONDITIONS, ModularGrammarCard, consume_grammar_card, AblationTrial,
     ExemplarAblationReport, run_exemplar_ablation,
 )
 from .review import (
@@ -88,6 +88,6 @@ __all__=[
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",
-    "ABLATION_CONDITIONS","ModularGrammarCard","AblationTrial",
+    "ABLATION_CONDITIONS","ModularGrammarCard","consume_grammar_card","AblationTrial",
     "ExemplarAblationReport","run_exemplar_ablation",
 ]

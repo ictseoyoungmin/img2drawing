@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from ..core.session import sha256_obj
+
 
 ABLATION_CONDITIONS = (
     "A_subject_contract",
@@ -57,6 +59,55 @@ class ModularGrammarCard:
             "source_audit_status": self.source_audit_status,
         }
 
+    def stroke_plan_metadata(
+        self,
+        *,
+        part: str | None = None,
+        role: str | None = None,
+    ) -> dict[str, Any]:
+        """Return deterministic, non-geometric consumption metadata.
+
+        A card describes *what to look for* when authoring a stroke plan; it
+        does not describe where pixels belong.  The returned tokens therefore
+        carry the ordered transfer mappings and their provenance, but contain
+        no points, dimensions, or coordinate transforms.  A runner may use
+        the tokens while consulting the frozen subject observation for all
+        geometry decisions.
+        """
+        normalized_part = None if part is None else str(part).strip()
+        normalized_role = None if role is None else str(role).strip()
+        if part is not None and not normalized_part:
+            raise ValueError("part must be non-empty when supplied")
+        if role is not None and not normalized_role:
+            raise ValueError("role must be non-empty when supplied")
+
+        payload = self.to_dict()
+        tokens = [
+            {
+                "token_id": f"{self.card_id}:transfer:{index:02d}",
+                "stage": self.stage,
+                "part": normalized_part,
+                "role": normalized_role,
+                "mapping": mapping,
+                "scope": list(self.scope),
+                "polarity": self.polarity,
+                "geometry_authority": "frozen_subject_observation",
+            }
+            for index, mapping in enumerate(self.transfer_mapping, start=1)
+        ]
+        return {
+            "schema": "img2drawing.grammar_card_stroke_plan.v1",
+            "card_id": self.card_id,
+            "card_digest": sha256_obj(payload),
+            "stage": self.stage,
+            "polarity": self.polarity,
+            "source_audit_status": self.source_audit_status,
+            "scope": list(self.scope),
+            "geometry_authority": "frozen_subject_observation",
+            "geometry_mutation": "forbidden",
+            "transfer_tokens": tokens,
+        }
+
     @classmethod
     def from_dict(cls, raw: Mapping[str, Any]) -> "ModularGrammarCard":
         return cls(
@@ -67,6 +118,28 @@ class ModularGrammarCard:
             transfer_mapping=tuple(map(str, raw.get("transfer_mapping", ()))),
             source_audit_status=str(raw.get("source_audit_status", "not_audited")),
         )
+
+
+def consume_grammar_card(
+    card: ModularGrammarCard | Mapping[str, Any],
+    *,
+    part: str | None = None,
+    role: str | None = None,
+) -> dict[str, Any]:
+    """Build stroke-plan guidance from one grammar card.
+
+    This is an explicit opt-in boundary for a runner.  It consumes only the
+    card's ordered ``transfer_mapping`` and never mutates a drawing plan or
+    supplies geometry.  ``part`` and ``role`` merely scope the returned
+    tokens so a caller can attach them to the intended authored strokes.
+    """
+    if isinstance(card, ModularGrammarCard):
+        normalized = card
+    elif isinstance(card, Mapping):
+        normalized = ModularGrammarCard.from_dict(card)
+    else:
+        raise TypeError("card must be a ModularGrammarCard or mapping")
+    return normalized.stroke_plan_metadata(part=part, role=role)
 
 
 @dataclass(frozen=True)
@@ -216,6 +289,6 @@ def run_exemplar_ablation(trials: Sequence[AblationTrial]) -> ExemplarAblationRe
 
 
 __all__ = [
-    "ABLATION_CONDITIONS", "ModularGrammarCard", "AblationTrial",
+    "ABLATION_CONDITIONS", "ModularGrammarCard", "consume_grammar_card", "AblationTrial",
     "ExemplarAblationReport", "run_exemplar_ablation",
 ]

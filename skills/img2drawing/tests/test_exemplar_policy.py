@@ -138,6 +138,31 @@ def test_modular_cards_bind_to_action_provenance_and_worker_packet(tmp_path: Pat
     assert resumed.grammar_cards[0]["card_id"] == "test-P1_gesture"
 
 
+def test_run_exposes_explicit_card_stroke_plan_consumption(tmp_path: Path):
+    run = DrawingRun.create(
+        SUBJECT,
+        tmp_path / "card-plan",
+        width=96,
+        height=144,
+        working_supersample=2,
+        session_id="test-card-stroke-plan",
+        grammar_cards=CARDS,
+        require_grammar_card_bindings=True,
+    )
+    card = run.grammar_card_for_stage("P3_primary_masses")
+    assert card["card_id"] == "test-P3_primary_masses"
+    card["transfer_mapping"].append("caller annotation")
+    assert run.grammar_card_for_stage("P3_primary_masses")["transfer_mapping"] == ["subject endpoints"]
+
+    plan = run.consume_grammar_card("P3_primary_masses", part="torso", role="mass")
+    assert plan["card_id"] == "test-P3_primary_masses"
+    assert plan["transfer_tokens"][0]["mapping"] == "subject endpoints"
+    assert all("points" not in token for token in plan["transfer_tokens"])
+
+    with pytest.raises(RuntimeError, match="no grammar card"):
+        _run(tmp_path, 0, "unbound-card-plan").consume_grammar_card("P1_gesture")
+
+
 def test_strict_modular_card_binding_requires_one_card_per_stage(tmp_path: Path):
     with pytest.raises(ValueError, match="exactly one card per stage"):
         DrawingRun.create(

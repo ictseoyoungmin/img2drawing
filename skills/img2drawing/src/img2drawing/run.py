@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 from dataclasses import dataclass, replace as dataclass_replace
+from copy import deepcopy
 from importlib import resources
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -30,6 +31,7 @@ from .review.fidelity import (
 )
 from .review.pass_memory import ActionMemory, build_stage_pass_memory, make_action_memory
 from .review.reopen import ReopenRecord
+from .exemplar.ablation import consume_grammar_card as build_grammar_card_consumption
 from .stages import StageProgress, get_stage_registry, get_stage_contract_registry
 from ._version import __version__, RELEASE_REVISION, RELEASE_SLICE, PUBLIC_API, DEFAULT_SESSION_ID
 
@@ -244,6 +246,34 @@ class DrawingRun:
         if sid is None:
             return None
         return self.references.for_stage(sid)
+
+    def grammar_card_for_stage(self, stage=None):
+        """Return a detached bound grammar card for a stage, if any.
+
+        The detached mapping is safe for a worker to annotate or pass to
+        :func:`img2drawing.consume_grammar_card`; mutating it cannot alter the
+        run's provenance contract.  This lookup never changes the drawing.
+        """
+        sid = stage or self.current_stage
+        if sid is None:
+            return None
+        if sid not in self.stage_by_id:
+            raise KeyError(f"unknown stage: {sid!r}")
+        card = self._grammar_cards_by_stage.get(sid)
+        return None if card is None else deepcopy(card)
+
+    def consume_grammar_card(self, stage=None, *, part=None, role=None):
+        """Build explicit stroke-plan guidance for a bound stage card.
+
+        Consumption is opt-in: this returns ordered transfer tokens and does
+        not author, alter, or transform any geometry.  A caller must continue
+        to derive points from the frozen subject observation.
+        """
+        card = self.grammar_card_for_stage(stage)
+        if card is None:
+            sid = stage or self.current_stage
+            raise RuntimeError(f"no grammar card is bound to stage {sid!r}")
+        return build_grammar_card_consumption(card, part=part, role=role)
 
     def stage_contract(self,stage=None):
         sid=stage or self.current_stage

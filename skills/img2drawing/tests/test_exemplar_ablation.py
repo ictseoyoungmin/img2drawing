@@ -7,7 +7,7 @@ import warnings
 import pytest
 from jsonschema import validators
 
-from img2drawing import AblationTrial, ModularGrammarCard, run_exemplar_ablation
+from img2drawing import AblationTrial, ModularGrammarCard, consume_grammar_card, run_exemplar_ablation
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +45,41 @@ def test_fail_exemplar_cannot_become_positive_card():
         source_audit_status="fail",
     )
     assert card.to_dict()["polarity"] == "negative"
+
+
+def test_grammar_card_consumption_is_deterministic_and_non_geometric():
+    card = ModularGrammarCard(
+        card_id="p3-mass",
+        stage="P3_primary_masses",
+        polarity="positive",
+        scope=("torso", "near arm"),
+        transfer_mapping=("measure the visible near-arm envelope", "preserve torso turn"),
+        source_audit_status="pass",
+    )
+    first = consume_grammar_card(card, part="near_arm", role="mass")
+    second = consume_grammar_card(card.to_dict(), part="near_arm", role="mass")
+    assert first == second
+    assert first["schema"] == "img2drawing.grammar_card_stroke_plan.v1"
+    assert first["geometry_authority"] == "frozen_subject_observation"
+    assert first["geometry_mutation"] == "forbidden"
+    assert [token["token_id"] for token in first["transfer_tokens"]] == [
+        "p3-mass:transfer:01",
+        "p3-mass:transfer:02",
+    ]
+    assert all(token["part"] == "near_arm" for token in first["transfer_tokens"])
+    assert all("points" not in token and "coordinates" not in token for token in first["transfer_tokens"])
+    plan_schema = json.loads((SCHEMAS / "grammar_card_stroke_plan.schema.json").read_text())
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        validators.validator_for(plan_schema)(plan_schema).validate(first)
+
+
+def test_grammar_card_consumption_rejects_blank_scope_context():
+    card = ModularGrammarCard("p1", "P1_gesture", "positive", ("gesture",), ("line of action",), "pass")
+    with pytest.raises(ValueError, match="part must be non-empty"):
+        consume_grammar_card(card, part=" ")
+    with pytest.raises(ValueError, match="role must be non-empty"):
+        consume_grammar_card(card, role=" ")
 
 
 def test_ablation_prefers_modular_cards_only_on_strict_structural_win():
