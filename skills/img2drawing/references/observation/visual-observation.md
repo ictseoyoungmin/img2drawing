@@ -77,3 +77,8 @@ For lower-body review, keep pelvis bounds/turn, `leg_A` and `leg_B` station
 profiles, support leg, counterbalance direction, and inter-leg negative-space
 stations in one `LowerBodyObservation`. Parallel rails can preserve two leg
 axes while collapsing both taper and the negative space between them.
+
+For head identity at primary-mass level, use `HeadHairObservation` before face
+features: head top/chin, left/right cranial and jaw contours, head bounds, bob
+hair envelope, hair occlusion, and anatomical uncertainty. This separates a
+large spherical head or helmet-like hair mass from later eye/nose/mouth detail.

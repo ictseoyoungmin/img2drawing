@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/head_hair.schema.json",
+  "title": "Head and hair evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "head_top", "chin", "cranial_left", "cranial_right", "jaw_left", "jaw_right", "head_bounds", "hair_bounds", "hair_style", "hair_occlusion", "anatomical_uncertainty", "source_surface", "observation_id", "source_artifact_sha256", "observation_lock_digest", "source_state_sha256"],
+  "properties": {
+    "schema": {"const": "img2drawing.head_hair.v1"},
+    "head_top": {"$ref": "#/$defs/point"},
+    "chin": {"$ref": "#/$defs/point"},
+    "cranial_left": {"$ref": "#/$defs/point"},
+    "cranial_right": {"$ref": "#/$defs/point"},
+    "jaw_left": {"$ref": "#/$defs/point"},
+    "jaw_right": {"$ref": "#/$defs/point"},
+    "head_bounds": {"$ref": "#/$defs/bounds"},
+    "hair_bounds": {"$ref": "#/$defs/bounds"},
+    "hair_style": {"type": "string", "minLength": 1},
+    "hair_occlusion": {"type": "array", "items": {"type": "string"}},
+    "anatomical_uncertainty": {"type": "array", "items": {"type": "string"}},
+    "source_surface": {"enum": ["reference", "drawing"]},
+    "observation_id": {"type": "string", "minLength": 1},
+    "source_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "source_state_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "point": {
+      "type": "array",
+      "prefixItems": [{"type": "number", "minimum": 0, "maximum": 1}, {"type": "number", "minimum": 0, "maximum": 1}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "bounds": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1}
+      ],
+      "minItems": 4,
+      "maxItems": 4
+    }
+  }
+}

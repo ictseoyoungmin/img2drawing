@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S06 종료, 다음 slice 미활성화)
-SKELETON: S07 Head and Hair Closure부터 S09 Exemplar Ablation까지
+ACTIVE: S07 Head and Hair Closure (구현 중)
+SKELETON: S08 Generic Prop Topology부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure
-NEXT GATE: S06 capsule 검토 후 S07 Head and Hair Closure 활성화
+NEXT GATE: S07 head/hair contour profile, bob-hair fixture, provenance/stale test
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -545,6 +545,8 @@ dev/planning/capsules/S06-pelvis-legs.md
 
 ### S07 — Head and hair closure
 
+Status: `ACTIVE` (S06 capsule consumed; implementation in progress)
+
 책임:
 
 - head top/chin, 좌우 cranial/jaw contour, hair envelope를 분리해 과대 구형 head와 helmet hair를 검출한다.
@@ -553,6 +555,14 @@ dev/planning/capsules/S06-pelvis-legs.md
 
 - face feature detail 없이도 head/hair primary mass fidelity를 판정할 수 있다.
 - hair occlusion과 anatomical head uncertainty가 명시된다.
+
+### S07 Definition of Closed
+
+- [ ] head top/chin, cranial/jaw contours, head bounds와 hair envelope를 독립 기록한다.
+- [ ] head/hair width-height/asymmetry와 hair occlusion evidence를 비교한다.
+- [ ] feature detail 없이도 과대 구형 head/helmet hair drift가 드러난다.
+- [ ] provenance, stale drawing, evidence-only authority와 schema/tests를 닫는다.
+- [ ] bob-hair fixture와 visual board/capsule이 작성된다.
 
 ### S08 — Generic prop topology
 

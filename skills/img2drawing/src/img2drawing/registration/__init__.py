@@ -15,6 +15,10 @@ from .lower_body import (
     LowerBodyObservation, LowerBodyIntegrityError, LowerBodyComparison,
     compare_lower_body,
 )
+from .head_hair import (
+    HeadHairObservation, HeadHairIntegrityError, HeadHairComparison,
+    compare_head_hair,
+)
 __all__=["RegistrationLandmark","RegistrationConnection","RegistrationGraph","GridSpec",
          "StructuralComparison","compare_registrations","RegistrationIntegrityError","make_human_pose_registration",
          "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
@@ -23,4 +27,6 @@ __all__=["RegistrationLandmark","RegistrationConnection","RegistrationGraph","Gr
          "TorsoOrientationObservation","TorsoOrientationIntegrityError",
          "TorsoOrientationComparison","compare_torso_orientation",
          "LowerBodyObservation","LowerBodyIntegrityError","LowerBodyComparison",
-         "compare_lower_body"]
+         "compare_lower_body",
+         "HeadHairObservation","HeadHairIntegrityError","HeadHairComparison",
+         "compare_head_hair"]

@@ -1,0 +1,7 @@
+{
+  "schema": "img2drawing.head_hair.fixture.v1",
+  "observation_lock_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "reference": {"head_width": 0.20, "head_height": 0.19, "hair_width": 0.24, "hair_style": "bob", "hair_occlusion": ["left_jaw", "right_jaw"]},
+  "drawing": {"head_width": 0.34, "head_height": 0.27, "hair_width": 0.40, "hair_style": "bob", "hair_occlusion": ["left_jaw", "right_jaw"]},
+  "evidence_note": "The drawing is overlarge and helmet-like even before face features are considered."
+}

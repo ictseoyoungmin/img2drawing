@@ -48,6 +48,8 @@ from .registration import (
     TorsoOrientationComparison, compare_torso_orientation,
     LowerBodyObservation, LowerBodyIntegrityError, LowerBodyComparison,
     compare_lower_body,
+    HeadHairObservation, HeadHairIntegrityError, HeadHairComparison,
+    compare_head_hair,
 )
 
 __all__=[
@@ -71,6 +73,8 @@ __all__=[
     "TorsoOrientationComparison","compare_torso_orientation",
     "LowerBodyObservation","LowerBodyIntegrityError","LowerBodyComparison",
     "compare_lower_body",
+    "HeadHairObservation","HeadHairIntegrityError","HeadHairComparison",
+    "compare_head_hair",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
     "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
     "compare_exemplar_trees","assert_exemplar_trees_synced",
