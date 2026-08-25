@@ -19,6 +19,10 @@ The real subject A/B/C ablation is now executed under `drawings/s10-ablation/`.
 The independent image-only comparison finds A strongest but still schematic;
 B and C are generic near-duplicates, with no visible C-over-B gain. Therefore
 the ablation is complete as an experiment but does not close the fidelity gate.
+The first comparison is also confounded by unequal identity-detail budgets (A:
+82 identity-role actions; B/C: 22 each). It cannot attribute the visual gap to
+the exemplar or grammar-card condition until B/C are rerun with an A-equivalent
+detail inventory and budget.
 
 ## Evidence
 

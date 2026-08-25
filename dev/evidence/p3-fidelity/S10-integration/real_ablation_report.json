@@ -36,6 +36,8 @@
   ],
   "strongest_condition": "A_subject_contract",
   "c_over_b_visible_gain": false,
+  "causal_status": "confounded_by_unequal_identity_detail_budget",
+  "normalized_detail_rerun_required": true,
   "authority": "independent_image_only_comparison; not statistical causality",
   "overall_decision": "revise"
 }

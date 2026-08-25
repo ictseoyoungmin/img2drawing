@@ -21,6 +21,17 @@ boots, and rifle topology. Exemplar material never had pose/coordinate authority
 
 These counts measure process effort and authored strokes, not likeness.
 
+### Important confound
+
+This first real-subject comparison is not a clean causal estimate of exemplar
+versus modular-card policy. Condition A authored 82 identity-role actions across
+331 total actions, while B and C authored only 22 identity-role actions across
+121/122 total actions. The blind result proves that the B/C executions did not
+make the requested identity bundle visibly legible; it does **not** prove that
+the exemplar or card policy inherently caused the weaker result. A normalized-
+detail-budget rerun is required before attributing the visual gap to the
+condition itself.
+
 ## Independent blind visual result
 
 The image-only evaluator inspected only the subject and the three final rasters.
@@ -35,9 +46,10 @@ The image-only evaluator inspected only the subject and the three final rasters.
   reliably visible.
 - **C shows no visible improvement over B** in this single-subject trial.
 
-The condition result is therefore `REVISE` for A, B, and C. This is a visual
-sample result, not a statistical causal claim; it does establish that the
-expected modular-card transfer was not observable in this run.
+The condition result is therefore `REVISE` for A, B, and C. This is an
+image-only sample result, not a statistical causal claim. Expected modular-card
+transfer was not observable under the unequal identity-detail budgets, so the
+condition effect remains unresolved.
 
 ## Earliest residuals
 
@@ -47,8 +59,9 @@ expected modular-card transfer was not observable in this run.
 3. P4/P5: face marks, bob bangs/locks, tactical straps/patch/pockets, shorts and
    thigh rig, rifle component transitions, and heavy boot construction.
 
-Do not use B/C's mechanical `ADVANCE` as visual proof. The next correction pass
-must start at P1/P2 and preserve the identity bundle through P5.
+Do not use B/C's mechanical `ADVANCE` as visual proof. First rerun B and C with
+an A-equivalent identity-detail budget and the same final-detail inventory;
+then start the correction pass at P1/P2 and preserve that bundle through P5.
 
 ## Evidence
 
