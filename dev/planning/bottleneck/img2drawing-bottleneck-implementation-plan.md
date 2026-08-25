@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S08 Generic Prop Topology (구현 중)
-SKELETON: S09 Exemplar Ablation
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure
-NEXT GATE: S08 generic topology API, rifle/non-rifle fixture, overlap/width regression
+ACTIVE: S09 Exemplar Ablation (구현 중)
+SKELETON: 없음
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology
+NEXT GATE: S09 A/B/C condition schema, P4 tracking metrics, policy decision
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -575,7 +575,7 @@ dev/planning/capsules/S07-head-hair.md
 
 ### S08 — Generic prop topology
 
-Status: `ACTIVE` (S07 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, fixture, and capsule complete)
 
 책임:
 
@@ -589,18 +589,37 @@ Status: `ACTIVE` (S07 capsule consumed; implementation in progress)
 
 ### S08 Definition of Closed
 
-- [ ] rifle와 비총기 prop이 동일 generic topology schema/API를 사용한다.
-- [ ] major axis, width-change points, terminal masses, body overlap points, visible interruptions, occlusion order를 독립 기록한다.
-- [ ] gross axis가 맞아도 폭 변화/overlap/topology가 틀린 fixture가 evidence로 드러난다.
-- [ ] distinct provenance/stale drawing/evidence-only authority와 schema/tests를 닫는다.
-- [ ] visual board와 capsule이 작성되고 기존 P5 attached-object owner와 중복되지 않는다.
+- [x] rifle와 비총기 prop이 동일 generic topology schema/API를 사용한다.
+- [x] major axis, width-change points, terminal masses, body overlap points, visible interruptions, occlusion order를 독립 기록한다.
+- [x] gross axis가 맞아도 폭 변화/overlap/topology가 틀린 fixture가 evidence로 드러난다.
+- [x] distinct provenance/stale drawing/evidence-only authority와 schema/tests를 닫는다.
+- [x] visual board와 capsule이 작성되고 기존 P5 attached-object owner와 중복되지 않는다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_prop_topology.py
+skills/img2drawing/schemas/prop_topology.schema.json
+dev/evidence/p3-fidelity/S08-prop-topology/
+dev/planning/capsules/S08-prop-topology.md
+```
 
 ### S09 — Modular grammar cards + A/B/C ablation
+
+Status: `ACTIVE` (S08 capsule consumed; implementation in progress)
 
 책임:
 
 - P3 full-body exemplar의 실효성을 A/B/C로 검증한다.
 - positive/negative modular grammar cards와 concrete transfer mapping을 도입한다.
+
+### S09 Definition of Closed
+
+- [ ] A/B/C 조건(subject+contract / +full-body exemplar / +modular cards)을 동일 schema로 기록한다.
+- [ ] region blocker 수, reopen 수, residual discrepancy, P4 structural error를 primary metrics로 비교한다.
+- [ ] FAIL exemplar가 positive card로 들어가지 않고 transfer mapping scope가 명시된다.
+- [ ] P4까지 추적한 fixture와 policy recommendation이 있다.
+- [ ] schema, tests, report/board와 capsule이 작성된다.
 
 조건:
 
