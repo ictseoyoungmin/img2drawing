@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S01 Pre-draw Observation Lock (선정됨, 구현 미착수)
+ACTIVE: 없음 (S01 종료, 다음 slice 미활성화)
 SKELETON: S02 Region Envelope Evidence부터 S09 Exemplar Ablation까지
-CLOSED: 없음
-NEXT GATE: S01 public contract와 lifecycle test를 먼저 닫기
+CLOSED: S01 Pre-draw Observation Lock
+NEXT GATE: S01 capsule 검토 후 S02 Region Envelope Evidence 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -214,6 +214,7 @@ output/
 계획된 schemas:
 
 - `observation_lock.schema.json`
+- `observation_reopen.schema.json`
 - `region_envelope.schema.json`
 - 실제 model을 검증하는 `registration.schema.json`
 - `region_closure.schema.json`
@@ -248,7 +249,7 @@ output/
 
 ## 6. ACTIVE bottleneck card — S01 Pre-draw Observation Lock
 
-Status: `ACTIVE` (implementation selected, code not started)
+Status: `CLOSED` (implementation, verification, and capsule complete)
 
 ### Responsibility
 
@@ -304,21 +305,21 @@ reopen = run.reopen_observation(reason=..., replacement=...)
 
 ### Definition of Closed
 
-- [ ] `ObservationContract`를 대체하는 parallel type을 만들지 않고 frozen lifecycle wrapper로 재사용한다.
-- [ ] lock은 subject artifact hash, observation id, schema version, digest를 검증한다.
-- [ ] P1 `stage_start`/최초 draw 전에 lock이 없으면 새 run은 fail-closed한다.
-- [ ] lock content는 외부 dict mutation이나 resume 과정에서 바뀌지 않는다.
-- [ ] drawing 시작 전 replacement도 audit record를 남긴다.
-- [ ] drawing 시작 후 replacement는 P1부터 drawing/review evidence를 rewind/invalidate한다.
-- [ ] checkpoint 저장·resume 후 observation digest와 content가 동일하다.
-- [ ] legacy checkpoint migration 동작과 제한이 명시되고 테스트된다.
-- [ ] malformed view role, 누락 visibility, subject hash mismatch, duplicate lock, stale replacement를 테스트한다.
-- [ ] 기존 subject-only benchmark가 observation lock을 사용하는 새 public path로 smoke 통과한다.
-- [ ] `skills/img2drawing/tests/test_observation_lock.py`에 unit/integration tests가 존재한다.
-- [ ] observation JSON은 일반 full-body case에서 64 KiB 이하이며 network/CV inference를 수행하지 않는다.
-- [ ] `SKILL.md`, observation reference, schema에 사용법과 reopen 조건이 기록된다.
-- [ ] 동일 책임의 `observation_v2/new/final` 경로가 없다.
-- [ ] S01 closure evidence와 context capsule이 작성된다.
+- [x] `ObservationContract`를 대체하는 parallel type을 만들지 않고 frozen lifecycle wrapper로 재사용한다.
+- [x] lock은 subject artifact hash, observation id, schema version, digest를 검증한다.
+- [x] P1 `stage_start`/최초 draw 전에 lock이 없으면 새 run은 fail-closed한다.
+- [x] lock content는 외부 dict mutation이나 resume 과정에서 바뀌지 않는다.
+- [x] drawing 시작 전 replacement도 audit record를 남긴다.
+- [x] drawing 시작 후 replacement는 P1부터 drawing/review evidence를 rewind/invalidate한다.
+- [x] checkpoint 저장·resume 후 observation digest와 content가 동일하다.
+- [x] legacy checkpoint migration 동작과 제한이 명시되고 테스트된다.
+- [x] malformed view role, 누락 visibility, subject hash mismatch, duplicate lock, stale replacement를 테스트한다.
+- [x] 기존 subject-only benchmark가 observation lock을 사용하는 새 public path로 smoke 통과한다.
+- [x] `skills/img2drawing/tests/test_observation_lock.py`에 unit/integration tests가 존재한다.
+- [x] observation JSON은 일반 full-body case에서 64 KiB 이하이며 network/CV inference를 수행하지 않는다.
+- [x] `SKILL.md`, observation reference, schema에 사용법과 reopen 조건이 기록된다.
+- [x] 동일 책임의 `observation_v2/new/final` 경로가 없다.
+- [x] S01 closure evidence와 context capsule이 작성된다.
 
 ### Evidence locations on closure
 
@@ -331,7 +332,7 @@ dev/planning/capsules/S01-pre-draw-observation-lock.md
 
 ### Next gate
 
-먼저 `FrozenObservationRecord` schema, replacement/invalidation semantics, legacy checkpoint migration을 테스트로 고정한다. UI나 region code는 이 gate 전에 작성하지 않는다.
+S01의 `FrozenObservationRecord` schema, replacement/invalidation semantics, legacy checkpoint migration은 closure evidence로 고정되었다. 다음 production slice는 이 capsule을 입력으로 삼는 S02 Region Envelope Evidence이며, 그 전까지 S03 이하의 production code는 활성화하지 않는다.
 
 ## 7. 후속 SKELETON queue
 
