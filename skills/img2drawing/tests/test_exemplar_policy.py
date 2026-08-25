@@ -70,6 +70,7 @@ def test_p3_exemplar_is_marked_unproven_until_ablation(tmp_path: Path):
         next((run.output_dir / "reviews").glob("*/pass_01/grammar_exemplar_audit.json")).read_text()
     )
     assert packet["references"]["grammar_exemplar"]["mandatory_path_policy"] == "unproven_until_ablation"
+    assert packet["artifacts"]["grammar_exemplar_policy"] == "unproven_until_ablation"
     assert audit["mandatory_path_policy"] == "unproven_until_ablation"
     assert "grammar_vs_drawing" not in packet["mandatory_review_views"]
     assert "grammar_exemplar_unproven_warning" in packet["mandatory_review_views"]

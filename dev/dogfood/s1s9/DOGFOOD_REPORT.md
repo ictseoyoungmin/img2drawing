@@ -32,6 +32,21 @@ and recovery behavior, but this dogfood does not yet demonstrate professional-le
 subject likeness. The next improvement target is an earlier P2/P3 whole-view semantic
 residual gate for torso turn, head identity, and prop topology.
 
+## S10 integration review
+
+The S10 independent blind review confirms that conclusion and prevents a false
+closure. It finds `REVISE` blockers in `head_hair`, `torso_orientation`,
+`near_arm`, `pelvis`, and `attached_object`; only the far arm and primary leg
+envelopes close at the current abstraction. The registered P3 measurements are
+valid provenance bindings, but they are agent-authored normalized observations,
+not raster-derived proof of visual likeness.
+
+The S09 A/B/C report is explicitly a harness fixture, not three real s1s9
+rendering conditions. The current P3 evaluator is labelled independent but is
+authored inline in the dogfood script, so worker independence is not proven.
+S10 remains `ACTIVE / REVISE`; reopen order is P1/P2 for face direction and
+torso axes, then P3 for masses/topology, before any P4/P5 polish.
+
 Key artifacts:
 
 - Final: [`croquis_run/final/drawing.png`](croquis_run/final/drawing.png)
@@ -39,3 +54,5 @@ Key artifacts:
 - Timelapse: [`croquis_run/timelapse/timelapse.gif`](croquis_run/timelapse/timelapse.gif)
 - P3 measurements: [`croquis_run/reviews/P3_primary_masses/pass_02/fidelity_evidence/region_measurements.json`](croquis_run/reviews/P3_primary_masses/pass_02/fidelity_evidence/region_measurements.json)
 - Reopen record: [`croquis_run/reopens/reopen_01.json`](croquis_run/reopens/reopen_01.json)
+- S10 blind review: [`../../evidence/p3-fidelity/S10-integration/blind_visual_report.md`](../../evidence/p3-fidelity/S10-integration/blind_visual_report.md)
+- S10 residual gate: [`../../evidence/p3-fidelity/S10-integration/residual_gate.json`](../../evidence/p3-fidelity/S10-integration/residual_gate.json)

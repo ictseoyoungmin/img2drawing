@@ -202,7 +202,11 @@ def main():
     text=json.dumps(result,indent=2,ensure_ascii=False)
     if args.write_json:
         args.write_json.parent.mkdir(parents=True,exist_ok=True)
-        args.write_json.write_text(text+'\\n',encoding='utf-8')
+        # Keep the persisted artifact strict JSON.  The CLI already emits a
+        # newline separately; writing the two-character ``\\n`` literal here
+        # made ``json.loads`` reject the audit artifact even though stdout was
+        # valid JSON.
+        args.write_json.write_text(text+'\n',encoding='utf-8')
     print(text)
     print('FRESH_WORKER_MECHANICAL_AUDIT_PASS')
 

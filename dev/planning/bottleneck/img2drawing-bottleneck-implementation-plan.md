@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S01–S09 closure complete)
+ACTIVE: S10 Full Integration + P2/P3 Semantic Residual Gate
 SKELETON: 없음
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology; S09 Exemplar Ablation
-NEXT GATE: full bottleneck integration review; reopen only on evidence-backed contract failure
+NEXT GATE: independent blind finding, real A/B/C execution, and earliest-stage decision
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -646,6 +646,41 @@ skills/img2drawing/schemas/modular_grammar_card.schema.json
 dev/evidence/p3-fidelity/S09-exemplar-ablation/
 dev/planning/capsules/S09-exemplar-ablation.md
 ```
+
+### S10 — Full Integration + P2/P3 Semantic Residual Gate
+
+Status: `ACTIVE` (S09 implementation is closed; s1s9 dogfood exposed unresolved semantic residuals)
+
+책임:
+
+- S01–S09 contracts를 하나의 fresh subject-only run에 통합해 실제 likeness closure를 검증한다.
+- blind visual evaluator와 mechanical/A-B/C auditor를 별도 worker로 실행한다.
+- torso back-three-quarter turn, head/hair identity, near-arm exposure, attached-prop topology의 residual mismatch가 P2/P3에서 실제로 닫히는지 확인한다.
+- synthetic S09 fixture와 실제 subject ablation을 구분한다.
+
+### S10 Definition of Closed
+
+- [ ] blind evaluator가 frozen observation + current drawing + registered evidence만 받아 fresh finding을 작성한다.
+- [ ] A/B/C 조건이 실제 subject에서 실행되고 P4 structural error까지 추적된다.
+- [ ] mechanical audit와 visual finding이 같은 artifact/state/lock digest에 bind된다.
+- [ ] torso turn, head/hair identity, near-arm width, prop topology에 대한 residual blocker와 earliest responsible stage가 명시된다.
+- [ ] mismatch가 남으면 P5 polish가 아니라 P2/P3 reopen decision을 기록한다.
+- [ ] 통합 report, visual/mechanical evidence, context capsule, tests/smoke가 작성된다.
+
+초기 evidence:
+
+```text
+dev/dogfood/s1s9/DOGFOOD_REPORT.md
+dev/dogfood/s1s9/croquis_run/
+dev/evidence/p3-fidelity/S09-exemplar-ablation/
+dev/evidence/p3-fidelity/S10-integration/
+```
+
+현재 판정: `ACTIVE / REVISE`. 독립 blind finding은 등록되었지만
+`head_hair`, `torso_orientation`, `near_arm`, `pelvis`, `attached_object`가
+렌더된 결과에서 막혀 있다. S09 A/B/C는 실제 subject trial이 아닌 fixture이고,
+기존 P3 evaluator의 worker 독립성도 입증되지 않았으므로 S10을 `CLOSED`로
+선언하지 않는다. 다음 작업은 P1/P2 → P3 reopen과 실제 subject A/B/C 실행이다.
 
 ## 8. Hardening and integration gates
 

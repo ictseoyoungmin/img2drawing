@@ -141,6 +141,11 @@ def build_reference_review(
             out/"reference_authority_overview.png",
         )
 
+    grammar_policy = (
+        "negative_reference_warning_only" if grammar_is_fail
+        else "unproven_until_ablation" if stage == "P3_primary_masses"
+        else "mandatory_positive_reference"
+    )
     return ReferenceReviewArtifacts(
         stage=stage,
         drawing=drawing,
@@ -156,9 +161,6 @@ def build_reference_review(
         task_target_vs_drawing=task_vs,
         task_target_split=task_split,
         overview=overview,
-        grammar_exemplar_policy=(
-            "negative_reference_warning_only" if grammar_is_fail
-            else "mandatory_positive_reference"
-        ),
+        grammar_exemplar_policy=grammar_policy,
         grammar_exemplar_warning=grammar_warning,
     )

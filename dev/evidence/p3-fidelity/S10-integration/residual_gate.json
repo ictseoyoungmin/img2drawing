@@ -1,0 +1,25 @@
+{
+  "schema": "img2drawing.s10.semantic_residual_gate.v1",
+  "subject": "dev/dogfood/s1s9/subject.png",
+  "drawing": "dev/dogfood/s1s9/croquis_run/final/drawing.png",
+  "observation_lock_digest": "16499af3fc539470f3d3ea03cbe4b0d11f5d322fdfab774389e767eb72610385",
+  "drawing_state_sha256": "cef027f9f02acbc975535c31ab6e327c82b16e86deb361d5194102fc0c735e02",
+  "drawing_artifact_sha256": "1f8b6b6e274686abab485584f514320f9c6da47d66f382ebbcb7fd5677bc7c79",
+  "visual_evaluator": "blind_visual_s10",
+  "mechanical_audit": "mechanical_ablation_s10",
+  "overall_decision": "revise",
+  "regions": {
+    "head_hair": {"decision": "revise", "earliest_stage": "P1/P3"},
+    "torso_orientation": {"decision": "revise", "earliest_stage": "P2/P3"},
+    "near_arm": {"decision": "revise", "earliest_stage": "P3"},
+    "far_arm": {"decision": "closed", "earliest_stage": "P3"},
+    "pelvis": {"decision": "revise", "earliest_stage": "P3"},
+    "leg_A": {"decision": "closed_primary_envelope", "earliest_stage": "P3"},
+    "leg_B": {"decision": "closed_primary_envelope", "earliest_stage": "P3"},
+    "attached_object": {"decision": "revise", "earliest_stage": "P3/P4"}
+  },
+  "blocking_regions": ["head_hair", "torso_orientation", "near_arm", "pelvis", "attached_object"],
+  "required_action": "reopen_P1_P2_then_P3_before_P4_P5_polish",
+  "ablation_status": "not_executed_on_real_subject",
+  "closure_status": "active_revise"
+}
