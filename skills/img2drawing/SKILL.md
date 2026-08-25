@@ -114,6 +114,13 @@ provenance integrity only; it is not an artistic score or stage decision. A
 drawing profile must include its current drawing-state digest so stale evidence
 cannot be reused after a correction.
 
+At P3, process review and visual-fidelity review are separate artifacts. The
+visual path writes a blind packet, an eight-region `RegionClosureManifest`, and
+a `VisualFidelityReviewRecord`; only when both process and visual decisions are
+advance may `DrawingRun.submit_stage_review(..., decision="advance")` advance
+P3. Missing regions, blockers, revise decisions, lock mismatches, or stale
+artifacts fail closed.
+
 
 ## Grammar Exemplar Audit
 Bundled grammar exemplars are audited against the frozen StageContract and bound to their image SHA-256.

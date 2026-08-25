@@ -14,8 +14,15 @@ __all__=[
     "AutonomousWorkerPacket","build_worker_packet",
     "ActionMemory","StagePassMemory","build_stage_pass_memory","make_action_memory","ReopenRecord",
     "CropBox","LocalReviewError","LocalReviewArtifacts","build_local_review","make_local_review_id",
+    "REQUIRED_P3_REGIONS","RegionClosureEntry","RegionClosureManifest",
+    "VisualFidelityReviewRecord","blind_observation_projection","build_blind_visual_packet",
 ]
 
 from .reopen import ReopenRecord
 
 from .contour_contact import ContourContactEvidence, measure_contour_contact
+from .fidelity import (
+    REQUIRED_P3_REGIONS, RegionClosureEntry, RegionClosureManifest,
+    VisualFidelityReviewRecord, blind_observation_projection,
+    build_blind_visual_packet,
+)

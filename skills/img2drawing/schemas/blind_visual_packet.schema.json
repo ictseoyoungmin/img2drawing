@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/blind_visual_packet.schema.json",
+  "title": "Blind visual packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "stage", "subject_reference_path", "observation_lock", "stage_contract", "drawing_artifact", "region_evidence_refs", "evaluator_instruction", "packet_digest"],
+  "properties": {
+    "schema": {"const": "img2drawing.blind_visual_packet.v1"},
+    "stage": {"const": "P3_primary_masses"},
+    "subject_reference_path": {"type": "string", "minLength": 1},
+    "observation_lock": {"type": "object"},
+    "stage_contract": {"type": "object"},
+    "drawing_artifact": {"type": "object"},
+    "region_evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "evaluator_instruction": {"type": "string", "minLength": 1},
+    "packet_digest": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

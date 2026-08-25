@@ -24,6 +24,10 @@ from .review.record import StageReviewRecord, record_from_artifacts, normalize_f
 from .review.reference_review import ReferenceReviewArtifacts, build_reference_review
 from .review.local_review import LocalReviewArtifacts, build_local_review, make_local_review_id
 from .review.worker_protocol import build_worker_packet
+from .review.fidelity import (
+    RegionClosureManifest, VisualFidelityReviewRecord,
+    build_blind_visual_packet,
+)
 from .review.pass_memory import ActionMemory, build_stage_pass_memory, make_action_memory
 from .review.reopen import ReopenRecord
 from .stages import StageProgress, get_stage_registry, get_stage_contract_registry
@@ -135,6 +139,9 @@ class DrawingRun:
         self._reopen_contexts: dict[str,dict[str,Any]]={}
         self._observation_lock: FrozenObservationRecord | None = None
         self._observation_reopens: list[ObservationReopenRecord] = []
+        self._region_closure_manifests: dict[str, RegionClosureManifest] = {}
+        self._visual_fidelity_reviews: dict[str, VisualFidelityReviewRecord] = {}
+        self._blind_packets: dict[str, dict[str, Any]] = {}
 
     @classmethod
     def create(
@@ -376,6 +383,114 @@ class DrawingRun:
         self.save_checkpoint()
         return reopen_record
 
+    @property
+    def region_closure_manifest(self) -> RegionClosureManifest | None:
+        return self._region_closure_manifests.get("P3_primary_masses")
+
+    @property
+    def visual_fidelity_review(self) -> VisualFidelityReviewRecord | None:
+        return self._visual_fidelity_reviews.get("P3_primary_masses")
+
+    @property
+    def blind_visual_packet(self) -> dict[str, Any] | None:
+        packet = self._blind_packets.get("P3_primary_masses")
+        return None if packet is None else dict(packet)
+
+    def _require_current_p3_artifacts(self):
+        if self.current_stage != "P3_primary_masses":
+            raise RuntimeError("visual fidelity closure is only available at P3_primary_masses")
+        artifacts = self._prepared.get("P3_primary_masses")
+        if artifacts is None:
+            raise RuntimeError("prepare_stage_review() must be called before visual fidelity review")
+        assert_review_artifact_current(
+            artifacts,
+            current_state_sha256=self._state_sha(),
+            current_cursor=self.session.history.cursor,
+        )
+        return artifacts
+
+    def submit_region_closure_manifest(
+        self,
+        manifest: RegionClosureManifest,
+    ) -> RegionClosureManifest:
+        """Persist the eight-region visual evidence manifest for the current P3 pass."""
+        artifacts = self._require_current_p3_artifacts()
+        if not isinstance(manifest, RegionClosureManifest):
+            raise TypeError("submit_region_closure_manifest requires RegionClosureManifest")
+        lock = self._require_observation_lock()
+        if manifest.drawing_state_sha256 != artifacts.drawing.state_sha256:
+            raise RuntimeError("region closure manifest is stale for the current drawing state")
+        if manifest.drawing_artifact_sha256 != artifacts.drawing.artifact_sha256:
+            raise RuntimeError("region closure manifest is stale for the current drawing artifact")
+        if manifest.history_cursor != artifacts.drawing.history_cursor:
+            raise RuntimeError("region closure manifest is stale for the current history cursor")
+        if manifest.observation_lock_digest != lock.observation_digest:
+            raise RuntimeError("region closure manifest is bound to a different observation lock")
+        self._region_closure_manifests["P3_primary_masses"] = manifest
+        pass_dir = artifacts.drawing.path.parent
+        manifest.save(pass_dir / "region_closure_manifest.json")
+        packet = build_blind_visual_packet(
+            observation_lock=lock,
+            stage_contract=self.stage_contracts.for_stage("P3_primary_masses").to_dict(),
+            drawing_artifact=artifacts.drawing.to_dict(),
+            subject_reference_path=str(self.reference_path),
+            region_evidence_refs=(
+                ref
+                for region in manifest.regions
+                for ref in region.evidence_refs
+            ),
+        )
+        (pass_dir / "blind_visual_packet.json").write_text(
+            json.dumps(packet, indent=2, ensure_ascii=False, sort_keys=True),
+            encoding="utf-8",
+        )
+        self._blind_packets["P3_primary_masses"] = packet
+        self.save_checkpoint()
+        return manifest
+
+    def submit_visual_fidelity_review(
+        self,
+        *,
+        manifest: RegionClosureManifest | None = None,
+        evaluator_id: str,
+        findings,
+        decision: str = "revise",
+        rationale: str = "",
+    ) -> VisualFidelityReviewRecord:
+        """Submit an independent visual decision for the current P3 pass."""
+        artifacts = self._require_current_p3_artifacts()
+        if manifest is None:
+            manifest = self._region_closure_manifests.get("P3_primary_masses")
+        if manifest is None:
+            raise RuntimeError("submit a region closure manifest before visual fidelity review")
+        if manifest is not self._region_closure_manifests.get("P3_primary_masses"):
+            self.submit_region_closure_manifest(manifest)
+        if decision == "advance" and not manifest.can_advance:
+            raise RuntimeError(
+                "visual fidelity cannot advance while region blockers/revise decisions remain: "
+                + ", ".join(manifest.blockers)
+            )
+        packet = self._blind_packets.get("P3_primary_masses")
+        if packet is None:
+            raise RuntimeError("blind visual packet is missing; submit the manifest again")
+        record = VisualFidelityReviewRecord(
+            stage="P3_primary_masses",
+            manifest_digest=manifest.digest(),
+            drawing_state_sha256=artifacts.drawing.state_sha256,
+            drawing_artifact_sha256=artifacts.drawing.artifact_sha256,
+            history_cursor=artifacts.drawing.history_cursor,
+            observation_lock_digest=self._require_observation_lock().observation_digest,
+            evaluator_id=str(evaluator_id),
+            decision=str(decision),
+            findings=tuple(findings) if not isinstance(findings, str) else (findings,),
+            rationale=str(rationale),
+            blind_packet_digest=str(packet["packet_digest"]),
+        )
+        record.save(artifacts.drawing.path.parent / "visual_fidelity_review.json")
+        self._visual_fidelity_reviews["P3_primary_masses"] = record
+        self.save_checkpoint()
+        return record
+
     def _stage_exemplar_path(self,stage: str) -> Path:
         """0.5.1 compatibility alias for the grammar exemplar."""
         return self.references.for_stage(stage).grammar_exemplar.path
@@ -468,6 +583,22 @@ class DrawingRun:
         )
         packet.save_json(out/"worker_packet.json")
         packet.save_markdown(out/"worker_packet.md")
+        if stage == "P3_primary_masses":
+            # A new pass gets a fresh blind packet and cannot reuse a prior visual
+            # decision. Region evidence is added later when the manifest is submitted.
+            self._region_closure_manifests.pop(stage, None)
+            self._visual_fidelity_reviews.pop(stage, None)
+            blind_packet = build_blind_visual_packet(
+                observation_lock=self._require_observation_lock(),
+                stage_contract=stage_contract.to_dict(),
+                drawing_artifact=artifact.to_dict(),
+                subject_reference_path=str(self.reference_path),
+            )
+            (out / "blind_visual_packet.json").write_text(
+                json.dumps(blind_packet, indent=2, ensure_ascii=False, sort_keys=True),
+                encoding="utf-8",
+            )
+            self._blind_packets[stage] = blind_packet
         self._prepared[stage]=artifacts
         self._prepared_memory[stage]=pass_memory
         # If prepare_stage_review() returns successfully, its drawing artifact and the
@@ -579,6 +710,30 @@ class DrawingRun:
             current_state_sha256=self._state_sha(),
             current_cursor=self.session.history.cursor,
         )
+
+        if stage == "P3_primary_masses" and decision == "advance":
+            manifest = self._region_closure_manifests.get(stage)
+            visual = self._visual_fidelity_reviews.get(stage)
+            if manifest is None or visual is None:
+                raise RuntimeError(
+                    "P3 advance requires an independent region closure manifest and visual fidelity review"
+                )
+            if visual.decision != "advance":
+                raise RuntimeError("P3 advance requires visual fidelity decision='advance'")
+            if not manifest.can_advance:
+                raise RuntimeError(
+                    "P3 advance is blocked by region decisions: "
+                    + ", ".join(manifest.blockers)
+                )
+            if visual.manifest_digest != manifest.digest():
+                raise RuntimeError("visual fidelity review is bound to a stale region closure manifest")
+            if (
+                visual.drawing_state_sha256 != artifacts.drawing.state_sha256
+                or visual.drawing_artifact_sha256 != artifacts.drawing.artifact_sha256
+                or visual.history_cursor != artifacts.drawing.history_cursor
+                or visual.observation_lock_digest != self._require_observation_lock().observation_digest
+            ):
+                raise RuntimeError("visual fidelity review is stale for the current process review artifact")
 
         # 0.5.0/0.5.1 compatibility. This shortcut is not allowed when a
         # same-task stage target exists because that authority needs its
@@ -794,6 +949,9 @@ class DrawingRun:
             self._reviews.pop(sid,None)
             self._prepared.pop(sid,None)
             self._prepared_memory.pop(sid,None)
+            self._region_closure_manifests.pop(sid, None)
+            self._visual_fidelity_reviews.pop(sid, None)
+            self._blind_packets.pop(sid, None)
             self.progress.advanced_reviews.pop(sid,None)
             self.progress.started_cursor.pop(sid,None)
         for local_id in abandoned_local_review_ids:
@@ -851,7 +1009,7 @@ class DrawingRun:
 
     def _checkpoint_payload(self):
         return {
-            "schema":"img2drawing.run_checkpoint.v2",
+            "schema":"img2drawing.run_checkpoint.v3",
             "version":__version__,
             "slice":RELEASE_SLICE,
             "init":{
@@ -884,6 +1042,13 @@ class DrawingRun:
                 None if self._observation_lock is None else self._observation_lock.to_dict()
             ),
             "observation_reopens":[x.to_dict() for x in self._observation_reopens],
+            "region_closure_manifests":{
+                k:v.to_dict() for k,v in self._region_closure_manifests.items()
+            },
+            "visual_fidelity_reviews":{
+                k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
+            },
+            "blind_packets":dict(self._blind_packets),
         }
 
     def save_checkpoint(self,path: str|Path|None=None) -> Path:
@@ -924,6 +1089,7 @@ class DrawingRun:
         if data.get("schema") not in {
             "img2drawing.run_checkpoint.v1",
             "img2drawing.run_checkpoint.v2",
+            "img2drawing.run_checkpoint.v3",
         }:
             raise ValueError(f"unsupported run checkpoint schema: {data.get('schema')!r}")
         init=data["init"]
@@ -973,6 +1139,17 @@ class DrawingRun:
             ObservationReopenRecord.from_dict(x)
             for x in data.get("observation_reopens",())
         ]
+        obj._region_closure_manifests={
+            str(k): RegionClosureManifest.from_dict(v)
+            for k,v in (data.get("region_closure_manifests") or {}).items()
+        }
+        obj._visual_fidelity_reviews={
+            str(k): VisualFidelityReviewRecord.from_dict(v)
+            for k,v in (data.get("visual_fidelity_reviews") or {}).items()
+        }
+        obj._blind_packets={
+            str(k): dict(v) for k,v in (data.get("blind_packets") or {}).items()
+        }
         obj._prepared={}
         obj._prepared_memory={}
         obj.canvas.sync(obj.session.history)
@@ -1033,6 +1210,12 @@ class DrawingRun:
                     None if self._observation_lock is None else self._observation_lock.to_dict()
                 ),
                 "observation_reopens":[x.to_dict() for x in self._observation_reopens],
+                "region_closure_manifests":{
+                    k:v.to_dict() for k,v in self._region_closure_manifests.items()
+                },
+                "visual_fidelity_reviews":{
+                    k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
+                },
             },
         )
         session_dir=self.output_dir/"session"; session_dir.mkdir(parents=True,exist_ok=True)
@@ -1040,7 +1223,7 @@ class DrawingRun:
 
         manifest=self.output_dir/"review_manifest.json"
         manifest.write_text(json.dumps({
-            "schema":"img2drawing.review_manifest.v8",
+            "schema":"img2drawing.review_manifest.v9",
             "version":__version__,
             "slice":RELEASE_SLICE,
             "reference_bundle":self.references.to_dict(),
@@ -1053,6 +1236,12 @@ class DrawingRun:
                 None if self._observation_lock is None else self._observation_lock.to_dict()
             ),
             "observation_reopens":[x.to_dict() for x in self._observation_reopens],
+            "region_closure_manifests":{
+                k:v.to_dict() for k,v in self._region_closure_manifests.items()
+            },
+            "visual_fidelity_reviews":{
+                k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
+            },
         },indent=2,ensure_ascii=False,sort_keys=True),encoding="utf-8")
 
         tl_manifest=None; tl_gif=None; tl_status="disabled"

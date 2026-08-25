@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S02 종료, 다음 slice 미활성화)
-SKELETON: S03 Blind Visual Fidelity Review부터 S09 Exemplar Ablation까지
+ACTIVE: S03 Blind Visual Fidelity Review + P3 dual gate (구현 중)
+SKELETON: S04 Exemplar Mandatory-Path Cleanup부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence
-NEXT GATE: S02 capsule 검토 후 S03 Blind Visual Fidelity Review 활성화
+NEXT GATE: S03 blind packet, eight-region manifest, dual-gate lifecycle test
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -394,6 +394,8 @@ dev/planning/capsules/S02-region-envelope-evidence.md
 
 ### S03 — Blind Visual Fidelity Review + P3 dual gate
 
+Status: `ACTIVE` (S02 capsule consumed; implementation in progress)
+
 책임:
 
 - `RegionClosureManifest`, `VisualFidelityReviewRecord`, blind packet을 구현한다.
@@ -409,6 +411,28 @@ dev/planning/capsules/S02-region-envelope-evidence.md
 - S05~S08 전에는 나머지 region도 독립 관측한 registration/local contour evidence를 반드시 제출한다. 후속 slice는 이 수동 evidence를 없애는 것이 아니라 더 강한 전용 측정으로 harden한다.
 - 기존 sniper-girl P3는 독립 review에서 그대로 advance하지 못한다.
 - non-P3 stage의 기존 progression을 깨지 않는다.
+
+### S03 public surface and Definition of Closed
+
+```python
+manifest = run.submit_region_closure_manifest(region_manifest)
+visual = run.submit_visual_fidelity_review(
+    evaluator_id="independent-evaluator",
+    findings=(...),
+    decision="advance",
+    rationale="...",
+)
+run.submit_stage_review(..., decision="advance", advance_rationale="...")
+```
+
+- [ ] blind packet에 frozen observation, stage contract, current drawing, region refs만 남고 worker rationale/exemplar verdict는 노출되지 않는다.
+- [ ] eight required region에 subject finding, drawing finding, independent evidence ref, closure decision이 모두 있다.
+- [ ] blocker, `revise`, 누락 region, stale state/artifact, lock mismatch가 있으면 visual advance와 P3 advance가 모두 거부된다.
+- [ ] `accept-with-rationale`는 uncertainty/occlusion 근거 없이는 생성되지 않는다.
+- [ ] mechanical/process review와 visual review가 동일한 drawing/observation digest에 bind된다.
+- [ ] checkpoint/resume와 review manifest에 visual records가 보존된다.
+- [ ] P3 dual gate가 통합 테스트되고 non-P3 stage progression은 유지된다.
+- [ ] S03 closure evidence와 context capsule이 작성된다.
 
 ### S04 — Exemplar mandatory-path cleanup
 

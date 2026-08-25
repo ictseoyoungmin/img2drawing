@@ -59,3 +59,10 @@ near_arm = RegionEnvelopeObservation(
 visible-fraction drift, and occlusion-order changes. It is evidence only: it
 does not emit an artistic `PASS` or `FAIL`. Drawing evidence must carry a
 current drawing-state digest when compared, so stale measurements are rejected.
+
+At P3, feed region evidence into all eight required region entries
+(`head_hair`, `torso_orientation`, `near_arm`, `far_arm`, `pelvis`, `leg_A`,
+`leg_B`, `attached_object`). The visual evaluator receives a blind packet with
+the frozen observation, current drawing, stage contract, and evidence refs; it
+does not receive worker rationale or exemplar verdict. Process PASS and visual
+PASS remain separate until the runtime's dual gate checks both.

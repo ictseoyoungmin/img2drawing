@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/region_closure.schema.json",
+  "title": "P3 region closure manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "stage", "drawing_state_sha256", "drawing_artifact_sha256", "history_cursor", "observation_lock_digest", "regions", "evaluator_id", "manifest_id"],
+  "properties": {
+    "schema": {"const": "img2drawing.region_closure_manifest.v1"},
+    "stage": {"const": "P3_primary_masses"},
+    "drawing_state_sha256": {"$ref": "#/$defs/sha256"},
+    "drawing_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "history_cursor": {"type": "integer", "minimum": 0},
+    "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "regions": {"type": "array", "minItems": 8, "maxItems": 8, "items": {"$ref": "#/$defs/region"}},
+    "evaluator_id": {"type": "string", "minLength": 1},
+    "manifest_id": {"type": "string", "minLength": 1},
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["region_id", "subject_finding", "drawing_finding", "evidence_refs", "decision", "blocker", "rationale", "rationale_basis"],
+      "properties": {
+        "region_id": {"type": "string", "minLength": 1},
+        "subject_finding": {"type": "string", "minLength": 1},
+        "drawing_finding": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "decision": {"enum": ["closed", "revise", "accept-with-rationale"]},
+        "blocker": {"type": "boolean"},
+        "rationale": {"type": "string"},
+        "rationale_basis": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

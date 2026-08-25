@@ -150,7 +150,10 @@ def test_lock_persists_and_resumes(tmp_path: Path):
     assert resumed.observation_lock.observation_digest == record.observation_digest
     assert resumed.observation_lock.observation.view == record.observation.view
     checkpoint = json.loads((run.output_dir / "session" / "checkpoint.json").read_text())
-    assert checkpoint["schema"] == "img2drawing.run_checkpoint.v2"
+    assert checkpoint["schema"] in {
+        "img2drawing.run_checkpoint.v2",
+        "img2drawing.run_checkpoint.v3",
+    }
     assert len(json.dumps(record.to_dict(), ensure_ascii=False).encode("utf-8")) <= 64 * 1024
 
 

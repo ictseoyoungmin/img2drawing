@@ -32,6 +32,9 @@ from .review import (
     ReferenceReviewArtifacts,
     DualReferenceReviewArtifacts,
     StaleReviewError,
+    REQUIRED_P3_REGIONS, RegionClosureEntry, RegionClosureManifest,
+    VisualFidelityReviewRecord, blind_observation_projection,
+    build_blind_visual_packet,
 )
 from .registration import (
     EnvelopeStation, RegionEnvelopeObservation, RegionEnvelopeIntegrityError,
@@ -51,6 +54,8 @@ __all__=[
     "CropBox","LocalReviewError","LocalReviewArtifacts",
     "ActionMemory","StagePassMemory","ReopenRecord",
     "StaleReviewError",
+    "REQUIRED_P3_REGIONS","RegionClosureEntry","RegionClosureManifest",
+    "VisualFidelityReviewRecord","blind_observation_projection","build_blind_visual_packet",
     "EnvelopeStation","RegionEnvelopeObservation","RegionEnvelopeIntegrityError",
     "EnvelopeIntegrity","AxisEnvelopeEvidence","StationEnvelopeEvidence",
     "RegionGeometryComparison","compare_region_envelopes",
