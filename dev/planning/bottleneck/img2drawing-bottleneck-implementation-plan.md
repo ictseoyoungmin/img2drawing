@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S04 Exemplar Mandatory-Path Cleanup (구현 중)
+ACTIVE: 없음 (S04 종료, 다음 slice 미활성화)
 SKELETON: S05 Torso Orientation Closure부터 S09 Exemplar Ablation까지
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate
-NEXT GATE: S04 mandatory-path policy, owner/hash sync, worker packet regression test
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup
+NEXT GATE: S04 capsule 검토 후 S05 Torso Orientation Closure 활성화
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -447,7 +447,7 @@ dev/planning/capsules/S03-blind-visual-fidelity.md
 
 ### S04 — Exemplar mandatory-path cleanup
 
-Status: `ACTIVE` (S03 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, and capsule complete)
 
 책임:
 
@@ -464,12 +464,21 @@ Status: `ACTIVE` (S03 capsule consumed; implementation in progress)
 
 ### S04 Definition of Closed
 
-- [ ] FAIL exemplar는 mandatory `grammar_vs_drawing`에서 제외되고 negative/reference warning만 남는다.
-- [ ] P2 PASS exemplar는 positive control로 유지된다.
-- [ ] P3 exemplar는 `unproven_until_ablation`으로 worker packet과 audit에 표시된다.
-- [ ] top-level exemplar를 authoring owner로 선언하고 packaged copy hash drift를 검출한다.
-- [ ] FAIL exemplar 없이 worker packet과 subject-first review가 생성된다.
-- [ ] S04 closure evidence와 context capsule이 작성된다.
+- [x] FAIL exemplar는 mandatory `grammar_vs_drawing`에서 제외되고 negative/reference warning만 남는다.
+- [x] P2 PASS exemplar는 positive control로 유지된다.
+- [x] P3 exemplar는 `unproven_until_ablation`으로 worker packet과 audit에 표시된다.
+- [x] top-level exemplar를 authoring owner로 선언하고 packaged copy hash drift를 검출한다.
+- [x] FAIL exemplar 없이 worker packet과 subject-first review가 생성된다.
+- [x] S04 closure evidence와 context capsule이 작성된다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/tests/test_exemplar_policy.py
+skills/img2drawing/tests/test_exemplar_sync.py
+dev/evidence/p3-fidelity/S04-exemplar-policy/
+dev/planning/capsules/S04-exemplar-mandatory-path-cleanup.md
+```
 
 ### S05 — Torso orientation closure
 
