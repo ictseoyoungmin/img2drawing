@@ -34,10 +34,38 @@
       "blind_decision": "revise"
     }
   ],
+  "normalized_trials": [
+    {
+      "condition": "A_subject_contract",
+      "run_dir": "drawings/s10-ablation/A_subject_contract",
+      "actions": 331,
+      "identity_role_actions": 82,
+      "final_sha256": "5dba644104b81eb8b11f9733914867392e07e5910bcff311498f05d40e8fbb71",
+      "blind_decision": "revise"
+    },
+    {
+      "condition": "B_full_body_exemplar_normalized",
+      "run_dir": "drawings/s10-ablation/B_full_body_exemplar_normalized",
+      "actions": 181,
+      "identity_role_actions": 82,
+      "final_sha256": "16d2672cf3cb5e5fcc628f274c9231e8ef2f4b3fde58f29c270ce8fde2574d39",
+      "blind_decision": "revise"
+    },
+    {
+      "condition": "C_modular_cards_normalized",
+      "run_dir": "drawings/s10-ablation/C_modular_grammar_cards_normalized",
+      "actions": 182,
+      "identity_role_actions": 82,
+      "final_sha256": "80a2c760b22432df07d5d6c52f7b72edb67c66d123c065b1f367729b2e16e4e4",
+      "blind_decision": "revise"
+    }
+  ],
   "strongest_condition": "A_subject_contract",
   "c_over_b_visible_gain": false,
+  "normalized_c_over_b_visible_gain": false,
+  "normalized_identity_role_budget": 82,
   "causal_status": "confounded_by_unequal_identity_detail_budget",
-  "normalized_detail_rerun_required": true,
+  "normalized_detail_rerun_required": false,
   "authority": "independent_image_only_comparison; not statistical causality",
   "overall_decision": "revise"
 }

@@ -19,10 +19,14 @@ The real subject A/B/C ablation is now executed under `drawings/s10-ablation/`.
 The independent image-only comparison finds A strongest but still schematic;
 B and C are generic near-duplicates, with no visible C-over-B gain. Therefore
 the ablation is complete as an experiment but does not close the fidelity gate.
-The first comparison is also confounded by unequal identity-detail budgets (A:
-82 identity-role actions; B/C: 22 each). It cannot attribute the visual gap to
-the exemplar or grammar-card condition until B/C are rerun with an A-equivalent
-detail inventory and budget.
+The first comparison was confounded by unequal identity-detail budgets (A: 82
+identity-role actions; B/C: 22 each). That comparison is retained as the
+diagnosis, not as a causal estimate. Bn/Cn were then rerun with exactly 82
+identity-role actions and the same requested final-detail inventory. The
+normalized blind comparison still finds A strongest, Bn/Cn generic, and no
+visible Cn-over-Bn gain. This supports “no observed modular-card advantage in
+this sample,” but not statistical causality; S10 remains `REVISE` because all
+three rasters fail subject-fidelity closure.
 
 ## Evidence
 
@@ -34,6 +38,7 @@ detail inventory and budget.
 - `dev/evidence/p3-fidelity/S09-exemplar-ablation/ablation_report.json` (fixture only)
 - `ablation_comparison.md`
 - `blind_ablation_report.md`
+- `blind_normalized_ablation_report.md`
 - `real_ablation_report.json`
 
 Mechanical smoke also passes for all three isolated runs with strict JSON audit

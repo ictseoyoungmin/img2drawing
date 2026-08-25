@@ -11,7 +11,7 @@ SYSTEM: sketched / cross-slice contract frozen
 ACTIVE: S10 Full Integration + P2/P3 Semantic Residual Gate
 SKELETON: 없음
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology; S09 Exemplar Ablation
-NEXT GATE: normalize identity-detail budget, then upstream P1/P2/P3 correction and repeat blind review
+NEXT GATE: upstream P1/P2/P3 correction and repeat blind review; retain matched-detail ablation as the condition baseline
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -678,13 +678,15 @@ dev/evidence/p3-fidelity/S10-integration/
 
 현재 판정: `ACTIVE / REVISE`. 실제 A/B/C와 독립 blind finding은 등록되었지만
 `head_hair`, `torso_orientation`, `near_arm`, `pelvis`, `attached_object`가
-렌더된 결과에서 막혀 있다. 또한 A는 identity-role action 82개, B/C는 각
-22개로 detail budget이 달라 현재 시각 차이를 condition 효과로 귀속할 수
-없다. S09에 남아 있던 ablation fixture는 정책 fixture로 분리해 두고, 이번
-S10 real-subject A/B/C 결과와 혼동하지 않는다. 기존 P3 evaluator의 worker
-독립성도 입증되지 않았으므로 S10을 `CLOSED`로 선언하지 않는다. 다음 작업은
-B/C를 A와 동등한 identity-detail inventory/budget으로 재실행한 뒤 P1/P2 →
-P3 reopen과 반복 blind fidelity review를 수행하는 것이다.
+렌더된 결과에서 막혀 있다. 최초 비교의 detail budget confound는 B/C를 A와
+동등한 identity-detail inventory/budget(각 82 action)으로 재실행해 제거했다.
+정규화 blind 결과도 A가 가장 강하고 Bn/Cn은 generic하며 Cn의 가시적 개선이
+없었다. 따라서 이 표본에서는 modular-card의 관찰 가능한 이득을 확인하지
+못했지만, 통계적 인과로 확대하지 않는다. S09에 남아 있던 ablation fixture는
+정책 fixture로 분리해 두고, 이번 S10 real-subject 결과와 혼동하지 않는다.
+기존 P3 evaluator의 worker 독립성도 입증되지 않았으므로 S10을 `CLOSED`로
+선언하지 않는다. 다음 작업은 P1/P2 → P3 reopen과 반복 blind fidelity
+review다.
 
 ## 8. Hardening and integration gates
 
