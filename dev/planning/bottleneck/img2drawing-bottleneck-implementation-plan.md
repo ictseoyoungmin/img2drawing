@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: S09 Exemplar Ablation (구현 중)
+ACTIVE: 없음 (S01–S09 closure complete)
 SKELETON: 없음
-CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology
-NEXT GATE: S09 A/B/C condition schema, P4 tracking metrics, policy decision
+CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate; S04 Exemplar Mandatory-Path Cleanup; S05 Torso Orientation Closure; S06 Pelvis and Legs Closure; S07 Head and Hair Closure; S08 Generic Prop Topology; S09 Exemplar Ablation
+NEXT GATE: full bottleneck integration review; reopen only on evidence-backed contract failure
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -237,7 +237,7 @@ output/
 
 | Slice 후보 | Impact | Uncertainty | Reusability | Score | 선택 판단 |
 |---|---:|---:|---:|---:|---|
-| Pre-draw Observation Lock | 5 | 4 | 5 | 100 | **ACTIVE** — 모든 near/far·visibility evidence의 의미와 provenance를 선행 고정 |
+| Pre-draw Observation Lock | 5 | 4 | 5 | 100 | **선행 선택 완료** — 모든 near/far·visibility evidence의 의미와 provenance를 고정 |
 | Region Envelope Evidence: near arm | 5 | 5 | 5 | 125 | 점수는 최고지만 observation lifecycle에 의존하므로 S02 |
 | Blind Visual Review + P3 dual gate | 5 | 4 | 5 | 100 | observation/evidence contract에 의존하므로 S03 |
 | FAIL exemplar mandatory cleanup | 4 | 2 | 4 | 32 | 중요하지만 core fidelity 판단보다 불확실성이 낮아 S04 |
@@ -606,7 +606,7 @@ dev/planning/capsules/S08-prop-topology.md
 
 ### S09 — Modular grammar cards + A/B/C ablation
 
-Status: `ACTIVE` (S08 capsule consumed; implementation in progress)
+Status: `CLOSED` (implementation, verification, report, and capsule complete)
 
 책임:
 
@@ -615,11 +615,11 @@ Status: `ACTIVE` (S08 capsule consumed; implementation in progress)
 
 ### S09 Definition of Closed
 
-- [ ] A/B/C 조건(subject+contract / +full-body exemplar / +modular cards)을 동일 schema로 기록한다.
-- [ ] region blocker 수, reopen 수, residual discrepancy, P4 structural error를 primary metrics로 비교한다.
-- [ ] FAIL exemplar가 positive card로 들어가지 않고 transfer mapping scope가 명시된다.
-- [ ] P4까지 추적한 fixture와 policy recommendation이 있다.
-- [ ] schema, tests, report/board와 capsule이 작성된다.
+- [x] A/B/C 조건(subject+contract / +full-body exemplar / +modular cards)을 동일 schema로 기록한다.
+- [x] region blocker 수, reopen 수, residual discrepancy, P4 structural error를 primary metrics로 비교한다.
+- [x] FAIL exemplar가 positive card로 들어가지 않고 transfer mapping scope가 명시된다.
+- [x] P4까지 추적한 fixture와 policy recommendation이 있다.
+- [x] schema, tests, report/board와 capsule이 작성된다.
 
 조건:
 
@@ -635,6 +635,17 @@ C = subject + contract + modular grammar cards
 - P3에서 끝내지 않고 P4까지 structural error를 추적한다.
 - B가 A보다 낫지 않으면 current P3 exemplar를 mandatory path에서 제거한다.
 - C가 P3 개선을 만들고 P4에서도 유지할 때만 채택한다.
+
+Evidence locations:
+
+```text
+skills/img2drawing/src/img2drawing/exemplar/ablation.py
+skills/img2drawing/tests/test_exemplar_ablation.py
+skills/img2drawing/schemas/exemplar_ablation.schema.json
+skills/img2drawing/schemas/modular_grammar_card.schema.json
+dev/evidence/p3-fidelity/S09-exemplar-ablation/
+dev/planning/capsules/S09-exemplar-ablation.md
+```
 
 ## 8. Hardening and integration gates
 
@@ -688,7 +699,7 @@ CLOSED slice는 다음 증거가 생길 때만 `REOPENED`한다.
 
 reopen record에는 reason, triggering evidence, affected contract, migration risk, 재closure gates를 기록하며 해당 slice가 단일 `ACTIVE` slot을 점유한다.
 
-## 12. 구현 착수 시 첫 작업
+## 12. 구현 착수 시 첫 작업 (historical S01 order)
 
 S01 외의 production 코드를 만들지 않고 다음 순서로 시작한다.
 

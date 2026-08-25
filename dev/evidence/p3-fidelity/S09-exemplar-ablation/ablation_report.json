@@ -1,0 +1,50 @@
+{
+  "schema": "img2drawing.exemplar_ablation.v1",
+  "conditions": [
+    "A_subject_contract",
+    "B_full_body_exemplar",
+    "C_modular_cards"
+  ],
+  "trials": [
+    {
+      "condition": "A_subject_contract",
+      "region_blockers": 4,
+      "reopen_count": 3,
+      "residual_discrepancy": 0.4,
+      "p4_structural_errors": 3,
+      "p4_tracked": true,
+      "evidence_refs": ["ablation_fixture.json", "ablation-board.svg"],
+      "notes": ["subject and contract only"]
+    },
+    {
+      "condition": "B_full_body_exemplar",
+      "region_blockers": 5,
+      "reopen_count": 4,
+      "residual_discrepancy": 0.55,
+      "p4_structural_errors": 4,
+      "p4_tracked": true,
+      "evidence_refs": ["ablation_fixture.json", "ablation-board.svg"],
+      "notes": ["existing full-body exemplar remains unproven"]
+    },
+    {
+      "condition": "C_modular_cards",
+      "region_blockers": 2,
+      "reopen_count": 1,
+      "residual_discrepancy": 0.2,
+      "p4_structural_errors": 1,
+      "p4_tracked": true,
+      "evidence_refs": ["ablation_fixture.json", "ablation-board.svg"],
+      "notes": ["modular cards strictly improve every ordered metric"]
+    }
+  ],
+  "best_condition": "C_modular_cards",
+  "recommendation": "adopt_modular_cards",
+  "metric_order": [
+    "region_blockers",
+    "reopen_count",
+    "residual_discrepancy",
+    "p4_structural_errors"
+  ],
+  "rationale": "C modular cards strictly improve all ordered structural metrics relative to A and B.",
+  "authority": "structural_metrics_not_prettiness"
+}
