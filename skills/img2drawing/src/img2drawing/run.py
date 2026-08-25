@@ -542,6 +542,7 @@ class DrawingRun:
                 "status":stage_refs.grammar_exemplar.audit_status,
                 "findings":list(stage_refs.grammar_exemplar.audit_findings),
                 "note":stage_refs.grammar_exemplar.audit_note,
+                "mandatory_path_policy":stage_refs.grammar_exemplar.to_dict().get("mandatory_path_policy"),
                 "exemplar_path":str(stage_refs.grammar_exemplar.path),
                 "exemplar_sha256":stage_refs.grammar_exemplar.sha256,
             },indent=2,ensure_ascii=False,sort_keys=True),

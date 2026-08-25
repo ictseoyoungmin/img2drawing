@@ -80,6 +80,13 @@ class TaskStageTarget:
         return cls(stage_id=str(stage_id),path=p,sha256=_sha256_file(p))
 
     def to_dict(self) -> dict:
+        mandatory_path_policy = (
+            "negative_reference_warning_only"
+            if self.audit_status == "fail"
+            else "unproven_until_ablation"
+            if self.stage_id == "P3_primary_masses"
+            else "mandatory_positive_reference"
+        )
         return {
             "role":"task_stage_target",
             "stage_id":self.stage_id,
@@ -137,6 +144,13 @@ class GrammarExemplar:
         )
 
     def to_dict(self) -> dict:
+        mandatory_path_policy = (
+            "negative_reference_warning_only"
+            if self.audit_status == "fail"
+            else "unproven_until_ablation"
+            if self.stage_id == "P3_primary_masses"
+            else "mandatory_positive_reference"
+        )
         return {
             "role":"grammar_exemplar",
             "stage_id":self.stage_id,
@@ -148,6 +162,7 @@ class GrammarExemplar:
             "audit_contract_id":self.audit_contract_id,
             "audit_findings":list(self.audit_findings),
             "audit_note":self.audit_note,
+            "mandatory_path_policy":mandatory_path_policy,
             "decides":[
                 "stage abstraction vocabulary",
                 "stroke economy",

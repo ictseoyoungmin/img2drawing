@@ -20,10 +20,12 @@ class ReferenceReviewArtifacts:
     subject_split: Path
     subject_drawing_overlay: Path
     subject_drawing_absdiff: Path
-    grammar_vs_drawing: Path
+    grammar_vs_drawing: Path | None
     task_target_vs_drawing: Path | None
     task_target_split: Path | None
     overview: Path
+    grammar_exemplar_policy: str = "mandatory_positive_reference"
+    grammar_exemplar_warning: str | None = None
 
     # 0.5.1 compatibility names.
     @property
@@ -31,7 +33,7 @@ class ReferenceReviewArtifacts:
         return self.grammar_exemplar
 
     @property
-    def exemplar_vs_drawing(self) -> Path:
+    def exemplar_vs_drawing(self) -> Path | None:
         return self.grammar_vs_drawing
 
     @property
@@ -59,12 +61,14 @@ class ReferenceReviewArtifacts:
             "subject_split":str(self.subject_split),
             "subject_drawing_overlay":str(self.subject_drawing_overlay),
             "subject_drawing_absdiff":str(self.subject_drawing_absdiff),
-            "grammar_vs_drawing":str(self.grammar_vs_drawing),
-            "exemplar_vs_drawing":str(self.grammar_vs_drawing),
+            "grammar_vs_drawing":None if self.grammar_vs_drawing is None else str(self.grammar_vs_drawing),
+            "exemplar_vs_drawing":None if self.grammar_vs_drawing is None else str(self.grammar_vs_drawing),
             "task_target_vs_drawing":None if self.task_target_vs_drawing is None else str(self.task_target_vs_drawing),
             "task_target_split":None if self.task_target_split is None else str(self.task_target_split),
             "overview":str(self.overview),
             "three_way":str(self.overview),
+            "grammar_exemplar_policy":self.grammar_exemplar_policy,
+            "grammar_exemplar_warning":self.grammar_exemplar_warning,
         }
 
 
@@ -94,11 +98,20 @@ def build_reference_review(
     subject_split=split_compare(subject,drawing.path,out/"subject_split.png")
     subject_overlay=crop_registered_overlay(subject,drawing.path,out/"subject_drawing_overlay.png")
     subject_absdiff=crop_registered_absdiff(subject,drawing.path,out/"subject_drawing_absdiff.png")
-    grammar_vs=side_by_side(
-        grammar,drawing.path,out/"grammar_vs_drawing.png",
-        left_label="GRAMMAR / REPRESENTATION ONLY",
-        right_label="DRAWING",
-    )
+    grammar_is_fail = references.grammar_exemplar.audit_status == "fail"
+    grammar_vs = None
+    grammar_warning = None
+    if grammar_is_fail:
+        grammar_warning = (
+            "FAIL exemplar excluded from the mandatory grammar_vs_drawing path; "
+            "retain only as a negative/reference warning."
+        )
+    else:
+        grammar_vs=side_by_side(
+            grammar,drawing.path,out/"grammar_vs_drawing.png",
+            left_label="GRAMMAR / REPRESENTATION ONLY",
+            right_label="DRAWING",
+        )
 
     task_vs=None
     task_split=None
@@ -113,7 +126,7 @@ def build_reference_review(
             [
                 ("TASK TARGET / highest stage authority",task),
                 ("SUBJECT / geometry truth",subject),
-                ("GRAMMAR / representation only",grammar),
+                *([] if grammar_is_fail else [("GRAMMAR / representation only",grammar)]),
                 ("CURRENT DRAWING",drawing.path),
             ],
             out/"reference_authority_overview.png",
@@ -122,7 +135,7 @@ def build_reference_review(
         overview=labeled_multi_way(
             [
                 ("SUBJECT / geometry truth",subject),
-                ("GRAMMAR / representation only",grammar),
+                *([] if grammar_is_fail else [("GRAMMAR / representation only",grammar)]),
                 ("CURRENT DRAWING",drawing.path),
             ],
             out/"reference_authority_overview.png",
@@ -143,4 +156,9 @@ def build_reference_review(
         task_target_vs_drawing=task_vs,
         task_target_split=task_split,
         overview=overview,
+        grammar_exemplar_policy=(
+            "negative_reference_warning_only" if grammar_is_fail
+            else "mandatory_positive_reference"
+        ),
+        grammar_exemplar_warning=grammar_warning,
     )

@@ -25,6 +25,10 @@ from .exemplar.audit import (
     ExemplarAuditFinding, ExemplarAuditRecord, ExemplarAuditRegistry, ExemplarAuditError,
     load_exemplar_audit_registry,
 )
+from .exemplar.sync import (
+    DEFAULT_EXEMPLAR_FILES, ExemplarTreeSyncReport, ExemplarTreeSyncError,
+    compare_exemplar_trees, assert_exemplar_trees_synced,
+)
 from .review import (
     CropBox, LocalReviewError, LocalReviewArtifacts,
     ActionMemory, StagePassMemory, ReopenRecord,
@@ -60,4 +64,6 @@ __all__=[
     "EnvelopeIntegrity","AxisEnvelopeEvidence","StationEnvelopeEvidence",
     "RegionGeometryComparison","compare_region_envelopes",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
+    "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
+    "compare_exemplar_trees","assert_exemplar_trees_synced",
 ]

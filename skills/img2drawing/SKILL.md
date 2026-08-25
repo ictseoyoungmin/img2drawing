@@ -136,6 +136,13 @@ Current full-body audit (canonical status: `exemplars/full_body_croquis/audit_ma
 
 When an exemplar audit is `FAIL`, `worker_packet.md` contains a **KNOWN GRAMMAR EXEMPLAR DEFECT** warning. The worker must obey the frozen StageContract and use the failed exemplar only with the listed hazards in mind.
 
+FAIL exemplars are excluded from the mandatory `grammar_vs_drawing` path and
+remain negative/reference warnings only. The P2 PASS exemplar is the current
+positive control; the P3 PASS exemplar is marked `unproven_until_ablation` until
+an A/B/C experiment tracks its effect through P4. The canonical authoring tree
+is `exemplars/full_body_croquis/`; packaged copies are derived and must pass
+`compare_exemplar_trees()` hash synchronization.
+
 
 ## Fresh-worker E2E Defect Closure
 Dogfood testing proved autonomous P1→P3 closure but exposed operational friction and

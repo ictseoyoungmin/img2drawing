@@ -175,6 +175,7 @@ class AutonomousWorkerPacket:
         lines += [
             f"- grammar exemplar: `{grammar['path']}` — representation only",
             f"- grammar exemplar audit: **{grammar.get('audit_status','not_audited').upper()}**",
+            f"- mandatory-path policy: **{grammar.get('mandatory_path_policy','unspecified')}**",
         ]
         if grammar.get("audit_status") == "fail":
             lines += [
@@ -184,6 +185,12 @@ class AutonomousWorkerPacket:
             lines += [f"- {x}" for x in grammar.get("audit_findings",())]
             if grammar.get("audit_note"):
                 lines.append(f"- audit note: {grammar['audit_note']}")
+        elif grammar.get("mandatory_path_policy") == "unproven_until_ablation":
+            lines += [
+                "",
+                "### UNPROVEN GRAMMAR EXEMPLAR",
+                "Treat this P3 exemplar as an unproven representation hypothesis; do not use it as mandatory positive evidence before ablation through P4.",
+            ]
 
         lines += [
             "", "### Non-negotiable authority rule",
@@ -259,11 +266,17 @@ def build_worker_packet(
         "subject_split",
         "subject_drawing_overlay",
         "subject_drawing_absdiff",
-        "grammar_vs_drawing",
         "reference_authority_overview",
         "stage-contract boundary review",
         "Agent-selected local reviews when whole view is insufficient",
     ]
+    grammar_policy = references.grammar_exemplar.to_dict().get("mandatory_path_policy")
+    if grammar_policy == "negative_reference_warning_only":
+        mandatory.append("grammar_exemplar_negative_warning")
+    elif grammar_policy == "unproven_until_ablation":
+        mandatory.append("grammar_exemplar_unproven_warning")
+    else:
+        mandatory.append("grammar_vs_drawing")
 
     loop=[
         "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",

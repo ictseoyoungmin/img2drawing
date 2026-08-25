@@ -8,10 +8,10 @@
 
 ```text
 SYSTEM: sketched / cross-slice contract frozen
-ACTIVE: 없음 (S03 종료, 다음 slice 미활성화)
-SKELETON: S04 Exemplar Mandatory-Path Cleanup부터 S09 Exemplar Ablation까지
+ACTIVE: S04 Exemplar Mandatory-Path Cleanup (구현 중)
+SKELETON: S05 Torso Orientation Closure부터 S09 Exemplar Ablation까지
 CLOSED: S01 Pre-draw Observation Lock; S02 Region Envelope Evidence; S03 Blind Visual Fidelity Review + P3 dual gate
-NEXT GATE: S03 capsule 검토 후 S04 Exemplar Mandatory-Path Cleanup 활성화
+NEXT GATE: S04 mandatory-path policy, owner/hash sync, worker packet regression test
 ```
 
 이 계획에서 `ACTIVE`는 구현 우선권을 뜻한다. S01이 Definition of Closed를 모두 통과하고 context capsule을 만들기 전에는 S02 이하를 production quality로 구현하지 않는다.
@@ -447,6 +447,8 @@ dev/planning/capsules/S03-blind-visual-fidelity.md
 
 ### S04 — Exemplar mandatory-path cleanup
 
+Status: `ACTIVE` (S03 capsule consumed; implementation in progress)
+
 책임:
 
 - P1/P4/P5 FAIL exemplar를 mandatory `grammar_vs_drawing` path에서 제외한다.
@@ -459,6 +461,15 @@ dev/planning/capsules/S03-blind-visual-fidelity.md
 - P2 PASS exemplar는 positive control로 유지된다.
 - P3는 `unproven` 상태를 worker packet과 audit에 표현한다.
 - 두 exemplar tree의 drift를 CI/smoke가 검출한다.
+
+### S04 Definition of Closed
+
+- [ ] FAIL exemplar는 mandatory `grammar_vs_drawing`에서 제외되고 negative/reference warning만 남는다.
+- [ ] P2 PASS exemplar는 positive control로 유지된다.
+- [ ] P3 exemplar는 `unproven_until_ablation`으로 worker packet과 audit에 표시된다.
+- [ ] top-level exemplar를 authoring owner로 선언하고 packaged copy hash drift를 검출한다.
+- [ ] FAIL exemplar 없이 worker packet과 subject-first review가 생성된다.
+- [ ] S04 closure evidence와 context capsule이 작성된다.
 
 ### S05 — Torso orientation closure
 
