@@ -23,12 +23,13 @@ it is a different question answered.
 Owns the head ovoid with its curved facial centreline and eye-line cross, the spine's
 S-curve from behind the neck, the pelvis and shoulder centrelines, the line of action
 (which is **not** the spine), every joint centre, the curvature of each limb, occluded
-limbs, ground contact, the silhouette envelope and the major prop axis.
+limbs, foot direction and ground contact, the silhouette envelope and the major prop axis.
 
-P1 is a whole-body pose hypothesis, not a few lines. Must not contain facial features
-beyond the centreline and eye-line, hair, clothing, muscle or closed volume — and must not
-merge the face and spine centrelines, join joints with straight lines, or drop an occluded
-limb.
+P1 is a whole-body pose hypothesis, not a few lines. Each foot is one oval stating the
+direction it points, because foot direction carries body direction. Must not contain
+facial features beyond the centreline and eye-line, hair, garment structure, footwear
+detail, muscle or closed volume — and must not merge the face and spine centrelines, join
+joints with straight lines, or drop an occluded limb.
 
 ## P2 — Primary Axes
 Owns segment length and foreshortening, the neck axis, the ribcage and pelvis boxes and

@@ -6,6 +6,7 @@
 - `review/worker-pass-memory.md`: pass-to-pass concern/correction continuity without semantic auto-judgement.
 - `review/local-review-api.md`: Agent-selected ROI comparison and state binding.
 - `review/`: comparison and correction loop.
+- `stages/p1-construction.png`: a subject annotated with the P1 construction lines, colour-coded and labelled — face centreline, spine, pelvis, line of action, joints, limb tubes, feet.
 - `stages/pipeline-overview.png`: the reference rendering of the pipeline — one subject across all five stages on a single sheet.
 - `figure/`: gesture, joints, attached objects.
 - `observation/`: visual-observation policy.

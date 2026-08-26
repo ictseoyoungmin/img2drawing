@@ -6,6 +6,9 @@ P1 is not "a few simple lines". It is a pose hypothesis for the entire figure, a
 quality is decided almost entirely by whether the first few construction lines read the
 subject's real 3D pose. Adding more lines does not rescue a wrong reading.
 
+`p1-construction.png` beside this file annotates a subject with exactly these lines,
+colour-coded and labelled. Open it before drawing a P1.
+
 ## The success criterion
 
 Lay the subject underneath at low opacity and put only P1 on top. Head direction, spine
@@ -28,12 +31,25 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 - shoulder, elbow, wrist, hip, knee and ankle centres;
 - the curvature of each limb between those joints;
 - any limb hidden behind clothing or a prop;
-- where the feet meet the ground and which way they point;
+- where the feet meet the ground and which way each foot points;
 - the overall silhouette envelope;
 - the major axis of a large attached object.
 
-Leave out: facial features beyond the centreline and eye-line, hair, clothing structure,
-muscle, closed volume, prop detail.
+Leave out: facial features beyond the centreline and eye-line, hair, garment structure,
+muscle, closed volume, prop detail, and footwear detail.
+
+## Feet belong in P1
+
+Draw each foot as **one simple oval linked to its ankle**, sitting on the ground mark.
+
+A foot is not a late detail. Which way each foot points states body direction, where the
+weight sits and where the figure is going — the same information the shoulders and pelvis
+carry. A pair of ankles ending in nothing leaves that unsaid, and downstream stages then
+invent it.
+
+What belongs here is the **direction**, not the shoe: one oval per foot, angled the way the
+subject's foot is angled, with a short link from the ankle circle. Sole shape, laces and
+panels are P4's.
 
 ## The head decides the drawing
 
@@ -125,6 +141,6 @@ structural reading needs the structure replaced.
 5. Joint centres, checked individually and then for shared drift.
 6. Limb flow lines following observed curvature.
 7. Occluded limbs, inferred.
-8. Ground contact and foot direction.
+8. Foot ovals, their direction, and ground contact.
 9. Silhouette envelope and any major prop axis.
 10. Whole overlay sweep against the success criterion.

@@ -16,4 +16,6 @@ Draw them as separate strokes; their visual rhythm should still flow into one an
 Attached objects may appear as a restrained major axis when they change the envelope, but
 must not overpower the body gesture.
 
+`../stages/p1-construction.png` shows all three on a real subject, colour-coded.
+
 Full guidance: `../stages/p1-gesture.md`.

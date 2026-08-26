@@ -277,7 +277,9 @@ Three rules survive every stage:
    face centreline and the spine centreline are separate strokes; the line of action is a
    third line, not the spine; joints are joined by observed curvature, never straight; and
    an occluded limb is inferred, never dropped. Read `references/stages/p1-gesture.md`
-   before drawing P1 — it carries the failure modes that cost the most passes.
+   before drawing P1 — it carries the failure modes that cost the most passes — and open
+   `references/stages/p1-construction.png`, which labels every one of these lines on a
+   real subject.
 
 2. **P4 is a connection stage, not a detail stage.** A jacket starts at
    `shoulder → sleeve → elbow → wrist`, not at the buttons. Hair is a mass seated on the
