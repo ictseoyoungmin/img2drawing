@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
+      "artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
       "history_cursor": 33,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0"
+      "state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -494,6 +494,7 @@
     ],
     "avoid": [
       "reading the hair silhouette as the cranial outline",
+      "taking a sleeve edge for the arm axis, or a waistband for the hip joint",
       "dropping a generic ellipse in for the head or a foot instead of observing its shape",
       "drawing the facial centreline as a plain vertical centre line",
       "running the facial centreline beside the nose instead of through it",
@@ -544,6 +545,7 @@
       "Do shoulder and pelvis state the subject's rotation, not just a tilt?",
       "Are both arms present, including any hidden behind a prop or in a pocket?",
       "Is every joint centre on the subject's joint, or are several drifting the same way?",
+      "Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?",
       "Does each limb follow the subject's observed curvature, or was it joined straight?",
       "Do the feet land where the subject's land, and does each foot oval point the way that foot points?",
       "Do the foot directions agree with the body direction the rest of the drawing states?",

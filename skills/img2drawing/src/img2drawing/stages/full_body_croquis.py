@@ -33,6 +33,7 @@ FULL_BODY_CROQUIS = (
         ),
         (
             "reading the hair silhouette as the cranial outline",
+            "taking a sleeve edge for the arm axis, or a waistband for the hip joint",
             "dropping a generic ellipse in for the head or a foot instead of observing its shape",
             "drawing the facial centreline as a plain vertical centre line",
             "running the facial centreline beside the nose instead of through it",
@@ -54,6 +55,7 @@ FULL_BODY_CROQUIS = (
             "Do shoulder and pelvis state the subject's rotation, not just a tilt?",
             "Are both arms present, including any hidden behind a prop or in a pocket?",
             "Is every joint centre on the subject's joint, or are several drifting the same way?",
+            "Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?",
             "Does each limb follow the subject's observed curvature, or was it joined straight?",
             "Do the feet land where the subject's land, and does each foot oval point the way that foot points?",
             "Do the foot directions agree with the body direction the rest of the drawing states?",

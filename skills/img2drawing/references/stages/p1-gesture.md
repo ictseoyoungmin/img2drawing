@@ -141,6 +141,27 @@ The spine is an anatomical S-curve inside the torso. The line of action is the w
 figure's energy: it typically enters above the head, cuts diagonally across the body, and
 lands ahead of the weight-bearing foot. Both belong in P1, and they are different lines.
 
+## Measure the landmarks; do not read them off the picture by eye
+
+Eyeballing a landmark produces errors that are individually small, all in the same
+direction, and invisible until the drawing is laid over the subject. Anchor each landmark
+on something you can actually locate:
+
+- **the crotch** — where the two legs separate. The hip joints sit just above it. The
+  **waistband is not the hip joint**; it is the iliac crest, and it is far higher.
+- **the visible hand** — bare skin below a sleeve. That is the wrist, not the point where
+  the sleeve ends.
+- **the jean hem or sock line** — the ankle. The shoe below it is the foot.
+- **the two pupils and the nose** — the eye line and the facial centreline.
+- **the shoe outline** — foot direction.
+
+Then derive what is hidden: the elbow sits between the located shoulder and the located
+wrist; the knee between the located hip and the located ankle.
+
+Clothing hides the body, and its edges are the trap: **a sleeve edge is not the arm axis, a
+waistband is not the hip, a hair silhouette is not the cranium.** Each of those substitutes
+a garment landmark for an anatomical one, and each puts the drawing systematically wrong.
+
 ## Joint centres must be accurate, not approximate
 
 A few pixels of error per joint is not harmless. When several joints drift the *same*

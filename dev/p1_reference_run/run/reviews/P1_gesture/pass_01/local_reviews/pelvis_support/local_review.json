@@ -17,10 +17,10 @@
         "top": 299
       },
       "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
-      "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
+      "crop_sha256": "a87e59f41882bf316588929640b4c7be0bfce2c2698a467643a9322bced05d7b",
       "role": "current_drawing",
       "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-      "source_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
+      "source_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
       "source_size": [
         512,
         802
@@ -45,8 +45,8 @@
     },
     "task_target": null
   },
-  "drawing_artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
-  "drawing_state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0",
+  "drawing_artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
+  "drawing_state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73",
   "history_cursor": 33,
   "intent": "Check pelvis tilt, hip joint centres and where both feet land.",
   "label": "pelvis_support",
