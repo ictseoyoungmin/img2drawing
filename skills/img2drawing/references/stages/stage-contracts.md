@@ -25,8 +25,9 @@ S-curve from behind the neck, the pelvis and shoulder centrelines, the line of a
 (which is **not** the spine), every joint centre, the curvature of each limb, occluded
 limbs, foot direction and ground contact, the silhouette envelope and the major prop axis.
 
-P1 is a whole-body pose hypothesis, not a few lines. Each foot is one oval stating the
-direction it points, because foot direction carries body direction. Must not contain
+P1 is a whole-body pose hypothesis, not a few lines. Each foot states the direction it points and its
+foreshortening, because foot direction carries body direction. Neither the head nor a foot
+may be a generic ellipse dropped in to fill the slot. Must not contain
 facial features beyond the centreline and eye-line, hair, garment structure, footwear
 detail, muscle or closed volume — and must not merge the face and spine centrelines, join
 joints with straight lines, or drop an occluded limb.

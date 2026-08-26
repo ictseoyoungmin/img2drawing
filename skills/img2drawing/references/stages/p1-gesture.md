@@ -38,18 +38,36 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 Leave out: facial features beyond the centreline and eye-line, hair, garment structure,
 muscle, closed volume, prop detail, and footwear detail.
 
-## Feet belong in P1
+## Never drop a primitive in for an observed shape
 
-Draw each foot as **one simple oval linked to its ankle**, sitting on the ground mark.
+The head is not an ellipse and a foot is not an oval. Reaching for a generic shape because
+the stage requires *something* there is the same failure as copying an example's
+coordinates: it produces a P1 that satisfies the checklist and describes a different person.
+
+A symmetric ellipse cannot say that this head is tilted slightly down and turned slightly
+to one side. It will say whatever its rotation angle happens to say — usually the wrong
+thing — and the drawing then reads as someone looking off in a direction the subject is not
+looking.
+
+Read the actual shape instead:
+
+- **Head**: its width, where the jaw turns, where the chin sits relative to the cranium's
+  midline, and how much cranium the tilt exposes. A head tilted down shows more cranium and
+  its eye line sits lower and dips in the middle; a head tilted up does the reverse. The
+  eye line is where the tilt becomes visible — get it wrong and the whole face turns.
+- **Feet**: each shoe has a direction and a foreshortening. A foot pointing across the body
+  is a narrow wedge; one pointing toward the viewer is a short blunt shape. Two identical
+  ovals say neither.
+
+## Feet belong in P1
 
 A foot is not a late detail. Which way each foot points states body direction, where the
 weight sits and where the figure is going — the same information the shoulders and pelvis
 carry. A pair of ankles ending in nothing leaves that unsaid, and downstream stages then
 invent it.
 
-What belongs here is the **direction**, not the shoe: one oval per foot, angled the way the
-subject's foot is angled, with a short link from the ankle circle. Sole shape, laces and
-panels are P4's.
+What belongs here is the foot's **direction and shape**, linked to the ankle and sitting on
+the ground mark. Sole detail, laces and panels are P4's.
 
 ## The head decides the drawing
 

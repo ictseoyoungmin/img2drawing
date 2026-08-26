@@ -148,7 +148,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # — a contract-forbidden failure mode — so the example demonstrates a real
     # revise cycle instead of a cosmetic one.
     # ------------------------------------------------------------------
-    initial_face_centreline=[[186,24],[186,40],[186,56],[186,71],[186,86]]
+    initial_face_centreline=[[187,24],[187,39],[187,53],[187,68],[187,82]]
 
     run.draw_many([
         _stroke(
@@ -166,12 +166,13 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ),
         _stroke(
             "EX-P1-A2",
-            "head_ovoid",
-            [[181,23], [192,26], [201,36], [207,52], [206,68], [201,81], [191,87], [180,84], [171,74], [165,58], [166,42], [171,29], [181,23]],
+            "head_outline",
+            [[186,23], [197,27], [204,35], [207,43], [206,54], [201,69], [193,80], [188,82],
+             [182,81], [174,69], [169,54], [168,43], [172,32], [179,26], [186,23]],
             pressure=0.2,
             width=1.12,
             opacity=0.27,
-            source="Cranial ovoid sized from the skull and tilted with the head, not traced from the hair silhouette.",
+            source="Head outline read from the subject: narrower far side, jaw turn, chin below the cranium midline. Not an ellipse.",
         ),
         _stroke(
             "EX-P1-A3",
@@ -180,16 +181,16 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             pressure=.26,
             width=1.25,
             opacity=.34,
-            source="Facial centreline crown -> nose -> chin. Pass 1 draws it flat on purpose.",
+            source="Facial centreline crown -> nose -> chin. Pass 1 runs it dead down the cranium midline on purpose.",
         ),
         _stroke(
             "EX-P1-A4",
             "eye_line",
-            [[166,60], [178,58], [190,56], [199,55], [205,55]],
+            [[169,52], [176,54], [183,56], [190,56], [198,55], [206,52]],
             pressure=0.16,
             width=1.02,
             opacity=0.2,
-            source="Eye line wrapping the head; the image-right side sits higher with the head tilt.",
+            source="Eye line dipping in the middle: this head is seen slightly from above, tilted down rather than up.",
         ),
         _stroke(
             "EX-P1-A5",
@@ -257,7 +258,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_left_a",
             "leg_left_outer",
-            [[135,263], [141,318], [148,374], [157,430], [167,485]],
+            [[135,263], [141,318], [148,374], [161,438], [180,502]],
             pressure=0.17,
             width=1.05,
             opacity=0.21,
@@ -266,7 +267,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_left_b",
             "leg_left_inner",
-            [[149,263], [153,318], [158,374], [165,430], [173,485]],
+            [[149,263], [153,318], [158,374], [175,438], [186,502]],
             pressure=0.17,
             width=1.05,
             opacity=0.21,
@@ -275,7 +276,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_right_a",
             "leg_right_outer",
-            [[201,266], [212,320], [223,375], [240,437], [258,499]],
+            [[201,266], [212,320], [223,375], [235,450], [244,524]],
             pressure=0.17,
             width=1.05,
             opacity=0.21,
@@ -284,7 +285,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_right_b",
             "leg_right_inner",
-            [[215,266], [224,320], [233,375], [248,437], [264,499]],
+            [[215,266], [224,320], [233,375], [241,450], [250,524]],
             pressure=0.17,
             width=1.05,
             opacity=0.21,
@@ -393,8 +394,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_ankle_L",
             "joint_ankle_L",
-            [[174,485], [173,488], [171,489], [168,488], [166,486], [166,484], [168,482], [171,481],
-             [173,482], [174,485]],
+            [[187,502], [186,505], [184,506], [181,505], [179,503], [179,501], [181,499], [184,498], [186,499], [187,502]],
             pressure=0.14,
             width=1.0,
             opacity=0.17,
@@ -403,8 +403,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_ankle_R",
             "joint_ankle_R",
-            [[265,499], [264,502], [262,503], [259,502], [257,500], [257,498], [259,496], [262,495],
-             [264,496], [265,499]],
+            [[251,524], [250,527], [248,528], [245,527], [243,525], [243,523], [245,521], [248,520], [250,521], [251,524]],
             pressure=0.14,
             width=1.0,
             opacity=0.17,
@@ -413,7 +412,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-F_link_L",
             "ankle_foot_link_left",
-            [[170,485], [172,504], [173,518]],
+            [[183,502], [188,510], [192,516]],
             pressure=0.15,
             width=1.02,
             opacity=0.19,
@@ -422,17 +421,17 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-F_L",
             "foot_direction_left",
-            [[198,525], [195,530], [187,534], [176,536], [164,536], [156,533], [152,529], [155,524],
-             [163,520], [174,518], [186,518], [194,521], [198,525]],
+            [[196,515], [195,508], [182,507], [168,508], [156,513], [150,521], [151,529], [163,534],
+             [178,533], [193,524], [196,515]],
             pressure=0.17,
             width=1.05,
             opacity=0.22,
-            source="Image-left foot as one oval; it points slightly across the body and carries the weight.",
+            source="Image-left shoe read from the subject: a wedge pointing across the body toward the image-left.",
         ),
         _stroke(
             "EX-P1-F_link_R",
             "ankle_foot_link_right",
-            [[261,499], [261,520], [261,535]],
+            [[247,524], [243,529], [238,534]],
             pressure=0.15,
             width=1.02,
             opacity=0.19,
@@ -441,12 +440,12 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-F_R",
             "foot_direction_right",
-            [[287,549], [282,553], [272,556], [259,555], [247,552], [238,546], [235,541], [240,537],
-             [250,534], [263,535], [275,538], [284,544], [287,549]],
+            [[231,533], [243,529], [257,528], [272,530], [282,538], [285,548], [281,557], [267,560],
+             [250,556], [237,547], [231,539], [231,533]],
             pressure=0.17,
             width=1.05,
             opacity=0.22,
-            source="Image-right foot as one oval; it steps out and points further from the body.",
+            source="Image-right shoe read from the subject: it steps out and its toe swings further from the body.",
         ),
         _stroke(
             "EX-P1-G_L",
@@ -519,12 +518,12 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # replaces the structure rather than nudging it.
     # ------------------------------------------------------------------
     corrected_face_centreline=[
-        [185,24],     # crown
-        [190,40],
-        [192,56],     # brow
-        [191,71],     # nose: off the ovoid's geometric centre, toward the head's turn
-        [189,80],
-        [187,87],     # chin
+        [186,24],     # crown
+        [189,38],
+        [191,53],     # brow, sitting right of the cranium midline
+        [191,65],     # nose
+        [189,75],
+        [187,82],     # chin, on the observed jaw
     ]
     run.draw(_replace(
         "EX-P1-R1",
