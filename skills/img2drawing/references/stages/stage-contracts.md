@@ -13,24 +13,30 @@ it is a different question answered.
 
 | Stage | Question it answers | Information it adds |
 |---|---|---|
-| P1 Gesture | How is this person standing? | flow, balance, centre of gravity |
-| P2 Primary Axes | Where are the bones and joints? | axes, joints, direction |
+| P1 Gesture | How is this person standing? | construction centrelines, joints, limb flow |
+| P2 Primary Axes | How long is each bone and how is it turned? | measured segments, ribcage/pelvis boxes |
 | P3 Primary Masses | What volume does the body occupy? | ribcage, pelvis and limb masses |
 | P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
 | P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
 
-## P1 — Gesture / Weight Path
-Owns head position and tilt, line of action, shoulder and pelvis tilt, limb direction
-paths, ground contact, the overall silhouette envelope, and the major prop axis.
+## P1 — Gesture / Construction Centrelines
+Owns the head ovoid with its curved facial centreline and eye-line cross, the spine's
+S-curve from behind the neck, the pelvis and shoulder centrelines, the line of action
+(which is **not** the spine), every joint centre, the curvature of each limb, occluded
+limbs, ground contact, the silhouette envelope and the major prop axis.
 
-Must not contain facial features, hair, clothing, muscle definition or prop detail.
+P1 is a whole-body pose hypothesis, not a few lines. Must not contain facial features
+beyond the centreline and eye-line, hair, clothing, muscle or closed volume — and must not
+merge the face and spine centrelines, join joints with straight lines, or drop an occluded
+limb.
 
 ## P2 — Primary Axes
-Owns joint positions, head centreline and face direction, the neck/ribcage/pelvis axes,
-limb segment directions, and the prop's length and tilt against the body.
+Owns segment length and foreshortening, the neck axis, the ribcage and pelvis boxes and
+their turn, hand and foot placement blocks, and the prop's length and tilt against the
+body. It may correct a P1 joint when the subject says so.
 
-Joint circles and lightly cylindrical segment axes belong here. Finished limb contour,
-clothing, hair and facial features do not.
+P1 observed curvature; P2 measures the span. Finished limb contour, clothing, hair and
+facial features do not belong here.
 
 ## P3 — Primary Masses
 Owns the three-dimensional volumes, ribcage and pelvis rotation, limb taper, overlap,

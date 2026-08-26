@@ -264,19 +264,26 @@ Every stage answers one question. A stage is not "more lines than the last one".
 
 | Stage | Question | Adds |
 |---|---|---|
-| P1 Gesture | How is this person standing? | flow, balance, centre of gravity |
-| P2 Primary Axes | Where are the bones and joints? | axes, joints, direction |
+| P1 Gesture | How is this person standing? | construction centrelines, joints, limb flow |
+| P2 Primary Axes | How long is each bone and how is it turned? | measured segments, ribcage/pelvis boxes |
 | P3 Primary Masses | What volume does the body occupy? | ribcage, pelvis, limb masses |
 | P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
 | P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
 
-Two rules survive every stage:
+Three rules survive every stage:
 
-1. **P4 is a connection stage, not a detail stage.** A jacket starts at
+1. **P1 is a whole-body pose hypothesis, not a few lines.** Its success test is not "looks
+   like a person" but "this is *this* person in *this* pose" with the subject hidden. The
+   face centreline and the spine centreline are separate strokes; the line of action is a
+   third line, not the spine; joints are joined by observed curvature, never straight; and
+   an occluded limb is inferred, never dropped. Read `references/stages/p1-gesture.md`
+   before drawing P1 — it carries the failure modes that cost the most passes.
+
+2. **P4 is a connection stage, not a detail stage.** A jacket starts at
    `shoulder → sleeve → elbow → wrist`, not at the buttons. Hair is a mass seated on the
    skull, not strands. A prop is barrel/stock/receiver/magazine/sling and where it touches
    the body, not its rails and screws.
-2. **P5's "clean" means selection, not pressure.** It decides which explored line is the
+3. **P5's "clean" means selection, not pressure.** It decides which explored line is the
    final form; it does not go over everything with a heavier stroke. The result is an
    under-drawing solid enough that detail work will not collapse it — not a finished
    illustration.
