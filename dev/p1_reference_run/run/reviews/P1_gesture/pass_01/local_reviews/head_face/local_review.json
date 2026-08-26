@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+    "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+    "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 132,
+        "left": 222,
+        "right": 288,
+        "top": 20
+      },
+      "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+      "crop_sha256": "a947ee3b5e93f367b1100e9a3c6851c374d728c17d61459fb7d0c8f76878429a",
+      "role": "current_drawing",
+      "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "source_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 200,
+        "left": 300,
+        "right": 450,
+        "top": 20
+      },
+      "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+      "crop_sha256": "704e802790520d2b736b7b2648747d99e6cde03ee4334925ae62dc1253f71182",
+      "role": "subject_reference",
+      "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+  "drawing_state_sha256": "15ea7b0f54c23170aab25078dc5bc14a856e4a29f64d8eca68409f4b4488d79d",
+  "history_cursor": 33,
+  "intent": "Check crown, facial-centreline curvature and the nose pass against the subject.",
+  "label": "head_face",
+  "local_review_id": "P1_gesture:pass_01:head_face",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

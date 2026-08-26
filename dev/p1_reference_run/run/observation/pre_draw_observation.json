@@ -1,0 +1,37 @@
+{
+  "locked_at_cursor": 0,
+  "locked_at_stage": "P1_gesture",
+  "observation": {
+    "automatic_semantic_inference": false,
+    "drawing_priorities": [],
+    "evidence_refs": [],
+    "global_relations": {},
+    "parts": {},
+    "schema": "img2drawing.observation.v3",
+    "semantic_authority": "agent",
+    "subject_summary": "Full-body subject reference for the canonical stage workflow.",
+    "uncertainties": [],
+    "view": {
+      "arm_occlusion": {
+        "subject_left": [],
+        "subject_right": []
+      },
+      "arm_visibility": {
+        "subject_left": "unknown",
+        "subject_right": "unknown"
+      },
+      "body_view": "unknown",
+      "near_side": "unknown",
+      "prop_overlap_order": [],
+      "torso_turn": "unknown",
+      "uncertainties": [
+        "The canonical example demonstrates review lifecycle; pose-side labels remain subject-observation inputs."
+      ]
+    }
+  },
+  "observation_digest": "9349eccac9419c420e03038120a4ab940eb91061ebd0f8622eb45c8bc91099bf",
+  "observation_id": "canonical-full-body-croquis-r07:observation:01",
+  "replacement_of": null,
+  "schema": "img2drawing.observation_lock.v1",
+  "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+}

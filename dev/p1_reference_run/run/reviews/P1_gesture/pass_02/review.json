@@ -1,0 +1,62 @@
+{
+  "advance_rationale": "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep found nothing new; the pose hypothesis registers against the subject, so P2 measurement may begin.",
+  "carried_concerns": [
+    "facial centreline is a plain vertical line and states no face rotation",
+    "head therefore reads as frontal while the subject's head is turned"
+  ],
+  "contract_findings": [
+    "The corrected artifact still stays inside the P1.v3 representation boundary.",
+    "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
+    "Face centreline, spine centreline and line of action remain three separate strokes."
+  ],
+  "corrections": [
+    "Replaced the flat facial centreline with a curve through crown, nose and chin."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+  "drawing_findings": [
+    "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
+    "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
+    "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+  ],
+  "drawing_state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a",
+  "grammar_findings": [
+    "Stage grammar stays subordinate to the frozen contract and subject geometry."
+  ],
+  "history_cursor": 34,
+  "inter_pass_action_ids": [
+    "EX-P1-R1"
+  ],
+  "local_review_ids": [
+    "P1_gesture:pass_02:head_face",
+    "P1_gesture:pass_02:pelvis_support"
+  ],
+  "observations": [
+    "The corrected artifact still stays inside the P1.v3 representation boundary.",
+    "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
+    "Face centreline, spine centreline and line of action remain three separate strokes.",
+    "The facial centreline now curves across the head and passes the nose where the subject's does.",
+    "Head direction now agrees with the subject at P1 abstraction.",
+    "Stage grammar stays subordinate to the frozen contract and subject geometry.",
+    "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
+    "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
+    "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+  ],
+  "parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+  "pass_memory_digest": "60b7f7640045172c01734222284d296fe142229baafcc199c79fa2957913ed52",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v3",
+  "subject_findings": [
+    "The facial centreline now curves across the head and passes the nose where the subject's does.",
+    "Head direction now agrees with the subject at P1 abstraction."
+  ],
+  "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

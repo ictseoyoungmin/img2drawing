@@ -197,7 +197,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-A5",
             "shoulder_line",
-            [[208,158], [230,151], [253,147], [276,147], [298,151]],
+            [[212,156], [232,150], [253,147], [276,147], [297,150]],
             grade="HB",
             pressure=0.52,
             width=2.2,
@@ -217,7 +217,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-arm_left_a",
             "arm_left_outer",
-            [[200,158], [189,208], [180,262], [175,308], [172,352]],
+            [[206,156], [198,206], [192,258], [184,306], [175,350]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -227,7 +227,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-arm_left_b",
             "arm_left_inner",
-            [[216,158], [203,208], [192,262], [185,308], [180,352]],
+            [[218,156], [210,206], [202,258], [192,306], [181,350]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -237,7 +237,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-arm_right_a",
             "arm_right_outer",
-            [[290,151], [313,200], [326,256], [307,288], [284,310]],
+            [[292,150], [307,198], [312,252], [302,284], [284,308]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -247,7 +247,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-arm_right_b",
             "arm_right_inner",
-            [[306,151], [327,200], [338,256], [317,288], [292,310]],
+            [[304,150], [319,198], [324,252], [312,284], [292,308]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -257,7 +257,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_left_a",
             "leg_left_outer",
-            [[205,330], [209,412], [217,500], [227,600], [240,700]],
+            [[208,330], [212,412], [219,500], [227,600], [236,700]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -267,7 +267,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_left_b",
             "leg_left_inner",
-            [[231,330], [231,412], [235,500], [241,600], [250,700]],
+            [[228,330], [228,412], [233,500], [239,600], [246,700]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -277,7 +277,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_right_a",
             "leg_right_outer",
-            [[269,330], [277,412], [289,500], [306,610], [330,728]],
+            [[272,330], [280,412], [291,500], [305,610], [324,728]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -287,7 +287,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-leg_right_b",
             "leg_right_inner",
-            [[295,330], [299,412], [307,500], [320,610], [340,728]],
+            [[292,330], [296,412], [305,500], [317,610], [334,728]],
             grade="HB",
             pressure=0.5,
             width=2.2,
@@ -297,7 +297,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_shoulder_L",
             "joint_shoulder_L",
-            [[214,158], [213,161], [210,163], [207,164], [204,163], [202,160], [202,156], [204,153],
+            [[218,156], [213,161], [210,163], [207,164], [204,163], [202,160], [202,156], [204,153],
              [207,152], [210,153], [213,155], [214,158]],
             grade="HB",
             pressure=0.44,
@@ -319,7 +319,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_elbow_L",
             "joint_elbow_L",
-            [[192,262], [191,265], [188,267], [185,268], [182,267], [180,264], [180,260], [182,257],
+            [[203,258], [191,265], [188,267], [185,268], [182,267], [180,264], [180,260], [182,257],
              [185,256], [188,257], [191,259], [192,262]],
             grade="HB",
             pressure=0.44,
@@ -330,7 +330,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_elbow_R",
             "joint_elbow_R",
-            [[338,256], [337,259], [334,261], [331,262], [328,261], [326,258], [326,254], [328,251],
+            [[324,252], [337,259], [334,261], [331,262], [328,261], [326,258], [326,254], [328,251],
              [331,250], [334,251], [337,253], [338,256]],
             grade="HB",
             pressure=0.44,
@@ -407,7 +407,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_ankle_L",
             "joint_ankle_L",
-            [[251,700], [250,703], [247,705], [244,706], [241,705], [239,702], [239,698], [241,695],
+            [[247,700], [250,703], [247,705], [244,706], [241,705], [239,702], [239,698], [241,695],
              [244,694], [247,695], [250,697], [251,700]],
             grade="HB",
             pressure=0.44,
@@ -418,7 +418,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-J_ankle_R",
             "joint_ankle_R",
-            [[341,728], [340,731], [337,733], [334,734], [331,733], [329,730], [329,726], [331,723],
+            [[335,728], [340,731], [337,733], [334,734], [331,733], [329,730], [329,726], [331,723],
              [334,722], [337,723], [340,725], [341,728]],
             grade="HB",
             pressure=0.44,

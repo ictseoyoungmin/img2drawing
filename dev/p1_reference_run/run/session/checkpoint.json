@@ -1,0 +1,4502 @@
+{
+  "action_memory_events": [
+    {
+      "action_id": "EX-P1-A1",
+      "history_cursor": 2,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "head_outline",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-A2",
+      "history_cursor": 3,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "facial_centreline",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-A3",
+      "history_cursor": 4,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "eye_line",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-A4",
+      "history_cursor": 5,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-A5",
+      "history_cursor": 6,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoulder_line",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-A6",
+      "history_cursor": 7,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "pelvis_centreline",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-arm_left_a",
+      "history_cursor": 8,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_left_outer",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-arm_left_b",
+      "history_cursor": 9,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_left_inner",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-arm_right_a",
+      "history_cursor": 10,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_right_outer",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-arm_right_b",
+      "history_cursor": 11,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_right_inner",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-leg_left_a",
+      "history_cursor": 12,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_left_outer",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-leg_left_b",
+      "history_cursor": 13,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_left_inner",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-leg_right_a",
+      "history_cursor": 14,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_right_outer",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-leg_right_b",
+      "history_cursor": 15,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_right_inner",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_shoulder_L",
+      "history_cursor": 16,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_shoulder_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_shoulder_R",
+      "history_cursor": 17,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_shoulder_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_elbow_L",
+      "history_cursor": 18,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_elbow_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_elbow_R",
+      "history_cursor": 19,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_elbow_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_wrist_L",
+      "history_cursor": 20,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_wrist_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_wrist_R",
+      "history_cursor": 21,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_wrist_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_hip_L",
+      "history_cursor": 22,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_hip_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_hip_R",
+      "history_cursor": 23,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_hip_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_knee_L",
+      "history_cursor": 24,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_knee_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_knee_R",
+      "history_cursor": 25,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_knee_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_ankle_L",
+      "history_cursor": 26,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_ankle_L",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J_ankle_R",
+      "history_cursor": 27,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_ankle_R",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-F_link_L",
+      "history_cursor": 28,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ankle_foot_link_left",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-F_L",
+      "history_cursor": 29,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "foot_direction_left",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-F_link_R",
+      "history_cursor": 30,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ankle_foot_link_right",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-F_R",
+      "history_cursor": 31,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "foot_direction_right",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-G_L",
+      "history_cursor": 32,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ground_contact_left",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-G_R",
+      "history_cursor": 33,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "ground_contact_right",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-R1",
+      "history_cursor": 34,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "facial_centreline",
+      "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "facial_centreline"
+    }
+  ],
+  "agent_session": {
+    "executed_action_ids": [
+      "EX-P1-A1",
+      "EX-P1-A2",
+      "EX-P1-A3",
+      "EX-P1-A4",
+      "EX-P1-A5",
+      "EX-P1-A6",
+      "EX-P1-F_L",
+      "EX-P1-F_R",
+      "EX-P1-F_link_L",
+      "EX-P1-F_link_R",
+      "EX-P1-G_L",
+      "EX-P1-G_R",
+      "EX-P1-J_ankle_L",
+      "EX-P1-J_ankle_R",
+      "EX-P1-J_elbow_L",
+      "EX-P1-J_elbow_R",
+      "EX-P1-J_hip_L",
+      "EX-P1-J_hip_R",
+      "EX-P1-J_knee_L",
+      "EX-P1-J_knee_R",
+      "EX-P1-J_shoulder_L",
+      "EX-P1-J_shoulder_R",
+      "EX-P1-J_wrist_L",
+      "EX-P1-J_wrist_R",
+      "EX-P1-R1",
+      "EX-P1-arm_left_a",
+      "EX-P1-arm_left_b",
+      "EX-P1-arm_right_a",
+      "EX-P1-arm_right_b",
+      "EX-P1-leg_left_a",
+      "EX-P1-leg_left_b",
+      "EX-P1-leg_right_a",
+      "EX-P1-leg_right_b"
+    ],
+    "history": {
+      "actions": [
+        {
+          "action": "snapshot",
+          "logical_time": 0.0,
+          "part": null,
+          "payload": {
+            "label": "stage_start:P1_gesture"
+          },
+          "provenance": {
+            "api": "DrawingRun/0.5.2-r22"
+          },
+          "role": null,
+          "seq": 1,
+          "stage": "P1_gesture",
+          "tool_state": null
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 1.0,
+          "part": "head_outline",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.66,
+              "part": "head_outline",
+              "points": [
+                [
+                  253.0,
+                  34.0
+                ],
+                [
+                  263.0,
+                  38.0
+                ],
+                [
+                  271.0,
+                  48.0
+                ],
+                [
+                  275.0,
+                  62.0
+                ],
+                [
+                  273.0,
+                  80.0
+                ],
+                [
+                  266.0,
+                  102.0
+                ],
+                [
+                  257.0,
+                  116.0
+                ],
+                [
+                  253.0,
+                  118.0
+                ],
+                [
+                  248.0,
+                  116.0
+                ],
+                [
+                  240.0,
+                  102.0
+                ],
+                [
+                  234.0,
+                  80.0
+                ],
+                [
+                  232.0,
+                  62.0
+                ],
+                [
+                  236.0,
+                  46.0
+                ],
+                [
+                  244.0,
+                  37.0
+                ],
+                [
+                  253.0,
+                  34.0
+                ]
+              ],
+              "pressure": [
+                0.19864,
+                0.22351266595330946,
+                0.2788798195520064,
+                0.33934300743325124,
+                0.4051571478152113,
+                0.48903525407907555,
+                0.5784601161410827,
+                0.6321066971498247,
+                0.6181699580113733,
+                0.542212602236134,
+                0.44993160151389444,
+                0.3625052225077289,
+                0.2758815084157602,
+                0.1984665975991334,
+                0.16432000000000002
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "head_outline",
+              "tool_state": {
+                "action_id": "EX-P1-A1",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.66,
+                "pencil_grade": "HB",
+                "pressure": 0.52,
+                "provenance": {
+                  "action_id": "EX-P1-A1",
+                  "observation_id": "canonical-EX-P1-A1",
+                  "source_observation": "Head outline read from the subject: full cranium narrowing to the jaw. Not an ellipse."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.3
+              },
+              "width": 2.3
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A1",
+            "observation_id": "canonical-EX-P1-A1",
+            "source_observation": "Head outline read from the subject: full cranium narrowing to the jaw. Not an ellipse."
+          },
+          "role": "construction",
+          "seq": 2,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A1",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.66,
+            "pencil_grade": "HB",
+            "pressure": 0.52,
+            "provenance": {
+              "action_id": "EX-P1-A1",
+              "observation_id": "canonical-EX-P1-A1",
+              "source_observation": "Head outline read from the subject: full cranium narrowing to the jaw. Not an ellipse."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.3
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 2.0,
+          "part": "facial_centreline",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.84,
+              "part": "facial_centreline",
+              "points": [
+                [
+                  253.0,
+                  34.0
+                ],
+                [
+                  253.0,
+                  55.0
+                ],
+                [
+                  253.0,
+                  76.0
+                ],
+                [
+                  253.0,
+                  97.0
+                ],
+                [
+                  253.0,
+                  118.0
+                ]
+              ],
+              "pressure": [
+                0.25212,
+                0.4737535162322817,
+                0.7955585002286237,
+                0.5182758297032959,
+                0.20856000000000008
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "facial_centreline",
+              "tool_state": {
+                "action_id": "EX-P1-A2",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.84,
+                "pencil_grade": "B",
+                "pressure": 0.66,
+                "provenance": {
+                  "action_id": "EX-P1-A2",
+                  "observation_id": "canonical-EX-P1-A2",
+                  "source_observation": "Facial centreline crown -> nose -> chin. Pass 1 runs it dead down the cranium midline on purpose."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.8
+              },
+              "width": 2.8
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A2",
+            "observation_id": "canonical-EX-P1-A2",
+            "source_observation": "Facial centreline crown -> nose -> chin. Pass 1 runs it dead down the cranium midline on purpose."
+          },
+          "role": "construction",
+          "seq": 3,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A2",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.84,
+            "pencil_grade": "B",
+            "pressure": 0.66,
+            "provenance": {
+              "action_id": "EX-P1-A2",
+              "observation_id": "canonical-EX-P1-A2",
+              "source_observation": "Facial centreline crown -> nose -> chin. Pass 1 runs it dead down the cranium midline on purpose."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.8
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 3.0,
+          "part": "eye_line",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.6,
+              "part": "eye_line",
+              "points": [
+                [
+                  233.0,
+                  71.0
+                ],
+                [
+                  243.0,
+                  73.0
+                ],
+                [
+                  253.0,
+                  74.0
+                ],
+                [
+                  264.0,
+                  73.0
+                ],
+                [
+                  275.0,
+                  70.0
+                ]
+              ],
+              "pressure": [
+                0.18336,
+                0.3411389208962048,
+                0.5854061819844535,
+                0.3735187852387606,
+                0.15168000000000004
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "eye_line",
+              "tool_state": {
+                "action_id": "EX-P1-A3",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.6,
+                "pencil_grade": "HB",
+                "pressure": 0.48,
+                "provenance": {
+                  "action_id": "EX-P1-A3",
+                  "observation_id": "canonical-EX-P1-A3",
+                  "source_observation": "Eye line dipping in the middle: this head is seen slightly from above, tilted down rather than up."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.15
+              },
+              "width": 2.15
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A3",
+            "observation_id": "canonical-EX-P1-A3",
+            "source_observation": "Eye line dipping in the middle: this head is seen slightly from above, tilted down rather than up."
+          },
+          "role": "construction",
+          "seq": 4,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A3",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.6,
+            "pencil_grade": "HB",
+            "pressure": 0.48,
+            "provenance": {
+              "action_id": "EX-P1-A3",
+              "observation_id": "canonical-EX-P1-A3",
+              "source_observation": "Eye line dipping in the middle: this head is seen slightly from above, tilted down rather than up."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.15
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 4.0,
+          "part": "spine_centreline",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.9,
+              "part": "spine_centreline",
+              "points": [
+                [
+                  253.0,
+                  142.0
+                ],
+                [
+                  256.0,
+                  180.0
+                ],
+                [
+                  254.0,
+                  220.0
+                ],
+                [
+                  250.0,
+                  262.0
+                ],
+                [
+                  248.0,
+                  300.0
+                ],
+                [
+                  250.0,
+                  332.0
+                ]
+              ],
+              "pressure": [
+                0.27504,
+                0.4531031001371742,
+                0.7537670233196159,
+                0.8206101619133721,
+                0.47804946494616585,
+                0.22752000000000006
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "spine_centreline",
+              "tool_state": {
+                "action_id": "EX-P1-A4",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.9,
+                "pencil_grade": "B",
+                "pressure": 0.72,
+                "provenance": {
+                  "action_id": "EX-P1-A4",
+                  "observation_id": "canonical-EX-P1-A4",
+                  "source_observation": "The body's gesture: an S-curve from the middle of the neck through ribcage and abdomen to the pelvis."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 3.1
+              },
+              "width": 3.1
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A4",
+            "observation_id": "canonical-EX-P1-A4",
+            "source_observation": "The body's gesture: an S-curve from the middle of the neck through ribcage and abdomen to the pelvis."
+          },
+          "role": "construction",
+          "seq": 5,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A4",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.9,
+            "pencil_grade": "B",
+            "pressure": 0.72,
+            "provenance": {
+              "action_id": "EX-P1-A4",
+              "observation_id": "canonical-EX-P1-A4",
+              "source_observation": "The body's gesture: an S-curve from the middle of the neck through ribcage and abdomen to the pelvis."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 3.1
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 5.0,
+          "part": "shoulder_line",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.64,
+              "part": "shoulder_line",
+              "points": [
+                [
+                  212.0,
+                  156.0
+                ],
+                [
+                  232.0,
+                  150.0
+                ],
+                [
+                  253.0,
+                  147.0
+                ],
+                [
+                  276.0,
+                  147.0
+                ],
+                [
+                  297.0,
+                  150.0
+                ]
+              ],
+              "pressure": [
+                0.19864,
+                0.37060883097088854,
+                0.6321066971498247,
+                0.4056870173419907,
+                0.16432000000000002
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "shoulder_line",
+              "tool_state": {
+                "action_id": "EX-P1-A5",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.64,
+                "pencil_grade": "HB",
+                "pressure": 0.52,
+                "provenance": {
+                  "action_id": "EX-P1-A5",
+                  "observation_id": "canonical-EX-P1-A5",
+                  "source_observation": "Shoulder tilt: the image-left shoulder sits lower, the image-right higher."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A5",
+            "observation_id": "canonical-EX-P1-A5",
+            "source_observation": "Shoulder tilt: the image-left shoulder sits lower, the image-right higher."
+          },
+          "role": "construction",
+          "seq": 6,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A5",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.64,
+            "pencil_grade": "HB",
+            "pressure": 0.52,
+            "provenance": {
+              "action_id": "EX-P1-A5",
+              "observation_id": "canonical-EX-P1-A5",
+              "source_observation": "Shoulder tilt: the image-left shoulder sits lower, the image-right higher."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 6.0,
+          "part": "pelvis_centreline",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.64,
+              "part": "pelvis_centreline",
+              "points": [
+                [
+                  214.0,
+                  326.0
+                ],
+                [
+                  238.0,
+                  329.0
+                ],
+                [
+                  262.0,
+                  332.0
+                ],
+                [
+                  286.0,
+                  334.0
+                ]
+              ],
+              "pressure": [
+                0.19864,
+                0.4590333103580642,
+                0.5114120317251584,
+                0.16432000000000002
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "pelvis_centreline",
+              "tool_state": {
+                "action_id": "EX-P1-A6",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.64,
+                "pencil_grade": "HB",
+                "pressure": 0.52,
+                "provenance": {
+                  "action_id": "EX-P1-A6",
+                  "observation_id": "canonical-EX-P1-A6",
+                  "source_observation": "Pelvis tilt counter to the shoulders: image-left higher, image-right lower."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-A6",
+            "observation_id": "canonical-EX-P1-A6",
+            "source_observation": "Pelvis tilt counter to the shoulders: image-left higher, image-right lower."
+          },
+          "role": "construction",
+          "seq": 7,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-A6",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.64,
+            "pencil_grade": "HB",
+            "pressure": 0.52,
+            "provenance": {
+              "action_id": "EX-P1-A6",
+              "observation_id": "canonical-EX-P1-A6",
+              "source_observation": "Pelvis tilt counter to the shoulders: image-left higher, image-right lower."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 7.0,
+          "part": "arm_left_outer",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "arm_left_outer",
+              "points": [
+                [
+                  206.0,
+                  156.0
+                ],
+                [
+                  198.0,
+                  206.0
+                ],
+                [
+                  192.0,
+                  258.0
+                ],
+                [
+                  184.0,
+                  306.0
+                ],
+                [
+                  175.0,
+                  350.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "arm_left_outer",
+              "tool_state": {
+                "action_id": "EX-P1-arm_left_a",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-arm_left_a",
+                  "observation_id": "canonical-EX-P1-arm_left_a",
+                  "source_observation": "Image-left arm hangs almost straight; shoulder, elbow and wrist nearly align."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-arm_left_a",
+            "observation_id": "canonical-EX-P1-arm_left_a",
+            "source_observation": "Image-left arm hangs almost straight; shoulder, elbow and wrist nearly align."
+          },
+          "role": "construction",
+          "seq": 8,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-arm_left_a",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-arm_left_a",
+              "observation_id": "canonical-EX-P1-arm_left_a",
+              "source_observation": "Image-left arm hangs almost straight; shoulder, elbow and wrist nearly align."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 8.0,
+          "part": "arm_left_inner",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "arm_left_inner",
+              "points": [
+                [
+                  218.0,
+                  156.0
+                ],
+                [
+                  210.0,
+                  206.0
+                ],
+                [
+                  202.0,
+                  258.0
+                ],
+                [
+                  192.0,
+                  306.0
+                ],
+                [
+                  181.0,
+                  350.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "arm_left_inner",
+              "tool_state": {
+                "action_id": "EX-P1-arm_left_b",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-arm_left_b",
+                  "observation_id": "canonical-EX-P1-arm_left_b",
+                  "source_observation": "Inner edge of the arm left tube."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-arm_left_b",
+            "observation_id": "canonical-EX-P1-arm_left_b",
+            "source_observation": "Inner edge of the arm left tube."
+          },
+          "role": "construction",
+          "seq": 9,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-arm_left_b",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-arm_left_b",
+              "observation_id": "canonical-EX-P1-arm_left_b",
+              "source_observation": "Inner edge of the arm left tube."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 9.0,
+          "part": "arm_right_outer",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "arm_right_outer",
+              "points": [
+                [
+                  292.0,
+                  150.0
+                ],
+                [
+                  307.0,
+                  198.0
+                ],
+                [
+                  312.0,
+                  252.0
+                ],
+                [
+                  302.0,
+                  284.0
+                ],
+                [
+                  284.0,
+                  308.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "arm_right_outer",
+              "tool_state": {
+                "action_id": "EX-P1-arm_right_a",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-arm_right_a",
+                  "observation_id": "canonical-EX-P1-arm_right_a",
+                  "source_observation": "Image-right arm bends at the elbow; the hand is in the pocket, so the wrist endpoint is inferred."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-arm_right_a",
+            "observation_id": "canonical-EX-P1-arm_right_a",
+            "source_observation": "Image-right arm bends at the elbow; the hand is in the pocket, so the wrist endpoint is inferred."
+          },
+          "role": "construction",
+          "seq": 10,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-arm_right_a",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-arm_right_a",
+              "observation_id": "canonical-EX-P1-arm_right_a",
+              "source_observation": "Image-right arm bends at the elbow; the hand is in the pocket, so the wrist endpoint is inferred."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 10.0,
+          "part": "arm_right_inner",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "arm_right_inner",
+              "points": [
+                [
+                  304.0,
+                  150.0
+                ],
+                [
+                  319.0,
+                  198.0
+                ],
+                [
+                  324.0,
+                  252.0
+                ],
+                [
+                  312.0,
+                  284.0
+                ],
+                [
+                  292.0,
+                  308.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "arm_right_inner",
+              "tool_state": {
+                "action_id": "EX-P1-arm_right_b",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-arm_right_b",
+                  "observation_id": "canonical-EX-P1-arm_right_b",
+                  "source_observation": "Inner edge of the arm right tube."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-arm_right_b",
+            "observation_id": "canonical-EX-P1-arm_right_b",
+            "source_observation": "Inner edge of the arm right tube."
+          },
+          "role": "construction",
+          "seq": 11,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-arm_right_b",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-arm_right_b",
+              "observation_id": "canonical-EX-P1-arm_right_b",
+              "source_observation": "Inner edge of the arm right tube."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 11.0,
+          "part": "leg_left_outer",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "leg_left_outer",
+              "points": [
+                [
+                  208.0,
+                  330.0
+                ],
+                [
+                  212.0,
+                  412.0
+                ],
+                [
+                  219.0,
+                  500.0
+                ],
+                [
+                  227.0,
+                  600.0
+                ],
+                [
+                  236.0,
+                  700.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "leg_left_outer",
+              "tool_state": {
+                "action_id": "EX-P1-leg_left_a",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-leg_left_a",
+                  "observation_id": "canonical-EX-P1-leg_left_a",
+                  "source_observation": "Image-left leg carries the weight and its lower leg angles out to the foot."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-leg_left_a",
+            "observation_id": "canonical-EX-P1-leg_left_a",
+            "source_observation": "Image-left leg carries the weight and its lower leg angles out to the foot."
+          },
+          "role": "construction",
+          "seq": 12,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-leg_left_a",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-leg_left_a",
+              "observation_id": "canonical-EX-P1-leg_left_a",
+              "source_observation": "Image-left leg carries the weight and its lower leg angles out to the foot."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 12.0,
+          "part": "leg_left_inner",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "leg_left_inner",
+              "points": [
+                [
+                  228.0,
+                  330.0
+                ],
+                [
+                  228.0,
+                  412.0
+                ],
+                [
+                  233.0,
+                  500.0
+                ],
+                [
+                  239.0,
+                  600.0
+                ],
+                [
+                  246.0,
+                  700.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "leg_left_inner",
+              "tool_state": {
+                "action_id": "EX-P1-leg_left_b",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-leg_left_b",
+                  "observation_id": "canonical-EX-P1-leg_left_b",
+                  "source_observation": "Inner edge of the leg left tube."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-leg_left_b",
+            "observation_id": "canonical-EX-P1-leg_left_b",
+            "source_observation": "Inner edge of the leg left tube."
+          },
+          "role": "construction",
+          "seq": 13,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-leg_left_b",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-leg_left_b",
+              "observation_id": "canonical-EX-P1-leg_left_b",
+              "source_observation": "Inner edge of the leg left tube."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 13.0,
+          "part": "leg_right_outer",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "leg_right_outer",
+              "points": [
+                [
+                  272.0,
+                  330.0
+                ],
+                [
+                  280.0,
+                  412.0
+                ],
+                [
+                  291.0,
+                  500.0
+                ],
+                [
+                  305.0,
+                  610.0
+                ],
+                [
+                  324.0,
+                  728.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "leg_right_outer",
+              "tool_state": {
+                "action_id": "EX-P1-leg_right_a",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-leg_right_a",
+                  "observation_id": "canonical-EX-P1-leg_right_a",
+                  "source_observation": "Image-right leg steps further out with a relaxed knee."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-leg_right_a",
+            "observation_id": "canonical-EX-P1-leg_right_a",
+            "source_observation": "Image-right leg steps further out with a relaxed knee."
+          },
+          "role": "construction",
+          "seq": 14,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-leg_right_a",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-leg_right_a",
+              "observation_id": "canonical-EX-P1-leg_right_a",
+              "source_observation": "Image-right leg steps further out with a relaxed knee."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 14.0,
+          "part": "leg_right_inner",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "leg_right_inner",
+              "points": [
+                [
+                  292.0,
+                  330.0
+                ],
+                [
+                  296.0,
+                  412.0
+                ],
+                [
+                  305.0,
+                  500.0
+                ],
+                [
+                  317.0,
+                  610.0
+                ],
+                [
+                  334.0,
+                  728.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.3558738759335467,
+                0.6087564395671391,
+                0.3896029012903756,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "leg_right_inner",
+              "tool_state": {
+                "action_id": "EX-P1-leg_right_b",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-leg_right_b",
+                  "observation_id": "canonical-EX-P1-leg_right_b",
+                  "source_observation": "Inner edge of the leg right tube."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-leg_right_b",
+            "observation_id": "canonical-EX-P1-leg_right_b",
+            "source_observation": "Inner edge of the leg right tube."
+          },
+          "role": "construction",
+          "seq": 15,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-leg_right_b",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-leg_right_b",
+              "observation_id": "canonical-EX-P1-leg_right_b",
+              "source_observation": "Inner edge of the leg right tube."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 15.0,
+          "part": "joint_shoulder_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_shoulder_L",
+              "points": [
+                [
+                  218.0,
+                  156.0
+                ],
+                [
+                  213.0,
+                  161.0
+                ],
+                [
+                  210.0,
+                  163.0
+                ],
+                [
+                  207.0,
+                  164.0
+                ],
+                [
+                  204.0,
+                  163.0
+                ],
+                [
+                  202.0,
+                  160.0
+                ],
+                [
+                  202.0,
+                  156.0
+                ],
+                [
+                  204.0,
+                  153.0
+                ],
+                [
+                  207.0,
+                  152.0
+                ],
+                [
+                  210.0,
+                  153.0
+                ],
+                [
+                  213.0,
+                  155.0
+                ],
+                [
+                  214.0,
+                  158.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_shoulder_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_shoulder_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_shoulder_L",
+                  "observation_id": "canonical-EX-P1-J_shoulder_L",
+                  "source_observation": "shoulder L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_shoulder_L",
+            "observation_id": "canonical-EX-P1-J_shoulder_L",
+            "source_observation": "shoulder L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 16,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_shoulder_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_shoulder_L",
+              "observation_id": "canonical-EX-P1-J_shoulder_L",
+              "source_observation": "shoulder L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 16.0,
+          "part": "joint_shoulder_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_shoulder_R",
+              "points": [
+                [
+                  304.0,
+                  151.0
+                ],
+                [
+                  303.0,
+                  154.0
+                ],
+                [
+                  300.0,
+                  156.0
+                ],
+                [
+                  297.0,
+                  157.0
+                ],
+                [
+                  294.0,
+                  156.0
+                ],
+                [
+                  292.0,
+                  153.0
+                ],
+                [
+                  292.0,
+                  149.0
+                ],
+                [
+                  294.0,
+                  146.0
+                ],
+                [
+                  297.0,
+                  145.0
+                ],
+                [
+                  300.0,
+                  146.0
+                ],
+                [
+                  303.0,
+                  148.0
+                ],
+                [
+                  304.0,
+                  151.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_shoulder_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_shoulder_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_shoulder_R",
+                  "observation_id": "canonical-EX-P1-J_shoulder_R",
+                  "source_observation": "shoulder R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_shoulder_R",
+            "observation_id": "canonical-EX-P1-J_shoulder_R",
+            "source_observation": "shoulder R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 17,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_shoulder_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_shoulder_R",
+              "observation_id": "canonical-EX-P1-J_shoulder_R",
+              "source_observation": "shoulder R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 17.0,
+          "part": "joint_elbow_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_elbow_L",
+              "points": [
+                [
+                  203.0,
+                  258.0
+                ],
+                [
+                  191.0,
+                  265.0
+                ],
+                [
+                  188.0,
+                  267.0
+                ],
+                [
+                  185.0,
+                  268.0
+                ],
+                [
+                  182.0,
+                  267.0
+                ],
+                [
+                  180.0,
+                  264.0
+                ],
+                [
+                  180.0,
+                  260.0
+                ],
+                [
+                  182.0,
+                  257.0
+                ],
+                [
+                  185.0,
+                  256.0
+                ],
+                [
+                  188.0,
+                  257.0
+                ],
+                [
+                  191.0,
+                  259.0
+                ],
+                [
+                  192.0,
+                  262.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_elbow_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_elbow_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_elbow_L",
+                  "observation_id": "canonical-EX-P1-J_elbow_L",
+                  "source_observation": "elbow L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_elbow_L",
+            "observation_id": "canonical-EX-P1-J_elbow_L",
+            "source_observation": "elbow L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 18,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_elbow_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_elbow_L",
+              "observation_id": "canonical-EX-P1-J_elbow_L",
+              "source_observation": "elbow L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 18.0,
+          "part": "joint_elbow_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_elbow_R",
+              "points": [
+                [
+                  324.0,
+                  252.0
+                ],
+                [
+                  337.0,
+                  259.0
+                ],
+                [
+                  334.0,
+                  261.0
+                ],
+                [
+                  331.0,
+                  262.0
+                ],
+                [
+                  328.0,
+                  261.0
+                ],
+                [
+                  326.0,
+                  258.0
+                ],
+                [
+                  326.0,
+                  254.0
+                ],
+                [
+                  328.0,
+                  251.0
+                ],
+                [
+                  331.0,
+                  250.0
+                ],
+                [
+                  334.0,
+                  251.0
+                ],
+                [
+                  337.0,
+                  253.0
+                ],
+                [
+                  338.0,
+                  256.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_elbow_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_elbow_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_elbow_R",
+                  "observation_id": "canonical-EX-P1-J_elbow_R",
+                  "source_observation": "elbow R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_elbow_R",
+            "observation_id": "canonical-EX-P1-J_elbow_R",
+            "source_observation": "elbow R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 19,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_elbow_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_elbow_R",
+              "observation_id": "canonical-EX-P1-J_elbow_R",
+              "source_observation": "elbow R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 19.0,
+          "part": "joint_wrist_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_wrist_L",
+              "points": [
+                [
+                  182.0,
+                  352.0
+                ],
+                [
+                  181.0,
+                  355.0
+                ],
+                [
+                  178.0,
+                  357.0
+                ],
+                [
+                  175.0,
+                  358.0
+                ],
+                [
+                  172.0,
+                  357.0
+                ],
+                [
+                  170.0,
+                  354.0
+                ],
+                [
+                  170.0,
+                  350.0
+                ],
+                [
+                  172.0,
+                  347.0
+                ],
+                [
+                  175.0,
+                  346.0
+                ],
+                [
+                  178.0,
+                  347.0
+                ],
+                [
+                  181.0,
+                  349.0
+                ],
+                [
+                  182.0,
+                  352.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_wrist_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_wrist_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_wrist_L",
+                  "observation_id": "canonical-EX-P1-J_wrist_L",
+                  "source_observation": "wrist L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_wrist_L",
+            "observation_id": "canonical-EX-P1-J_wrist_L",
+            "source_observation": "wrist L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 20,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_wrist_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_wrist_L",
+              "observation_id": "canonical-EX-P1-J_wrist_L",
+              "source_observation": "wrist L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 20.0,
+          "part": "joint_wrist_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_wrist_R",
+              "points": [
+                [
+                  294.0,
+                  310.0
+                ],
+                [
+                  293.0,
+                  313.0
+                ],
+                [
+                  290.0,
+                  315.0
+                ],
+                [
+                  287.0,
+                  316.0
+                ],
+                [
+                  284.0,
+                  315.0
+                ],
+                [
+                  282.0,
+                  312.0
+                ],
+                [
+                  282.0,
+                  308.0
+                ],
+                [
+                  284.0,
+                  305.0
+                ],
+                [
+                  287.0,
+                  304.0
+                ],
+                [
+                  290.0,
+                  305.0
+                ],
+                [
+                  293.0,
+                  307.0
+                ],
+                [
+                  294.0,
+                  310.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_wrist_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_wrist_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_wrist_R",
+                  "observation_id": "canonical-EX-P1-J_wrist_R",
+                  "source_observation": "wrist R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_wrist_R",
+            "observation_id": "canonical-EX-P1-J_wrist_R",
+            "source_observation": "wrist R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 21,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_wrist_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_wrist_R",
+              "observation_id": "canonical-EX-P1-J_wrist_R",
+              "source_observation": "wrist R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 21.0,
+          "part": "joint_hip_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_hip_L",
+              "points": [
+                [
+                  224.0,
+                  330.0
+                ],
+                [
+                  223.0,
+                  333.0
+                ],
+                [
+                  220.0,
+                  335.0
+                ],
+                [
+                  217.0,
+                  336.0
+                ],
+                [
+                  214.0,
+                  335.0
+                ],
+                [
+                  212.0,
+                  332.0
+                ],
+                [
+                  212.0,
+                  328.0
+                ],
+                [
+                  214.0,
+                  325.0
+                ],
+                [
+                  217.0,
+                  324.0
+                ],
+                [
+                  220.0,
+                  325.0
+                ],
+                [
+                  223.0,
+                  327.0
+                ],
+                [
+                  224.0,
+                  330.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_hip_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_hip_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_hip_L",
+                  "observation_id": "canonical-EX-P1-J_hip_L",
+                  "source_observation": "hip L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_hip_L",
+            "observation_id": "canonical-EX-P1-J_hip_L",
+            "source_observation": "hip L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 22,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_hip_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_hip_L",
+              "observation_id": "canonical-EX-P1-J_hip_L",
+              "source_observation": "hip L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 22.0,
+          "part": "joint_hip_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_hip_R",
+              "points": [
+                [
+                  288.0,
+                  330.0
+                ],
+                [
+                  287.0,
+                  333.0
+                ],
+                [
+                  284.0,
+                  335.0
+                ],
+                [
+                  281.0,
+                  336.0
+                ],
+                [
+                  278.0,
+                  335.0
+                ],
+                [
+                  276.0,
+                  332.0
+                ],
+                [
+                  276.0,
+                  328.0
+                ],
+                [
+                  278.0,
+                  325.0
+                ],
+                [
+                  281.0,
+                  324.0
+                ],
+                [
+                  284.0,
+                  325.0
+                ],
+                [
+                  287.0,
+                  327.0
+                ],
+                [
+                  288.0,
+                  330.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_hip_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_hip_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_hip_R",
+                  "observation_id": "canonical-EX-P1-J_hip_R",
+                  "source_observation": "hip R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_hip_R",
+            "observation_id": "canonical-EX-P1-J_hip_R",
+            "source_observation": "hip R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 23,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_hip_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_hip_R",
+              "observation_id": "canonical-EX-P1-J_hip_R",
+              "source_observation": "hip R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 23.0,
+          "part": "joint_knee_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_knee_L",
+              "points": [
+                [
+                  232.0,
+                  500.0
+                ],
+                [
+                  231.0,
+                  503.0
+                ],
+                [
+                  228.0,
+                  505.0
+                ],
+                [
+                  225.0,
+                  506.0
+                ],
+                [
+                  222.0,
+                  505.0
+                ],
+                [
+                  220.0,
+                  502.0
+                ],
+                [
+                  220.0,
+                  498.0
+                ],
+                [
+                  222.0,
+                  495.0
+                ],
+                [
+                  225.0,
+                  494.0
+                ],
+                [
+                  228.0,
+                  495.0
+                ],
+                [
+                  231.0,
+                  497.0
+                ],
+                [
+                  232.0,
+                  500.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_knee_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_knee_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_knee_L",
+                  "observation_id": "canonical-EX-P1-J_knee_L",
+                  "source_observation": "knee L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_knee_L",
+            "observation_id": "canonical-EX-P1-J_knee_L",
+            "source_observation": "knee L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 24,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_knee_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_knee_L",
+              "observation_id": "canonical-EX-P1-J_knee_L",
+              "source_observation": "knee L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 24.0,
+          "part": "joint_knee_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_knee_R",
+              "points": [
+                [
+                  304.0,
+                  500.0
+                ],
+                [
+                  303.0,
+                  503.0
+                ],
+                [
+                  300.0,
+                  505.0
+                ],
+                [
+                  297.0,
+                  506.0
+                ],
+                [
+                  294.0,
+                  505.0
+                ],
+                [
+                  292.0,
+                  502.0
+                ],
+                [
+                  292.0,
+                  498.0
+                ],
+                [
+                  294.0,
+                  495.0
+                ],
+                [
+                  297.0,
+                  494.0
+                ],
+                [
+                  300.0,
+                  495.0
+                ],
+                [
+                  303.0,
+                  497.0
+                ],
+                [
+                  304.0,
+                  500.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_knee_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_knee_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_knee_R",
+                  "observation_id": "canonical-EX-P1-J_knee_R",
+                  "source_observation": "knee R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_knee_R",
+            "observation_id": "canonical-EX-P1-J_knee_R",
+            "source_observation": "knee R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 25,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_knee_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_knee_R",
+              "observation_id": "canonical-EX-P1-J_knee_R",
+              "source_observation": "knee R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 25.0,
+          "part": "joint_ankle_L",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_ankle_L",
+              "points": [
+                [
+                  247.0,
+                  700.0
+                ],
+                [
+                  250.0,
+                  703.0
+                ],
+                [
+                  247.0,
+                  705.0
+                ],
+                [
+                  244.0,
+                  706.0
+                ],
+                [
+                  241.0,
+                  705.0
+                ],
+                [
+                  239.0,
+                  702.0
+                ],
+                [
+                  239.0,
+                  698.0
+                ],
+                [
+                  241.0,
+                  695.0
+                ],
+                [
+                  244.0,
+                  694.0
+                ],
+                [
+                  247.0,
+                  695.0
+                ],
+                [
+                  250.0,
+                  697.0
+                ],
+                [
+                  251.0,
+                  700.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_ankle_L",
+              "tool_state": {
+                "action_id": "EX-P1-J_ankle_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_ankle_L",
+                  "observation_id": "canonical-EX-P1-J_ankle_L",
+                  "source_observation": "ankle L centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_ankle_L",
+            "observation_id": "canonical-EX-P1-J_ankle_L",
+            "source_observation": "ankle L centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 26,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_ankle_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_ankle_L",
+              "observation_id": "canonical-EX-P1-J_ankle_L",
+              "source_observation": "ankle L centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 26.0,
+          "part": "joint_ankle_R",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.55,
+              "part": "joint_ankle_R",
+              "points": [
+                [
+                  335.0,
+                  728.0
+                ],
+                [
+                  340.0,
+                  731.0
+                ],
+                [
+                  337.0,
+                  733.0
+                ],
+                [
+                  334.0,
+                  734.0
+                ],
+                [
+                  331.0,
+                  733.0
+                ],
+                [
+                  329.0,
+                  730.0
+                ],
+                [
+                  329.0,
+                  726.0
+                ],
+                [
+                  331.0,
+                  723.0
+                ],
+                [
+                  334.0,
+                  722.0
+                ],
+                [
+                  337.0,
+                  723.0
+                ],
+                [
+                  340.0,
+                  725.0
+                ],
+                [
+                  341.0,
+                  728.0
+                ]
+              ],
+              "pressure": [
+                0.16808,
+                0.20155509154489437,
+                0.26449926414445035,
+                0.329113559700336,
+                0.41901074021766505,
+                0.5143053267527307,
+                0.5377423385327963,
+                0.46384581670139974,
+                0.364291296503714,
+                0.2740729277376304,
+                0.18468661925222019,
+                0.13904000000000005
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "joint_ankle_R",
+              "tool_state": {
+                "action_id": "EX-P1-J_ankle_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.55,
+                "pencil_grade": "HB",
+                "pressure": 0.44,
+                "provenance": {
+                  "action_id": "EX-P1-J_ankle_R",
+                  "observation_id": "canonical-EX-P1-J_ankle_R",
+                  "source_observation": "ankle R centre read from the subject."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.0
+              },
+              "width": 2.0
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-J_ankle_R",
+            "observation_id": "canonical-EX-P1-J_ankle_R",
+            "source_observation": "ankle R centre read from the subject."
+          },
+          "role": "construction",
+          "seq": 27,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-J_ankle_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.55,
+            "pencil_grade": "HB",
+            "pressure": 0.44,
+            "provenance": {
+              "action_id": "EX-P1-J_ankle_R",
+              "observation_id": "canonical-EX-P1-J_ankle_R",
+              "source_observation": "ankle R centre read from the subject."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.0
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 27.0,
+          "part": "ankle_foot_link_left",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.56,
+              "part": "ankle_foot_link_left",
+              "points": [
+                [
+                  245.0,
+                  700.0
+                ],
+                [
+                  246.0,
+                  703.0
+                ],
+                [
+                  250.0,
+                  708.0
+                ]
+              ],
+              "pressure": [
+                0.17572000000000002,
+                0.562055924401768,
+                0.14536000000000004
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "ankle_foot_link_left",
+              "tool_state": {
+                "action_id": "EX-P1-F_link_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.56,
+                "pencil_grade": "HB",
+                "pressure": 0.46,
+                "provenance": {
+                  "action_id": "EX-P1-F_link_L",
+                  "observation_id": "canonical-EX-P1-F_link_L",
+                  "source_observation": "Link from the image-left ankle into the shoe."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.05
+              },
+              "width": 2.05
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-F_link_L",
+            "observation_id": "canonical-EX-P1-F_link_L",
+            "source_observation": "Link from the image-left ankle into the shoe."
+          },
+          "role": "construction",
+          "seq": 28,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-F_link_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.56,
+            "pencil_grade": "HB",
+            "pressure": 0.46,
+            "provenance": {
+              "action_id": "EX-P1-F_link_L",
+              "observation_id": "canonical-EX-P1-F_link_L",
+              "source_observation": "Link from the image-left ankle into the shoe."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.05
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 28.0,
+          "part": "foot_direction_left",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "foot_direction_left",
+              "points": [
+                [
+                  240.0,
+                  706.0
+                ],
+                [
+                  267.0,
+                  708.0
+                ],
+                [
+                  275.0,
+                  720.0
+                ],
+                [
+                  270.0,
+                  736.0
+                ],
+                [
+                  243.0,
+                  747.0
+                ],
+                [
+                  223.0,
+                  746.0
+                ],
+                [
+                  210.0,
+                  737.0
+                ],
+                [
+                  209.0,
+                  728.0
+                ],
+                [
+                  218.0,
+                  713.0
+                ],
+                [
+                  240.0,
+                  706.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.2431471034797827,
+                0.3326028512448341,
+                0.4406570291904463,
+                0.5727656233086089,
+                0.6043769255166743,
+                0.4910211843511137,
+                0.35755149694674443,
+                0.229858742423997,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "foot_direction_left",
+              "tool_state": {
+                "action_id": "EX-P1-F_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-F_L",
+                  "observation_id": "canonical-EX-P1-F_L",
+                  "source_observation": "Image-left shoe read from the subject: its toe swings across the body toward the image-left."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-F_L",
+            "observation_id": "canonical-EX-P1-F_L",
+            "source_observation": "Image-left shoe read from the subject: its toe swings across the body toward the image-left."
+          },
+          "role": "construction",
+          "seq": 29,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-F_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-F_L",
+              "observation_id": "canonical-EX-P1-F_L",
+              "source_observation": "Image-left shoe read from the subject: its toe swings across the body toward the image-left."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 29.0,
+          "part": "ankle_foot_link_right",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.56,
+              "part": "ankle_foot_link_right",
+              "points": [
+                [
+                  335.0,
+                  728.0
+                ],
+                [
+                  331.0,
+                  731.0
+                ],
+                [
+                  327.0,
+                  736.0
+                ]
+              ],
+              "pressure": [
+                0.17572000000000002,
+                0.562055924401768,
+                0.14536000000000004
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "ankle_foot_link_right",
+              "tool_state": {
+                "action_id": "EX-P1-F_link_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.56,
+                "pencil_grade": "HB",
+                "pressure": 0.46,
+                "provenance": {
+                  "action_id": "EX-P1-F_link_R",
+                  "observation_id": "canonical-EX-P1-F_link_R",
+                  "source_observation": "Link from the image-right ankle into the shoe."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.05
+              },
+              "width": 2.05
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-F_link_R",
+            "observation_id": "canonical-EX-P1-F_link_R",
+            "source_observation": "Link from the image-right ankle into the shoe."
+          },
+          "role": "construction",
+          "seq": 30,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-F_link_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.56,
+            "pencil_grade": "HB",
+            "pressure": 0.46,
+            "provenance": {
+              "action_id": "EX-P1-F_link_R",
+              "observation_id": "canonical-EX-P1-F_link_R",
+              "source_observation": "Link from the image-right ankle into the shoe."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.05
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 30.0,
+          "part": "foot_direction_right",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.62,
+              "part": "foot_direction_right",
+              "points": [
+                [
+                  327.0,
+                  739.0
+                ],
+                [
+                  350.0,
+                  734.0
+                ],
+                [
+                  375.0,
+                  737.0
+                ],
+                [
+                  393.0,
+                  750.0
+                ],
+                [
+                  392.0,
+                  763.0
+                ],
+                [
+                  367.0,
+                  775.0
+                ],
+                [
+                  340.0,
+                  774.0
+                ],
+                [
+                  322.0,
+                  762.0
+                ],
+                [
+                  319.0,
+                  750.0
+                ],
+                [
+                  327.0,
+                  739.0
+                ]
+              ],
+              "pressure": [
+                0.191,
+                0.2431471034797827,
+                0.3326028512448341,
+                0.4406570291904463,
+                0.5727656233086089,
+                0.6043769255166743,
+                0.4910211843511137,
+                0.35755149694674443,
+                0.229858742423997,
+                0.15800000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "foot_direction_right",
+              "tool_state": {
+                "action_id": "EX-P1-F_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.62,
+                "pencil_grade": "HB",
+                "pressure": 0.5,
+                "provenance": {
+                  "action_id": "EX-P1-F_R",
+                  "observation_id": "canonical-EX-P1-F_R",
+                  "source_observation": "Image-right shoe read from the subject: it steps out and its toe points further from the body."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.2
+              },
+              "width": 2.2
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-F_R",
+            "observation_id": "canonical-EX-P1-F_R",
+            "source_observation": "Image-right shoe read from the subject: it steps out and its toe points further from the body."
+          },
+          "role": "construction",
+          "seq": 31,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-F_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.62,
+            "pencil_grade": "HB",
+            "pressure": 0.5,
+            "provenance": {
+              "action_id": "EX-P1-F_R",
+              "observation_id": "canonical-EX-P1-F_R",
+              "source_observation": "Image-right shoe read from the subject: it steps out and its toe points further from the body."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.2
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 31.0,
+          "part": "ground_contact_left",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.42,
+              "part": "ground_contact_left",
+              "points": [
+                [
+                  210.0,
+                  750.0
+                ],
+                [
+                  272.0,
+                  752.0
+                ]
+              ],
+              "pressure": [
+                0.13752,
+                0.11376000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "ground_contact_left",
+              "tool_state": {
+                "action_id": "EX-P1-G_L",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.42,
+                "pencil_grade": "2H",
+                "pressure": 0.36,
+                "provenance": {
+                  "action_id": "EX-P1-G_L",
+                  "observation_id": "canonical-EX-P1-G_L",
+                  "source_observation": "Image-left foot contact; this foot carries the weight."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 1.7
+              },
+              "width": 1.7
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-G_L",
+            "observation_id": "canonical-EX-P1-G_L",
+            "source_observation": "Image-left foot contact; this foot carries the weight."
+          },
+          "role": "construction",
+          "seq": 32,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-G_L",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.42,
+            "pencil_grade": "2H",
+            "pressure": 0.36,
+            "provenance": {
+              "action_id": "EX-P1-G_L",
+              "observation_id": "canonical-EX-P1-G_L",
+              "source_observation": "Image-left foot contact; this foot carries the weight."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 1.7
+          }
+        },
+        {
+          "action": "stroke.add",
+          "logical_time": 32.0,
+          "part": "ground_contact_right",
+          "payload": {
+            "stroke": {
+              "confidence": 0.84,
+              "layer": 10,
+              "opacity": 0.42,
+              "part": "ground_contact_right",
+              "points": [
+                [
+                  318.0,
+                  779.0
+                ],
+                [
+                  393.0,
+                  781.0
+                ]
+              ],
+              "pressure": [
+                0.13752,
+                0.11376000000000003
+              ],
+              "role": "construction",
+              "stage": "P1_gesture",
+              "stroke_id": "ground_contact_right",
+              "tool_state": {
+                "action_id": "EX-P1-G_R",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.42,
+                "pencil_grade": "2H",
+                "pressure": 0.36,
+                "provenance": {
+                  "action_id": "EX-P1-G_R",
+                  "observation_id": "canonical-EX-P1-G_R",
+                  "source_observation": "Image-right foot contact; it lands lower and further out."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 1.7
+              },
+              "width": 1.7
+            }
+          },
+          "provenance": {
+            "action_id": "EX-P1-G_R",
+            "observation_id": "canonical-EX-P1-G_R",
+            "source_observation": "Image-right foot contact; it lands lower and further out."
+          },
+          "role": "construction",
+          "seq": 33,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-G_R",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.42,
+            "pencil_grade": "2H",
+            "pressure": 0.36,
+            "provenance": {
+              "action_id": "EX-P1-G_R",
+              "observation_id": "canonical-EX-P1-G_R",
+              "source_observation": "Image-right foot contact; it lands lower and further out."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 1.7
+          }
+        },
+        {
+          "action": "stroke.replace",
+          "logical_time": 33.0,
+          "part": "facial_centreline",
+          "payload": {
+            "stroke": {
+              "confidence": 0.94,
+              "layer": 10,
+              "opacity": 0.84,
+              "part": "facial_centreline",
+              "points": [
+                [
+                  252.0,
+                  34.0
+                ],
+                [
+                  256.0,
+                  54.0
+                ],
+                [
+                  258.0,
+                  73.0
+                ],
+                [
+                  258.0,
+                  90.0
+                ],
+                [
+                  256.0,
+                  106.0
+                ],
+                [
+                  254.0,
+                  118.0
+                ]
+              ],
+              "pressure": [
+                0.25212,
+                0.41534450845907633,
+                0.690953104709648,
+                0.7522259817539245,
+                0.4382120095339854,
+                0.20856000000000008
+              ],
+              "role": "gesture",
+              "stage": "P1_gesture",
+              "stroke_id": "facial_centreline",
+              "tool_state": {
+                "action_id": "EX-P1-R1",
+                "erase_strength": 0.0,
+                "grain": 0.3,
+                "hardness": 0.58,
+                "jitter": 0.06,
+                "mode": "draw",
+                "opacity": 0.84,
+                "pencil_grade": "B",
+                "pressure": 0.66,
+                "provenance": {
+                  "action_id": "EX-P1-R1",
+                  "observation_id": "canonical-EX-P1-R1",
+                  "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+                  "revision_of": "facial_centreline",
+                  "source_observation": "Fresh re-observation after the previous review."
+                },
+                "taper_in": 0.34,
+                "taper_out": 0.42,
+                "tool": "construction_pencil",
+                "width": 2.8
+              },
+              "width": 2.8
+            },
+            "stroke_id": "facial_centreline"
+          },
+          "provenance": {
+            "action_id": "EX-P1-R1",
+            "observation_id": "canonical-EX-P1-R1",
+            "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+            "revision_of": "facial_centreline",
+            "source_observation": "Fresh re-observation after the previous review."
+          },
+          "role": "gesture",
+          "seq": 34,
+          "stage": "P1_gesture",
+          "tool_state": {
+            "action_id": "EX-P1-R1",
+            "erase_strength": 0.0,
+            "grain": 0.3,
+            "hardness": 0.58,
+            "jitter": 0.06,
+            "mode": "draw",
+            "opacity": 0.84,
+            "pencil_grade": "B",
+            "pressure": 0.66,
+            "provenance": {
+              "action_id": "EX-P1-R1",
+              "observation_id": "canonical-EX-P1-R1",
+              "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+              "revision_of": "facial_centreline",
+              "source_observation": "Fresh re-observation after the previous review."
+            },
+            "taper_in": 0.34,
+            "taper_out": 0.42,
+            "tool": "construction_pencil",
+            "width": 2.8
+          }
+        },
+        {
+          "action": "snapshot",
+          "logical_time": 34.0,
+          "part": null,
+          "payload": {
+            "label": "stage_end:P1_gesture"
+          },
+          "provenance": {
+            "review_digest": "2149ff3232ec29b48ac92c8695e7cae3af53657dce6dc57f4a07890146c39366"
+          },
+          "role": null,
+          "seq": 35,
+          "stage": "P1_gesture",
+          "tool_state": null
+        }
+      ],
+      "cursor": 35,
+      "height": 802,
+      "metadata": {
+        "drawing_authority": "agent_actions",
+        "grammar_cards": [],
+        "public_api": "DrawingRun/0.5.2-r22",
+        "reference_bundle": {
+          "authority_policy": {
+            "notes": [
+              "Task stage targets are strongest only when they belong to the same task/subject.",
+              "Subject reference remains geometry truth and resolves contradictions about pose/proportion/perspective."
+            ],
+            "with_task_stage_target": [
+              "task_stage_target",
+              "subject_reference"
+            ],
+            "without_task_stage_target": [
+              "subject_reference"
+            ]
+          },
+          "default_reference_mode": "subject_only",
+          "schema": "img2drawing.reference_bundle.v1",
+          "subject_reference": {
+            "authority": "geometry_truth",
+            "decides": [
+              "pose",
+              "proportion",
+              "perspective",
+              "overlap",
+              "weight distribution",
+              "subject-specific silhouette"
+            ],
+            "must_not_decide": [
+              "stage abstraction vocabulary",
+              "which construction convention belongs to a stage"
+            ],
+            "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+            "role": "subject_reference",
+            "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+          },
+          "task_stage_targets": {}
+        },
+        "reference_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+        "require_grammar_card_bindings": false
+      },
+      "width": 512
+    },
+    "schema": "img2drawing.agent_drawing_session.v1"
+  },
+  "blind_packets": {},
+  "init": {
+    "grammar_cards": [],
+    "height": 802,
+    "output_dir": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run",
+    "reference_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+    "reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+    "require_grammar_card_bindings": false,
+    "session_id": "canonical-full-body-croquis-r07",
+    "stage_registry": "full_body_croquis",
+    "task_stage_targets": {},
+    "width": 512,
+    "working_supersample": 3
+  },
+  "local_reviews": {
+    "P1_gesture:pass_01:head_face": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 132,
+            "left": 222,
+            "right": 288,
+            "top": 20
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+          "crop_sha256": "a947ee3b5e93f367b1100e9a3c6851c374d728c17d61459fb7d0c8f76878429a",
+          "role": "current_drawing",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 200,
+            "left": 300,
+            "right": 450,
+            "top": 20
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+          "crop_sha256": "704e802790520d2b736b7b2648747d99e6cde03ee4334925ae62dc1253f71182",
+          "role": "subject_reference",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+      "drawing_state_sha256": "15ea7b0f54c23170aab25078dc5bc14a856e4a29f64d8eca68409f4b4488d79d",
+      "history_cursor": 33,
+      "intent": "Check crown, facial-centreline curvature and the nose pass against the subject.",
+      "label": "head_face",
+      "local_review_id": "P1_gesture:pass_01:head_face",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P1_gesture:pass_01:pelvis_support": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_reference_overview.png",
+        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 800,
+            "left": 132,
+            "right": 398,
+            "top": 299
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
+          "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
+          "role": "current_drawing",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1145,
+            "left": 190,
+            "right": 570,
+            "top": 430
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/subject.png",
+          "crop_sha256": "777da20467a23447b2ddfb49217b544d2831521d7ec07d044e082b84a204bd51",
+          "role": "subject_reference",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+      "drawing_state_sha256": "15ea7b0f54c23170aab25078dc5bc14a856e4a29f64d8eca68409f4b4488d79d",
+      "history_cursor": 33,
+      "intent": "Check pelvis tilt, hip joint centres and where both feet land.",
+      "label": "pelvis_support",
+      "local_review_id": "P1_gesture:pass_01:pelvis_support",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P1_gesture:pass_02:head_face": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/local_reference_overview.png",
+        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 132,
+            "left": 222,
+            "right": 288,
+            "top": 20
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/drawing.png",
+          "crop_sha256": "3588b23134464d67a6d65a59cdef4e296ba4828e581afa5643235a083ae9fbd5",
+          "role": "current_drawing",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+          "source_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 200,
+            "left": 300,
+            "right": 450,
+            "top": 20
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/subject.png",
+          "crop_sha256": "704e802790520d2b736b7b2648747d99e6cde03ee4334925ae62dc1253f71182",
+          "role": "subject_reference",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+      "drawing_state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a",
+      "history_cursor": 34,
+      "intent": "Re-check the carried facial-centreline concern after EX-P1-R1.",
+      "label": "head_face",
+      "local_review_id": "P1_gesture:pass_02:head_face",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P1_gesture:pass_02:pelvis_support": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/local_reference_overview.png",
+        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_drawing_overlay.png",
+        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 800,
+            "left": 132,
+            "right": 398,
+            "top": 299
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/drawing.png",
+          "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
+          "role": "current_drawing",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+          "source_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1145,
+            "left": 190,
+            "right": 570,
+            "top": 430
+          },
+          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/subject.png",
+          "crop_sha256": "777da20467a23447b2ddfb49217b544d2831521d7ec07d044e082b84a204bd51",
+          "role": "subject_reference",
+          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+      "drawing_state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a",
+      "history_cursor": 34,
+      "intent": "Re-check pelvis tilt and joint centres on the corrected artifact.",
+      "label": "pelvis_support",
+      "local_review_id": "P1_gesture:pass_02:pelvis_support",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    }
+  },
+  "observation_lock": {
+    "locked_at_cursor": 0,
+    "locked_at_stage": "P1_gesture",
+    "observation": {
+      "automatic_semantic_inference": false,
+      "drawing_priorities": [],
+      "evidence_refs": [],
+      "global_relations": {},
+      "parts": {},
+      "schema": "img2drawing.observation.v3",
+      "semantic_authority": "agent",
+      "subject_summary": "Full-body subject reference for the canonical stage workflow.",
+      "uncertainties": [],
+      "view": {
+        "arm_occlusion": {
+          "subject_left": [],
+          "subject_right": []
+        },
+        "arm_visibility": {
+          "subject_left": "unknown",
+          "subject_right": "unknown"
+        },
+        "body_view": "unknown",
+        "near_side": "unknown",
+        "prop_overlap_order": [],
+        "torso_turn": "unknown",
+        "uncertainties": [
+          "The canonical example demonstrates review lifecycle; pose-side labels remain subject-observation inputs."
+        ]
+      }
+    },
+    "observation_digest": "9349eccac9419c420e03038120a4ab940eb91061ebd0f8622eb45c8bc91099bf",
+    "observation_id": "canonical-full-body-croquis-r07:observation:01",
+    "replacement_of": null,
+    "schema": "img2drawing.observation_lock.v1",
+    "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+  },
+  "observation_reopens": [],
+  "progress": {
+    "advanced_reviews": {
+      "P1_gesture": "2149ff3232ec29b48ac92c8695e7cae3af53657dce6dc57f4a07890146c39366"
+    },
+    "current_index": 1,
+    "started_cursor": {
+      "P1_gesture": 0
+    }
+  },
+  "region_closure_manifests": {},
+  "reopen_contexts": {},
+  "reopens": [],
+  "reviews": {
+    "P1_gesture": [
+      {
+        "advance_rationale": "",
+        "carried_concerns": [],
+        "contract_findings": [
+          "The drawing stays inside the P1.v3 representation boundary.",
+          "No facial features beyond the centreline and eye line, no hair, clothing, muscle or closed volume.",
+          "Face centreline, spine centreline and line of action are three separate strokes."
+        ],
+        "corrections": [],
+        "decision": "revise",
+        "drawing_artifact_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+        "drawing_findings": [
+          "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
+          "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+          "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
+        ],
+        "drawing_state_sha256": "15ea7b0f54c23170aab25078dc5bc14a856e4a29f64d8eca68409f4b4488d79d",
+        "grammar_findings": [
+          "P1 is being judged against the frozen contract, not against an example drawing.",
+          "Joint centres were read from the subject rather than copied from the pipeline overview sheet."
+        ],
+        "history_cursor": 33,
+        "inter_pass_action_ids": [
+          "EX-P1-A1",
+          "EX-P1-A2",
+          "EX-P1-A3",
+          "EX-P1-A4",
+          "EX-P1-A5",
+          "EX-P1-A6",
+          "EX-P1-arm_left_a",
+          "EX-P1-arm_left_b",
+          "EX-P1-arm_right_a",
+          "EX-P1-arm_right_b",
+          "EX-P1-leg_left_a",
+          "EX-P1-leg_left_b",
+          "EX-P1-leg_right_a",
+          "EX-P1-leg_right_b",
+          "EX-P1-J_shoulder_L",
+          "EX-P1-J_shoulder_R",
+          "EX-P1-J_elbow_L",
+          "EX-P1-J_elbow_R",
+          "EX-P1-J_wrist_L",
+          "EX-P1-J_wrist_R",
+          "EX-P1-J_hip_L",
+          "EX-P1-J_hip_R",
+          "EX-P1-J_knee_L",
+          "EX-P1-J_knee_R",
+          "EX-P1-J_ankle_L",
+          "EX-P1-J_ankle_R",
+          "EX-P1-F_link_L",
+          "EX-P1-F_L",
+          "EX-P1-F_link_R",
+          "EX-P1-F_R",
+          "EX-P1-G_L",
+          "EX-P1-G_R"
+        ],
+        "local_review_ids": [
+          "P1_gesture:pass_01:head_face",
+          "P1_gesture:pass_01:pelvis_support"
+        ],
+        "observations": [
+          "The drawing stays inside the P1.v3 representation boundary.",
+          "No facial features beyond the centreline and eye line, no hair, clothing, muscle or closed volume.",
+          "Face centreline, spine centreline and line of action are three separate strokes.",
+          "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+          "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out.",
+          "P1 is being judged against the frozen contract, not against an example drawing.",
+          "Joint centres were read from the subject rather than copied from the pipeline overview sheet.",
+          "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
+          "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+          "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "df22ab9cd0aa0e9aa0d4986b10408ec81e036080a729a6aa581a18719b59371a",
+        "reference_authority_order": [
+          "subject_reference"
+        ],
+        "remaining_concerns": [
+          "facial centreline is a plain vertical line and states no face rotation",
+          "head therefore reads as frontal while the subject's head is turned"
+        ],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P1_gesture",
+        "stage_contract_id": "full_body_croquis.P1.v3",
+        "subject_findings": [
+          "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+          "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out."
+        ],
+        "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      },
+      {
+        "advance_rationale": "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep found nothing new; the pose hypothesis registers against the subject, so P2 measurement may begin.",
+        "carried_concerns": [
+          "facial centreline is a plain vertical line and states no face rotation",
+          "head therefore reads as frontal while the subject's head is turned"
+        ],
+        "contract_findings": [
+          "The corrected artifact still stays inside the P1.v3 representation boundary.",
+          "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
+          "Face centreline, spine centreline and line of action remain three separate strokes."
+        ],
+        "corrections": [
+          "Replaced the flat facial centreline with a curve through crown, nose and chin."
+        ],
+        "decision": "advance",
+        "drawing_artifact_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+        "drawing_findings": [
+          "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
+          "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
+          "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+        ],
+        "drawing_state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a",
+        "grammar_findings": [
+          "Stage grammar stays subordinate to the frozen contract and subject geometry."
+        ],
+        "history_cursor": 34,
+        "inter_pass_action_ids": [
+          "EX-P1-R1"
+        ],
+        "local_review_ids": [
+          "P1_gesture:pass_02:head_face",
+          "P1_gesture:pass_02:pelvis_support"
+        ],
+        "observations": [
+          "The corrected artifact still stays inside the P1.v3 representation boundary.",
+          "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
+          "Face centreline, spine centreline and line of action remain three separate strokes.",
+          "The facial centreline now curves across the head and passes the nose where the subject's does.",
+          "Head direction now agrees with the subject at P1 abstraction.",
+          "Stage grammar stays subordinate to the frozen contract and subject geometry.",
+          "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
+          "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
+          "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+        ],
+        "parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+        "pass_memory_digest": "60b7f7640045172c01734222284d296fe142229baafcc199c79fa2957913ed52",
+        "reference_authority_order": [
+          "subject_reference"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P1_gesture",
+        "stage_contract_id": "full_body_croquis.P1.v3",
+        "subject_findings": [
+          "The facial centreline now curves across the head and passes the nose where the subject's does.",
+          "Head direction now agrees with the subject at P1 abstraction."
+        ],
+        "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ]
+  },
+  "schema": "img2drawing.run_checkpoint.v3",
+  "slice": "R22_fresh_worker_defect_closure_subject_only",
+  "state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a",
+  "version": "0.5.2.dev22",
+  "visual_fidelity_reviews": {}
+}

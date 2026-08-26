@@ -1,0 +1,67 @@
+{
+  "carried_concerns": [
+    "facial centreline is a plain vertical line and states no face rotation",
+    "head therefore reads as frontal while the subject's head is turned"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "facial centreline is a plain vertical line and states no face rotation",
+        "head therefore reads as frontal while the subject's head is turned"
+      ],
+      "review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "EX-P1-R1",
+      "history_cursor": 34,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "facial_centreline",
+      "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "facial_centreline"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "EX-P1-R1",
+      "history_cursor": 34,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "facial_centreline",
+      "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "facial_centreline"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "facial centreline is a plain vertical line and states no face rotation",
+    "head therefore reads as frontal while the subject's head is turned"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "revision_continuation"
+}

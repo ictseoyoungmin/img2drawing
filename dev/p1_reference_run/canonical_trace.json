@@ -1,0 +1,56 @@
+{
+  "schema": "img2drawing.canonical_example_trace.v1",
+  "version": "0.5.2.dev22",
+  "example": "full_body_croquis",
+  "stage": "P1_gesture",
+  "initial_dominant_path_start": [
+    253,
+    34
+  ],
+  "initial_dominant_path_start_semantics": "crown",
+  "pass1": {
+    "decision": "revise",
+    "remaining_concerns": [
+      "facial centreline is a plain vertical line and states no face rotation",
+      "head therefore reads as frontal while the subject's head is turned"
+    ],
+    "local_review_ids": [
+      "P1_gesture:pass_01:head_face",
+      "P1_gesture:pass_01:pelvis_support"
+    ],
+    "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.md"
+  },
+  "inter_pass_corrections": [
+    {
+      "action_id": "EX-P1-R1",
+      "kind": "replace_stroke",
+      "target": "facial_centreline"
+    }
+  ],
+  "pass2": {
+    "memory_state": "revision_continuation",
+    "parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+    "carried_concerns": [
+      "facial centreline is a plain vertical line and states no face rotation",
+      "head therefore reads as frontal while the subject's head is turned"
+    ],
+    "inter_pass_correction_action_ids": [
+      "EX-P1-R1"
+    ],
+    "decision": "advance",
+    "remaining_concerns": [],
+    "advance_rationale": "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep found nothing new; the pose hypothesis registers against the subject, so P2 measurement may begin.",
+    "local_review_ids": [
+      "P1_gesture:pass_02:head_face",
+      "P1_gesture:pass_02:pelvis_support"
+    ],
+    "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md"
+  },
+  "review_chain": {
+    "pass1_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+    "pass2_parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+    "pass2_digest": "2149ff3232ec29b48ac92c8695e7cae3af53657dce6dc57f4a07890146c39366"
+  },
+  "current_stage": "P2_primary_axes",
+  "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."
+}
