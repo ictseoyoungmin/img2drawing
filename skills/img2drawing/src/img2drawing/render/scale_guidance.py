@@ -11,6 +11,7 @@ class CanvasScaleGuidance:
     recommended_width_multiplier: float
     minimum_visible_opacity: float
     minimum_visible_pressure: float
+    typical_width: float
     authority: str = 'guidance_only'
 
     def to_dict(self):
@@ -22,12 +23,18 @@ class CanvasScaleGuidance:
             'recommended_width_multiplier':self.recommended_width_multiplier,
             'minimum_visible_opacity':self.minimum_visible_opacity,
             'minimum_visible_pressure':self.minimum_visible_pressure,
+            'typical_width':self.typical_width,
             'authority':self.authority,
             'rule':'Guidance only; runtime never silently rewrites Agent-authored stroke style.',
+            'note':'An early stage is not a faint stage. These are floors from a completed run, not ceilings.',
         }
 
-_OPACITY={'P1_gesture':0.18,'P2_primary_axes':0.23,'P3_primary_masses':0.34,'P4_structural_connections':0.38,'P5_clean_blockin':0.48}
-_PRESSURE={'P1_gesture':0.18,'P2_primary_axes':0.22,'P3_primary_masses':0.30,'P4_structural_connections':0.34,'P5_clean_blockin':0.42}
+# Calibrated against a completed dogfood run rather than guessed. Every stage's
+# strokes there sat far above the old table, which was telling workers that a
+# barely-visible P1 was acceptable.
+_OPACITY={'P1_gesture':0.55,'P2_primary_axes':0.60,'P3_primary_masses':0.66,'P4_structural_connections':0.58,'P5_clean_blockin':0.62}
+_PRESSURE={'P1_gesture':0.45,'P2_primary_axes':0.48,'P3_primary_masses':0.54,'P4_structural_connections':0.48,'P5_clean_blockin':0.52}
+_WIDTH={'P1_gesture':2.0,'P2_primary_axes':2.2,'P3_primary_masses':2.5,'P4_structural_connections':2.1,'P5_clean_blockin':2.3}
 
 def canvas_scale_guidance(width: int, height: int, stage: str) -> CanvasScaleGuidance:
     w=max(1,int(width)); h=max(1,int(height)); sid=str(stage)
@@ -37,6 +44,7 @@ def canvas_scale_guidance(width: int, height: int, stage: str) -> CanvasScaleGui
         width=w,height=h,stage=sid,
         scale_factor=round(factor,3),
         recommended_width_multiplier=round(factor,3),
-        minimum_visible_opacity=_OPACITY.get(sid,0.28),
-        minimum_visible_pressure=_PRESSURE.get(sid,0.25),
+        minimum_visible_opacity=_OPACITY.get(sid,0.55),
+        minimum_visible_pressure=_PRESSURE.get(sid,0.45),
+        typical_width=round(_WIDTH.get(sid,2.1)*factor,2),
     )

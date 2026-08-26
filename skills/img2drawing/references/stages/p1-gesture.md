@@ -38,6 +38,33 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 Leave out: facial features beyond the centreline and eye-line, hair, garment structure,
 muscle, closed volume, prop detail, and footwear detail.
 
+## An early stage is not a faint stage
+
+P1 construction is not a whisper. In a completed run the dominant gesture was drawn with a
+**B** grade at pressure 0.72, width 3.1, opacity 0.90; ordinary construction lines sat
+around **HB** at 0.52 / 2.2 / 0.64; only the ground cue dropped to 2H at 0.36 / 1.7 / 0.42.
+
+Two things follow:
+
+- **The pencil grade decides more than the numbers.** A 2H stroke at high pressure still
+  renders pale. Use B for the dominant gesture, HB for construction, 2H only for cues you
+  want to disappear.
+- **Judge on the raw render.** If P1 is only readable with the contrast turned up, it is
+  too faint to review — and the stages built on it will inherit that.
+
+`canvas_scale_guidance` reports a floor per stage. It is a floor, not a target.
+
+## Compare on the raw render, and overlay
+
+Two comparisons, both on the unmodified render:
+
+1. the drawing as rendered, beside the subject;
+2. the drawing as if it were on translucent paper laid over the subject.
+
+The overlay is what catches registration error. A drawing that looks plausible alone will
+show its crown, joint centres and foot landings sitting off the subject the moment it is
+laid on top. Never judge P1 without it.
+
 ## Never drop a primitive in for an observed shape
 
 The head is not an ellipse and a foot is not an oval. Reaching for a generic shape because
