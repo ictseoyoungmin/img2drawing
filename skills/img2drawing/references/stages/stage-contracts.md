@@ -48,3 +48,22 @@ The worker should answer:
 
 The contract is the authority. A stage example image beside the stage reference is
 illustration, never a competing contract.
+
+## Pipeline overview image
+
+`pipeline-overview.png` beside this file shows one subject carried through all five stages
+on a single sheet. Open it for the **shape of the progression** — how much changes between
+consecutive stages, and how a stage stays incomplete on purpose.
+
+It is a hand-drawn sheet from outside this skill, and it does **not** obey these contracts.
+Read it with that in mind:
+
+- its P1 already closes a head oval, a torso contour and a pelvis shape; this contract's P1
+  owns an open craniofacial gesture and forbids mass contour;
+- its P2 is a full mannequin with joint circles, limb thickness, hands and boots; this
+  contract's P2 is axes-only and forbids all of those;
+- it builds a nude mannequin first and dresses it at P4; P3 here takes the *observed*
+  clothed volume as the primary mass instead;
+- its P4 and P5 carry facial features, which stay outside every stage ceiling here.
+
+Where the sheet and a contract disagree, the contract wins.
