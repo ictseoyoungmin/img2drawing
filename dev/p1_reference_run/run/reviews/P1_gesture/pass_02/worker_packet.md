@@ -3,7 +3,7 @@
 ## Stage pass memory
 - state: **revision_continuation**
 - prior review count: 1
-- parent review digest: `fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a`
+- parent review digest: `f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287`
 - previous decision: **revise**
 
 ### Previous remaining concerns
@@ -54,7 +54,7 @@
 ### Allowed representation
 - the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes
 - a curved facial centreline passing crown -> nose -> chin
-- an eye line placed and curved where the subject's falls on that head
+- an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit
 - spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum
 - pelvis centreline stating its tilt
 - shoulder line stating its tilt
@@ -72,6 +72,8 @@
 - the hair silhouette used as the cranial outline
 - a generic ellipse standing in for an observed head or foot
 - the facial centreline collapsed into a plain vertical centre line
+- a facial centreline that misses the nose, which turns the face the wrong way
+- an eye line that does not connect both eyes
 - face and spine centrelines merged into one stroke
 - straight landmark-to-landmark joins that flatten limb curvature
 - omitting an occluded limb because it is not visible
@@ -124,7 +126,7 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - the major axis of a large attached object
 
 ## Draw
-- the head outline read from the subject, with a curved facial centreline crown → nose → chin and an eye line placed where the subject's falls
+- the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes
 - a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum
 - pelvis and shoulder lines stating their tilt
 - one line of action entering above the head, cutting across the body and landing ahead of the weight-bearing foot
@@ -140,6 +142,8 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - reading the hair silhouette as the cranial outline
 - dropping a generic ellipse in for the head or a foot instead of observing its shape
 - drawing the facial centreline as a plain vertical centre line
+- running the facial centreline beside the nose instead of through it
+- drawing the eye line without checking it meets both eyes
 - merging the face and spine centrelines into one stroke
 - joining joints with straight lines
 - dropping an occluded limb because it cannot be seen
@@ -151,7 +155,8 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 ## Mandatory review questions
 - Overlay P1 on the subject: does the crown sit where the subject's crown sits, and is the head outline the subject's shape rather than a generic ellipse?
 - Does the eye line say what the subject's head tilt says — level, up, or down — rather than whatever the ellipse happened to give?
-- Does the facial centreline pass the nose and exit toward the chin as the subject's does, curving rather than running straight down?
+- Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.
+- Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?
 - Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?
 - Do shoulder and pelvis state the subject's rotation, not just a tilt?
 - Are both arms present, including any hidden behind a prop or in a pocket?

@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
+      "artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
       "history_cursor": 33,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "a055bcdf5788046ed782682e9a15746ec54f05093af2a0d3b5f74cb260a5091e"
+      "state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -496,6 +496,8 @@
       "reading the hair silhouette as the cranial outline",
       "dropping a generic ellipse in for the head or a foot instead of observing its shape",
       "drawing the facial centreline as a plain vertical centre line",
+      "running the facial centreline beside the nose instead of through it",
+      "drawing the eye line without checking it meets both eyes",
       "merging the face and spine centrelines into one stroke",
       "joining joints with straight lines",
       "dropping an occluded limb because it cannot be seen",
@@ -505,7 +507,7 @@
       "facial features, hair, garment structure, muscle or closed volume"
     ],
     "draw": [
-      "the head outline read from the subject, with a curved facial centreline crown → nose → chin and an eye line placed where the subject's falls",
+      "the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes",
       "a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum",
       "pelvis and shoulder lines stating their tilt",
       "one line of action entering above the head, cutting across the body and landing ahead of the weight-bearing foot",
@@ -536,7 +538,8 @@
     "review_questions": [
       "Overlay P1 on the subject: does the crown sit where the subject's crown sits, and is the head outline the subject's shape rather than a generic ellipse?",
       "Does the eye line say what the subject's head tilt says — level, up, or down — rather than whatever the ellipse happened to give?",
-      "Does the facial centreline pass the nose and exit toward the chin as the subject's does, curving rather than running straight down?",
+      "Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.",
+      "Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?",
       "Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?",
       "Do shoulder and pelvis state the subject's rotation, not just a tilt?",
       "Are both arms present, including any hidden behind a prop or in a pocket?",
@@ -563,7 +566,7 @@
     "allowed_representation": [
       "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
       "a curved facial centreline passing crown -> nose -> chin",
-      "an eye line placed and curved where the subject's falls on that head",
+      "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
       "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
       "pelvis centreline stating its tilt",
       "shoulder line stating its tilt",
@@ -589,6 +592,8 @@
       "the hair silhouette used as the cranial outline",
       "a generic ellipse standing in for an observed head or foot",
       "the facial centreline collapsed into a plain vertical centre line",
+      "a facial centreline that misses the nose, which turns the face the wrong way",
+      "an eye line that does not connect both eyes",
       "face and spine centrelines merged into one stroke",
       "straight landmark-to-landmark joins that flatten limb curvature",
       "omitting an occluded limb because it is not visible",

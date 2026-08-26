@@ -29,7 +29,7 @@
   ],
   "pass2": {
     "memory_state": "revision_continuation",
-    "parent_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
+    "parent_review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287",
     "carried_concerns": [
       "cranium outline is a borrowed ellipse, not this head's measured width",
       "eye line and facial centreline therefore sit inside the face instead of across the head"
@@ -47,9 +47,9 @@
     "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md"
   },
   "review_chain": {
-    "pass1_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
-    "pass2_parent_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
-    "pass2_digest": "4f7d1267b6a52767b3fbaf97eef7b9ed3a092afdf00a2e45bd0de111be15bf4d"
+    "pass1_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287",
+    "pass2_parent_review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287",
+    "pass2_digest": "a03af4eed77b7adefa6d6b38fa254bec60e4ec4f484dccf6ea3697956dd76016"
   },
   "current_stage": "P2_primary_axes",
   "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."

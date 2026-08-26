@@ -33,7 +33,7 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
         allowed_representation=(
             "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
             "a curved facial centreline passing crown -> nose -> chin",
-            "an eye line placed and curved where the subject's falls on that head",
+            "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
             "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
             "pelvis centreline stating its tilt",
             "shoulder line stating its tilt",
@@ -51,6 +51,8 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "the hair silhouette used as the cranial outline",
             "a generic ellipse standing in for an observed head or foot",
             "the facial centreline collapsed into a plain vertical centre line",
+            "a facial centreline that misses the nose, which turns the face the wrong way",
+            "an eye line that does not connect both eyes",
             "face and spine centrelines merged into one stroke",
             "straight landmark-to-landmark joins that flatten limb curvature",
             "omitting an occluded limb because it is not visible",

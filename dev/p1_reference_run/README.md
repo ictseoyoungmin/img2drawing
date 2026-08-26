@@ -24,6 +24,7 @@ python3 dev/p1_reference_run/build.py
 | `canonical_trace.json` | the example's own trace, validating against `dev/schemas/canonical_example_trace.schema.json` |
 | `compare.png`, `overlay.png` | raw-render comparison and the translucent-paper overlay |
 | `head-revise.png` | the pass-1 ellipse and the pass-2 measured outline, both over the subject |
+| `face-lines.png` | the facial centreline through the nose and the eye line through both pupils, over the subject |
 
 `run/timelapse/frames/` is deleted after the GIF is built; it regenerates from the
 checkpoint.

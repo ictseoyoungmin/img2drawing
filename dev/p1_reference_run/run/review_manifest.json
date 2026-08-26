@@ -20,10 +20,10 @@
             "top": 20
           },
           "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
-          "crop_sha256": "019d54558742242208782af2bcddbf699671340876ce653b80fb7dab57d17e21",
+          "crop_sha256": "155d6d196eaa2182b75e000758f1be8bc4e25e6ec54c378dc552f3870ead9098",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
+          "source_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
           "source_size": [
             512,
             802
@@ -48,8 +48,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
-      "drawing_state_sha256": "a055bcdf5788046ed782682e9a15746ec54f05093af2a0d3b5f74cb260a5091e",
+      "drawing_artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
+      "drawing_state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0",
       "history_cursor": 33,
       "intent": "Check cranium width, crown position and the nose pass against the subject.",
       "label": "head_face",
@@ -82,7 +82,7 @@
           "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
+          "source_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
           "source_size": [
             512,
             802
@@ -107,8 +107,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
-      "drawing_state_sha256": "a055bcdf5788046ed782682e9a15746ec54f05093af2a0d3b5f74cb260a5091e",
+      "drawing_artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
+      "drawing_state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0",
       "history_cursor": 33,
       "intent": "Check pelvis tilt, hip joint centres and where both feet land.",
       "label": "pelvis_support",
@@ -138,10 +138,10 @@
             "top": 20
           },
           "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/drawing.png",
-          "crop_sha256": "251564b7715f9bf16eabace1512bdfa4434fe76f272def54f102b4b8c7c5198b",
+          "crop_sha256": "80de14d638d92422a8e114846bb7fcddf61afe26b7dedb6b50414205dc3199d0",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-          "source_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
+          "source_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
           "source_size": [
             512,
             802
@@ -166,8 +166,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
-      "drawing_state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc",
+      "drawing_artifact_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
+      "drawing_state_sha256": "ac73c58af02a0de43039d93296c8dbca681133e3279a971eef050e5219392606",
       "history_cursor": 34,
       "intent": "Re-check the carried cranium-width concern after EX-P1-R1.",
       "label": "head_face",
@@ -200,7 +200,7 @@
           "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-          "source_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
+          "source_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
           "source_size": [
             512,
             802
@@ -225,8 +225,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
-      "drawing_state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc",
+      "drawing_artifact_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
+      "drawing_state_sha256": "ac73c58af02a0de43039d93296c8dbca681133e3279a971eef050e5219392606",
       "history_cursor": 34,
       "intent": "Re-check pelvis tilt and joint centres on the corrected artifact.",
       "label": "pelvis_support",
@@ -278,7 +278,7 @@
   "observation_reopens": [],
   "progress": {
     "advanced_reviews": {
-      "P1_gesture": "4f7d1267b6a52767b3fbaf97eef7b9ed3a092afdf00a2e45bd0de111be15bf4d"
+      "P1_gesture": "a03af4eed77b7adefa6d6b38fa254bec60e4ec4f484dccf6ea3697956dd76016"
     },
     "current_stage": "P2_primary_axes"
   },
@@ -333,13 +333,13 @@
         ],
         "corrections": [],
         "decision": "revise",
-        "drawing_artifact_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
+        "drawing_artifact_sha256": "476715d864bdc3874e1fe7724398cfde1c71ff11369f80b7ad37fae929962a5e",
         "drawing_findings": [
           "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
           "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
           "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
         ],
-        "drawing_state_sha256": "a055bcdf5788046ed782682e9a15746ec54f05093af2a0d3b5f74cb260a5091e",
+        "drawing_state_sha256": "490841a0beaf1e0575f465ba79a3e3cb1a7e03d67e6a353d6154a926ae39d6a0",
         "grammar_findings": [
           "P1 is being judged against the frozen contract, not against an example drawing.",
           "Joint centres were read from the subject rather than copied from the pipeline overview sheet."
@@ -431,13 +431,13 @@
           "Replaced the borrowed ellipse with the head outline measured on the subject."
         ],
         "decision": "advance",
-        "drawing_artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
+        "drawing_artifact_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
         "drawing_findings": [
           "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
           "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
           "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
         ],
-        "drawing_state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc",
+        "drawing_state_sha256": "ac73c58af02a0de43039d93296c8dbca681133e3279a971eef050e5219392606",
         "grammar_findings": [
           "Stage grammar stays subordinate to the frozen contract and subject geometry."
         ],
@@ -460,8 +460,8 @@
           "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
           "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
         ],
-        "parent_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
-        "pass_memory_digest": "9f7b16599286ddf0aebec311d6b71cac3784eeb57a7d3e327ff3c6acabd5507e",
+        "parent_review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287",
+        "pass_memory_digest": "a6f37752f27733448124b509099fd5edb28c233982629fb6428c5bd55fcf00b4",
         "reference_authority_order": [
           "subject_reference"
         ],
@@ -488,7 +488,7 @@
         "allowed_representation": [
           "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
           "a curved facial centreline passing crown -> nose -> chin",
-          "an eye line placed and curved where the subject's falls on that head",
+          "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
           "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
           "pelvis centreline stating its tilt",
           "shoulder line stating its tilt",
@@ -514,6 +514,8 @@
           "the hair silhouette used as the cranial outline",
           "a generic ellipse standing in for an observed head or foot",
           "the facial centreline collapsed into a plain vertical centre line",
+          "a facial centreline that misses the nose, which turns the face the wrong way",
+          "an eye line that does not connect both eyes",
           "face and spine centrelines merged into one stroke",
           "straight landmark-to-landmark joins that flatten limb curvature",
           "omitting an occluded limb because it is not visible",

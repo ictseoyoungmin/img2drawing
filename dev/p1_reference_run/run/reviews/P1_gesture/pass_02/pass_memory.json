@@ -11,14 +11,14 @@
         "cranium outline is a borrowed ellipse, not this head's measured width",
         "eye line and facial centreline therefore sit inside the face instead of across the head"
       ],
-      "review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a"
+      "review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287"
     }
   ],
   "correction_history": [
     {
       "pass_index": 1,
       "reported_corrections": [],
-      "review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a"
+      "review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287"
     }
   ],
   "inter_pass_actions": [
@@ -58,7 +58,7 @@
     "eye line and facial centreline therefore sit inside the face instead of across the head"
   ],
   "previous_reported_corrections": [],
-  "previous_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
+  "previous_review_digest": "f5009e65791c772eaf24415e593ef2bd774b9405dfa014864c58551be93b8287",
   "prior_review_count": 1,
   "reopen_context": null,
   "schema": "img2drawing.stage_pass_memory.v2",

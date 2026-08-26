@@ -21,10 +21,10 @@
             "top": 20
           },
           "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/drawing.png",
-          "crop_sha256": "251564b7715f9bf16eabace1512bdfa4434fe76f272def54f102b4b8c7c5198b",
+          "crop_sha256": "80de14d638d92422a8e114846bb7fcddf61afe26b7dedb6b50414205dc3199d0",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-          "source_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
+          "source_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
           "source_size": [
             512,
             802
@@ -49,8 +49,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
-      "drawing_state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc",
+      "drawing_artifact_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
+      "drawing_state_sha256": "ac73c58af02a0de43039d93296c8dbca681133e3279a971eef050e5219392606",
       "history_cursor": 34,
       "intent": "Re-check the carried cranium-width concern after EX-P1-R1.",
       "label": "head_face",
@@ -83,7 +83,7 @@
           "crop_sha256": "7aacbe787f8f3fab6f57523cee1ecda64c1cb656d36c5aaac393ecfb52152415",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-          "source_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
+          "source_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
           "source_size": [
             512,
             802
@@ -108,8 +108,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
-      "drawing_state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc",
+      "drawing_artifact_sha256": "b68eda6a6e38a922101ab59140662a30412058c485d7338efaef03bce058ba43",
+      "drawing_state_sha256": "ac73c58af02a0de43039d93296c8dbca681133e3279a971eef050e5219392606",
       "history_cursor": 34,
       "intent": "Re-check pelvis tilt and joint centres on the corrected artifact.",
       "label": "pelvis_support",

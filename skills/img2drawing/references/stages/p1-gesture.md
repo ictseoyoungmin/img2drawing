@@ -102,6 +102,22 @@ Get the head right first. Crown position, the curvature of the facial centreline
 passes the nose, and the direction it exits toward the chin — a small error in any of these
 makes the whole figure read as a different pose even when the body is close.
 
+### Both head lines are defined by features, not by the outline
+
+This is where a plausible-looking head goes wrong most often. The outline is drawn, and
+then the cross is placed on the *outline's* midpoint instead of on the face.
+
+- **The facial centreline must pass through the nose.** Mark crown, the point between the
+  eyes, the nose, the mouth and the chin on the subject, then run the line through them.
+  A centreline a few pixels beside the nose turns the face the other way, and no amount of
+  correct outline rescues it.
+- **The eye line must connect both eyes.** Find each pupil on the subject and draw through
+  the two of them. Its tilt is then whatever those two positions give you. An eye line
+  drawn level because level looks tidy will say the head is upright when it is not.
+
+Both lines run past the eyes and the nose to the head's edges, curving as they wrap the
+form — but they are anchored on the features, not fitted to the silhouette.
+
 Two failures degrade it immediately:
 
 - **reading the hair silhouette as the cranial outline.** Hair volume is P4's. The cranium
@@ -179,7 +195,8 @@ structural reading needs the structure replaced.
 
 ## Hardening order
 
-1. Head: crown, facial centreline curvature, nose pass, chin exit, eye-line tilt.
+1. Head: crown; mark both pupils and the nose on the subject; run the eye line through the
+   pupils and the centreline through the nose; then the outline around them.
 2. Spine S-curve from behind the neck.
 3. Shoulder and pelvis lines with their rotation.
 4. Line of action across the whole figure.
