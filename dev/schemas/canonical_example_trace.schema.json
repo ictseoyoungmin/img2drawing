@@ -21,7 +21,7 @@
       "const": "img2drawing.canonical_example_trace.v1"
     },
     "initial_dominant_path_start_semantics": {
-      "const": "line_of_action_head_end"
+      "const": "neck"
     },
     "pass1": {
       "type": "object",

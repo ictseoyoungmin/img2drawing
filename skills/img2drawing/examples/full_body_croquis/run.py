@@ -140,20 +140,17 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # intentionally weak at the head tilt and the pelvis transfer so the example
     # demonstrates a real revise cycle.
     initial_dominant=[
-        [190,8],      # head end of the line of action
-        [192,30],
-        [193,53],     # head tilt: deliberately too straight in pass 1
-        [188,78],
-        [182,98],     # neck
-        [178,142],
-        [174,192],
-        [174,238],
-        [172,266],    # pelvis transfer: deliberately weak
-        [165,306],
-        [159,358],
-        [160,415],
-        [166,482],
-        [173,548],    # ground contact
+        [187,90],     # neck
+        [184,112],
+        [181,142],
+        [179,192],    # lower-torso lean: deliberately too straight in pass 1
+        [177,238],
+        [175,266],    # pelvis transfer: deliberately weak
+        [170,306],
+        [166,358],
+        [166,415],
+        [169,482],
+        [172,536],    # image-left foot contact
     ]
 
     run.draw_many([
@@ -174,48 +171,85 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ),
         _stroke(
             "EX-P1-A2",
-            "head_left_envelope",
-            [[190,8],[165,9],[151,30],[152,60],[161,82],[182,98]],
+            "head_ovoid",
+            [[189,16],[199,20],[206,30],[210,45],[210,61],[206,76],[199,86],
+             [189,90],[179,86],[172,76],[168,61],[168,45],[172,30],[179,20],[189,16]],
             pressure=.20,
             width=1.12,
             opacity=.27,
-            source="Image-left head ovoid edge; subordinate to the line of action.",
+            source="Simple head ovoid sized from the subject's head bounds.",
         ),
         _stroke(
             "EX-P1-A3",
-            "head_right_envelope",
-            [[190,8],[213,11],[223,34],[219,63],[207,84],[182,98]],
-            pressure=.20,
-            width=1.12,
-            opacity=.27,
-            source="Open image-right cranial/jaw envelope; not a closed oval.",
+            "head_tilt_mark",
+            [[176,44],[203,41]],
+            pressure=.16,
+            width=1.02,
+            opacity=.20,
+            source="Light cross mark stating head tilt only; no facial features.",
         ),
         _stroke(
             "EX-P1-A4",
-            "shoulder_rhythm",
-            [[120,137],[151,122],[186,112],[222,108],[258,118]],
-            pressure=.17,
-            width=1.05,
-            opacity=.21,
-            source="Broad shoulder rhythm only; no ribcage mass.",
+            "shoulder_tilt",
+            [[148,111],[186,106],[228,104]],
+            pressure=.19,
+            width=1.10,
+            opacity=.24,
+            source="Shoulder line as a tilt cue; the subject's image-right shoulder sits higher.",
         ),
         _stroke(
             "EX-P1-A5",
-            "pelvis_rhythm",
-            [[130,250],[151,242],[176,241],[201,248],[226,266]],
-            pressure=.17,
-            width=1.05,
-            opacity=.21,
-            source="Open pelvis rhythm indicating tilt without closing a pelvis mass.",
+            "pelvis_tilt",
+            [[152,224],[184,222],[216,226]],
+            pressure=.19,
+            width=1.10,
+            opacity=.24,
+            source="Pelvis line as a tilt cue; no pelvis mass.",
         ),
         _stroke(
             "EX-P1-A6",
-            "counterbalance_leg",
-            [[191,276],[210,331],[232,405],[255,486],[278,560]],
+            "arm_direction_left",
+            [[148,111],[131,152],[128,195],[125,248],[123,300]],
+            pressure=.15,
+            width=1.02,
+            opacity=.19,
+            source="Image-left arm hangs and travels slightly inward to the hand.",
+        ),
+        _stroke(
+            "EX-P1-A7",
+            "arm_direction_right",
+            [[228,104],[247,145],[252,187],[238,210],[224,220]],
+            pressure=.15,
+            width=1.02,
+            opacity=.19,
+            source="Image-right arm bends forward; the hand meets the waistband.",
+        ),
+        _stroke(
+            "EX-P1-A8",
+            "leg_direction_right",
+            [[209,227],[214,292],[220,362],[236,452],[250,548]],
             pressure=.15,
             width=1.02,
             opacity=.18,
-            source="Image-right leg direction path stays subordinate to the line of action.",
+            source="Image-right leg direction path; it carries less weight than the image-left leg.",
+        ),
+        _stroke(
+            "EX-P1-A9",
+            "ground_contact_left",
+            [[150,536],[199,539]],
+            pressure=.17,
+            width=1.05,
+            opacity=.22,
+            source="Where the image-left foot meets the ground.",
+        ),
+        _stroke(
+            "EX-P1-A10",
+            "ground_contact_right",
+            [[229,554],[285,557]],
+            pressure=.17,
+            width=1.05,
+            opacity=.22,
+            source="Where the image-right foot meets the ground; it lands lower and further out.",
         ),
     ])
 
@@ -224,13 +258,13 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # Agent-selected local evidence. Runtime does not locate anatomy.
     head1=run.prepare_local_review(
         label="head_face",
-        intent="Check head position and tilt against the subject.",
+        intent="Check head position, tilt and size against the subject.",
         subject_box=(235,0,495,250),
         drawing_box=(115,0,248,126),
     )
     pelvis1=run.prepare_local_review(
         label="pelvis_support",
-        intent="Check pelvis-to-support-leg directional handoff and weight transfer.",
+        intent="Check pelvis tilt, weight transfer and where both feet land.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
     )
@@ -238,11 +272,11 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     pass1=run.submit_stage_review(
         contract_findings=[
             "The drawing stays inside the P1 gesture/weight-path contract.",
-            "No ribcage/pelvis mass closure, joint anatomy, clothing contour, or final silhouette leaked in.",
+            "No facial features, hair, clothing or muscle definition leaked in; P2 joints stay downstream.",
         ],
         subject_findings=[
-            "The subject shows a more decisive head tilt than pass 1.",
-            "The subject's pelvis-to-image-left support transfer changes direction more decisively than pass 1.",
+            "The subject's weight sits on the image-left leg; the pelvis turns into it decisively.",
+            "The subject's upper body leans slightly image-left of the pelvis centre.",
         ],
         grammar_findings=[
             "P1 has no example image of its own; the frozen P1 contract is the representation authority.",
@@ -250,14 +284,14 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ],
         drawing_findings=[
             "The line of action is continuous from the head to the ground contact.",
-            "The head tilt is too straight, weakening the standing direction.",
-            "Its pelvis-to-support segment is too vertical/soft, weakening weight transfer.",
+            "Its pelvis segment is too vertical, so the weight transfer does not read.",
+            "Through the lower torso it runs straighter than the subject's own lean.",
         ],
         local_review_ids=[head1.local_review_id,pelvis1.local_review_id],
         corrections=[],
         remaining_concerns=[
-            "head tilt is too straight to carry the standing direction clearly",
-            "pelvis-to-support transfer is too weak",
+            "pelvis segment is too vertical to show which leg carries the weight",
+            "lower-torso lean is straighter than the subject's",
         ],
         decision="revise",
     )
@@ -266,30 +300,26 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # CORRECTION BETWEEN PASSES
     # ------------------------------------------------------------------
     corrected_dominant=[
-        [190,8],
-        [192,27],
-        [197,47],     # stronger face-direction bow
-        [195,67],
-        [188,84],
-        [181,99],
-        [177,143],
-        [172,193],
-        [173,238],
-        [178,255],
-        [171,276],    # clearer directional break into support side
-        [160,302],
-        [154,352],
-        [156,410],
-        [164,482],
-        [173,548],
+        [187,90],     # neck
+        [184,113],
+        [183,143],
+        [184,193],    # lower-torso lean corrected toward the subject
+        [181,240],
+        [175,262],
+        [166,282],    # clearer directional break into the weight-bearing leg
+        [159,312],
+        [156,362],
+        [158,418],
+        [165,484],
+        [172,536],
     ]
     run.draw(_replace(
         "EX-P1-R1",
         "line_of_action",
         corrected_dominant,
         reason=(
-            "Pass 1 carried two concerns: strengthen the head tilt and "
-            "make the pelvis→support-leg handoff more decisive."
+            "Pass 1 carried two concerns: follow the subject's lower-torso lean and "
+            "make the pelvis handoff into the weight-bearing leg decisive."
         ),
     ))
 
@@ -300,13 +330,13 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
 
     head2=run.prepare_local_review(
         label="head_face",
-        intent="Re-check the carried face-direction concern after EX-P1-R1.",
+        intent="Re-check the carried lower-torso lean after EX-P1-R1.",
         subject_box=(235,0,495,250),
         drawing_box=(115,0,248,126),
     )
     pelvis2=run.prepare_local_review(
         label="pelvis_support",
-        intent="Re-check the carried pelvis/support concern after EX-P1-R1.",
+        intent="Re-check the carried pelvis handoff after EX-P1-R1.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
     )
@@ -319,8 +349,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     assert pass2_memory["state"]=="revision_continuation"
     assert pass2_memory["previous_decision"]=="revise"
     assert pass2_memory["carried_concerns"]==[
-        "head tilt is too straight to carry the standing direction clearly",
-        "pelvis-to-support transfer is too weak",
+        "pelvis segment is too vertical to show which leg carries the weight",
+        "lower-torso lean is straighter than the subject's",
     ]
     assert [
         a["action_id"] for a in pass2_memory["inter_pass_correction_actions"]
@@ -332,8 +362,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "The correction changed the dominant gesture only; no downstream vocabulary was introduced.",
         ],
         subject_findings=[
-            "The head tilt now communicates the subject's standing direction at P1 abstraction.",
-            "The pelvis-to-support path now changes direction clearly enough to communicate weight transfer.",
+            "The lower-torso lean now follows the subject at P1 abstraction.",
+            "The pelvis now turns into the weight-bearing leg clearly enough to read.",
         ],
         grammar_findings=[
             "Stage grammar stays subordinate to the frozen contract and subject geometry.",
@@ -345,8 +375,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ],
         local_review_ids=[head2.local_review_id,pelvis2.local_review_id],
         corrections=[
-            "Re-drew the head-tilt segment.",
-            "Strengthened the pelvis-to-support directional handoff.",
+            "Re-drew the lower-torso lean of the line of action.",
+            "Strengthened the pelvis handoff into the weight-bearing leg.",
         ],
         remaining_concerns=[],
         decision="advance",
@@ -362,7 +392,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         "example":"full_body_croquis",
         "stage":"P1_gesture",
         "initial_dominant_path_start":initial_dominant[0],
-        "initial_dominant_path_start_semantics":"line_of_action_head_end",
+        "initial_dominant_path_start_semantics":"neck",
         "pass1":{
             "decision":pass1.decision,
             "remaining_concerns":list(pass1.remaining_concerns),

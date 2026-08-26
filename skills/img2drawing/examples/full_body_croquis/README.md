@@ -8,13 +8,12 @@ It demonstrates the required autonomous P1 sequence:
 explicit replace_stroke → fresh review → pass-memory continuation → ADVANCE`
 
 ## Non-negotiable details demonstrated
-- P1 states one dominant **line of action** plus head tilt, shoulder/pelvis tilt, limb
-  directions and ground contact — and nothing else.
-- Inside the head it acts as a curved **facial-centre** line that carries face direction.
-- The same dominant intention continues through chin → neck → spine → pelvis →
-  support leg → landing point.
-- Head-envelope, shoulder/pelvis rhythm and counterbalance marks stay subordinate.
-- P1 has no example image; the frozen StageContract is the only representation authority.
+- P1 states one dominant **line of action** plus a simple head ovoid with a tilt mark,
+  shoulder and pelvis tilt lines, arm and leg direction paths, and ground contact — and
+  nothing else. No facial features, hair, clothing or muscle.
+- Everything except the line of action stays subordinate to it.
+- The frozen StageContract is the representation authority; `references/stages/` carries
+  the guidance and the rendered pipeline overview.
 - Local crops are selected explicitly by the Agent.
 - Pass 2 receives pass-1 remaining concerns and exact inter-pass correction provenance.
 - No user approval is requested between routine passes.
