@@ -10615,8 +10615,7 @@
             "surface texture",
             "excessive garment folds",
             "fine skin rendering",
-            "accidental contour welding between independent masses",
-            "beautification that changes verified structure"
+            "accidental contour welding between independent masses"
           ],
           "inherits_from": "P4_structural_connections",
           "must_preserve": [

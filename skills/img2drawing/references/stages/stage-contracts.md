@@ -60,8 +60,10 @@ are not.
 Owns the decisive silhouette, resolved face and hair, decided garment contour, tidied hands
 and footwear, contour ownership between overlapping masses, and construction retirement.
 
-Tonal shading, texture, excessive folds, fine skin rendering and structure-changing
-beautification are not.
+Tonal shading, texture, excessive folds and fine skin rendering are not.
+
+If P5 exposes a structural error, correct it — reopen the earliest responsible stage. P5
+may not paint over a wrong structure, but it is not forbidden from fixing one.
 
 ## Contract review
 Every StageReviewRecord includes `contract_findings`.

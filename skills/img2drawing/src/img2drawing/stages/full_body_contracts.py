@@ -264,7 +264,6 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "excessive garment folds",
             "fine skin rendering",
             "accidental contour welding between independent masses",
-            "beautification that changes verified structure",
         ),
         detail_ceiling=(
             "which lines survive",

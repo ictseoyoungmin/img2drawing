@@ -41,6 +41,10 @@ If the subject's clean silhouette cannot be drawn without contradicting P3 or P4
 the earliest responsible stage before cleaning. Polishing a wrong structure just makes the
 error permanent.
 
+This cuts both ways. P5 is not sealed off from correction — an error that first becomes
+visible here still has to be fixed. What P5 may not do is hide it under a better line. Send
+it back to the stage that owns it, rebuild the stages below, and clean afterwards.
+
 ## Silhouette ownership
 
 Do not weld two independent masses into one continuous contour. Where ownership changes
@@ -56,7 +60,7 @@ read as one line after rendering, even though the renderer merges nothing.
 ## Common failures
 - **Darkening instead of choosing.** Every exploratory line survives, just heavier.
 - **Rendering.** Shading arrives because the drawing "looks unfinished".
-- **Beautification.** A prettier line that quietly changes verified P3/P4 structure.
+- **Repainting over an error.** A prettier line laid on top of wrong P3/P4 structure, instead of reopening the stage that owns it.
 - **Welded contours** between the arm and the torso, or the prop and the body.
 - **Hair strands** instead of a resolved hair silhouette.
 

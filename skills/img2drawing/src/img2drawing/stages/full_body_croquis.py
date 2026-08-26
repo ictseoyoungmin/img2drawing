@@ -237,7 +237,6 @@ FULL_BODY_CROQUIS = (
             "excessive garment folds",
             "fine skin rendering",
             "welding two independent masses into one continuous contour",
-            "beautification that changes verified structure",
         ),
         review_questions=(
             "Was the final line selected, or were the existing lines merely darkened?",
@@ -253,7 +252,7 @@ FULL_BODY_CROQUIS = (
             "The silhouette is readable and the surviving internal lines are chosen, not accumulated.",
             "Face, hair, garment, hands, footwear and equipment forms are decided.",
             "Contour ownership is explicit wherever masses overlap.",
-            "The verified P1–P4 structure was not changed for the sake of a prettier line.",
+            "Where a structural error surfaced, the earliest responsible stage was reopened rather than repainted over.",
             "No major visible P5 mismatch remains after whole-view and relevant crop review.",
         ),
         suggested_crops=("head+face", "hair silhouette", "garment contour", "hands", "footwear", "overlap handoff regions"),

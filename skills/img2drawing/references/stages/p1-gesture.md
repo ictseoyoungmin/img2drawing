@@ -183,8 +183,9 @@ a fold crease or a hard prop edge may not be. Where the form curves:
   them, so the spacing is small relative to the curvature;
 - check the **raw render**, not the point list. If you can count the segments, it is faceted.
 
-The cheapest fix is at P1. Rounding a facet at P5 means moving verified structure, which
-the P5 contract forbids as beautification.
+The cheapest fix is at P1. A facet found at P5 still has to be fixed — by reopening the
+stage that introduced it — but by then three stages have been built on it, and all of them
+are rebuilt too.
 
 ## Never join joints with straight lines
 
