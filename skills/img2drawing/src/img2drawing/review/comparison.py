@@ -27,18 +27,6 @@ def split_compare(reference: str | Path, drawing: str | Path, out: str | Path) -
     ImageDraw.Draw(canvas).line((cut,0,cut,a.height),fill=(100,100,100),width=2)
     p=Path(out); p.parent.mkdir(parents=True,exist_ok=True); canvas.save(p); return p
 
-def three_way(subject: str | Path, exemplar: str | Path, drawing: str | Path, out: str | Path) -> Path:
-    ims=[Image.open(x).convert("RGB") for x in (subject,exemplar,drawing)]
-    labels=["SUBJECT / geometry truth","STAGE EXEMPLAR / representation truth","CURRENT DRAWING"]
-    tile_w=520; tile_h=720; pad=20; header=54
-    canvas=Image.new("RGB",(tile_w*3+pad*4,tile_h+header+pad),(246,245,242))
-    d=ImageDraw.Draw(canvas)
-    for i,(im,label) in enumerate(zip(ims,labels)):
-        fitted=_fit(im,(tile_w-30,tile_h-30))
-        x=pad+i*(tile_w+pad); y=header
-        canvas.paste(fitted,(x+(tile_w-fitted.width)//2,y+(tile_h-fitted.height)//2))
-        d.text((x+10,18),label,fill=(28,28,28))
-    p=Path(out); p.parent.mkdir(parents=True,exist_ok=True); canvas.save(p); return p
 def labeled_multi_way(items, out: str | Path, *, tile_w=430, tile_h=650) -> Path:
     """Render 2-4 labeled images without assigning semantic authority.
 

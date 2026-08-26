@@ -27,7 +27,7 @@ It must not add:
 - clothing block-in;
 - final silhouette.
 
-If a bundled P2 exemplar contains those forbidden forms, the worker must flag the exemplar as over-developed. **Do not widen P2 to match the exemplar.**
+If a stage example image contains those forbidden forms, it is over-developed for this contract. **Do not widen P2 to match a picture.**
 
 ## P3 — Connected Primary Masses
 P3 unlocks organic head/ribcage/pelvis/limb/prop masses and torso bridge, while detailed joint articulation remains forbidden.
@@ -45,8 +45,6 @@ The worker should answer:
 - Did the drawing remain inside the allowed representation?
 - Did it omit required stage-owned information?
 - Did downstream vocabulary leak in early?
-- Does the grammar exemplar itself appear to violate the frozen contract?
 
-Stages that ship a grammar exemplar have it audited against these contracts; stages
-without one are governed by the contract alone. See the grammar exemplar audit in
-`SKILL.md` and `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`.
+The contract is the authority. A stage example image beside the stage reference is
+illustration, never a competing contract.

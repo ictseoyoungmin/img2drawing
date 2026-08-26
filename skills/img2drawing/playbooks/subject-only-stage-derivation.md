@@ -11,7 +11,7 @@ At stage `Pn`, the worker builds a **contract-constrained visual hypothesis** fr
 
 1. the subject image — geometry truth;
 2. the frozen StageContract — what may be represented now;
-3. the generic grammar exemplar — how that type of stage may be drawn;
+3. the current stage reference in `references/stages/` — how that type of stage is drawn;
 4. the verified prior-stage drawing — structural continuity, never substitute geometry truth.
 
 In shorthand:
@@ -20,7 +20,7 @@ In shorthand:
 
 not:
 
-`current_stage = copy(stage exemplar)`
+`current_stage = copy(some other drawing)`
 
 ## How each stage is derived
 
@@ -31,12 +31,12 @@ object axes directly from the subject. Do not search for a matching P1 answer im
 ### P2 Primary Axes
 Re-observe the subject for shoulder/pelvis/limb/object directions. Preserve the P1
 gesture. P2 is a directional explanation of the same subject, not a trace of a generic
-mannequin exemplar.
+mannequin.
 
 ### P3 Primary Masses
 Use visible occupied volume from the subject, including clothing-dominated volume.
 Preserve P1/P2 direction. Do not infer a hidden naked-body contour merely because a
-grammar exemplar shows one.
+textbook figure study would show one.
 
 ### P4 Structural Connections
 Explain visible chain transitions and overlap with the minimum structure required.
@@ -68,7 +68,7 @@ When the subject does not reveal an exact hidden structure:
 - encode only what is necessary to explain the visible result;
 - keep the uncertain construction simple;
 - record the uncertainty in findings when it matters;
-- never import coordinates or anatomy from the grammar exemplar to make uncertainty disappear.
+- never import coordinates or anatomy from an example image to make uncertainty disappear.
 
 ## Optional task-stage targets
 

@@ -13,28 +13,17 @@ class ReferenceReviewArtifacts:
     stage: str
     drawing: DrawingArtifact
     subject_reference: Path
-    grammar_exemplar: Path | None
     task_stage_target: Path | None
     authority_order: tuple[str, ...]
     subject_vs_drawing: Path
     subject_split: Path
     subject_drawing_overlay: Path
     subject_drawing_absdiff: Path
-    grammar_vs_drawing: Path | None
     task_target_vs_drawing: Path | None
     task_target_split: Path | None
     overview: Path
-    grammar_exemplar_policy: str = "mandatory_positive_reference"
 
     # 0.5.1 compatibility names.
-    @property
-    def stage_exemplar(self) -> Path | None:
-        return self.grammar_exemplar
-
-    @property
-    def exemplar_vs_drawing(self) -> Path | None:
-        return self.grammar_vs_drawing
-
     @property
     def three_way(self) -> Path:
         # When a task target exists this property intentionally points at
@@ -53,20 +42,14 @@ class ReferenceReviewArtifacts:
             "authority_order":list(self.authority_order),
             "subject_reference":str(self.subject_reference),
             "task_stage_target":None if self.task_stage_target is None else str(self.task_stage_target),
-            "grammar_exemplar":None if self.grammar_exemplar is None else str(self.grammar_exemplar),
-            # compatibility fields:
-            "stage_exemplar":None if self.grammar_exemplar is None else str(self.grammar_exemplar),
             "subject_vs_drawing":str(self.subject_vs_drawing),
             "subject_split":str(self.subject_split),
             "subject_drawing_overlay":str(self.subject_drawing_overlay),
             "subject_drawing_absdiff":str(self.subject_drawing_absdiff),
-            "grammar_vs_drawing":None if self.grammar_vs_drawing is None else str(self.grammar_vs_drawing),
-            "exemplar_vs_drawing":None if self.grammar_vs_drawing is None else str(self.grammar_vs_drawing),
             "task_target_vs_drawing":None if self.task_target_vs_drawing is None else str(self.task_target_vs_drawing),
             "task_target_split":None if self.task_target_split is None else str(self.task_target_split),
             "overview":str(self.overview),
             "three_way":str(self.overview),
-            "grammar_exemplar_policy":self.grammar_exemplar_policy,
         }
 
 
@@ -85,7 +68,6 @@ def build_reference_review(
     out.mkdir(parents=True,exist_ok=True)
 
     subject=references.subject.path
-    grammar=None if references.grammar_exemplar is None else references.grammar_exemplar.path
     task=None if references.task_stage_target is None else references.task_stage_target.path
 
     subject_vs=side_by_side(
@@ -96,13 +78,6 @@ def build_reference_review(
     subject_split=split_compare(subject,drawing.path,out/"subject_split.png")
     subject_overlay=crop_registered_overlay(subject,drawing.path,out/"subject_drawing_overlay.png")
     subject_absdiff=crop_registered_absdiff(subject,drawing.path,out/"subject_drawing_absdiff.png")
-    grammar_vs = None
-    if grammar is not None:
-        grammar_vs=side_by_side(
-            grammar,drawing.path,out/"grammar_vs_drawing.png",
-            left_label="GRAMMAR / REPRESENTATION ONLY",
-            right_label="DRAWING",
-        )
 
     task_vs=None
     task_split=None
@@ -117,7 +92,6 @@ def build_reference_review(
             [
                 ("TASK TARGET / highest stage authority",task),
                 ("SUBJECT / geometry truth",subject),
-                *([] if grammar is None else [("GRAMMAR / representation only",grammar)]),
                 ("CURRENT DRAWING",drawing.path),
             ],
             out/"reference_authority_overview.png",
@@ -126,31 +100,22 @@ def build_reference_review(
         overview=labeled_multi_way(
             [
                 ("SUBJECT / geometry truth",subject),
-                *([] if grammar is None else [("GRAMMAR / representation only",grammar)]),
                 ("CURRENT DRAWING",drawing.path),
             ],
             out/"reference_authority_overview.png",
         )
 
-    grammar_policy = (
-        "no_exemplar" if grammar is None
-        else "unproven_until_ablation" if stage == "P3_primary_masses"
-        else "mandatory_positive_reference"
-    )
     return ReferenceReviewArtifacts(
         stage=stage,
         drawing=drawing,
         subject_reference=subject,
-        grammar_exemplar=grammar,
         task_stage_target=task,
         authority_order=references.authority_order,
         subject_vs_drawing=subject_vs,
         subject_split=subject_split,
         subject_drawing_overlay=subject_overlay,
         subject_drawing_absdiff=subject_absdiff,
-        grammar_vs_drawing=grammar_vs,
         task_target_vs_drawing=task_vs,
         task_target_split=task_split,
         overview=overview,
-        grammar_exemplar_policy=grammar_policy,
     )

@@ -22,4 +22,4 @@ where = ["src"]
 include = ["img2drawing*"]
 
 [tool.setuptools.package-data]
-"img2drawing.data" = ["*.json", "exemplars/full_body_croquis/*.png", "exemplars/full_body_croquis/*.json", "exemplars/full_body_croquis/sources/*.json"]
+"img2drawing.data" = ["*.json"]

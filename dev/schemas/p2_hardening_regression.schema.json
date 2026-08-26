@@ -7,7 +7,6 @@
     "version",
     "stage",
     "predecessor",
-    "grammar_exemplar_audit",
     "pass1",
     "pass2_memory",
     "pass2",
@@ -23,9 +22,6 @@
     },
     "stage": {
       "const": "P2_primary_axes"
-    },
-    "grammar_exemplar_audit": {
-      "const": "pass"
     },
     "pass1": {
       "type": "object",

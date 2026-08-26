@@ -1,5 +1,9 @@
 # P3 Primary Masses
 
+A rendered example of P3 mass block-in sits beside this file as `p3-primary-masses.png`. Open it if you want to see the
+stage's mark-making and detail budget; it shows representation only and never the current
+subject's pose or coordinates.
+
 Turn the verified P1 gesture and P2 axes into connected primary masses.
 
 P3 is not a collection of geometric primitives. The objective is one continuous

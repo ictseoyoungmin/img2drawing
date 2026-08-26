@@ -17,7 +17,8 @@ from img2drawing import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SUBJECT = ROOT / "examples" / "full_body_croquis" / "subject.png"
+SKILL_ROOT = ROOT.parent / "skills" / "img2drawing"
+SUBJECT = SKILL_ROOT / "examples" / "full_body_croquis" / "subject.png"
 SCHEMAS = ROOT / "schemas"
 
 
@@ -119,7 +120,7 @@ def test_p3_dual_gate_blocks_without_visual_pass_and_then_advances(tmp_path: Pat
         run.submit_stage_review(
             contract_findings=("process contract is complete",),
             subject_findings=("subject was observed",),
-            exemplar_findings=("exemplar is not a visual authority",),
+            grammar_findings=("exemplar is not a visual authority",),
             drawing_findings=("drawing process is complete",),
             decision="advance",
             advance_rationale="process only",
@@ -153,7 +154,7 @@ def test_p3_dual_gate_blocks_without_visual_pass_and_then_advances(tmp_path: Pat
     run.submit_stage_review(
         contract_findings=("P3 process contract is complete",),
         subject_findings=("fresh subject findings are present for all regions",),
-        exemplar_findings=("exemplar verdict is excluded from visual packet",),
+        grammar_findings=("exemplar verdict is excluded from visual packet",),
         drawing_findings=("drawing artifact is bound to the current cursor",),
         decision="advance",
         advance_rationale="Process PASS and independent visual PASS are both present.",

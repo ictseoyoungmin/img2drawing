@@ -36,37 +36,23 @@ run = DrawingRun.create(
 
 `stage_targets=` is a compatibility alias for `task_stage_targets=`.
 
-## 3. Grammar exemplar — representation only
-Grammar exemplars teach:
-- stage abstraction vocabulary;
-- line hierarchy;
-- stroke economy;
-- detail budget;
-- construction conventions.
-
-Never copy from a grammar exemplar:
-- pose;
-- coordinates;
-- subject proportions;
-- subject perspective.
-
 ## Authority order
 
 With a task stage target:
-`task_stage_target > subject_reference > grammar_exemplar`
+`task_stage_target > subject_reference`
 
-Without one:
-`subject_reference > grammar_exemplar`
+Without one the subject reference is the only geometry authority.
 
 This is not a numerical scoring order. It determines which reference answers which question.
+Stage grammar is not in this order at all: it comes from the frozen contract and the stage
+reference, which never decide pose.
 
 ## Review artifacts
 `prepare_stage_review()` now creates:
 - subject ↔ drawing;
 - subject split;
-- grammar ↔ drawing;
 - optional task-target ↔ drawing;
 - optional task-target split;
-- a 3-way or 4-way `reference_authority_overview.png`.
+- a 2-way or 3-way `reference_authority_overview.png`.
 
 The worker packet records the exact authority order for the current stage.

@@ -13,7 +13,7 @@ explicit replace_stroke → fresh review → pass-memory continuation → ADVANC
 - The same dominant intention continues through chin → neck → spine → pelvis →
   support leg → landing point.
 - Head-envelope, shoulder/pelvis rhythm and counterbalance marks stay subordinate.
-- The known-failed P1 grammar exemplar is not allowed to override the StageContract.
+- P1 has no example image; the frozen StageContract is the only representation authority.
 - Local crops are selected explicitly by the Agent.
 - Pass 2 receives pass-1 remaining concerns and exact inter-pass correction provenance.
 - No user approval is requested between routine passes.

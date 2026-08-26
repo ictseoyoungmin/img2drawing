@@ -6,8 +6,7 @@
     "schema",
     "authority_policy",
     "subject_reference",
-    "task_stage_targets",
-    "grammar_exemplars"
+    "task_stage_targets"
   ],
   "properties": {
     "schema": {
@@ -50,32 +49,6 @@
           },
           "authority": {
             "const": "task_stage_truth"
-          }
-        }
-      }
-    },
-    "grammar_exemplars": {
-      "type": "object",
-      "minProperties": 1,
-      "additionalProperties": {
-        "type": "object",
-        "required": [
-          "role",
-          "stage_id",
-          "path",
-          "sha256",
-          "purpose",
-          "authority"
-        ],
-        "properties": {
-          "role": {
-            "const": "grammar_exemplar"
-          },
-          "purpose": {
-            "const": "representation_only"
-          },
-          "authority": {
-            "const": "representation_guidance"
           }
         }
       }

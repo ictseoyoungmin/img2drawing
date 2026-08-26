@@ -39,10 +39,9 @@ recorded and replayable.
 
 Pre-1.0 (`0.5.2`, release slice R22). The core pipeline, dual-reference review,
 pass-memory continuity, reopen/recovery, and fresh-worker autonomy are dogfooded and
-working. Grammar exemplars ship only for P2 and P3; the P1, P4 and P5 exemplars failed
-their own contract audits and were removed rather than shipped with a warning, so those
-stages are currently governed by their frozen StageContract alone. Authoring replacement
-exemplars for them is open work. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
+working. Stage grammar comes from the frozen `StageContract` and the stage references; two
+of those references keep a rendered example image beside the prose, which the agent opens
+when it wants one. The runtime has no grammar-exemplar concept of its own. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
 
 ## Requirements
 
@@ -100,7 +99,7 @@ python dev/benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_sm
 │   └── entries/       # one page and its display assets per result
 ├── skills/
 │   └── img2drawing/   # the deployable skill: SKILL.md, runtime source, references,
-│                       # playbooks, exemplars — everything that ships
+│                       # playbooks, references — everything that ships
 ├── dev/                # release builds, dogfood runs, verification evidence,
 │   ├── dogfood/        # persistent reproducible runs and continuation records
 │   ├── tests/          # pytest suite for skills/img2drawing's runtime

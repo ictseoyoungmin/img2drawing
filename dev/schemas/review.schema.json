@@ -14,10 +14,9 @@
     "inter_pass_action_ids",
     "reference_authority_order",
     "subject_reference",
-    "grammar_exemplar",
     "contract_findings",
     "subject_findings",
-    "exemplar_findings",
+    "grammar_findings",
     "drawing_findings",
     "remaining_concerns",
     "decision"
@@ -84,7 +83,7 @@
         "minLength": 1
       }
     },
-    "exemplar_findings": {
+    "grammar_findings": {
       "type": "array",
       "minItems": 1,
       "items": {

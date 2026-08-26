@@ -112,8 +112,6 @@ class DrawingRun:
         width,
         height,
         stage_registry="full_body_croquis",
-        grammar_exemplar_dir=None,
-        exemplar_dir=None,
         grammar_cards=None,
         require_grammar_card_bindings=False,
         task_stage_targets: Mapping[str, str | Path] | None = None,
@@ -131,17 +129,6 @@ class DrawingRun:
         if task_stage_targets is None:
             task_stage_targets=stage_targets
 
-        if grammar_exemplar_dir is not None and exemplar_dir is not None:
-            raise ValueError(
-                "use either grammar_exemplar_dir or legacy exemplar_dir, not both"
-            )
-        if grammar_exemplar_dir is None:
-            grammar_exemplar_dir=exemplar_dir
-        if grammar_exemplar_dir is None:
-            grammar_exemplar_dir=resources.files("img2drawing.data").joinpath(
-                "exemplars/full_body_croquis"
-            )
-
         self.output_dir=Path(output_dir).resolve()
         self.output_dir.mkdir(parents=True,exist_ok=True)
         self.session_id=str(session_id)
@@ -153,9 +140,6 @@ class DrawingRun:
         self.progress=StageProgress(tuple(s.stage_id for s in self.stage_specs))
         self.working_supersample=max(2,int(working_supersample))
 
-        self.grammar_exemplar_dir=Path(str(grammar_exemplar_dir)).resolve()
-        # 0.5.1 compatibility
-        self.exemplar_dir=self.grammar_exemplar_dir
         self.grammar_cards=_normalize_grammar_cards(grammar_cards)
         self._grammar_cards_by_stage={card["stage"]: card for card in self.grammar_cards}
         self.require_grammar_card_bindings=bool(require_grammar_card_bindings)
@@ -173,14 +157,8 @@ class DrawingRun:
         self.references: ReferenceBundle=build_reference_bundle(
             subject_reference=self.reference_path,
             stage_ids=tuple(s.stage_id for s in self.stage_specs),
-            grammar_exemplar_dir=self.grammar_exemplar_dir,
             task_stage_targets=task_stage_targets,
         )
-        # Compatibility surface for callers that inspect the manifest.
-        self.exemplar_manifest=json.loads(
-            (self.grammar_exemplar_dir/"manifest.json").read_text(encoding="utf-8")
-        )
-
         self.session=AgentDrawingSession(
             int(width),
             int(height),
@@ -613,11 +591,6 @@ class DrawingRun:
         self.save_checkpoint()
         return record
 
-    def _stage_exemplar_path(self,stage: str) -> Path | None:
-        """0.5.1 compatibility alias for the grammar exemplar."""
-        item=self.references.for_stage(stage).grammar_exemplar
-        return None if item is None else item.path
-
     def _task_stage_target_path(self,stage: str) -> Path | None:
         item=self.references.for_stage(stage).task_stage_target
         return None if item is None else item.path
@@ -658,23 +631,6 @@ class DrawingRun:
 
         stage_refs=self.references.for_stage(stage)
         stage_contract=self.stage_contracts.for_stage(stage)
-        exemplar=stage_refs.grammar_exemplar
-        (out/"grammar_exemplar_audit.json").write_text(
-            json.dumps({
-                "stage_id":stage,
-                "contract_id":None if exemplar is None else exemplar.audit_contract_id,
-                "status":"no_exemplar" if exemplar is None else exemplar.audit_status,
-                "findings":[] if exemplar is None else list(exemplar.audit_findings),
-                "note":"" if exemplar is None else exemplar.audit_note,
-                "mandatory_path_policy":(
-                    "no_exemplar" if exemplar is None
-                    else exemplar.to_dict().get("mandatory_path_policy")
-                ),
-                "exemplar_path":None if exemplar is None else str(exemplar.path),
-                "exemplar_sha256":None if exemplar is None else exemplar.sha256,
-            },indent=2,ensure_ascii=False,sort_keys=True),
-            encoding="utf-8",
-        )
         (out/"stage_contract.json").write_text(
             json.dumps(stage_contract.to_dict(),indent=2,ensure_ascii=False,sort_keys=True),
             encoding="utf-8",
@@ -743,7 +699,6 @@ class DrawingRun:
         intent: str,
         subject_box,
         drawing_box,
-        grammar_box=None,
         task_target_box=None,
         stage: str|None=None,
     ) -> LocalReviewArtifacts:
@@ -780,7 +735,6 @@ class DrawingRun:
             intent=intent,
             subject_box=subject_box,
             drawing_box=drawing_box,
-            grammar_box=grammar_box,
             task_target_box=task_target_box,
             out_dir=pass_dir/"local_reviews",
         )
@@ -812,7 +766,7 @@ class DrawingRun:
         task_target_findings=None,
         subject_findings=None,
         local_review_ids=(),
-        exemplar_findings=None,
+        grammar_findings=None,
         drawing_findings=None,
         observations=None,
         corrections=(),
@@ -872,7 +826,7 @@ class DrawingRun:
             if artifacts.has_task_stage_target:
                 raise ValueError(
                     "generic observations= is not allowed when a task stage target exists; "
-                    "provide task_target_findings, subject_findings, exemplar_findings "
+                    "provide task_target_findings, subject_findings, grammar_findings "
                     "and drawing_findings separately"
                 )
             obs=normalize_findings(observations, field="observations")
@@ -880,8 +834,8 @@ class DrawingRun:
                 "Legacy review path: current drawing was checked against the frozen stage representation contract.",
             )
             subject_findings=subject_findings or obs
-            exemplar_findings=exemplar_findings or (
-                "Grammar exemplar inspected; see drawing_findings for representation judgement.",
+            grammar_findings=grammar_findings or (
+                "Legacy review path: stage grammar judged against the frozen contract.",
             )
             drawing_findings=drawing_findings or obs
 
@@ -927,7 +881,7 @@ class DrawingRun:
             task_target_findings=task_target_findings or (),
             local_review_ids=local_review_ids,
             subject_findings=subject_findings or (),
-            exemplar_findings=exemplar_findings or (),
+            grammar_findings=grammar_findings or (),
             drawing_findings=drawing_findings or (),
             corrections=corrections,
             remaining_concerns=remaining_concerns,
@@ -1150,7 +1104,6 @@ class DrawingRun:
                 "width":self.session.width,
                 "height":self.session.height,
                 "stage_registry":self.stage_registry_name,
-                "grammar_exemplar_dir":str(self.grammar_exemplar_dir),
                 "task_stage_targets":{
                     k:str(v.path) for k,v in self.references.task_stage_targets.items()
                 },
@@ -1208,7 +1161,6 @@ class DrawingRun:
         checkpoint_or_output_dir,
         *,
         reference=None,
-        grammar_exemplar_dir=None,
         grammar_cards=None,
         require_grammar_card_bindings=None,
     ):
@@ -1234,10 +1186,6 @@ class DrawingRun:
             )
         if sha256_file(ref)!=str(init["reference_sha256"]):
             raise ValueError("resume reference sha256 does not match checkpoint subject")
-        grammar=(
-            Path(grammar_exemplar_dir).expanduser().resolve()
-            if grammar_exemplar_dir is not None else Path(init["grammar_exemplar_dir"]).expanduser().resolve()
-        )
         cards = grammar_cards if grammar_cards is not None else init.get("grammar_cards")
         strict_cards = (
             bool(require_grammar_card_bindings)
@@ -1249,7 +1197,7 @@ class DrawingRun:
             reference_path=ref, output_dir=init["output_dir"], session_id=init["session_id"],
             width=int(init["width"]), height=int(init["height"]),
             stage_registry=init.get("stage_registry","full_body_croquis"),
-            grammar_exemplar_dir=grammar, task_stage_targets=targets,
+            task_stage_targets=targets,
             grammar_cards=cards,
             require_grammar_card_bindings=strict_cards,
             working_supersample=int(init.get("working_supersample",3)),

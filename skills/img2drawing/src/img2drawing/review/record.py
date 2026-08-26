@@ -43,13 +43,12 @@ class StageReviewRecord:
     inter_pass_action_ids: tuple[str, ...]
 
     subject_reference: str
-    grammar_exemplar: str
     task_stage_target: str | None
     reference_authority_order: tuple[str, ...]
 
     contract_findings: tuple[str,...]
     subject_findings: tuple[str,...]
-    exemplar_findings: tuple[str,...]
+    grammar_findings: tuple[str,...]
     drawing_findings: tuple[str,...]
     task_target_findings: tuple[str,...] = ()
     local_review_ids: tuple[str,...] = ()
@@ -74,8 +73,8 @@ class StageReviewRecord:
             raise ValueError("review requires contract_findings")
         if not self.subject_findings:
             raise ValueError("review requires subject_findings")
-        if not self.exemplar_findings:
-            raise ValueError("review requires exemplar_findings")
+        if not self.grammar_findings:
+            raise ValueError("review requires grammar_findings")
         if not self.drawing_findings:
             raise ValueError("review requires drawing_findings")
         if self.task_stage_target is not None and not self.task_target_findings:
@@ -101,12 +100,14 @@ class StageReviewRecord:
             carried_concerns=normalize_findings(data.get("carried_concerns",()), field="carried_concerns"),
             inter_pass_action_ids=normalize_findings(data.get("inter_pass_action_ids",()), field="inter_pass_action_ids"),
             subject_reference=str(data["subject_reference"]),
-            grammar_exemplar=str(data.get("grammar_exemplar") or data.get("stage_exemplar")),
             task_stage_target=data.get("task_stage_target"),
             reference_authority_order=normalize_findings(data.get("reference_authority_order",()), field="reference_authority_order"),
             contract_findings=normalize_findings(data.get("contract_findings",()), field="contract_findings"),
             subject_findings=normalize_findings(data.get("subject_findings",()), field="subject_findings"),
-            exemplar_findings=normalize_findings(data.get("exemplar_findings",()), field="exemplar_findings"),
+            grammar_findings=normalize_findings(
+                data.get("grammar_findings", data.get("exemplar_findings",())),
+                field="grammar_findings",
+            ),
             drawing_findings=normalize_findings(data.get("drawing_findings",()), field="drawing_findings"),
             task_target_findings=normalize_findings(data.get("task_target_findings",()), field="task_target_findings"),
             local_review_ids=normalize_findings(data.get("local_review_ids",()), field="local_review_ids"),
@@ -117,16 +118,12 @@ class StageReviewRecord:
         )
 
     @property
-    def stage_exemplar(self) -> str:
-        return self.grammar_exemplar
-
-    @property
     def observations(self) -> tuple[str,...]:
         return (
             self.contract_findings
             + self.task_target_findings
             + self.subject_findings
-            + self.exemplar_findings
+            + self.grammar_findings
             + self.drawing_findings
         )
 
@@ -145,13 +142,11 @@ class StageReviewRecord:
             "reference_authority_order":list(self.reference_authority_order),
             "subject_reference":self.subject_reference,
             "task_stage_target":self.task_stage_target,
-            "grammar_exemplar":self.grammar_exemplar,
-            "stage_exemplar":self.grammar_exemplar,
             "contract_findings":list(self.contract_findings),
             "task_target_findings":list(self.task_target_findings),
             "local_review_ids":list(self.local_review_ids),
             "subject_findings":list(self.subject_findings),
-            "exemplar_findings":list(self.exemplar_findings),
+            "grammar_findings":list(self.grammar_findings),
             "drawing_findings":list(self.drawing_findings),
             "observations":list(self.observations),
             "corrections":list(self.corrections),
@@ -180,7 +175,7 @@ def record_from_artifacts(
     pass_memory: StagePassMemory,
     contract_findings,
     subject_findings,
-    exemplar_findings,
+    grammar_findings,
     drawing_findings,
     task_target_findings=(),
     local_review_ids=(),
@@ -203,7 +198,6 @@ def record_from_artifacts(
             action.action_id for action in pass_memory.inter_pass_actions
         ),
         subject_reference=str(artifacts.subject_reference),
-        grammar_exemplar=str(artifacts.grammar_exemplar),
         task_stage_target=(
             None if artifacts.task_stage_target is None
             else str(artifacts.task_stage_target)
@@ -213,7 +207,7 @@ def record_from_artifacts(
         task_target_findings=normalize_findings(task_target_findings, field="task_target_findings"),
         local_review_ids=normalize_findings(local_review_ids, field="local_review_ids"),
         subject_findings=normalize_findings(subject_findings, field="subject_findings"),
-        exemplar_findings=normalize_findings(exemplar_findings, field="exemplar_findings"),
+        grammar_findings=normalize_findings(grammar_findings, field="grammar_findings"),
         drawing_findings=normalize_findings(drawing_findings, field="drawing_findings"),
         corrections=normalize_findings(corrections, field="corrections"),
         remaining_concerns=normalize_findings(remaining_concerns, field="remaining_concerns"),

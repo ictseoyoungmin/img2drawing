@@ -244,7 +244,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "The subject shows a more curved face-direction centre than pass 1.",
             "The subject's pelvis-to-image-left support transfer changes direction more decisively than pass 1.",
         ],
-        exemplar_findings=[
+        grammar_findings=[
             "P1 ships no grammar exemplar, so the frozen P1 contract is the only representation authority.",
             "Stage grammar is judged against that contract rather than against a reference image.",
         ],
@@ -335,8 +335,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "The facial-centre bow now communicates the subject's face direction at P1 abstraction.",
             "The pelvis-to-support path now changes direction clearly enough to communicate weight transfer.",
         ],
-        exemplar_findings=[
-            "The known-defect P1 exemplar remains subordinate to the frozen contract and subject geometry.",
+        grammar_findings=[
+            "Stage grammar stays subordinate to the frozen contract and subject geometry.",
         ],
         drawing_findings=[
             "Both carried pass-1 concerns were re-checked against fresh whole/local artifacts.",

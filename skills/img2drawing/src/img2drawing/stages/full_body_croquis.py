@@ -34,14 +34,13 @@ FULL_BODY_CROQUIS = (
             "final contour",
             "facial features",
         ),
-        "p1_gesture",
         review_questions=(
             "Does the dominant gesture start at the crown, not at the neck?",
             "Inside the head, does the centre line curve asymmetrically and do the open crown/temporal/jaw arcs avoid reconstructing a closed badge?",
             "Does that same dominant intention continue through chin→neck→spine→pelvis→support leg without a conceptual break?",
             "Does the pelvis visibly transfer weight into one support leg instead of feeding two equivalent sticks?",
             "Does the opposite leg read as counterbalance?",
-            "Are head width/height, shoulder span and pelvis breadth derived from the subject rather than copied from the exemplar?",
+            "Are head width/height, shoulder span and pelvis breadth derived from the subject rather than from a remembered generic figure?",
             "Is the dominant gesture materially/visually stronger than secondary construction?",
             "Did the worker avoid P2/P3 anatomy, clothing and contour detail?",
             "If a large attached object changes balance or silhouette, is its major axis already present but subordinate?",
@@ -62,7 +61,6 @@ FULL_BODY_CROQUIS = (
         ("head direction","shoulder tilt","pelvis tilt","limb directions","prop direction and breadth","foreshortening cues"),
         ("head axis","shoulder axis","pelvis axis","major limb axes","attached-object extent"),
         ("surface detail","folds","final contour","small anatomy","redrawing P1 as a new unrelated scaffold"),
-        "p2_axes",
         review_questions=(
             "Do head/shoulder/pelvis axes explain the same pose already established in P1?",
             "Do shoulder and pelvis tilts communicate twist rather than behave as unrelated bars?",
@@ -82,7 +80,6 @@ FULL_BODY_CROQUIS = (
         ("ribcage volume","pelvis wedge","torso bridge","limb taper","overlap","head/hair mass","attached-object mass"),
         ("head mass","ribcage mass","pelvis mass","torso bridge","tapered limb masses","attached-object mass"),
         ("joint dots as substitutes for structure","box assembly that breaks spinal flow","clothing folds","rendered facial features"),
-        "p3_masses",
         review_questions=(
             "Do ribcage and pelvis read as connected organic masses rather than boxes?",
             "Does the torso bridge preserve spinal rhythm and twist?",
@@ -102,7 +99,6 @@ FULL_BODY_CROQUIS = (
         ("shoulder insertion","elbow turn","wrist direction","hip-to-thigh","knee plane","ankle-to-foot","prop overlap and attachment"),
         ("limb chains","partial directional joint planes","joint transitions","hands/feet blocks","overlap corrections","attachment relationships"),
         ("joint dots without form transition","full-width elbow/knee bands that read as clothing stripes","faceted detached hand/foot polygons","final shading","texture","decorative detail"),
-        "p4_structure",
         review_questions=(
             "Can each arm be followed shoulder→elbow→wrist as a connected chain?",
             "Can each leg be followed pelvis→knee→ankle as a connected chain?",
@@ -125,7 +121,6 @@ FULL_BODY_CROQUIS = (
         ("whole silhouette","head/body proportion","torso-pelvis relation","stance","negative space","prop alignment","line hierarchy"),
         ("decisive outer contour","major internal breaks","major attached-object subpart topology","explicit silhouette-owner handoffs","overlap contours","only necessary surviving construction"),
         ("tone rendering","micro-detail","accidental contour welding between independent masses","beautification that hides structural error","cleaning a wrong structure instead of reopening it"),
-        "p5_clean_blockin",
         review_questions=(
             "Does the final block-in preserve the verified P1-P4 structure?",
             "Is the main silhouette readable without construction noise?",

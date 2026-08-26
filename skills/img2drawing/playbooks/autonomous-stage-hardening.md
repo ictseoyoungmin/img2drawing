@@ -10,7 +10,7 @@ This playbook exists so a fresh worker does not require interactive coaching.
 5. Call `prepare_stage_review()`.
 6. Open the generated `worker_packet.md`.
 7. Inspect every mandatory comparison plus stage-relevant crops.
-8. Separate subject fidelity from exemplar/stage fidelity.
+8. Separate subject fidelity from stage-grammar fidelity.
 9. State concrete visible mismatches.
 10. Correct the highest-impact 1–3 issues locally.
 11. Prepare a fresh review after every mutation.
@@ -21,7 +21,7 @@ This playbook exists so a fresh worker does not require interactive coaching.
 ## Anti-patterns
 - passing a stage because required objects/lines merely exist;
 - converting artistic judgement into hardcoded booleans;
-- copying pose from an exemplar;
+- copying pose from an example image;
 - asking the user to identify every mismatch;
 - moving forward because the pipeline is complete while the current artifact is visibly weak;
 - repeated local tweaks without changing observation strategy when the same error persists.
@@ -30,7 +30,7 @@ This playbook exists so a fresh worker does not require interactive coaching.
 If the same concern survives three consecutive passes:
 - stop editing;
 - create a more informative crop/overlay;
-- re-observe the subject and exemplar independently;
+- re-observe the subject and re-read the stage contract independently;
 - rewrite the stroke plan;
 - then resume.
 

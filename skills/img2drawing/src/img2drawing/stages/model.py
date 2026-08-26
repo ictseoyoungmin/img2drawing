@@ -10,7 +10,6 @@ class StageSpec:
     observe: tuple[str, ...]
     draw: tuple[str, ...]
     avoid: tuple[str, ...]
-    exemplar_key: str
     review_questions: tuple[str, ...] = ()
     advance_when: tuple[str, ...] = ()
     suggested_crops: tuple[str, ...] = ()
@@ -29,7 +28,6 @@ class StageSpec:
             "observe": list(self.observe),
             "draw": list(self.draw),
             "avoid": list(self.avoid),
-            "exemplar_key": self.exemplar_key,
             "review_questions": list(self.review_questions),
             "advance_when": list(self.advance_when),
             "suggested_crops": list(self.suggested_crops),

@@ -1,5 +1,9 @@
 # P2 Primary Axes
 
+A rendered example of axes-only P2 sits beside this file as `p2-primary-axes.png`. Open it if you want to see the
+stage's mark-making and detail budget; it shows representation only and never the current
+subject's pose or coordinates.
+
 Preserve P1 energy while stating head direction, shoulder/pelvis tilt, limb
 directions and attached-object extent. Axes explain relationships; they are not a
 substitute for observation.

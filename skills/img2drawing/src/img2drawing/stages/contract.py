@@ -9,38 +9,6 @@ class StageContractError(ValueError):
 
 
 @dataclass(frozen=True)
-class ExemplarContract:
-    """What a grammar exemplar is allowed to teach for one stage.
-
-    This class only freezes the contract; auditing exemplars against it is a
-    separate, independent step (see the exemplar audit in SKILL.md).
-    """
-    must_show: tuple[str, ...]
-    may_show: tuple[str, ...]
-    must_not_show: tuple[str, ...]
-
-    def __post_init__(self):
-        required=set(self.must_show)
-        optional=set(self.may_show)
-        forbidden=set(self.must_not_show)
-        overlap=(required|optional)&forbidden
-        if overlap:
-            raise StageContractError(
-                "exemplar contract both allows/requires and forbids: "
-                + ", ".join(sorted(overlap))
-            )
-        if not required:
-            raise StageContractError("exemplar contract must define must_show")
-
-    def to_dict(self) -> dict:
-        return {
-            "must_show":list(self.must_show),
-            "may_show":list(self.may_show),
-            "must_not_show":list(self.must_not_show),
-        }
-
-
-@dataclass(frozen=True)
 class StageContract:
     """Machine-readable representation scope for one drawing stage.
 
@@ -58,7 +26,6 @@ class StageContract:
     forbidden_representation: tuple[str, ...]
     detail_ceiling: tuple[str, ...]
     next_stage_unlocks: tuple[str, ...]
-    exemplar: ExemplarContract
 
     def __post_init__(self):
         if not self.contract_id.strip() or not self.stage_id.strip():
@@ -92,7 +59,6 @@ class StageContract:
             "forbidden_representation":list(self.forbidden_representation),
             "detail_ceiling":list(self.detail_ceiling),
             "next_stage_unlocks":list(self.next_stage_unlocks),
-            "exemplar_contract":self.exemplar.to_dict(),
             "authority_note":(
                 "This contract governs representation scope only. "
                 "Subject/task references remain visual truth; the Agent remains semantic authority."

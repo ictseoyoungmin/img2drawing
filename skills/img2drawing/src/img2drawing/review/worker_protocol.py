@@ -155,11 +155,6 @@ class AutonomousWorkerPacket:
         lines += ["", "### Next stage unlocks"]
         lines += [f"- {x}" for x in c["next_stage_unlocks"]] if c["next_stage_unlocks"] else ["- _none; final stage in this contract_"]
 
-        lines += ["", "### Grammar exemplar contract", "**must show**"]
-        lines += [f"- {x}" for x in c["exemplar_contract"]["must_show"]]
-        lines += ["**may show**"] + [f"- {x}" for x in c["exemplar_contract"]["may_show"]]
-        lines += ["**must not show**"] + [f"- {x}" for x in c["exemplar_contract"]["must_not_show"]]
-
         lines += [
             "", "## Reference authority",
             f"- reference mode: **{refs.get('reference_mode','subject_only')}**",
@@ -173,29 +168,12 @@ class AutonomousWorkerPacket:
         else:
             lines.append("- task stage target: _not provided_")
 
-        grammar=refs["grammar_exemplar"]
-        if grammar is None:
-            lines += [
-                "- grammar exemplar: _none for this stage_ — the frozen stage contract is the only"
-                " representation authority here",
-            ]
-        else:
-            lines += [
-                f"- grammar exemplar: `{grammar['path']}` — representation only",
-                f"- grammar exemplar audit: **{grammar.get('audit_status','not_audited').upper()}**",
-                f"- mandatory-path policy: **{grammar.get('mandatory_path_policy','unspecified')}**",
-            ]
-        if grammar is not None and grammar.get("mandatory_path_policy") == "unproven_until_ablation":
-            lines += [
-                "",
-                "### UNPROVEN GRAMMAR EXEMPLAR",
-                "Treat this P3 exemplar as an unproven representation hypothesis; do not use it as mandatory positive evidence before ablation through P4.",
-            ]
-
         lines += [
             "", "### Non-negotiable authority rule",
             "- The stage contract decides representation scope; it does not decide pose correctness.",
-            "- Never copy pose, coordinates, perspective, or subject proportions from a grammar exemplar.",
+            "- The stage reference under `references/stages/` carries this stage's mark-making guidance,"
+            " and some stages keep a rendered example beside it. Open one when you want it; never copy"
+            " pose, coordinates, perspective or subject proportions from it.",
             "- The subject reference remains geometry truth if references conflict about pose/proportion/perspective.",
             "", "## Intent", s["intent"], "", "## Observe",
         ]
@@ -229,7 +207,6 @@ class AutonomousWorkerPacket:
             '    intent="Check face-direction curve and head envelope",',
             "    subject_box=(left, top, right, bottom),",
             "    drawing_box=(left, top, right, bottom),",
-            "    grammar_box=(left, top, right, bottom),",
             ")",
             "```",
             "",
@@ -283,17 +260,11 @@ def build_worker_packet(
         "stage-contract boundary review",
         "Agent-selected local reviews when whole view is insufficient",
     ]
-    if references.grammar_exemplar is not None:
-        grammar_policy = references.grammar_exemplar.to_dict().get("mandatory_path_policy")
-        if grammar_policy == "unproven_until_ablation":
-            mandatory.append("grammar_exemplar_unproven_warning")
-        else:
-            mandatory.append("grammar_vs_drawing")
 
     loop=[
         "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
         "If carried concerns exist, re-check them before inventing new work.",
-        "Read the frozen stage contract before interpreting the exemplar.",
+        "Read the frozen stage contract before deciding what belongs in this stage.",
         "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
     ]
     if references.task_stage_target is not None:
@@ -302,10 +273,9 @@ def build_worker_packet(
         )
     else:
         loop.append(
-            "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image."
+            "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state."
         )
     loop += [
-        "Use the grammar exemplar, when the stage has one, only for representation vocabulary allowed by the frozen stage contract.",
         "Before drawing, reject vocabulary listed in forbidden_representation.",
         "Draw a bounded set of explicit strokes that serve the current stage ownership.",
         "Render the exact current artifact with prepare_stage_review().",
@@ -331,11 +301,7 @@ def build_worker_packet(
             "method":"DrawingRun.prepare_local_review",
             "selection_authority":"agent_explicit_boxes",
             "auto_detection":False,
-            "required_boxes":(
-                ["subject_box","drawing_box","grammar_box"]
-                if references.grammar_exemplar is not None
-                else ["subject_box","drawing_box"]
-            ),
+            "required_boxes":["subject_box","drawing_box"],
             "task_target_box":"required" if references.task_stage_target is not None else "must_be_omitted",
             "coordinate_space":"source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
             "suggested_intents":list(stage_spec.suggested_crops),
@@ -352,7 +318,6 @@ def build_worker_packet(
             "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
             "Do not treat inter-pass action provenance as proof that a concern was solved.",
             "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
-            "Never use a grammar exemplar as pose/coordinate truth.",
             "Never use CV/evidence maps or crop automation as semantic authority.",
         ),
         escalation_policy=(

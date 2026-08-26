@@ -1,4 +1,4 @@
-from .contract import ExemplarContract, StageContract, StageContractRegistry
+from .contract import StageContract, StageContractRegistry
 
 
 FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
@@ -49,27 +49,6 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "pelvis axis",
             "major limb axes",
             "attached-object extent/breadth axis",
-        ),
-        exemplar=ExemplarContract(
-            must_show=(
-                "dominant whole-body gesture",
-                "head direction construction",
-                "support/counterbalance relationship",
-            ),
-            may_show=(
-                "shoulder rhythm",
-                "pelvis rhythm",
-                "minimal ground cue",
-                "major attached-object axis",
-            ),
-            must_not_show=(
-                "ribcage mass contour",
-                "pelvis mass contour",
-                "full limb thickness",
-                "joint anatomy",
-                "clothing silhouette",
-                "facial features",
-            ),
         ),
     ),
     StageContract(
@@ -135,31 +114,6 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "tapered limb masses",
             "attached-object mass",
         ),
-        exemplar=ExemplarContract(
-            must_show=(
-                "head direction axis",
-                "shoulder axis",
-                "pelvis axis",
-                "major arm and leg axes",
-                "preserved P1 gesture",
-            ),
-            may_show=(
-                "open head envelope",
-                "minimal pelvis/shoulder rhythms from P1",
-                "attached-object extent/breadth axis",
-                "tiny endpoint ticks",
-            ),
-            must_not_show=(
-                "ribcage side contour",
-                "closed torso mass",
-                "closed pelvis mass",
-                "full limb thickness",
-                "hand block",
-                "foot/boot block",
-                "joint anatomy",
-                "clothing silhouette",
-            ),
-        ),
     ),
     StageContract(
         contract_id="full_body_croquis.P3.v1",
@@ -224,27 +178,6 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "hand/foot block",
             "strap/holster/prop attachment",
         ),
-        exemplar=ExemplarContract(
-            must_show=(
-                "connected ribcage and pelvis masses",
-                "torso bridge",
-                "tapered limb masses",
-                "preserved underlying axes",
-            ),
-            may_show=(
-                "head/hair mass",
-                "attached-object mass",
-                "simple hand/foot endpoints",
-            ),
-            must_not_show=(
-                "articulated elbow anatomy",
-                "articulated knee anatomy",
-                "detailed hand block",
-                "detailed boot block",
-                "clothing folds",
-                "clean final contour",
-            ),
-        ),
     ),
     StageContract(
         contract_id="full_body_croquis.P4.v1",
@@ -301,24 +234,6 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "major internal contour breaks",
             "construction-line retirement",
         ),
-        exemplar=ExemplarContract(
-            must_show=(
-                "connected mannequin limb chains",
-                "joint transitions",
-                "hand/foot blocks",
-                "major prop attachments/overlaps",
-            ),
-            may_show=(
-                "simple clothing envelope where needed for attachment",
-                "major accessory block",
-            ),
-            must_not_show=(
-                "polished clothing contour",
-                "micro folds",
-                "surface texture",
-                "tonal shading",
-            ),
-        ),
     ),
     StageContract(
         contract_id="full_body_croquis.P5.v1",
@@ -366,23 +281,5 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "no tonal finish",
         ),
         next_stage_unlocks=(),
-        exemplar=ExemplarContract(
-            must_show=(
-                "readable whole silhouette",
-                "clean major clothing/body contour",
-                "major internal contour breaks",
-                "subordinated construction",
-            ),
-            may_show=(
-                "major pockets/accessory shapes",
-                "simple hair grouping",
-                "clean prop silhouette",
-            ),
-            must_not_show=(
-                "rendered shading",
-                "micro texture",
-                "micro fold rendering",
-            ),
-        ),
     ),
 ))

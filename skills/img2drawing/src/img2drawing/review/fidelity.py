@@ -309,7 +309,6 @@ def blind_observation_projection(lock: FrozenObservationRecord) -> dict[str, Any
             "worker_rationale",
             "previous_review_findings",
             "previous_advance_claim",
-            "exemplar_verdict",
         ],
     }
 
@@ -331,7 +330,7 @@ def build_blind_visual_packet(
         "stage_contract": dict(stage_contract),
         "drawing_artifact": dict(drawing_artifact),
         "region_evidence_refs": list(map(str, region_evidence_refs)),
-        "evaluator_instruction": "Inspect subject and current drawing independently; do not use worker rationale or exemplar verdict.",
+        "evaluator_instruction": "Inspect subject and current drawing independently; do not use worker rationale or any prior verdict.",
     }
     packet["packet_digest"] = sha256_obj(packet)
     return packet

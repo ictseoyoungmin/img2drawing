@@ -44,13 +44,16 @@ For a full-body croquis job:
 Do not preload every anatomy/reference document. Pull extra references from
 `references/INDEX.md` only when a concrete uncertainty requires them.
 
-## Dual-reference rule
+## What a stage review compares
 Every stage review distinguishes:
 1. **Subject reference** — pose, proportion, overlap, perspective and weight truth.
-2. **Stage exemplar** — abstraction, stroke vocabulary, line hierarchy and detail-budget guidance.
-3. **Current drawing** — the exact artifact being judged.
+2. **Current drawing** — the exact artifact being judged.
 
-Never copy pose or coordinates from a stage exemplar.
+Stage grammar — abstraction, stroke vocabulary, line hierarchy, detail budget — comes from
+the frozen `StageContract` and the current stage reference in `references/stages/`. Some of
+those references keep a rendered example image beside the prose. **Open one when you want
+it**; the runtime does not hand it to you and never requires you to compare against it.
+Never copy pose or coordinates from such an image.
 
 ## Default stage progression
 `P1_gesture → P2_primary_axes → P3_primary_masses → P4_structural_connections → P5_clean_blockin`
@@ -75,7 +78,7 @@ After any drawing mutation, the previous review is stale. Render and inspect aga
 ## Self-review contract
 A review should separately record:
 - `subject_findings`: geometry/pose/proportion/weight observations;
-- `exemplar_findings`: stage-grammar/abstraction/line-economy observations;
+- `grammar_findings`: stage-grammar/abstraction/line-economy observations, judged against the contract;
 - `drawing_findings`: what the current artifact actually communicates;
 - `contract_findings`: representation scope against the frozen `StageContract`;
 - `corrections`;
@@ -146,49 +149,27 @@ The contract owns:
 - `forbidden_representation`;
 - `detail_ceiling`;
 - `next_stage_unlocks`;
-- `exemplar_contract.must_show / may_show / must_not_show`.
 
 **The contract governs representation scope only. It is not an automatic artistic PASS/FAIL gate.**
 
-If a grammar exemplar appears richer than the contract, do not expand the stage. Record the
-exemplar/contract mismatch in the grammar exemplar audit.
-
 Read `references/stages/stage-contracts.md`.
-
-## Grammar Exemplar Audit
-Not every stage has a grammar exemplar. A stage that has one is audited against the
-frozen StageContract and bound to its image SHA-256; a stage that has none is governed
-by its StageContract alone, and its worker packet says so.
-
-Audit is **Agent-authored visual judgement**. Runtime code does not look at pixels and auto-decide PASS/FAIL; it only verifies that the stored audit still points to the same image and contract.
-
-An exemplar that fails its contract audit is removed from the manifest, not shipped with
-a warning — bundling one raises `ReferenceBundleError`. So every exemplar the worker is
-shown is a usable positive reference, except that a PASS exemplar without a completed
-A/B/C ablation is `unproven_until_ablation` rather than a guaranteed positive control.
-
-Which stages currently have one drifts as exemplars are authored and audited, so it is
-not restated here. Check `src/img2drawing/data/exemplars/full_body_croquis/manifest.json`
-and its `audit_manifest.json` directly. The P2 exemplar is the corrected axes-only one,
-reproducible from `src/img2drawing/data/exemplars/full_body_croquis/sources/p2_axes_v2.json`.
 
 ## Reference authority
 Before reviewing a stage, classify every image by role:
 
 - `subject_reference`: geometry truth.
 - `task_stage_target`: optional same-task/same-stage truth.
-- `grammar_exemplar`: representation-only guidance.
 - `current_drawing`: the artifact being judged.
 
 If a same-task stage target exists, the review priority is:
 
-`task_stage_target > subject_reference > grammar_exemplar`
+`task_stage_target > subject_reference`
 
 Otherwise:
 
-`subject_reference > grammar_exemplar`
+`subject_reference` alone.
 
-This does **not** allow a task target to override contradictory subject geometry, and it never allows a grammar exemplar to donate pose or coordinates.
+This does **not** allow a task target to override contradictory subject geometry.
 
 ```python
 run = DrawingRun.create(
@@ -208,11 +189,11 @@ Read `references/review/reference-authority.md` when a task provides stage-by-st
 P1–P5 drawings of the same subject; `task_stage_targets` are optional extra evidence and the
 worker must never depend on them.
 
-In subject-only mode the authority is `subject_reference > grammar_exemplar`.
+In subject-only mode the subject reference is the only geometry authority.
 
-The grammar exemplars are generic teaching references. They decide only stage abstraction
-vocabulary, construction convention, stroke economy / line hierarchy and detail ceiling.
-They never decide the current subject's pose, coordinates, proportions, perspective or
+Stage abstraction vocabulary, construction convention, stroke economy / line hierarchy and
+detail ceiling come from the frozen `StageContract` and the stage reference. Neither ever
+decides the current subject's pose, coordinates, proportions, perspective or
 subject-specific silhouette.
 
 The worker creates a stage-specific working hypothesis from the subject itself, renders it,
@@ -247,7 +228,6 @@ local = run.prepare_local_review(
     intent="Check pelvis-to-support transfer and counterbalance",
     subject_box=(...),
     drawing_box=(...),
-    grammar_box=(...),        # only when the stage has a grammar exemplar
     # task_target_box=(...)   only when the stage has a task target
 )
 ```

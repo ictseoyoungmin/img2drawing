@@ -7,9 +7,8 @@ The dominant line begins at the crown. Its facial segment is curved, dividing th
 
 Add only subordinate head-envelope arcs, shoulder rhythm, pelvis rhythm, counterbalance leg and—when silhouette/balance requires it—the major axis of a large attached object.
 
-Compare:
-- subject ↔ drawing for geometry/pose/weight;
-- exemplar ↔ drawing for stage grammar and line hierarchy.
+Compare subject ↔ drawing for geometry/pose/weight, and judge stage grammar and line
+hierarchy against the frozen contract and `references/stages/p1-gesture.md`.
 
 Keep P1 open while any major gesture/weight/face-direction mismatch remains. Once P1 is self-reviewed as closed, begin P2 without waiting for user confirmation.
 
