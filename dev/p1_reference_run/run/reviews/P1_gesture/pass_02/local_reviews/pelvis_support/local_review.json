@@ -17,10 +17,10 @@
         "top": 299
       },
       "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/drawing.png",
-      "crop_sha256": "a87e59f41882bf316588929640b4c7be0bfce2c2698a467643a9322bced05d7b",
+      "crop_sha256": "c685929bb2181723bcaecfec855055db694b09b5da87d2274b8ad07272412923",
       "role": "current_drawing",
       "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-      "source_sha256": "24effdd8845536435f5e86f8099a6e4f3bab0c49e5ee712f49a76a1771598cce",
+      "source_sha256": "6f709541a0b87c3bc805119a3fead1eef409bdc19b4afb8b3db9cf28641398ec",
       "source_size": [
         512,
         802
@@ -45,8 +45,8 @@
     },
     "task_target": null
   },
-  "drawing_artifact_sha256": "24effdd8845536435f5e86f8099a6e4f3bab0c49e5ee712f49a76a1771598cce",
-  "drawing_state_sha256": "a4bf99b9df18116945ab8c11a3c53c40d36d13808b144d3db7d17f67e8920482",
+  "drawing_artifact_sha256": "6f709541a0b87c3bc805119a3fead1eef409bdc19b4afb8b3db9cf28641398ec",
+  "drawing_state_sha256": "a2b20741e1be74fbab67040dd98cfe9da16441b9124261473d11b22f8faf332e",
   "history_cursor": 34,
   "intent": "Re-check pelvis tilt and joint centres on the corrected artifact.",
   "label": "pelvis_support",

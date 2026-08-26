@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "24effdd8845536435f5e86f8099a6e4f3bab0c49e5ee712f49a76a1771598cce",
+      "artifact_sha256": "6f709541a0b87c3bc805119a3fead1eef409bdc19b4afb8b3db9cf28641398ec",
       "history_cursor": 34,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "a4bf99b9df18116945ab8c11a3c53c40d36d13808b144d3db7d17f67e8920482"
+      "state_sha256": "a2b20741e1be74fbab67040dd98cfe9da16441b9124261473d11b22f8faf332e"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -126,14 +126,14 @@
           "cranium outline is a borrowed ellipse, not this head's measured width",
           "eye line and facial centreline therefore sit inside the face instead of across the head"
         ],
-        "review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638"
+        "review_digest": "3edd501f50780790d30c6efce8be851ee931a7be6b3379991793214b4d7b9aea"
       }
     ],
     "correction_history": [
       {
         "pass_index": 1,
         "reported_corrections": [],
-        "review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638"
+        "review_digest": "3edd501f50780790d30c6efce8be851ee931a7be6b3379991793214b4d7b9aea"
       }
     ],
     "inter_pass_actions": [
@@ -173,7 +173,7 @@
       "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "previous_reported_corrections": [],
-    "previous_review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638",
+    "previous_review_digest": "3edd501f50780790d30c6efce8be851ee931a7be6b3379991793214b4d7b9aea",
     "prior_review_count": 1,
     "reopen_context": null,
     "schema": "img2drawing.stage_pass_memory.v2",
@@ -225,6 +225,7 @@
       "drawing the eye line without checking it meets both eyes",
       "merging the face and spine centrelines into one stroke",
       "joining joints with straight lines",
+      "leaving a curve as a few control points, so it renders with visible corners",
       "dropping an occluded limb because it cannot be seen",
       "copying joint positions from an example drawing instead of the subject",
       "moving a line to satisfy a filter or evidence map",
@@ -271,6 +272,7 @@
       "Is every joint centre on the subject's joint, or are several drifting the same way?",
       "Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?",
       "Does each limb follow the subject's observed curvature, or was it joined straight?",
+      "Is anything the subject shows as round drawn with visible corners? A head, a joint, a shoe and a limb all curve.",
       "Do the feet land where the subject's land, and does each foot oval point the way that foot points?",
       "Do the foot directions agree with the body direction the rest of the drawing states?",
       "Is any part merely 'roughly around here'?",
@@ -322,6 +324,7 @@
       "an eye line that does not connect both eyes",
       "face and spine centrelines merged into one stroke",
       "straight landmark-to-landmark joins that flatten limb curvature",
+      "faceted polylines: visible corners where the subject's form is round",
       "omitting an occluded limb because it is not visible",
       "hair",
       "garment structure",

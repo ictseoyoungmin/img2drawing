@@ -168,6 +168,24 @@ A few pixels of error per joint is not harmless. When several joints drift the *
 direction, the errors accumulate and the whole figure reads as shifted to one side. Check
 joints against the subject individually, then check whether they share a drift.
 
+## Round from the first stroke — corners never leave
+
+A stroke is a polyline. Five control points render as four straight segments with four
+visible corners, whatever curve you had in mind. **Those corners do not go away.** P2
+measures the segments you drew, P3 wraps volume around them, P4 hangs form on that, and P5
+is asked to preserve upstream structure — so a facet introduced at P1 is still there in the
+finished block-in, and by then it reads as a decision rather than an artifact.
+
+The subject decides which parts curve. A head, a joint, a shoe, a limb, a torso are round;
+a fold crease or a hard prop edge may not be. Where the form curves:
+
+- state the shape with as many control points as the curve needs, or interpolate through
+  them, so the spacing is small relative to the curvature;
+- check the **raw render**, not the point list. If you can count the segments, it is faceted.
+
+The cheapest fix is at P1. Rounding a facet at P5 means moving verified structure, which
+the P5 contract forbids as beautification.
+
 ## Never join joints with straight lines
 
 Correct joint positions connected by straight `shoulder → elbow → wrist` and

@@ -12,11 +12,45 @@ HERE=Path(__file__).resolve().parent
 SUBJECT=HERE/"subject.png"
 
 
+def _smooth(points, step=3.0):
+    """Catmull-Rom resample so the renderer draws a curve, not a polygon.
+
+    A five-point polyline renders as four straight segments with visible corners,
+    and those corners survive every later stage. Control points state the shape;
+    this states it at a spacing the renderer can round.
+    """
+    pts=[(float(x),float(y)) for x,y in points]
+    if len(pts)<3:
+        return [[round(x),round(y)] for x,y in pts]
+    closed = abs(pts[0][0]-pts[-1][0])<1e-6 and abs(pts[0][1]-pts[-1][1])<1e-6
+    if closed:
+        pts=pts[:-1]
+        ext=[pts[-1]]+pts+[pts[0],pts[1]]
+    else:
+        ext=[pts[0]]+pts+[pts[-1]]
+    out=[]
+    for i in range(len(ext)-3):
+        p0,p1,p2,p3=ext[i:i+4]
+        seg=max(2,int(((p2[0]-p1[0])**2+(p2[1]-p1[1])**2)**.5/step))
+        for k in range(seg):
+            t=k/seg; t2=t*t; t3=t2*t
+            out.append((
+                .5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+                .5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3),
+            ))
+    out.append(ext[-2] if not closed else pts[0])
+    ded=[]
+    for x,y in out:
+        r=[round(x),round(y)]
+        if not ded or ded[-1]!=r: ded.append(r)
+    return ded
+
 def _stroke(
     action_id,
     part,
     points,
     *,
+    smooth=True,
     role="construction",
     pressure=.18,
     width=1.1,
@@ -31,7 +65,7 @@ def _stroke(
         "stage":"P1_gesture",
         "role":role,
         "part":part,
-        "points":points,
+        "points":_smooth(points) if smooth else points,
         "stroke_id":part,
         "confidence":confidence,
         "layer":10,
@@ -55,6 +89,7 @@ def _replace(
     points,
     *,
     reason,
+    smooth=True,
     pressure=.42,
     width=1.9,
     opacity=.62,
@@ -66,7 +101,7 @@ def _replace(
         "stage":"P1_gesture",
         "role":"gesture",
         "part":part,
-        "points":points,
+        "points":_smooth(points) if smooth else points,
         "target_stroke_id":part,
         "stroke_id":part,
         "confidence":.94,

@@ -32,6 +32,7 @@
     "an eye line that does not connect both eyes",
     "face and spine centrelines merged into one stroke",
     "straight landmark-to-landmark joins that flatten limb curvature",
+    "faceted polylines: visible corners where the subject's form is round",
     "omitting an occluded limb because it is not visible",
     "hair",
     "garment structure",

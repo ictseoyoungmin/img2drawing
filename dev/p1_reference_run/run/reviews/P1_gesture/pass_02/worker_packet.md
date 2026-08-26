@@ -3,7 +3,7 @@
 ## Stage pass memory
 - state: **revision_continuation**
 - prior review count: 1
-- parent review digest: `0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638`
+- parent review digest: `3edd501f50780790d30c6efce8be851ee931a7be6b3379991793214b4d7b9aea`
 - previous decision: **revise**
 
 ### Previous remaining concerns
@@ -76,6 +76,7 @@
 - an eye line that does not connect both eyes
 - face and spine centrelines merged into one stroke
 - straight landmark-to-landmark joins that flatten limb curvature
+- faceted polylines: visible corners where the subject's form is round
 - omitting an occluded limb because it is not visible
 - hair
 - garment structure
@@ -147,6 +148,7 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - drawing the eye line without checking it meets both eyes
 - merging the face and spine centrelines into one stroke
 - joining joints with straight lines
+- leaving a curve as a few control points, so it renders with visible corners
 - dropping an occluded limb because it cannot be seen
 - copying joint positions from an example drawing instead of the subject
 - moving a line to satisfy a filter or evidence map
@@ -164,6 +166,7 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - Is every joint centre on the subject's joint, or are several drifting the same way?
 - Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?
 - Does each limb follow the subject's observed curvature, or was it joined straight?
+- Is anything the subject shows as round drawn with visible corners? A head, a joint, a shoe and a limb all curve.
 - Do the feet land where the subject's land, and does each foot oval point the way that foot points?
 - Do the foot directions agree with the body direction the rest of the drawing states?
 - Is any part merely 'roughly around here'?
