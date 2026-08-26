@@ -12,7 +12,7 @@
 - `drawings/croquis_run/reviews/P4_structural_connections/pass_02/review.json`
 - `drawings/croquis_run/reopen_archive/reopen_01/reviews/P5_clean_blockin/pass_02/review.json`
 - `drawings/croquis_run/reopen_archive/reopen_01/reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png`
-- packaged runtime reference audit manifest
+- `skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`
 - `skills/img2drawing/src/img2drawing/registration/human.py`
 - `skills/img2drawing/src/img2drawing/registration/compare.py`
 - `skills/img2drawing/src/img2drawing/review/comparison.py`

@@ -19,32 +19,29 @@ as the authority while exposing only an explicit warning for FAIL examples.
   records the policy/warning in its serialized artifact.
 - `build_worker_packet()` changes mandatory review views by policy: warning for
   FAIL/P3-unproven, grammar comparison only for positive controls.
-- The default subject-only workflow has no editable authoring owner. Runtime
-  reference metadata is validated through its manifest and remains subordinate
-  to subject geometry.
+- `compare_exemplar_trees()` and `assert_exemplar_trees_synced()` validate the
+  top-level authoring owner against packaged derived bytes.
 
 ## Invariants
 
 - FAIL exemplar is never a mandatory positive comparison.
-- The former P2/P3 positive-control labels are historical; subject-only mode
-  does not require a local reference comparison.
+- P2 is the only current positive control; P3 remains unproven pending ablation.
 - Subject-first review packet generation remains available without a FAIL
   grammar board.
-- Missing or malformed runtime reference metadata fails reference-bundle
-  construction; it never becomes pose or coordinate authority.
+- Hash drift or missing files in either exemplar tree fail the sync assertion.
 
 ## Budgets and dependencies
 
 - Hash comparison is linear in the fixed exemplar file set and uses no network,
   CV, or inference dependency.
-- No local answer-image tree is part of the worker input. Package data is an
-  internal compatibility resource, not a source for subject geometry.
+- Canonical authoring owner is `skills/img2drawing/exemplars/full_body_croquis/`;
+  package data is derived, not hand-edited.
 
 ## Evidence
 
 - `dev/evidence/p3-fidelity/S04-exemplar-policy/closure_report.md`
 - `skills/img2drawing/tests/test_exemplar_policy.py`
-- `skills/img2drawing/tests/test_packaged_reference_policy.py`
+- `skills/img2drawing/tests/test_exemplar_sync.py` (`28 passed` overall suite)
 
 ## Limitations and next integration
 

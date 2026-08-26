@@ -1,0 +1,596 @@
+{
+  "schema": "img2drawing.grammar_exemplar_source.v1",
+  "id": "full_body_croquis.P2.axes_only.v2",
+  "stage_id": "P2_primary_axes",
+  "contract_id": "full_body_croquis.P2.v1",
+  "canvas": {
+    "width": 289,
+    "height": 1086
+  },
+  "title": "2 주요 축",
+  "background": [
+    249,
+    247,
+    242,
+    255
+  ],
+  "notes": [
+    "Direct explicit strokes only; no image generation.",
+    "This exemplar preserves P1 gesture and adds P2 axes only.",
+    "No closed torso/pelvis mass, limb thickness, hand/foot block, joint anatomy, clothing block-in, or shading."
+  ],
+  "actions": [
+    {
+      "action_id": "P2X-001",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "gesture",
+      "part": "crown_face_spine_support",
+      "points": [
+        [
+          116,
+          82
+        ],
+        [
+          120,
+          101
+        ],
+        [
+          125,
+          123
+        ],
+        [
+          127,
+          147
+        ],
+        [
+          124,
+          172
+        ],
+        [
+          119,
+          199
+        ],
+        [
+          121,
+          229
+        ],
+        [
+          124,
+          270
+        ],
+        [
+          125,
+          317
+        ],
+        [
+          124,
+          366
+        ],
+        [
+          120,
+          414
+        ],
+        [
+          111,
+          463
+        ],
+        [
+          101,
+          519
+        ],
+        [
+          96,
+          581
+        ],
+        [
+          94,
+          646
+        ],
+        [
+          93,
+          716
+        ],
+        [
+          92,
+          790
+        ],
+        [
+          91,
+          866
+        ],
+        [
+          90,
+          944
+        ]
+      ],
+      "stroke_id": "crown_face_spine_support",
+      "confidence": 0.95,
+      "layer": 20,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "B",
+        "overrides": {
+          "pressure": 0.58,
+          "width": 1.95,
+          "opacity": 0.78
+        }
+      },
+      "observation_id": "grammar-p2-main",
+      "source_observation": "Generic P2 grammar: preserve crown→curved face→spine→pelvis→support path."
+    },
+    {
+      "action_id": "P2X-002",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "head_left_envelope",
+      "points": [
+        [
+          116,
+          82
+        ],
+        [
+          102,
+          83
+        ],
+        [
+          90,
+          90
+        ],
+        [
+          82,
+          103
+        ],
+        [
+          78,
+          120
+        ],
+        [
+          79,
+          140
+        ],
+        [
+          84,
+          161
+        ],
+        [
+          95,
+          180
+        ],
+        [
+          119,
+          199
+        ]
+      ],
+      "stroke_id": "head_left_envelope",
+      "confidence": 0.9,
+      "layer": 12,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.28,
+          "width": 1.2,
+          "opacity": 0.36
+        }
+      },
+      "observation_id": "grammar-p2-head-left",
+      "source_observation": "Open left head envelope supporting the face-direction axis."
+    },
+    {
+      "action_id": "P2X-003",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "head_right_envelope",
+      "points": [
+        [
+          117,
+          82
+        ],
+        [
+          132,
+          84
+        ],
+        [
+          144,
+          93
+        ],
+        [
+          151,
+          108
+        ],
+        [
+          154,
+          126
+        ],
+        [
+          152,
+          147
+        ],
+        [
+          145,
+          168
+        ],
+        [
+          134,
+          186
+        ],
+        [
+          119,
+          199
+        ]
+      ],
+      "stroke_id": "head_right_envelope",
+      "confidence": 0.9,
+      "layer": 12,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.28,
+          "width": 1.2,
+          "opacity": 0.36
+        }
+      },
+      "observation_id": "grammar-p2-head-right",
+      "source_observation": "Open right head envelope; not a closed oval."
+    },
+    {
+      "action_id": "P2X-004",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "head_cross_axis",
+      "points": [
+        [
+          88,
+          139
+        ],
+        [
+          106,
+          141
+        ],
+        [
+          126,
+          144
+        ],
+        [
+          146,
+          148
+        ]
+      ],
+      "stroke_id": "head_cross_axis",
+      "confidence": 0.91,
+      "layer": 18,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.36,
+          "width": 1.25,
+          "opacity": 0.48
+        }
+      },
+      "observation_id": "grammar-p2-head-axis",
+      "source_observation": "P2 head cross-axis communicates turn/tilt without facial detail."
+    },
+    {
+      "action_id": "P2X-005",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "shoulder_axis",
+      "points": [
+        [
+          48,
+          249
+        ],
+        [
+          84,
+          239
+        ],
+        [
+          123,
+          229
+        ],
+        [
+          163,
+          219
+        ],
+        [
+          199,
+          215
+        ]
+      ],
+      "stroke_id": "shoulder_axis",
+      "confidence": 0.94,
+      "layer": 18,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "HB",
+        "overrides": {
+          "pressure": 0.42,
+          "width": 1.45,
+          "opacity": 0.58
+        }
+      },
+      "observation_id": "grammar-p2-shoulder",
+      "source_observation": "Primary shoulder axis only; no ribcage side contour."
+    },
+    {
+      "action_id": "P2X-006",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "pelvis_axis",
+      "points": [
+        [
+          54,
+          466
+        ],
+        [
+          85,
+          473
+        ],
+        [
+          118,
+          481
+        ],
+        [
+          151,
+          489
+        ],
+        [
+          184,
+          498
+        ]
+      ],
+      "stroke_id": "pelvis_axis",
+      "confidence": 0.94,
+      "layer": 18,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "HB",
+        "overrides": {
+          "pressure": 0.42,
+          "width": 1.45,
+          "opacity": 0.58
+        }
+      },
+      "observation_id": "grammar-p2-pelvis",
+      "source_observation": "Primary pelvis axis only; no closed pelvis mass."
+    },
+    {
+      "action_id": "P2X-007",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "left_arm_axis",
+      "points": [
+        [
+          48,
+          249
+        ],
+        [
+          31,
+          325
+        ],
+        [
+          35,
+          393
+        ],
+        [
+          52,
+          449
+        ]
+      ],
+      "stroke_id": "left_arm_axis",
+      "confidence": 0.88,
+      "layer": 16,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.32,
+          "width": 1.25,
+          "opacity": 0.44
+        }
+      },
+      "observation_id": "grammar-p2-left-arm",
+      "source_observation": "Single arm direction chain, not a two-sided limb contour."
+    },
+    {
+      "action_id": "P2X-008",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "right_arm_axis",
+      "points": [
+        [
+          199,
+          215
+        ],
+        [
+          230,
+          288
+        ],
+        [
+          232,
+          348
+        ],
+        [
+          213,
+          414
+        ],
+        [
+          184,
+          469
+        ]
+      ],
+      "stroke_id": "right_arm_axis",
+      "confidence": 0.88,
+      "layer": 16,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.32,
+          "width": 1.25,
+          "opacity": 0.44
+        }
+      },
+      "observation_id": "grammar-p2-right-arm",
+      "source_observation": "Bent arm direction chain only."
+    },
+    {
+      "action_id": "P2X-009",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "support_leg_axis",
+      "points": [
+        [
+          82,
+          474
+        ],
+        [
+          86,
+          590
+        ],
+        [
+          89,
+          704
+        ],
+        [
+          90,
+          819
+        ],
+        [
+          90,
+          944
+        ]
+      ],
+      "stroke_id": "support_leg_axis",
+      "confidence": 0.91,
+      "layer": 17,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.32,
+          "width": 1.25,
+          "opacity": 0.44
+        }
+      },
+      "observation_id": "grammar-p2-support-leg",
+      "source_observation": "Single support-leg axis preserves P1 support role."
+    },
+    {
+      "action_id": "P2X-010",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "counter_leg_axis",
+      "points": [
+        [
+          158,
+          492
+        ],
+        [
+          177,
+          604
+        ],
+        [
+          196,
+          716
+        ],
+        [
+          215,
+          830
+        ],
+        [
+          235,
+          958
+        ]
+      ],
+      "stroke_id": "counter_leg_axis",
+      "confidence": 0.91,
+      "layer": 17,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "2H",
+        "overrides": {
+          "pressure": 0.32,
+          "width": 1.25,
+          "opacity": 0.44
+        }
+      },
+      "observation_id": "grammar-p2-counter-leg",
+      "source_observation": "Single counterbalance-leg axis opens away from support."
+    },
+    {
+      "action_id": "P2X-011",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "support_endpoint_tick",
+      "points": [
+        [
+          84,
+          946
+        ],
+        [
+          96,
+          943
+        ]
+      ],
+      "stroke_id": "support_endpoint_tick",
+      "confidence": 0.75,
+      "layer": 14,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "4H",
+        "overrides": {
+          "pressure": 0.16,
+          "width": 0.9,
+          "opacity": 0.2
+        }
+      },
+      "observation_id": "grammar-p2-support-tick",
+      "source_observation": "Tiny endpoint tick; not a foot block."
+    },
+    {
+      "action_id": "P2X-012",
+      "kind": "draw_stroke",
+      "stage": "P2_primary_axes",
+      "role": "construction",
+      "part": "counter_endpoint_tick",
+      "points": [
+        [
+          229,
+          960
+        ],
+        [
+          241,
+          956
+        ]
+      ],
+      "stroke_id": "counter_endpoint_tick",
+      "confidence": 0.75,
+      "layer": 14,
+      "tool": {
+        "preset": "construction_pencil",
+        "grade": "4H",
+        "overrides": {
+          "pressure": 0.16,
+          "width": 0.9,
+          "opacity": 0.2
+        }
+      },
+      "observation_id": "grammar-p2-counter-tick",
+      "source_observation": "Tiny endpoint tick; not a foot block."
+    }
+  ]
+}
