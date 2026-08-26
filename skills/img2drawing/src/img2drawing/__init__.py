@@ -25,10 +25,6 @@ from .exemplar.audit import (
     ExemplarAuditFinding, ExemplarAuditRecord, ExemplarAuditRegistry, ExemplarAuditError,
     load_exemplar_audit_registry,
 )
-from .exemplar.sync import (
-    DEFAULT_EXEMPLAR_FILES, ExemplarTreeSyncReport, ExemplarTreeSyncError,
-    compare_exemplar_trees, assert_exemplar_trees_synced,
-)
 from .exemplar.ablation import (
     ABLATION_CONDITIONS, ModularGrammarCard, consume_grammar_card, AblationTrial,
     ExemplarAblationReport, run_exemplar_ablation,
@@ -86,8 +82,6 @@ __all__=[
     "PropTopologyObservation","PropTopologyIntegrityError",
     "PropTopologyComparison","compare_prop_topology",
     "ExemplarAuditFinding","ExemplarAuditRecord","ExemplarAuditRegistry","ExemplarAuditError","load_exemplar_audit_registry",
-    "DEFAULT_EXEMPLAR_FILES","ExemplarTreeSyncReport","ExemplarTreeSyncError",
-    "compare_exemplar_trees","assert_exemplar_trees_synced",
     "ABLATION_CONDITIONS","ModularGrammarCard","consume_grammar_card","AblationTrial",
     "ExemplarAblationReport","run_exemplar_ablation",
 ]

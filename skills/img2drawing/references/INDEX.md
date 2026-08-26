@@ -9,4 +9,4 @@
 - `figure/`: gesture, joints, attached objects.
 - `observation/`: visual-observation policy.
 - `pencil/`: material guidance.
-- `../exemplars/full_body_croquis/audit_manifest.json`: frozen-contract audit status of the bundled P1–P5 grammar exemplars.
+- `../src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`: frozen-contract audit status of the bundled P1–P5 grammar exemplars.

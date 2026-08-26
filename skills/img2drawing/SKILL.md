@@ -161,17 +161,17 @@ Bundled grammar exemplars are audited against the frozen StageContract and bound
 Audit is **Agent-authored visual judgement**. Runtime code does not look at pixels and auto-decide PASS/FAIL; it only verifies that the stored audit still points to the same image and contract.
 
 Per-stage status drifts as exemplars are fixed and re-audited, so it is not restated here.
-Check `exemplars/full_body_croquis/audit_manifest.json` directly before trusting any exemplar.
-The P2 exemplar is the corrected axes-only one, reproducible from
-`exemplars/full_body_croquis/sources/p2_axes_v2.json`.
+Check `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json` directly
+before trusting any exemplar. The P2 exemplar is the corrected axes-only one,
+reproducible from `src/img2drawing/data/exemplars/full_body_croquis/sources/p2_axes_v2.json`.
 
 When an exemplar audit is `FAIL`, `worker_packet.md` contains a **KNOWN GRAMMAR EXEMPLAR DEFECT** warning. The worker must obey the frozen StageContract and use the failed exemplar only with the listed hazards in mind.
 
 FAIL exemplars are excluded from the mandatory `grammar_vs_drawing` path and
 remain negative/reference warnings only. A PASS exemplar without a completed A/B/C
-ablation is `unproven_until_ablation`, not a guaranteed positive control. The
-canonical authoring tree is `exemplars/full_body_croquis/`; packaged copies are
-derived and must pass `compare_exemplar_trees()` hash synchronization.
+ablation is `unproven_until_ablation`, not a guaranteed positive control. There is
+one exemplar tree, `src/img2drawing/data/exemplars/full_body_croquis/`; it is
+both the authored source and what the runtime loads.
 
 ## Reference authority
 Before reviewing a stage, classify every image by role:

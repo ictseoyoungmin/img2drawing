@@ -48,4 +48,4 @@ The worker should answer:
 - Does the grammar exemplar itself appear to violate the frozen contract?
 
 The bundled P1–P5 exemplar images are audited against these contracts; see the
-grammar exemplar audit in `SKILL.md` and `exemplars/full_body_croquis/audit_manifest.json`.
+grammar exemplar audit in `SKILL.md` and `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`.
