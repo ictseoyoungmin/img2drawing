@@ -8,13 +8,13 @@
   ],
   "corrections": [],
   "decision": "revise",
-  "drawing_artifact_sha256": "8cfe5fd188ea82e1fd6c7a29f8b904ae18f9375bfb925427b11330b53ffab899",
+  "drawing_artifact_sha256": "2be260ca2b0a278301670a0721fd9ff96f086415057e6ad4c61383f2eb8c568f",
   "drawing_findings": [
-    "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
-    "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+    "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
+    "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
     "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
   ],
-  "drawing_state_sha256": "15ea7b0f54c23170aab25078dc5bc14a856e4a29f64d8eca68409f4b4488d79d",
+  "drawing_state_sha256": "a055bcdf5788046ed782682e9a15746ec54f05093af2a0d3b5f74cb260a5091e",
   "grammar_findings": [
     "P1 is being judged against the frozen contract, not against an example drawing.",
     "Joint centres were read from the subject rather than copied from the pipeline overview sheet."
@@ -62,12 +62,12 @@
     "The drawing stays inside the P1.v3 representation boundary.",
     "No facial features beyond the centreline and eye line, no hair, clothing, muscle or closed volume.",
     "Face centreline, spine centreline and line of action are three separate strokes.",
-    "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+    "The subject's cranium is measurably wider than the ellipse drawn in pass 1 and sits further image-right.",
     "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out.",
     "P1 is being judged against the frozen contract, not against an example drawing.",
     "Joint centres were read from the subject rather than copied from the pipeline overview sheet.",
-    "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
-    "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+    "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
+    "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
     "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
   ],
   "parent_review_digest": null,
@@ -76,15 +76,15 @@
     "subject_reference"
   ],
   "remaining_concerns": [
-    "facial centreline is a plain vertical line and states no face rotation",
-    "head therefore reads as frontal while the subject's head is turned"
+    "cranium outline is a borrowed ellipse, not this head's measured width",
+    "eye line and facial centreline therefore sit inside the face instead of across the head"
   ],
   "schema": "img2drawing.stage_review.v6",
   "semantic_authority": "agent",
   "stage": "P1_gesture",
   "stage_contract_id": "full_body_croquis.P1.v3",
   "subject_findings": [
-    "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+    "The subject's cranium is measurably wider than the ellipse drawn in pass 1 and sits further image-right.",
     "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out."
   ],
   "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",

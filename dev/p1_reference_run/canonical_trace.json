@@ -11,8 +11,8 @@
   "pass1": {
     "decision": "revise",
     "remaining_concerns": [
-      "facial centreline is a plain vertical line and states no face rotation",
-      "head therefore reads as frontal while the subject's head is turned"
+      "cranium outline is a borrowed ellipse, not this head's measured width",
+      "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "local_review_ids": [
       "P1_gesture:pass_01:head_face",
@@ -24,15 +24,15 @@
     {
       "action_id": "EX-P1-R1",
       "kind": "replace_stroke",
-      "target": "facial_centreline"
+      "target": "head_outline"
     }
   ],
   "pass2": {
     "memory_state": "revision_continuation",
-    "parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+    "parent_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
     "carried_concerns": [
-      "facial centreline is a plain vertical line and states no face rotation",
-      "head therefore reads as frontal while the subject's head is turned"
+      "cranium outline is a borrowed ellipse, not this head's measured width",
+      "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "inter_pass_correction_action_ids": [
       "EX-P1-R1"
@@ -47,9 +47,9 @@
     "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md"
   },
   "review_chain": {
-    "pass1_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
-    "pass2_parent_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
-    "pass2_digest": "2149ff3232ec29b48ac92c8695e7cae3af53657dce6dc57f4a07890146c39366"
+    "pass1_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
+    "pass2_parent_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
+    "pass2_digest": "4f7d1267b6a52767b3fbaf97eef7b9ed3a092afdf00a2e45bd0de111be15bf4d"
   },
   "current_stage": "P2_primary_axes",
   "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."

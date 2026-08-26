@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "ba71db83c4f103fb62997bde8eef26f518cf4eb8854f17edb41863921b9cb833",
+      "artifact_sha256": "3230f9d274e8ab3f3fc58f0b7ab3decba667d0eaf2f802198e678716cac2dc34",
       "history_cursor": 34,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "490a36ba1465e9960de8a7f1f177bdc39df12f9d5f180fa202c5951b75a0596a"
+      "state_sha256": "9555188c96cb0d67b65bb9797d01442192763d469dae2647371ea2dcea7ceafc"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -115,25 +115,25 @@
   "pass_index": 2,
   "pass_memory": {
     "carried_concerns": [
-      "facial centreline is a plain vertical line and states no face rotation",
-      "head therefore reads as frontal while the subject's head is turned"
+      "cranium outline is a borrowed ellipse, not this head's measured width",
+      "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "concern_history": [
       {
         "decision": "revise",
         "pass_index": 1,
         "remaining_concerns": [
-          "facial centreline is a plain vertical line and states no face rotation",
-          "head therefore reads as frontal while the subject's head is turned"
+          "cranium outline is a borrowed ellipse, not this head's measured width",
+          "eye line and facial centreline therefore sit inside the face instead of across the head"
         ],
-        "review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c"
+        "review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a"
       }
     ],
     "correction_history": [
       {
         "pass_index": 1,
         "reported_corrections": [],
-        "review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c"
+        "review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a"
       }
     ],
     "inter_pass_actions": [
@@ -142,10 +142,10 @@
         "history_cursor": 34,
         "is_correction_action": true,
         "kind": "replace_stroke",
-        "part": "facial_centreline",
-        "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+        "part": "head_outline",
+        "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
         "stage": "P1_gesture",
-        "target_stroke_id": "facial_centreline"
+        "target_stroke_id": "head_outline"
       }
     ],
     "inter_pass_correction_actions": [
@@ -154,10 +154,10 @@
         "history_cursor": 34,
         "is_correction_action": true,
         "kind": "replace_stroke",
-        "part": "facial_centreline",
-        "reason": "Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.",
+        "part": "head_outline",
+        "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
         "stage": "P1_gesture",
-        "target_stroke_id": "facial_centreline"
+        "target_stroke_id": "head_outline"
       }
     ],
     "memory_policy": [
@@ -169,11 +169,11 @@
     "next_pass_index": 2,
     "previous_decision": "revise",
     "previous_remaining_concerns": [
-      "facial centreline is a plain vertical line and states no face rotation",
-      "head therefore reads as frontal while the subject's head is turned"
+      "cranium outline is a borrowed ellipse, not this head's measured width",
+      "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "previous_reported_corrections": [],
-    "previous_review_digest": "c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c",
+    "previous_review_digest": "fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a",
     "prior_review_count": 1,
     "reopen_context": null,
     "schema": "img2drawing.stage_pass_memory.v2",

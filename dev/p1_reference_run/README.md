@@ -23,6 +23,7 @@ python3 dev/p1_reference_run/build.py
 | `run/timelapse/manifest.json` | frame-to-action provenance |
 | `canonical_trace.json` | the example's own trace, validating against `dev/schemas/canonical_example_trace.schema.json` |
 | `compare.png`, `overlay.png` | raw-render comparison and the translucent-paper overlay |
+| `head-revise.png` | the pass-1 ellipse and the pass-2 measured outline, both over the subject |
 
 `run/timelapse/frames/` is deleted after the GIF is built; it regenerates from the
 checkpoint.
@@ -32,10 +33,14 @@ checkpoint.
 `P1 draw → prepare review → Agent-selected local reviews → REVISE → explicit
 replace_stroke → fresh review → pass-memory continuation → ADVANCE`, then `finish()`.
 
-Pass 1 draws the facial centreline dead down the cranium midline — a form the P1.v3
-contract forbids because it states no face rotation. Review catches it, the correction
-replaces the structure rather than nudging it, and pass 2 clears the carried concerns and
-runs a residual sweep before advancing.
+Pass 1 stands a borrowed narrow ellipse in for the cranium — the form the P1.v3 contract
+forbids as "a generic ellipse standing in for an observed head or foot". It is about a
+third too narrow and sits left of the subject's head, so its edge cuts through her eye and
+its lower end stops at the mouth. Review catches it against the subject, the correction
+**replaces** the structure rather than nudging it, and pass 2 clears the carried concerns
+and runs a residual sweep before advancing.
+
+`head-revise.png` shows both passes laid over the subject.
 
 ## Reading the result
 

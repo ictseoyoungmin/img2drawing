@@ -3,22 +3,22 @@
 ## Stage pass memory
 - state: **revision_continuation**
 - prior review count: 1
-- parent review digest: `c7c55988bac7cd8b40418096ee810f289ee757dd18cf1e74d0cde66ea7e1e76c`
+- parent review digest: `fe63ed9ac5316e432b6123621f161c4094220999f80bd5f170373c7df8bc1c5a`
 - previous decision: **revise**
 
 ### Previous remaining concerns
-- facial centreline is a plain vertical line and states no face rotation
-- head therefore reads as frontal while the subject's head is turned
+- cranium outline is a borrowed ellipse, not this head's measured width
+- eye line and facial centreline therefore sit inside the face instead of across the head
 
 ### Previous reported corrections
 - _none_
 
 ### Inter-pass actions since the previous review
-- `EX-P1-R1` replace_stroke / facial_centreline — Pass 1 drew the facial centreline flat, which the P1 contract forbids. Replaced with a curve that passes the nose and exits toward the chin.
+- `EX-P1-R1` replace_stroke / head_outline — Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.
 
 ### Carried concerns for this pass
-- facial centreline is a plain vertical line and states no face rotation
-- head therefore reads as frontal while the subject's head is turned
+- cranium outline is a borrowed ellipse, not this head's measured width
+- eye line and facial centreline therefore sit inside the face instead of across the head
 
 ### Memory policy
 - Start the next pass by re-checking carried_concerns against fresh artifacts.

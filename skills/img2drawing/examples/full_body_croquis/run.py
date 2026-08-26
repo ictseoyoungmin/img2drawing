@@ -150,14 +150,16 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # midline — a contract-forbidden form — so the example demonstrates a real
     # revise cycle instead of a cosmetic one.
     # ------------------------------------------------------------------
-    initial_face_centreline=[[253,34],[253,55],[253,76],[253,97],[253,118]]
+    # Pass 1's error, and a real one: a borrowed narrow ellipse standing in for
+    # this subject's cranium. The P1 contract forbids exactly this.
+    initial_head_outline=[[253,34], [263,38], [271,48], [275,62], [273,80], [266,102], [257,116], [253,118],
+             [248,116], [240,102], [234,80], [232,62], [236,46], [244,37], [253,34]]
 
     run.draw_many([
         _stroke(
             "EX-P1-A1",
             "head_outline",
-            [[253,34], [263,38], [271,48], [275,62], [273,80], [266,102], [257,116], [253,118],
-             [248,116], [240,102], [234,80], [232,62], [236,46], [244,37], [253,34]],
+            initial_head_outline,
             grade="HB",
             pressure=0.52,
             width=2.3,
@@ -167,7 +169,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-A2",
             "facial_centreline",
-            initial_face_centreline,
+            [[258,32], [259,50], [259,70], [258,88], [261,104], [263,120]],
             grade="B",
             pressure=.66,
             width=2.8,
@@ -177,7 +179,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         _stroke(
             "EX-P1-A3",
             "eye_line",
-            [[233,71], [243,73], [253,74], [264,73], [275,70]],
+            [[233,67], [245,70], [258,71], [272,70], [290,66]],
             grade="HB",
             pressure=0.48,
             width=2.15,
@@ -495,7 +497,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # Agent-selected local evidence. Runtime does not locate anatomy.
     head1=run.prepare_local_review(
         label="head_face",
-        intent="Check crown, facial-centreline curvature and the nose pass against the subject.",
+        intent="Check cranium width, crown position and the nose pass against the subject.",
         subject_box=(300,20,450,200),
         drawing_box=(222,20,288,132),
     )
@@ -513,7 +515,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "Face centreline, spine centreline and line of action are three separate strokes.",
         ],
         subject_findings=[
-            "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+            "The subject's cranium is measurably wider than the ellipse drawn in pass 1 and sits further image-right.",
             "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out.",
         ],
         grammar_findings=[
@@ -521,15 +523,15 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "Joint centres were read from the subject rather than copied from the pipeline overview sheet.",
         ],
         drawing_findings=[
-            "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
-            "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+            "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
+            "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
             "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register.",
         ],
         local_review_ids=[head1.local_review_id,pelvis1.local_review_id],
         corrections=[],
         remaining_concerns=[
-            "facial centreline is a plain vertical line and states no face rotation",
-            "head therefore reads as frontal while the subject's head is turned",
+            "cranium outline is a borrowed ellipse, not this head's measured width",
+            "eye line and facial centreline therefore sit inside the face instead of across the head",
         ],
         decision="revise",
     )
@@ -540,26 +542,23 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # A forbidden representation was found, not a small inaccuracy: the fix
     # replaces the structure rather than nudging it.
     # ------------------------------------------------------------------
-    corrected_face_centreline=[
-        [252,34],     # crown
-        [256,54],
-        [258,73],     # brow, sitting right of the cranium midline
-        [258,90],     # nose
-        [256,106],
-        [254,118],    # chin, on the observed jaw
+    corrected_head_outline=[
+        [258,32], [272,36], [283,46], [290,60], [291,76], [285,96], [274,112], [264,120],
+        [252,116], [241,102], [234,84], [232,64], [238,46], [247,36], [258,32]
     ]
     run.draw(_replace(
         "EX-P1-R1",
-        "facial_centreline",
-        corrected_face_centreline,
+        "head_outline",
+        corrected_head_outline,
         reason=(
-            "Pass 1 drew the facial centreline flat, which the P1 contract forbids. "
-            "Replaced with a curve that passes the nose and exits toward the chin."
+            "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 "
+            "contract forbids. Replaced with the head outline measured on the subject: "
+            "wider, centred right of where the ellipse sat, and asymmetric."
         ),
-        pressure=.66,
-        width=2.8,
-        opacity=.84,
-        grade="B",
+        pressure=.52,
+        width=2.3,
+        opacity=.66,
+        grade="HB",
     ))
 
     # ------------------------------------------------------------------
@@ -569,7 +568,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
 
     head2=run.prepare_local_review(
         label="head_face",
-        intent="Re-check the carried facial-centreline concern after EX-P1-R1.",
+        intent="Re-check the carried cranium-width concern after EX-P1-R1.",
         subject_box=(300,20,450,200),
         drawing_box=(222,20,288,132),
     )
@@ -588,8 +587,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     assert pass2_memory["state"]=="revision_continuation"
     assert pass2_memory["previous_decision"]=="revise"
     assert pass2_memory["carried_concerns"]==[
-        "facial centreline is a plain vertical line and states no face rotation",
-        "head therefore reads as frontal while the subject's head is turned",
+        "cranium outline is a borrowed ellipse, not this head's measured width",
+        "eye line and facial centreline therefore sit inside the face instead of across the head",
     ]
     assert [
         a["action_id"] for a in pass2_memory["inter_pass_correction_actions"]
@@ -602,8 +601,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "Face centreline, spine centreline and line of action remain three separate strokes.",
         ],
         subject_findings=[
-            "The facial centreline now curves across the head and passes the nose where the subject's does.",
-            "Head direction now agrees with the subject at P1 abstraction.",
+            "The head outline now matches the subject's measured cranium width and position.",
+            "The eye line and facial centreline now cross the whole head rather than sitting inside the face.",
         ],
         grammar_findings=[
             "Stage grammar stays subordinate to the frozen contract and subject geometry.",
@@ -615,7 +614,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ],
         local_review_ids=[head2.local_review_id,pelvis2.local_review_id],
         corrections=[
-            "Replaced the flat facial centreline with a curve through crown, nose and chin.",
+            "Replaced the borrowed ellipse with the head outline measured on the subject.",
         ],
         remaining_concerns=[],
         decision="advance",
@@ -631,7 +630,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         "version":__import__("img2drawing").__version__,
         "example":"full_body_croquis",
         "stage":"P1_gesture",
-        "initial_dominant_path_start":initial_face_centreline[0],
+        "initial_dominant_path_start":initial_head_outline[0],
         "initial_dominant_path_start_semantics":"crown",
         "pass1":{
             "decision":pass1.decision,
@@ -645,7 +644,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             {
                 "action_id":"EX-P1-R1",
                 "kind":"replace_stroke",
-                "target":"facial_centreline",
+                "target":"head_outline",
             }
         ],
         "pass2":{
