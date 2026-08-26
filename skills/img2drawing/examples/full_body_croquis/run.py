@@ -135,139 +135,306 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # ------------------------------------------------------------------
     run.stage_start("P1_gesture")
 
-    # P1 settles how the figure stands: one dominant line of action plus head
-    # tilt, shoulder/pelvis tilt, limb directions and ground contact. Pass 1 is
-    # intentionally weak at the head tilt and the pelvis transfer so the example
-    # demonstrates a real revise cycle.
-    initial_dominant=[
-        [187,90],     # neck
-        [184,112],
-        [181,142],
-        [179,192],    # lower-torso lean: deliberately too straight in pass 1
-        [177,238],
-        [175,266],    # pelvis transfer: deliberately weak
-        [170,306],
-        [166,358],
-        [166,415],
-        [169,482],
-        [172,536],    # image-left foot contact
-    ]
+    # ------------------------------------------------------------------
+    # P1 / PASS 1 — a whole-body pose hypothesis, per the P1.v3 contract.
+    #
+    # Three distinct lines, never merged: the facial centreline explains face
+    # rotation, the spine centreline explains body gesture, and the line of
+    # action carries the whole figure's energy to the ground.
+    #
+    # Pass 1 deliberately draws the facial centreline as a plain vertical line
+    # — a contract-forbidden failure mode — so the example demonstrates a real
+    # revise cycle instead of a cosmetic one.
+    # ------------------------------------------------------------------
+    initial_face_centreline=[[186,23],[186,40],[186,56],[186,73],[186,90]]
 
     run.draw_many([
         _stroke(
             "EX-P1-A1",
             "line_of_action",
-            initial_dominant,
+            [[208,12],[199,58],[190,120],[180,196],[171,276],[167,360],[170,450],[176,548]],
             role="gesture",
-            pressure=.40,
-            width=1.85,
-            opacity=.58,
+            pressure=.26,
+            width=1.35,
+            opacity=.36,
             grade="HB",
             confidence=.92,
             source=(
-                "Observed line of action from the head through the pelvis to the "
-                "image-left weight-bearing foot."
+                "Whole-figure energy: enters above the head, crosses the body and lands "
+                "ahead of the image-left weight-bearing foot. Not the spine."
             ),
         ),
         _stroke(
             "EX-P1-A2",
             "head_ovoid",
-            [[189,16],[199,20],[206,30],[210,45],[210,61],[206,76],[199,86],
-             [189,90],[179,86],[172,76],[168,61],[168,45],[172,30],[179,20],[189,16]],
-            pressure=.20,
+            [[186,22],[194,25],[201,36],[204,56],[201,76],[194,87],[186,90],[178,87],[171,76],
+             [168,56],[171,36],[178,25],[186,22]],
+            role="construction",
+            pressure=0.2,
             width=1.12,
-            opacity=.27,
-            source="Simple head ovoid sized from the subject's head bounds.",
+            opacity=0.27,
+            source="Cranial ovoid sized from the skull, not from the hair silhouette.",
         ),
         _stroke(
             "EX-P1-A3",
-            "head_tilt_mark",
-            [[176,44],[203,41]],
-            pressure=.16,
-            width=1.02,
-            opacity=.20,
-            source="Light cross mark stating head tilt only; no facial features.",
+            "facial_centreline",
+            initial_face_centreline,
+            pressure=.26,
+            width=1.25,
+            opacity=.34,
+            source="Facial centreline crown -> nose -> chin. Pass 1 draws it flat on purpose.",
         ),
         _stroke(
             "EX-P1-A4",
-            "shoulder_tilt",
-            [[148,113],[167,106],[190,104],[212,104],[228,108]],
-            pressure=.19,
-            width=1.10,
-            opacity=.24,
-            source="Shoulder line as a tilt cue; the subject's image-right shoulder sits higher.",
+            "eye_line_cross",
+            [[169,55],[176,52],[183,51],[192,52],[202,55]],
+            role="construction",
+            pressure=0.16,
+            width=1.02,
+            opacity=0.2,
+            source="Eye line stating head tilt; no facial features.",
         ),
         _stroke(
             "EX-P1-A5",
-            "pelvis_tilt",
-            [[152,223],[171,219],[192,220],[206,223],[216,227]],
-            pressure=.19,
-            width=1.10,
-            opacity=.24,
-            source="Pelvis line as a tilt cue; no pelvis mass.",
-        ),
-        _stroke(
-            "EX-P1-A11",
-            "torso_envelope_left",
-            [[153,118],[147,150],[148,181],[156,208],[159,224]],
-            pressure=.16,
-            width=1.04,
-            opacity=.20,
-            source="Image-left extent of the torso; states silhouette width, not a ribcage mass.",
-        ),
-        _stroke(
-            "EX-P1-A12",
-            "torso_envelope_right",
-            [[223,113],[229,146],[227,179],[218,206],[214,226]],
-            pressure=.16,
-            width=1.04,
-            opacity=.20,
-            source="Image-right extent of the torso; states silhouette width, not a ribcage mass.",
+            "spine_centreline",
+            [[185,94],[182,120],[179,155],[178,192],[181,226]],
+            role="construction",
+            pressure=0.24,
+            width=1.2,
+            opacity=0.3,
+            source="Separate S-curve starting behind the neck, through mid-back, waist and sacrum.",
         ),
         _stroke(
             "EX-P1-A6",
-            "arm_direction_left",
-            [[149,113],[142,155],[138,197],[132,252],[127,318]],
-            pressure=.15,
-            width=1.02,
-            opacity=.19,
-            source="Image-left arm axis inside the cardigan silhouette; hand emerges low.",
+            "shoulder_line",
+            [[150,112],[168,107],[188,105],[208,104],[226,107]],
+            role="construction",
+            pressure=0.19,
+            width=1.1,
+            opacity=0.24,
+            source="Shoulder line stating tilt and rotation.",
         ),
         _stroke(
             "EX-P1-A7",
-            "arm_direction_right",
-            [[226,109],[245,148],[250,188],[232,216],[216,232]],
-            pressure=.15,
-            width=1.02,
-            opacity=.19,
-            source="Image-right arm bends forward; the hand meets the waistband.",
+            "pelvis_centreline",
+            [[156,227],[172,224],[188,223],[209,225]],
+            role="construction",
+            pressure=0.19,
+            width=1.1,
+            opacity=0.24,
+            source="Pelvis centreline stating tilt.",
         ),
         _stroke(
             "EX-P1-A8",
-            "leg_direction_right",
-            [[206,226],[211,292],[214,358],[228,442],[240,520]],
-            pressure=.15,
-            width=1.02,
-            opacity=.18,
-            source="Image-right leg direction path to the ankle; it carries less weight than the image-left leg.",
+            "arm_flow_left",
+            [[150,113],[144,140],[137,168],[134,196],[131,230],[128,266],[126,300]],
+            role="construction",
+            pressure=0.17,
+            width=1.05,
+            opacity=0.21,
+            source="Image-left arm flow following observed curvature, not a straight join.",
         ),
         _stroke(
             "EX-P1-A9",
-            "ground_contact_left",
-            [[150,536],[199,539]],
-            pressure=.17,
+            "arm_flow_right",
+            [[226,108],[240,132],[248,158],[250,187],[240,208],[226,222],[215,231]],
+            role="construction",
+            pressure=0.17,
             width=1.05,
-            opacity=.22,
-            source="Where the image-left foot meets the ground.",
+            opacity=0.21,
+            source="Image-right arm flow; the hand is in the pocket, so its endpoint is inferred.",
         ),
         _stroke(
             "EX-P1-A10",
+            "leg_flow_left",
+            [[156,228],[153,270],[151,310],[151,350],[153,400],[156,455],[159,506]],
+            role="construction",
+            pressure=0.17,
+            width=1.05,
+            opacity=0.21,
+            source="Image-left leg flow to the ankle; this leg carries the weight.",
+        ),
+        _stroke(
+            "EX-P1-A11",
+            "leg_flow_right",
+            [[209,226],[211,270],[213,315],[214,357],[221,410],[230,465],[239,517]],
+            role="construction",
+            pressure=0.17,
+            width=1.05,
+            opacity=0.21,
+            source="Image-right leg flow to the ankle.",
+        ),
+        _stroke(
+            "EX-P1-A12",
+            "torso_mass_left",
+            [[152,116],[145,150],[146,185],[153,213],[157,227]],
+            role="construction",
+            pressure=0.15,
+            width=1.02,
+            opacity=0.18,
+            source="Loose image-left torso extent; no closed ribcage volume.",
+        ),
+        _stroke(
+            "EX-P1-A13",
+            "torso_mass_right",
+            [[224,111],[230,145],[228,182],[218,208],[210,225]],
+            role="construction",
+            pressure=0.15,
+            width=1.02,
+            opacity=0.18,
+            source="Loose image-right torso extent; no closed ribcage volume.",
+        ),
+        _stroke(
+            "EX-P1-A14",
+            "ground_contact_left",
+            [[150,536],[199,539]],
+            role="construction",
+            pressure=0.17,
+            width=1.05,
+            opacity=0.22,
+            source="Image-left foot contact and landing direction.",
+        ),
+        _stroke(
+            "EX-P1-A15",
             "ground_contact_right",
             [[229,554],[285,557]],
-            pressure=.17,
+            role="construction",
+            pressure=0.17,
             width=1.05,
-            opacity=.22,
-            source="Where the image-right foot meets the ground; it lands lower and further out.",
+            opacity=0.22,
+            source="Image-right foot contact; it lands lower and further out.",
+        ),
+        _stroke(
+            "EX-P1-A16",
+            "joint_shoulder_L",
+            [[154,111],[153,114],[151,115],[148,114],[146,112],[146,110],[148,108],[151,107],
+             [153,108],[154,111]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="shoulder L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A17",
+            "joint_shoulder_R",
+            [[230,106],[229,109],[227,110],[224,109],[222,107],[222,105],[224,103],[227,102],
+             [229,103],[230,106]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="shoulder R centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A18",
+            "joint_elbow_L",
+            [[138,195],[137,198],[135,199],[132,198],[130,196],[130,194],[132,192],[135,191],
+             [137,192],[138,195]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="elbow L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A19",
+            "joint_elbow_R",
+            [[254,186],[253,189],[251,190],[248,189],[246,187],[246,185],[248,183],[251,182],
+             [253,183],[254,186]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="elbow R centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A20",
+            "joint_wrist_L",
+            [[130,300],[129,303],[127,304],[124,303],[122,301],[122,299],[124,297],[127,296],
+             [129,297],[130,300]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="wrist L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A21",
+            "joint_wrist_R",
+            [[218,231],[217,234],[215,235],[212,234],[210,232],[210,230],[212,228],[215,227],
+             [217,228],[218,231]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="wrist R centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A22",
+            "joint_hip_L",
+            [[160,226],[159,229],[157,230],[154,229],[152,227],[152,225],[154,223],[157,222],
+             [159,223],[160,226]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="hip L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A23",
+            "joint_hip_R",
+            [[213,224],[212,227],[210,228],[207,227],[205,225],[205,223],[207,221],[210,220],
+             [212,221],[213,224]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="hip R centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A24",
+            "joint_knee_L",
+            [[155,350],[154,353],[152,354],[149,353],[147,351],[147,349],[149,347],[152,346],
+             [154,347],[155,350]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="knee L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A25",
+            "joint_knee_R",
+            [[218,357],[217,360],[215,361],[212,360],[210,358],[210,356],[212,354],[215,353],
+             [217,354],[218,357]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="knee R centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A26",
+            "joint_ankle_L",
+            [[163,506],[162,509],[160,510],[157,509],[155,507],[155,505],[157,503],[160,502],
+             [162,503],[163,506]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="ankle L centre read from the subject.",
+        ),
+        _stroke(
+            "EX-P1-A27",
+            "joint_ankle_R",
+            [[243,517],[242,520],[240,521],[237,520],[235,518],[235,516],[237,514],[240,513],
+             [242,514],[243,517]],
+            role="construction",
+            pressure=0.14,
+            width=1.0,
+            opacity=0.17,
+            source="ankle R centre read from the subject.",
         ),
     ])
 
@@ -276,69 +443,70 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # Agent-selected local evidence. Runtime does not locate anatomy.
     head1=run.prepare_local_review(
         label="head_face",
-        intent="Check head position, tilt and size against the subject.",
-        subject_box=(235,0,495,250),
-        drawing_box=(115,0,248,126),
+        intent="Check crown, facial-centreline curvature and the nose pass against the subject.",
+        subject_box=(300,20,450,200),
+        drawing_box=(150,10,225,100),
     )
     pelvis1=run.prepare_local_review(
         label="pelvis_support",
-        intent="Check pelvis tilt, weight transfer and where both feet land.",
+        intent="Check pelvis tilt, hip joint centres and where both feet land.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
     )
 
     pass1=run.submit_stage_review(
         contract_findings=[
-            "The drawing stays inside the P1 gesture/weight-path contract.",
-            "No facial features, hair, clothing or muscle definition leaked in; P2 joints stay downstream.",
+            "The drawing stays inside the P1.v3 representation boundary.",
+            "No facial features beyond the centreline and eye line, no hair, clothing, muscle or closed volume.",
+            "Face centreline, spine centreline and line of action are three separate strokes.",
         ],
         subject_findings=[
-            "The subject's weight sits on the image-left leg; the pelvis turns into it decisively.",
-            "The subject's upper body leans slightly image-left of the pelvis centre.",
+            "The subject's facial centreline curves across the head and passes the nose off the head's geometric centre.",
+            "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out.",
         ],
         grammar_findings=[
-            "P1 has no example image of its own; the frozen P1 contract is the representation authority.",
-            "Stage grammar is judged against that contract rather than against a reference image.",
+            "P1 is being judged against the frozen contract, not against an example drawing.",
+            "Joint centres were read from the subject rather than copied from the pipeline overview sheet.",
         ],
         drawing_findings=[
-            "The line of action is continuous from the head to the ground contact.",
-            "Its pelvis segment is too vertical, so the weight transfer does not read.",
-            "Through the lower torso it runs straighter than the subject's own lean.",
+            "The facial centreline was drawn as a plain vertical line, so it carries no face rotation.",
+            "Because of that, the head reads as facing straight ahead while the subject's is turned.",
+            "Spine, shoulder, pelvis, both arms, both legs, joint centres and both ground contacts are present and register.",
         ],
         local_review_ids=[head1.local_review_id,pelvis1.local_review_id],
         corrections=[],
         remaining_concerns=[
-            "pelvis segment is too vertical to show which leg carries the weight",
-            "lower-torso lean is straighter than the subject's",
+            "facial centreline is a plain vertical line and states no face rotation",
+            "head therefore reads as frontal while the subject's head is turned",
         ],
         decision="revise",
     )
 
     # ------------------------------------------------------------------
     # CORRECTION BETWEEN PASSES
+    #
+    # A forbidden representation was found, not a small inaccuracy: the fix
+    # replaces the structure rather than nudging it.
     # ------------------------------------------------------------------
-    corrected_dominant=[
-        [187,90],     # neck
-        [184,113],
-        [183,143],
-        [184,193],    # lower-torso lean corrected toward the subject
-        [181,240],
-        [175,262],
-        [166,282],    # clearer directional break into the weight-bearing leg
-        [159,312],
-        [156,362],
-        [158,418],
-        [165,484],
-        [172,536],
+    corrected_face_centreline=[
+        [187,23],     # crown
+        [183,38],
+        [180,53],     # brow
+        [179,68],     # nose: off the ovoid's geometric centre, toward the subject's turn
+        [181,81],
+        [184,91],     # chin
     ]
     run.draw(_replace(
         "EX-P1-R1",
-        "line_of_action",
-        corrected_dominant,
+        "facial_centreline",
+        corrected_face_centreline,
         reason=(
-            "Pass 1 carried two concerns: follow the subject's lower-torso lean and "
-            "make the pelvis handoff into the weight-bearing leg decisive."
+            "Pass 1 drew the facial centreline flat, which the P1 contract forbids. "
+            "Replaced with a curve that passes the nose and exits toward the chin."
         ),
+        pressure=.26,
+        width=1.25,
+        opacity=.34,
     ))
 
     # ------------------------------------------------------------------
@@ -348,13 +516,13 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
 
     head2=run.prepare_local_review(
         label="head_face",
-        intent="Re-check the carried lower-torso lean after EX-P1-R1.",
-        subject_box=(235,0,495,250),
-        drawing_box=(115,0,248,126),
+        intent="Re-check the carried facial-centreline concern after EX-P1-R1.",
+        subject_box=(300,20,450,200),
+        drawing_box=(150,10,225,100),
     )
     pelvis2=run.prepare_local_review(
         label="pelvis_support",
-        intent="Re-check the carried pelvis handoff after EX-P1-R1.",
+        intent="Re-check pelvis tilt and joint centres on the corrected artifact.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
     )
@@ -367,8 +535,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     assert pass2_memory["state"]=="revision_continuation"
     assert pass2_memory["previous_decision"]=="revise"
     assert pass2_memory["carried_concerns"]==[
-        "pelvis segment is too vertical to show which leg carries the weight",
-        "lower-torso lean is straighter than the subject's",
+        "facial centreline is a plain vertical line and states no face rotation",
+        "head therefore reads as frontal while the subject's head is turned",
     ]
     assert [
         a["action_id"] for a in pass2_memory["inter_pass_correction_actions"]
@@ -376,31 +544,32 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
 
     pass2=run.submit_stage_review(
         contract_findings=[
-            "The corrected artifact still stays inside the P1 representation boundary.",
-            "The correction changed the dominant gesture only; no downstream vocabulary was introduced.",
+            "The corrected artifact still stays inside the P1.v3 representation boundary.",
+            "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
+            "Face centreline, spine centreline and line of action remain three separate strokes.",
         ],
         subject_findings=[
-            "The lower-torso lean now follows the subject at P1 abstraction.",
-            "The pelvis now turns into the weight-bearing leg clearly enough to read.",
+            "The facial centreline now curves across the head and passes the nose where the subject's does.",
+            "Head direction now agrees with the subject at P1 abstraction.",
         ],
         grammar_findings=[
             "Stage grammar stays subordinate to the frozen contract and subject geometry.",
         ],
         drawing_findings=[
-            "Both carried pass-1 concerns were re-checked against fresh whole/local artifacts.",
-            "The line of action remains continuous and dominant from head to ground contact.",
-            "No P1-purpose concern remains before introducing P2 axes.",
+            "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
+            "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
+            "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure.",
         ],
         local_review_ids=[head2.local_review_id,pelvis2.local_review_id],
         corrections=[
-            "Re-drew the lower-torso lean of the line of action.",
-            "Strengthened the pelvis handoff into the weight-bearing leg.",
+            "Replaced the flat facial centreline with a curve through crown, nose and chin.",
         ],
         remaining_concerns=[],
         decision="advance",
         advance_rationale=(
-            "Fresh pass-2 evidence clears both carried P1 concerns while preserving "
-            "the frozen P1 contract; P2 primary axes may now be introduced."
+            "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep "
+            "found nothing new; the pose hypothesis registers against the subject, so P2 "
+            "measurement may begin."
         ),
     )
 
@@ -409,8 +578,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         "version":__import__("img2drawing").__version__,
         "example":"full_body_croquis",
         "stage":"P1_gesture",
-        "initial_dominant_path_start":initial_dominant[0],
-        "initial_dominant_path_start_semantics":"neck",
+        "initial_dominant_path_start":initial_face_centreline[0],
+        "initial_dominant_path_start_semantics":"crown",
         "pass1":{
             "decision":pass1.decision,
             "remaining_concerns":list(pass1.remaining_concerns),
@@ -423,7 +592,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             {
                 "action_id":"EX-P1-R1",
                 "kind":"replace_stroke",
-                "target":"line_of_action",
+                "target":"facial_centreline",
             }
         ],
         "pass2":{
