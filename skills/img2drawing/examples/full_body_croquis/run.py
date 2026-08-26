@@ -227,14 +227,12 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         intent="Check facial-centre curvature and unequal left/right head masses.",
         subject_box=(235,0,495,250),
         drawing_box=(115,0,248,126),
-        grammar_box=(25,20,255,285),
     )
     pelvis1=run.prepare_local_review(
         label="pelvis_support",
         intent="Check pelvis-to-support-leg directional handoff and weight transfer.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
-        grammar_box=(15,390,275,1070),
     )
 
     pass1=run.submit_stage_review(
@@ -247,8 +245,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "The subject's pelvis-to-image-left support transfer changes direction more decisively than pass 1.",
         ],
         exemplar_findings=[
-            "The bundled P1 grammar exemplar is a known failed exemplar; its pose is not copied.",
-            "Only its broad gesture economy is used where it does not conflict with the frozen P1 contract.",
+            "P1 ships no grammar exemplar, so the frozen P1 contract is the only representation authority.",
+            "Stage grammar is judged against that contract rather than against a reference image.",
         ],
         drawing_findings=[
             "The dominant line correctly starts at the crown and remains continuous to the support landing.",
@@ -305,14 +303,12 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         intent="Re-check the carried face-direction concern after EX-P1-R1.",
         subject_box=(235,0,495,250),
         drawing_box=(115,0,248,126),
-        grammar_box=(25,20,255,285),
     )
     pelvis2=run.prepare_local_review(
         label="pelvis_support",
         intent="Re-check the carried pelvis/support concern after EX-P1-R1.",
         subject_box=(190,430,570,1145),
         drawing_box=(95,215,286,575),
-        grammar_box=(15,390,275,1070),
     )
 
     pass2_memory=json.loads(

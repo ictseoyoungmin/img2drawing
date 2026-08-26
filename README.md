@@ -39,16 +39,16 @@ recorded and replayable.
 
 Pre-1.0 (`0.5.2`, release slice R22). The core pipeline, dual-reference review,
 pass-memory continuity, reopen/recovery, and fresh-worker autonomy are dogfooded and
-working. The bundled grammar-exemplar images for P1, P4 and P5 are still known-failing
-against their own contracts (see the grammar exemplar audit in
-[`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md)) — the runtime warns the
-agent about this at review time, but a full contribution replacing those exemplars is
-still open work. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
+working. Grammar exemplars ship only for P2 and P3; the P1, P4 and P5 exemplars failed
+their own contract audits and were removed rather than shipped with a warning, so those
+stages are currently governed by their frozen StageContract alone. Authoring replacement
+exemplars for them is open work. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
 
 ## Requirements
 
 - Python 3.10+
-- `numpy`, `Pillow`, `svgwrite`, `jsonschema` (installed automatically)
+- `numpy`, `Pillow`, `svgwrite` (installed automatically); `pytest`, `jsonschema` for the
+  `dev/` test suite (`pip install "skills/img2drawing/[dev]"`)
 - A coding agent that supports Agent Skills (Claude Code, Claude.ai, or similar)
 
 ## Install
@@ -81,14 +81,14 @@ run.stage_start("P1_gesture")
 The agent then observes the subject, authors explicit strokes, calls
 `run.prepare_stage_review()`, inspects the rendered evidence, revises, and advances —
 one stage at a time, without asking for approval between routine passes. See
-[`skills/img2drawing/QUICKSTART.md`](skills/img2drawing/QUICKSTART.md) for the full
-autonomous loop, and [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for
-the complete operating spec.
+[`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for the complete
+autonomous loop and operating spec.
 
-Run the bundled subject-only benchmark:
+Run the bundled subject-only benchmark (dev-side regression fixture, not part of the
+shipped skill):
 
 ```bash
-python skills/img2drawing/benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_smoke.py
+python dev/benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_smoke.py
 ```
 
 ## How it's organized
@@ -100,9 +100,13 @@ python skills/img2drawing/benchmarks/stage_reconstruction/full_body_croquis_subj
 │   └── entries/       # one page and its display assets per result
 ├── skills/
 │   └── img2drawing/   # the deployable skill: SKILL.md, runtime source, references,
-│                       # playbooks, schemas, benchmarks — everything that ships
+│                       # playbooks, exemplars — everything that ships
 ├── dev/                # release builds, dogfood runs, verification evidence,
 │   ├── dogfood/        # persistent reproducible runs and continuation records
+│   ├── tests/          # pytest suite for skills/img2drawing's runtime
+│   ├── schemas/        # JSON schemas used by the test suite (not runtime-loaded)
+│   ├── tools/           # dev-side audit scripts (fresh-worker evidence audit, etc.)
+│   ├── benchmarks/      # regression/smoke fixtures for the drawing pipeline
 │   └── ...             # release artifacts, audits, and the changelog
 └── temp/               # ignored scratch space for unpromoted runs
 ```

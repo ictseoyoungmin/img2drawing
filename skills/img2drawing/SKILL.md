@@ -156,22 +156,21 @@ exemplar/contract mismatch in the grammar exemplar audit.
 Read `references/stages/stage-contracts.md`.
 
 ## Grammar Exemplar Audit
-Bundled grammar exemplars are audited against the frozen StageContract and bound to their image SHA-256.
+Not every stage has a grammar exemplar. A stage that has one is audited against the
+frozen StageContract and bound to its image SHA-256; a stage that has none is governed
+by its StageContract alone, and its worker packet says so.
 
 Audit is **Agent-authored visual judgement**. Runtime code does not look at pixels and auto-decide PASS/FAIL; it only verifies that the stored audit still points to the same image and contract.
 
-Per-stage status drifts as exemplars are fixed and re-audited, so it is not restated here.
-Check `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json` directly
-before trusting any exemplar. The P2 exemplar is the corrected axes-only one,
+An exemplar that fails its contract audit is removed from the manifest, not shipped with
+a warning — bundling one raises `ReferenceBundleError`. So every exemplar the worker is
+shown is a usable positive reference, except that a PASS exemplar without a completed
+A/B/C ablation is `unproven_until_ablation` rather than a guaranteed positive control.
+
+Which stages currently have one drifts as exemplars are authored and audited, so it is
+not restated here. Check `src/img2drawing/data/exemplars/full_body_croquis/manifest.json`
+and its `audit_manifest.json` directly. The P2 exemplar is the corrected axes-only one,
 reproducible from `src/img2drawing/data/exemplars/full_body_croquis/sources/p2_axes_v2.json`.
-
-When an exemplar audit is `FAIL`, `worker_packet.md` contains a **KNOWN GRAMMAR EXEMPLAR DEFECT** warning. The worker must obey the frozen StageContract and use the failed exemplar only with the listed hazards in mind.
-
-FAIL exemplars are excluded from the mandatory `grammar_vs_drawing` path and
-remain negative/reference warnings only. A PASS exemplar without a completed A/B/C
-ablation is `unproven_until_ablation`, not a guaranteed positive control. There is
-one exemplar tree, `src/img2drawing/data/exemplars/full_body_croquis/`; it is
-both the authored source and what the runtime loads.
 
 ## Reference authority
 Before reviewing a stage, classify every image by role:
@@ -248,8 +247,8 @@ local = run.prepare_local_review(
     intent="Check pelvis-to-support transfer and counterbalance",
     subject_box=(...),
     drawing_box=(...),
-    grammar_box=(...),
-    # task_target_box=(...) only when the stage has a task target
+    grammar_box=(...),        # only when the stage has a grammar exemplar
+    # task_target_box=(...)   only when the stage has a task target
 )
 ```
 

@@ -613,9 +613,10 @@ class DrawingRun:
         self.save_checkpoint()
         return record
 
-    def _stage_exemplar_path(self,stage: str) -> Path:
+    def _stage_exemplar_path(self,stage: str) -> Path | None:
         """0.5.1 compatibility alias for the grammar exemplar."""
-        return self.references.for_stage(stage).grammar_exemplar.path
+        item=self.references.for_stage(stage).grammar_exemplar
+        return None if item is None else item.path
 
     def _task_stage_target_path(self,stage: str) -> Path | None:
         item=self.references.for_stage(stage).task_stage_target
@@ -657,16 +658,20 @@ class DrawingRun:
 
         stage_refs=self.references.for_stage(stage)
         stage_contract=self.stage_contracts.for_stage(stage)
+        exemplar=stage_refs.grammar_exemplar
         (out/"grammar_exemplar_audit.json").write_text(
             json.dumps({
                 "stage_id":stage,
-                "contract_id":stage_refs.grammar_exemplar.audit_contract_id,
-                "status":stage_refs.grammar_exemplar.audit_status,
-                "findings":list(stage_refs.grammar_exemplar.audit_findings),
-                "note":stage_refs.grammar_exemplar.audit_note,
-                "mandatory_path_policy":stage_refs.grammar_exemplar.to_dict().get("mandatory_path_policy"),
-                "exemplar_path":str(stage_refs.grammar_exemplar.path),
-                "exemplar_sha256":stage_refs.grammar_exemplar.sha256,
+                "contract_id":None if exemplar is None else exemplar.audit_contract_id,
+                "status":"no_exemplar" if exemplar is None else exemplar.audit_status,
+                "findings":[] if exemplar is None else list(exemplar.audit_findings),
+                "note":"" if exemplar is None else exemplar.audit_note,
+                "mandatory_path_policy":(
+                    "no_exemplar" if exemplar is None
+                    else exemplar.to_dict().get("mandatory_path_policy")
+                ),
+                "exemplar_path":None if exemplar is None else str(exemplar.path),
+                "exemplar_sha256":None if exemplar is None else exemplar.sha256,
             },indent=2,ensure_ascii=False,sort_keys=True),
             encoding="utf-8",
         )
@@ -738,7 +743,7 @@ class DrawingRun:
         intent: str,
         subject_box,
         drawing_box,
-        grammar_box,
+        grammar_box=None,
         task_target_box=None,
         stage: str|None=None,
     ) -> LocalReviewArtifacts:

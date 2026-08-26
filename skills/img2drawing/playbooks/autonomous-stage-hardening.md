@@ -38,11 +38,7 @@ Plateau is a signal to improve observation, not to ask the user by default.
 
 
 ## Pass continuity
-Before pass 2+, read the generated `pass_memory.json` / worker-packet memory section.
-
-Start by re-checking carried concerns. Inspect the effect of inter-pass correction
-actions on fresh artifacts. Do not repeat a failed edit merely because the previous
-pass used it, and do not assume an edit succeeded because the action completed.
-
-The review should reduce, retain, or reframe concerns only through explicit Agent
-judgement from fresh evidence.
+Before pass 2+, read the generated `pass_memory.json` / worker-packet memory section
+and start from its carried concerns. See "Worker Pass Memory" in `SKILL.md` and
+`references/review/worker-pass-memory.md` for what that memory carries and what it
+must not be used to infer.

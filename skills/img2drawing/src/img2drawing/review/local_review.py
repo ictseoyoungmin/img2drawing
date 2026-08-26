@@ -111,10 +111,10 @@ class LocalReviewArtifacts:
     history_cursor: int
     subject: LocalCropArtifact
     drawing: LocalCropArtifact
-    grammar: LocalCropArtifact
+    grammar: LocalCropArtifact | None
     task_target: LocalCropArtifact | None
     subject_vs_drawing: Path
-    grammar_vs_drawing: Path
+    grammar_vs_drawing: Path | None
     task_target_vs_drawing: Path | None
     subject_drawing_overlay: Path
     subject_drawing_absdiff: Path
@@ -130,9 +130,10 @@ class LocalReviewArtifacts:
             drawing_state_sha256=str(data["drawing_state_sha256"]), drawing_artifact_sha256=str(data["drawing_artifact_sha256"]),
             history_cursor=int(data["history_cursor"]),
             subject=LocalCropArtifact.from_dict(crops["subject"]), drawing=LocalCropArtifact.from_dict(crops["drawing"]),
-            grammar=LocalCropArtifact.from_dict(crops["grammar"]),
+            grammar=None if crops.get("grammar") is None else LocalCropArtifact.from_dict(crops["grammar"]),
             task_target=None if crops.get("task_target") is None else LocalCropArtifact.from_dict(crops["task_target"]),
-            subject_vs_drawing=Path(comps["subject_vs_drawing"]), grammar_vs_drawing=Path(comps["grammar_vs_drawing"]),
+            subject_vs_drawing=Path(comps["subject_vs_drawing"]),
+            grammar_vs_drawing=None if comps.get("grammar_vs_drawing") is None else Path(comps["grammar_vs_drawing"]),
             task_target_vs_drawing=None if comps.get("task_target_vs_drawing") is None else Path(comps["task_target_vs_drawing"]),
             subject_drawing_overlay=Path(comps["subject_drawing_overlay"]),
             subject_drawing_absdiff=Path(comps["subject_drawing_absdiff"]),
@@ -155,12 +156,12 @@ class LocalReviewArtifacts:
             "crops":{
                 "subject":self.subject.to_dict(),
                 "drawing":self.drawing.to_dict(),
-                "grammar":self.grammar.to_dict(),
+                "grammar":None if self.grammar is None else self.grammar.to_dict(),
                 "task_target":None if self.task_target is None else self.task_target.to_dict(),
             },
             "comparisons":{
                 "subject_vs_drawing":str(self.subject_vs_drawing),
-                "grammar_vs_drawing":str(self.grammar_vs_drawing),
+                "grammar_vs_drawing":None if self.grammar_vs_drawing is None else str(self.grammar_vs_drawing),
                 "task_target_vs_drawing":None if self.task_target_vs_drawing is None else str(self.task_target_vs_drawing),
                 "subject_drawing_overlay":str(self.subject_drawing_overlay),
                 "subject_drawing_absdiff":str(self.subject_drawing_absdiff),
@@ -215,7 +216,7 @@ def build_local_review(
     intent: str,
     subject_box: CropBox | Iterable[int],
     drawing_box: CropBox | Iterable[int],
-    grammar_box: CropBox | Iterable[int],
+    grammar_box: CropBox | Iterable[int] | None,
     task_target_box: CropBox | Iterable[int] | None,
     out_dir: str | Path,
 ) -> LocalReviewArtifacts:
@@ -227,7 +228,6 @@ def build_local_review(
     slug=_slug(label)
     subject_box=CropBox.coerce(subject_box)
     drawing_box=CropBox.coerce(drawing_box)
-    grammar_box=CropBox.coerce(grammar_box)
 
     if stage_review.task_stage_target is not None:
         if task_target_box is None:
@@ -258,12 +258,22 @@ def build_local_review(
         box=drawing_box,
         out=crops/"drawing.png",
     )
-    grammar=_crop(
-        role="grammar_exemplar",
-        source=stage_review.grammar_exemplar,
-        box=grammar_box,
-        out=crops/"grammar.png",
-    )
+    grammar=None
+    if stage_review.grammar_exemplar is not None:
+        if grammar_box is None:
+            raise LocalReviewError(
+                "grammar_box is required because this stage has a grammar exemplar"
+            )
+        grammar=_crop(
+            role="grammar_exemplar",
+            source=stage_review.grammar_exemplar,
+            box=CropBox.coerce(grammar_box),
+            out=crops/"grammar.png",
+        )
+    elif grammar_box is not None:
+        raise LocalReviewError(
+            "grammar_box was supplied but this stage has no grammar exemplar"
+        )
 
     task=None
     if stage_review.task_stage_target is not None:
@@ -279,10 +289,12 @@ def build_local_review(
         subject.crop_path,drawing.crop_path,out/"subject_vs_drawing.png",
         left_label=f"SUBJECT ROI / {label}",right_label="DRAWING ROI",
     )
-    grammar_vs=side_by_side(
-        grammar.crop_path,drawing.crop_path,out/"grammar_vs_drawing.png",
-        left_label=f"GRAMMAR ROI / {label}",right_label="DRAWING ROI",
-    )
+    grammar_vs=None
+    if grammar is not None:
+        grammar_vs=side_by_side(
+            grammar.crop_path,drawing.crop_path,out/"grammar_vs_drawing.png",
+            left_label=f"GRAMMAR ROI / {label}",right_label="DRAWING ROI",
+        )
     subject_overlay=crop_registered_overlay(
         subject.crop_path,drawing.crop_path,out/"subject_drawing_overlay.png"
     )
@@ -297,11 +309,10 @@ def build_local_review(
             left_label=f"TASK TARGET ROI / {label}",right_label="DRAWING ROI",
         )
         items.append(("TASK TARGET ROI",task.crop_path))
-    items.extend([
-        ("SUBJECT ROI",subject.crop_path),
-        ("GRAMMAR ROI",grammar.crop_path),
-        ("DRAWING ROI",drawing.crop_path),
-    ])
+    items.append(("SUBJECT ROI",subject.crop_path))
+    if grammar is not None:
+        items.append(("GRAMMAR ROI",grammar.crop_path))
+    items.append(("DRAWING ROI",drawing.crop_path))
     overview=labeled_multi_way(items,out/"local_reference_overview.png",tile_w=360,tile_h=460)
 
     result=LocalReviewArtifacts(

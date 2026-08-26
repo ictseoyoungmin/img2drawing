@@ -174,20 +174,18 @@ class AutonomousWorkerPacket:
             lines.append("- task stage target: _not provided_")
 
         grammar=refs["grammar_exemplar"]
-        lines += [
-            f"- grammar exemplar: `{grammar['path']}` — representation only",
-            f"- grammar exemplar audit: **{grammar.get('audit_status','not_audited').upper()}**",
-            f"- mandatory-path policy: **{grammar.get('mandatory_path_policy','unspecified')}**",
-        ]
-        if grammar.get("audit_status") == "fail":
+        if grammar is None:
             lines += [
-                "", "### KNOWN GRAMMAR EXEMPLAR DEFECT",
-                "The bundled exemplar failed the frozen stage contract audit. Do not widen or distort the stage to imitate it.",
+                "- grammar exemplar: _none for this stage_ — the frozen stage contract is the only"
+                " representation authority here",
             ]
-            lines += [f"- {x}" for x in grammar.get("audit_findings",())]
-            if grammar.get("audit_note"):
-                lines.append(f"- audit note: {grammar['audit_note']}")
-        elif grammar.get("mandatory_path_policy") == "unproven_until_ablation":
+        else:
+            lines += [
+                f"- grammar exemplar: `{grammar['path']}` — representation only",
+                f"- grammar exemplar audit: **{grammar.get('audit_status','not_audited').upper()}**",
+                f"- mandatory-path policy: **{grammar.get('mandatory_path_policy','unspecified')}**",
+            ]
+        if grammar is not None and grammar.get("mandatory_path_policy") == "unproven_until_ablation":
             lines += [
                 "",
                 "### UNPROVEN GRAMMAR EXEMPLAR",
@@ -285,13 +283,12 @@ def build_worker_packet(
         "stage-contract boundary review",
         "Agent-selected local reviews when whole view is insufficient",
     ]
-    grammar_policy = references.grammar_exemplar.to_dict().get("mandatory_path_policy")
-    if grammar_policy == "negative_reference_warning_only":
-        mandatory.append("grammar_exemplar_negative_warning")
-    elif grammar_policy == "unproven_until_ablation":
-        mandatory.append("grammar_exemplar_unproven_warning")
-    else:
-        mandatory.append("grammar_vs_drawing")
+    if references.grammar_exemplar is not None:
+        grammar_policy = references.grammar_exemplar.to_dict().get("mandatory_path_policy")
+        if grammar_policy == "unproven_until_ablation":
+            mandatory.append("grammar_exemplar_unproven_warning")
+        else:
+            mandatory.append("grammar_vs_drawing")
 
     loop=[
         "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
@@ -308,7 +305,7 @@ def build_worker_packet(
             "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state; do not treat the grammar exemplar as an answer image."
         )
     loop += [
-        "Use the grammar exemplar only for representation vocabulary allowed by the frozen stage contract.",
+        "Use the grammar exemplar, when the stage has one, only for representation vocabulary allowed by the frozen stage contract.",
         "Before drawing, reject vocabulary listed in forbidden_representation.",
         "Draw a bounded set of explicit strokes that serve the current stage ownership.",
         "Render the exact current artifact with prepare_stage_review().",
@@ -334,7 +331,11 @@ def build_worker_packet(
             "method":"DrawingRun.prepare_local_review",
             "selection_authority":"agent_explicit_boxes",
             "auto_detection":False,
-            "required_boxes":["subject_box","drawing_box","grammar_box"],
+            "required_boxes":(
+                ["subject_box","drawing_box","grammar_box"]
+                if references.grammar_exemplar is not None
+                else ["subject_box","drawing_box"]
+            ),
             "task_target_box":"required" if references.task_stage_target is not None else "must_be_omitted",
             "coordinate_space":"source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
             "suggested_intents":list(stage_spec.suggested_crops),

@@ -47,5 +47,6 @@ The worker should answer:
 - Did downstream vocabulary leak in early?
 - Does the grammar exemplar itself appear to violate the frozen contract?
 
-The bundled P1–P5 exemplar images are audited against these contracts; see the
-grammar exemplar audit in `SKILL.md` and `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`.
+Stages that ship a grammar exemplar have it audited against these contracts; stages
+without one are governed by the contract alone. See the grammar exemplar audit in
+`SKILL.md` and `src/img2drawing/data/exemplars/full_body_croquis/audit_manifest.json`.

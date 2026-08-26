@@ -10,7 +10,7 @@ local = run.prepare_local_review(
     intent="Check facial centre curvature and head-envelope asymmetry",
     subject_box=(260, 0, 470, 225),
     drawing_box=(132, 0, 236, 116),
-    grammar_box=(65, 70, 230, 275),
+    grammar_box=(65, 70, 230, 275),  # only when the stage has a grammar exemplar
 )
 ```
 
@@ -29,15 +29,15 @@ Subject, current drawing, grammar exemplar, and optional task-stage target may h
 Required:
 - `subject_box`
 - `drawing_box`
-- `grammar_box`
 
-If the stage has a task-stage target, `task_target_box` is also required. If no target exists, supplying a target box is an error.
+`grammar_box` is required when the stage ships a grammar exemplar and is an error when it
+does not. The same rule applies to `task_target_box` and the stage's task-stage target.
 
 ## Generated artifacts
 Each local review writes:
 - exact source crops;
 - `subject_vs_drawing.png`;
-- `grammar_vs_drawing.png`;
+- `grammar_vs_drawing.png` when the stage has a grammar exemplar;
 - optional `task_target_vs_drawing.png`;
 - `local_reference_overview.png`;
 - `local_review.json` with source hashes, source dimensions and exact boxes.

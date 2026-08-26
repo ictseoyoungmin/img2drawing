@@ -81,9 +81,7 @@ class TaskStageTarget:
 
     def to_dict(self) -> dict:
         mandatory_path_policy = (
-            "negative_reference_warning_only"
-            if self.audit_status == "fail"
-            else "unproven_until_ablation"
+            "unproven_until_ablation"
             if self.stage_id == "P3_primary_masses"
             else "mandatory_positive_reference"
         )
@@ -133,7 +131,12 @@ class GrammarExemplar:
                 f"grammar exemplar {stage_id!r} must be representation_only, got {purpose!r}"
             )
         p=_image_path(path,label=f"grammar exemplar {stage_id}")
-        if audit_status not in {"not_audited","pass","fail"}:
+        if audit_status == "fail":
+            raise ReferenceBundleError(
+                f"grammar exemplar {stage_id!r} failed its contract audit; "
+                "remove it from the manifest instead of bundling a broken reference"
+            )
+        if audit_status not in {"not_audited","pass"}:
             raise ReferenceBundleError(f"unknown grammar exemplar audit status: {audit_status!r}")
         return cls(
             stage_id=str(stage_id),path=p,sha256=_sha256_file(p),purpose=purpose,
@@ -145,9 +148,7 @@ class GrammarExemplar:
 
     def to_dict(self) -> dict:
         mandatory_path_policy = (
-            "negative_reference_warning_only"
-            if self.audit_status == "fail"
-            else "unproven_until_ablation"
+            "unproven_until_ablation"
             if self.stage_id == "P3_primary_masses"
             else "mandatory_positive_reference"
         )
@@ -183,7 +184,7 @@ class GrammarExemplar:
 class StageReferenceView:
     stage_id: str
     subject: SubjectReference
-    grammar_exemplar: GrammarExemplar
+    grammar_exemplar: GrammarExemplar | None
     task_stage_target: TaskStageTarget | None
     authority_order: tuple[str, ...]
 
@@ -206,7 +207,7 @@ class StageReferenceView:
             "authority_order":list(self.authority_order),
             "subject_reference":self.subject.to_dict(),
             "task_stage_target":None if self.task_stage_target is None else self.task_stage_target.to_dict(),
-            "grammar_exemplar":self.grammar_exemplar.to_dict(),
+            "grammar_exemplar":None if self.grammar_exemplar is None else self.grammar_exemplar.to_dict(),
             "subject_only_rule":(
                 None if self.task_stage_target is not None else
                 "Derive stage geometry from the subject and verified prior drawing; grammar exemplar is representation-only."
@@ -221,8 +222,6 @@ class ReferenceBundle:
     task_stage_targets: dict[str, TaskStageTarget]
 
     def __post_init__(self):
-        if not self.grammar_exemplars:
-            raise ReferenceBundleError("ReferenceBundle requires grammar exemplars")
         for stage_id, item in self.grammar_exemplars.items():
             if stage_id != item.stage_id:
                 raise ReferenceBundleError(
@@ -233,21 +232,14 @@ class ReferenceBundle:
                 raise ReferenceBundleError(
                     f"task target key/stage mismatch: {stage_id!r} != {item.stage_id!r}"
                 )
-            if stage_id not in self.grammar_exemplars:
-                raise ReferenceBundleError(
-                    f"task target {stage_id!r} has no corresponding stage/grammar exemplar"
-                )
 
     def for_stage(self, stage_id: str) -> StageReferenceView:
-        try:
-            grammar=self.grammar_exemplars[stage_id]
-        except KeyError as exc:
-            raise ReferenceBundleError(f"no grammar exemplar for stage {stage_id!r}") from exc
+        grammar=self.grammar_exemplars.get(stage_id)
         task=self.task_stage_targets.get(stage_id)
-        order=(
-            ("task_stage_target","subject_reference","grammar_exemplar")
-            if task is not None
-            else ("subject_reference","grammar_exemplar")
+        order=tuple(
+            part for part in ("task_stage_target","subject_reference","grammar_exemplar")
+            if (part != "task_stage_target" or task is not None)
+            and (part != "grammar_exemplar" or grammar is not None)
         )
         return StageReferenceView(
             stage_id=stage_id,

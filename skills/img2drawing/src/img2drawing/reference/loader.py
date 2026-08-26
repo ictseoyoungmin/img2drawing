@@ -36,10 +36,10 @@ def build_reference_bundle(
         raise ReferenceBundleError("grammar exemplar manifest must be representation_only")
 
     declared=manifest.get("stages") or {}
-    missing=[stage for stage in stage_ids if stage not in declared]
-    if missing:
+    unknown=sorted(set(declared)-allowed)
+    if unknown:
         raise ReferenceBundleError(
-            "grammar exemplar manifest is missing stages: "+", ".join(missing)
+            "grammar exemplar manifest declares unknown stages: "+", ".join(unknown)
         )
 
     audit_by_stage={}
@@ -51,6 +51,8 @@ def build_reference_bundle(
     grammar={}
     contract_map=manifest.get("contracts") or {}
     for stage in stage_ids:
+        if stage not in declared:
+            continue
         audit=audit_by_stage.get(stage)
         if audit is not None:
             expected_contract=contract_map.get(stage)

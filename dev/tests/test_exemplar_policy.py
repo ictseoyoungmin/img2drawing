@@ -9,7 +9,8 @@ from img2drawing import DrawingRun, ModularGrammarCard, ObservationContract, Vie
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SUBJECT = ROOT / "examples" / "full_body_croquis" / "subject.png"
+SKILL_ROOT = ROOT.parent / "skills" / "img2drawing"
+SUBJECT = SKILL_ROOT / "examples" / "full_body_croquis" / "subject.png"
 
 CARDS = tuple(
     ModularGrammarCard(
@@ -57,15 +58,42 @@ def _packet(run: DrawingRun) -> dict:
     )
 
 
-def test_fail_exemplar_is_negative_warning_only(tmp_path: Path):
+def test_stage_without_exemplar_falls_back_to_the_contract(tmp_path: Path):
     run = _run(tmp_path, 0, "p1")
     packet = _packet(run)
     artifacts = run._prepared["P1_gesture"]
+    assert artifacts.grammar_exemplar is None
     assert artifacts.grammar_vs_drawing is None
-    assert packet["references"]["grammar_exemplar"]["mandatory_path_policy"] == "negative_reference_warning_only"
-    assert "grammar_vs_drawing" not in packet["mandatory_review_views"]
-    assert "grammar_exemplar_negative_warning" in packet["mandatory_review_views"]
+    assert packet["references"]["grammar_exemplar"] is None
+    assert packet["artifacts"]["grammar_exemplar_policy"] == "no_exemplar"
     assert packet["artifacts"]["grammar_vs_drawing"] is None
+    assert not any(v.startswith("grammar") for v in packet["mandatory_review_views"])
+    assert packet["local_review_api"]["required_boxes"] == ["subject_box", "drawing_box"]
+    audit = json.loads(
+        next((run.output_dir / "reviews").glob("*/pass_01/grammar_exemplar_audit.json")).read_text()
+    )
+    assert audit["status"] == "no_exemplar"
+    assert audit["exemplar_path"] is None
+
+
+def test_local_review_without_exemplar_omits_the_grammar_roi(tmp_path: Path):
+    run = _run(tmp_path, 0, "p1-local")
+    local = run.prepare_local_review(
+        label="head",
+        intent="No grammar exemplar exists for P1; subject/drawing ROI only.",
+        subject_box=(0, 0, 40, 60),
+        drawing_box=(0, 0, 40, 60),
+    )
+    assert local.grammar is None
+    assert local.grammar_vs_drawing is None
+    with pytest.raises(Exception, match="no grammar exemplar"):
+        run.prepare_local_review(
+            label="head-bad",
+            intent="grammar_box must be rejected when the stage has no exemplar.",
+            subject_box=(0, 0, 40, 60),
+            drawing_box=(0, 0, 40, 60),
+            grammar_box=(0, 0, 40, 60),
+        )
 
 
 def test_p2_pass_exemplar_remains_positive_control(tmp_path: Path):
