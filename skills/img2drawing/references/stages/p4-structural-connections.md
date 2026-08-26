@@ -1,62 +1,61 @@
-# P4 Structural Connections
+# P4 Structural Connections — the real form on the body
 
-P4 turns P3 masses into a connected mannequin. It does **not** clean the final silhouette.
+**The question this stage answers: how does the actual subject's form connect to the body?**
 
-## Structural ownership
+This is the largest visual change in the pipeline. Hair, clothing, footwear and equipment
+arrive, and the drawing starts to read as this specific person.
 
-Read and draw:
-- shoulder insertion into upper-arm/sleeve mass;
-- elbow change-of-direction as a transition/wedge, not a dot;
-- wrist direction and hand block;
-- pelvis→thigh insertion;
-- knee plane / directional break;
-- ankle→foot transition and simple grounded foot block;
-- major attachment/overlap when present.
+It is still **not** a detail stage. It is a connection stage.
 
-Preserve P1 gesture, P2 axes, P3 occupied-volume masses and negative spaces.
+## What P4 states
+- how the hair mass sits on the skull;
+- how the garment hangs across `shoulder → sleeve → elbow → wrist`;
+- the waistline and garment openings;
+- hand and foot form;
+- footwear structure;
+- the major structure of a large attached object;
+- where straps, slings, holsters and pockets attach and overlap.
 
-## Transition, not symbol
+## Structure before decoration
 
-A joint mark must explain how two neighboring masses connect.
+Drawing a jacket does not start with the buttons. It starts with:
 
-Bad:
-- a full-width elbow/knee line crossing the whole limb, which reads as a cardigan or jeans stripe;
-- a circular elbow dot;
-- a horizontal knee tick floating inside a leg;
-- a shoe shape detached from the ankle;
-- a hand polygon floating beside the sleeve.
+`shoulder → sleeve → elbow → wrist` — and how cloth hangs across that chain.
 
-Better:
-- a short cross-plane or wedge whose endpoints agree with both sides of the limb mass;
-- an ankle bridge that flows into a simple foot block;
-- an occluded hand block that visibly enters the waistband/pocket instead of drawing a complete floating hand.
+Hair is not drawn strand by strand. Ask how the **mass** of hair sits over the cranium.
 
-## Clothing-aware articulation
+A rifle is not every screw and rail. Its major structure is:
+- barrel direction;
+- stock;
+- receiver;
+- magazine;
+- sling;
+- and where it touches the body.
 
-When loose clothing hides the anatomical joint:
-- infer only the **functional transition needed to explain the visible chain**;
-- do not expose a naked elbow/knee shape through the sleeve or jeans;
-- use the observed clothing volume as the outer evidence;
-- keep folds, seams and polished clothing contour for P5 or later.
+## How much to draw
+Enough structure that the real form is connected and readable. Facial features may be
+placed, kept minimal — their form is resolved at P5.
 
-## Grounding
+Keep out: buttons, stitching, individual hair strands, micro folds, surface texture, tonal
+rendering.
 
-P4 must no longer end long leg masses at anonymous line endpoints.
-Where the subject shows feet:
-- establish ankle narrowing / direction;
-- add simple shoe/foot blocks;
-- verify the sole/landing relation against the subject;
-- preserve support-vs-counterbalance roles.
+## Common failures
+- **Floating clothing.** A sleeve drawn beside the arm instead of on it.
+- **Hair as an outline** pasted around the head rather than a mass seated on the skull.
+- **Detached hands and shoes.** A boot that does not grow out of its ankle.
+- **Decoration first.** Pockets and seams before the garment's hang is solved.
+- **Prop detail before prop structure.** Rails before the barrel direction is right.
+- **Moving a P3 mass to make a connection work.** If that is required, reopen P3.
 
 ## Hardening order
+1. Hair mass on the skull.
+2. Garment hang over the torso.
+3. Garment hang over the arm chains.
+4. Waistline and openings.
+5. Hands.
+6. Feet and footwear.
+7. Attached-object structure and body contact.
 
-1. shoulder→elbow→wrist continuity;
-2. wrist→hand overlap;
-3. pelvis→thigh insertion;
-4. knee directional plane;
-5. ankle→foot and ground contact;
-6. fresh whole-view chain check;
-7. fresh local residual-mismatch sweep.
-
-If P4 requires moving an entire P3 mass to make a joint work, reopen P3 instead of
-hiding the upstream error with articulation.
+## Useful local review intents
+`head+hair`, `shoulder→sleeve→wrist`, `waist+opening`, `hand`, `foot+footwear`,
+`object↔body contact`.

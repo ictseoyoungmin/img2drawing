@@ -1,8 +1,11 @@
 # P1 Gesture
-Purpose: capture one dominant weight path. It begins at the **crown**, curves through the
-**facial centre** (unequal left/right head masses encode face direction), then continues
-chin→neck→spine→pelvis→support leg→weight landing point. It does **not** begin at the neck.
-The opposite leg is a counterbalance, not a second independent scaffold. Attached objects may
-appear as restrained major axes but must not overpower body gesture.
+Purpose: settle how the figure stands — flow, balance and centre of gravity.
+
+One dominant **line of action** carries the body's rhythm. Around it, P1 states head
+position and tilt, shoulder and pelvis tilt, the direction each limb travels, where the
+feet meet the ground, and the overall silhouette envelope.
+
+Attached objects may appear as a restrained major axis when they change the envelope, but
+must not overpower the body gesture.
 
 Full guidance: `../stages/p1-gesture.md`.

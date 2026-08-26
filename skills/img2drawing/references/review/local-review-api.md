@@ -7,7 +7,7 @@ The Agent chooses the region. The runtime never detects the head, pelvis, limb, 
 ```python
 local = run.prepare_local_review(
     label="head_face",
-    intent="Check facial centre curvature and head-envelope asymmetry",
+    intent="Check head tilt and its agreement with the subject",
     subject_box=(260, 0, 470, 225),
     drawing_box=(132, 0, 236, 116),
 )

@@ -1,42 +1,59 @@
 # Stage contracts
 
-A StageSpec explains **how to work**. A StageContract freezes **how far the representation may progress**.
+A StageSpec explains **how to work**. A StageContract freezes **how far the representation
+may progress**.
 
-The contract is not an artistic score and does not decide whether pose/anatomy is correct.
+The contract is not an artistic score and does not decide whether pose or anatomy is
+correct.
+
+## The pipeline in one table
+
+Each stage settles one class of information. A stage is not "more lines than the last one";
+it is a different question answered.
+
+| Stage | Question it answers | Information it adds |
+|---|---|---|
+| P1 Gesture | How is this person standing? | flow, balance, centre of gravity |
+| P2 Primary Axes | Where are the bones and joints? | axes, joints, direction |
+| P3 Primary Masses | What volume does the body occupy? | ribcage, pelvis and limb masses |
+| P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
+| P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
 
 ## P1 — Gesture / Weight Path
-Owns craniofacial direction, whole-body gesture, pelvis weight transfer, support/counterbalance and early major prop axis.
-It must not contain ribcage/pelvis mass contours, full limb thickness, joint anatomy, clothing contour or facial detail.
+Owns head position and tilt, line of action, shoulder and pelvis tilt, limb direction
+paths, ground contact, the overall silhouette envelope, and the major prop axis.
+
+Must not contain facial features, hair, clothing, muscle definition or prop detail.
 
 ## P2 — Primary Axes
-P2 is deliberately **axes-only**.
+Owns joint positions, head centreline and face direction, the neck/ribcage/pelvis axes,
+limb segment directions, and the prop's length and tilt against the body.
 
-It may add:
-- head cross-axis;
-- shoulder axis;
-- pelvis axis;
-- major arm/leg axes;
-- attached-object extent/breadth axis.
+Joint circles and lightly cylindrical segment axes belong here. Finished limb contour,
+clothing, hair and facial features do not.
 
-It must not add:
-- ribcage side/mass contour;
-- closed pelvis mass;
-- full arm/thigh/shin thickness;
-- hand or foot/boot blocks;
-- joint anatomy;
-- clothing block-in;
-- final silhouette.
+## P3 — Primary Masses
+Owns the three-dimensional volumes, ribcage and pelvis rotation, limb taper, overlap,
+perspective and whole-figure proportion.
 
-If a stage example image contains those forbidden forms, it is over-developed for this contract. **Do not widen P2 to match a picture.**
+A few garment or gear marks are allowed where they materially change the occupied volume.
+Folds, seams, finished garment silhouette, hair strands, hand/foot detail and facial
+features are not.
 
-## P3 — Connected Primary Masses
-P3 unlocks organic head/ribcage/pelvis/limb/prop masses and torso bridge, while detailed joint articulation remains forbidden.
+## P4 — Structural Connections
+Owns hair mass on the skull, garment structure over the body, waistline and openings, hand
+and foot form, footwear, and the prop's major structure and body contact. Facial features
+may be placed, minimally.
 
-## P4 — Mannequin / Structural Connections
-P4 unlocks functional joint transitions, hands/feet blocks and attachment/overlap logic, but not polished contour or tonal finish.
+Buttons, stitching, individual hair strands, micro folds, texture and tonal rendering
+are not.
 
 ## P5 — Clean Block-in
-P5 unlocks decisive silhouette, major clothing contour and construction-line retirement. It still stops before tonal rendering and micro texture.
+Owns the decisive silhouette, resolved face and hair, decided garment contour, tidied hands
+and footwear, contour ownership between overlapping masses, and construction retirement.
+
+Tonal shading, texture, excessive folds, fine skin rendering and structure-changing
+beautification are not.
 
 ## Contract review
 Every StageReviewRecord includes `contract_findings`.
@@ -46,24 +63,11 @@ The worker should answer:
 - Did it omit required stage-owned information?
 - Did downstream vocabulary leak in early?
 
-The contract is the authority. A stage example image beside the stage reference is
-illustration, never a competing contract.
-
 ## Pipeline overview image
 
 `pipeline-overview.png` beside this file shows one subject carried through all five stages
-on a single sheet. Open it for the **shape of the progression** — how much changes between
-consecutive stages, and how a stage stays incomplete on purpose.
+on a single sheet. It is the reference rendering of this pipeline: open it to see how much
+changes between consecutive stages, and how each stage stays incomplete on purpose.
 
-It is a hand-drawn sheet from outside this skill, and it does **not** obey these contracts.
-Read it with that in mind:
-
-- its P1 already closes a head oval, a torso contour and a pelvis shape; this contract's P1
-  owns an open craniofacial gesture and forbids mass contour;
-- its P2 is a full mannequin with joint circles, limb thickness, hands and boots; this
-  contract's P2 is axes-only and forbids all of those;
-- it builds a nude mannequin first and dresses it at P4; P3 here takes the *observed*
-  clothed volume as the primary mass instead;
-- its P4 and P5 carry facial features, which stay outside every stage ceiling here.
-
-Where the sheet and a contract disagree, the contract wins.
+It illustrates the contracts; where a drawn line and a contract disagree, the contract
+wins.

@@ -6,8 +6,7 @@
 - `review/worker-pass-memory.md`: pass-to-pass concern/correction continuity without semantic auto-judgement.
 - `review/local-review-api.md`: Agent-selected ROI comparison and state binding.
 - `review/`: comparison and correction loop.
-- `stages/p2-primary-axes.png`, `stages/p3-primary-masses.png`: rendered stage examples, open them when you want to see the mark-making.
-- `stages/pipeline-overview.png`: one subject across all five stages on a single sheet; see the caveats in `stages/stage-contracts.md` before imitating it.
+- `stages/pipeline-overview.png`: the reference rendering of the pipeline — one subject across all five stages on a single sheet.
 - `figure/`: gesture, joints, attached objects.
 - `observation/`: visual-observation policy.
 - `pencil/`: material guidance.

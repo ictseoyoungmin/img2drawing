@@ -25,22 +25,25 @@ not:
 ## How each stage is derived
 
 ### P1 Gesture
-Observe whole-body flow, crown/face direction, support/counterbalance and large attached
-object axes directly from the subject. Do not search for a matching P1 answer image.
+Observe whole-body flow, head tilt, shoulder/pelvis tilt, limb directions, ground contact
+and large attached-object axes directly from the subject. Do not search for a matching P1
+answer image.
 
 ### P2 Primary Axes
-Re-observe the subject for shoulder/pelvis/limb/object directions. Preserve the P1
-gesture. P2 is a directional explanation of the same subject, not a trace of a generic
-mannequin.
+Re-observe the subject for joint positions and segment directions. Preserve the P1 pose.
+Where clothing hides a joint, infer its position from the visible chain — but read the
+subject's own proportions, not a generic mannequin's.
 
 ### P3 Primary Masses
-Use visible occupied volume from the subject, including clothing-dominated volume.
-Preserve P1/P2 direction. Do not infer a hidden naked-body contour merely because a
-textbook figure study would show one.
+Build the body volume this subject actually has: torso thickness, ribcage and pelvis
+rotation, limb taper, overlap and perspective. Loose clothing is evidence about the volume
+underneath, not a substitute for it — add a garment mark only where it materially changes
+the occupied volume. Preserve P1/P2 direction.
 
 ### P4 Structural Connections
-Explain visible chain transitions and overlap with the minimum structure required.
-Occluded joints stay clothing-aware. If a joint only works by moving a P3 mass, reopen P3.
+Connect this subject's real form to those volumes: their hair, their garment, their
+footwear, their equipment. Structure before decoration. If a connection only works by
+moving a P3 mass, reopen P3.
 
 ### P5 Clean Block-in
 State the verified subject silhouette and major internal breaks. If clean contour must
@@ -54,7 +57,6 @@ Every pass still has strong evidence:
 - `subject_split.png`
 - registered subject/drawing overlay
 - registered raw difference evidence
-- generic grammar vs drawing for representation only
 - Agent-selected local review crops
 - prior-stage structure and pass memory
 

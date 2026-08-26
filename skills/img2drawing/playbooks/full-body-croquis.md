@@ -3,14 +3,17 @@
 Harden stages sequentially. Never sweep P1→P5 in one unreviewed pass.
 
 ## P1
-The dominant line begins at the crown. Its facial segment is curved, dividing the head into unequal left/right masses to encode face direction. The same intention continues through chin→neck→spine→pelvis→support leg→weight landing point.
+Settle how the subject stands: one dominant line of action, head position and tilt,
+shoulder and pelvis tilt, the direction each limb travels, where the feet meet the ground,
+and the overall silhouette envelope. When a large attached object changes balance or
+silhouette, add its major axis too.
 
-Add only subordinate head-envelope arcs, shoulder rhythm, pelvis rhythm, counterbalance leg and—when silhouette/balance requires it—the major axis of a large attached object.
+Nothing else. Clothing, hair, face and muscle belong downstream.
 
-Compare subject ↔ drawing for geometry/pose/weight, and judge stage grammar and line
-hierarchy against the frozen contract and `references/stages/p1-gesture.md`.
+Compare subject ↔ drawing for pose, balance and proportion, and judge stage scope against
+the frozen contract and `references/stages/p1-gesture.md`.
 
-Keep P1 open while any major gesture/weight/face-direction mismatch remains. Once P1 is self-reviewed as closed, begin P2 without waiting for user confirmation.
+Keep P1 open while any major pose, balance or proportion mismatch remains. Once P1 is self-reviewed as closed, begin P2 without waiting for user confirmation.
 
 ## P2–P5
 Repeat the same autonomous hardening protocol. If a later stage exposes a P1/P2/P3/P4 foundation error, reopen the earliest responsible stage instead of compensating downstream.

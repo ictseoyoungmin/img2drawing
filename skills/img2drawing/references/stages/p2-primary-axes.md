@@ -1,79 +1,49 @@
-# P2 Primary Axes
+# P2 Primary Axes — joints and skeletal direction
 
-A rendered example of axes-only P2 sits beside this file as `p2-primary-axes.png`. Open it if you want to see the
-stage's mark-making and detail budget; it shows representation only and never the current
-subject's pose or coordinates.
+**The question this stage answers: where are the bones and joints?**
 
-Preserve P1 energy while stating head direction, shoulder/pelvis tilt, limb
-directions and attached-object extent. Axes explain relationships; they are not a
-substitute for observation.
+P1 said "the leg travels this way". P2 makes the structure explicit:
 
-## Representation boundary
-P2 is axes-only.
+`hip → knee → ankle → foot`
 
-Allowed:
-- head cross-axis;
-- shoulder axis;
+and the same for `shoulder → elbow → wrist → hand`.
+
+## What P2 states
+- shoulder, elbow and wrist positions;
+- hip, knee and ankle positions;
+- head centreline and face direction;
+- neck axis;
+- ribcage centre axis;
 - pelvis axis;
-- single major arm direction chains;
-- single major leg direction chains;
-- attached-object extent/breadth axis when relevant.
+- upper-arm and forearm direction;
+- thigh and shin direction;
+- the attached object's length and tilt measured against the body.
 
-Do not add:
-- closed ribcage or pelvis masses;
-- paired limb contours / limb thickness;
-- hand or foot blocks;
-- joint anatomy;
-- clothing block-in;
-- final contour or shading.
+## How much to draw
+Joints as small circles. Limb segments as straight or lightly cylindrical axes. A head
+centreline with the facial direction cross. Simple placement blocks for hands and feet.
+
+A large prop is present here as a **measuring axis** — its length and tilt against the
+body — not as a described object.
+
+Stop before finished contour, clothing, hair and surface detail.
+
+## Common failures
+- **One continuous leg curve** that never states the knee, so the chain stays unresolved.
+- **Joints placed by symmetry** rather than by looking at the subject.
+- **Segment lengths that ignore foreshortening.** A forearm coming toward the viewer is
+  short; draw it short.
+- **Losing P1.** If the axes are correct but the balance drifted, reopen P1 rather than
+  compensating here.
+- **Closing volume early.** P2 states direction; P3 gives it thickness.
 
 ## Hardening order
-On a subject-specific P2, review in this order:
-
-1. **Preserve P1**
-   - dominant crown→support gesture is still readable;
-   - support/counterbalance roles have not changed.
-
-2. **Head direction + shoulder axis**
-   - head cross-axis matches face tilt/turn;
-   - shoulder axis uses subject-derived endpoints and tilt.
-
-3. **Pelvis counter-tilt**
-   - pelvis axis explains the torso/pelvis relationship rather than becoming an
-     unrelated horizontal bar;
-   - compare shoulder and pelvis together.
-
-4. **Arm direction chains**
-   - each chain originates at the shoulder;
-   - elbow-to-wrist direction change is explicit;
-   - hanging-arm endpoint is not shortened into the torso.
-
-5. **Leg direction chains**
-   - each chain originates from the pelvis/hip region;
-   - support leg remains weight-bearing;
-   - counterbalance leg diverges according to the subject;
-   - do not turn the axes into pant-leg contours.
-
-6. **Whole-view contract check**
-   - axes clarify P1 without replacing it;
-   - no P3 volume vocabulary has leaked in.
+1. Preserve the P1 line of action and tilts.
+2. Head centreline and face direction.
+3. Neck, ribcage and pelvis axes.
+4. Arm chains.
+5. Leg chains.
+6. Prop axis against the body.
 
 ## Useful local review intents
-- `head_shoulders`: head cross-axis + shoulder tilt;
-- `torso_pelvis`: shoulder/pelvis counter-tilt;
-- `arms`: both arm direction chains;
-- `pelvis_legs`: pelvis + support/counterbalance chains.
-
-## Dogfood lessons
-The first P2 pass can be structurally complete yet still wrong in axis direction.
-Correct high-impact torso/head axes before polishing limb chains.
-
-A successful correction action is not a PASS by itself. Re-render and inspect fresh
-local evidence, then update `remaining_concerns`.
-
-P2 is ready to advance only when:
-- head/shoulder/pelvis axes explain the same pose established by P1;
-- both arm chains and both leg chains are credible at axis abstraction;
-- support/counterbalance roles remain clear;
-- no major axis-level mismatch remains;
-- no downstream mass/detail has been introduced.
+`head+neck`, `shoulder→elbow→wrist`, `hip→knee→ankle`, `object against the torso`.

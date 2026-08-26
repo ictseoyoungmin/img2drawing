@@ -91,7 +91,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     """Canonical P1 hardening example.
 
     Demonstrates:
-    crown-origin gesture → fresh artifact review → local evidence → REVISE →
+    P1 gesture → fresh artifact review → local evidence → REVISE →
     explicit correction → pass-memory continuation → fresh review → ADVANCE.
 
     It intentionally stops with P2 as the current stage. It is a workflow example,
@@ -135,31 +135,31 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # ------------------------------------------------------------------
     run.stage_start("P1_gesture")
 
-    # Non-negotiable: the dominant centre gesture starts at the crown, passes
-    # through a curved facial centre, then continues through chin/neck/spine/
-    # pelvis/support leg. Pass 1 is intentionally under-curved at face/pelvis
-    # so the example demonstrates a real revise cycle.
+    # P1 settles how the figure stands: one dominant line of action plus head
+    # tilt, shoulder/pelvis tilt, limb directions and ground contact. Pass 1 is
+    # intentionally weak at the head tilt and the pelvis transfer so the example
+    # demonstrates a real revise cycle.
     initial_dominant=[
-        [190,8],      # crown
+        [190,8],      # head end of the line of action
         [192,30],
-        [193,53],     # facial centre: deliberately too straight in pass 1
+        [193,53],     # head tilt: deliberately too straight in pass 1
         [188,78],
-        [182,98],     # chin / neck handoff
+        [182,98],     # neck
         [178,142],
         [174,192],
         [174,238],
-        [172,266],    # pelvis handoff: deliberately weak
+        [172,266],    # pelvis transfer: deliberately weak
         [165,306],
         [159,358],
         [160,415],
         [166,482],
-        [173,548],    # support landing
+        [173,548],    # ground contact
     ]
 
     run.draw_many([
         _stroke(
             "EX-P1-A1",
-            "crown_face_spine_support",
+            "line_of_action",
             initial_dominant,
             role="gesture",
             pressure=.40,
@@ -168,8 +168,8 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             grade="HB",
             confidence=.92,
             source=(
-                "Observed crown→facial-centre→chin→neck→spine→pelvis→"
-                "image-left support-leg path."
+                "Observed line of action from the head through the pelvis to the "
+                "image-left weight-bearing foot."
             ),
         ),
         _stroke(
@@ -179,7 +179,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             pressure=.20,
             width=1.12,
             opacity=.27,
-            source="Open image-left cranial/jaw envelope; subordinate to facial centre.",
+            source="Image-left head ovoid edge; subordinate to the line of action.",
         ),
         _stroke(
             "EX-P1-A3",
@@ -215,7 +215,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             pressure=.15,
             width=1.02,
             opacity=.18,
-            source="Image-right counterbalance leg stays subordinate to support path.",
+            source="Image-right leg direction path stays subordinate to the line of action.",
         ),
     ])
 
@@ -224,7 +224,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     # Agent-selected local evidence. Runtime does not locate anatomy.
     head1=run.prepare_local_review(
         label="head_face",
-        intent="Check facial-centre curvature and unequal left/right head masses.",
+        intent="Check head position and tilt against the subject.",
         subject_box=(235,0,495,250),
         drawing_box=(115,0,248,126),
     )
@@ -241,22 +241,22 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "No ribcage/pelvis mass closure, joint anatomy, clothing contour, or final silhouette leaked in.",
         ],
         subject_findings=[
-            "The subject shows a more curved face-direction centre than pass 1.",
+            "The subject shows a more decisive head tilt than pass 1.",
             "The subject's pelvis-to-image-left support transfer changes direction more decisively than pass 1.",
         ],
         grammar_findings=[
-            "P1 ships no grammar exemplar, so the frozen P1 contract is the only representation authority.",
+            "P1 has no example image of its own; the frozen P1 contract is the representation authority.",
             "Stage grammar is judged against that contract rather than against a reference image.",
         ],
         drawing_findings=[
-            "The dominant line correctly starts at the crown and remains continuous to the support landing.",
-            "Its facial-centre segment is too straight, weakening face direction.",
+            "The line of action is continuous from the head to the ground contact.",
+            "The head tilt is too straight, weakening the standing direction.",
             "Its pelvis-to-support segment is too vertical/soft, weakening weight transfer.",
         ],
         local_review_ids=[head1.local_review_id,pelvis1.local_review_id],
         corrections=[],
         remaining_concerns=[
-            "facial-centre curve is too straight to carry face direction clearly",
+            "head tilt is too straight to carry the standing direction clearly",
             "pelvis-to-support transfer is too weak",
         ],
         decision="revise",
@@ -285,10 +285,10 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     ]
     run.draw(_replace(
         "EX-P1-R1",
-        "crown_face_spine_support",
+        "line_of_action",
         corrected_dominant,
         reason=(
-            "Pass 1 carried two concerns: strengthen the facial-centre bow and "
+            "Pass 1 carried two concerns: strengthen the head tilt and "
             "make the pelvis→support-leg handoff more decisive."
         ),
     ))
@@ -319,7 +319,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
     assert pass2_memory["state"]=="revision_continuation"
     assert pass2_memory["previous_decision"]=="revise"
     assert pass2_memory["carried_concerns"]==[
-        "facial-centre curve is too straight to carry face direction clearly",
+        "head tilt is too straight to carry the standing direction clearly",
         "pelvis-to-support transfer is too weak",
     ]
     assert [
@@ -332,7 +332,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             "The correction changed the dominant gesture only; no downstream vocabulary was introduced.",
         ],
         subject_findings=[
-            "The facial-centre bow now communicates the subject's face direction at P1 abstraction.",
+            "The head tilt now communicates the subject's standing direction at P1 abstraction.",
             "The pelvis-to-support path now changes direction clearly enough to communicate weight transfer.",
         ],
         grammar_findings=[
@@ -340,12 +340,12 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         ],
         drawing_findings=[
             "Both carried pass-1 concerns were re-checked against fresh whole/local artifacts.",
-            "The crown→face→chin→neck→spine→pelvis→support intention remains continuous and dominant.",
+            "The line of action remains continuous and dominant from head to ground contact.",
             "No P1-purpose concern remains before introducing P2 axes.",
         ],
         local_review_ids=[head2.local_review_id,pelvis2.local_review_id],
         corrections=[
-            "Re-curved the facial-centre segment.",
+            "Re-drew the head-tilt segment.",
             "Strengthened the pelvis-to-support directional handoff.",
         ],
         remaining_concerns=[],
@@ -362,7 +362,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
         "example":"full_body_croquis",
         "stage":"P1_gesture",
         "initial_dominant_path_start":initial_dominant[0],
-        "initial_dominant_path_start_semantics":"crown",
+        "initial_dominant_path_start_semantics":"line_of_action_head_end",
         "pass1":{
             "decision":pass1.decision,
             "remaining_concerns":list(pass1.remaining_concerns),
@@ -375,7 +375,7 @@ def run_example(output_dir: str|Path, *, clean=True) -> dict:
             {
                 "action_id":"EX-P1-R1",
                 "kind":"replace_stroke",
-                "target":"crown_face_spine_support",
+                "target":"line_of_action",
             }
         ],
         "pass2":{

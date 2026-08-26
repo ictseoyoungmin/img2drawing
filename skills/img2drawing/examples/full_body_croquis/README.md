@@ -4,11 +4,12 @@ This is a focused P1 workflow example, not the full P1→P5 subject-only benchma
 
 It demonstrates the required autonomous P1 sequence:
 
-`crown-origin gesture → render/review → Agent-selected local review → REVISE →
+`P1 gesture → render/review → Agent-selected local review → REVISE →
 explicit replace_stroke → fresh review → pass-memory continuation → ADVANCE`
 
 ## Non-negotiable details demonstrated
-- The dominant gesture starts at the **crown**, not the neck.
+- P1 states one dominant **line of action** plus head tilt, shoulder/pelvis tilt, limb
+  directions and ground contact — and nothing else.
 - Inside the head it acts as a curved **facial-centre** line that carries face direction.
 - The same dominant intention continues through chin → neck → spine → pelvis →
   support leg → landing point.

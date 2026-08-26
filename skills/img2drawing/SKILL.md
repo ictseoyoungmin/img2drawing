@@ -225,7 +225,7 @@ When whole-view review leaves a concrete uncertainty, the worker should choose t
 ```python
 local = run.prepare_local_review(
     label="pelvis_legs",
-    intent="Check pelvis-to-support transfer and counterbalance",
+    intent="Check pelvis tilt and where the weight lands",
     subject_box=(...),
     drawing_box=(...),
     # task_target_box=(...)   only when the stage has a task target
@@ -258,13 +258,34 @@ upstream fix. Archived reviews are evidence of the abandoned branch, not current
 
 Read `references/review/reopen-recovery.md`.
 
-## P1 non-negotiable knowledge
-For full-body gesture, the dominant centre gesture does **not** begin at the neck.
-It begins at the **crown**, curves through the **facial centre** so unequal left/right head masses encode face direction, then continues through **chin → neck → spine → pelvis → support leg → weight landing point**.
+## What each stage settles
 
-Head envelope arcs, shoulder rhythm, pelvis rhythm and counterbalance leg are subordinate to this dominant path.
+Every stage answers one question. A stage is not "more lines than the last one".
 
-If the subject carries a large object that changes balance/silhouette, introduce its major axis early, but do not let it replace the body gesture.
+| Stage | Question | Adds |
+|---|---|---|
+| P1 Gesture | How is this person standing? | flow, balance, centre of gravity |
+| P2 Primary Axes | Where are the bones and joints? | axes, joints, direction |
+| P3 Primary Masses | What volume does the body occupy? | ribcage, pelvis, limb masses |
+| P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
+| P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
+
+Two rules survive every stage:
+
+1. **P4 is a connection stage, not a detail stage.** A jacket starts at
+   `shoulder → sleeve → elbow → wrist`, not at the buttons. Hair is a mass seated on the
+   skull, not strands. A prop is barrel/stock/receiver/magazine/sling and where it touches
+   the body, not its rails and screws.
+2. **P5's "clean" means selection, not pressure.** It decides which explored line is the
+   final form; it does not go over everything with a heavier stroke. The result is an
+   under-drawing solid enough that detail work will not collapse it — not a finished
+   illustration.
+
+`references/stages/pipeline-overview.png` shows one subject across all five stages on a
+single sheet. Open it when you want to see the shape of the progression.
+
+If the subject carries a large object that changes balance or silhouette, introduce its
+major axis at P1, but do not let it replace the body gesture.
 
 ## Failure recovery
 - If a pass repeats the same mismatch, change observation strategy or crop; do not merely redraw the same guess.
@@ -277,7 +298,7 @@ If the subject carries a large object that changes balance/silhouette, introduce
 ## Canonical Example
 `examples/full_body_croquis/run.py` is the executable demonstration of the hardening loop:
 
-`crown-origin P1 → prepare review → Agent-selected local reviews → REVISE →
+`P1 gesture → prepare review → Agent-selected local reviews → REVISE →
 explicit replace_stroke → fresh review → pass-memory continuation → ADVANCE`
 
 It intentionally stops at `P2_primary_axes`. Treat it as a workflow demonstration, never as
