@@ -20,6 +20,7 @@ Preserve P1 gesture, P2 axes, P3 occupied-volume masses and negative spaces.
 A joint mark must explain how two neighboring masses connect.
 
 Bad:
+- a full-width elbow/knee line crossing the whole limb, which reads as a cardigan or jeans stripe;
 - a circular elbow dot;
 - a horizontal knee tick floating inside a leg;
 - a shoe shape detached from the ankle;

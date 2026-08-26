@@ -418,8 +418,9 @@ def main():
     parser.add_argument(
         "--output",
         type=Path,
-        default=HERE/"output",
-        help="Output directory for canonical example artifacts.",
+        # ponytail: cwd-relative so the example never writes 13MB into the installed skill
+        default=Path("img2drawing_example_output"),
+        help="Output directory for canonical example artifacts (default: ./img2drawing_example_output).",
     )
     parser.add_argument(
         "--no-clean",

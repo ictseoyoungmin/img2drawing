@@ -9,8 +9,11 @@ protocol consistently. A fresh worker must never have to infer which of several 
 protocol revisions is authoritative.
 
 ## 2. Runnable benchmark packaging
-A benchmark request should resolve to a concrete subject/reference bundle, not a
-README-only directory. Use `benchmarks/stage_reconstruction/full_body_croquis_subject_only/`.
+A benchmark request must resolve to a concrete subject/reference bundle, not a
+README-only directory. Inside the packaged skill the runnable bundle is
+`examples/full_body_croquis/` (subject + executable run). The subject-only P1→P5
+regression fixture lives in the development repository under
+`dev/benchmarks/stage_reconstruction/full_body_croquis_subject_only/` and is not shipped.
 
 ## 3. Reliable finish
 `DrawingRun.finish(timelapse="auto")` persists checkpoint, final drawing, compare,

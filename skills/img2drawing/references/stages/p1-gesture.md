@@ -49,6 +49,8 @@ For P1:
 - use enough sampled points that the renderer does not visibly facet the curve;
 - use two **open** cranial/jaw envelope arcs that describe unequal left/right facial masses;
 - let the envelope arcs stop at jaw-side / chin-transition regions rather than closing a symbolic egg;
+- if a smooth left/right pair still reconstructs a symbolic oval, segment it further: one short crown arc,
+  separate temporal→jaw arcs, and visible gaps between crown and side arcs;
 - preserve the subject's asymmetry and face turn;
 - do not use hair silhouette as a substitute for cranial direction; long hair belongs to P3 mass;
 - do not add eyes, nose, lips or other facial-feature detail at P1.

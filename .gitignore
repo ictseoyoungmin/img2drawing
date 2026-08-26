@@ -54,3 +54,5 @@ dev/release/*.whl
 dev/release/*.zip
 dev/evidence/*.zip
 temp/
+drawings/
+dev/dogfood/s1s9/img2drawing_example_output/
