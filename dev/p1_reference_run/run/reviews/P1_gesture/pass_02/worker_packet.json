@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "24effdd8845536435f5e86f8099a6e4f3bab0c49e5ee712f49a76a1771598cce",
+      "artifact_sha256": "142b9069649003c5d5832c6bab78016d5188f25c8a7f2ded904be7c77330a2f4",
       "history_cursor": 34,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "a4bf99b9df18116945ab8c11a3c53c40d36d13808b144d3db7d17f67e8920482"
+      "state_sha256": "b7f59973c59196c453a0047c13a7782a8ac7238c9be32abf10b0052c05b8d1a3"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -126,14 +126,14 @@
           "cranium outline is a borrowed ellipse, not this head's measured width",
           "eye line and facial centreline therefore sit inside the face instead of across the head"
         ],
-        "review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638"
+        "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
       }
     ],
     "correction_history": [
       {
         "pass_index": 1,
         "reported_corrections": [],
-        "review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638"
+        "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
       }
     ],
     "inter_pass_actions": [
@@ -173,7 +173,7 @@
       "eye line and facial centreline therefore sit inside the face instead of across the head"
     ],
     "previous_reported_corrections": [],
-    "previous_review_digest": "0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638",
+    "previous_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
     "prior_review_count": 1,
     "reopen_context": null,
     "schema": "img2drawing.stage_pass_memory.v2",

@@ -21,10 +21,10 @@
             "top": 20
           },
           "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
-          "crop_sha256": "155d6d196eaa2182b75e000758f1be8bc4e25e6ec54c378dc552f3870ead9098",
+          "crop_sha256": "5655a333d32b17d5c8227f8cf080a6fa8c5536912f9e9acf6f4226871a2d6b7c",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
+          "source_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
           "source_size": [
             512,
             802
@@ -49,8 +49,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
-      "drawing_state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73",
+      "drawing_artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
+      "drawing_state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df",
       "history_cursor": 33,
       "intent": "Check cranium width, crown position and the nose pass against the subject.",
       "label": "head_face",
@@ -80,10 +80,10 @@
             "top": 299
           },
           "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
-          "crop_sha256": "a87e59f41882bf316588929640b4c7be0bfce2c2698a467643a9322bced05d7b",
+          "crop_sha256": "10dba28695e47843f5bd09f390c54525f415954f45470775842914fc093fddcc",
           "role": "current_drawing",
           "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
+          "source_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
           "source_size": [
             512,
             802
@@ -108,8 +108,8 @@
         },
         "task_target": null
       },
-      "drawing_artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
-      "drawing_state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73",
+      "drawing_artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
+      "drawing_state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df",
       "history_cursor": 33,
       "intent": "Check pelvis tilt, hip joint centres and where both feet land.",
       "label": "pelvis_support",

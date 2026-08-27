@@ -3,7 +3,7 @@
 ## Stage pass memory
 - state: **revision_continuation**
 - prior review count: 1
-- parent review digest: `0d7c67b0a23bf37323aa9ba471f07c5a6e70fe3479a74511b60e4ba9f80be638`
+- parent review digest: `55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3`
 - previous decision: **revise**
 
 ### Previous remaining concerns

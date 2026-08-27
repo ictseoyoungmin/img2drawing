@@ -4,8 +4,8 @@
   "drawing": {
     "stage": "P1_gesture",
     "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-    "artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
-    "state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73",
+    "artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
+    "state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df",
     "history_cursor": 33
   },
   "authority_order": [
