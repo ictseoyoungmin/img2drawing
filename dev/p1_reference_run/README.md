@@ -23,7 +23,7 @@ python3 dev/p1_reference_run/build.py
 | `run/timelapse/manifest.json` | frame-to-action provenance |
 | `canonical_trace.json` | the example's own trace, validating against `dev/schemas/canonical_example_trace.schema.json` |
 | `compare.png`, `overlay.png` | raw-render comparison and the translucent-paper overlay |
-| `smoothing.png` | resample step 3px / 8px / 14px on the same strokes; 8px is what's used |
+| `smoothing.png` | resample step 3px / 8px / 14px compared; 8px is what the baked coordinates below use |
 
 `run/timelapse/frames/` is deleted after the GIF is built; it regenerates from the
 checkpoint.
@@ -51,6 +51,15 @@ Judge registration on **`overlay.png`**, which lays the drawing over the subject
 translucent paper. That is what shows whether the crown, the joint centres and the foot
 landings actually sit on the subject; a drawing that looks plausible on its own will not
 survive it.
+
+## Point density is baked into the source, not applied at runtime
+
+Every stroke's coordinates in `examples/full_body_croquis/run.py` are the literal points
+`draw`/`replace_stroke` receives — dense enough that no corner survives, generated once
+offline via a Catmull-Rom resample over measured anchor points, then written into the
+script as plain numbers. Nothing in the drawing path rewrites them. The runtime records
+exactly what the script authors, matching the same "never silently rewrite Agent-authored
+stroke style" rule the canvas scale guidance states elsewhere in this skill.
 
 ## Stroke weights
 

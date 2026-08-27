@@ -24,7 +24,10 @@ review. It does not decide geometry and is not an automatic artistic judge.
 ## Point spacing: round the curve without shaking the line
 
 A stroke is a polyline, so a curve stated with a handful of control points renders with
-visible corners. The fix is to state it at a finer spacing — but not arbitrarily fine.
+visible corners. **Author the point list at the spacing the curve needs before it reaches
+`draw`/`replace_stroke`** — the runtime records exactly the points it is given and never
+resamples or rewrites them, so getting the spacing right is the Agent's job, not something
+to fix downstream.
 
 The renderer applies hand jitter **per point**. Resample a stroke to a very small spacing
 and that gentle tremor fires ten times as often, turning into high-frequency wobble: the
@@ -39,5 +42,8 @@ There is a working band, not a "smaller is better" rule:
 | too fine | round curve, but the line wobbles and softens |
 
 On a ~512px canvas that band sits around **8px**. Scale it with the canvas rather than
-copying the number. Judge it on the **raw render at zoom**, on both a long line and a small
-closed shape — the two fail in opposite directions.
+copying the number. Judge it on the **raw render at zoom**, on both a long line and a small closed shape — the
+two fail in opposite directions. A one-off resample (e.g. Catmull-Rom over a set of
+observed anchor points) is a legitimate way to *generate* that point list before drawing;
+what must not happen is resampling silently inside the drawing call itself, where the
+recorded provenance would then describe points the Agent never actually placed.
