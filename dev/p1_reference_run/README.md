@@ -23,7 +23,7 @@ python3 dev/p1_reference_run/build.py
 | `run/timelapse/manifest.json` | frame-to-action provenance |
 | `canonical_trace.json` | the example's own trace, validating against `dev/schemas/canonical_example_trace.schema.json` |
 | `compare.png`, `overlay.png` | raw-render comparison and the translucent-paper overlay |
-| `smoothing.png` | the faceted polylines beside the Catmull-Rom resampled strokes |
+| `smoothing.png` | resample step 3px / 8px / 14px on the same strokes; 8px is what's used |
 
 `run/timelapse/frames/` is deleted after the GIF is built; it regenerates from the
 checkpoint.

@@ -12,12 +12,17 @@ HERE=Path(__file__).resolve().parent
 SUBJECT=HERE/"subject.png"
 
 
-def _smooth(points, step=3.0):
+def _smooth(points, step=8.0):
     """Catmull-Rom resample so the renderer draws a curve, not a polygon.
 
     A five-point polyline renders as four straight segments with visible corners,
     and those corners survive every later stage. Control points state the shape;
     this states it at a spacing the renderer can round.
+
+    `step` matters in both directions. The renderer applies hand jitter per point,
+    so resampling too finely turns a gentle tremor into high-frequency wobble and
+    the line loses its crispness; too coarsely and the corners come back. Around
+    8px on this canvas is where the curve is round and the line is still clean.
     """
     pts=[(float(x),float(y)) for x,y in points]
     if len(pts)<3:

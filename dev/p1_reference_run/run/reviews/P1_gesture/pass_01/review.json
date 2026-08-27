@@ -8,13 +8,13 @@
   ],
   "corrections": [],
   "decision": "revise",
-  "drawing_artifact_sha256": "2522d1c7e4789a99e86d6844d315ee2d6db35761e0078125196264e6f521938b",
+  "drawing_artifact_sha256": "b2845bf265e8e7983c54010c300bf17509542d14d5374f35f43bd9160400e4d5",
   "drawing_findings": [
     "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
     "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
     "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register."
   ],
-  "drawing_state_sha256": "3898a1dd17c60533e6a91e180a92f4063e142332d9816c209bb7ff79d006a22c",
+  "drawing_state_sha256": "b361ed1df9f7eadccf17d0822f2a49a0302db4b50346a9b7d92a8dc2c8c8f19b",
   "grammar_findings": [
     "P1 is being judged against the frozen contract, not against an example drawing.",
     "Joint centres were read from the subject rather than copied from the pipeline overview sheet."

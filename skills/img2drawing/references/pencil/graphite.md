@@ -20,3 +20,24 @@ flatten per-point pressure into a constant width/darkness.
 
 `render.line_weight.calibrate_line_weight()` is a deterministic mechanical utility for A/B
 review. It does not decide geometry and is not an automatic artistic judge.
+
+## Point spacing: round the curve without shaking the line
+
+A stroke is a polyline, so a curve stated with a handful of control points renders with
+visible corners. The fix is to state it at a finer spacing — but not arbitrarily fine.
+
+The renderer applies hand jitter **per point**. Resample a stroke to a very small spacing
+and that gentle tremor fires ten times as often, turning into high-frequency wobble: the
+line stops looking drawn and starts looking noisy, and its edges lose their crispness.
+
+There is a working band, not a "smaller is better" rule:
+
+| spacing | result |
+|---|---|
+| too coarse | visible corners; the curve reads as a polygon |
+| the band | round curve, clean edge |
+| too fine | round curve, but the line wobbles and softens |
+
+On a ~512px canvas that band sits around **8px**. Scale it with the canvas rather than
+copying the number. Judge it on the **raw render at zoom**, on both a long line and a small
+closed shape — the two fail in opposite directions.

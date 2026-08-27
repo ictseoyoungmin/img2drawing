@@ -13,13 +13,13 @@
     "Replaced the borrowed ellipse with the head outline measured on the subject."
   ],
   "decision": "advance",
-  "drawing_artifact_sha256": "6f709541a0b87c3bc805119a3fead1eef409bdc19b4afb8b3db9cf28641398ec",
+  "drawing_artifact_sha256": "57227744d40938f736b35aa44cffb00157b710d722d1894b694ec965a116a03b",
   "drawing_findings": [
     "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
     "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
     "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
   ],
-  "drawing_state_sha256": "a2b20741e1be74fbab67040dd98cfe9da16441b9124261473d11b22f8faf332e",
+  "drawing_state_sha256": "a348b29ebadf076459f283ca1c1fb9ac15104793e01fa6a33ca1c800fb7ad852",
   "grammar_findings": [
     "Stage grammar stays subordinate to the frozen contract and subject geometry."
   ],
@@ -42,8 +42,8 @@
     "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
     "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
   ],
-  "parent_review_digest": "3edd501f50780790d30c6efce8be851ee931a7be6b3379991793214b4d7b9aea",
-  "pass_memory_digest": "7e99d2ff7dbdcf00f59e7862bc82b75c977c790a98f459ae43aae3e5e0f7cd27",
+  "parent_review_digest": "028389d1091726481f94254912cb3a96358ee62e5c6081f259c011af1033dc02",
+  "pass_memory_digest": "5ea5861a0df915f5f2ddfd5f7aca162ec7b928c502de24bd853c668e3fec0844",
   "reference_authority_order": [
     "subject_reference"
   ],
