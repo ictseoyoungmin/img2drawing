@@ -17,10 +17,10 @@
         "top": 20
       },
       "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
-      "crop_sha256": "c14c9f299a8c092a6be0e4b0e8cf118cb75ded559739f978e1576a586f01d7cb",
+      "crop_sha256": "155d6d196eaa2182b75e000758f1be8bc4e25e6ec54c378dc552f3870ead9098",
       "role": "current_drawing",
       "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-      "source_sha256": "b2845bf265e8e7983c54010c300bf17509542d14d5374f35f43bd9160400e4d5",
+      "source_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
       "source_size": [
         512,
         802
@@ -45,8 +45,8 @@
     },
     "task_target": null
   },
-  "drawing_artifact_sha256": "b2845bf265e8e7983c54010c300bf17509542d14d5374f35f43bd9160400e4d5",
-  "drawing_state_sha256": "b361ed1df9f7eadccf17d0822f2a49a0302db4b50346a9b7d92a8dc2c8c8f19b",
+  "drawing_artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
+  "drawing_state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73",
   "history_cursor": 33,
   "intent": "Check cranium width, crown position and the nose pass against the subject.",
   "label": "head_face",

@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "b2845bf265e8e7983c54010c300bf17509542d14d5374f35f43bd9160400e4d5",
+      "artifact_sha256": "654c892fab29871fc5389481116ef620ad0ceb45903723c6f27a33206c00600e",
       "history_cursor": 33,
       "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "b361ed1df9f7eadccf17d0822f2a49a0302db4b50346a9b7d92a8dc2c8c8f19b"
+      "state_sha256": "dbb87e3ce5bd34c82ce0a218a2ea7f7eb3f501861a8dd94b8bac3636b56f3f73"
     },
     "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -501,7 +501,6 @@
       "drawing the eye line without checking it meets both eyes",
       "merging the face and spine centrelines into one stroke",
       "joining joints with straight lines",
-      "leaving a curve as a few control points, so it renders with visible corners",
       "dropping an occluded limb because it cannot be seen",
       "copying joint positions from an example drawing instead of the subject",
       "moving a line to satisfy a filter or evidence map",
@@ -548,7 +547,6 @@
       "Is every joint centre on the subject's joint, or are several drifting the same way?",
       "Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?",
       "Does each limb follow the subject's observed curvature, or was it joined straight?",
-      "Is anything the subject shows as round drawn with visible corners? A head, a joint, a shoe and a limb all curve.",
       "Do the feet land where the subject's land, and does each foot oval point the way that foot points?",
       "Do the foot directions agree with the body direction the rest of the drawing states?",
       "Is any part merely 'roughly around here'?",
@@ -600,7 +598,6 @@
       "an eye line that does not connect both eyes",
       "face and spine centrelines merged into one stroke",
       "straight landmark-to-landmark joins that flatten limb curvature",
-      "faceted polylines: visible corners where the subject's form is round",
       "omitting an occluded limb because it is not visible",
       "hair",
       "garment structure",
