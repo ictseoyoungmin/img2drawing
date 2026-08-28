@@ -83,6 +83,48 @@ def _normalize_grammar_cards(cards):
     return tuple(normalized)
 
 
+_CHECKPOINT_PATH_KEYS = {
+    "path", "archive_dir", "output_dir", "reference_path",
+    "subject_reference_path", "checkpoint_path", "source_path", "crop_path",
+    "subject_vs_drawing", "task_target_vs_drawing", "subject_drawing_overlay",
+    "subject_drawing_absdiff", "overview",
+}
+
+
+def _resolve_checkpoint_paths(value, *, base: Path, key: str = ""):
+    """Resolve portable checkpoint paths relative to the checkpoint location.
+
+    Older checkpoints containing absolute paths remain readable. Public builds may
+    rewrite path fields to relative values without making resume cwd-dependent.
+    """
+    if (
+        isinstance(value, dict)
+        and key == "task_stage_targets"
+        and all(isinstance(path, str) for path in value.values())
+    ):
+        return {
+            stage: str(
+                Path(path).expanduser().resolve()
+                if Path(path).expanduser().is_absolute()
+                else (base / Path(path).expanduser()).resolve()
+            )
+            for stage, path in value.items()
+        }
+    if isinstance(value, dict):
+        return {
+            item_key: _resolve_checkpoint_paths(item, base=base, key=str(item_key))
+            for item_key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_resolve_checkpoint_paths(item, base=base, key=key) for item in value]
+    if isinstance(value, str) and (
+        key in _CHECKPOINT_PATH_KEYS or key.endswith("_path") or key.endswith("_dir")
+    ):
+        path = Path(value).expanduser()
+        return str(path.resolve() if path.is_absolute() else (base / path).resolve())
+    return value
+
+
 @dataclass(frozen=True)
 class DrawingRunResult:
     final_drawing: Path
@@ -1178,6 +1220,7 @@ class DrawingRun:
             "img2drawing.run_checkpoint.v3",
         }:
             raise ValueError(f"unsupported run checkpoint schema: {data.get('schema')!r}")
+        data=_resolve_checkpoint_paths(data,base=checkpoint.parent)
         init=data["init"]
         ref=Path(reference).expanduser().resolve() if reference is not None else Path(init["reference_path"]).expanduser().resolve()
         if not ref.exists():

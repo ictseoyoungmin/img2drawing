@@ -19,7 +19,7 @@ python3 dev/p1_reference_run/build.py
 | `run/observation/pre_draw_observation.json` | the immutable pre-draw observation lock |
 | `run/final/drawing.png` | the closeout render |
 | `run/compare/subject_vs_final.png` | subject beside the final render |
-| `run/timelapse/timelapse.gif` | 35-frame action timelapse (`timelapse_mode="action"`) |
+| `run/timelapse/timelapse.gif` | 47-frame action timelapse (`timelapse_mode="action"`) |
 | `run/timelapse/manifest.json` | frame-to-action provenance |
 | `canonical_trace.json` | the example's own trace, validating against `dev/schemas/canonical_example_trace.schema.json` |
 | `compare.png`, `overlay.png` | raw-render comparison and the translucent-paper overlay |
@@ -29,15 +29,20 @@ checkpoint.
 
 ## What the run demonstrates
 
-`P1 draw → prepare review → Agent-selected local reviews → REVISE → explicit
-replace_stroke → fresh review → pass-memory continuation → ADVANCE`, then `finish()`.
+`P1 draw → subject/target/drawing review → Agent-selected local reviews → REVISE → explicit
+pelvis/hip/leg replacement → fresh review → pass-memory continuation → ADVANCE`, then
+`finish()`.
 
-Pass 1 stands a borrowed narrow ellipse in for the cranium — the form the P1.v3 contract
-forbids as "a generic ellipse standing in for an observed head or foot". It is about a
-third too narrow and sits left of the subject's head, so its edge cuts through her eye and
-its lower end stops at the mouth. Review catches it against the subject, the correction
-**replaces** the structure rather than nudging it, and pass 2 clears the carried concerns
-and runs a residual sweep before advancing.
+`ideal_overlay_preview.png` is copied into the canonical example as `p1_target.png` and
+registered as the P1 task-stage target. Pass 1 deliberately leaves the pelvis line through
+the provisional hip row, with medial hip centres and a low support knee. Pass 2 raises the
+pelvic crest, moves both femoral heads laterally, raises the support knee and redraws both
+leg paths through the corrected joints. It then clears all carried concerns against fresh
+three-way evidence before advancing.
+
+The observation lock is semantic rather than placeholder data, and every local subject
+box is derived from the same normalized transform as its drawing box. Local overlays can
+no longer improve apparent registration by shifting or stretching a hand-picked crop.
 
 ## Reading the result
 
@@ -47,7 +52,7 @@ Judge tone on **`run/reviews/P1_gesture/pass_02/current_drawing.png`** and
 Judge registration on **`overlay.png`**, which lays the drawing over the subject like
 translucent paper. That is what shows whether the crown, the joint centres and the foot
 landings actually sit on the subject; a drawing that looks plausible on its own will not
-survive it.
+survive it. The overlay preserves raw graphite density; it applies no contrast gain.
 
 ## Stroke weights
 
@@ -55,9 +60,10 @@ Calibrated against a completed dogfood run, not guessed:
 
 | element | grade | pressure | width | opacity |
 |---|---|---|---|---|
-| spine centreline (dominant gesture) | B | 0.72 | 3.1 | 0.90 |
-| facial centreline | B | 0.66 | 2.8 | 0.84 |
-| construction (head, shoulder, pelvis, limbs, feet) | HB | 0.44–0.52 | 2.0–2.3 | 0.55–0.66 |
+| dashed spine centreline | HB | 0.40 | 1.9 | 0.54 |
+| facial centreline | B | 0.62 | 2.65 | 0.80 |
+| limb centre-path curves | HB | 0.56–0.58 | 2.45–2.5 | 0.70–0.72 |
+| construction (head, shoulder, pelvis, joints, feet) | HB | 0.44–0.54 | 2.0–2.35 | 0.55–0.68 |
 | ground contact | 2H | 0.36 | 1.7 | 0.42 |
 
 An early stage is not a faint stage, and the pencil grade decides more than the numbers:

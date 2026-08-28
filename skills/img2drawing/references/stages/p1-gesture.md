@@ -25,9 +25,10 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 - crown position, and a **curved** facial centreline running crown → nose → chin;
 - head tilt, via an eye-line cross;
 - the **spine centreline** as an S-curve: behind the neck → mid-back → waist → sacrum;
+- an open neck connection from the jaw into the clavicle, keeping the head attached without
+  turning the cue into the measured P2 neck axis;
 - the pelvis centreline and its tilt;
 - the shoulder line and its tilt;
-- the **line of action**, which is a different line from the spine;
 - shoulder, elbow, wrist, hip, knee and ankle centres;
 - the curvature of each limb between those joints;
 - any limb hidden behind clothing or a prop;
@@ -38,17 +39,43 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 Leave out: facial features beyond the centreline and eye-line, hair, garment structure,
 muscle, closed volume, prop detail, and footwear detail.
 
+## One centre-path curve per limb by default
+
+Start each arm and leg with one flowing curve through its shoulder/elbow/wrist or
+hip/knee/ankle centres. This states direction and curvature without inventing thickness.
+Do not bracket a limb with two lines merely because two garment edges are visible; that
+turns P1 into a sleeve, trouser or tube drawing.
+
+A second light cue is optional only when a single curve cannot explain an observed
+curvature reversal or a necessary silhouette-envelope fact. It stays subordinate, must
+not simply trace the opposite clothing edge, and its distance from the centre-path curve
+has no metric meaning.
+
+The P2 handoff is explicit: preserve the P1 pose hypothesis, centrelines, curvature intent
+and joint evidence, but recompute separately from the subject:
+
+- shoulder -> elbow -> wrist and hip -> knee -> ankle measurement axes;
+- each segment's length and foreshortening;
+- the neck axis;
+- turned ribcage and pelvis axis boxes; and
+- hand and foot placement blocks, including occluded ones.
+
+P2 must derive every axis and volume measurement fresh from the subject rather than from
+the placement of any optional secondary P1 cue.
+
 ## An early stage is not a faint stage
 
-P1 construction is not a whisper. In a completed run the dominant gesture was drawn with a
-**B** grade at pressure 0.72, width 3.1, opacity 0.90; ordinary construction lines sat
-around **HB** at 0.52 / 2.2 / 0.64; only the ground cue dropped to 2H at 0.36 / 1.7 / 0.42.
+P1 construction is not a whisper. In a completed run the principal face, spine and limb
+flows sat around **HB/B** at pressure 0.52–0.62, width 2.2–2.65 and opacity 0.64–0.80;
+secondary envelope cues sat lighter, and only the ground cue dropped to 2H at
+0.36 / 1.7 / 0.42.
 
 Two things follow:
 
 - **The pencil grade decides more than the numbers.** A 2H stroke at high pressure still
-  renders pale. Use B for the dominant gesture, HB for construction, 2H only for cues you
-  want to disappear.
+  renders pale. Use B sparingly for the clearest directional accents, HB for readable
+  construction, and 2H only for cues you want to recede. Do not make the spine a black
+  centre pole.
 - **Judge on the raw render.** If P1 is only readable with the contrast turned up, it is
   too faint to review — and the stages built on it will inherit that.
 
@@ -135,12 +162,6 @@ Trying to solve both with one line breaks the drawing.
 
 Draw them as separate strokes. Their visual rhythm should still flow into each other.
 
-## The line of action is not the spine
-
-The spine is an anatomical S-curve inside the torso. The line of action is the whole
-figure's energy: it typically enters above the head, cuts diagonally across the body, and
-lands ahead of the weight-bearing foot. Both belong in P1, and they are different lines.
-
 ## Measure the landmarks; do not read them off the picture by eye
 
 Eyeballing a landmark produces errors that are individually small, all in the same
@@ -223,10 +244,9 @@ structural reading needs the structure replaced.
    pupils and the centreline through the nose; then the outline around them.
 2. Spine S-curve from behind the neck.
 3. Shoulder and pelvis lines with their rotation.
-4. Line of action across the whole figure.
-5. Joint centres, checked individually and then for shared drift.
-6. Limb flow lines following observed curvature.
-7. Occluded limbs, inferred.
-8. Foot ovals, their direction, and ground contact.
-9. Silhouette envelope and any major prop axis.
-10. Whole overlay sweep against the success criterion.
+4. Joint centres, checked individually and then for shared drift.
+5. Limb flow lines following observed curvature.
+6. Occluded limbs, inferred.
+7. Foot ovals, their direction, and ground contact.
+8. Silhouette envelope and any major prop axis.
+9. Whole overlay sweep against the success criterion.

@@ -1,62 +1,92 @@
 {
-  "advance_rationale": "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep found nothing new; the pose hypothesis registers against the subject, so P2 measurement may begin.",
+  "advance_rationale": "Fresh pass-2 whole and coordinate-registered local evidence clears all carried concerns. A separate residual sweep finds the subject's head direction, weight side, joint chains, limb flows and foot landings specific enough for independent P2 measurement.",
   "carried_concerns": [
-    "cranium outline is a borrowed ellipse, not this head's measured width",
-    "eye line and facial centreline therefore sit inside the face instead of across the head"
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
   ],
   "contract_findings": [
-    "The corrected artifact still stays inside the P1.v3 representation boundary.",
-    "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
-    "Face centreline, spine centreline and line of action remain three separate strokes."
+    "The corrected artifact remains inside the P1.v5 representation boundary.",
+    "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
+    "Every limb remains one centre-path curve through its joint centres, with no garment-width pair."
   ],
   "corrections": [
-    "Replaced the borrowed ellipse with the head outline measured on the subject."
+    "Raised the pelvis line from the hip row to the observed pelvic crest.",
+    "Moved both femoral heads laterally and raised the image-left knee from fresh target registration.",
+    "Redrew both legs as single curves through the corrected joint centres."
   ],
   "decision": "advance",
-  "drawing_artifact_sha256": "142b9069649003c5d5832c6bab78016d5188f25c8a7f2ded904be7c77330a2f4",
+  "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
   "drawing_findings": [
-    "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
-    "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
-    "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+    "All three carried concerns were checked against fresh whole and registered local evidence and are visibly resolved.",
+    "The three-way pelvis crop now agrees on a high counter-tilted pelvis line with separate lateral femoral-head markers below it.",
+    "The leg crop shows exactly one curve passing through each hip, knee and ankle marker rather than two lines following the jeans.",
+    "Each leg curve changes tangent across the knee instead of behaving like a measured P2 segment axis.",
+    "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
+    "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
   ],
-  "drawing_state_sha256": "b7f59973c59196c453a0047c13a7782a8ac7238c9be32abf10b0052c05b8d1a3",
+  "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
   "grammar_findings": [
-    "Stage grammar stays subordinate to the frozen contract and subject geometry."
+    "The face, spine, shoulder, pelvis and limb flows now share a readable construction hierarchy.",
+    "Single limb centre paths communicate curvature without being mistaken for sleeve, trouser or limb width.",
+    "Observed head and shoe shapes remain subject-specific rather than generic ellipses."
   ],
-  "history_cursor": 34,
+  "history_cursor": 44,
   "inter_pass_action_ids": [
-    "EX-P1-R1"
+    "EX-P1-R1-PELVIS",
+    "EX-P1-R1-HIP-L",
+    "EX-P1-R1-HIP-R",
+    "EX-P1-R1-KNEE-L",
+    "EX-P1-R1-LEG-L",
+    "EX-P1-R1-LEG-R"
   ],
   "local_review_ids": [
     "P1_gesture:pass_02:head_face",
-    "P1_gesture:pass_02:pelvis_support"
+    "P1_gesture:pass_02:torso_rhythm",
+    "P1_gesture:pass_02:pelvis_support",
+    "P1_gesture:pass_02:arm_left_flow",
+    "P1_gesture:pass_02:arm_right_flow",
+    "P1_gesture:pass_02:legs_chain"
   ],
   "observations": [
-    "The corrected artifact still stays inside the P1.v3 representation boundary.",
-    "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
-    "Face centreline, spine centreline and line of action remain three separate strokes.",
-    "The head outline now matches the subject's measured cranium width and position.",
-    "The eye line and facial centreline now cross the whole head rather than sitting inside the face.",
-    "Stage grammar stays subordinate to the frozen contract and subject geometry.",
-    "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
-    "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
-    "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure."
+    "The corrected artifact remains inside the P1.v5 representation boundary.",
+    "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
+    "Every limb remains one centre-path curve through its joint centres, with no garment-width pair.",
+    "Fresh three-way reviews align the corrected pelvic crest, lateral femoral heads, knees, ankles and foot directions with the approved target overlay.",
+    "The final drawing keeps the target's sparse P1 vocabulary without copying the photograph's garment contours.",
+    "The head outline places unequal jaw turns around the nose-anchored centreline and preserves the subject's slight downward three-quarter turn.",
+    "The subordinate spine starts behind the neck and remains readable through the shoulder/pelvis counter-tilt without becoming the pose itself.",
+    "The image-left leg stacks hip-knee-ankle over the support shoe while the image-right chain sweeps outward into the lower frontal shoe.",
+    "The face, spine, shoulder, pelvis and limb flows now share a readable construction hierarchy.",
+    "Single limb centre paths communicate curvature without being mistaken for sleeve, trouser or limb width.",
+    "Observed head and shoe shapes remain subject-specific rather than generic ellipses.",
+    "All three carried concerns were checked against fresh whole and registered local evidence and are visibly resolved.",
+    "The three-way pelvis crop now agrees on a high counter-tilted pelvis line with separate lateral femoral-head markers below it.",
+    "The leg crop shows exactly one curve passing through each hip, knee and ankle marker rather than two lines following the jeans.",
+    "Each leg curve changes tangent across the knee instead of behaving like a measured P2 segment axis.",
+    "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
+    "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
   ],
-  "parent_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
-  "pass_memory_digest": "bbe3451913a292d503b9b805aba4bc6669e67d79c5c634f73caa3e93efb83273",
+  "parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
+  "pass_memory_digest": "90127bb2fe6640e5cfb206792a8383dc3dbed0b1b46b361f6df14c9169c2d4f7",
   "reference_authority_order": [
+    "task_stage_target",
     "subject_reference"
   ],
   "remaining_concerns": [],
   "schema": "img2drawing.stage_review.v6",
   "semantic_authority": "agent",
   "stage": "P1_gesture",
-  "stage_contract_id": "full_body_croquis.P1.v3",
+  "stage_contract_id": "full_body_croquis.P1.v5",
   "subject_findings": [
-    "The head outline now matches the subject's measured cranium width and position.",
-    "The eye line and facial centreline now cross the whole head rather than sitting inside the face."
+    "The head outline places unequal jaw turns around the nose-anchored centreline and preserves the subject's slight downward three-quarter turn.",
+    "The subordinate spine starts behind the neck and remains readable through the shoulder/pelvis counter-tilt without becoming the pose itself.",
+    "The image-left leg stacks hip-knee-ankle over the support shoe while the image-right chain sweeps outward into the lower frontal shoe."
   ],
-  "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
-  "task_stage_target": null,
-  "task_target_findings": []
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+  "task_target_findings": [
+    "Fresh three-way reviews align the corrected pelvic crest, lateral femoral heads, knees, ankles and foot directions with the approved target overlay.",
+    "The final drawing keeps the target's sparse P1 vocabulary without copying the photograph's garment contours."
+  ]
 }

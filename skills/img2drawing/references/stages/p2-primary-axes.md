@@ -6,6 +6,15 @@ P1 already placed the joints and read each limb's curvature. P2 does not re-plac
 turns that flow into **measured structure**: segment length, foreshortening, and the
 ribcage and pelvis volumes a mannequin needs.
 
+### P1 handoff: flow is not thickness
+
+P1's limb curves are gesture-flow evidence, not measurement axes or width. Preserve the P1
+joint evidence and pose direction, then measure fresh against the subject.
+P2 authors its own shoulder -> elbow -> wrist and hip -> knee -> ankle axes, segment
+lengths and foreshortening, neck axis, turned ribcage/pelvis boxes, and hand/foot blocks.
+If a P1 joint is proven wrong, correct that joint explicitly and reopen P1 rather than
+silently making a compensating P2 volume.
+
 ## What P2 states
 - the length of each limb segment, measured against the subject;
 - foreshortening of each segment;
@@ -34,11 +43,13 @@ object.
 - **Moving a joint for convenience.** Correcting a P1 joint is allowed when the subject
   says so; it is not a way to make the drawing easier.
 - **Forgetting an occluded hand.** If P1 inferred a hand in a pocket, P2 gives it a block.
+- **Treating P1 flow as a measured axis.** Derive P2 axes and boxes independently from the
+  subject, including where P1 used an optional secondary cue.
 - **Losing P1.** If the axes measure well but the pose hypothesis drifted, reopen P1
   instead of compensating here.
 
 ## Hardening order
-1. Preserve the P1 centrelines, line of action and joint centres.
+1. Preserve the P1 centrelines, pose rhythm and joint centres.
 2. Neck axis.
 3. Ribcage box and its turn.
 4. Pelvis box and its turn.

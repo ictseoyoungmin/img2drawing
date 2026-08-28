@@ -8,8 +8,38 @@ from pathlib import Path
 from img2drawing import DrawingRun, ObservationContract, ViewObservation
 
 
-HERE=Path(__file__).resolve().parent
-SUBJECT=HERE/"subject.png"
+HERE = Path(__file__).resolve().parent
+SUBJECT = HERE / "subject.png"
+TARGET = HERE / "p1_target.png"
+CANVAS_SIZE = (512, 802)
+SUBJECT_SIZE = (735, 1152)
+TARGET_SIZE = (1002, 1570)
+
+
+def _subject_box(drawing_box: tuple[int, int, int, int]) -> tuple[int, int, int, int]:
+    """Map a canvas ROI to the same normalized region in the source image."""
+    sx = SUBJECT_SIZE[0] / CANVAS_SIZE[0]
+    sy = SUBJECT_SIZE[1] / CANVAS_SIZE[1]
+    left, top, right, bottom = drawing_box
+    return (
+        round(left * sx),
+        round(top * sy),
+        round(right * sx),
+        round(bottom * sy),
+    )
+
+
+def _target_box(drawing_box: tuple[int, int, int, int]) -> tuple[int, int, int, int]:
+    """Map a canvas ROI into the user-approved P1 target overlay."""
+    sx = TARGET_SIZE[0] / CANVAS_SIZE[0]
+    sy = TARGET_SIZE[1] / CANVAS_SIZE[1]
+    left, top, right, bottom = drawing_box
+    return (
+        round(left * sx),
+        round(top * sy),
+        round(right * sx),
+        round(bottom * sy),
+    )
 
 
 def _stroke(
@@ -26,26 +56,26 @@ def _stroke(
     source="Canonical-example visual observation.",
 ):
     return {
-        "action_id":action_id,
-        "kind":"draw_stroke",
-        "stage":"P1_gesture",
-        "role":role,
-        "part":part,
-        "points":points,
-        "stroke_id":part,
-        "confidence":confidence,
-        "layer":10,
-        "tool":{
-            "preset":"construction_pencil",
-            "grade":grade,
-            "overrides":{
-                "pressure":pressure,
-                "width":width,
-                "opacity":opacity,
+        "action_id": action_id,
+        "kind": "draw_stroke",
+        "stage": "P1_gesture",
+        "role": role,
+        "part": part,
+        "points": points,
+        "stroke_id": part,
+        "confidence": confidence,
+        "layer": 10,
+        "tool": {
+            "preset": "construction_pencil",
+            "grade": grade,
+            "overrides": {
+                "pressure": pressure,
+                "width": width,
+                "opacity": opacity,
             },
         },
-        "observation_id":"canonical-"+action_id,
-        "source_observation":source,
+        "observation_id": "canonical-" + action_id,
+        "source_observation": source,
     }
 
 
@@ -55,629 +85,534 @@ def _replace(
     points,
     *,
     reason,
+    role="gesture",
     pressure=.42,
     width=1.9,
     opacity=.62,
     grade="HB",
 ):
     return {
-        "action_id":action_id,
-        "kind":"replace_stroke",
-        "stage":"P1_gesture",
-        "role":"gesture",
-        "part":part,
-        "points":points,
-        "target_stroke_id":part,
-        "stroke_id":part,
-        "confidence":.94,
-        "layer":10,
-        "tool":{
-            "preset":"construction_pencil",
-            "grade":grade,
-            "overrides":{
-                "pressure":pressure,
-                "width":width,
-                "opacity":opacity,
+        "action_id": action_id,
+        "kind": "replace_stroke",
+        "stage": "P1_gesture",
+        "role": role,
+        "part": part,
+        "points": points,
+        "target_stroke_id": part,
+        "stroke_id": part,
+        "confidence": .94,
+        "layer": 10,
+        "tool": {
+            "preset": "construction_pencil",
+            "grade": grade,
+            "overrides": {
+                "pressure": pressure,
+                "width": width,
+                "opacity": opacity,
             },
         },
-        "observation_id":"canonical-"+action_id,
-        "source_observation":"Fresh re-observation after the previous review.",
-        "reason":reason,
-        "revision_of":part,
+        "observation_id": "canonical-" + action_id,
+        "source_observation": "Fresh re-observation after the previous review.",
+        "reason": reason,
+        "revision_of": part,
     }
 
 
-def run_example(output_dir: str|Path, *, clean=True) -> dict:
-    """Canonical P1 hardening example.
+def _joint_points(centre):
+    cx, cy = centre
+    return [
+        [cx + 5, cy], [cx + 4, cy + 3], [cx + 2, cy + 5],
+        [cx - 2, cy + 5], [cx - 4, cy + 3], [cx - 5, cy],
+        [cx - 4, cy - 3], [cx - 2, cy - 5], [cx + 2, cy - 5],
+        [cx + 4, cy - 3], [cx + 5, cy],
+    ]
 
-    Demonstrates:
-    P1 gesture → fresh artifact review → local evidence → REVISE →
-    explicit correction → pass-memory continuation → fresh review → ADVANCE.
 
-    It intentionally stops with P2 as the current stage. It is a workflow example,
-    not a claim that the entire figure is finished.
-    """
-    output=Path(output_dir).resolve()
+def _joint(action_id, part, centre, *, source):
+    return _stroke(
+        action_id,
+        part,
+        _joint_points(centre),
+        grade="HB",
+        pressure=.44,
+        width=2.0,
+        opacity=.55,
+        source=source,
+    )
+
+
+def _prepare_local_reviews(run: DrawingRun, *, fresh: bool):
+    prefix = "Re-check" if fresh else "Check"
+    specs = (
+        ("head_face", f"{prefix} crown, observed head shape, pupil line and nose pass.", (220, 10, 310, 140)),
+        ("torso_rhythm", f"{prefix} the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.", (185, 120, 330, 430)),
+        ("pelvis_support", f"{prefix} pelvis counter-tilt, both hip centres and weight transfer into the image-left support foot.", (195, 355, 410, 802)),
+        ("arm_left_flow", f"{prefix} image-left shoulder, elbow, visible wrist and curved hanging-arm flow.", (140, 140, 220, 455)),
+        ("arm_right_flow", f"{prefix} image-right shoulder, elbow and partly occluded pocket-hand flow.", (280, 125, 380, 355)),
+        ("legs_chain", f"{prefix} each single hip-knee-ankle centre-path curve, shoe direction and ground contact.", (195, 390, 410, 802)),
+    )
+    reviews = []
+    for label, intent, drawing_box in specs:
+        reviews.append(run.prepare_local_review(
+            label=label,
+            intent=intent,
+            subject_box=_subject_box(drawing_box),
+            drawing_box=drawing_box,
+            task_target_box=_target_box(drawing_box),
+        ))
+    return reviews
+
+
+def run_example(output_dir: str | Path, *, clean=True) -> dict:
+    """Canonical two-pass P1 hardening example for the bundled subject."""
+    output = Path(output_dir).resolve()
     if clean and output.exists():
         shutil.rmtree(output)
-    output.mkdir(parents=True,exist_ok=True)
+    output.mkdir(parents=True, exist_ok=True)
 
-    run=DrawingRun.create(
+    run = DrawingRun.create(
         SUBJECT,
         output,
-        width=512,
-        height=802,
+        width=CANVAS_SIZE[0],
+        height=CANVAS_SIZE[1],
         working_supersample=3,
-        session_id="canonical-full-body-croquis-r07",
+        session_id="canonical-full-body-croquis-r10-target-rebuild",
+        task_stage_targets={"P1_gesture": TARGET},
     )
     run.lock_observation(ObservationContract(
-        subject_summary="Full-body subject reference for the canonical stage workflow.",
-        view=ViewObservation(
-            body_view="unknown",
-            torso_turn="unknown",
-            near_side="unknown",
-            arm_visibility={
-                "subject_left":"unknown",
-                "subject_right":"unknown",
+        subject_summary=(
+            "Full-body front three-quarter standing subject. The image-left leg carries "
+            "the weight; the image-right leg steps out. The image-left arm hangs while "
+            "the image-right arm bends into the trouser pocket."
+        ),
+        global_relations={
+            "canvas_basis": "All listed coordinates were observed on the 512x802 working canvas.",
+            "weight_side": "image_left",
+            "counterbalance_side": "image_right",
+            "shoulder_tilt": "image-left shoulder lower; image-right shoulder higher",
+            "pelvis_tilt": "image-left hip higher; image-right hip lower",
+            "head_direction": "slight turn toward image-left with a small downward tilt",
+            "prop": "none",
+        },
+        parts={
+            "head_landmarks": {
+                "crown": [264, 29],
+                "pupils": [[251, 70], [275, 74]],
+                "nose": [263, 87],
+                "chin": [258, 118],
             },
+            "joint_centres": {
+                "image_left": {
+                    "shoulder": [184, 175], "elbow": [169, 301],
+                    "wrist": [158, 413], "hip": [198, 358],
+                    "knee": [212, 524], "ankle": [233, 696],
+                },
+                "image_right": {
+                    "shoulder": [311, 153], "elbow": [350, 263],
+                    "wrist": [294, 331], "hip": [287, 364],
+                    "knee": [311, 524], "ankle": [350, 724],
+                },
+            },
+            "feet": {
+                "image_left": "weight-bearing shoe points across the body toward image-left",
+                "image_right": "lower stepped-out shoe points toward the viewer and image-right",
+            },
+        },
+        uncertainties=(
+            "Loose denim obscures exact knee contours; knee centres are inferred from each hip-to-ankle chain.",
+            "The pocket and sleeve partly hide the image-right wrist and hand endpoint.",
+        ),
+        drawing_priorities=(
+            "head direction from pupils and nose",
+            "balanced face, spine, shoulder and pelvis line hierarchy",
+            "support versus counterbalance leg",
+            "one centre-path curve per limb through its joint centres",
+            "subject-specific foot landing",
+        ),
+        evidence_refs=(
+            "subject.png whole view normalized to 512x802",
+            "p1_target.png user-approved task-stage target normalized to 512x802",
+        ),
+        view=ViewObservation(
+            body_view="front_three_quarter",
+            torso_turn="left",
+            near_side="subject_left",
+            arm_visibility={"subject_left": "partial", "subject_right": "visible"},
             arm_occlusion={
-                "subject_left":(),
-                "subject_right":(),
+                "subject_left": (
+                    "wrist partly covered by cardigan cuff",
+                    "hand partly inside trouser pocket",
+                ),
+                "subject_right": (),
             },
             uncertainties=(
-                "The canonical example demonstrates review lifecycle; pose-side labels remain subject-observation inputs.",
+                "Near-side assignment follows the larger image-right sleeve and shoulder exposure.",
             ),
         ),
     ))
 
-    # ------------------------------------------------------------------
-    # P1 / PASS 1
-    # ------------------------------------------------------------------
     run.stage_start("P1_gesture")
 
-    # ------------------------------------------------------------------
-    # P1 / PASS 1 — a whole-body pose hypothesis, per the P1.v3 contract.
-    #
-    # Every coordinate here was read off the subject at canvas scale. The
-    # annotated construction reference supplies the grammar — which lines exist
-    # and what each states — never the coordinates.
-    #
-    # Two distinct lines are never merged: the facial centreline explains face
-    # rotation, the spine centreline explains body gesture. Weights follow a
-    # completed run: an early stage is not a faint stage.
-    #
-    # Pass 1 deliberately runs the facial centreline dead down the cranium
-    # midline — a contract-forbidden form — so the example demonstrates a real
-    # revise cycle instead of a cosmetic one.
-    # ------------------------------------------------------------------
-    # Pass 1's error, and a real one: a borrowed narrow ellipse standing in for
-    # this subject's cranium. The P1 contract forbids exactly this.
-    initial_head_outline=[[253,34], [263,38], [271,48], [275,62], [273,80], [266,102], [257,116], [253,118],
-             [248,116], [240,102], [234,80], [232,62], [236,46], [244,37], [253,34]]
+    # The subject supplies every coordinate. The stage reference supplies only
+    # vocabulary, hierarchy and the P1 detail boundary.
+    initial_head_outline = [
+        [264, 29], [276, 31], [286, 38], [293, 49], [296, 63],
+        [295, 78], [291, 91], [284, 104], [276, 114], [266, 120],
+        [258, 118], [249, 111], [242, 102], [236, 91], [232, 78],
+        [231, 65], [234, 52], [240, 42], [250, 34], [260, 30], [264, 29],
+    ]
+    facial_centreline = [
+        [264, 29], [265, 45], [265, 61], [264, 74],
+        [263, 87], [261, 100], [259, 111], [258, 118],
+    ]
+    eye_line = [
+        [215, 66], [232, 67], [251, 70], [263, 72],
+        [275, 74], [287, 77], [294, 79],
+    ]
 
-    run.draw_many([
+    # Pass 1 is a fresh target-registered centre-path construction. Its review
+    # deliberately tests the uncertain pelvis/hip separation before advancing.
+
+    strokes = [
         _stroke(
-            "EX-P1-A1",
-            "head_outline",
-            initial_head_outline,
-            grade="HB",
-            pressure=0.52,
-            width=2.3,
-            opacity=0.66,
-            source="Head outline read from the subject: full cranium narrowing to the jaw. Not an ellipse.",
+            "EX-P1-A1", "head_outline", initial_head_outline,
+            grade="HB", pressure=.52, width=2.3, opacity=.66,
+            source="Pass-1 cranium and jaw hypothesis; retained for review because it may be too symmetric.",
         ),
         _stroke(
-            "EX-P1-A2",
-            "facial_centreline",
-            [[263,30], [266,50], [267,71], [263,90], [262,101], [260,118]],
-            grade="B",
-            pressure=.66,
-            width=2.8,
-            opacity=.84,
-            source="Facial centreline run through the marked crown, between-eyes, nose, mouth and chin — not down the outline's midpoint.",
+            "EX-P1-A2", "facial_centreline", facial_centreline,
+            grade="B", pressure=.62, width=2.65, opacity=.80,
+            source="Curved facial centreline through crown, between the pupils, nose, mouth and chin.",
         ),
         _stroke(
-            "EX-P1-A3",
-            "eye_line",
-            [[236,66], [246,68], [256,70], [268,72], [279,73], [289,70]],
-            grade="HB",
-            pressure=0.48,
-            width=2.15,
-            opacity=0.6,
-            source="Eye line drawn through both pupils; its downward tilt toward the image-right is what those two positions give.",
+            "EX-P1-A3", "eye_line", eye_line,
+            grade="HB", pressure=.48, width=2.15, opacity=.60,
+            source="Wrapped eye line anchored independently on both pupils.",
         ),
         _stroke(
-            "EX-P1-A4",
-            "spine_centreline",
-            [[253,142], [257,190], [255,240], [250,290], [248,335], [250,378]],
-            grade="B",
-            pressure=0.72,
-            width=3.1,
-            opacity=0.9,
-            source="The body's gesture: an S-curve from the middle of the neck through ribcage and abdomen to the pelvis.",
+            "EX-P1-NECK-L", "neck_connection_left",
+            [[249, 109], [247, 116], [245, 123]],
+            grade="HB", pressure=.38, width=1.8, opacity=.46,
+            source="Short visible image-left jaw-to-neck attachment; it stops before the clavicle and shoulder.",
+        ),
+        *(
+            _stroke(
+                f"EX-P1-SPINE-{index:02d}", f"spine_centreline_dash_{index:02d}", dash,
+                grade="HB", pressure=.40, width=1.9, opacity=.54,
+                source="Dashed subordinate cervical-to-sacral S-curve registered to the approved P1 target.",
+            )
+            for index, dash in enumerate((
+                [[255, 116], [252, 135]],
+                [[249, 148], [245, 169]],
+                [[242, 182], [241, 204]],
+                [[242, 217], [246, 239]],
+                [[250, 251], [254, 271]],
+                [[254, 284], [251, 306]],
+                [[248, 319], [244, 341]],
+                [[242, 350], [241, 362]],
+            ), start=1)
         ),
         _stroke(
-            "EX-P1-A5",
-            "shoulder_line",
-            [[194,152], [222,146], [253,143], [284,144], [313,148]],
-            grade="HB",
-            pressure=0.52,
-            width=2.2,
-            opacity=0.64,
-            source="Shoulder tilt: the image-left shoulder sits lower, the image-right higher.",
+            "EX-P1-SHOULDER", "shoulder_line",
+            [[184, 175], [212, 170], [245, 164], [278, 158], [311, 153]],
+            grade="HB", pressure=.52, width=2.2, opacity=.64,
+            source="Observed shoulder rhythm: image-left lower and image-right higher.",
         ),
         _stroke(
-            "EX-P1-A6",
-            "pelvis_centreline",
-            [[204,374], [232,376], [260,379], [286,382]],
-            grade="HB",
-            pressure=0.52,
-            width=2.2,
-            opacity=0.64,
-            source="Pelvis tilt counter to the shoulders: image-left higher, image-right lower.",
+            "EX-P1-PELVIS", "pelvis_centreline",
+            [[207, 370], [226, 368], [246, 369], [266, 371], [284, 374]],
+            grade="HB", pressure=.52, width=2.2, opacity=.64,
+            source="Pelvis counter-tilt through femoral-head centres inferred just above the crotch, below the waistband.",
         ),
         _stroke(
-            "EX-P1-arm_left_a",
-            "arm_left_outer",
-            [[186,152], [180,222], [176,288], [172,356], [166,422]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-left arm hangs almost straight; shoulder, elbow and wrist nearly align.",
+            "EX-P1-ARM-L", "arm_left_flow",
+            [[184, 175], [180, 209], [176, 251], [169, 301], [166, 342], [162, 382], [158, 413]],
+            grade="HB", pressure=.56, width=2.45, opacity=.70,
+            source="Single centre-path curve through the image-left shoulder, elbow and visible wrist; it does not trace sleeve width.",
         ),
         _stroke(
-            "EX-P1-arm_left_b",
-            "arm_left_inner",
-            [[202,152], [196,222], [192,288], [186,356], [174,422]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Inner edge of the arm left tube.",
+            "EX-P1-ARM-R", "arm_right_flow",
+            [[311, 153], [323, 174], [337, 204], [347, 235], [350, 263], [342, 283], [327, 302], [310, 318], [294, 331]],
+            grade="HB", pressure=.56, width=2.45, opacity=.70,
+            source="Single centre-path curve through the image-right shoulder, inferred elbow and pocket wrist; it ignores the cardigan's outer bulge.",
         ),
         _stroke(
-            "EX-P1-arm_right_a",
-            "arm_right_outer",
-            [[305,148], [335,192], [346,228], [313,282], [272,326]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-right arm bends at the elbow; the hand is in the pocket, so the wrist endpoint is inferred.",
+            "EX-P1-LEG-L", "leg_left_flow",
+            [[207, 370], [207, 409], [208, 451], [210, 492], [214, 532], [220, 574], [225, 616], [229, 658], [233, 696]],
+            grade="HB", pressure=.58, width=2.5, opacity=.72,
+            source="Single centre-path curve through the image-left weight-bearing hip, knee and ankle; it is independent of both trouser edges.",
         ),
         _stroke(
-            "EX-P1-arm_right_b",
-            "arm_right_inner",
-            [[321,148], [349,192], [358,228], [323,282], [280,326]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Inner edge of the arm right tube.",
+            "EX-P1-LEG-R", "leg_right_flow",
+            [[284, 374], [291, 408], [298, 448], [305, 488], [311, 524], [320, 567], [330, 611], [340, 668], [350, 724]],
+            grade="HB", pressure=.58, width=2.5, opacity=.72,
+            source="Single centre-path curve through the image-right hip, knee and ankle, preserving the stepped-out sweep without tracing trouser width.",
+        ),
+    ]
+
+    joint_specs = (
+        ("EX-P1-J-SHOULDER-L", "joint_shoulder_L", (184, 175), "Image-left shoulder centre."),
+        ("EX-P1-J-SHOULDER-R", "joint_shoulder_R", (311, 153), "Image-right shoulder centre."),
+        ("EX-P1-J-ELBOW-L", "joint_elbow_L", (169, 301), "Image-left elbow centre."),
+        ("EX-P1-J-ELBOW-R", "joint_elbow_R", (350, 263), "Image-right elbow inferred inside the cardigan, not at its outer bulge."),
+        ("EX-P1-J-WRIST-L", "joint_wrist_L", (158, 413), "Visible image-left wrist below the cuff."),
+        ("EX-P1-J-WRIST-R", "joint_wrist_R", (294, 331), "Inferred image-right wrist at the pocket hand."),
+        ("EX-P1-J-HIP-L", "joint_hip_L", (207, 370), "Pass-1 image-left femoral-head estimate for target review."),
+        ("EX-P1-J-HIP-R", "joint_hip_R", (284, 374), "Pass-1 image-right femoral-head estimate for target review."),
+        ("EX-P1-J-PELVIS-C", "joint_pelvis_centre", (241, 362), "Sacral centre at the end of the subordinate spine cue."),
+        ("EX-P1-J-KNEE-L", "joint_knee_L", (214, 532), "Pass-1 image-left knee estimate along the support chain."),
+        ("EX-P1-J-KNEE-R", "joint_knee_R", (311, 524), "Image-right knee centre inferred along the counterbalance chain."),
+        ("EX-P1-J-ANKLE-L", "joint_ankle_L", (233, 696), "Image-left ankle at the jean hem."),
+        ("EX-P1-J-ANKLE-R", "joint_ankle_R", (350, 724), "Image-right ankle at the jean hem."),
+    )
+    strokes.extend(_joint(action_id, part, centre, source=source)
+                   for action_id, part, centre, source in joint_specs)
+    strokes.extend([
+        _stroke(
+            "EX-P1-FOOT-LINK-L", "ankle_foot_link_left", [[233, 696], [230, 702], [226, 708]],
+            grade="HB", pressure=.46, width=2.05, opacity=.56,
+            source="Connection from the support ankle into its observed shoe direction.",
         ),
         _stroke(
-            "EX-P1-leg_left_a",
-            "leg_left_outer",
-            [[193,378], [202,462], [211,545], [224,625], [239,705]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-left leg carries the weight and its lower leg angles out to the foot.",
+            "EX-P1-FOOT-L", "foot_direction_left",
+            [[233, 696], [226, 707], [214, 724], [227, 730], [233, 696]],
+            grade="HB", pressure=.50, width=2.2, opacity=.62,
+            source="Observed support shoe: a compact wedge pointing across the body toward image-left.",
         ),
         _stroke(
-            "EX-P1-leg_left_b",
-            "leg_left_inner",
-            [[223,378], [226,462], [231,545], [240,625], [251,705]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Inner edge of the leg left tube.",
+            "EX-P1-FOOT-LINK-R", "ankle_foot_link_right", [[350, 724], [351, 732], [354, 739]],
+            grade="HB", pressure=.46, width=2.05, opacity=.56,
+            source="Connection from the counterbalance ankle into its observed shoe direction.",
         ),
         _stroke(
-            "EX-P1-leg_right_a",
-            "leg_right_outer",
-            [[267,378], [280,462], [294,548], [314,640], [335,730]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-right leg steps further out with a relaxed knee.",
+            "EX-P1-FOOT-R", "foot_direction_right",
+            [[350, 724], [354, 739], [362, 756], [379, 751], [374, 743],
+             [364, 735], [350, 724]],
+            grade="HB", pressure=.50, width=2.2, opacity=.62,
+            source="Observed stepped-out shoe: broader and more frontal than the support shoe.",
         ),
         _stroke(
-            "EX-P1-leg_right_b",
-            "leg_right_inner",
-            [[297,378], [304,462], [314,548], [330,640], [347,730]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Inner edge of the leg right tube.",
+            "EX-P1-GROUND-L", "ground_contact_left", [[205, 740], [239, 741]],
+            grade="2H", pressure=.36, width=1.7, opacity=.42,
+            source="Ground contact under the image-left weight-bearing shoe.",
         ),
         _stroke(
-            "EX-P1-J_shoulder_L",
-            "joint_shoulder_L",
-            [[200,152], [199,156], [196,158], [192,158], [189,156], [188,152], [189,148], [192,146], [196,146], [199,148], [200,152]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="shoulder L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_shoulder_R",
-            "joint_shoulder_R",
-            [[319,148], [318,152], [315,154], [311,154], [308,152], [307,148], [308,144], [311,142], [315,142], [318,144], [319,148]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="shoulder R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_elbow_L",
-            "joint_elbow_L",
-            [[190,288], [189,292], [186,294], [182,294], [179,292], [178,288], [179,284], [182,282], [186,282], [189,284], [190,288]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="elbow L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_elbow_R",
-            "joint_elbow_R",
-            [[358,228], [357,232], [354,234], [350,234], [347,232], [346,228], [347,224], [350,222], [354,222], [357,224], [358,228]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="elbow R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_wrist_L",
-            "joint_wrist_L",
-            [[176,422], [175,425], [172,427], [169,428], [166,427], [164,424], [164,420], [166,417],
-             [169,416], [172,417], [175,419], [176,422]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="wrist L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_wrist_R",
-            "joint_wrist_R",
-            [[282,326], [281,329], [278,331], [275,332], [272,331], [270,328], [270,324], [272,321],
-             [275,320], [278,321], [281,323], [282,326]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="wrist R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_hip_L",
-            "joint_hip_L",
-            [[214,378], [213,381], [210,383], [207,384], [204,383], [202,380], [202,376], [204,373],
-             [207,372], [210,373], [213,375], [214,378]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="hip L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_hip_R",
-            "joint_hip_R",
-            [[288,378], [287,381], [284,383], [281,384], [278,383], [276,380], [276,376], [278,373],
-             [281,372], [284,373], [287,375], [288,378]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="hip R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_knee_L",
-            "joint_knee_L",
-            [[227,545], [226,548], [223,550], [220,551], [217,550], [215,547], [215,543], [217,540],
-             [220,539], [223,540], [226,542], [227,545]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="knee L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_knee_R",
-            "joint_knee_R",
-            [[310,548], [309,551], [306,553], [303,554], [300,553], [298,550], [298,546], [300,543],
-             [303,542], [306,543], [309,545], [310,548]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="knee R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_ankle_L",
-            "joint_ankle_L",
-            [[251,705], [250,708], [247,710], [244,711], [241,710], [239,707], [239,703], [241,700],
-             [244,699], [247,700], [250,702], [251,705]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="ankle L centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-J_ankle_R",
-            "joint_ankle_R",
-            [[347,730], [346,733], [343,735], [340,736], [337,735], [335,732], [335,728], [337,725],
-             [340,724], [343,725], [346,727], [347,730]],
-            grade="HB",
-            pressure=0.44,
-            width=2.0,
-            opacity=0.55,
-            source="ankle R centre read from the subject.",
-        ),
-        _stroke(
-            "EX-P1-F_link_L",
-            "ankle_foot_link_left",
-            [[245,705], [246,708], [250,713]],
-            grade="HB",
-            pressure=0.46,
-            width=2.05,
-            opacity=0.56,
-            source="Link from the image-left ankle into the shoe.",
-        ),
-        _stroke(
-            "EX-P1-F_L",
-            "foot_direction_left",
-            [[266,716], [263,722], [254,728], [242,731], [231,729], [226,724], [229,718], [238,712], [250,709], [261,711], [266,716]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-left shoe read from the subject: its toe swings across the body toward the image-left.",
-        ),
-        _stroke(
-            "EX-P1-F_link_R",
-            "ankle_foot_link_right",
-            [[341,730], [337,733], [333,738]],
-            grade="HB",
-            pressure=0.46,
-            width=2.05,
-            opacity=0.56,
-            source="Link from the image-right ankle into the shoe.",
-        ),
-        _stroke(
-            "EX-P1-F_R",
-            "foot_direction_right",
-            [[378,760], [372,765], [361,765], [349,761], [340,754], [338,748], [344,743], [355,743], [367,747], [376,754], [378,760]],
-            grade="HB",
-            pressure=0.5,
-            width=2.2,
-            opacity=0.62,
-            source="Image-right shoe read from the subject: it steps out and its toe points further from the body.",
-        ),
-        _stroke(
-            "EX-P1-G_L",
-            "ground_contact_left",
-            [[210,750], [272,752]],
-            grade="2H",
-            pressure=0.36,
-            width=1.7,
-            opacity=0.42,
-            source="Image-left foot contact; this foot carries the weight.",
-        ),
-        _stroke(
-            "EX-P1-G_R",
-            "ground_contact_right",
-            [[318,779], [393,781]],
-            grade="2H",
-            pressure=0.36,
-            width=1.7,
-            opacity=0.42,
-            source="Image-right foot contact; it lands lower and further out.",
+            "EX-P1-GROUND-R", "ground_contact_right", [[350, 783], [392, 783]],
+            grade="2H", pressure=.36, width=1.7, opacity=.42,
+            source="Lower ground contact under the image-right stepped-out shoe.",
         ),
     ])
+    run.draw_many(strokes)
 
-    pass1_artifacts=run.prepare_stage_review()
-
-    # Agent-selected local evidence. Runtime does not locate anatomy.
-    head1=run.prepare_local_review(
-        label="head_face",
-        intent="Check cranium width, crown position and the nose pass against the subject.",
-        subject_box=(300,20,450,200),
-        drawing_box=(222,20,288,132),
-    )
-    pelvis1=run.prepare_local_review(
-        label="pelvis_support",
-        intent="Check pelvis tilt, hip joint centres and where both feet land.",
-        subject_box=(190,430,570,1145),
-        drawing_box=(132,299,398,800),
-    )
-
-    pass1=run.submit_stage_review(
+    run.prepare_stage_review()
+    pass1_locals = _prepare_local_reviews(run, fresh=False)
+    pass1 = run.submit_stage_review(
+        task_target_findings=[
+            "The approved target fixes the intended P1 geometry: asymmetric head, subordinate spine, counter-tilted shoulder/pelvis lines, lateral hip markers, one path per limb and wedge-like foot directions.",
+            "Registered pelvis and leg crops show that the pass-1 pelvis/hip row does not yet match the target separation.",
+        ],
         contract_findings=[
-            "The drawing stays inside the P1.v3 representation boundary.",
-            "No facial features beyond the centreline and eye line, no hair, clothing, muscle or closed volume.",
-            "Face centreline, spine centreline and line of action are three separate strokes.",
+            "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+            "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
+            "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced.",
         ],
         subject_findings=[
-            "The subject's cranium is measurably wider than the ellipse drawn in pass 1 and sits further image-right.",
-            "The subject's weight sits on the image-left leg; the image-right foot lands lower and further out.",
+            "The subject transfers weight through the image-left hip, knee and compact cross-body shoe; the image-right leg steps lower and outward.",
+            "The torso is not a single diagonal: it reverses gently from head and ribcage through pelvis before settling into the support side.",
+            "The anatomical spine shows a cervical-to-thoracic-to-lumbar reversal even though clothing hides its literal contour.",
         ],
         grammar_findings=[
-            "P1 is being judged against the frozen contract, not against an example drawing.",
-            "Joint centres were read from the subject rather than copied from the pipeline overview sheet.",
+            "Each arm and leg should read as one curved centre path through its three joint centres.",
+            "Face, spine, shoulder, pelvis and limb flows should remain mutually readable; the spine is not a dominant black pole.",
         ],
         drawing_findings=[
-            "The cranium was drawn as a narrow ellipse: it is about a third too narrow and sits left of the subject's head.",
-            "Its left edge cuts through the subject's eye, and its lower end stops at the mouth rather than the chin.",
-            "Spine, shoulder and pelvis centrelines, both arm and leg tubes, twelve joint centres, both foot direction ovals and both ground contacts are present and register.",
+            "The fresh head, face, shoulder and arm construction agrees with the approved target overlay.",
+            "The pass-1 pelvis line was mistakenly placed through the hip joints instead of across the observed pelvic crest.",
+            "Both pass-1 femoral heads are too medial and too low relative to the target, so the leg paths start inside the trousers rather than at the lateral hip centres.",
+            "The image-left knee is also slightly low; the lower chain consequently misses the target's support-leg sweep.",
         ],
-        local_review_ids=[head1.local_review_id,pelvis1.local_review_id],
+        local_review_ids=[item.local_review_id for item in pass1_locals],
         corrections=[],
         remaining_concerns=[
-            "cranium outline is a borrowed ellipse, not this head's measured width",
-            "eye line and facial centreline therefore sit inside the face instead of across the head",
+            "pelvis line is too low and incorrectly passes through the hip markers",
+            "both femoral-head markers and leg origins are too medial and low",
+            "image-left knee and support-leg curvature do not match the approved target",
         ],
         decision="revise",
     )
 
-    # ------------------------------------------------------------------
-    # CORRECTION BETWEEN PASSES
-    #
-    # A forbidden representation was found, not a small inaccuracy: the fix
-    # replaces the structure rather than nudging it.
-    # ------------------------------------------------------------------
-    corrected_head_outline=[
-        [263,30], [275,35], [285,46], [291,61], [291,77], [284,97], [273,113], [263,120],
-        [251,116], [240,102], [233,84], [232,63], [239,45], [250,34], [263,30]
+    corrected_pelvis = [
+        [187, 332], [213, 335], [241, 339], [270, 343], [299, 347],
     ]
-    run.draw(_replace(
-        "EX-P1-R1",
-        "head_outline",
-        corrected_head_outline,
-        reason=(
-            "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 "
-            "contract forbids. Replaced with the head outline measured on the subject: "
-            "wider, centred right of where the ellipse sat, and asymmetric."
+    corrected_leg_left = [
+        [198, 358], [200, 399], [204, 442], [208, 484], [212, 524],
+        [216, 567], [222, 612], [228, 657], [233, 696],
+    ]
+    corrected_leg_right = [
+        [287, 364], [293, 404], [299, 447], [305, 488], [311, 524],
+        [319, 566], [329, 611], [340, 668], [350, 724],
+    ]
+    run.draw_many([
+        _replace(
+            "EX-P1-R1-PELVIS", "pelvis_centreline", corrected_pelvis,
+            reason=(
+                "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest."
+            ),
+            grade="HB", pressure=.52, width=2.2, opacity=.64,
         ),
-        pressure=.52,
-        width=2.3,
-        opacity=.66,
-        grade="HB",
-    ))
+        _replace(
+            "EX-P1-R1-HIP-L", "joint_hip_L", _joint_points((198, 358)),
+            reason=(
+                "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch."
+            ),
+            role="construction", grade="HB", pressure=.44, width=2.0, opacity=.55,
+        ),
+        _replace(
+            "EX-P1-R1-HIP-R", "joint_hip_R", _joint_points((287, 364)),
+            reason="Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+            role="construction", grade="HB", pressure=.44, width=2.0, opacity=.55,
+        ),
+        _replace(
+            "EX-P1-R1-KNEE-L", "joint_knee_L", _joint_points((212, 524)),
+            reason="The support knee is raised to the target-registered centre before redrawing the leg path.",
+            role="construction", grade="HB", pressure=.44, width=2.0, opacity=.55,
+        ),
+        _replace(
+            "EX-P1-R1-LEG-L", "leg_left_flow", corrected_leg_left,
+            reason=(
+                "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep."
+            ),
+            grade="HB", pressure=.58, width=2.5, opacity=.72,
+        ),
+        _replace(
+            "EX-P1-R1-LEG-R", "leg_right_flow", corrected_leg_right,
+            reason=(
+                "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle."
+            ),
+            grade="HB", pressure=.58, width=2.5, opacity=.72,
+        ),
+    ])
 
-    # ------------------------------------------------------------------
-    # P1 / PASS 2 — pass memory is generated automatically here.
-    # ------------------------------------------------------------------
-    pass2_artifacts=run.prepare_stage_review()
-
-    head2=run.prepare_local_review(
-        label="head_face",
-        intent="Re-check the carried cranium-width concern after EX-P1-R1.",
-        subject_box=(300,20,450,200),
-        drawing_box=(222,20,288,132),
+    run.prepare_stage_review()
+    pass2_locals = _prepare_local_reviews(run, fresh=True)
+    pass2_memory = json.loads(
+        (output / "reviews/P1_gesture/pass_02/pass_memory.json").read_text(encoding="utf-8")
     )
-    pelvis2=run.prepare_local_review(
-        label="pelvis_support",
-        intent="Re-check pelvis tilt and joint centres on the corrected artifact.",
-        subject_box=(190,430,570,1145),
-        drawing_box=(132,299,398,800),
-    )
-
-    pass2_memory=json.loads(
-        (output/"reviews/P1_gesture/pass_02/pass_memory.json").read_text(encoding="utf-8")
-    )
-
-    # The worker reads carried concerns and action provenance before deciding.
-    assert pass2_memory["state"]=="revision_continuation"
-    assert pass2_memory["previous_decision"]=="revise"
-    assert pass2_memory["carried_concerns"]==[
-        "cranium outline is a borrowed ellipse, not this head's measured width",
-        "eye line and facial centreline therefore sit inside the face instead of across the head",
+    carried_concerns = [
+        "pelvis line is too low and incorrectly passes through the hip markers",
+        "both femoral-head markers and leg origins are too medial and low",
+        "image-left knee and support-leg curvature do not match the approved target",
     ]
-    assert [
-        a["action_id"] for a in pass2_memory["inter_pass_correction_actions"]
-    ]==["EX-P1-R1"]
+    correction_ids = [
+        "EX-P1-R1-PELVIS", "EX-P1-R1-HIP-L", "EX-P1-R1-HIP-R", "EX-P1-R1-KNEE-L",
+        "EX-P1-R1-LEG-L", "EX-P1-R1-LEG-R",
+    ]
+    assert pass2_memory["state"] == "revision_continuation"
+    assert pass2_memory["previous_decision"] == "revise"
+    assert pass2_memory["carried_concerns"] == carried_concerns
+    assert [item["action_id"] for item in pass2_memory["inter_pass_correction_actions"]] == correction_ids
 
-    pass2=run.submit_stage_review(
+    pass2 = run.submit_stage_review(
+        task_target_findings=[
+            "Fresh three-way reviews align the corrected pelvic crest, lateral femoral heads, knees, ankles and foot directions with the approved target overlay.",
+            "The final drawing keeps the target's sparse P1 vocabulary without copying the photograph's garment contours.",
+        ],
         contract_findings=[
-            "The corrected artifact still stays inside the P1.v3 representation boundary.",
-            "The correction replaced the facial centreline only; no downstream vocabulary was introduced.",
-            "Face centreline, spine centreline and line of action remain three separate strokes.",
+            "The corrected artifact remains inside the P1.v5 representation boundary.",
+            "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
+            "Every limb remains one centre-path curve through its joint centres, with no garment-width pair.",
         ],
         subject_findings=[
-            "The head outline now matches the subject's measured cranium width and position.",
-            "The eye line and facial centreline now cross the whole head rather than sitting inside the face.",
+            "The head outline places unequal jaw turns around the nose-anchored centreline and preserves the subject's slight downward three-quarter turn.",
+            "The subordinate spine starts behind the neck and remains readable through the shoulder/pelvis counter-tilt without becoming the pose itself.",
+            "The image-left leg stacks hip-knee-ankle over the support shoe while the image-right chain sweeps outward into the lower frontal shoe.",
         ],
         grammar_findings=[
-            "Stage grammar stays subordinate to the frozen contract and subject geometry.",
+            "The face, spine, shoulder, pelvis and limb flows now share a readable construction hierarchy.",
+            "Single limb centre paths communicate curvature without being mistaken for sleeve, trouser or limb width.",
+            "Observed head and shoe shapes remain subject-specific rather than generic ellipses.",
         ],
         drawing_findings=[
-            "Both carried pass-1 concerns were re-checked against fresh whole and local artifacts.",
-            "A fresh residual sweep beyond the carried list found no joint drifting, no straight limb join and no missing occluded limb.",
-            "With the subject hidden, the drawing reads as this subject in this pose rather than as a generic figure.",
+            "All three carried concerns were checked against fresh whole and registered local evidence and are visibly resolved.",
+            "The three-way pelvis crop now agrees on a high counter-tilted pelvis line with separate lateral femoral-head markers below it.",
+            "The leg crop shows exactly one curve passing through each hip, knee and ankle marker rather than two lines following the jeans.",
+            "Each leg curve changes tangent across the knee instead of behaving like a measured P2 segment axis.",
+            "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
+            "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose.",
         ],
-        local_review_ids=[head2.local_review_id,pelvis2.local_review_id],
+        local_review_ids=[item.local_review_id for item in pass2_locals],
         corrections=[
-            "Replaced the borrowed ellipse with the head outline measured on the subject.",
+            "Raised the pelvis line from the hip row to the observed pelvic crest.",
+            "Moved both femoral heads laterally and raised the image-left knee from fresh target registration.",
+            "Redrew both legs as single curves through the corrected joint centres.",
         ],
         remaining_concerns=[],
         decision="advance",
         advance_rationale=(
-            "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep "
-            "found nothing new; the pose hypothesis registers against the subject, so P2 "
-            "measurement may begin."
+            "Fresh pass-2 whole and coordinate-registered local evidence clears all "
+            "carried concerns. A separate residual sweep finds the subject's "
+            "head direction, weight side, joint chains, limb flows and foot landings "
+            "specific enough for independent P2 measurement."
         ),
     )
 
-    trace={
-        "schema":"img2drawing.canonical_example_trace.v1",
-        "version":__import__("img2drawing").__version__,
-        "example":"full_body_croquis",
-        "stage":"P1_gesture",
-        "initial_dominant_path_start":initial_head_outline[0],
-        "initial_dominant_path_start_semantics":"crown",
-        "pass1":{
-            "decision":pass1.decision,
-            "remaining_concerns":list(pass1.remaining_concerns),
-            "local_review_ids":list(pass1.local_review_ids),
-            "worker_packet":str(
-                output/"reviews/P1_gesture/pass_01/worker_packet.md"
-            ),
+    trace = {
+        "schema": "img2drawing.canonical_example_trace.v1",
+        "version": __import__("img2drawing").__version__,
+        "example": "full_body_croquis",
+        "stage": "P1_gesture",
+        "initial_dominant_path_start": initial_head_outline[0],
+        "initial_dominant_path_start_semantics": "crown",
+        "pass1": {
+            "decision": pass1.decision,
+            "remaining_concerns": list(pass1.remaining_concerns),
+            "local_review_ids": list(pass1.local_review_ids),
+            "worker_packet": "reviews/P1_gesture/pass_01/worker_packet.md",
         },
-        "inter_pass_corrections":[
-            {
-                "action_id":"EX-P1-R1",
-                "kind":"replace_stroke",
-                "target":"head_outline",
-            }
+        "inter_pass_corrections": [
+            {"action_id": action_id, "kind": "replace_stroke", "target": target}
+            for action_id, target in (
+                ("EX-P1-R1-PELVIS", "pelvis_centreline"),
+                ("EX-P1-R1-HIP-L", "joint_hip_L"),
+                ("EX-P1-R1-HIP-R", "joint_hip_R"),
+                ("EX-P1-R1-KNEE-L", "joint_knee_L"),
+                ("EX-P1-R1-LEG-L", "leg_left_flow"),
+                ("EX-P1-R1-LEG-R", "leg_right_flow"),
+            )
         ],
-        "pass2":{
-            "memory_state":pass2_memory["state"],
-            "parent_review_digest":pass2_memory["previous_review_digest"],
-            "carried_concerns":pass2_memory["carried_concerns"],
-            "inter_pass_correction_action_ids":[
-                a["action_id"]
-                for a in pass2_memory["inter_pass_correction_actions"]
+        "pass2": {
+            "memory_state": pass2_memory["state"],
+            "parent_review_digest": pass2_memory["previous_review_digest"],
+            "carried_concerns": pass2_memory["carried_concerns"],
+            "inter_pass_correction_action_ids": [
+                item["action_id"] for item in pass2_memory["inter_pass_correction_actions"]
             ],
-            "decision":pass2.decision,
-            "remaining_concerns":list(pass2.remaining_concerns),
-            "advance_rationale":pass2.advance_rationale,
-            "local_review_ids":list(pass2.local_review_ids),
-            "worker_packet":str(
-                output/"reviews/P1_gesture/pass_02/worker_packet.md"
-            ),
+            "decision": pass2.decision,
+            "remaining_concerns": list(pass2.remaining_concerns),
+            "advance_rationale": pass2.advance_rationale,
+            "local_review_ids": list(pass2.local_review_ids),
+            "worker_packet": "reviews/P1_gesture/pass_02/worker_packet.md",
         },
-        "review_chain":{
-            "pass1_digest":pass1.digest(),
-            "pass2_parent_review_digest":pass2.parent_review_digest,
-            "pass2_digest":pass2.digest(),
+        "review_chain": {
+            "pass1_digest": pass1.digest(),
+            "pass2_parent_review_digest": pass2.parent_review_digest,
+            "pass2_digest": pass2.digest(),
         },
-        "current_stage":run.current_stage,
-        "autonomy_note":"No user approval is requested between revise, correction, re-review, and advance.",
+        "current_stage": run.current_stage,
+        "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance.",
     }
-    (output/"canonical_trace.json").write_text(
-        json.dumps(trace,indent=2,ensure_ascii=False),
+    (output / "canonical_trace.json").write_text(
+        json.dumps(trace, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
     return trace
 
 
 def main():
-    parser=argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
         type=Path,
-        # ponytail: cwd-relative so the example never writes 13MB into the installed skill
         default=Path("img2drawing_example_output"),
         help="Output directory for canonical example artifacts (default: ./img2drawing_example_output).",
     )
@@ -686,11 +621,11 @@ def main():
         action="store_true",
         help="Do not delete an existing output directory before running.",
     )
-    args=parser.parse_args()
+    args = parser.parse_args()
 
-    trace=run_example(args.output,clean=not args.no_clean)
-    print(json.dumps(trace,indent=2,ensure_ascii=False))
+    trace = run_example(args.output, clean=not args.no_clean)
+    print(json.dumps(trace, indent=2, ensure_ascii=False))
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()

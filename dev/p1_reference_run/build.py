@@ -7,9 +7,12 @@ the review artifacts.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / "skills" / "img2drawing"
@@ -21,6 +24,51 @@ from img2drawing import DrawingRun                      # noqa: E402
 from run import run_example                             # noqa: E402
 
 OUT = Path(__file__).resolve().parent
+
+
+def _relativize_public_paths(tree: Path, *, checkout_root: Path) -> None:
+    """Remove checkout-specific absolute paths from committed text evidence.
+
+    Each replacement is relative to the file containing it, so copied evidence
+    remains meaningful without publishing a contributor's machine layout.
+    """
+    checkout = str(checkout_root.resolve())
+    for path in tree.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in {".json", ".md"}:
+            continue
+        text = path.read_text(encoding="utf-8")
+        if checkout not in text:
+            continue
+        relative_root = os.path.relpath(checkout_root, path.parent)
+        path.write_text(text.replace(checkout, relative_root), encoding="utf-8")
+
+
+def _overlay(subject: Image.Image, drawing: Image.Image, *, paper=.62) -> Image.Image:
+    """Lay raw graphite over a translucent-paper subject without contrast gain."""
+    sub = subject.convert("RGB").resize(drawing.size, Image.Resampling.LANCZOS)
+    white = Image.new("RGB", drawing.size, (255, 255, 255))
+    base = Image.blend(sub, white, paper)
+    return ImageChops.multiply(base, drawing.convert("L").convert("RGB"))
+
+
+def _sheet(tiles, out: Path, *, height=900, pad=16, label_height=30) -> Path:
+    def fit(im):
+        return im.resize(
+            (max(1, int(im.width * height / im.height)), height),
+            Image.Resampling.LANCZOS,
+        )
+
+    fitted = [(label, fit(image)) for label, image in tiles]
+    width = sum(image.width for _, image in fitted) + pad * (len(fitted) + 1)
+    canvas = Image.new("RGB", (width, height + label_height + pad), (248, 247, 244))
+    draw = ImageDraw.Draw(canvas)
+    x = pad
+    for label, image in fitted:
+        draw.text((x, 9), label, fill=(30, 30, 30))
+        canvas.paste(image, (x, label_height))
+        x += image.width + pad
+    canvas.save(out)
+    return out
 
 
 def main() -> None:
@@ -35,27 +83,27 @@ def main() -> None:
 
     # comparison sheets, raw + translucent-paper overlay
     try:
-        from compare import overlay, sheet
-        from PIL import Image
         sub = Image.open(SKILL / "examples/full_body_croquis/subject.png")
         R = work / "reviews/P1_gesture"
         p1 = Image.open(R / "pass_01/current_drawing.png")
         p2 = Image.open(R / "pass_02/current_drawing.png")
-        sheet([("SUBJECT", sub), ("PASS 1 raw", p1), ("PASS 2 raw", p2),
-               ("PASS 2 over subject", overlay(sub, p2))],
-              OUT / "compare.png")
-        overlay(sub, p2).save(OUT / "overlay.png")
+        _sheet([("SUBJECT", sub), ("PASS 1 raw", p1), ("PASS 2 raw", p2),
+                ("PASS 2 over subject", _overlay(sub, p2))],
+               OUT / "compare.png")
+        _overlay(sub, p2).save(OUT / "overlay.png")
     except Exception as exc:                             # pragma: no cover
         print("comparison sheets skipped:", exc)
 
     # the individual timelapse frames are regenerable from the checkpoint
     shutil.rmtree(work / "timelapse" / "frames", ignore_errors=True)
 
+    _relativize_public_paths(OUT, checkout_root=ROOT)
+
     print(json.dumps({
-        "final_drawing": str(result.final_drawing),
-        "timelapse": str(getattr(result, "timelapse", "") or ""),
-        "session": str(work / "session" / "session.json"),
-        "checkpoint": str(work / "session" / "checkpoint.json"),
+        "final_drawing": str(result.final_drawing.relative_to(ROOT)),
+        "timelapse": "",
+        "session": str((work / "session" / "session.json").relative_to(ROOT)),
+        "checkpoint": str((work / "session" / "checkpoint.json").relative_to(ROOT)),
     }, indent=1))
 
 

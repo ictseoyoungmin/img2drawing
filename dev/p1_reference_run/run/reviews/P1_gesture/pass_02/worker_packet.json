@@ -1,34 +1,35 @@
 {
   "artifacts": {
     "authority_order": [
+      "task_stage_target",
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "142b9069649003c5d5832c6bab78016d5188f25c8a7f2ded904be7c77330a2f4",
-      "history_cursor": 34,
-      "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+      "artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+      "history_cursor": 44,
+      "path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "b7f59973c59196c453a0047c13a7782a8ac7238c9be32abf10b0052c05b8d1a3"
+      "state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511"
     },
-    "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
+    "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
     "stage": "P1_gesture",
-    "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_overlay.png",
-    "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
-    "subject_split": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_split.png",
-    "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_vs_drawing.png",
-    "task_stage_target": null,
-    "task_target_split": null,
-    "task_target_vs_drawing": null,
-    "three_way": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png"
+    "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_overlay.png",
+    "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_split.png",
+    "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_vs_drawing.png",
+    "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+    "task_target_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_split.png",
+    "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_vs_drawing.png",
+    "three_way": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png"
   },
   "autonomous_loop": [
     "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
     "If carried concerns exist, re-check them before inventing new work.",
     "Read the frozen stage contract before deciding what belongs in this stage.",
     "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
-    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Inspect the same-task stage target for current-stage expected placement/abstraction without allowing it to override contradictory subject geometry.",
     "Before drawing, reject vocabulary listed in forbidden_representation.",
     "Draw a bounded set of explicit strokes that serve the current stage ownership.",
     "Render the exact current artifact with prepare_stage_review().",
@@ -70,7 +71,7 @@
     "auto_checkpoint_after_mutation": true,
     "auto_checkpoint_after_prepare": true,
     "auto_checkpoint_after_review": true,
-    "checkpoint_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/session/checkpoint.json",
+    "checkpoint_path": "../../../../../../dev/p1_reference_run/run/session/checkpoint.json",
     "resume_method": "DrawingRun.resume"
   },
   "escalation_policy": [
@@ -101,9 +102,11 @@
       "each leg",
       "ankles, foot direction and ground contact"
     ],
-    "task_target_box": "must_be_omitted"
+    "task_target_box": "required"
   },
   "mandatory_review_views": [
+    "task_target_vs_drawing",
+    "task_target_split",
     "subject_vs_drawing",
     "subject_split",
     "subject_drawing_overlay",
@@ -115,49 +118,151 @@
   "pass_index": 2,
   "pass_memory": {
     "carried_concerns": [
-      "cranium outline is a borrowed ellipse, not this head's measured width",
-      "eye line and facial centreline therefore sit inside the face instead of across the head"
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
     ],
     "concern_history": [
       {
         "decision": "revise",
         "pass_index": 1,
         "remaining_concerns": [
-          "cranium outline is a borrowed ellipse, not this head's measured width",
-          "eye line and facial centreline therefore sit inside the face instead of across the head"
+          "pelvis line is too low and incorrectly passes through the hip markers",
+          "both femoral-head markers and leg origins are too medial and low",
+          "image-left knee and support-leg curvature do not match the approved target"
         ],
-        "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
+        "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
       }
     ],
     "correction_history": [
       {
         "pass_index": 1,
         "reported_corrections": [],
-        "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
+        "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
       }
     ],
     "inter_pass_actions": [
       {
-        "action_id": "EX-P1-R1",
-        "history_cursor": 34,
+        "action_id": "EX-P1-R1-PELVIS",
+        "history_cursor": 39,
         "is_correction_action": true,
         "kind": "replace_stroke",
-        "part": "head_outline",
-        "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
+        "part": "pelvis_centreline",
+        "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
         "stage": "P1_gesture",
-        "target_stroke_id": "head_outline"
+        "target_stroke_id": "pelvis_centreline"
+      },
+      {
+        "action_id": "EX-P1-R1-HIP-L",
+        "history_cursor": 40,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_hip_L",
+        "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_hip_L"
+      },
+      {
+        "action_id": "EX-P1-R1-HIP-R",
+        "history_cursor": 41,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_hip_R",
+        "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_hip_R"
+      },
+      {
+        "action_id": "EX-P1-R1-KNEE-L",
+        "history_cursor": 42,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_knee_L",
+        "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_knee_L"
+      },
+      {
+        "action_id": "EX-P1-R1-LEG-L",
+        "history_cursor": 43,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_left_flow",
+        "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "leg_left_flow"
+      },
+      {
+        "action_id": "EX-P1-R1-LEG-R",
+        "history_cursor": 44,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_right_flow",
+        "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "leg_right_flow"
       }
     ],
     "inter_pass_correction_actions": [
       {
-        "action_id": "EX-P1-R1",
-        "history_cursor": 34,
+        "action_id": "EX-P1-R1-PELVIS",
+        "history_cursor": 39,
         "is_correction_action": true,
         "kind": "replace_stroke",
-        "part": "head_outline",
-        "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
+        "part": "pelvis_centreline",
+        "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
         "stage": "P1_gesture",
-        "target_stroke_id": "head_outline"
+        "target_stroke_id": "pelvis_centreline"
+      },
+      {
+        "action_id": "EX-P1-R1-HIP-L",
+        "history_cursor": 40,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_hip_L",
+        "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_hip_L"
+      },
+      {
+        "action_id": "EX-P1-R1-HIP-R",
+        "history_cursor": 41,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_hip_R",
+        "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_hip_R"
+      },
+      {
+        "action_id": "EX-P1-R1-KNEE-L",
+        "history_cursor": 42,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "joint_knee_L",
+        "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "joint_knee_L"
+      },
+      {
+        "action_id": "EX-P1-R1-LEG-L",
+        "history_cursor": 43,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_left_flow",
+        "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "leg_left_flow"
+      },
+      {
+        "action_id": "EX-P1-R1-LEG-R",
+        "history_cursor": 44,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_right_flow",
+        "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+        "stage": "P1_gesture",
+        "target_stroke_id": "leg_right_flow"
       }
     ],
     "memory_policy": [
@@ -169,11 +274,12 @@
     "next_pass_index": 2,
     "previous_decision": "revise",
     "previous_remaining_concerns": [
-      "cranium outline is a borrowed ellipse, not this head's measured width",
-      "eye line and facial centreline therefore sit inside the face instead of across the head"
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
     ],
     "previous_reported_corrections": [],
-    "previous_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
+    "previous_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
     "prior_review_count": 1,
     "reopen_context": null,
     "schema": "img2drawing.stage_pass_memory.v2",
@@ -182,11 +288,12 @@
   },
   "references": {
     "authority_order": [
+      "task_stage_target",
       "subject_reference"
     ],
-    "reference_mode": "subject_only",
+    "reference_mode": "task_stage_target_augmented",
     "stage_id": "P1_gesture",
-    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_only_rule": null,
     "subject_reference": {
       "authority": "geometry_truth",
       "decides": [
@@ -201,11 +308,25 @@
         "stage abstraction vocabulary",
         "which construction convention belongs to a stage"
       ],
-      "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+      "path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
       "role": "subject_reference",
       "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
     },
-    "task_stage_target": null
+    "task_stage_target": {
+      "authority": "task_stage_truth",
+      "decides": [
+        "same-task stage-specific expected abstraction",
+        "same-subject stage-specific placement and relationships"
+      ],
+      "must_not_decide": [
+        "facts that contradict the subject reference",
+        "generic stage grammar outside the current task"
+      ],
+      "path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "role": "task_stage_target",
+      "sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "stage_id": "P1_gesture"
+    }
   },
   "schema": "img2drawing.autonomous_worker_packet.v7",
   "stage": {
@@ -225,6 +346,8 @@
       "drawing the eye line without checking it meets both eyes",
       "merging the face and spine centrelines into one stroke",
       "joining joints with straight lines",
+      "bracketing a limb with two lines that read as limb thickness, garment width, or mass",
+      "using an optional second limb cue merely to trace the opposite garment edge",
       "dropping an occluded limb because it cannot be seen",
       "copying joint positions from an example drawing instead of the subject",
       "moving a line to satisfy a filter or evidence map",
@@ -234,10 +357,10 @@
     "draw": [
       "the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes",
       "a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum",
+      "open neck connection cues from jaw to clavicle, not a measured neck axis",
       "pelvis and shoulder lines stating their tilt",
-      "one line of action entering above the head, cutting across the body and landing ahead of the weight-bearing foot",
       "joint markers as small circles",
-      "flowing limb lines that follow observed curvature, not straight joins",
+      "one flowing centre-path curve per limb through the joint centres; an optional second cue only where a visible reversal or necessary silhouette-envelope fact requires it",
       "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
       "a loose flowing torso mass",
       "each foot's observed shape linked to its ankle, stating the direction it points",
@@ -250,9 +373,9 @@
       "crown position, and the curvature of the facial centreline through nose and chin",
       "head tilt from the eye-line cross",
       "the spine's S-curve, starting behind the neck",
+      "an open neck connection from the jaw into the clavicle, not a measured neck axis",
       "pelvis centreline and its tilt",
       "shoulder line and its tilt",
-      "the line of action, which is not the spine",
       "shoulder, elbow, wrist, hip, knee and ankle centres",
       "the curvature of each limb between those joints",
       "any limb hidden behind clothing or a prop",
@@ -266,6 +389,7 @@
       "Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.",
       "Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?",
       "Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?",
+      "Is the jaw visibly connected to the torso by an open neck cue, without turning it into a P2 neck axis?",
       "Do shoulder and pelvis state the subject's rotation, not just a tilt?",
       "Are both arms present, including any hidden behind a prop or in a pocket?",
       "Is every joint centre on the subject's joint, or are several drifting the same way?",
@@ -293,12 +417,13 @@
       "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
       "a curved facial centreline passing crown -> nose -> chin",
       "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
+      "open neck connection cues from the jaw into the clavicle; not a measured neck axis",
       "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
       "pelvis centreline stating its tilt",
       "shoulder line stating its tilt",
-      "one line of action that enters above the head, cuts across the body and lands ahead of the weight-bearing foot",
       "joint markers as small circles",
-      "flowing limb lines from shoulder to wrist and from hip to ankle",
+      "one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle",
+      "an optional subordinate second cue only where it explains an observed curvature reversal or necessary silhouette-envelope fact; its spacing is non-metric",
       "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
       "a loose flowing torso mass",
       "each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened",
@@ -306,7 +431,7 @@
       "major attached-object axis"
     ],
     "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
-    "contract_id": "full_body_croquis.P1.v3",
+    "contract_id": "full_body_croquis.P1.v5",
     "detail_ceiling": [
       "a whole-body pose hypothesis at minimum information",
       "the centrelines that carry direction: face, spine, pelvis",
@@ -323,6 +448,8 @@
       "face and spine centrelines merged into one stroke",
       "straight landmark-to-landmark joins that flatten limb curvature",
       "omitting an occluded limb because it is not visible",
+      "bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass",
+      "using an optional second limb cue merely to trace the opposite garment edge",
       "hair",
       "garment structure",
       "footwear detail beyond a direction oval",
@@ -346,12 +473,12 @@
     "owns": [
       "the head's observed outline, with its facial centreline and eye line",
       "face direction and head tilt",
+      "an open neck connection from the jaw into the clavicle; not a measured neck axis",
       "spine centreline as an S-curve from the back of the neck",
       "pelvis centreline and its tilt",
       "shoulder line and its tilt",
-      "line of action, distinct from the spine",
       "joint positions: shoulder, elbow, wrist, hip, knee, ankle",
-      "arm and leg flow lines, including occluded segments",
+      "one centre-path gesture curve per arm and leg through the joint centres, including occluded segments",
       "loose torso mass",
       "foot direction and ground contact",
       "overall silhouette envelope",

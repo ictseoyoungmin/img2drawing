@@ -1,0 +1,75 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_vs_drawing.png",
+    "task_target_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/task_target_vs_drawing.png"
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 355,
+        "left": 280,
+        "right": 380,
+        "top": 125
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/drawing.png",
+      "crop_sha256": "e32d53503f52de7f3d1db25d2a1670ed6432381e16bc21207f1b5893a990c029",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+      "source_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 510,
+        "left": 402,
+        "right": 546,
+        "top": 180
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/subject.png",
+      "crop_sha256": "cec594441151797c16d594792668798af404d5b389e70b336f1061124606f860",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": {
+      "box": {
+        "bottom": 695,
+        "left": 548,
+        "right": 744,
+        "top": 245
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/task_target.png",
+      "crop_sha256": "ec166e995ece8aac57d70efbf174f89f916acb74aa15940b7be675bae393d94d",
+      "role": "task_stage_target",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "source_size": [
+        1002,
+        1570
+      ]
+    }
+  },
+  "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+  "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+  "history_cursor": 44,
+  "intent": "Re-check image-right shoulder, elbow and partly occluded pocket-hand flow.",
+  "label": "arm_right_flow",
+  "local_review_id": "P1_gesture:pass_02:arm_right_flow",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

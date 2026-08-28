@@ -3,10 +3,11 @@
 Harden stages sequentially. Never sweep P1→P5 in one unreviewed pass.
 
 ## P1
-Settle how the subject stands: one dominant line of action, head position and tilt,
-shoulder and pelvis tilt, the direction each limb travels, where the feet meet the ground,
-and the overall silhouette envelope. When a large attached object changes balance or
-silhouette, add its major axis too.
+Settle how the subject stands: head position and tilt, spine and torso rhythm, shoulder and
+pelvis tilt, the direction each limb travels through its joint centres, where the feet meet
+the ground, and the overall silhouette envelope. No single construction line should
+overpower the rest. When a large attached object changes balance or silhouette, add its
+major axis too.
 
 Nothing else. Clothing, hair, face and muscle belong downstream.
 

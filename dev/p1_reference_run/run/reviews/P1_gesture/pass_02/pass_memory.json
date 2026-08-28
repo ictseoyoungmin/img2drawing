@@ -1,48 +1,150 @@
 {
   "carried_concerns": [
-    "cranium outline is a borrowed ellipse, not this head's measured width",
-    "eye line and facial centreline therefore sit inside the face instead of across the head"
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
   ],
   "concern_history": [
     {
       "decision": "revise",
       "pass_index": 1,
       "remaining_concerns": [
-        "cranium outline is a borrowed ellipse, not this head's measured width",
-        "eye line and facial centreline therefore sit inside the face instead of across the head"
+        "pelvis line is too low and incorrectly passes through the hip markers",
+        "both femoral-head markers and leg origins are too medial and low",
+        "image-left knee and support-leg curvature do not match the approved target"
       ],
-      "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
+      "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
     }
   ],
   "correction_history": [
     {
       "pass_index": 1,
       "reported_corrections": [],
-      "review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3"
+      "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
     }
   ],
   "inter_pass_actions": [
     {
-      "action_id": "EX-P1-R1",
-      "history_cursor": 34,
+      "action_id": "EX-P1-R1-PELVIS",
+      "history_cursor": 39,
       "is_correction_action": true,
       "kind": "replace_stroke",
-      "part": "head_outline",
-      "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
+      "part": "pelvis_centreline",
+      "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
       "stage": "P1_gesture",
-      "target_stroke_id": "head_outline"
+      "target_stroke_id": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_L",
+      "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "history_cursor": 41,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_R",
+      "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "history_cursor": 42,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_knee_L",
+      "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "history_cursor": 43,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_left_flow",
+      "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "history_cursor": 44,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_flow",
+      "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_right_flow"
     }
   ],
   "inter_pass_correction_actions": [
     {
-      "action_id": "EX-P1-R1",
-      "history_cursor": 34,
+      "action_id": "EX-P1-R1-PELVIS",
+      "history_cursor": 39,
       "is_correction_action": true,
       "kind": "replace_stroke",
-      "part": "head_outline",
-      "reason": "Pass 1 stood a borrowed narrow ellipse in for the cranium, which the P1 contract forbids. Replaced with the head outline measured on the subject: wider, centred right of where the ellipse sat, and asymmetric.",
+      "part": "pelvis_centreline",
+      "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
       "stage": "P1_gesture",
-      "target_stroke_id": "head_outline"
+      "target_stroke_id": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_L",
+      "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "history_cursor": 41,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_R",
+      "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "history_cursor": 42,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_knee_L",
+      "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "history_cursor": 43,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_left_flow",
+      "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "history_cursor": 44,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_flow",
+      "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_right_flow"
     }
   ],
   "memory_policy": [
@@ -54,11 +156,12 @@
   "next_pass_index": 2,
   "previous_decision": "revise",
   "previous_remaining_concerns": [
-    "cranium outline is a borrowed ellipse, not this head's measured width",
-    "eye line and facial centreline therefore sit inside the face instead of across the head"
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
   ],
   "previous_reported_corrections": [],
-  "previous_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
+  "previous_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
   "prior_review_count": 1,
   "reopen_context": null,
   "schema": "img2drawing.stage_pass_memory.v2",

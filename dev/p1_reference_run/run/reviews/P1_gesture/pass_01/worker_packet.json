@@ -1,34 +1,35 @@
 {
   "artifacts": {
     "authority_order": [
+      "task_stage_target",
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
-      "history_cursor": 33,
-      "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "history_cursor": 38,
+      "path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df"
+      "state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e"
     },
-    "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
+    "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
     "stage": "P1_gesture",
-    "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png",
-    "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
-    "subject_split": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png",
-    "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png",
-    "task_stage_target": null,
-    "task_target_split": null,
-    "task_target_vs_drawing": null,
-    "three_way": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png"
+    "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png",
+    "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png",
+    "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+    "task_target_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_split.png",
+    "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_vs_drawing.png",
+    "three_way": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png"
   },
   "autonomous_loop": [
     "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
     "If carried concerns exist, re-check them before inventing new work.",
     "Read the frozen stage contract before deciding what belongs in this stage.",
     "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
-    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Inspect the same-task stage target for current-stage expected placement/abstraction without allowing it to override contradictory subject geometry.",
     "Before drawing, reject vocabulary listed in forbidden_representation.",
     "Draw a bounded set of explicit strokes that serve the current stage ownership.",
     "Render the exact current artifact with prepare_stage_review().",
@@ -70,7 +71,7 @@
     "auto_checkpoint_after_mutation": true,
     "auto_checkpoint_after_prepare": true,
     "auto_checkpoint_after_review": true,
-    "checkpoint_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/session/checkpoint.json",
+    "checkpoint_path": "../../../../../../dev/p1_reference_run/run/session/checkpoint.json",
     "resume_method": "DrawingRun.resume"
   },
   "escalation_policy": [
@@ -101,9 +102,11 @@
       "each leg",
       "ankles, foot direction and ground contact"
     ],
-    "task_target_box": "must_be_omitted"
+    "task_target_box": "required"
   },
   "mandatory_review_views": [
+    "task_target_vs_drawing",
+    "task_target_split",
     "subject_vs_drawing",
     "subject_split",
     "subject_drawing_overlay",
@@ -149,18 +152,98 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-A4",
+        "action_id": "EX-P1-NECK-L",
         "history_cursor": 5,
         "is_correction_action": false,
         "kind": "draw_stroke",
-        "part": "spine_centreline",
+        "part": "neck_connection_left",
         "reason": null,
         "stage": "P1_gesture",
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-A5",
+        "action_id": "EX-P1-SPINE-01",
         "history_cursor": 6,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_01",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-02",
+        "history_cursor": 7,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_02",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-03",
+        "history_cursor": 8,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_03",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-04",
+        "history_cursor": 9,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_04",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-05",
+        "history_cursor": 10,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_05",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-06",
+        "history_cursor": 11,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_06",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-07",
+        "history_cursor": 12,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_07",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SPINE-08",
+        "history_cursor": 13,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "spine_centreline_dash_08",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-SHOULDER",
+        "history_cursor": 14,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "shoulder_line",
@@ -169,8 +252,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-A6",
-        "history_cursor": 7,
+        "action_id": "EX-P1-PELVIS",
+        "history_cursor": 15,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "pelvis_centreline",
@@ -179,88 +262,48 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-arm_left_a",
-        "history_cursor": 8,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "arm_left_outer",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-arm_left_b",
-        "history_cursor": 9,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "arm_left_inner",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-arm_right_a",
-        "history_cursor": 10,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "arm_right_outer",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-arm_right_b",
-        "history_cursor": 11,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "arm_right_inner",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-leg_left_a",
-        "history_cursor": 12,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "leg_left_outer",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-leg_left_b",
-        "history_cursor": 13,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "leg_left_inner",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-leg_right_a",
-        "history_cursor": 14,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "leg_right_outer",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-leg_right_b",
-        "history_cursor": 15,
-        "is_correction_action": false,
-        "kind": "draw_stroke",
-        "part": "leg_right_inner",
-        "reason": null,
-        "stage": "P1_gesture",
-        "target_stroke_id": null
-      },
-      {
-        "action_id": "EX-P1-J_shoulder_L",
+        "action_id": "EX-P1-ARM-L",
         "history_cursor": 16,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_left_flow",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-ARM-R",
+        "history_cursor": 17,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_right_flow",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-LEG-L",
+        "history_cursor": 18,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_left_flow",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-LEG-R",
+        "history_cursor": 19,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "leg_right_flow",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-J-SHOULDER-L",
+        "history_cursor": 20,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_shoulder_L",
@@ -269,8 +312,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_shoulder_R",
-        "history_cursor": 17,
+        "action_id": "EX-P1-J-SHOULDER-R",
+        "history_cursor": 21,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_shoulder_R",
@@ -279,8 +322,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_elbow_L",
-        "history_cursor": 18,
+        "action_id": "EX-P1-J-ELBOW-L",
+        "history_cursor": 22,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_elbow_L",
@@ -289,8 +332,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_elbow_R",
-        "history_cursor": 19,
+        "action_id": "EX-P1-J-ELBOW-R",
+        "history_cursor": 23,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_elbow_R",
@@ -299,8 +342,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_wrist_L",
-        "history_cursor": 20,
+        "action_id": "EX-P1-J-WRIST-L",
+        "history_cursor": 24,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_wrist_L",
@@ -309,8 +352,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_wrist_R",
-        "history_cursor": 21,
+        "action_id": "EX-P1-J-WRIST-R",
+        "history_cursor": 25,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_wrist_R",
@@ -319,8 +362,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_hip_L",
-        "history_cursor": 22,
+        "action_id": "EX-P1-J-HIP-L",
+        "history_cursor": 26,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_hip_L",
@@ -329,8 +372,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_hip_R",
-        "history_cursor": 23,
+        "action_id": "EX-P1-J-HIP-R",
+        "history_cursor": 27,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_hip_R",
@@ -339,8 +382,18 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_knee_L",
-        "history_cursor": 24,
+        "action_id": "EX-P1-J-PELVIS-C",
+        "history_cursor": 28,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "joint_pelvis_centre",
+        "reason": null,
+        "stage": "P1_gesture",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "EX-P1-J-KNEE-L",
+        "history_cursor": 29,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_knee_L",
@@ -349,8 +402,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_knee_R",
-        "history_cursor": 25,
+        "action_id": "EX-P1-J-KNEE-R",
+        "history_cursor": 30,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_knee_R",
@@ -359,8 +412,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_ankle_L",
-        "history_cursor": 26,
+        "action_id": "EX-P1-J-ANKLE-L",
+        "history_cursor": 31,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_ankle_L",
@@ -369,8 +422,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-J_ankle_R",
-        "history_cursor": 27,
+        "action_id": "EX-P1-J-ANKLE-R",
+        "history_cursor": 32,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "joint_ankle_R",
@@ -379,8 +432,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-F_link_L",
-        "history_cursor": 28,
+        "action_id": "EX-P1-FOOT-LINK-L",
+        "history_cursor": 33,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "ankle_foot_link_left",
@@ -389,8 +442,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-F_L",
-        "history_cursor": 29,
+        "action_id": "EX-P1-FOOT-L",
+        "history_cursor": 34,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "foot_direction_left",
@@ -399,8 +452,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-F_link_R",
-        "history_cursor": 30,
+        "action_id": "EX-P1-FOOT-LINK-R",
+        "history_cursor": 35,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "ankle_foot_link_right",
@@ -409,8 +462,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-F_R",
-        "history_cursor": 31,
+        "action_id": "EX-P1-FOOT-R",
+        "history_cursor": 36,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "foot_direction_right",
@@ -419,8 +472,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-G_L",
-        "history_cursor": 32,
+        "action_id": "EX-P1-GROUND-L",
+        "history_cursor": 37,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "ground_contact_left",
@@ -429,8 +482,8 @@
         "target_stroke_id": null
       },
       {
-        "action_id": "EX-P1-G_R",
-        "history_cursor": 33,
+        "action_id": "EX-P1-GROUND-R",
+        "history_cursor": 38,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "ground_contact_right",
@@ -458,11 +511,12 @@
   },
   "references": {
     "authority_order": [
+      "task_stage_target",
       "subject_reference"
     ],
-    "reference_mode": "subject_only",
+    "reference_mode": "task_stage_target_augmented",
     "stage_id": "P1_gesture",
-    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_only_rule": null,
     "subject_reference": {
       "authority": "geometry_truth",
       "decides": [
@@ -477,11 +531,25 @@
         "stage abstraction vocabulary",
         "which construction convention belongs to a stage"
       ],
-      "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+      "path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
       "role": "subject_reference",
       "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
     },
-    "task_stage_target": null
+    "task_stage_target": {
+      "authority": "task_stage_truth",
+      "decides": [
+        "same-task stage-specific expected abstraction",
+        "same-subject stage-specific placement and relationships"
+      ],
+      "must_not_decide": [
+        "facts that contradict the subject reference",
+        "generic stage grammar outside the current task"
+      ],
+      "path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "role": "task_stage_target",
+      "sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "stage_id": "P1_gesture"
+    }
   },
   "schema": "img2drawing.autonomous_worker_packet.v7",
   "stage": {
@@ -501,6 +569,8 @@
       "drawing the eye line without checking it meets both eyes",
       "merging the face and spine centrelines into one stroke",
       "joining joints with straight lines",
+      "bracketing a limb with two lines that read as limb thickness, garment width, or mass",
+      "using an optional second limb cue merely to trace the opposite garment edge",
       "dropping an occluded limb because it cannot be seen",
       "copying joint positions from an example drawing instead of the subject",
       "moving a line to satisfy a filter or evidence map",
@@ -510,10 +580,10 @@
     "draw": [
       "the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes",
       "a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum",
+      "open neck connection cues from jaw to clavicle, not a measured neck axis",
       "pelvis and shoulder lines stating their tilt",
-      "one line of action entering above the head, cutting across the body and landing ahead of the weight-bearing foot",
       "joint markers as small circles",
-      "flowing limb lines that follow observed curvature, not straight joins",
+      "one flowing centre-path curve per limb through the joint centres; an optional second cue only where a visible reversal or necessary silhouette-envelope fact requires it",
       "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
       "a loose flowing torso mass",
       "each foot's observed shape linked to its ankle, stating the direction it points",
@@ -526,9 +596,9 @@
       "crown position, and the curvature of the facial centreline through nose and chin",
       "head tilt from the eye-line cross",
       "the spine's S-curve, starting behind the neck",
+      "an open neck connection from the jaw into the clavicle, not a measured neck axis",
       "pelvis centreline and its tilt",
       "shoulder line and its tilt",
-      "the line of action, which is not the spine",
       "shoulder, elbow, wrist, hip, knee and ankle centres",
       "the curvature of each limb between those joints",
       "any limb hidden behind clothing or a prop",
@@ -542,6 +612,7 @@
       "Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.",
       "Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?",
       "Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?",
+      "Is the jaw visibly connected to the torso by an open neck cue, without turning it into a P2 neck axis?",
       "Do shoulder and pelvis state the subject's rotation, not just a tilt?",
       "Are both arms present, including any hidden behind a prop or in a pocket?",
       "Is every joint centre on the subject's joint, or are several drifting the same way?",
@@ -569,12 +640,13 @@
       "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
       "a curved facial centreline passing crown -> nose -> chin",
       "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
+      "open neck connection cues from the jaw into the clavicle; not a measured neck axis",
       "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
       "pelvis centreline stating its tilt",
       "shoulder line stating its tilt",
-      "one line of action that enters above the head, cuts across the body and lands ahead of the weight-bearing foot",
       "joint markers as small circles",
-      "flowing limb lines from shoulder to wrist and from hip to ankle",
+      "one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle",
+      "an optional subordinate second cue only where it explains an observed curvature reversal or necessary silhouette-envelope fact; its spacing is non-metric",
       "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
       "a loose flowing torso mass",
       "each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened",
@@ -582,7 +654,7 @@
       "major attached-object axis"
     ],
     "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
-    "contract_id": "full_body_croquis.P1.v3",
+    "contract_id": "full_body_croquis.P1.v5",
     "detail_ceiling": [
       "a whole-body pose hypothesis at minimum information",
       "the centrelines that carry direction: face, spine, pelvis",
@@ -599,6 +671,8 @@
       "face and spine centrelines merged into one stroke",
       "straight landmark-to-landmark joins that flatten limb curvature",
       "omitting an occluded limb because it is not visible",
+      "bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass",
+      "using an optional second limb cue merely to trace the opposite garment edge",
       "hair",
       "garment structure",
       "footwear detail beyond a direction oval",
@@ -622,12 +696,12 @@
     "owns": [
       "the head's observed outline, with its facial centreline and eye line",
       "face direction and head tilt",
+      "an open neck connection from the jaw into the clavicle; not a measured neck axis",
       "spine centreline as an S-curve from the back of the neck",
       "pelvis centreline and its tilt",
       "shoulder line and its tilt",
-      "line of action, distinct from the spine",
       "joint positions: shoulder, elbow, wrist, hip, knee, ankle",
-      "arm and leg flow lines, including occluded segments",
+      "one centre-path gesture curve per arm and leg through the joint centres, including occluded segments",
       "loose torso mass",
       "foot direction and ground contact",
       "overall silhouette envelope",

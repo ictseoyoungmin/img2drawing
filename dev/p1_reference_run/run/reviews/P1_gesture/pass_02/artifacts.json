@@ -3,22 +3,23 @@
   "stage": "P1_gesture",
   "drawing": {
     "stage": "P1_gesture",
-    "path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
-    "artifact_sha256": "142b9069649003c5d5832c6bab78016d5188f25c8a7f2ded904be7c77330a2f4",
-    "state_sha256": "b7f59973c59196c453a0047c13a7782a8ac7238c9be32abf10b0052c05b8d1a3",
-    "history_cursor": 34
+    "path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+    "artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+    "state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+    "history_cursor": 44
   },
   "authority_order": [
+    "task_stage_target",
     "subject_reference"
   ],
-  "subject_reference": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
-  "task_stage_target": null,
-  "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_vs_drawing.png",
-  "subject_split": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_split.png",
-  "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_overlay.png",
-  "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_absdiff.png",
-  "task_target_vs_drawing": null,
-  "task_target_split": null,
-  "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
-  "three_way": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png"
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+  "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_vs_drawing.png",
+  "subject_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_split.png",
+  "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_vs_drawing.png",
+  "task_target_split": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_split.png",
+  "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
+  "three_way": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png"
 }

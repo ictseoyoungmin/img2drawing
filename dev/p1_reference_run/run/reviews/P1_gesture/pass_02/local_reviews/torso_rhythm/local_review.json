@@ -1,0 +1,75 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_vs_drawing.png",
+    "task_target_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/task_target_vs_drawing.png"
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 430,
+        "left": 185,
+        "right": 330,
+        "top": 120
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/drawing.png",
+      "crop_sha256": "6449078c077a6f7669928936f62b2af9a4fe36ed6f3c6a8da7c2185783f7f7c3",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+      "source_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 618,
+        "left": 266,
+        "right": 474,
+        "top": 172
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/subject.png",
+      "crop_sha256": "1f7085fe1d860617acd01b7fff28166ec097eacd301fbde6f5a3c6e87088542d",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": {
+      "box": {
+        "bottom": 842,
+        "left": 362,
+        "right": 646,
+        "top": 235
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/task_target.png",
+      "crop_sha256": "bf0abad7839386db839bea1539e1fe66470ea424b0cbff3f360ab153d8c3e52b",
+      "role": "task_stage_target",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "source_size": [
+        1002,
+        1570
+      ]
+    }
+  },
+  "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
+  "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+  "history_cursor": 44,
+  "intent": "Re-check the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.",
+  "label": "torso_rhythm",
+  "local_review_id": "P1_gesture:pass_02:torso_rhythm",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

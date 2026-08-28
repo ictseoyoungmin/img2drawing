@@ -5,8 +5,8 @@ import json
 import sys
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]
-SRC=ROOT/'skills/img2drawing/src'
+REPO_ROOT=Path(__file__).resolve().parents[2]
+SRC=REPO_ROOT/'skills/img2drawing/src'
 sys.path.insert(0,str(SRC))
 
 import img2drawing

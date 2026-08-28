@@ -3,34 +3,140 @@
   "locked_at_stage": "P1_gesture",
   "observation": {
     "automatic_semantic_inference": false,
-    "drawing_priorities": [],
-    "evidence_refs": [],
-    "global_relations": {},
-    "parts": {},
+    "drawing_priorities": [
+      "head direction from pupils and nose",
+      "balanced face, spine, shoulder and pelvis line hierarchy",
+      "support versus counterbalance leg",
+      "one centre-path curve per limb through its joint centres",
+      "subject-specific foot landing"
+    ],
+    "evidence_refs": [
+      "subject.png whole view normalized to 512x802",
+      "p1_target.png user-approved task-stage target normalized to 512x802"
+    ],
+    "global_relations": {
+      "canvas_basis": "All listed coordinates were observed on the 512x802 working canvas.",
+      "counterbalance_side": "image_right",
+      "head_direction": "slight turn toward image-left with a small downward tilt",
+      "pelvis_tilt": "image-left hip higher; image-right hip lower",
+      "prop": "none",
+      "shoulder_tilt": "image-left shoulder lower; image-right shoulder higher",
+      "weight_side": "image_left"
+    },
+    "parts": {
+      "feet": {
+        "image_left": "weight-bearing shoe points across the body toward image-left",
+        "image_right": "lower stepped-out shoe points toward the viewer and image-right"
+      },
+      "head_landmarks": {
+        "chin": [
+          258,
+          118
+        ],
+        "crown": [
+          264,
+          29
+        ],
+        "nose": [
+          263,
+          87
+        ],
+        "pupils": [
+          [
+            251,
+            70
+          ],
+          [
+            275,
+            74
+          ]
+        ]
+      },
+      "joint_centres": {
+        "image_left": {
+          "ankle": [
+            233,
+            696
+          ],
+          "elbow": [
+            169,
+            301
+          ],
+          "hip": [
+            198,
+            358
+          ],
+          "knee": [
+            212,
+            524
+          ],
+          "shoulder": [
+            184,
+            175
+          ],
+          "wrist": [
+            158,
+            413
+          ]
+        },
+        "image_right": {
+          "ankle": [
+            350,
+            724
+          ],
+          "elbow": [
+            350,
+            263
+          ],
+          "hip": [
+            287,
+            364
+          ],
+          "knee": [
+            311,
+            524
+          ],
+          "shoulder": [
+            311,
+            153
+          ],
+          "wrist": [
+            294,
+            331
+          ]
+        }
+      }
+    },
     "schema": "img2drawing.observation.v3",
     "semantic_authority": "agent",
-    "subject_summary": "Full-body subject reference for the canonical stage workflow.",
-    "uncertainties": [],
+    "subject_summary": "Full-body front three-quarter standing subject. The image-left leg carries the weight; the image-right leg steps out. The image-left arm hangs while the image-right arm bends into the trouser pocket.",
+    "uncertainties": [
+      "Loose denim obscures exact knee contours; knee centres are inferred from each hip-to-ankle chain.",
+      "The pocket and sleeve partly hide the image-right wrist and hand endpoint."
+    ],
     "view": {
       "arm_occlusion": {
-        "subject_left": [],
+        "subject_left": [
+          "wrist partly covered by cardigan cuff",
+          "hand partly inside trouser pocket"
+        ],
         "subject_right": []
       },
       "arm_visibility": {
-        "subject_left": "unknown",
-        "subject_right": "unknown"
+        "subject_left": "partial",
+        "subject_right": "visible"
       },
-      "body_view": "unknown",
-      "near_side": "unknown",
+      "body_view": "front_three_quarter",
+      "near_side": "subject_left",
       "prop_overlap_order": [],
-      "torso_turn": "unknown",
+      "torso_turn": "left",
       "uncertainties": [
-        "The canonical example demonstrates review lifecycle; pose-side labels remain subject-observation inputs."
+        "Near-side assignment follows the larger image-right sleeve and shoulder exposure."
       ]
     }
   },
-  "observation_digest": "9349eccac9419c420e03038120a4ab940eb91061ebd0f8622eb45c8bc91099bf",
-  "observation_id": "canonical-full-body-croquis-r07:observation:01",
+  "observation_digest": "cccfa0cd1a86c0fbd5f4738805b1b2def60d036b03153d37570d572aad90d199",
+  "observation_id": "canonical-full-body-croquis-r10-target-rebuild:observation:01",
   "replacement_of": null,
   "schema": "img2drawing.observation_lock.v1",
   "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"

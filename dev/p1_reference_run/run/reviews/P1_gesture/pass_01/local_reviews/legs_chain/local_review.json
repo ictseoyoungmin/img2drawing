@@ -1,0 +1,75 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_vs_drawing.png",
+    "task_target_vs_drawing": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/task_target_vs_drawing.png"
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 802,
+        "left": 195,
+        "right": 410,
+        "top": 390
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/drawing.png",
+      "crop_sha256": "a4c9a7234d6276237bbf03113c112a549e01d51ae76b2037653b71f564d18bea",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 1152,
+        "left": 280,
+        "right": 589,
+        "top": 560
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/subject.png",
+      "crop_sha256": "1997b96c772ee263751ccd59380165d45b7c5ed660da89258e4883979c29e3d3",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": {
+      "box": {
+        "bottom": 1570,
+        "left": 382,
+        "right": 802,
+        "top": 763
+      },
+      "crop_path": "../../../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/task_target.png",
+      "crop_sha256": "60c9ea1b1f916a9ede9c1877b5ef015a4a86da3912f11294f987792a52baa73e",
+      "role": "task_stage_target",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "source_size": [
+        1002,
+        1570
+      ]
+    }
+  },
+  "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+  "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+  "history_cursor": 38,
+  "intent": "Check each single hip-knee-ankle centre-path curve, shoe direction and ground contact.",
+  "label": "legs_chain",
+  "local_review_id": "P1_gesture:pass_01:legs_chain",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

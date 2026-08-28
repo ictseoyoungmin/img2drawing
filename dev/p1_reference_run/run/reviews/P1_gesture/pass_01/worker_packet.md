@@ -15,7 +15,7 @@ This is the first review pass for this stage. Start from the stage contract and 
 - Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime.
 
 ## Frozen stage representation contract
-- contract: `full_body_croquis.P1.v3`
+- contract: `full_body_croquis.P1.v5`
 - representation: **gesture_and_construction_centrelines**
 - tier: 1
 - inherits from: _none_
@@ -23,12 +23,12 @@ This is the first review pass for this stage. Start from the stage contract and 
 ### This stage owns
 - the head's observed outline, with its facial centreline and eye line
 - face direction and head tilt
+- an open neck connection from the jaw into the clavicle; not a measured neck axis
 - spine centreline as an S-curve from the back of the neck
 - pelvis centreline and its tilt
 - shoulder line and its tilt
-- line of action, distinct from the spine
 - joint positions: shoulder, elbow, wrist, hip, knee, ankle
-- arm and leg flow lines, including occluded segments
+- one centre-path gesture curve per arm and leg through the joint centres, including occluded segments
 - loose torso mass
 - foot direction and ground contact
 - overall silhouette envelope
@@ -43,12 +43,13 @@ This is the first review pass for this stage. Start from the stage contract and 
 - the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes
 - a curved facial centreline passing crown -> nose -> chin
 - an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit
+- open neck connection cues from the jaw into the clavicle; not a measured neck axis
 - spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum
 - pelvis centreline stating its tilt
 - shoulder line stating its tilt
-- one line of action that enters above the head, cuts across the body and lands ahead of the weight-bearing foot
 - joint markers as small circles
-- flowing limb lines from shoulder to wrist and from hip to ankle
+- one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle
+- an optional subordinate second cue only where it explains an observed curvature reversal or necessary silhouette-envelope fact; its spacing is non-metric
 - an inferred flow line through an occluded limb, ending where the hidden hand or foot must be
 - a loose flowing torso mass
 - each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened
@@ -65,6 +66,8 @@ This is the first review pass for this stage. Start from the stage contract and 
 - face and spine centrelines merged into one stroke
 - straight landmark-to-landmark joins that flatten limb curvature
 - omitting an occluded limb because it is not visible
+- bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass
+- using an optional second limb cue merely to trace the opposite garment edge
 - hair
 - garment structure
 - footwear detail beyond a direction oval
@@ -86,10 +89,10 @@ This is the first review pass for this stage. Start from the stage contract and 
 - attached-object length and tilt measured against the body
 
 ## Reference authority
-- reference mode: **subject_only**
-- authority order: `subject_reference`
-- subject reference: `/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png` — geometry truth
-- task stage target: _not provided_
+- reference mode: **task_stage_target_augmented**
+- authority order: `task_stage_target > subject_reference`
+- subject reference: `../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png` — geometry truth
+- task stage target: `../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png` — same-task stage truth
 
 ### Non-negotiable authority rule
 - The stage contract decides representation scope; it does not decide pose correctness.
@@ -103,9 +106,9 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - crown position, and the curvature of the facial centreline through nose and chin
 - head tilt from the eye-line cross
 - the spine's S-curve, starting behind the neck
+- an open neck connection from the jaw into the clavicle, not a measured neck axis
 - pelvis centreline and its tilt
 - shoulder line and its tilt
-- the line of action, which is not the spine
 - shoulder, elbow, wrist, hip, knee and ankle centres
 - the curvature of each limb between those joints
 - any limb hidden behind clothing or a prop
@@ -116,10 +119,10 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 ## Draw
 - the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes
 - a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum
+- open neck connection cues from jaw to clavicle, not a measured neck axis
 - pelvis and shoulder lines stating their tilt
-- one line of action entering above the head, cutting across the body and landing ahead of the weight-bearing foot
 - joint markers as small circles
-- flowing limb lines that follow observed curvature, not straight joins
+- one flowing centre-path curve per limb through the joint centres; an optional second cue only where a visible reversal or necessary silhouette-envelope fact requires it
 - an inferred flow line through an occluded limb, ending where the hidden hand or foot must be
 - a loose flowing torso mass
 - each foot's observed shape linked to its ankle, stating the direction it points
@@ -135,6 +138,8 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - drawing the eye line without checking it meets both eyes
 - merging the face and spine centrelines into one stroke
 - joining joints with straight lines
+- bracketing a limb with two lines that read as limb thickness, garment width, or mass
+- using an optional second limb cue merely to trace the opposite garment edge
 - dropping an occluded limb because it cannot be seen
 - copying joint positions from an example drawing instead of the subject
 - moving a line to satisfy a filter or evidence map
@@ -147,6 +152,7 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.
 - Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?
 - Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?
+- Is the jaw visibly connected to the torso by an open neck cue, without turning it into a P2 neck axis?
 - Do shoulder and pelvis state the subject's rotation, not just a tilt?
 - Are both arms present, including any hidden behind a prop or in a pocket?
 - Is every joint centre on the subject's joint, or are several drifting the same way?
@@ -176,13 +182,16 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 ## Review artifacts
 - schema: `img2drawing.reference_review_artifacts.v2`
 - stage: `P1_gesture`
-- subject_reference: `/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png`
-- subject_vs_drawing: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png`
-- subject_split: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png`
-- subject_drawing_overlay: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png`
-- subject_drawing_absdiff: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png`
-- overview: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png`
-- three_way: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png`
+- subject_reference: `../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png`
+- task_stage_target: `../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png`
+- subject_vs_drawing: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png`
+- subject_split: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png`
+- subject_drawing_overlay: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png`
+- subject_drawing_absdiff: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png`
+- task_target_vs_drawing: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_vs_drawing.png`
+- task_target_split: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_split.png`
+- overview: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png`
+- three_way: `../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png`
 
 ## Canvas-scale pencil guidance
 - canvas: `512 × 802`
@@ -192,7 +201,7 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - Guidance only: do not silently rewrite explicit stroke intent.
 
 ## Checkpoint / resume
-- checkpoint: `/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/session/checkpoint.json`
+- checkpoint: `../../../../../../dev/p1_reference_run/run/session/checkpoint.json`
 - `submit_stage_review()` writes a resumable checkpoint automatically.
 - Resume with `DrawingRun.resume(output_dir)` after process loss; prepare a fresh review before judging new edits.
 
@@ -218,7 +227,7 @@ local = run.prepare_local_review(
 2. If carried concerns exist, re-check them before inventing new work.
 3. Read the frozen stage contract before deciding what belongs in this stage.
 4. Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.
-5. SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.
+5. Inspect the same-task stage target for current-stage expected placement/abstraction without allowing it to override contradictory subject geometry.
 6. Before drawing, reject vocabulary listed in forbidden_representation.
 7. Draw a bounded set of explicit strokes that serve the current stage ownership.
 8. Render the exact current artifact with prepare_stage_review().

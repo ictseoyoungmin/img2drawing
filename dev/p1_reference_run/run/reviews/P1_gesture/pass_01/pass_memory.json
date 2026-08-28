@@ -34,18 +34,98 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-A4",
+      "action_id": "EX-P1-NECK-L",
       "history_cursor": 5,
       "is_correction_action": false,
       "kind": "draw_stroke",
-      "part": "spine_centreline",
+      "part": "neck_connection_left",
       "reason": null,
       "stage": "P1_gesture",
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-A5",
+      "action_id": "EX-P1-SPINE-01",
       "history_cursor": 6,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_01",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-02",
+      "history_cursor": 7,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_02",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-03",
+      "history_cursor": 8,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_03",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-04",
+      "history_cursor": 9,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_04",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-05",
+      "history_cursor": 10,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_05",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-06",
+      "history_cursor": 11,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_06",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-07",
+      "history_cursor": 12,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_07",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SPINE-08",
+      "history_cursor": 13,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "spine_centreline_dash_08",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-SHOULDER",
+      "history_cursor": 14,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "shoulder_line",
@@ -54,8 +134,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-A6",
-      "history_cursor": 7,
+      "action_id": "EX-P1-PELVIS",
+      "history_cursor": 15,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "pelvis_centreline",
@@ -64,88 +144,48 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-arm_left_a",
-      "history_cursor": 8,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "arm_left_outer",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-arm_left_b",
-      "history_cursor": 9,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "arm_left_inner",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-arm_right_a",
-      "history_cursor": 10,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "arm_right_outer",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-arm_right_b",
-      "history_cursor": 11,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "arm_right_inner",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-leg_left_a",
-      "history_cursor": 12,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "leg_left_outer",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-leg_left_b",
-      "history_cursor": 13,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "leg_left_inner",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-leg_right_a",
-      "history_cursor": 14,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "leg_right_outer",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-leg_right_b",
-      "history_cursor": 15,
-      "is_correction_action": false,
-      "kind": "draw_stroke",
-      "part": "leg_right_inner",
-      "reason": null,
-      "stage": "P1_gesture",
-      "target_stroke_id": null
-    },
-    {
-      "action_id": "EX-P1-J_shoulder_L",
+      "action_id": "EX-P1-ARM-L",
       "history_cursor": 16,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_left_flow",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-ARM-R",
+      "history_cursor": 17,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_right_flow",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-LEG-L",
+      "history_cursor": 18,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_left_flow",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-LEG-R",
+      "history_cursor": 19,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "leg_right_flow",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J-SHOULDER-L",
+      "history_cursor": 20,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_shoulder_L",
@@ -154,8 +194,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_shoulder_R",
-      "history_cursor": 17,
+      "action_id": "EX-P1-J-SHOULDER-R",
+      "history_cursor": 21,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_shoulder_R",
@@ -164,8 +204,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_elbow_L",
-      "history_cursor": 18,
+      "action_id": "EX-P1-J-ELBOW-L",
+      "history_cursor": 22,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_elbow_L",
@@ -174,8 +214,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_elbow_R",
-      "history_cursor": 19,
+      "action_id": "EX-P1-J-ELBOW-R",
+      "history_cursor": 23,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_elbow_R",
@@ -184,8 +224,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_wrist_L",
-      "history_cursor": 20,
+      "action_id": "EX-P1-J-WRIST-L",
+      "history_cursor": 24,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_wrist_L",
@@ -194,8 +234,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_wrist_R",
-      "history_cursor": 21,
+      "action_id": "EX-P1-J-WRIST-R",
+      "history_cursor": 25,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_wrist_R",
@@ -204,8 +244,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_hip_L",
-      "history_cursor": 22,
+      "action_id": "EX-P1-J-HIP-L",
+      "history_cursor": 26,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_hip_L",
@@ -214,8 +254,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_hip_R",
-      "history_cursor": 23,
+      "action_id": "EX-P1-J-HIP-R",
+      "history_cursor": 27,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_hip_R",
@@ -224,8 +264,18 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_knee_L",
-      "history_cursor": 24,
+      "action_id": "EX-P1-J-PELVIS-C",
+      "history_cursor": 28,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "joint_pelvis_centre",
+      "reason": null,
+      "stage": "P1_gesture",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "EX-P1-J-KNEE-L",
+      "history_cursor": 29,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_knee_L",
@@ -234,8 +284,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_knee_R",
-      "history_cursor": 25,
+      "action_id": "EX-P1-J-KNEE-R",
+      "history_cursor": 30,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_knee_R",
@@ -244,8 +294,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_ankle_L",
-      "history_cursor": 26,
+      "action_id": "EX-P1-J-ANKLE-L",
+      "history_cursor": 31,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_ankle_L",
@@ -254,8 +304,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-J_ankle_R",
-      "history_cursor": 27,
+      "action_id": "EX-P1-J-ANKLE-R",
+      "history_cursor": 32,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "joint_ankle_R",
@@ -264,8 +314,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-F_link_L",
-      "history_cursor": 28,
+      "action_id": "EX-P1-FOOT-LINK-L",
+      "history_cursor": 33,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "ankle_foot_link_left",
@@ -274,8 +324,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-F_L",
-      "history_cursor": 29,
+      "action_id": "EX-P1-FOOT-L",
+      "history_cursor": 34,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "foot_direction_left",
@@ -284,8 +334,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-F_link_R",
-      "history_cursor": 30,
+      "action_id": "EX-P1-FOOT-LINK-R",
+      "history_cursor": 35,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "ankle_foot_link_right",
@@ -294,8 +344,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-F_R",
-      "history_cursor": 31,
+      "action_id": "EX-P1-FOOT-R",
+      "history_cursor": 36,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "foot_direction_right",
@@ -304,8 +354,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-G_L",
-      "history_cursor": 32,
+      "action_id": "EX-P1-GROUND-L",
+      "history_cursor": 37,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "ground_contact_left",
@@ -314,8 +364,8 @@
       "target_stroke_id": null
     },
     {
-      "action_id": "EX-P1-G_R",
-      "history_cursor": 33,
+      "action_id": "EX-P1-GROUND-R",
+      "history_cursor": 38,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "ground_contact_right",

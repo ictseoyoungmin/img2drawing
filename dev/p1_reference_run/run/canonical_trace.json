@@ -4,52 +4,92 @@
   "example": "full_body_croquis",
   "stage": "P1_gesture",
   "initial_dominant_path_start": [
-    253,
-    34
+    264,
+    29
   ],
   "initial_dominant_path_start_semantics": "crown",
   "pass1": {
     "decision": "revise",
     "remaining_concerns": [
-      "cranium outline is a borrowed ellipse, not this head's measured width",
-      "eye line and facial centreline therefore sit inside the face instead of across the head"
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
     ],
     "local_review_ids": [
       "P1_gesture:pass_01:head_face",
-      "P1_gesture:pass_01:pelvis_support"
+      "P1_gesture:pass_01:torso_rhythm",
+      "P1_gesture:pass_01:pelvis_support",
+      "P1_gesture:pass_01:arm_left_flow",
+      "P1_gesture:pass_01:arm_right_flow",
+      "P1_gesture:pass_01:legs_chain"
     ],
-    "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.md"
+    "worker_packet": "reviews/P1_gesture/pass_01/worker_packet.md"
   },
   "inter_pass_corrections": [
     {
-      "action_id": "EX-P1-R1",
+      "action_id": "EX-P1-R1-PELVIS",
       "kind": "replace_stroke",
-      "target": "head_outline"
+      "target": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "kind": "replace_stroke",
+      "target": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "kind": "replace_stroke",
+      "target": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "kind": "replace_stroke",
+      "target": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "kind": "replace_stroke",
+      "target": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "kind": "replace_stroke",
+      "target": "leg_right_flow"
     }
   ],
   "pass2": {
     "memory_state": "revision_continuation",
-    "parent_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
+    "parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
     "carried_concerns": [
-      "cranium outline is a borrowed ellipse, not this head's measured width",
-      "eye line and facial centreline therefore sit inside the face instead of across the head"
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
     ],
     "inter_pass_correction_action_ids": [
-      "EX-P1-R1"
+      "EX-P1-R1-PELVIS",
+      "EX-P1-R1-HIP-L",
+      "EX-P1-R1-HIP-R",
+      "EX-P1-R1-KNEE-L",
+      "EX-P1-R1-LEG-L",
+      "EX-P1-R1-LEG-R"
     ],
     "decision": "advance",
     "remaining_concerns": [],
-    "advance_rationale": "Fresh pass-2 evidence clears both carried P1 concerns and a residual sweep found nothing new; the pose hypothesis registers against the subject, so P2 measurement may begin.",
+    "advance_rationale": "Fresh pass-2 whole and coordinate-registered local evidence clears all carried concerns. A separate residual sweep finds the subject's head direction, weight side, joint chains, limb flows and foot landings specific enough for independent P2 measurement.",
     "local_review_ids": [
       "P1_gesture:pass_02:head_face",
-      "P1_gesture:pass_02:pelvis_support"
+      "P1_gesture:pass_02:torso_rhythm",
+      "P1_gesture:pass_02:pelvis_support",
+      "P1_gesture:pass_02:arm_left_flow",
+      "P1_gesture:pass_02:arm_right_flow",
+      "P1_gesture:pass_02:legs_chain"
     ],
-    "worker_packet": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md"
+    "worker_packet": "reviews/P1_gesture/pass_02/worker_packet.md"
   },
   "review_chain": {
-    "pass1_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
-    "pass2_parent_review_digest": "55444b4fe5ce02272e6dc09965d784b054f268f095b7390fa8dc55558c43d8c3",
-    "pass2_digest": "cc3f002334a323af7ce8090ea653c0620c643b2f9697c1721c7eae897531b90c"
+    "pass1_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
+    "pass2_parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
+    "pass2_digest": "714dbb7d7e59df90724c3d059c4c84c330924ff9c88950fc1931ea4ceec5b3fb"
   },
   "current_stage": "P2_primary_axes",
   "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."

@@ -270,12 +270,22 @@ Every stage answers one question. A stage is not "more lines than the last one".
 | P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
 | P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
 
+P1 limb flow defaults to one observed curve through the joint centres. Do not bracket an
+arm or leg with two lines that read as sleeve, trouser or limb width. A second flow cue is
+allowed only when one curve cannot explain a visible reversal or silhouette-envelope fact;
+it remains subordinate and its spacing is non-metric. P2 re-measures the subject
+independently, authoring its own shoulder -> elbow -> wrist and hip -> knee -> ankle axes,
+segment lengths/foreshortening, neck axis, turned ribcage/pelvis boxes, and hand/foot
+placement blocks. Preserve P1 joints and pose intent; if evidence disproves a joint,
+correct it explicitly and reopen the earliest responsible stage.
+
 Three rules survive every stage:
 
 1. **P1 is a whole-body pose hypothesis, not a few lines.** Its success test is not "looks
    like a person" but "this is *this* person in *this* pose" with the subject hidden. The
-   face centreline and the spine centreline are separate strokes; the line of action is a
-   third line, not the spine; joints are joined by observed curvature, never straight; and
+   face centreline and the spine centreline are separate strokes; the spine's S-curve
+   states torso rhythm without overpowering the other construction; joints are joined by
+   observed curvature, never straight; and
    an occluded limb is inferred, never dropped. Read `references/stages/p1-gesture.md`
    before drawing P1 — it carries the failure modes that cost the most passes — and open
    `references/stages/p1-construction.png`, which labels every one of these lines on a

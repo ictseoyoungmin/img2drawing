@@ -6,25 +6,25 @@
       "auto_detection_used": false,
       "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
       "comparisons": {
-        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
-        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
-        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
-        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
-        "task_target_vs_drawing": null
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/task_target_vs_drawing.png"
       },
       "crops": {
         "drawing": {
           "box": {
-            "bottom": 132,
-            "left": 222,
-            "right": 288,
-            "top": 20
+            "bottom": 140,
+            "left": 220,
+            "right": 310,
+            "top": 10
           },
-          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
-          "crop_sha256": "5655a333d32b17d5c8227f8cf080a6fa8c5536912f9e9acf6f4226871a2d6b7c",
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+          "crop_sha256": "451e8b7e0b15d56f0beb5b868622805383cf4fc4227fb58a59f9c9588904f829",
           "role": "current_drawing",
-          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
           "source_size": [
             512,
             802
@@ -32,27 +32,43 @@
         },
         "subject": {
           "box": {
-            "bottom": 200,
-            "left": 300,
-            "right": 450,
-            "top": 20
+            "bottom": 201,
+            "left": 316,
+            "right": 445,
+            "top": 14
           },
-          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
-          "crop_sha256": "704e802790520d2b736b7b2648747d99e6cde03ee4334925ae62dc1253f71182",
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+          "crop_sha256": "19d29841581b19b1ba25b94005dd750c4c0f91f775e3f4c250e01241ba7637fe",
           "role": "subject_reference",
-          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
           "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
           "source_size": [
             735,
             1152
           ]
         },
-        "task_target": null
+        "task_target": {
+          "box": {
+            "bottom": 274,
+            "left": 431,
+            "right": 607,
+            "top": 20
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/task_target.png",
+          "crop_sha256": "82cbc618feb29d1812e7ed33d530357bcb3111dd774579382767a7cc8e9eaab2",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
       },
-      "drawing_artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
-      "drawing_state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df",
-      "history_cursor": 33,
-      "intent": "Check cranium width, crown position and the nose pass against the subject.",
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check crown, observed head shape, pupil line and nose pass.",
       "label": "head_face",
       "local_review_id": "P1_gesture:pass_01:head_face",
       "pass_name": "pass_01",
@@ -65,25 +81,25 @@
       "auto_detection_used": false,
       "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
       "comparisons": {
-        "overview": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_reference_overview.png",
-        "subject_drawing_absdiff": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_absdiff.png",
-        "subject_drawing_overlay": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_overlay.png",
-        "subject_vs_drawing": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_vs_drawing.png",
-        "task_target_vs_drawing": null
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/task_target_vs_drawing.png"
       },
       "crops": {
         "drawing": {
           "box": {
-            "bottom": 800,
-            "left": 132,
-            "right": 398,
-            "top": 299
+            "bottom": 430,
+            "left": 185,
+            "right": 330,
+            "top": 120
           },
-          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
-          "crop_sha256": "10dba28695e47843f5bd09f390c54525f415954f45470775842914fc093fddcc",
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/drawing.png",
+          "crop_sha256": "07a210165a3d164888e055f67927331f018dce28bec22a358a967ed06b24fde3",
           "role": "current_drawing",
-          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
-          "source_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
           "source_size": [
             512,
             802
@@ -91,29 +107,345 @@
         },
         "subject": {
           "box": {
-            "bottom": 1145,
-            "left": 190,
-            "right": 570,
-            "top": 430
+            "bottom": 618,
+            "left": 266,
+            "right": 474,
+            "top": 172
           },
-          "crop_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/subject.png",
-          "crop_sha256": "777da20467a23447b2ddfb49217b544d2831521d7ec07d044e082b84a204bd51",
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/subject.png",
+          "crop_sha256": "1f7085fe1d860617acd01b7fff28166ec097eacd301fbde6f5a3c6e87088542d",
           "role": "subject_reference",
-          "source_path": "/mnt/f/NowWorking/skill-forge/img2drawing/project/skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
           "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
           "source_size": [
             735,
             1152
           ]
         },
-        "task_target": null
+        "task_target": {
+          "box": {
+            "bottom": 842,
+            "left": 362,
+            "right": 646,
+            "top": 235
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/task_target.png",
+          "crop_sha256": "bf0abad7839386db839bea1539e1fe66470ea424b0cbff3f360ab153d8c3e52b",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
       },
-      "drawing_artifact_sha256": "ec3943c08804bfa468ae3aac2efe820e2207b0dc39741a2f723d3193ab4c1500",
-      "drawing_state_sha256": "c1ed970e01c0fa2fb864533ea79769480bc93d4fa3ace361e575e6c0a8e792df",
-      "history_cursor": 33,
-      "intent": "Check pelvis tilt, hip joint centres and where both feet land.",
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.",
+      "label": "torso_rhythm",
+      "local_review_id": "P1_gesture:pass_01:torso_rhythm",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/task_target_vs_drawing.png"
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 802,
+            "left": 195,
+            "right": 410,
+            "top": 355
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
+          "crop_sha256": "86fc2d8b17ce34ae385701bc92627e7c1d7fc84cbef1b31141e5036551ae9d73",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1152,
+            "left": 280,
+            "right": 589,
+            "top": 510
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/subject.png",
+          "crop_sha256": "e930bfbd6ea790e0978dd13335ea9eee94fe48a21e64ee8989bb00369a750b07",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": {
+          "box": {
+            "bottom": 1570,
+            "left": 382,
+            "right": 802,
+            "top": 695
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/task_target.png",
+          "crop_sha256": "6a9ae37f2223055f98882bc0ef9e4a7767f7813b5b01c9ee0673a8eb754ab4ed",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
+      },
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check pelvis counter-tilt, both hip centres and weight transfer into the image-left support foot.",
       "label": "pelvis_support",
       "local_review_id": "P1_gesture:pass_01:pelvis_support",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/task_target_vs_drawing.png"
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 455,
+            "left": 140,
+            "right": 220,
+            "top": 140
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/drawing.png",
+          "crop_sha256": "be12fb0a11db1e90860513229d86c53b75e83dba92d883db9f6c0825aa9e0faf",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 654,
+            "left": 201,
+            "right": 316,
+            "top": 201
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/subject.png",
+          "crop_sha256": "e1f62d12cdbe8dc872144779f7c447454898187f38463c704ec0461b1690ca24",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": {
+          "box": {
+            "bottom": 891,
+            "left": 274,
+            "right": 431,
+            "top": 274
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/task_target.png",
+          "crop_sha256": "abfdc0fd9647dba414009713e2c6e8ffede4a5ab17fc9152ec0701ae215328d8",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
+      },
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check image-left shoulder, elbow, visible wrist and curved hanging-arm flow.",
+      "label": "arm_left_flow",
+      "local_review_id": "P1_gesture:pass_01:arm_left_flow",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/task_target_vs_drawing.png"
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 355,
+            "left": 280,
+            "right": 380,
+            "top": 125
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/drawing.png",
+          "crop_sha256": "2b7217f88c360e0016a8215db50ef709f99dcb333b74930ca6e7e80e3f79ad7e",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 510,
+            "left": 402,
+            "right": 546,
+            "top": 180
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/subject.png",
+          "crop_sha256": "cec594441151797c16d594792668798af404d5b389e70b336f1061124606f860",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": {
+          "box": {
+            "bottom": 695,
+            "left": 548,
+            "right": 744,
+            "top": 245
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/task_target.png",
+          "crop_sha256": "ec166e995ece8aac57d70efbf174f89f916acb74aa15940b7be675bae393d94d",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
+      },
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check image-right shoulder, elbow and partly occluded pocket-hand flow.",
+      "label": "arm_right_flow",
+      "local_review_id": "P1_gesture:pass_01:arm_right_flow",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_vs_drawing.png",
+        "task_target_vs_drawing": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/task_target_vs_drawing.png"
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 802,
+            "left": 195,
+            "right": 410,
+            "top": 390
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/drawing.png",
+          "crop_sha256": "a4c9a7234d6276237bbf03113c112a549e01d51ae76b2037653b71f564d18bea",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1152,
+            "left": 280,
+            "right": 589,
+            "top": 560
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/subject.png",
+          "crop_sha256": "1997b96c772ee263751ccd59380165d45b7c5ed660da89258e4883979c29e3d3",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": {
+          "box": {
+            "bottom": 1570,
+            "left": 382,
+            "right": 802,
+            "top": 763
+          },
+          "crop_path": "../../../../../../dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/task_target.png",
+          "crop_sha256": "60c9ea1b1f916a9ede9c1877b5ef015a4a86da3912f11294f987792a52baa73e",
+          "role": "task_stage_target",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+          "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+          "source_size": [
+            1002,
+            1570
+          ]
+        }
+      },
+      "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+      "history_cursor": 38,
+      "intent": "Check each single hip-knee-ankle centre-path curve, shoe direction and ground contact.",
+      "label": "legs_chain",
+      "local_review_id": "P1_gesture:pass_01:legs_chain",
       "pass_name": "pass_01",
       "schema": "img2drawing.local_review_artifacts.v2",
       "selection_authority": "agent_explicit_boxes",

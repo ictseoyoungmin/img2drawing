@@ -16,7 +16,8 @@ from img2drawing import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SUBJECT = ROOT / "examples" / "full_body_croquis" / "subject.png"
+SKILL_ROOT = ROOT.parent / "skills" / "img2drawing"
+SUBJECT = SKILL_ROOT / "examples" / "full_body_croquis" / "subject.png"
 SCHEMA_DIR = ROOT / "schemas"
 
 

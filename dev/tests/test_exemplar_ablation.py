@@ -75,7 +75,7 @@ def test_grammar_card_consumption_is_deterministic_and_non_geometric():
 
 
 def test_grammar_card_consumption_rejects_blank_scope_context():
-    card = ModularGrammarCard("p1", "P1_gesture", "positive", ("gesture",), ("line of action",), "pass")
+    card = ModularGrammarCard("p1", "P1_gesture", "positive", ("gesture",), ("spine rhythm",), "pass")
     with pytest.raises(ValueError, match="part must be non-empty"):
         consume_grammar_card(card, part=" ")
     with pytest.raises(ValueError, match="role must be non-empty"):
