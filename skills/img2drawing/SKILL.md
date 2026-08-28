@@ -39,6 +39,24 @@ preserves pencil grade, pressure, contact, grain, paper interaction and eraser b
 Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
 material feature, not a reason to revive or silently emulate the removed renderer.
 
+## Stroke retirement and stage handoff
+
+Retirement is about current-stage representation ownership, not whether an earlier line
+was correct. A valid P1 gesture may be removed from the visible branch when a later axis,
+block, mass or contour takes over and the old line would duplicate or violate the current
+stage grammar.
+
+- Use `soft_lift` (or `soft_lift_segment`) when the earlier construction should remain as
+  a faint cue for weight, rhythm, or an occluded handoff.
+- Use the public `delete_stroke` action when the complete earlier stroke must be absent
+  from the current drawing. The earlier stroke and the deletion event remain in history.
+- `hard_delete` is the history-layer method behind `delete_stroke`, recorded as
+  `stroke.delete`; it is not a valid action kind by itself.
+
+Do not raster-edit files or mutate history to clean the image. Supply the target stroke,
+observation and reason, then render and review the mutated canvas afresh. Read
+`references/review/stroke-retirement.md` for the handoff test and examples.
+
 ## Required reading route
 For a full-body croquis job:
 1. Read `SKILL.md`.

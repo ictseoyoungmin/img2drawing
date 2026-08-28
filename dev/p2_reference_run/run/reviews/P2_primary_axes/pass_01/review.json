@@ -1,0 +1,93 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The artifact stays inside P2.v3: measured segment axes, open ribcage/pelvis axis volumes and hand/foot placement blocks only.",
+    "P1 face, spine, pelvis rhythm, joint evidence and ground contact remain visible and unchanged; P1 foot-direction evidence remains in the prior/history while P2 blocks own the visible placement.",
+    "No finished limb contour, clothing, hair, surface detail or shading was added."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "ac03645526fcca19eee2034269a5e25ec770f0fe12667fafd6e512dffb0de956",
+  "drawing_findings": [
+    "The neck, ribcage, pelvis, arms and support leg are registered to the observed joint chain.",
+    "The first ribcage centre axis reads too vertical through the lower torso and needs a small image-left turn to agree with the subject's rotation.",
+    "The first image-right thigh axis ends below the observed knee centre, weakening the measured foreshortening relationship.",
+    "The P1 foot-direction wedges and the new P2 foot blocks overlap, creating a doubled shoe read that should be retired after the block takes over placement."
+  ],
+  "drawing_state_sha256": "1db8ec421f38336075d154eec1a62b36bc8a64ba73b702a07ca484441234f5d3",
+  "grammar_findings": [
+    "P2 adds measured spans and open axis boxes while preserving the P1 flow and joint circles underneath.",
+    "Hand and foot marks are placement blocks only; no clothing, hair, facial detail or finished contour is introduced."
+  ],
+  "history_cursor": 69,
+  "inter_pass_action_ids": [
+    "EX-P2-A1",
+    "EX-P2-A2",
+    "EX-P2-A3",
+    "EX-P2-A4",
+    "EX-P2-A5",
+    "EX-P2-A6",
+    "EX-P2-A7",
+    "EX-P2-A8",
+    "EX-P2-A9",
+    "EX-P2-A10",
+    "EX-P2-A11",
+    "EX-P2-A12",
+    "EX-P2-A13",
+    "EX-P2-A14",
+    "EX-P2-A15",
+    "EX-P2-A16",
+    "EX-P2-A17",
+    "EX-P2-A18",
+    "EX-P2-A19",
+    "EX-P2-A20",
+    "EX-P2-A21",
+    "EX-P2-A22",
+    "EX-P2-A23"
+  ],
+  "local_review_ids": [
+    "P2_primary_axes:pass_01:neck_ribcage",
+    "P2_primary_axes:pass_01:ribcage_pelvis",
+    "P2_primary_axes:pass_01:arm_segments",
+    "P2_primary_axes:pass_01:leg_segments",
+    "P2_primary_axes:pass_01:hand_blocks",
+    "P2_primary_axes:pass_01:foot_blocks"
+  ],
+  "observations": [
+    "The artifact stays inside P2.v3: measured segment axes, open ribcage/pelvis axis volumes and hand/foot placement blocks only.",
+    "P1 face, spine, pelvis rhythm, joint evidence and ground contact remain visible and unchanged; P1 foot-direction evidence remains in the prior/history while P2 blocks own the visible placement.",
+    "No finished limb contour, clothing, hair, surface detail or shading was added.",
+    "The subject's ribcage sits beneath the elevated image-right shoulder and turns gently back toward the image-left pelvis.",
+    "The image-left leg is the support chain; the image-right thigh is shorter in the visible projection before its lower outward step.",
+    "The pocket hand and both shoes are partially occluded placement problems, not opportunities for finished detail.",
+    "P2 adds measured spans and open axis boxes while preserving the P1 flow and joint circles underneath.",
+    "Hand and foot marks are placement blocks only; no clothing, hair, facial detail or finished contour is introduced.",
+    "The neck, ribcage, pelvis, arms and support leg are registered to the observed joint chain.",
+    "The first ribcage centre axis reads too vertical through the lower torso and needs a small image-left turn to agree with the subject's rotation.",
+    "The first image-right thigh axis ends below the observed knee centre, weakening the measured foreshortening relationship.",
+    "The P1 foot-direction wedges and the new P2 foot blocks overlap, creating a doubled shoe read that should be retired after the block takes over placement."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "b0071eeca70a5f8499fd875fa413ba943e211a8152ae4a949099254764305716",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [
+    "ribcage centre axis is too vertical through the lower torso",
+    "image-right thigh axis ends below the observed knee centre",
+    "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v3",
+  "subject_findings": [
+    "The subject's ribcage sits beneath the elevated image-right shoulder and turns gently back toward the image-left pelvis.",
+    "The image-left leg is the support chain; the image-right thigh is shorter in the visible projection before its lower outward step.",
+    "The pocket hand and both shoes are partially occluded placement problems, not opportunities for finished detail."
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

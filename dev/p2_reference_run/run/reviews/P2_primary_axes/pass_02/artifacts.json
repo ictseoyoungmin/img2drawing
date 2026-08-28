@@ -1,0 +1,24 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P2_primary_axes",
+  "drawing": {
+    "stage": "P2_primary_axes",
+    "path": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+    "artifact_sha256": "f48439a0d47b41c8ff58b6513f42e6568dfaeb45beaf44521f1f33d3dfbcc885",
+    "state_sha256": "60fbb4abf4365ec7d529523a8eda9cf8a4721b227e9134006e57da3bc7a3efc7",
+    "history_cursor": 75
+  },
+  "authority_order": [
+    "subject_reference"
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "subject_vs_drawing": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/subject_vs_drawing.png",
+  "subject_split": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/subject_split.png",
+  "subject_drawing_overlay": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/reference_authority_overview.png",
+  "three_way": "../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/reference_authority_overview.png"
+}

@@ -1,0 +1,80 @@
+{
+  "advance_rationale": "Fresh pass-2 whole and registered local evidence clears the two carried axis concerns. The subject's neck, ribcage and pelvis turn, limb spans, foreshortening and endpoint blocks are now specific enough to unlock P3 volume construction without altering the P1 pose hypothesis.",
+  "carried_concerns": [
+    "ribcage centre axis is too vertical through the lower torso",
+    "image-right thigh axis ends below the observed knee centre",
+    "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+  ],
+  "contract_findings": [
+    "The corrected artifact remains inside P2.v3 and adds no downstream mass, clothing or surface vocabulary.",
+    "P1 remains the pose prior: its centrelines, joint circles and ground contacts are preserved underneath; the retired foot-direction evidence remains available in the P1 artifact and history.",
+    "The two replacements are explicitly tied to fresh subject re-observation rather than convenience edits."
+  ],
+  "corrections": [
+    "Turned the ribcage centre axis slightly image-left through the lower torso.",
+    "Shortened the image-right thigh axis to the observed knee centre, restoring the shin's measured span.",
+    "Deleted the superseded P1 foot-direction wedges and ankle links from the active canvas after the P2 placement blocks took over."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "f48439a0d47b41c8ff58b6513f42e6568dfaeb45beaf44521f1f33d3dfbcc885",
+  "drawing_findings": [
+    "The carried ribcage-turn and low-thigh concerns are cleared in fresh registered crops.",
+    "Segment endpoints agree with the P1 joint centres and the subject's projected foreshortening.",
+    "The P2 foot blocks now read as the active placement marks; the superseded P1 wedges and ankle links are deleted from the active canvas while remaining replayable in history.",
+    "No new axis-level mismatch was found in the neck, boxes, arms, legs, hands or feet during the residual sweep."
+  ],
+  "drawing_state_sha256": "60fbb4abf4365ec7d529523a8eda9cf8a4721b227e9134006e57da3bc7a3efc7",
+  "grammar_findings": [
+    "P2 axes are subordinate to the P1 gesture and are visibly straight/segmental where measurement is the question.",
+    "The ribcage and pelvis boxes stay open and lightweight; they do not become finished torso or trouser contours."
+  ],
+  "history_cursor": 75,
+  "inter_pass_action_ids": [
+    "EX-P2-R1-DELETE-FOOT-LINK-L",
+    "EX-P2-R1-DELETE-FOOT-L",
+    "EX-P2-R1-DELETE-FOOT-LINK-R",
+    "EX-P2-R1-DELETE-FOOT-R",
+    "EX-P2-R1-RIBCAGE",
+    "EX-P2-R1-THIGH-R"
+  ],
+  "local_review_ids": [
+    "P2_primary_axes:pass_02:neck_ribcage",
+    "P2_primary_axes:pass_02:ribcage_pelvis",
+    "P2_primary_axes:pass_02:arm_segments",
+    "P2_primary_axes:pass_02:leg_segments",
+    "P2_primary_axes:pass_02:hand_blocks",
+    "P2_primary_axes:pass_02:foot_blocks"
+  ],
+  "observations": [
+    "The corrected artifact remains inside P2.v3 and adds no downstream mass, clothing or surface vocabulary.",
+    "P1 remains the pose prior: its centrelines, joint circles and ground contacts are preserved underneath; the retired foot-direction evidence remains available in the P1 artifact and history.",
+    "The two replacements are explicitly tied to fresh subject re-observation rather than convenience edits.",
+    "Fresh whole and local views keep the P1 head, spine, shoulder and pelvis rhythm while the new axes measure the subject's turned ribcage and asymmetric leg spans.",
+    "The corrected image-right thigh ends at the observed knee centre; the lower shin remains the longer outward chain into the nearer shoe.",
+    "Both hand blocks and both foot blocks sit at the visible or inferred endpoints without inventing anatomy or garment detail.",
+    "P2 axes are subordinate to the P1 gesture and are visibly straight/segmental where measurement is the question.",
+    "The ribcage and pelvis boxes stay open and lightweight; they do not become finished torso or trouser contours.",
+    "The carried ribcage-turn and low-thigh concerns are cleared in fresh registered crops.",
+    "Segment endpoints agree with the P1 joint centres and the subject's projected foreshortening.",
+    "The P2 foot blocks now read as the active placement marks; the superseded P1 wedges and ankle links are deleted from the active canvas while remaining replayable in history.",
+    "No new axis-level mismatch was found in the neck, boxes, arms, legs, hands or feet during the residual sweep."
+  ],
+  "parent_review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+  "pass_memory_digest": "eea8d8c24ac04a28d7535a88d6118c23d9619cc06f00c43c767f632b8e607b1a",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v3",
+  "subject_findings": [
+    "Fresh whole and local views keep the P1 head, spine, shoulder and pelvis rhythm while the new axes measure the subject's turned ribcage and asymmetric leg spans.",
+    "The corrected image-right thigh ends at the observed knee centre; the lower shin remains the longer outward chain into the nearer shoe.",
+    "Both hand blocks and both foot blocks sit at the visible or inferred endpoints without inventing anatomy or garment detail."
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

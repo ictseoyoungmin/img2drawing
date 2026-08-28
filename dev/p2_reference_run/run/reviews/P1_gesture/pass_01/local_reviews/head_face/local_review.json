@@ -1,0 +1,75 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+    "task_target_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/task_target_vs_drawing.png"
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 140,
+        "left": 220,
+        "right": 310,
+        "top": 10
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+      "crop_sha256": "451e8b7e0b15d56f0beb5b868622805383cf4fc4227fb58a59f9c9588904f829",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 201,
+        "left": 316,
+        "right": 445,
+        "top": 14
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+      "crop_sha256": "19d29841581b19b1ba25b94005dd750c4c0f91f775e3f4c250e01241ba7637fe",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": {
+      "box": {
+        "bottom": 274,
+        "left": 431,
+        "right": 607,
+        "top": 20
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/task_target.png",
+      "crop_sha256": "82cbc618feb29d1812e7ed33d530357bcb3111dd774579382767a7cc8e9eaab2",
+      "role": "task_stage_target",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "source_size": [
+        1002,
+        1570
+      ]
+    }
+  },
+  "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+  "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
+  "history_cursor": 38,
+  "intent": "Check crown, observed head shape, pupil line and nose pass.",
+  "label": "head_face",
+  "local_review_id": "P1_gesture:pass_01:head_face",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

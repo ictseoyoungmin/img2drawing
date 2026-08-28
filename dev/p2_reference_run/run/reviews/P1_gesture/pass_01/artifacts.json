@@ -1,0 +1,25 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P1_gesture",
+  "drawing": {
+    "stage": "P1_gesture",
+    "path": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+    "artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+    "state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
+    "history_cursor": 38
+  },
+  "authority_order": [
+    "task_stage_target",
+    "subject_reference"
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+  "subject_vs_drawing": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png",
+  "subject_split": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png",
+  "subject_drawing_overlay": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/task_target_vs_drawing.png",
+  "task_target_split": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/task_target_split.png",
+  "overview": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
+  "three_way": "../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png"
+}

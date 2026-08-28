@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 802,
+        "left": 195,
+        "right": 410,
+        "top": 670
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/crops/drawing.png",
+      "crop_sha256": "cb3f3622805ece4b5a2d0751514af9c0faabfe55e21fbb0ce35ab8a2ac0a4890",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "source_sha256": "ac03645526fcca19eee2034269a5e25ec770f0fe12667fafd6e512dffb0de956",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 1152,
+        "left": 280,
+        "right": 589,
+        "top": 962
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/crops/subject.png",
+      "crop_sha256": "b32c476bf0bd93dd0f9637a5a54dbcbf6210cd48cc2288216d0317ce1516fa28",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "ac03645526fcca19eee2034269a5e25ec770f0fe12667fafd6e512dffb0de956",
+  "drawing_state_sha256": "1db8ec421f38336075d154eec1a62b36bc8a64ba73b702a07ca484441234f5d3",
+  "history_cursor": 69,
+  "intent": "Check foot blocks, toe directions and ground contact inherited from P1.",
+  "label": "foot_blocks",
+  "local_review_id": "P2_primary_axes:pass_01:foot_blocks",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes"
+}

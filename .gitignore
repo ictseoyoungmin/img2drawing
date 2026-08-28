@@ -60,3 +60,9 @@ dev/dogfood/s1s9/img2drawing_example_output/
 # Local P1 iteration previews and regenerable frame sequences.
 dev/p1_reference_run/ideal_overlay_preview.png
 dev/p1_reference_run/run/timelapse/frames/
+
+# P2 reference-run review rasters are regenerated from the checkpoint. Keep the
+# pass-level drawings, while excluding repeated crop/overlay/difference boards.
+dev/p2_reference_run/run/reviews/**/*.png
+!dev/p2_reference_run/run/reviews/**/current_drawing.png
+dev/p2_reference_run/run/timelapse/frames/

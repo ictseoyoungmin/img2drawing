@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "img2drawing P2 Reference Trace v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "example",
+    "stage",
+    "initial_dominant_path_start",
+    "initial_dominant_path_start_semantics",
+    "pass1",
+    "inter_pass_corrections",
+    "pass2",
+    "p2",
+    "review_chain",
+    "current_stage",
+    "autonomy_note"
+  ],
+  "properties": {
+    "schema": {
+      "const": "img2drawing.p2_reference_trace.v1"
+    },
+    "initial_dominant_path_start_semantics": {
+      "const": "crown"
+    },
+    "pass1": {
+      "type": "object",
+      "required": ["decision", "remaining_concerns", "local_review_ids", "worker_packet"],
+      "properties": {
+        "decision": {"const": "revise"}
+      }
+    },
+    "pass2": {
+      "type": "object",
+      "required": [
+        "memory_state",
+        "parent_review_digest",
+        "carried_concerns",
+        "inter_pass_correction_action_ids",
+        "decision",
+        "remaining_concerns",
+        "advance_rationale",
+        "local_review_ids",
+        "worker_packet"
+      ],
+      "properties": {
+        "memory_state": {"const": "revision_continuation"},
+        "decision": {"const": "advance"},
+        "remaining_concerns": {"type": "array", "maxItems": 0}
+      }
+    },
+    "p2": {
+      "type": "object",
+      "required": ["stage", "pass1", "inter_pass_corrections", "pass2", "review_chain"],
+      "properties": {
+        "stage": {"const": "P2_primary_axes"},
+        "pass1": {
+          "type": "object",
+          "required": ["decision", "remaining_concerns", "local_review_ids", "worker_packet"],
+          "properties": {
+            "decision": {"const": "revise"},
+            "remaining_concerns": {"type": "array", "minItems": 1}
+          }
+        },
+        "inter_pass_corrections": {"type": "array", "minItems": 1},
+        "pass2": {
+          "type": "object",
+          "required": [
+            "memory_state",
+            "parent_review_digest",
+            "carried_concerns",
+            "inter_pass_correction_action_ids",
+            "decision",
+            "remaining_concerns",
+            "advance_rationale",
+            "local_review_ids",
+            "worker_packet"
+          ],
+          "properties": {
+            "memory_state": {"const": "revision_continuation"},
+            "decision": {"const": "advance"},
+            "remaining_concerns": {"type": "array", "maxItems": 0}
+          }
+        },
+        "review_chain": {
+          "type": "object",
+          "required": ["pass1_digest", "pass2_parent_review_digest", "pass2_digest"]
+        }
+      }
+    },
+    "current_stage": {
+      "const": "P3_primary_masses"
+    }
+  }
+}

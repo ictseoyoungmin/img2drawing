@@ -1,0 +1,170 @@
+{
+  "carried_concerns": [
+    "ribcage centre axis is too vertical through the lower torso",
+    "image-right thigh axis ends below the observed knee centre",
+    "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "ribcage centre axis is too vertical through the lower torso",
+        "image-right thigh axis ends below the observed knee centre",
+        "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+      ],
+      "review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-LINK-L",
+      "history_cursor": 70,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 left-foot placement block now carries the ankle-to-foot connection; delete the superseded P1 link from the active canvas while retaining it in history.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ankle_foot_link_left"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-L",
+      "history_cursor": 71,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 left-foot block now carries the observed image-left toe direction; delete the superseded P1 wedge rather than displaying two shoe outlines.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "foot_direction_left"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-LINK-R",
+      "history_cursor": 72,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 right-foot placement block now carries the ankle-to-foot connection; delete the superseded P1 link from the active canvas while retaining it in history.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ankle_foot_link_right"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-R",
+      "history_cursor": 73,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 right-foot block now carries the observed outward toe direction; delete the superseded P1 wedge rather than displaying two shoe outlines.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "foot_direction_right"
+    },
+    {
+      "action_id": "EX-P2-R1-RIBCAGE",
+      "history_cursor": 74,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ribcage_centre_axis",
+      "reason": "Fresh neck-to-pelvis re-observation shows the ribcage centre drifting image-left as the torso turns; the vertical first pass was compensating for the P1 spine rather than measuring the box.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ribcage_centre_axis"
+    },
+    {
+      "action_id": "EX-P2-R1-THIGH-R",
+      "history_cursor": 75,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_thigh_axis",
+      "reason": "The measured axis must terminate at the existing image-right knee centre; the first pass extended below that landmark and understated the lower-leg span.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "leg_right_thigh_axis"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-LINK-L",
+      "history_cursor": 70,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 left-foot placement block now carries the ankle-to-foot connection; delete the superseded P1 link from the active canvas while retaining it in history.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ankle_foot_link_left"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-L",
+      "history_cursor": 71,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 left-foot block now carries the observed image-left toe direction; delete the superseded P1 wedge rather than displaying two shoe outlines.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "foot_direction_left"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-LINK-R",
+      "history_cursor": 72,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 right-foot placement block now carries the ankle-to-foot connection; delete the superseded P1 link from the active canvas while retaining it in history.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ankle_foot_link_right"
+    },
+    {
+      "action_id": "EX-P2-R1-DELETE-FOOT-R",
+      "history_cursor": 73,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "The P2 right-foot block now carries the observed outward toe direction; delete the superseded P1 wedge rather than displaying two shoe outlines.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "foot_direction_right"
+    },
+    {
+      "action_id": "EX-P2-R1-RIBCAGE",
+      "history_cursor": 74,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "ribcage_centre_axis",
+      "reason": "Fresh neck-to-pelvis re-observation shows the ribcage centre drifting image-left as the torso turns; the vertical first pass was compensating for the P1 spine rather than measuring the box.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "ribcage_centre_axis"
+    },
+    {
+      "action_id": "EX-P2-R1-THIGH-R",
+      "history_cursor": 75,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_thigh_axis",
+      "reason": "The measured axis must terminate at the existing image-right knee centre; the first pass extended below that landmark and understated the lower-leg span.",
+      "stage": "P2_primary_axes",
+      "target_stroke_id": "leg_right_thigh_axis"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "ribcage centre axis is too vertical through the lower torso",
+    "image-right thigh axis ends below the observed knee centre",
+    "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P2_primary_axes",
+  "state": "revision_continuation"
+}

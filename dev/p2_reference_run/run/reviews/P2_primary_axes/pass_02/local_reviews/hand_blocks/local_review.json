@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 455,
+        "left": 135,
+        "right": 320,
+        "top": 300
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/crops/drawing.png",
+      "crop_sha256": "074ddcd2e1161cefeb32a4f041d9ea020a198ec3f940c3be53cf874278f0e579",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+      "source_sha256": "f48439a0d47b41c8ff58b6513f42e6568dfaeb45beaf44521f1f33d3dfbcc885",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 654,
+        "left": 194,
+        "right": 459,
+        "top": 431
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/crops/subject.png",
+      "crop_sha256": "9795cc10ef40a25b3a32da38493e485f05805dab5462209acb2859ee78182406",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "f48439a0d47b41c8ff58b6513f42e6568dfaeb45beaf44521f1f33d3dfbcc885",
+  "drawing_state_sha256": "60fbb4abf4365ec7d529523a8eda9cf8a4721b227e9134006e57da3bc7a3efc7",
+  "history_cursor": 75,
+  "intent": "Re-check both hand placement blocks, including the partly occluded pocket hand.",
+  "label": "hand_blocks",
+  "local_review_id": "P2_primary_axes:pass_02:hand_blocks",
+  "pass_name": "pass_02",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes"
+}

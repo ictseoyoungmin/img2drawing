@@ -1,0 +1,170 @@
+{
+  "carried_concerns": [
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "pelvis line is too low and incorrectly passes through the hip markers",
+        "both femoral-head markers and leg origins are too medial and low",
+        "image-left knee and support-leg curvature do not match the approved target"
+      ],
+      "review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "EX-P1-R1-PELVIS",
+      "history_cursor": 39,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_centreline",
+      "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_L",
+      "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "history_cursor": 41,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_R",
+      "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "history_cursor": 42,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_knee_L",
+      "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "history_cursor": 43,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_left_flow",
+      "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "history_cursor": 44,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_flow",
+      "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_right_flow"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "EX-P1-R1-PELVIS",
+      "history_cursor": 39,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "pelvis_centreline",
+      "reason": "The target separates the pelvic crest from the femoral heads. The replacement moves the pelvis line upward to the observed counter-tilted crest.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_L",
+      "reason": "Fresh target registration places the image-left femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "history_cursor": 41,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_hip_R",
+      "reason": "Fresh target registration places the image-right femoral head laterally below the waistband and above the crotch.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "history_cursor": 42,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "joint_knee_L",
+      "reason": "The support knee is raised to the target-registered centre before redrawing the leg path.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "history_cursor": 43,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_left_flow",
+      "reason": "The replacement begins at the corrected lateral hip, passes through the raised knee, and preserves the target's quiet support-leg sweep.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "history_cursor": 44,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_right_flow",
+      "reason": "The replacement begins at the corrected lateral hip and preserves the target's outward counterbalance sweep through knee and ankle.",
+      "stage": "P1_gesture",
+      "target_stroke_id": "leg_right_flow"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 2,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
+  ],
+  "previous_reported_corrections": [],
+  "previous_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+  "prior_review_count": 1,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P1_gesture",
+  "state": "revision_continuation"
+}

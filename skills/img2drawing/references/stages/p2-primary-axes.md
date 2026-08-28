@@ -15,6 +15,16 @@ lengths and foreshortening, neck axis, turned ribcage/pelvis boxes, and hand/foo
 If a P1 joint is proven wrong, correct that joint explicitly and reopen P1 rather than
 silently making a compensating P2 volume.
 
+### P1 line handoff
+
+P1 lines can be correct gesture evidence without remaining visible forever. When a P2
+axis or placement block takes over the same visible job, keep the P1 line faint with
+`soft_lift` only if it still explains pose rhythm or weight. If it creates a duplicate
+read or the P2 representation must stand alone, retire the complete P1 stroke with the
+public `delete_stroke` action. This preserves the P1 artifact and history; it does not
+rewrite what P1 established. In particular, a P2 foot block may replace a P1 foot
+direction mark when the visible result must show one shoe placement, not two outlines.
+
 ## What P2 states
 - the length of each limb segment, measured against the subject;
 - foreshortening of each segment;

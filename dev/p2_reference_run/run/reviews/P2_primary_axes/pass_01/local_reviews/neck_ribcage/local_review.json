@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 335,
+        "left": 180,
+        "right": 320,
+        "top": 115
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/crops/drawing.png",
+      "crop_sha256": "4c371a5c7b6bdc8448381f0563919f15595aad6e12951e4564aa06265a1e9d64",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "source_sha256": "ac03645526fcca19eee2034269a5e25ec770f0fe12667fafd6e512dffb0de956",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 481,
+        "left": 258,
+        "right": 459,
+        "top": 165
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/crops/subject.png",
+      "crop_sha256": "e14bf464e97366a6fcc332ea0cc018dd93489134b83267e0de4b2e890c2859d4",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "ac03645526fcca19eee2034269a5e25ec770f0fe12667fafd6e512dffb0de956",
+  "drawing_state_sha256": "1db8ec421f38336075d154eec1a62b36bc8a64ba73b702a07ca484441234f5d3",
+  "history_cursor": 69,
+  "intent": "Check the independently measured neck axis and turned ribcage box.",
+  "label": "neck_ribcage",
+  "local_review_id": "P2_primary_axes:pass_01:neck_ribcage",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes"
+}

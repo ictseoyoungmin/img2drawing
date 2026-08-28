@@ -108,6 +108,7 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
             "simple hand and foot placement blocks",
             "corrected joint positions when P1 flow proves a joint is misplaced",
             "attached-object length and tilt measured against the body",
+            "retiring a superseded P1 placement cue with soft_lift or delete_stroke when a P2 axis or block takes over, while preserving P1 evidence and history",
         ),
         forbidden_representation=(
             "facial features",
@@ -227,7 +228,7 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
         ),
         next_stage_unlocks=(
             "selecting which explored line is the final form",
-            "subordinating superseded construction rather than erasing history",
+            "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
             "explicit occlusion handoff where one mass passes behind another",
         ),
     ),
@@ -254,7 +255,7 @@ FULL_BODY_CROQUIS_CONTRACTS = StageContractRegistry((
         ),
         allowed_representation=(
             "selecting which explored line is the final form",
-            "subordinating superseded construction rather than erasing history",
+            "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
             "resolved face and hair silhouette",
             "major internal contour breaks",
             "explicit occlusion handoff where one mass passes behind another",

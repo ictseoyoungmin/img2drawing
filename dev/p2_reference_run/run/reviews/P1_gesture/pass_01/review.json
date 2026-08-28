@@ -1,0 +1,113 @@
+{
+  "advance_rationale": "",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
+    "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
+    "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced."
+  ],
+  "corrections": [],
+  "decision": "revise",
+  "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+  "drawing_findings": [
+    "The fresh head, face, shoulder and arm construction agrees with the approved target overlay.",
+    "The pass-1 pelvis line was mistakenly placed through the hip joints instead of across the observed pelvic crest.",
+    "Both pass-1 femoral heads are too medial and too low relative to the target, so the leg paths start inside the trousers rather than at the lateral hip centres.",
+    "The image-left knee is also slightly low; the lower chain consequently misses the target's support-leg sweep."
+  ],
+  "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
+  "grammar_findings": [
+    "Each arm and leg should read as one curved centre path through its three joint centres.",
+    "Face, spine, shoulder, pelvis and limb flows should remain mutually readable; the spine is not a dominant black pole."
+  ],
+  "history_cursor": 38,
+  "inter_pass_action_ids": [
+    "EX-P1-A1",
+    "EX-P1-A2",
+    "EX-P1-A3",
+    "EX-P1-NECK-L",
+    "EX-P1-SPINE-01",
+    "EX-P1-SPINE-02",
+    "EX-P1-SPINE-03",
+    "EX-P1-SPINE-04",
+    "EX-P1-SPINE-05",
+    "EX-P1-SPINE-06",
+    "EX-P1-SPINE-07",
+    "EX-P1-SPINE-08",
+    "EX-P1-SHOULDER",
+    "EX-P1-PELVIS",
+    "EX-P1-ARM-L",
+    "EX-P1-ARM-R",
+    "EX-P1-LEG-L",
+    "EX-P1-LEG-R",
+    "EX-P1-J-SHOULDER-L",
+    "EX-P1-J-SHOULDER-R",
+    "EX-P1-J-ELBOW-L",
+    "EX-P1-J-ELBOW-R",
+    "EX-P1-J-WRIST-L",
+    "EX-P1-J-WRIST-R",
+    "EX-P1-J-HIP-L",
+    "EX-P1-J-HIP-R",
+    "EX-P1-J-PELVIS-C",
+    "EX-P1-J-KNEE-L",
+    "EX-P1-J-KNEE-R",
+    "EX-P1-J-ANKLE-L",
+    "EX-P1-J-ANKLE-R",
+    "EX-P1-FOOT-LINK-L",
+    "EX-P1-FOOT-L",
+    "EX-P1-FOOT-LINK-R",
+    "EX-P1-FOOT-R",
+    "EX-P1-GROUND-L",
+    "EX-P1-GROUND-R"
+  ],
+  "local_review_ids": [
+    "P1_gesture:pass_01:head_face",
+    "P1_gesture:pass_01:torso_rhythm",
+    "P1_gesture:pass_01:pelvis_support",
+    "P1_gesture:pass_01:arm_left_flow",
+    "P1_gesture:pass_01:arm_right_flow",
+    "P1_gesture:pass_01:legs_chain"
+  ],
+  "observations": [
+    "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
+    "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
+    "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced.",
+    "The approved target fixes the intended P1 geometry: asymmetric head, subordinate spine, counter-tilted shoulder/pelvis lines, lateral hip markers, one path per limb and wedge-like foot directions.",
+    "Registered pelvis and leg crops show that the pass-1 pelvis/hip row does not yet match the target separation.",
+    "The subject transfers weight through the image-left hip, knee and compact cross-body shoe; the image-right leg steps lower and outward.",
+    "The torso is not a single diagonal: it reverses gently from head and ribcage through pelvis before settling into the support side.",
+    "The anatomical spine shows a cervical-to-thoracic-to-lumbar reversal even though clothing hides its literal contour.",
+    "Each arm and leg should read as one curved centre path through its three joint centres.",
+    "Face, spine, shoulder, pelvis and limb flows should remain mutually readable; the spine is not a dominant black pole.",
+    "The fresh head, face, shoulder and arm construction agrees with the approved target overlay.",
+    "The pass-1 pelvis line was mistakenly placed through the hip joints instead of across the observed pelvic crest.",
+    "Both pass-1 femoral heads are too medial and too low relative to the target, so the leg paths start inside the trousers rather than at the lateral hip centres.",
+    "The image-left knee is also slightly low; the lower chain consequently misses the target's support-leg sweep."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "ad30c93d00c3f7704747553b5d1624f63b8553a3336430c7cacb40581e638cb7",
+  "reference_authority_order": [
+    "task_stage_target",
+    "subject_reference"
+  ],
+  "remaining_concerns": [
+    "pelvis line is too low and incorrectly passes through the hip markers",
+    "both femoral-head markers and leg origins are too medial and low",
+    "image-left knee and support-leg curvature do not match the approved target"
+  ],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v6",
+  "subject_findings": [
+    "The subject transfers weight through the image-left hip, knee and compact cross-body shoe; the image-right leg steps lower and outward.",
+    "The torso is not a single diagonal: it reverses gently from head and ribcage through pelvis before settling into the support side.",
+    "The anatomical spine shows a cervical-to-thoracic-to-lumbar reversal even though clothing hides its literal contour."
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": "../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+  "task_target_findings": [
+    "The approved target fixes the intended P1 geometry: asymmetric head, subordinate spine, counter-tilted shoulder/pelvis lines, lateral hip markers, one path per limb and wedge-like foot directions.",
+    "Registered pelvis and leg crops show that the pass-1 pelvis/hip row does not yet match the target separation."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_vs_drawing.png",
+    "task_target_vs_drawing": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/task_target_vs_drawing.png"
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 802,
+        "left": 195,
+        "right": 410,
+        "top": 355
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
+      "crop_sha256": "86fc2d8b17ce34ae385701bc92627e7c1d7fc84cbef1b31141e5036551ae9d73",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "source_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 1152,
+        "left": 280,
+        "right": 589,
+        "top": 510
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/subject.png",
+      "crop_sha256": "e930bfbd6ea790e0978dd13335ea9eee94fe48a21e64ee8989bb00369a750b07",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": {
+      "box": {
+        "bottom": 1570,
+        "left": 382,
+        "right": 802,
+        "top": 695
+      },
+      "crop_path": "../../../../../../../../dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/task_target.png",
+      "crop_sha256": "6a9ae37f2223055f98882bc0ef9e4a7767f7813b5b01c9ee0673a8eb754ab4ed",
+      "role": "task_stage_target",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png",
+      "source_sha256": "bcecf6b6404a20a3376bb4a4b2161ed0b570b31d075e02330f40d427145c9e75",
+      "source_size": [
+        1002,
+        1570
+      ]
+    }
+  },
+  "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
+  "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
+  "history_cursor": 38,
+  "intent": "Check pelvis counter-tilt, both hip centres and weight transfer into the image-left support foot.",
+  "label": "pelvis_support",
+  "local_review_id": "P1_gesture:pass_01:pelvis_support",
+  "pass_name": "pass_01",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture"
+}

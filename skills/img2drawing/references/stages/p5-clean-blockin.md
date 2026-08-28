@@ -34,7 +34,14 @@ detail work will not collapse the form.**
 Draw the decided contour first, then subordinate the superseded construction with
 `soft_lift`. Keep a faint gesture where it still explains weight.
 
-Do not raster-erase history merely for visual cleanliness — the run stays replayable.
+If a superseded line must be completely absent because the decided contour or handoff
+fully replaces it, use the public `delete_stroke` action (`hard_delete` is its history
+implementation). This is valid even when the earlier line was correct for its earlier
+stage. Both actions keep the prior stroke and retirement event replayable; do not
+raster-erase or mutate history merely for visual cleanliness.
+
+Read `references/review/stroke-retirement.md` before choosing between a faint cue and a
+fully retired stroke.
 
 ## Cleanup preflight
 If the subject's clean silhouette cannot be drawn without contradicting P3 or P4, reopen
@@ -72,7 +79,8 @@ read as one line after rendering, even though the renderer merges nothing.
 5. Garment contour.
 6. Hands, footwear, equipment.
 7. Overlap handoffs.
-8. Construction retirement with `soft_lift`.
+8. Construction retirement with `soft_lift` or, when the line must be absent,
+   `delete_stroke`.
 
 ## Useful local review intents
 `head+face`, `hair silhouette`, `garment contour`, `hands`, `footwear`, `overlap regions`.

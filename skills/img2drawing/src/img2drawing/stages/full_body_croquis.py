@@ -94,6 +94,7 @@ FULL_BODY_CROQUIS = (
             "simple hand and foot placement blocks",
             "corrected joint positions where the measured chain disagrees with P1",
             "the attached object as a measuring axis against the body",
+            "retiring a superseded P1 placement cue with soft_lift or delete_stroke when a P2 axis or block takes over, while preserving P1 evidence and history",
         ),
         (
             "facial features",
@@ -228,7 +229,7 @@ FULL_BODY_CROQUIS = (
         ),
         (
             "the decided contour drawn first",
-            "superseded construction subordinated with soft_lift rather than erased from history",
+            "superseded construction subordinated with soft_lift or fully retired with delete_stroke when the current contour replaces it, while keeping history",
             "resolved face and hair silhouette",
             "major internal contour breaks",
             "an explicit occlusion handoff where one mass passes behind another",
