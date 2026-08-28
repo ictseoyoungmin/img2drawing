@@ -1,0 +1,446 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "history_cursor": 141,
+      "path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+      "stage": "P3_primary_masses",
+      "state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044"
+    },
+    "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P3_primary_masses",
+    "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/subject_drawing_overlay.png",
+    "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/subject_split.png",
+    "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      802
+    ],
+    "minimum_visible_opacity": 0.66,
+    "minimum_visible_pressure": 0.54,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.055,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.055,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P3_primary_masses",
+    "typical_width": 2.64
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "../../../../../../dev/p3_reference_run/run/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "head+ribcage",
+      "ribcage+pelvis",
+      "one full arm",
+      "one full leg",
+      "attached object volume"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 6,
+  "pass_memory": {
+    "carried_concerns": [
+      "one final blind residual sweep is required before P3 closure"
+    ],
+    "concern_history": [
+      {
+        "decision": "revise",
+        "pass_index": 1,
+        "remaining_concerns": [
+          "whole figure still needs a final proportion sweep after the rewritten volume plan",
+          "near arm and pelvis overlap require fresh comparison after the torso rewrite"
+        ],
+        "review_digest": "d8e16d97b5d4bc915d5db957ea169405045f2cdf8f009779b2e5d2f9f00d19a5"
+      },
+      {
+        "decision": "revise",
+        "pass_index": 2,
+        "remaining_concerns": [
+          "support and counterbalance leg widths need a measured station sweep",
+          "pelvis breadth and thigh insertion still need clearer asymmetry"
+        ],
+        "review_digest": "c650f5dab2d734734517d16c9ccfaf04aa0ca4717dac393beafa132e9b336f44"
+      },
+      {
+        "decision": "revise",
+        "pass_index": 3,
+        "remaining_concerns": [
+          "far-arm occlusion edge needs one explicit overlap check",
+          "feet and hands need a final volume read after P2 block deletion"
+        ],
+        "review_digest": "97059b5873962621629b49b629761d28dffa4f512baa6059641d914dec246712"
+      },
+      {
+        "decision": "revise",
+        "pass_index": 4,
+        "remaining_concerns": [
+          "whole-figure overlay needs a residual sweep for shoulder/pelvis rhythm",
+          "head and torso must remain readable without downstream surface detail"
+        ],
+        "review_digest": "faaab7b898155b401ec8dca4d3c946ba752bb0e53ad1f1cba3c7a71800a5c972"
+      },
+      {
+        "decision": "revise",
+        "pass_index": 5,
+        "remaining_concerns": [
+          "one final blind residual sweep is required before P3 closure"
+        ],
+        "review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134"
+      }
+    ],
+    "correction_history": [
+      {
+        "pass_index": 1,
+        "reported_corrections": [],
+        "review_digest": "d8e16d97b5d4bc915d5db957ea169405045f2cdf8f009779b2e5d2f9f00d19a5"
+      },
+      {
+        "pass_index": 2,
+        "reported_corrections": [
+          "Rebuilt torso envelopes and ribcage/waist cross-contours around the observed turn.",
+          "Retired the superseded P2 hand/foot placement blocks after P3 endpoint volumes took ownership.",
+          "Reoriented the head cross-contour without introducing facial detail."
+        ],
+        "review_digest": "c650f5dab2d734734517d16c9ccfaf04aa0ca4717dac393beafa132e9b336f44"
+      },
+      {
+        "pass_index": 3,
+        "reported_corrections": [
+          "Rebuilt pelvis breadth/turn and both leg station profiles with explicit asymmetric taper."
+        ],
+        "review_digest": "97059b5873962621629b49b629761d28dffa4f512baa6059641d914dec246712"
+      },
+      {
+        "pass_index": 4,
+        "reported_corrections": [
+          "Clarified far-arm overlap and refreshed simple hand/foot volumes after retiring P2 blocks."
+        ],
+        "review_digest": "faaab7b898155b401ec8dca4d3c946ba752bb0e53ad1f1cba3c7a71800a5c972"
+      },
+      {
+        "pass_index": 5,
+        "reported_corrections": [
+          "Rechecked shoulder counter-tilt and the lower torso bridge without adding garment seams."
+        ],
+        "review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134"
+      }
+    ],
+    "inter_pass_actions": [
+      {
+        "action_id": "P3R-P6-HEAD-L",
+        "history_cursor": 139,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "head_mass_left",
+        "reason": "Final blind sweep keeps the head mass close to the locked crown/chin while preserving turn.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "head_mass_left"
+      },
+      {
+        "action_id": "P3R-P6-LEG-A-KNEE",
+        "history_cursor": 140,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_A_knee_cross",
+        "reason": "Final blind sweep aligns the support knee cross-contour to the measured outer and inner edges.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "leg_A_knee_cross"
+      },
+      {
+        "action_id": "P3R-P6-LEG-B-KNEE",
+        "history_cursor": 141,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_B_knee_cross",
+        "reason": "Final blind sweep aligns the counterbalance knee cross-contour to its measured station.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "leg_B_knee_cross"
+      }
+    ],
+    "inter_pass_correction_actions": [
+      {
+        "action_id": "P3R-P6-HEAD-L",
+        "history_cursor": 139,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "head_mass_left",
+        "reason": "Final blind sweep keeps the head mass close to the locked crown/chin while preserving turn.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "head_mass_left"
+      },
+      {
+        "action_id": "P3R-P6-LEG-A-KNEE",
+        "history_cursor": 140,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_A_knee_cross",
+        "reason": "Final blind sweep aligns the support knee cross-contour to the measured outer and inner edges.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "leg_A_knee_cross"
+      },
+      {
+        "action_id": "P3R-P6-LEG-B-KNEE",
+        "history_cursor": 141,
+        "is_correction_action": true,
+        "kind": "replace_stroke",
+        "part": "leg_B_knee_cross",
+        "reason": "Final blind sweep aligns the counterbalance knee cross-contour to its measured station.",
+        "stage": "P3_primary_masses",
+        "target_stroke_id": "leg_B_knee_cross"
+      }
+    ],
+    "memory_policy": [
+      "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+      "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+      "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+      "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+    ],
+    "next_pass_index": 6,
+    "previous_decision": "revise",
+    "previous_remaining_concerns": [
+      "one final blind residual sweep is required before P3 closure"
+    ],
+    "previous_reported_corrections": [
+      "Rechecked shoulder counter-tilt and the lower torso bridge without adding garment seams."
+    ],
+    "previous_review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134",
+    "prior_review_count": 5,
+    "reopen_context": {
+      "abandoned_review_digests": [
+        "17b00eef56dc62c79a3f378df3edc5b83e6badddaeeb1e7696cd795532638f75",
+        "20ef9bd512970687b2f8348fa1ae702830c46ba4466455883af126315b58b088",
+        "10bceaf4931eb9ad1d7db88f995095783f50254b1b48affe875aa71b8ba6d806",
+        "6c3e2ada242e66509646ae05df1e87e3749b4937914cfc0ae57a481cebb65e8b",
+        "f8733173e9ff4d892be685497faebaf4f56f49b816027bc5839b8abbe58e48e4",
+        "b24cee3068b1c7c4d53021fa77116ed0664a9435a5ec709f6d06172734d6e96d"
+      ],
+      "archive_dir": "../../../../../../dev/p3_reference_run/run/reopen_archive/reopen_01",
+      "discovered_in_stage": "P4_structural_connections",
+      "findings": [
+        "FAIL — torso orientation crop shows a rectangular mass with nearly horizontal depth cues.",
+        "FAIL — pelvis/legs crop shows insufficient asymmetric taper and inter-leg negative space.",
+        "FAIL — the head volume reads as a generic egg rather than a turned primary mass.",
+        "FAIL — P3 must be rebuilt before any P4 connection or surface detail is allowed."
+      ],
+      "reason": "Fresh whole/crop/overlay audit found that the active P3 masses were a flat torso and rail-like legs, so P4 could only compensate for an upstream volume error.",
+      "reopen_id": "reopen_01",
+      "role": "reopened_target",
+      "stage": "P3_primary_masses",
+      "target_stage": "P3_primary_masses",
+      "trigger_review_digest": null
+    },
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P3_primary_masses",
+    "state": "revision_continuation"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P3_primary_masses",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "role": "subject_reference",
+      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The figure reads as a body with volume rather than a stick figure.",
+      "Ribcage and pelvis rotation match the subject.",
+      "Limb thickness, taper and overlap match the subject.",
+      "Whole-figure proportion holds at mass level.",
+      "No major visible P3 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail"
+    ],
+    "draw": [
+      "simple three-dimensional volumes around head, ribcage, pelvis, shoulders, upper arms, forearms, thighs, calves, hands and feet",
+      "cross-contours that state which way a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they materially change the occupied volume"
+    ],
+    "index": 3,
+    "intent": "Turn the stick figure into a body with volume: wrap simple three-dimensional masses around the P2 axes.",
+    "observe": [
+      "how thick the torso is",
+      "ribcage and pelvis rotation",
+      "limb thickness and taper",
+      "which parts are in front of which",
+      "overlap",
+      "perspective",
+      "whole-figure proportion",
+      "the volume a large attached object occupies"
+    ],
+    "review_questions": [
+      "Does each limb read as a volume pointing somewhere, not two parallel outlines?",
+      "Do the ribcage and pelvis show their rotation?",
+      "Is the torso thickness credible against the subject?",
+      "Are front/back and overlap relationships explicit?",
+      "Does whole-figure proportion hold up at mass level?",
+      "Are the P2 joint positions and directions preserved underneath?",
+      "Did the worker keep garment detail and face out, adding only marks that change the occupied volume?"
+    ],
+    "stage_id": "P3_primary_masses",
+    "suggested_crops": [
+      "head+ribcage",
+      "ribcage+pelvis",
+      "one full arm",
+      "one full leg",
+      "attached object volume"
+    ],
+    "title": "Primary Masses"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "simple three-dimensional volumes wrapped around the P2 axes",
+      "cross-contours that state the direction a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they change the occupied volume"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P3.v2",
+    "detail_ceiling": [
+      "what volume the body occupies",
+      "limb thickness and taper",
+      "rotation, overlap and perspective",
+      "no real-form surface yet"
+    ],
+    "forbidden_representation": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail",
+      "rendered shading"
+    ],
+    "inherits_from": "P2_primary_axes",
+    "must_preserve": [
+      "P1 balance and whole-body pose rhythm",
+      "P1 face, spine and pelvis centrelines",
+      "P2 segment lengths and foreshortening"
+    ],
+    "next_stage_unlocks": [
+      "hair as a large mass over the cranium, not strand by strand",
+      "how a garment hangs on the underlying volume",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "resolved hand, foot and footwear form"
+    ],
+    "owns": [
+      "head volume",
+      "ribcage volume",
+      "pelvis volume",
+      "shoulder volume",
+      "upper-arm and forearm volumes",
+      "thigh and calf volumes",
+      "simple hand and foot volumes",
+      "ribcage and pelvis rotation",
+      "front/back relationships and overlap",
+      "whole-figure proportion",
+      "attached-object volume"
+    ],
+    "representation_name": "three_dimensional_masses",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P3_primary_masses",
+    "tier": 3
+  }
+}

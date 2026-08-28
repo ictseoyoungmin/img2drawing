@@ -1,0 +1,117 @@
+{
+  "blockers": [],
+  "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+  "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+  "evaluator_id": "p3-blind-visual-evaluator",
+  "history_cursor": 141,
+  "manifest_id": "manifest_62b440dc8433",
+  "observation_lock_digest": "cccfa0cd1a86c0fbd5f4738805b1b2def60d036b03153d37570d572aad90d199",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "P3 closes the head volume and turn only; no hair mass or strand detail is smuggled into this stage.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/head_hair/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "head_hair",
+      "subject_finding": "Locked crown, chin and slight head turn; the subject's hair is visible but its large seated mass is deferred to P4 by the current contract."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Ribcage and pelvis are wrapped by opposing cross-contours with visible torso thickness and bridge.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "torso_orientation",
+      "subject_finding": "Shoulder line rises toward image-right; ribcage turns over a counter-tilted pelvis."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Near arm has a wider upper envelope, taper and a clear torso overlap.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/near_arm/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "near_arm",
+      "subject_finding": "Image-right arm is the broader visible sleeve/forearm chain into the pocket wrist."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Far arm stays narrower, attached at the shoulder and behind the torso where occluded.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/far_arm/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "far_arm",
+      "subject_finding": "Image-left arm hangs visibly but is partly occluded by sleeve/cuff; wrist remains the endpoint."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Pelvis basin wraps both hip centres and bridges cleanly into the two thigh roots.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "pelvis",
+      "subject_finding": "Pelvis breadth sits below the measured crest and rotates opposite the shoulders."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Leg A tapers from thigh to calf with a quiet support sweep and non-parallel sides.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "leg_A",
+      "subject_finding": "Image-left chain carries weight through hip, knee and compact support shoe."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Leg B is broader through the thigh and turns outward into the lower foot mass.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "leg_B",
+      "subject_finding": "Image-right chain steps outward and lower, with a distinct nearer foot projection."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "No prop mass is drawn; the empty region is intentionally closed rather than invented.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_06/local_reviews/attached_object/local_review.json",
+        "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "attached_object",
+      "subject_finding": "The frozen observation records prop=none; no attached object occupies the subject frame."
+    }
+  ],
+  "schema": "img2drawing.region_closure_manifest.v1",
+  "stage": "P3_primary_masses"
+}

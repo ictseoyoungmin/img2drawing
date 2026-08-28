@@ -1,0 +1,363 @@
+{
+  "auto_detection_used": false,
+  "pass_name": "pass_06",
+  "reviews": [
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 145,
+            "left": 215,
+            "right": 315,
+            "top": 10
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/crops/drawing.png",
+          "crop_sha256": "86c1aeb3a81fd668bbe1af0fdece66de2780f6621af29744d59b7841a8bf23f6",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 208,
+            "left": 309,
+            "right": 452,
+            "top": 14
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/crops/subject.png",
+          "crop_sha256": "aca00a56fc896a7cc105e2b145b3eca64a59b3d70e0218d713fd11f37c907d01",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: head volume, jaw plane and asymmetric hair envelope.",
+      "label": "head_hair",
+      "local_review_id": "P3_primary_masses:pass_06:head_hair",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 410,
+            "left": 175,
+            "right": 325,
+            "top": 125
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/crops/drawing.png",
+          "crop_sha256": "4639ce2a19870674dc1acaa5def42cf87946302c803fe10066a5643c9bf826ba",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 589,
+            "left": 251,
+            "right": 467,
+            "top": 180
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/crops/subject.png",
+          "crop_sha256": "1d7525c7f0a727a4bcb355600dded54a2dc19628e9a0429f440598d24c38b891",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: ribcage thickness, turn, shoulder bridge and torso-to-pelvis overlap.",
+      "label": "torso_orientation",
+      "local_review_id": "P3_primary_masses:pass_06:torso_orientation",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 360,
+            "left": 275,
+            "right": 380,
+            "top": 135
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/crops/drawing.png",
+          "crop_sha256": "36b315f26d363694ffed4f3fb4adb5512fd81072ea54d4aa08e9d134592ed0f3",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 517,
+            "left": 395,
+            "right": 546,
+            "top": 194
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/crops/subject.png",
+          "crop_sha256": "a8751f521054c25afde84df56e599c33117c562366affbef6199770320af0e76",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: near arm width profile, taper and front/back relation to the torso.",
+      "label": "near_arm",
+      "local_review_id": "P3_primary_masses:pass_06:near_arm",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 455,
+            "left": 135,
+            "right": 220,
+            "top": 145
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/crops/drawing.png",
+          "crop_sha256": "8c4c05be430a593d39041853f4f9d8a4560667c90d0e410789b3908473d04d79",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 654,
+            "left": 194,
+            "right": 316,
+            "top": 208
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/crops/subject.png",
+          "crop_sha256": "e97c26b9650b97c3ea0771d83c56f928532863c2fea4f5afba9da8800b2fe838",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: far arm occupied volume, visibility and occlusion order.",
+      "label": "far_arm",
+      "local_review_id": "P3_primary_masses:pass_06:far_arm",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 175,
+            "right": 400,
+            "top": 325
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "fdef5239ef1237e4f55f003351154c30703deea8f8cbc22793d04d5f34c318af",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1092,
+            "left": 251,
+            "right": 574,
+            "top": 467
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "6189d6a83918850f90ab962ee26f55d74690372e65e1e524d2f69ae36fe2e594",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: pelvis basin, both leg tapers, knee depth and inter-leg negative space.",
+      "label": "pelvis_legs",
+      "local_review_id": "P3_primary_masses:pass_06:pelvis_legs",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/local_reference_overview.png",
+        "subject_drawing_absdiff": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_drawing_overlay.png",
+        "subject_vs_drawing": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 430,
+            "left": 5,
+            "right": 430,
+            "top": 5
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/crops/drawing.png",
+          "crop_sha256": "e1bf08a2258c57d3a3798805c5cddba42b34426390a1f2d54d89edd1ef6993a3",
+          "role": "current_drawing",
+          "source_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+          "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+          "source_size": [
+            512,
+            802
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 618,
+            "left": 7,
+            "right": 617,
+            "top": 7
+          },
+          "crop_path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/crops/subject.png",
+          "crop_sha256": "8a84bdf12fb323dd3737feeef49089a809fec371c554761fc5ac8cc5e7f7f94b",
+          "role": "subject_reference",
+          "source_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+          "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+          "source_size": [
+            735,
+            1152
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+      "history_cursor": 141,
+      "intent": "Fresh independent re-check: attached-object volume; confirm the frozen subject records no prop.",
+      "label": "attached_object",
+      "local_review_id": "P3_primary_masses:pass_06:attached_object",
+      "pass_name": "pass_06",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    }
+  ],
+  "schema": "img2drawing.local_review_manifest.v1",
+  "selection_authority": "agent_explicit_boxes",
+  "stage": "P3_primary_masses"
+}

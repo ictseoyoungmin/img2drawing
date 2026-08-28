@@ -1,0 +1,126 @@
+{
+  "drawing_artifact": {
+    "artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+    "history_cursor": 141,
+    "path": "../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+    "stage": "P3_primary_masses",
+    "state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044"
+  },
+  "evaluator_instruction": "Inspect subject and current drawing independently; do not use worker rationale or any prior verdict.",
+  "observation_lock": {
+    "hidden_from_evaluator": [
+      "worker_rationale",
+      "previous_review_findings",
+      "previous_advance_claim"
+    ],
+    "observation": {
+      "subject_summary": "Full-body front three-quarter standing subject. The image-left leg carries the weight; the image-right leg steps out. The image-left arm hangs while the image-right arm bends into the trouser pocket.",
+      "uncertainties": [
+        "Loose denim obscures exact knee contours; knee centres are inferred from each hip-to-ankle chain.",
+        "The pocket and sleeve partly hide the image-right wrist and hand endpoint.",
+        "Near-side assignment follows the larger image-right sleeve and shoulder exposure."
+      ],
+      "view": {
+        "arm_occlusion": {
+          "subject_left": [
+            "wrist partly covered by cardigan cuff",
+            "hand partly inside trouser pocket"
+          ],
+          "subject_right": []
+        },
+        "arm_visibility": {
+          "subject_left": "partial",
+          "subject_right": "visible"
+        },
+        "body_view": "front_three_quarter",
+        "near_side": "subject_left",
+        "prop_overlap_order": [],
+        "torso_turn": "left",
+        "uncertainties": [
+          "Near-side assignment follows the larger image-right sleeve and shoulder exposure."
+        ]
+      }
+    },
+    "observation_digest": "cccfa0cd1a86c0fbd5f4738805b1b2def60d036b03153d37570d572aad90d199",
+    "observation_id": "canonical-full-body-croquis-r10-target-rebuild:observation:01",
+    "schema": "img2drawing.blind_observation_projection.v1",
+    "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+  },
+  "packet_digest": "3e45ecdd3519b7971336b646f82b8602bea94675ccd472495c6b22526ddccd7a",
+  "region_evidence_refs": [
+    "reviews/P3_primary_masses/pass_06/local_reviews/head_hair/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/near_arm/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/far_arm/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+    "reviews/P3_primary_masses/pass_06/local_reviews/attached_object/local_review.json",
+    "reviews/P3_primary_masses/pass_06/blind_visual_packet.json"
+  ],
+  "schema": "img2drawing.blind_visual_packet.v1",
+  "stage": "P3_primary_masses",
+  "stage_contract": {
+    "allowed_representation": [
+      "simple three-dimensional volumes wrapped around the P2 axes",
+      "cross-contours that state the direction a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they change the occupied volume"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P3.v2",
+    "detail_ceiling": [
+      "what volume the body occupies",
+      "limb thickness and taper",
+      "rotation, overlap and perspective",
+      "no real-form surface yet"
+    ],
+    "forbidden_representation": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail",
+      "rendered shading"
+    ],
+    "inherits_from": "P2_primary_axes",
+    "must_preserve": [
+      "P1 balance and whole-body pose rhythm",
+      "P1 face, spine and pelvis centrelines",
+      "P2 segment lengths and foreshortening"
+    ],
+    "next_stage_unlocks": [
+      "hair as a large mass over the cranium, not strand by strand",
+      "how a garment hangs on the underlying volume",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "resolved hand, foot and footwear form"
+    ],
+    "owns": [
+      "head volume",
+      "ribcage volume",
+      "pelvis volume",
+      "shoulder volume",
+      "upper-arm and forearm volumes",
+      "thigh and calf volumes",
+      "simple hand and foot volumes",
+      "ribcage and pelvis rotation",
+      "front/back relationships and overlap",
+      "whole-figure proportion",
+      "attached-object volume"
+    ],
+    "representation_name": "three_dimensional_masses",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P3_primary_masses",
+    "tier": 3
+  },
+  "subject_reference_path": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png"
+}

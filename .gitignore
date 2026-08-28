@@ -66,3 +66,21 @@ dev/p1_reference_run/run/timelapse/frames/
 dev/p2_reference_run/run/reviews/**/*.png
 !dev/p2_reference_run/run/reviews/**/current_drawing.png
 dev/p2_reference_run/run/timelapse/frames/
+
+# P3 reference-run: commit only the reproducible source, resumable checkpoint,
+# final trace/manifest, curated root boards and the final P3 review evidence.
+# All predecessor/intermediate review packets and raster boards are regenerable.
+dev/p3_reference_run/run/reviews/P1_gesture/
+dev/p3_reference_run/run/reviews/P2_primary_axes/
+dev/p3_reference_run/run/reviews/**/*.json
+dev/p3_reference_run/run/reviews/**/*.md
+dev/p3_reference_run/run/reviews/**/*.png
+!dev/p3_reference_run/run/reviews/P3_primary_masses/pass_01/current_drawing.png
+!dev/p3_reference_run/run/reviews/P3_primary_masses/pass_03/current_drawing.png
+!dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png
+!dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/**/*.json
+!dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/**/*.md
+dev/p3_reference_run/run/reopen_archive/
+dev/p3_reference_run/run/timelapse/
+dev/p3_reference_run/run/compare/
+dev/p3_reference_run/run/canonical_trace.json

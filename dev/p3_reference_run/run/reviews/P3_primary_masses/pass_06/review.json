@@ -1,0 +1,60 @@
+{
+  "advance_rationale": "P3 was reopened at the earliest responsible stage after the whole/crop/overlay audit found a flat torso and rail-like legs. The rebuilt branch now passes the process contract and independent blind visual gate with no remaining stage-purpose concern.",
+  "carried_concerns": [
+    "one final blind residual sweep is required before P3 closure"
+  ],
+  "contract_findings": [
+    "The artifact stays inside full_body_croquis.P3.v2 and preserves P1 centrelines plus P2 segment endpoints underneath."
+  ],
+  "corrections": [
+    "Completed the final blind residual sweep and aligned both knee cross-contours.",
+    "Submitted a fresh eight-region closure manifest and blind visual review bound to the reopened branch."
+  ],
+  "decision": "advance",
+  "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+  "drawing_findings": [
+    "Pass 6 was inspected as a raw pencil render in whole view and selected local crops.",
+    "The independent region review remains separate from the process review; no prior verdict is used as visual evidence."
+  ],
+  "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+  "grammar_findings": [
+    "P3 uses simple volumes, taper, cross-contours, overlap and perspective cues; it does not smuggle in facial, hair-strand, seam or shading detail."
+  ],
+  "history_cursor": 141,
+  "inter_pass_action_ids": [
+    "P3R-P6-HEAD-L",
+    "P3R-P6-LEG-A-KNEE",
+    "P3R-P6-LEG-B-KNEE"
+  ],
+  "local_review_ids": [
+    "P3_primary_masses:pass_06:head_hair",
+    "P3_primary_masses:pass_06:torso_orientation",
+    "P3_primary_masses:pass_06:near_arm",
+    "P3_primary_masses:pass_06:far_arm",
+    "P3_primary_masses:pass_06:pelvis_legs",
+    "P3_primary_masses:pass_06:attached_object"
+  ],
+  "observations": [
+    "The artifact stays inside full_body_croquis.P3.v2 and preserves P1 centrelines plus P2 segment endpoints underneath.",
+    "Fresh whole-view and region crops preserve the locked front-three-quarter pose, counter-tilted shoulder/pelvis rhythm and asymmetric leg depth.",
+    "P3 uses simple volumes, taper, cross-contours, overlap and perspective cues; it does not smuggle in facial, hair-strand, seam or shading detail.",
+    "Pass 6 was inspected as a raw pencil render in whole view and selected local crops.",
+    "The independent region review remains separate from the process review; no prior verdict is used as visual evidence."
+  ],
+  "parent_review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134",
+  "pass_memory_digest": "c347a6d27ec491ea7b84c3501a1de364200398c52ba62607187517bce74a576e",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses",
+  "stage_contract_id": "full_body_croquis.P3.v2",
+  "subject_findings": [
+    "Fresh whole-view and region crops preserve the locked front-three-quarter pose, counter-tilted shoulder/pelvis rhythm and asymmetric leg depth."
+  ],
+  "subject_reference": "../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

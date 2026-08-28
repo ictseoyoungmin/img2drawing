@@ -4,6 +4,7 @@
 - `stages/`: stage-specific expert guidance and hardening lessons.
 - `review/reference-authority.md`: subject / task-stage-target authority separation.
 - `review/worker-pass-memory.md`: pass-to-pass concern/correction continuity without semantic auto-judgement.
+- `review/self-visual-audit.md`: whole/crop/overlay visual assertions, blind self-review and fail→reopen decisions.
 - `review/local-review-api.md`: Agent-selected ROI comparison and state binding.
 - `review/`: comparison and correction loop.
 - `stages/p1-construction.png`: a subject annotated with the P1 construction lines, colour-coded and labelled — face centreline, spine, pelvis, joints, limb-flow cues, feet.

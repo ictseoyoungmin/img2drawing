@@ -1,0 +1,185 @@
+{
+  "schema": "img2drawing.p2_reference_trace.v1",
+  "version": "0.5.2.dev22",
+  "example": "full_body_croquis",
+  "stage": "P1_gesture",
+  "initial_dominant_path_start": [
+    264,
+    29
+  ],
+  "initial_dominant_path_start_semantics": "crown",
+  "pass1": {
+    "decision": "revise",
+    "remaining_concerns": [
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
+    ],
+    "local_review_ids": [
+      "P1_gesture:pass_01:head_face",
+      "P1_gesture:pass_01:torso_rhythm",
+      "P1_gesture:pass_01:pelvis_support",
+      "P1_gesture:pass_01:arm_left_flow",
+      "P1_gesture:pass_01:arm_right_flow",
+      "P1_gesture:pass_01:legs_chain"
+    ],
+    "worker_packet": "reviews/P1_gesture/pass_01/worker_packet.md"
+  },
+  "inter_pass_corrections": [
+    {
+      "action_id": "EX-P1-R1-PELVIS",
+      "kind": "replace_stroke",
+      "target": "pelvis_centreline"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-L",
+      "kind": "replace_stroke",
+      "target": "joint_hip_L"
+    },
+    {
+      "action_id": "EX-P1-R1-HIP-R",
+      "kind": "replace_stroke",
+      "target": "joint_hip_R"
+    },
+    {
+      "action_id": "EX-P1-R1-KNEE-L",
+      "kind": "replace_stroke",
+      "target": "joint_knee_L"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-L",
+      "kind": "replace_stroke",
+      "target": "leg_left_flow"
+    },
+    {
+      "action_id": "EX-P1-R1-LEG-R",
+      "kind": "replace_stroke",
+      "target": "leg_right_flow"
+    }
+  ],
+  "pass2": {
+    "memory_state": "revision_continuation",
+    "parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+    "carried_concerns": [
+      "pelvis line is too low and incorrectly passes through the hip markers",
+      "both femoral-head markers and leg origins are too medial and low",
+      "image-left knee and support-leg curvature do not match the approved target"
+    ],
+    "inter_pass_correction_action_ids": [
+      "EX-P1-R1-PELVIS",
+      "EX-P1-R1-HIP-L",
+      "EX-P1-R1-HIP-R",
+      "EX-P1-R1-KNEE-L",
+      "EX-P1-R1-LEG-L",
+      "EX-P1-R1-LEG-R"
+    ],
+    "decision": "advance",
+    "remaining_concerns": [],
+    "advance_rationale": "Fresh pass-2 whole and coordinate-registered local evidence clears all carried concerns. A separate residual sweep finds the subject's head direction, weight side, joint chains, limb flows and foot landings specific enough for independent P2 measurement.",
+    "local_review_ids": [
+      "P1_gesture:pass_02:head_face",
+      "P1_gesture:pass_02:torso_rhythm",
+      "P1_gesture:pass_02:pelvis_support",
+      "P1_gesture:pass_02:arm_left_flow",
+      "P1_gesture:pass_02:arm_right_flow",
+      "P1_gesture:pass_02:legs_chain"
+    ],
+    "worker_packet": "reviews/P1_gesture/pass_02/worker_packet.md"
+  },
+  "p2": {
+    "stage": "P2_primary_axes",
+    "pass1": {
+      "decision": "revise",
+      "remaining_concerns": [
+        "ribcage centre axis is too vertical through the lower torso",
+        "image-right thigh axis ends below the observed knee centre",
+        "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+      ],
+      "local_review_ids": [
+        "P2_primary_axes:pass_01:neck_ribcage",
+        "P2_primary_axes:pass_01:ribcage_pelvis",
+        "P2_primary_axes:pass_01:arm_segments",
+        "P2_primary_axes:pass_01:leg_segments",
+        "P2_primary_axes:pass_01:hand_blocks",
+        "P2_primary_axes:pass_01:foot_blocks"
+      ],
+      "worker_packet": "reviews/P2_primary_axes/pass_01/worker_packet.md"
+    },
+    "inter_pass_corrections": [
+      {
+        "action_id": "EX-P2-R1-DELETE-FOOT-LINK-L",
+        "kind": "delete_stroke",
+        "target": "ankle_foot_link_left"
+      },
+      {
+        "action_id": "EX-P2-R1-DELETE-FOOT-L",
+        "kind": "delete_stroke",
+        "target": "foot_direction_left"
+      },
+      {
+        "action_id": "EX-P2-R1-DELETE-FOOT-LINK-R",
+        "kind": "delete_stroke",
+        "target": "ankle_foot_link_right"
+      },
+      {
+        "action_id": "EX-P2-R1-DELETE-FOOT-R",
+        "kind": "delete_stroke",
+        "target": "foot_direction_right"
+      },
+      {
+        "action_id": "EX-P2-R1-RIBCAGE",
+        "kind": "replace_stroke",
+        "target": "ribcage_centre_axis"
+      },
+      {
+        "action_id": "EX-P2-R1-THIGH-R",
+        "kind": "replace_stroke",
+        "target": "leg_right_thigh_axis"
+      }
+    ],
+    "pass2": {
+      "memory_state": "revision_continuation",
+      "parent_review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+      "carried_concerns": [
+        "ribcage centre axis is too vertical through the lower torso",
+        "image-right thigh axis ends below the observed knee centre",
+        "P1 foot-direction wedges and ankle links remain visible beneath the P2 foot blocks"
+      ],
+      "inter_pass_correction_action_ids": [
+        "EX-P2-R1-DELETE-FOOT-LINK-L",
+        "EX-P2-R1-DELETE-FOOT-L",
+        "EX-P2-R1-DELETE-FOOT-LINK-R",
+        "EX-P2-R1-DELETE-FOOT-R",
+        "EX-P2-R1-RIBCAGE",
+        "EX-P2-R1-THIGH-R"
+      ],
+      "decision": "advance",
+      "remaining_concerns": [],
+      "advance_rationale": "Fresh pass-2 whole and registered local evidence clears the two carried axis concerns. The subject's neck, ribcage and pelvis turn, limb spans, foreshortening and endpoint blocks are now specific enough to unlock P3 volume construction without altering the P1 pose hypothesis.",
+      "local_review_ids": [
+        "P2_primary_axes:pass_02:neck_ribcage",
+        "P2_primary_axes:pass_02:ribcage_pelvis",
+        "P2_primary_axes:pass_02:arm_segments",
+        "P2_primary_axes:pass_02:leg_segments",
+        "P2_primary_axes:pass_02:hand_blocks",
+        "P2_primary_axes:pass_02:foot_blocks"
+      ],
+      "worker_packet": "reviews/P2_primary_axes/pass_02/worker_packet.md"
+    },
+    "review_chain": {
+      "pass1_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+      "pass2_parent_review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+      "pass2_digest": "f7b4a415a06b867ae165027ba26f12d8a0cad47c5bdd9d6c4c17b381aa76894a"
+    }
+  },
+  "review_chain": {
+    "pass1_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+    "pass2_parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+    "pass2_digest": "f9ba0477774d521c572a609d8d23db5f5a6c62e210a7fca914c88013c1138958",
+    "p2_pass1_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+    "p2_pass2_parent_review_digest": "a4afe7ff10cb886b61e250c22f1eb440dcab78804693ce050ddbc41960483faf",
+    "p2_pass2_digest": "f7b4a415a06b867ae165027ba26f12d8a0cad47c5bdd9d6c4c17b381aa76894a"
+  },
+  "current_stage": "P3_primary_masses",
+  "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."
+}

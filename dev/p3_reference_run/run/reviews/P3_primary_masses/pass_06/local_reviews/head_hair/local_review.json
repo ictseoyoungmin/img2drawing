@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 145,
+        "left": 215,
+        "right": 315,
+        "top": 10
+      },
+      "crop_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/crops/drawing.png",
+      "crop_sha256": "86c1aeb3a81fd668bbe1af0fdece66de2780f6621af29744d59b7841a8bf23f6",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+      "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 208,
+        "left": 309,
+        "right": 452,
+        "top": 14
+      },
+      "crop_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/crops/subject.png",
+      "crop_sha256": "aca00a56fc896a7cc105e2b145b3eca64a59b3d70e0218d713fd11f37c907d01",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+  "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+  "history_cursor": 141,
+  "intent": "Fresh independent re-check: head volume, jaw plane and asymmetric hair envelope.",
+  "label": "head_hair",
+  "local_review_id": "P3_primary_masses:pass_06:head_hair",
+  "pass_name": "pass_06",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses"
+}

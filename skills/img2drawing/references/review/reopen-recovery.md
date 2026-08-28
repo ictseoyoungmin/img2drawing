@@ -15,6 +15,24 @@ Do not compensate locally when the root cause belongs upstream.
 7. Re-review and close the target.
 8. Rebuild every invalidated downstream stage from the corrected upstream state.
 
+## Visual FAIL to REOPEN decision
+
+The stage where a defect is noticed is not necessarily the stage that owns it.
+
+- Keep the current stage at `REVISE` when the frozen observation and earlier axes/pose are
+  correct but the current mass, taper, overlap or line ownership is wrong.
+- `REOPEN` the earliest responsible stage when the mismatch contradicts that stage's
+  `must_preserve` information, or when a current-stage patch would conceal the upstream
+  error.
+- If the same structural concern survives three fresh passes, stop local nudging, make a
+  more informative whole/region overlay, re-observe and rewrite the stroke plan before
+  deciding whether to reopen.
+
+Visual FAIL is represented by `decision="revise"` plus concrete `remaining_concerns`; the
+reopen itself is a separate `run.reopen_stage()` mutation with its own reason and findings.
+Do not use a pass count, a plausible isolated crop or a process PASS to suppress a visual
+FAIL.
+
 Example:
 
 ```python

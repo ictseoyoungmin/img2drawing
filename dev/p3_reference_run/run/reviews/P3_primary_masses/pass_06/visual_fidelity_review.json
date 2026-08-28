@@ -1,0 +1,20 @@
+{
+  "blind_packet_digest": "3e45ecdd3519b7971336b646f82b8602bea94675ccd472495c6b22526ddccd7a",
+  "decision": "advance",
+  "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+  "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+  "evaluator_id": "p3-blind-visual-evaluator-reopen-01",
+  "findings": [
+    "Blind whole-view, same-coordinate overlay and all eight region crops were inspected before reading prior process rationale.",
+    "PASS — torso turn and pelvic counter-tilt are visibly supported in the whole view and torso/pelvis crops.",
+    "PASS — asymmetric leg taper and inter-leg negative space are visible in the same-coordinate overlay and leg crop.",
+    "PASS — near/far arm exposure and endpoint ownership are visible without inventing hidden detail.",
+    "PASS — head mass states a turn without becoming a generic egg; hair mass, surface connections and detail remain deferred to P4."
+  ],
+  "history_cursor": 141,
+  "manifest_digest": "84030954a25bbba51e2a7f8aacf31bee43ecc2738ff1f16811d58adc53a6ce90",
+  "observation_lock_digest": "cccfa0cd1a86c0fbd5f4738805b1b2def60d036b03153d37570d572aad90d199",
+  "rationale": "The reopened P3 branch clears the structural mismatch that was exposed at the downstream visual audit; no critical assertion remains uncertain.",
+  "schema": "img2drawing.visual_fidelity_review.v1",
+  "stage": "P3_primary_masses"
+}

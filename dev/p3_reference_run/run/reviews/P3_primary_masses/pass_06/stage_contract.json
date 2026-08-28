@@ -1,0 +1,55 @@
+{
+  "allowed_representation": [
+    "simple three-dimensional volumes wrapped around the P2 axes",
+    "cross-contours that state the direction a volume points",
+    "limb taper",
+    "torso thickness and ribcage/pelvis rotation",
+    "overlap and perspective cues",
+    "a few garment or gear marks where they change the occupied volume"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P3.v2",
+  "detail_ceiling": [
+    "what volume the body occupies",
+    "limb thickness and taper",
+    "rotation, overlap and perspective",
+    "no real-form surface yet"
+  ],
+  "forbidden_representation": [
+    "facial features",
+    "individual hair strands",
+    "clothing folds and seams",
+    "finished garment silhouette",
+    "hand and foot detail",
+    "rendered shading"
+  ],
+  "inherits_from": "P2_primary_axes",
+  "must_preserve": [
+    "P1 balance and whole-body pose rhythm",
+    "P1 face, spine and pelvis centrelines",
+    "P2 segment lengths and foreshortening"
+  ],
+  "next_stage_unlocks": [
+    "hair as a large mass over the cranium, not strand by strand",
+    "how a garment hangs on the underlying volume",
+    "major prop structure: barrel direction, stock, receiver, magazine, sling",
+    "resolved hand, foot and footwear form"
+  ],
+  "owns": [
+    "head volume",
+    "ribcage volume",
+    "pelvis volume",
+    "shoulder volume",
+    "upper-arm and forearm volumes",
+    "thigh and calf volumes",
+    "simple hand and foot volumes",
+    "ribcage and pelvis rotation",
+    "front/back relationships and overlap",
+    "whole-figure proportion",
+    "attached-object volume"
+  ],
+  "representation_name": "three_dimensional_masses",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P3_primary_masses",
+  "tier": 3
+}

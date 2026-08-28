@@ -1,0 +1,59 @@
+{
+  "auto_detection_used": false,
+  "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+  "comparisons": {
+    "overview": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/local_reference_overview.png",
+    "subject_drawing_absdiff": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_drawing_overlay.png",
+    "subject_vs_drawing": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/subject_vs_drawing.png",
+    "task_target_vs_drawing": null
+  },
+  "crops": {
+    "drawing": {
+      "box": {
+        "bottom": 430,
+        "left": 5,
+        "right": 430,
+        "top": 5
+      },
+      "crop_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/crops/drawing.png",
+      "crop_sha256": "e1bf08a2258c57d3a3798805c5cddba42b34426390a1f2d54d89edd1ef6993a3",
+      "role": "current_drawing",
+      "source_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+      "source_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+      "source_size": [
+        512,
+        802
+      ]
+    },
+    "subject": {
+      "box": {
+        "bottom": 618,
+        "left": 7,
+        "right": 617,
+        "top": 7
+      },
+      "crop_path": "../../../../../../../../dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/crops/subject.png",
+      "crop_sha256": "8a84bdf12fb323dd3737feeef49089a809fec371c554761fc5ac8cc5e7f7f94b",
+      "role": "subject_reference",
+      "source_path": "../../../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png",
+      "source_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+      "source_size": [
+        735,
+        1152
+      ]
+    },
+    "task_target": null
+  },
+  "drawing_artifact_sha256": "c5484f89685556b66df96844d0c34ed55f60e27697eaaa2a4972e37384cfcf29",
+  "drawing_state_sha256": "9119d358de908b408d962a48302dea646dbae839aa3680630fb04dbcc8459044",
+  "history_cursor": 141,
+  "intent": "Fresh independent re-check: attached-object volume; confirm the frozen subject records no prop.",
+  "label": "attached_object",
+  "local_review_id": "P3_primary_masses:pass_06:attached_object",
+  "pass_name": "pass_06",
+  "schema": "img2drawing.local_review_artifacts.v2",
+  "selection_authority": "agent_explicit_boxes",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses"
+}

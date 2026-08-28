@@ -1,0 +1,195 @@
+{
+  "carried_concerns": [
+    "one final blind residual sweep is required before P3 closure"
+  ],
+  "concern_history": [
+    {
+      "decision": "revise",
+      "pass_index": 1,
+      "remaining_concerns": [
+        "whole figure still needs a final proportion sweep after the rewritten volume plan",
+        "near arm and pelvis overlap require fresh comparison after the torso rewrite"
+      ],
+      "review_digest": "d8e16d97b5d4bc915d5db957ea169405045f2cdf8f009779b2e5d2f9f00d19a5"
+    },
+    {
+      "decision": "revise",
+      "pass_index": 2,
+      "remaining_concerns": [
+        "support and counterbalance leg widths need a measured station sweep",
+        "pelvis breadth and thigh insertion still need clearer asymmetry"
+      ],
+      "review_digest": "c650f5dab2d734734517d16c9ccfaf04aa0ca4717dac393beafa132e9b336f44"
+    },
+    {
+      "decision": "revise",
+      "pass_index": 3,
+      "remaining_concerns": [
+        "far-arm occlusion edge needs one explicit overlap check",
+        "feet and hands need a final volume read after P2 block deletion"
+      ],
+      "review_digest": "97059b5873962621629b49b629761d28dffa4f512baa6059641d914dec246712"
+    },
+    {
+      "decision": "revise",
+      "pass_index": 4,
+      "remaining_concerns": [
+        "whole-figure overlay needs a residual sweep for shoulder/pelvis rhythm",
+        "head and torso must remain readable without downstream surface detail"
+      ],
+      "review_digest": "faaab7b898155b401ec8dca4d3c946ba752bb0e53ad1f1cba3c7a71800a5c972"
+    },
+    {
+      "decision": "revise",
+      "pass_index": 5,
+      "remaining_concerns": [
+        "one final blind residual sweep is required before P3 closure"
+      ],
+      "review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134"
+    }
+  ],
+  "correction_history": [
+    {
+      "pass_index": 1,
+      "reported_corrections": [],
+      "review_digest": "d8e16d97b5d4bc915d5db957ea169405045f2cdf8f009779b2e5d2f9f00d19a5"
+    },
+    {
+      "pass_index": 2,
+      "reported_corrections": [
+        "Rebuilt torso envelopes and ribcage/waist cross-contours around the observed turn.",
+        "Retired the superseded P2 hand/foot placement blocks after P3 endpoint volumes took ownership.",
+        "Reoriented the head cross-contour without introducing facial detail."
+      ],
+      "review_digest": "c650f5dab2d734734517d16c9ccfaf04aa0ca4717dac393beafa132e9b336f44"
+    },
+    {
+      "pass_index": 3,
+      "reported_corrections": [
+        "Rebuilt pelvis breadth/turn and both leg station profiles with explicit asymmetric taper."
+      ],
+      "review_digest": "97059b5873962621629b49b629761d28dffa4f512baa6059641d914dec246712"
+    },
+    {
+      "pass_index": 4,
+      "reported_corrections": [
+        "Clarified far-arm overlap and refreshed simple hand/foot volumes after retiring P2 blocks."
+      ],
+      "review_digest": "faaab7b898155b401ec8dca4d3c946ba752bb0e53ad1f1cba3c7a71800a5c972"
+    },
+    {
+      "pass_index": 5,
+      "reported_corrections": [
+        "Rechecked shoulder counter-tilt and the lower torso bridge without adding garment seams."
+      ],
+      "review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134"
+    }
+  ],
+  "inter_pass_actions": [
+    {
+      "action_id": "P3R-P6-HEAD-L",
+      "history_cursor": 139,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "head_mass_left",
+      "reason": "Final blind sweep keeps the head mass close to the locked crown/chin while preserving turn.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "head_mass_left"
+    },
+    {
+      "action_id": "P3R-P6-LEG-A-KNEE",
+      "history_cursor": 140,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_A_knee_cross",
+      "reason": "Final blind sweep aligns the support knee cross-contour to the measured outer and inner edges.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_A_knee_cross"
+    },
+    {
+      "action_id": "P3R-P6-LEG-B-KNEE",
+      "history_cursor": 141,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_B_knee_cross",
+      "reason": "Final blind sweep aligns the counterbalance knee cross-contour to its measured station.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_B_knee_cross"
+    }
+  ],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "P3R-P6-HEAD-L",
+      "history_cursor": 139,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "head_mass_left",
+      "reason": "Final blind sweep keeps the head mass close to the locked crown/chin while preserving turn.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "head_mass_left"
+    },
+    {
+      "action_id": "P3R-P6-LEG-A-KNEE",
+      "history_cursor": 140,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_A_knee_cross",
+      "reason": "Final blind sweep aligns the support knee cross-contour to the measured outer and inner edges.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_A_knee_cross"
+    },
+    {
+      "action_id": "P3R-P6-LEG-B-KNEE",
+      "history_cursor": 141,
+      "is_correction_action": true,
+      "kind": "replace_stroke",
+      "part": "leg_B_knee_cross",
+      "reason": "Final blind sweep aligns the counterbalance knee cross-contour to its measured station.",
+      "stage": "P3_primary_masses",
+      "target_stroke_id": "leg_B_knee_cross"
+    }
+  ],
+  "memory_policy": [
+    "Start the next pass by re-checking carried_concerns against fresh artifacts.",
+    "inter_pass_actions are mechanical action provenance, not proof that a concern was solved.",
+    "Do not infer resolved concerns by set subtraction or scores; the Agent must make a fresh visual judgement.",
+    "Use correction history to avoid repeating an ineffective edit without changing observation strategy."
+  ],
+  "next_pass_index": 6,
+  "previous_decision": "revise",
+  "previous_remaining_concerns": [
+    "one final blind residual sweep is required before P3 closure"
+  ],
+  "previous_reported_corrections": [
+    "Rechecked shoulder counter-tilt and the lower torso bridge without adding garment seams."
+  ],
+  "previous_review_digest": "efe7d26811091d41a46575b2b631e94e624e05d17d3daadf8e33416ef4d6d134",
+  "prior_review_count": 5,
+  "reopen_context": {
+    "abandoned_review_digests": [
+      "17b00eef56dc62c79a3f378df3edc5b83e6badddaeeb1e7696cd795532638f75",
+      "20ef9bd512970687b2f8348fa1ae702830c46ba4466455883af126315b58b088",
+      "10bceaf4931eb9ad1d7db88f995095783f50254b1b48affe875aa71b8ba6d806",
+      "6c3e2ada242e66509646ae05df1e87e3749b4937914cfc0ae57a481cebb65e8b",
+      "f8733173e9ff4d892be685497faebaf4f56f49b816027bc5839b8abbe58e48e4",
+      "b24cee3068b1c7c4d53021fa77116ed0664a9435a5ec709f6d06172734d6e96d"
+    ],
+    "archive_dir": "../../../../../../dev/p3_reference_run/run/reopen_archive/reopen_01",
+    "discovered_in_stage": "P4_structural_connections",
+    "findings": [
+      "FAIL — torso orientation crop shows a rectangular mass with nearly horizontal depth cues.",
+      "FAIL — pelvis/legs crop shows insufficient asymmetric taper and inter-leg negative space.",
+      "FAIL — the head volume reads as a generic egg rather than a turned primary mass.",
+      "FAIL — P3 must be rebuilt before any P4 connection or surface detail is allowed."
+    ],
+    "reason": "Fresh whole/crop/overlay audit found that the active P3 masses were a flat torso and rail-like legs, so P4 could only compensate for an upstream volume error.",
+    "reopen_id": "reopen_01",
+    "role": "reopened_target",
+    "stage": "P3_primary_masses",
+    "target_stage": "P3_primary_masses",
+    "trigger_review_digest": null
+  },
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P3_primary_masses",
+  "state": "revision_continuation"
+}
