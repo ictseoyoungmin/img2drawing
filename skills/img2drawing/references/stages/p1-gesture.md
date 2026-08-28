@@ -25,31 +25,38 @@ Then hide the subject. The test is not *"that looks like a person."* It is:
 - crown position, and a **curved** facial centreline running crown → nose → chin;
 - head tilt, via an eye-line cross;
 - the **spine centreline** as an S-curve: behind the neck → mid-back → waist → sacrum;
-- an open neck connection from the jaw into the clavicle, keeping the head attached without
-  turning the cue into the measured P2 neck axis;
+- optional short jaw-to-neck attachment cues, only where the subject or same-task target
+  visibly supports them; zero or one side is valid;
 - the pelvis centreline and its tilt;
 - the shoulder line and its tilt;
 - shoulder, elbow, wrist, hip, knee and ankle centres;
 - the curvature of each limb between those joints;
 - any limb hidden behind clothing or a prop;
 - where the feet meet the ground and which way each foot points;
-- the overall silhouette envelope;
 - the major axis of a large attached object.
 
 Leave out: facial features beyond the centreline and eye-line, hair, garment structure,
 muscle, closed volume, prop detail, and footwear detail.
 
+### Neck attachment is optional and evidence-gated
+
+Do not draw a jaw-to-shoulder line simply to stop the head from appearing detached. A P1
+neck cue is a short, light attachment immediately below a visible jaw turn. It stops before
+the clavicle or shoulder and may be absent on an occluded side. Hair, clothing, pose or the
+camera view may leave only one side—or neither side—usable. Never mirror a cue for symmetry,
+continue it across an unsupported photographic edge, or mistake it for P2's measured neck
+axis.
+
 ## One centre-path curve per limb by default
 
-Start each arm and leg with one flowing curve through its shoulder/elbow/wrist or
+Draw each arm and leg with exactly one flowing curve through its shoulder/elbow/wrist or
 hip/knee/ankle centres. This states direction and curvature without inventing thickness.
 Do not bracket a limb with two lines merely because two garment edges are visible; that
 turns P1 into a sleeve, trouser or tube drawing.
 
-A second light cue is optional only when a single curve cannot explain an observed
-curvature reversal or a necessary silhouette-envelope fact. It stays subordinate, must
-not simply trace the opposite clothing edge, and its distance from the centre-path curve
-has no metric meaning.
+When the limb reverses direction, bend the single centre path through the observed joints
+and tangent changes. Do not add a second path, torso edge or silhouette trace to explain it;
+width and occupied volume belong downstream.
 
 The P2 handoff is explicit: preserve the P1 pose hypothesis, centrelines, curvature intent
 and joint evidence, but recompute separately from the subject:
@@ -60,14 +67,14 @@ and joint evidence, but recompute separately from the subject:
 - turned ribcage and pelvis axis boxes; and
 - hand and foot placement blocks, including occluded ones.
 
-P2 must derive every axis and volume measurement fresh from the subject rather than from
-the placement of any optional secondary P1 cue.
+P2 must derive every axis and volume measurement fresh from the subject rather than using
+the P1 centre path as a width or measured segment.
 
 ## An early stage is not a faint stage
 
 P1 construction is not a whisper. In a completed run the principal face, spine and limb
 flows sat around **HB/B** at pressure 0.52–0.62, width 2.2–2.65 and opacity 0.64–0.80;
-secondary envelope cues sat lighter, and only the ground cue dropped to 2H at
+subordinate joint and ground cues sat lighter, and only the ground cue dropped to 2H at
 0.36 / 1.7 / 0.42.
 
 Two things follow:
@@ -247,6 +254,6 @@ structural reading needs the structure replaced.
 4. Joint centres, checked individually and then for shared drift.
 5. Limb flow lines following observed curvature.
 6. Occluded limbs, inferred.
-7. Foot ovals, their direction, and ground contact.
+7. Subject-specific foot direction wedges/shapes linked to the ankles, plus ground contact.
 8. Silhouette envelope and any major prop axis.
 9. Whole overlay sweep against the success criterion.

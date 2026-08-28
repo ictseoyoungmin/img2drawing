@@ -718,10 +718,10 @@
   "schema": "img2drawing.timelapse.manifest.v1",
   "session": {
     "action_count": 45,
-    "action_log_sha256": "96a0d0b46c6d364c0cb2e80029d527684d416fec71cd6c00dbd139ab080ae6cc",
+    "action_log_sha256": "2fac35a76ffb4eabc5fac5b6701f179622518243db1623d08fdd040a1d41e2e7",
     "cursor": 45,
     "path": "../../../../dev/p1_reference_run/run/session/session.json",
     "session_id": "canonical-full-body-croquis-r10-target-rebuild",
-    "state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511"
+    "state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027"
   }
 }

@@ -2,14 +2,17 @@
 
 This is a focused P1 workflow example, not the full P1→P5 subject-only benchmark.
 
+All frames and final artifacts use `img2drawing.render.pillow_pencil_contact`. The legacy
+uniform-pressure renderers have been removed.
+
 It demonstrates the required autonomous P1 sequence:
 
 `P1 gesture → subject/target/drawing review → Agent-selected local reviews → REVISE →
 explicit pelvis/hip/leg replacement → fresh review → pass-memory continuation → ADVANCE`
 
 ## Non-negotiable details demonstrated
-- P1 states an observed head outline with a tilt mark, an open jaw-to-clavicle neck
-  connection, spine/shoulder/pelvis rhythm, one curved centre-path flow per limb and ground
+- P1 states an observed head outline with a tilt mark, only the one short jaw-to-neck cue
+  supported by this view, spine/shoulder/pelvis rhythm, one curved centre-path flow per limb and ground
   contact — and nothing else. No facial features, hair, clothing or muscle.
 - Each limb curve passes through its joint markers. The example does not bracket arms or
   legs with paired lines that could be mistaken for sleeve, trouser or limb width.

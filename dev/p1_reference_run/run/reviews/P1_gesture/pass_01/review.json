@@ -2,7 +2,7 @@
   "advance_rationale": "",
   "carried_concerns": [],
   "contract_findings": [
-    "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+    "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
     "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
     "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced."
   ],
@@ -15,7 +15,7 @@
     "Both pass-1 femoral heads are too medial and too low relative to the target, so the leg paths start inside the trousers rather than at the lateral hip centres.",
     "The image-left knee is also slightly low; the lower chain consequently misses the target's support-leg sweep."
   ],
-  "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+  "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
   "grammar_findings": [
     "Each arm and leg should read as one curved centre path through its three joint centres.",
     "Face, spine, shoulder, pelvis and limb flows should remain mutually readable; the spine is not a dominant black pole."
@@ -69,7 +69,7 @@
     "P1_gesture:pass_01:legs_chain"
   ],
   "observations": [
-    "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+    "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
     "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
     "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced.",
     "The approved target fixes the intended P1 geometry: asymmetric head, subordinate spine, counter-tilted shoulder/pelvis lines, lateral hip markers, one path per limb and wedge-like foot directions.",
@@ -98,7 +98,7 @@
   "schema": "img2drawing.stage_review.v6",
   "semantic_authority": "agent",
   "stage": "P1_gesture",
-  "stage_contract_id": "full_body_croquis.P1.v5",
+  "stage_contract_id": "full_body_croquis.P1.v6",
   "subject_findings": [
     "The subject transfers weight through the image-left hip, knee and compact cross-body shoe; the image-right leg steps lower and outward.",
     "The torso is not a single diagonal: it reverses gently from head and ribcage through pelvis before settling into the support side.",

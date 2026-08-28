@@ -13,14 +13,14 @@
         "both femoral-head markers and leg origins are too medial and low",
         "image-left knee and support-leg curvature do not match the approved target"
       ],
-      "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
+      "review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499"
     }
   ],
   "correction_history": [
     {
       "pass_index": 1,
       "reported_corrections": [],
-      "review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51"
+      "review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499"
     }
   ],
   "inter_pass_actions": [
@@ -161,7 +161,7 @@
     "image-left knee and support-leg curvature do not match the approved target"
   ],
   "previous_reported_corrections": [],
-  "previous_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
+  "previous_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
   "prior_review_count": 1,
   "reopen_context": null,
   "schema": "img2drawing.stage_pass_memory.v2",

@@ -44,7 +44,7 @@ object.
   says so; it is not a way to make the drawing easier.
 - **Forgetting an occluded hand.** If P1 inferred a hand in a pocket, P2 gives it a block.
 - **Treating P1 flow as a measured axis.** Derive P2 axes and boxes independently from the
-  subject, including where P1 used an optional secondary cue.
+  subject rather than treating the P1 centre path as measured width or segment geometry.
 - **Losing P1.** If the axes measure well but the pose hypothesis drifted, reopen P1
   instead of compensating here.
 

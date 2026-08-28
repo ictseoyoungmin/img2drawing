@@ -22,11 +22,12 @@ it is a different question answered.
 ## P1 — Gesture / Construction Centrelines
 Owns the observed head outline with its curved facial centreline and eye-line cross, the spine's
 S-curve from behind the neck, the pelvis and shoulder centrelines, every joint centre, the curvature of each limb, occluded
-limbs, foot direction and ground contact, the silhouette envelope and the major prop axis.
+limbs, foot direction and ground contact, and the major prop axis.
 
-P1 may include an open neck connection from the jaw into the clavicle so the head does not
-float above the torso. This is a connection cue only, not the measured neck axis; P2 owns
-that independent axis.
+P1 may include a short, light jaw-to-neck attachment only where the subject or same-task
+target supports it. It is optional, may appear on only one side, stops before the clavicle
+or shoulder, and is never mirrored merely for symmetry. This is a connection cue only;
+P2 owns the independently measured neck axis.
 
 P1 is a whole-body pose hypothesis, not a few lines. Each foot states the direction it points and its
 foreshortening, because foot direction carries body direction. Neither the head nor a foot
@@ -35,10 +36,9 @@ facial features beyond the centreline and eye-line, hair, garment structure, foo
 detail, muscle or closed volume — and must not merge the face and spine centrelines, join
 joints with straight lines, or drop an occluded limb.
 
-P1 defaults to one flowing centre-path curve per arm and leg. It must pass through the
-observed joint centres rather than bracket garment width. An optional second cue is allowed
-only to explain a curvature reversal or necessary silhouette-envelope fact, remains
-subordinate and has non-metric spacing. P2 must preserve the P1 pose intent and joint
+P1 uses exactly one flowing centre-path curve per arm and leg. It must pass through the
+observed joint centres rather than bracket garment width or trace the silhouette. Express
+curvature reversals through that one path. P2 must preserve the P1 pose intent and joint
 evidence while independently measuring shoulder -> elbow -> wrist and hip -> knee -> ankle
 axes, segment length/foreshortening, neck axis, turned ribcage and pelvis boxes, and
 hand/foot placement blocks.

@@ -2,11 +2,15 @@
 
 Harden stages sequentially. Never sweep P1→P5 in one unreviewed pass.
 
+Use `img2drawing.render.pillow_pencil_contact` for ordinary croquis renders, comparisons,
+replay, final export and timelapse. No legacy Pillow fallback exists.
+
 ## P1
 Settle how the subject stands: head position and tilt, spine and torso rhythm, shoulder and
 pelvis tilt, the direction each limb travels through its joint centres, where the feet meet
-the ground, and the overall silhouette envelope. No single construction line should
-overpower the rest. When a large attached object changes balance or silhouette, add its
+the ground, and which way each foot points. Use exactly one centre path per limb; do not
+add torso or garment boundary lines. No single construction line should overpower the
+rest. When a large attached object changes balance or silhouette, add its
 major axis too.
 
 Nothing else. Clothing, hair, face and muscle belong downstream.

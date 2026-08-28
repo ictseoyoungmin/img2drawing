@@ -62,7 +62,7 @@
     }
   },
   "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-  "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+  "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
   "history_cursor": 38,
   "intent": "Check the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.",
   "label": "torso_rhythm",

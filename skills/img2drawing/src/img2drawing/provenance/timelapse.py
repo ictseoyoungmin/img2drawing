@@ -9,7 +9,7 @@ from typing import Any, Iterable, Callable
 
 from PIL import Image, ImageDraw
 
-from ..render.pillow import render as default_render
+from ..render.pillow_pencil_contact import render as pencil_render
 from ..core.session import DrawingSession, sha256_file
 
 
@@ -164,7 +164,7 @@ def export_timelapse(
 ) -> TimelapseExport:
     session_path = Path(session_path)
     out_dir = Path(out_dir)
-    render_fn = renderer or default_render
+    render_fn = renderer or pencil_render
     render_kwargs = dict(renderer_kwargs or {})
     final_render_kwargs = dict(render_kwargs if final_renderer_kwargs is None else final_renderer_kwargs)
     effective_renderer_id = renderer_id or getattr(render_fn, "__module__", "renderer")

@@ -59,7 +59,7 @@
   ],
   "pass2": {
     "memory_state": "revision_continuation",
-    "parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
+    "parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
     "carried_concerns": [
       "pelvis line is too low and incorrectly passes through the hip markers",
       "both femoral-head markers and leg origins are too medial and low",
@@ -87,9 +87,9 @@
     "worker_packet": "reviews/P1_gesture/pass_02/worker_packet.md"
   },
   "review_chain": {
-    "pass1_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
-    "pass2_parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
-    "pass2_digest": "714dbb7d7e59df90724c3d059c4c84c330924ff9c88950fc1931ea4ceec5b3fb"
+    "pass1_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+    "pass2_parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+    "pass2_digest": "f9ba0477774d521c572a609d8d23db5f5a6c62e210a7fca914c88013c1138958"
   },
   "current_stage": "P2_primary_axes",
   "autonomy_note": "No user approval is requested between revise, correction, re-review, and advance."

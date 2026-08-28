@@ -9,7 +9,7 @@ from typing import Any
 from .history import CanvasHistory
 
 SESSION_SCHEMA_VERSION="1.0"
-RENDERER_ID="pillow-pressure-v1"
+RENDERER_ID="pillow-pencil-contact-v9"
 TOOLSET_ID="atelier-core-a2"
 
 

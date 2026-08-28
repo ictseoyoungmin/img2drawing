@@ -6,7 +6,7 @@
     "image-left knee and support-leg curvature do not match the approved target"
   ],
   "contract_findings": [
-    "The corrected artifact remains inside the P1.v5 representation boundary.",
+    "The corrected artifact remains inside the P1.v6 representation boundary.",
     "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
     "Every limb remains one centre-path curve through its joint centres, with no garment-width pair."
   ],
@@ -25,7 +25,7 @@
     "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
     "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
   ],
-  "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+  "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
   "grammar_findings": [
     "The face, spine, shoulder, pelvis and limb flows now share a readable construction hierarchy.",
     "Single limb centre paths communicate curvature without being mistaken for sleeve, trouser or limb width.",
@@ -49,7 +49,7 @@
     "P1_gesture:pass_02:legs_chain"
   ],
   "observations": [
-    "The corrected artifact remains inside the P1.v5 representation boundary.",
+    "The corrected artifact remains inside the P1.v6 representation boundary.",
     "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
     "Every limb remains one centre-path curve through its joint centres, with no garment-width pair.",
     "Fresh three-way reviews align the corrected pelvic crest, lateral femoral heads, knees, ankles and foot directions with the approved target overlay.",
@@ -67,8 +67,8 @@
     "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
     "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
   ],
-  "parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
-  "pass_memory_digest": "90127bb2fe6640e5cfb206792a8383dc3dbed0b1b46b361f6df14c9169c2d4f7",
+  "parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+  "pass_memory_digest": "a97b8c08de4682662087ba44973549535bacb5e671759acde9363bd7ba5eca96",
   "reference_authority_order": [
     "task_stage_target",
     "subject_reference"
@@ -77,7 +77,7 @@
   "schema": "img2drawing.stage_review.v6",
   "semantic_authority": "agent",
   "stage": "P1_gesture",
-  "stage_contract_id": "full_body_croquis.P1.v5",
+  "stage_contract_id": "full_body_croquis.P1.v6",
   "subject_findings": [
     "The head outline places unequal jaw turns around the nose-anchored centreline and preserves the subject's slight downward three-quarter turn.",
     "The subordinate spine starts behind the neck and remains readable through the shoulder/pelvis counter-tilt without becoming the pose itself.",

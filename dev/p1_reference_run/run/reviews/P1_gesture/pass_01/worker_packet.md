@@ -15,7 +15,7 @@ This is the first review pass for this stage. Start from the stage contract and 
 - Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime.
 
 ## Frozen stage representation contract
-- contract: `full_body_croquis.P1.v5`
+- contract: `full_body_croquis.P1.v6`
 - representation: **gesture_and_construction_centrelines**
 - tier: 1
 - inherits from: _none_
@@ -23,15 +23,13 @@ This is the first review pass for this stage. Start from the stage contract and 
 ### This stage owns
 - the head's observed outline, with its facial centreline and eye line
 - face direction and head tilt
-- an open neck connection from the jaw into the clavicle; not a measured neck axis
+- optional short jaw-to-neck attachment cues on visibly supported sides; not a measured neck axis
 - spine centreline as an S-curve from the back of the neck
 - pelvis centreline and its tilt
 - shoulder line and its tilt
 - joint positions: shoulder, elbow, wrist, hip, knee, ankle
 - one centre-path gesture curve per arm and leg through the joint centres, including occluded segments
-- loose torso mass
 - foot direction and ground contact
-- overall silhouette envelope
 - major attached-object axis
 
 ### Must preserve from earlier stages
@@ -43,15 +41,13 @@ This is the first review pass for this stage. Start from the stage contract and 
 - the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes
 - a curved facial centreline passing crown -> nose -> chin
 - an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit
-- open neck connection cues from the jaw into the clavicle; not a measured neck axis
+- short light jaw-to-neck attachment cues only where visible evidence supports them; stop before clavicle or shoulder
 - spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum
 - pelvis centreline stating its tilt
 - shoulder line stating its tilt
 - joint markers as small circles
-- one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle
-- an optional subordinate second cue only where it explains an observed curvature reversal or necessary silhouette-envelope fact; its spacing is non-metric
+- exactly one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle, bending through observed reversals
 - an inferred flow line through an occluded limb, ending where the hidden hand or foot must be
-- a loose flowing torso mass
 - each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened
 - ground contact marks under the feet
 - major attached-object axis
@@ -64,13 +60,14 @@ This is the first review pass for this stage. Start from the stage contract and 
 - a facial centreline that misses the nose, which turns the face the wrong way
 - an eye line that does not connect both eyes
 - face and spine centrelines merged into one stroke
+- a jaw-to-shoulder connection invented, extended, or mirrored without visible evidence
 - straight landmark-to-landmark joins that flatten limb curvature
 - omitting an occluded limb because it is not visible
 - bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass
-- using an optional second limb cue merely to trace the opposite garment edge
+- a second limb path, torso edge, or silhouette trace used to imply width
 - hair
 - garment structure
-- footwear detail beyond a direction oval
+- footwear detail beyond a subject-specific direction wedge or minimal foot shape
 - muscle definition
 - cross-contours or closed volume
 - attached-object detail
@@ -80,7 +77,7 @@ This is the first review pass for this stage. Start from the stage contract and 
 - a whole-body pose hypothesis at minimum information
 - the centrelines that carry direction: face, spine, pelvis
 - accurate joint centres and observed limb curvature
-- loose mass, never resolved volume
+- pose relationships only, never torso boundary or resolved volume
 
 ### Next stage unlocks
 - limb segments as measured straight or lightly cylindrical axes
@@ -90,7 +87,7 @@ This is the first review pass for this stage. Start from the stage contract and 
 
 ## Reference authority
 - reference mode: **task_stage_target_augmented**
-- authority order: `task_stage_target > subject_reference`
+- comparison order: `task_stage_target > subject_reference` (subject remains geometry and visible-edge truth)
 - subject reference: `../../../../../../skills/img2drawing/examples/full_body_croquis/subject.png` — geometry truth
 - task stage target: `../../../../../../skills/img2drawing/examples/full_body_croquis/p1_target.png` — same-task stage truth
 
@@ -106,25 +103,23 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - crown position, and the curvature of the facial centreline through nose and chin
 - head tilt from the eye-line cross
 - the spine's S-curve, starting behind the neck
-- an open neck connection from the jaw into the clavicle, not a measured neck axis
+- optional short jaw-to-neck attachment cues only where visible evidence supports them; zero or one side is valid
 - pelvis centreline and its tilt
 - shoulder line and its tilt
 - shoulder, elbow, wrist, hip, knee and ankle centres
 - the curvature of each limb between those joints
 - any limb hidden behind clothing or a prop
 - where the feet meet the ground and which way each foot points
-- the overall silhouette envelope
 - the major axis of a large attached object
 
 ## Draw
 - the head outline read from the subject, a facial centreline through crown → between the eyes → nose → mouth → chin, and an eye line through both eyes
 - a separate spine centreline: an S-curve from behind the neck through mid-back, waist and sacrum
-- open neck connection cues from jaw to clavicle, not a measured neck axis
+- short, light jaw-to-neck attachment cues on visible sides only; stop before clavicle or shoulder
 - pelvis and shoulder lines stating their tilt
 - joint markers as small circles
-- one flowing centre-path curve per limb through the joint centres; an optional second cue only where a visible reversal or necessary silhouette-envelope fact requires it
+- exactly one flowing centre-path curve per limb through the joint centres, bending through observed reversals without a second boundary cue
 - an inferred flow line through an occluded limb, ending where the hidden hand or foot must be
-- a loose flowing torso mass
 - each foot's observed shape linked to its ankle, stating the direction it points
 - ground contact marks under each foot
 - the major axis of a large attached object
@@ -137,9 +132,10 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - running the facial centreline beside the nose instead of through it
 - drawing the eye line without checking it meets both eyes
 - merging the face and spine centrelines into one stroke
+- inventing or mirroring a jaw-to-shoulder connection where no visible edge supports it
 - joining joints with straight lines
 - bracketing a limb with two lines that read as limb thickness, garment width, or mass
-- using an optional second limb cue merely to trace the opposite garment edge
+- adding a second limb path, torso edge, or silhouette trace to express width
 - dropping an occluded limb because it cannot be seen
 - copying joint positions from an example drawing instead of the subject
 - moving a line to satisfy a filter or evidence map
@@ -152,13 +148,13 @@ Build a whole-body pose hypothesis. P1 is not a few simple lines: head, spine, s
 - Does the facial centreline actually pass through the nose? A centreline beside the nose turns the face the wrong way, however good the outline is.
 - Does the eye line pass through both eyes, and does its tilt come from where those two eyes sit rather than from a guess?
 - Is the spine an S-curve that starts behind the neck, not at the chin, and is it a separate stroke from the facial centreline?
-- Is the jaw visibly connected to the torso by an open neck cue, without turning it into a P2 neck axis?
+- Is every neck attachment cue short and visibly supported, with an occluded side left absent rather than mirrored or extended to the shoulder?
 - Do shoulder and pelvis state the subject's rotation, not just a tilt?
 - Are both arms present, including any hidden behind a prop or in a pocket?
 - Is every joint centre on the subject's joint, or are several drifting the same way?
 - Was each landmark located against something findable — the crotch, the visible hand, the jean hem, the pupils — or estimated by eye?
 - Does each limb follow the subject's observed curvature, or was it joined straight?
-- Do the feet land where the subject's land, and does each foot oval point the way that foot points?
+- Do the feet land where the subject's land, and does each subject-specific direction shape point the way that foot points?
 - Do the foot directions agree with the body direction the rest of the drawing states?
 - Is any part merely 'roughly around here'?
 - With the subject hidden, does this read as this specific person in this specific pose — not just as a person?

@@ -174,8 +174,9 @@ class ReferenceBundle:
                     "subject_reference",
                 ],
                 "notes":[
-                    "Task stage targets are strongest only when they belong to the same task/subject.",
-                    "Subject reference remains geometry truth and resolves contradictions about pose/proportion/perspective.",
+                    "The listed order is review sequence, not a geometry override hierarchy.",
+                    "Task stage targets state intended same-task stage representation and placement.",
+                    "Subject reference remains geometry and visible-edge truth and resolves contradictions about pose/proportion/perspective/overlap.",
                 ],
             },
             "subject_reference":self.subject.to_dict(),

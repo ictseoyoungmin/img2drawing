@@ -4632,7 +4632,7 @@
         "label": "stage_end:P1_gesture"
       },
       "provenance": {
-        "review_digest": "714dbb7d7e59df90724c3d059c4c84c330924ff9c88950fc1931ea4ceec5b3fb"
+        "review_digest": "f9ba0477774d521c572a609d8d23db5f5a6c62e210a7fca914c88013c1138958"
       },
       "role": null,
       "seq": 45,
@@ -4646,8 +4646,8 @@
   },
   "cursor": 45,
   "digests": {
-    "action_log_sha256": "96a0d0b46c6d364c0cb2e80029d527684d416fec71cd6c00dbd139ab080ae6cc",
-    "state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511"
+    "action_log_sha256": "2fac35a76ffb4eabc5fac5b6701f179622518243db1623d08fdd040a1d41e2e7",
+    "state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027"
   },
   "environment": {
     "numpy": "2.2.6",
@@ -5094,8 +5094,9 @@
       "reference_bundle": {
         "authority_policy": {
           "notes": [
-            "Task stage targets are strongest only when they belong to the same task/subject.",
-            "Subject reference remains geometry truth and resolves contradictions about pose/proportion/perspective."
+            "The listed order is review sequence, not a geometry override hierarchy.",
+            "Task stage targets state intended same-task stage representation and placement.",
+            "Subject reference remains geometry and visible-edge truth and resolves contradictions about pose/proportion/perspective/overlap."
           ],
           "with_task_stage_target": [
             "task_stage_target",
@@ -5212,7 +5213,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check image-left shoulder, elbow, visible wrist and curved hanging-arm flow.",
         "label": "arm_left_flow",
@@ -5287,7 +5288,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check image-right shoulder, elbow and partly occluded pocket-hand flow.",
         "label": "arm_right_flow",
@@ -5362,7 +5363,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check crown, observed head shape, pupil line and nose pass.",
         "label": "head_face",
@@ -5437,7 +5438,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check each single hip-knee-ankle centre-path curve, shoe direction and ground contact.",
         "label": "legs_chain",
@@ -5512,7 +5513,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check pelvis counter-tilt, both hip centres and weight transfer into the image-left support foot.",
         "label": "pelvis_support",
@@ -5587,7 +5588,7 @@
           }
         },
         "drawing_artifact_sha256": "897d3237fbcd97a9770c0ad14198327bb9b0293806fac87169a7beec87bbbb34",
-        "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+        "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
         "history_cursor": 38,
         "intent": "Check the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.",
         "label": "torso_rhythm",
@@ -5662,7 +5663,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check image-left shoulder, elbow, visible wrist and curved hanging-arm flow.",
         "label": "arm_left_flow",
@@ -5737,7 +5738,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check image-right shoulder, elbow and partly occluded pocket-hand flow.",
         "label": "arm_right_flow",
@@ -5812,7 +5813,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check crown, observed head shape, pupil line and nose pass.",
         "label": "head_face",
@@ -5887,7 +5888,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check each single hip-knee-ankle centre-path curve, shoe direction and ground contact.",
         "label": "legs_chain",
@@ -5962,7 +5963,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check pelvis counter-tilt, both hip centres and weight transfer into the image-left support foot.",
         "label": "pelvis_support",
@@ -6037,7 +6038,7 @@
           }
         },
         "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-        "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+        "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
         "history_cursor": 44,
         "intent": "Re-check the subordinate cervical-to-sacral spine curve, shoulder/pelvis counter-tilt and torso rhythm.",
         "label": "torso_rhythm",
@@ -6196,8 +6197,9 @@
     "reference_bundle": {
       "authority_policy": {
         "notes": [
-          "Task stage targets are strongest only when they belong to the same task/subject.",
-          "Subject reference remains geometry truth and resolves contradictions about pose/proportion/perspective."
+          "The listed order is review sequence, not a geometry override hierarchy.",
+          "Task stage targets state intended same-task stage representation and placement.",
+          "Subject reference remains geometry and visible-edge truth and resolves contradictions about pose/proportion/perspective/overlap."
         ],
         "with_task_stage_target": [
           "task_stage_target",
@@ -6258,26 +6260,24 @@
             "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
             "a curved facial centreline passing crown -> nose -> chin",
             "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
-            "open neck connection cues from the jaw into the clavicle; not a measured neck axis",
+            "short light jaw-to-neck attachment cues only where visible evidence supports them; stop before clavicle or shoulder",
             "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
             "pelvis centreline stating its tilt",
             "shoulder line stating its tilt",
             "joint markers as small circles",
-            "one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle",
-            "an optional subordinate second cue only where it explains an observed curvature reversal or necessary silhouette-envelope fact; its spacing is non-metric",
+            "exactly one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle, bending through observed reversals",
             "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
-            "a loose flowing torso mass",
             "each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened",
             "ground contact marks under the feet",
             "major attached-object axis"
           ],
           "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
-          "contract_id": "full_body_croquis.P1.v5",
+          "contract_id": "full_body_croquis.P1.v6",
           "detail_ceiling": [
             "a whole-body pose hypothesis at minimum information",
             "the centrelines that carry direction: face, spine, pelvis",
             "accurate joint centres and observed limb curvature",
-            "loose mass, never resolved volume"
+            "pose relationships only, never torso boundary or resolved volume"
           ],
           "forbidden_representation": [
             "facial features other than the centreline and eye-line",
@@ -6287,13 +6287,14 @@
             "a facial centreline that misses the nose, which turns the face the wrong way",
             "an eye line that does not connect both eyes",
             "face and spine centrelines merged into one stroke",
+            "a jaw-to-shoulder connection invented, extended, or mirrored without visible evidence",
             "straight landmark-to-landmark joins that flatten limb curvature",
             "omitting an occluded limb because it is not visible",
             "bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass",
-            "using an optional second limb cue merely to trace the opposite garment edge",
+            "a second limb path, torso edge, or silhouette trace used to imply width",
             "hair",
             "garment structure",
-            "footwear detail beyond a direction oval",
+            "footwear detail beyond a subject-specific direction wedge or minimal foot shape",
             "muscle definition",
             "cross-contours or closed volume",
             "attached-object detail",
@@ -6314,15 +6315,13 @@
           "owns": [
             "the head's observed outline, with its facial centreline and eye line",
             "face direction and head tilt",
-            "an open neck connection from the jaw into the clavicle; not a measured neck axis",
+            "optional short jaw-to-neck attachment cues on visibly supported sides; not a measured neck axis",
             "spine centreline as an S-curve from the back of the neck",
             "pelvis centreline and its tilt",
             "shoulder line and its tilt",
             "joint positions: shoulder, elbow, wrist, hip, knee, ankle",
             "one centre-path gesture curve per arm and leg through the joint centres, including occluded segments",
-            "loose torso mass",
             "foot direction and ground contact",
-            "overall silhouette envelope",
             "major attached-object axis"
           ],
           "representation_name": "gesture_and_construction_centrelines",
@@ -6361,8 +6360,8 @@
           "must_preserve": [
             "P1 face, spine and pelvis centrelines",
             "P1 joint positions",
-            "P1 open neck connection cue as a connection only, not a measured axis",
-            "P1 ground contact and silhouette envelope",
+            "any P1 neck attachment cue as optional connection evidence only, not a measured axis",
+            "P1 ground contact and whole-pose rhythm",
             "P1 limb-flow cues as pose and curvature evidence only, not measured axes or width"
           ],
           "next_stage_unlocks": [
@@ -6544,7 +6543,7 @@
           "advance_rationale": "",
           "carried_concerns": [],
           "contract_findings": [
-            "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+            "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
             "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
             "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced."
           ],
@@ -6557,7 +6556,7 @@
             "Both pass-1 femoral heads are too medial and too low relative to the target, so the leg paths start inside the trousers rather than at the lateral hip centres.",
             "The image-left knee is also slightly low; the lower chain consequently misses the target's support-leg sweep."
           ],
-          "drawing_state_sha256": "abfc830d08af10b40645239de71a101c0794eddbcf16bda22a40ee4d0debad8e",
+          "drawing_state_sha256": "90fb70ccef51b8a403920b70123f43c21cdd25dc6144c300d0b83c4758132e17",
           "grammar_findings": [
             "Each arm and leg should read as one curved centre path through its three joint centres.",
             "Face, spine, shoulder, pelvis and limb flows should remain mutually readable; the spine is not a dominant black pole."
@@ -6611,7 +6610,7 @@
             "P1_gesture:pass_01:legs_chain"
           ],
           "observations": [
-            "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+            "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
             "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
             "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced.",
             "The approved target fixes the intended P1 geometry: asymmetric head, subordinate spine, counter-tilted shoulder/pelvis lines, lateral hip markers, one path per limb and wedge-like foot directions.",
@@ -6640,7 +6639,7 @@
           "schema": "img2drawing.stage_review.v6",
           "semantic_authority": "agent",
           "stage": "P1_gesture",
-          "stage_contract_id": "full_body_croquis.P1.v5",
+          "stage_contract_id": "full_body_croquis.P1.v6",
           "subject_findings": [
             "The subject transfers weight through the image-left hip, knee and compact cross-body shoe; the image-right leg steps lower and outward.",
             "The torso is not a single diagonal: it reverses gently from head and ribcage through pelvis before settling into the support side.",
@@ -6661,7 +6660,7 @@
             "image-left knee and support-leg curvature do not match the approved target"
           ],
           "contract_findings": [
-            "The corrected artifact remains inside the P1.v5 representation boundary.",
+            "The corrected artifact remains inside the P1.v6 representation boundary.",
             "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
             "Every limb remains one centre-path curve through its joint centres, with no garment-width pair."
           ],
@@ -6680,7 +6679,7 @@
             "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
             "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
           ],
-          "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+          "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
           "grammar_findings": [
             "The face, spine, shoulder, pelvis and limb flows now share a readable construction hierarchy.",
             "Single limb centre paths communicate curvature without being mistaken for sleeve, trouser or limb width.",
@@ -6704,7 +6703,7 @@
             "P1_gesture:pass_02:legs_chain"
           ],
           "observations": [
-            "The corrected artifact remains inside the P1.v5 representation boundary.",
+            "The corrected artifact remains inside the P1.v6 representation boundary.",
             "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
             "Every limb remains one centre-path curve through its joint centres, with no garment-width pair.",
             "Fresh three-way reviews align the corrected pelvic crest, lateral femoral heads, knees, ankles and foot directions with the approved target overlay.",
@@ -6722,8 +6721,8 @@
             "A residual sweep found no new P1-purpose mismatch in crown, face direction, joint placement, limb presence, foot landing or weight side.",
             "With the subject hidden, the asymmetrical shoulders, pocket arm, hanging arm, support leg and stepped-out leg identify this specific pose."
           ],
-          "parent_review_digest": "cca127ae75d94dd9a6601ab98b6988c5579e9161d646f096668ffb1af0562b51",
-          "pass_memory_digest": "90127bb2fe6640e5cfb206792a8383dc3dbed0b1b46b361f6df14c9169c2d4f7",
+          "parent_review_digest": "effd35a62a109ec1411132b38cc4fdd18dc6ff432c30a1da88d859f6a0039499",
+          "pass_memory_digest": "a97b8c08de4682662087ba44973549535bacb5e671759acde9363bd7ba5eca96",
           "reference_authority_order": [
             "task_stage_target",
             "subject_reference"
@@ -6732,7 +6731,7 @@
           "schema": "img2drawing.stage_review.v6",
           "semantic_authority": "agent",
           "stage": "P1_gesture",
-          "stage_contract_id": "full_body_croquis.P1.v5",
+          "stage_contract_id": "full_body_croquis.P1.v6",
           "subject_findings": [
             "The head outline places unequal jaw turns around the nose-anchored centreline and preserves the subject's slight downward three-quarter turn.",
             "The subordinate spine starts behind the neck and remains readable through the shoulder/pelvis counter-tilt without becoming the pose itself.",
@@ -6751,7 +6750,7 @@
     "visual_fidelity_reviews": {}
   },
   "renderer": {
-    "id": "pillow-pressure-v1",
+    "id": "pillow-pencil-contact-v9",
     "version": "1"
   },
   "schema_version": "1.0",

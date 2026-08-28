@@ -27,8 +27,17 @@ Ask the user only if the source is missing/unreadable, the target itself is ambi
 - `stages/`: stage intent and expert drawing guidance, never semantic judgement.
 - `review/`: artifact-bound dual-reference review and autonomous worker packet.
 - `canvas/`: inspect and edit the current drawing.
-- `render/`: pencil material only.
+- `render/`: pencil-contact material only.
 - `provenance/`: replay and timelapse.
+
+## Renderer policy
+
+All normal drawing, review, replay, final export and timelapse paths use
+`img2drawing.render.pillow_pencil_contact`. This is the sole default renderer because it
+preserves pencil grade, pressure, contact, grain, paper interaction and eraser behavior.
+
+Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
+material feature, not a reason to revive or silently emulate the removed renderer.
 
 ## Required reading route
 For a full-body croquis job:
@@ -161,7 +170,8 @@ Before reviewing a stage, classify every image by role:
 - `task_stage_target`: optional same-task/same-stage truth.
 - `current_drawing`: the artifact being judged.
 
-If a same-task stage target exists, the review priority is:
+If a same-task stage target exists, inspect it first for intended stage vocabulary and
+placement:
 
 `task_stage_target > subject_reference`
 
@@ -169,7 +179,10 @@ Otherwise:
 
 `subject_reference` alone.
 
-This does **not** allow a task target to override contradictory subject geometry.
+This is a comparison order, not a total truth hierarchy. The target answers "what should
+this stage look like for this task?" The subject answers pose, proportion, perspective,
+overlap and visible-edge truth, and resolves every geometric contradiction. Do not copy a
+target mark that the subject does not support.
 
 ```python
 run = DrawingRun.create(
@@ -270,14 +283,18 @@ Every stage answers one question. A stage is not "more lines than the last one".
 | P4 Structural Connections | How does the real form connect to the body? | clothing, hair, equipment structure |
 | P5 Clean Block-in | Which lines actually survive? | decided silhouette and internal line |
 
-P1 limb flow defaults to one observed curve through the joint centres. Do not bracket an
-arm or leg with two lines that read as sleeve, trouser or limb width. A second flow cue is
-allowed only when one curve cannot explain a visible reversal or silhouette-envelope fact;
-it remains subordinate and its spacing is non-metric. P2 re-measures the subject
+P1 uses exactly one observed centre-path curve per arm or leg through the joint centres.
+Do not bracket a limb with two lines that read as sleeve, trouser, limb width or silhouette.
+Record complex reversal through the shape of that single path; P2 re-measures the subject
 independently, authoring its own shoulder -> elbow -> wrist and hip -> knee -> ankle axes,
 segment lengths/foreshortening, neck axis, turned ribcage/pelvis boxes, and hand/foot
 placement blocks. Preserve P1 joints and pose intent; if evidence disproves a joint,
 correct it explicitly and reopen the earliest responsible stage.
+
+P1 neck attachment is evidence-gated, not a checklist line. Add at most a short, light
+jaw-to-neck cue on each side that is actually supported by the subject or same-task target.
+Zero or one visible side is valid. Never extend the cue to the shoulder, invent a continuous
+edge hidden by hair/clothing, or add a symmetric mate merely to keep the head "connected."
 
 Three rules survive every stage:
 

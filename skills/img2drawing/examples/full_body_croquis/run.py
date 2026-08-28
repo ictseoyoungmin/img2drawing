@@ -412,7 +412,7 @@ def run_example(output_dir: str | Path, *, clean=True) -> dict:
             "Registered pelvis and leg crops show that the pass-1 pelvis/hip row does not yet match the target separation.",
         ],
         contract_findings=[
-            "The artifact stays inside P1.v5: centrelines, joint evidence, one centre-path curve per limb, foot direction and ground contact only.",
+            "The artifact stays inside P1.v6: centrelines, joint evidence, exactly one centre-path curve per limb, foot direction and ground contact only.",
             "No limb is bracketed by paired lines that could read as sleeve, trouser or body width.",
             "No hair, garment structure, facial detail, resolved mass or footwear detail was introduced.",
         ],
@@ -518,7 +518,7 @@ def run_example(output_dir: str | Path, *, clean=True) -> dict:
             "The final drawing keeps the target's sparse P1 vocabulary without copying the photograph's garment contours.",
         ],
         contract_findings=[
-            "The corrected artifact remains inside the P1.v5 representation boundary.",
+            "The corrected artifact remains inside the P1.v6 representation boundary.",
             "Only the pelvis line, three joint markers and two leg centre paths were replaced; no downstream vocabulary was introduced.",
             "Every limb remains one centre-path curve through its joint centres, with no garment-width pair.",
         ],

@@ -158,7 +158,7 @@ class AutonomousWorkerPacket:
         lines += [
             "", "## Reference authority",
             f"- reference mode: **{refs.get('reference_mode','subject_only')}**",
-            f"- authority order: `{' > '.join(refs['authority_order'])}`",
+            f"- comparison order: `{' > '.join(refs['authority_order'])}` (subject remains geometry and visible-edge truth)",
             f"- subject reference: `{refs['subject_reference']['path']}` — geometry truth",
         ]
         if refs.get("task_stage_target") is not None:

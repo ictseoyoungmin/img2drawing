@@ -62,7 +62,7 @@
     }
   },
   "drawing_artifact_sha256": "0d99b2f1dcc29b38672caad364e26254574107706105c4c8416cf364949fe145",
-  "drawing_state_sha256": "61b40857ce0085131f97adcc5c2ebf5b21eb067c974165f8b49d99966c360511",
+  "drawing_state_sha256": "2ed54ddb7b7e934d9d5c7213796318b92913425bb881c57c8b2d80a2a0d6d027",
   "history_cursor": 44,
   "intent": "Re-check image-left shoulder, elbow, visible wrist and curved hanging-arm flow.",
   "label": "arm_left_flow",
