@@ -3,13 +3,12 @@
 Updated: 2026-08-30
 
 ```text
-SYSTEM:   architecture contract frozen / inspection foundation closed
-ACTIVE:   none — B02+B03 CLOSED; no next production slice activated
+SYSTEM:   architecture contract frozen / inspection foundation reopened for evidence hardening
+ACTIVE:   B02+B03 REOPENED — registration/provenance/visual gates
 SKELETON: B04 session; B05 construction grammar; B06 correction loop;
           B07–B18 remaining slices
-CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut;
-          B02+B03 Inspection Foundation
-NEXT GATE: manually activate B04 after reviewing the B02+B03 context capsule
+CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut
+NEXT GATE: close B02+B03 R1–R6; keep B04 inactive
 ```
 
 ## B00 closure
@@ -27,13 +26,12 @@ NEXT GATE: manually activate B04 after reviewing the B02+B03 context capsule
 - Archived card and dependency audit: `archive/B01.md`
 - No source, runtime, or review-schema implementation was introduced.
 
-## B02+B03 closure
+## B02+B03 reopen
 
-- Archived card: `archive/B02-B03.md`
+- Active card: `active/B02-B03.md`
 - Context capsule: `capsules/B02-B03.md`
-- Scope closed: standalone unified inspection sheet and read-only measurement only.
-- Focused and full tests pass; representative dogfood fixture produced a whole/ROI
-  sheet with explicit registration, grid, guides, profiles, and pixel provenance.
+- Reopen scope: correct non-identity raster registration, bind subject/drawing/state
+  digests, narrow stage-free normalization, and commit direct visual evidence.
 - B04 session and correction/runtime lifecycle work remain inactive.
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
