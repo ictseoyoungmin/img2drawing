@@ -6,15 +6,15 @@
   ],
   "corrections": [],
   "decision": "advance",
-  "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+  "drawing_artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
   "drawing_findings": [
     "No resolved-form blocker remains."
   ],
-  "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+  "drawing_state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be",
   "grammar_findings": [
     "Hair, garment, joints, and line roles are explicit."
   ],
-  "history_cursor": 38,
+  "history_cursor": 40,
   "inter_pass_action_ids": [
     "FW-P5-01",
     "FW-P5-02",
@@ -29,7 +29,9 @@
     "FW-P5-11",
     "FW-P5-12",
     "FW-P5-13",
-    "FW-P5-14"
+    "FW-P5-14",
+    "FW-P5-retire-01",
+    "FW-P5-retire-02"
   ],
   "local_review_ids": [],
   "observations": [
@@ -39,7 +41,7 @@
     "No resolved-form blocker remains."
   ],
   "parent_review_digest": null,
-  "pass_memory_digest": "3b695065396e52d678fe1d3b92de0dfd339a72f23a191067103085d4e6ad1c26",
+  "pass_memory_digest": "adb85e14a6a580365d83f8531b98540d26dc7c64aeb4ee5421f3abc79b246ce8",
   "reference_authority_order": [
     "subject_reference"
   ],

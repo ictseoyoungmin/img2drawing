@@ -53,6 +53,9 @@ dev/archives/*.zip
 dev/release/*.whl
 dev/release/*.zip
 dev/evidence/*.zip
+# Local skill-package scratch archives are reproducible from the source tree;
+# canonical release archives belong under dev/release/ instead.
+skills/*.zip
 temp/
 drawings/
 dev/dogfood/s1s9/img2drawing_example_output/

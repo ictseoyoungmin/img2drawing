@@ -380,17 +380,22 @@ Three rules survive every stage:
 
 ### Line calibration and selective restatement
 
-Before an identity pass, call `run.prepare_identity_finish()` and inspect the generated
-`identity/calibration_sheet.json` at actual size and 50% scale. It records five pressure
-samples plus taper/curve examples in the current canvas coordinates. The sample is a
-calibration aid, never geometry truth. Translate material-1's construction/form/accent
-hierarchy to the current `grade`, `pressure`, `width`, `opacity` and per-point pressure
-fields; do not copy croquis-atelier `scale`, `strength` or `wobble` numbers.
+Before an identity pass, call `run.stage_start("P6_identity_finish")`, then
+`run.prepare_identity_finish()` and inspect the generated
+`identity/calibration_sheet.png` and `identity/calibration_sheet_50pct.png` alongside
+`calibration_sheet.json`. It records five pressure samples with straight, C, S and
+taper-in/out curves in the current canvas coordinates; its artifact hashes are bound to
+the P6 manifest. The sample is a calibration aid, never geometry truth. Translate
+material-1's construction/form/accent hierarchy to the current `grade`, `pressure`,
+`width`, `opacity` and per-point pressure fields; do not copy croquis-atelier `scale`,
+`strength` or `wobble` numbers.
 
 Accent is reserved for the small high-information portion of the drawing (normally
 15–25%). `IdentityFinishProfile` rejects blanket confirmation, broad value bands and
-unbounded micro-fold or hair-strand passes. Every pressure/taper sample remains in the
-action log so replay and resume reproduce the same line expression.
+unbounded micro-fold or hair-strand passes. P6 may not delete, replace or lift a stroke
+owned by P1–P5; reopen that stage when structural correction is needed. Every
+pressure/taper sample remains in the action log so replay and resume reproduce the same
+line expression.
 
 `references/stages/pipeline-overview.png` shows one subject across all five stages on a
 single sheet. Open it when you want to see the shape of the progression.

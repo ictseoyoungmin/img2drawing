@@ -1,10 +1,10 @@
 {
   "drawing_artifact": {
-    "artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+    "artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
     "history_cursor": 16,
     "path": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/current_drawing.png",
     "stage": "P3_primary_masses",
-    "state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b"
+    "state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148"
   },
   "evaluator_instruction": "Inspect subject and current drawing independently; do not use worker rationale or any prior verdict.",
   "observation_lock": {
@@ -44,7 +44,7 @@
     "schema": "img2drawing.blind_observation_projection.v1",
     "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
   },
-  "packet_digest": "6fee9faccade1467a7420ffbcc85df37acca9d95de6a8519a0938957c62165b0",
+  "packet_digest": "294a387ddd3595994c4fc0b125d206e601133406c4f94eed4fd553b2659c0258",
   "region_evidence_refs": [
     "reviews/P3_primary_masses/pass_01/current_drawing.png",
     "reviews/P3_primary_masses/pass_01/current_drawing.png",

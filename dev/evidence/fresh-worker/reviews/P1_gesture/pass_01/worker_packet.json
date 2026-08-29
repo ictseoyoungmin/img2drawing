@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "232157859d4eb4385abeb68b0adfdd33dba1986a39036d47609593f82c28b2ea",
+      "artifact_sha256": "d001b11de1f5641bc1e343989ca6ce20f18e266d9ed1f11361c351a2149215f1",
       "history_cursor": 4,
       "path": "dev/evidence/fresh-worker/reviews/P1_gesture/pass_01/current_drawing.png",
       "stage": "P1_gesture",
-      "state_sha256": "14654fd18857c562ff8409f4c18539fc60066d7c9b01c402c70e796fb82bb497"
+      "state_sha256": "c471142a7fee666ffe255787c276897b4132d59480a15893a80c4356d871c632"
     },
     "overview": "dev/evidence/fresh-worker/reviews/P1_gesture/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",

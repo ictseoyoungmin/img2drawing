@@ -1,8 +1,8 @@
 {
-  "blind_packet_digest": "54c6585b9a1600a9f3422198317f682cdb43d94357f482e768c445711c5dc133",
+  "blind_packet_digest": "a4fd8f3997c58354a251f80a82d423bba50901bc2c6cf132ba47d9d065558c0d",
   "blockers": [],
-  "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
-  "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+  "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
+  "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
   "evaluator_id": "fresh-worker-independent-review",
   "history_cursor": 22,
   "manifest_id": "resolved_37ff22fe8503",

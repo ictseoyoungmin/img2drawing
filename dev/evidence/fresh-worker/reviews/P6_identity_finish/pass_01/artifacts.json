@@ -4,9 +4,9 @@
   "drawing": {
     "stage": "P6_identity_finish",
     "path": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/current_drawing.png",
-    "artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
-    "state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
-    "history_cursor": 45
+    "artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
+    "state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a",
+    "history_cursor": 48
   },
   "authority_order": [
     "subject_reference"

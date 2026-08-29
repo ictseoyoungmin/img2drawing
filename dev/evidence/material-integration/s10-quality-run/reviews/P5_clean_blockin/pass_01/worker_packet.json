@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
-      "history_cursor": 466,
+      "artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
+      "history_cursor": 474,
       "path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
       "stage": "P5_clean_blockin",
-      "state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3"
+      "state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24"
     },
     "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -1176,6 +1176,76 @@
         "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
         "stage": "P5_clean_blockin",
         "target_stroke_id": "elbow_transition_right"
+      },
+      {
+        "action_id": "R23-P5-retire-01",
+        "history_cursor": 468,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_crown_arc"
+      },
+      {
+        "action_id": "R23-P5-retire-02",
+        "history_cursor": 469,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_left_temporal_jaw"
+      },
+      {
+        "action_id": "R23-P5-retire-03",
+        "history_cursor": 470,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_right_temporal_jaw"
+      },
+      {
+        "action_id": "R23-P5-retire-04",
+        "history_cursor": 471,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_left"
+      },
+      {
+        "action_id": "R23-P5-retire-05",
+        "history_cursor": 472,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_right"
+      },
+      {
+        "action_id": "R23-P5-retire-06",
+        "history_cursor": 473,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "hair_mass_left"
+      },
+      {
+        "action_id": "R23-P5-retire-07",
+        "history_cursor": 474,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "hair_mass_right"
       }
     ],
     "inter_pass_correction_actions": [
@@ -1888,11 +1958,82 @@
         "reason": "P4 joint plane kept partly visible because it still explains a directional break.",
         "stage": "P5_clean_blockin",
         "target_stroke_id": "elbow_transition_right"
+      },
+      {
+        "action_id": "R23-P5-retire-01",
+        "history_cursor": 468,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_crown_arc"
+      },
+      {
+        "action_id": "R23-P5-retire-02",
+        "history_cursor": 469,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_left_temporal_jaw"
+      },
+      {
+        "action_id": "R23-P5-retire-03",
+        "history_cursor": 470,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_right_temporal_jaw"
+      },
+      {
+        "action_id": "R23-P5-retire-04",
+        "history_cursor": 471,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_left"
+      },
+      {
+        "action_id": "R23-P5-retire-05",
+        "history_cursor": 472,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_right"
+      },
+      {
+        "action_id": "R23-P5-retire-06",
+        "history_cursor": 473,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "hair_mass_left"
+      },
+      {
+        "action_id": "R23-P5-retire-07",
+        "history_cursor": 474,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "hair_mass_right"
       }
     ],
     "memory_policy": [
-      "No prior stage review exists; begin from the stage contract and references.",
-      "Runtime memory never invents artistic conclusions.",
+      "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+      "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+      "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
       "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
     ],
     "next_pass_index": 1,
@@ -1901,10 +2042,25 @@
     "previous_reported_corrections": [],
     "previous_review_digest": null,
     "prior_review_count": 0,
-    "reopen_context": null,
+    "reopen_context": {
+      "abandoned_review_digests": [
+        "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073"
+      ],
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_04",
+      "discovered_in_stage": "P6_identity_finish",
+      "findings": [
+        "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+      ],
+      "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+      "reopen_id": "reopen_04",
+      "role": "reopened_target",
+      "stage": "P5_clean_blockin",
+      "target_stage": "P5_clean_blockin",
+      "trigger_review_digest": null
+    },
     "schema": "img2drawing.stage_pass_memory.v2",
     "stage": "P5_clean_blockin",
-    "state": "cold_start"
+    "state": "reopen_restart"
   },
   "references": {
     "authority_order": [

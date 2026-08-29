@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace as dataclass_replace
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,7 @@ from img2drawing import (
     DrawingAction, DrawingRun, ObservationContract, ViewObservation,
     ResolvedFormEntry, ResolvedFormManifest, IdentityFinishProfile,
     IdentityFinishManifest, ConstructionRetirementRecord,
+    CalibrationSheet,
     AssistiveROIProposal, ExcludedRegion, AcceptedResidual, AdaptiveEvidencePolicy,
 )
 
@@ -75,31 +77,83 @@ def _advance_stage(run: DrawingRun, stage: str) -> None:
     run.submit_stage_review(observations=(f"{stage} process contract is complete",), decision="advance", advance_rationale="process and independent visual gates agree")
 
 
+def test_stage_start_is_required_before_draw_review_or_advance(tmp_path: Path):
+    run = _run(tmp_path)
+    with pytest.raises(RuntimeError, match="stage_start"):
+        run.draw(_action("P1_gesture", "unstarted-draw"))
+    with pytest.raises(RuntimeError, match="stage_start"):
+        run.prepare_stage_review("P1_gesture")
+    with pytest.raises(RuntimeError, match="stage_start"):
+        run.progress.advance("P1_gesture", "a" * 64)
+
+
+def test_calibration_artifacts_render_and_legacy_digest_roundtrip(tmp_path: Path):
+    sheet = CalibrationSheet.default(96, 144)
+    legacy = sheet.to_dict()
+    for key in ("artifact_sha256", "artifact_50pct_sha256", "artifact_size", "artifact_50pct_size"):
+        legacy.pop(key, None)
+    restored = CalibrationSheet.from_dict(legacy)
+    assert restored.digest() == sheet.digest()
+
+    rendered = sheet.render_artifacts(tmp_path / "identity", supersample=2)
+    assert rendered.artifact_sha256
+    assert rendered.artifact_50pct_sha256
+    assert (tmp_path / "identity" / "calibration_sheet.png").is_file()
+    assert (tmp_path / "identity" / "calibration_sheet_50pct.png").is_file()
+
+
 def test_resolved_form_requires_visual_gate_and_roundtrips(tmp_path: Path):
     run = _run(tmp_path)
     run.progress.current_index = 3
     _advance_stage(run, "P4_structural_connections")
     assert run.current_stage == "P5_clean_blockin"
+    run.stage_start("P5_clean_blockin")
+    run.draw(_action("P5_clean_blockin", "old-construction"))
     run.draw(_action("P5_clean_blockin", "draw-p5"))
+    run.draw({
+        "action_id": "delete-old-construction", "kind": "delete_stroke", "stage": "P5_clean_blockin",
+        "target_stroke_id": "old-construction", "tool": {"preset": "hard_eraser"},
+    })
     run.prepare_stage_review()
     manifest = _resolved_manifest(run, "P5_clean_blockin")
     run.submit_resolved_form_manifest(manifest)
-    retirement = ConstructionRetirementRecord(("old-construction",), ("gesture-ghost",), ("draw-p5",), "selected contour owns the resolved form", run.session.history.cursor)
+    with pytest.raises(ValueError, match="actual P5 delete/soft-lift"):
+        run.record_construction_retirement(ConstructionRetirementRecord(
+            ("fabricated-stroke",), (), ("draw-p5",), "fabricated retirement", run.session.history.cursor
+        ))
+    retirement = ConstructionRetirementRecord(("old-construction",), (), ("draw-p5",), "selected contour owns the resolved form", run.session.history.cursor)
     run.record_construction_retirement(retirement)
     run.submit_resolved_form_review(manifest=manifest, evaluator_id="fresh-blind-fixture", findings=("hair, garment, joints and topology inspected",), decision="advance", rationale="no resolved-form blocker remains")
     run.submit_stage_review(observations=("P5 process contract is complete",), decision="advance", advance_rationale="P5 process and visual gates agree")
     assert run.current_stage == "P6_identity_finish"
     profile = IdentityFinishProfile(max_identity_strokes=4, max_confirmation_strokes=1, max_micro_fold_strokes=1)
+    run.stage_start("P6_identity_finish")
     preflight = run.prepare_identity_finish(profile)
     assert preflight["allowed"]
+    with pytest.raises(RuntimeError, match="upstream-owned"):
+        run.draw({
+            "action_id": "illegal-p6-upstream-edit", "kind": "delete_stroke", "stage": "P6_identity_finish",
+            "target_stroke_id": "draw-p5", "tool": {"preset": "hard_eraser"},
+        })
     run.draw(_action("P6_identity_finish", "draw-p6"))
+    artifacts6 = run.prepare_stage_review()
     manifest6 = IdentityFinishManifest(
-        drawing_state_sha256=run._state_sha(), drawing_artifact_sha256=run._state_sha(), history_cursor=run.session.history.cursor,
+        drawing_state_sha256=run._state_sha(), drawing_artifact_sha256=artifacts6.drawing.artifact_sha256, history_cursor=run.session.history.cursor,
         observation_lock_digest=run.observation_lock.observation_digest, profile=profile,
         calibration_sheet_digest=run.calibration_sheet.digest(), face_relation="eye-line, nose and mouth follow the locked head turn",
-        hair_group_count=2, garment_mark_count=2, identity_stroke_count=2, confirmation_stroke_count=0,
-        accent_stroke_count=0, fold_stroke_count=1, evidence_refs=("identity/calibration_sheet.json", "identity/whole_view.png"), evaluator_id="fresh-blind-fixture", decision="advance", rationale="bounded identity marks preserve the resolved block-in",
+        hair_group_count=2, garment_mark_count=2, identity_stroke_count=1, confirmation_stroke_count=0,
+        accent_stroke_count=0, fold_stroke_count=0, evidence_refs=("identity/calibration_sheet.json", "identity/whole_view.png"), evaluator_id="fresh-blind-fixture", decision="advance", rationale="bounded identity marks preserve the resolved block-in",
     )
+    with pytest.raises(RuntimeError, match="different P6 drawing artifact"):
+        run.submit_identity_finish_manifest(dataclass_replace(manifest6, drawing_artifact_sha256=run._state_sha()))
+    with pytest.raises(RuntimeError, match="stroke counts do not match"):
+        run.submit_identity_finish_manifest(dataclass_replace(manifest6, identity_stroke_count=2))
+    calibration_png = run.output_dir / "identity" / "calibration_sheet.png"
+    calibration_bytes = calibration_png.read_bytes()
+    calibration_png.write_bytes(calibration_bytes + b"tampered")
+    with pytest.raises(RuntimeError, match="calibration artifact is missing or stale"):
+        run.submit_identity_finish_manifest(manifest6)
+    calibration_png.write_bytes(calibration_bytes)
     run.submit_identity_finish_manifest(manifest6)
     run.prepare_stage_review()
     run.submit_stage_review(observations=("P6 optional identity process is complete",), decision="advance", advance_rationale="identity visual manifest is current")

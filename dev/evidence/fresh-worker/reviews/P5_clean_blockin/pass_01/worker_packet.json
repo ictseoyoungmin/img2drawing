@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
-      "history_cursor": 38,
+      "artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
+      "history_cursor": 40,
       "path": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/current_drawing.png",
       "stage": "P5_clean_blockin",
-      "state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445"
+      "state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be"
     },
     "overview": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -256,9 +256,50 @@
         "reason": null,
         "stage": "P5_clean_blockin",
         "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-retire-01",
+        "history_cursor": 39,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Transfer primary mass ownership to the selected clean contour.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "FW-P3-01"
+      },
+      {
+        "action_id": "FW-P5-retire-02",
+        "history_cursor": 40,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Transfer primary mass ownership to the selected clean contour.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "FW-P3-02"
       }
     ],
-    "inter_pass_correction_actions": [],
+    "inter_pass_correction_actions": [
+      {
+        "action_id": "FW-P5-retire-01",
+        "history_cursor": 39,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Transfer primary mass ownership to the selected clean contour.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "FW-P3-01"
+      },
+      {
+        "action_id": "FW-P5-retire-02",
+        "history_cursor": 40,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Transfer primary mass ownership to the selected clean contour.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "FW-P3-02"
+      }
+    ],
     "memory_policy": [
       "No prior stage review exists; begin from the stage contract and references.",
       "Runtime memory never invents artistic conclusions.",

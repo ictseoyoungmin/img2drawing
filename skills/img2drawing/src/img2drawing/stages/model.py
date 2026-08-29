@@ -59,5 +59,9 @@ class StageProgress:
 
     def advance(self, stage: str, review_digest: str) -> None:
         self.require_current(stage)
+        if stage not in self.started_cursor:
+            raise StageOrderError(
+                f"stage {stage!r} must be started with stage_start() before advance"
+            )
         self.advanced_reviews[stage] = str(review_digest)
         self.current_index += 1

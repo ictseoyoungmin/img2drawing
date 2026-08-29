@@ -1,20 +1,22 @@
 {
   "accent_stroke_count": 2,
-  "calibration_sheet_digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
-  "confirmation_stroke_count": 4,
+  "calibration_sheet_digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+  "confirmation_stroke_count": 0,
   "decision": "advance",
-  "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
-  "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+  "drawing_artifact_sha256": "a5095127803b1ba5b6cb8cb0d0df5720796c5454de6af3bd0672c9f1d843d506",
+  "drawing_state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b",
   "evaluator_id": "material-integration-independent-visual-review",
   "evidence_refs": [
     "reviews/P6_identity_finish/pass_01/current_drawing.png",
-    "identity/calibration_sheet.json"
+    "identity/calibration_sheet.json",
+    "identity/calibration_sheet.png",
+    "identity/calibration_sheet_50pct.png"
   ],
   "face_relation": "Face opening is smaller than and separated from the grouped hair silhouette.",
-  "fold_stroke_count": 3,
+  "fold_stroke_count": 0,
   "garment_mark_count": 3,
   "hair_group_count": 3,
-  "history_cursor": 493,
+  "history_cursor": 498,
   "identity_stroke_count": 20,
   "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
   "profile": {

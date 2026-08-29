@@ -1,14 +1,14 @@
 {
-  "blind_packet_digest": "54c6585b9a1600a9f3422198317f682cdb43d94357f482e768c445711c5dc133",
+  "blind_packet_digest": "a4fd8f3997c58354a251f80a82d423bba50901bc2c6cf132ba47d9d065558c0d",
   "decision": "advance",
-  "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
-  "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+  "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
+  "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
   "evaluator_id": "fresh-worker-independent-review",
   "findings": [
     "Subject and drawing were inspected in whole view and local relations."
   ],
   "history_cursor": 22,
-  "manifest_digest": "18dfcfa825f4aee43290a806cc167713981c679aa1ca353a3f5977154c217f18",
+  "manifest_digest": "9460eb131bb4a7acdcdc600df1f512e383d6970ccb42a41c4ae3165746b58e98",
   "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
   "rationale": "All eight resolved-form regions are closed.",
   "schema": "img2drawing.resolved_form_review.v1",

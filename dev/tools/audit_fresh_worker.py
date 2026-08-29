@@ -11,19 +11,34 @@ sys.path.insert(0,str(SRC))
 
 import img2drawing
 
-STAGES=[
+BASE_STAGES=[
     'P1_gesture',
     'P2_primary_axes',
     'P3_primary_masses',
     'P4_structural_connections',
     'P5_clean_blockin',
 ]
+P6_STAGE = 'P6_identity_finish'
 OLD_DOGFOOD_PREFIXES=tuple(f'R{i:02d}-' for i in range(8,20))
 
 def fail(msg: str):
     raise SystemExit(msg)
 
-def audit(run_dir: Path) -> dict:
+def _stage_ids(checkpoint: dict) -> list[str]:
+    registry = str((checkpoint.get('init') or {}).get('stage_registry', 'full_body_croquis'))
+    stages = list(BASE_STAGES)
+    if registry == 'full_body_croquis_with_p6':
+        stages.append(P6_STAGE)
+    return stages
+
+
+def audit(
+    run_dir: Path,
+    *,
+    expected_package_sha256: str | None = None,
+    expected_subject_sha256: str | None = None,
+    forbidden_action_ids: tuple[str, ...] = (),
+) -> dict:
     run_dir=run_dir.resolve()
     cp_path=run_dir/'session/checkpoint.json'
     if not cp_path.is_file():
@@ -37,18 +52,19 @@ def audit(run_dir: Path) -> dict:
     }:
         fail(f'unsupported checkpoint schema: {checkpoint_schema!r}')
 
+    stages = _stage_ids(cp)
     progress=cp.get('progress') or {}
-    if int(progress.get('current_index',-1)) != len(STAGES):
+    if int(progress.get('current_index',-1)) != len(stages):
         fail(f'run is not complete: current_index={progress.get("current_index")}')
     advanced=progress.get('advanced_reviews') or {}
-    missing=[s for s in STAGES if not advanced.get(s)]
+    missing=[s for s in stages if not advanced.get(s)]
     if missing:
         fail(f'missing advanced reviews: {missing}')
 
     reviews=cp.get('reviews') or {}
     stage_summary={}
     revision_count=0
-    for stage in STAGES:
+    for stage in stages:
         rows=reviews.get(stage) or []
         if not rows:
             fail(f'no artifact-bound reviews for {stage}')
@@ -102,6 +118,10 @@ def audit(run_dir: Path) -> dict:
             for name in ('blind_visual_packet.json', 'region_closure_manifest.json', 'visual_fidelity_review.json'):
                 if not (latest_pass/name).is_file():
                     fail(f'{latest_pass}: missing P3 dual-gate evidence {name}')
+        if stage == P6_STAGE:
+            identity = cp.get('identity_finish_manifest')
+            if not identity or identity.get('decision') != 'advance':
+                fail('P6 run is missing an advanced identity finish manifest')
 
     history=((cp.get('agent_session') or {}).get('history') or {})
     actions=history.get('actions') or []
@@ -129,6 +149,9 @@ def audit(run_dir: Path) -> dict:
             'run appears to reuse historical dogfood action IDs instead of fresh work: '
             + ', '.join(copied[:10])
         )
+    forbidden = [aid for aid in action_ids if aid in set(forbidden_action_ids)]
+    if forbidden:
+        fail('run contains action IDs forbidden by the strict input envelope: ' + ', '.join(forbidden[:10]))
     if direct_stroke_actions < 10:
         fail(f'too few direct stroke actions: {direct_stroke_actions}')
 
@@ -145,7 +168,9 @@ def audit(run_dir: Path) -> dict:
     # The semantic report is evidence for later human/Agent audit, not trusted as proof.
     report=run_dir/'DOGFOOD_REPORT.md'
     if not report.is_file():
-        fail('missing DOGFOOD_REPORT.md')
+        report=run_dir/'generalization_report.json'
+    if not report.is_file():
+        fail('missing semantic worker report (DOGFOOD_REPORT.md or generalization_report.json)')
 
     # Reopen is not mandatory: a good fresh run may never discover an upstream defect.
     reopens=cp.get('reopens') or []
@@ -175,10 +200,17 @@ def audit(run_dir: Path) -> dict:
             'must verify that no downstream compensation hid an earlier defect.'
         )
 
+    init = cp.get('init') or {}
+    recorded_subject_sha = str(init.get('reference_sha256') or '')
+    if expected_subject_sha256 and recorded_subject_sha != str(expected_subject_sha256).lower():
+        fail('run subject sha256 does not match the strict input envelope')
     result={
         'schema':'img2drawing.fresh_worker_mechanical_audit.v1',
         'img2drawing_version':img2drawing.__version__,
         'run_dir':str(run_dir),
+        'stage_registry': str(init.get('stage_registry', 'full_body_croquis')),
+        'subject_sha256': recorded_subject_sha,
+        'package_sha256': None if expected_package_sha256 is None else str(expected_package_sha256).lower(),
         'complete':True,
         'stage_summary':stage_summary,
         'revision_count':revision_count,
@@ -197,8 +229,16 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--run-dir',required=True,type=Path)
     ap.add_argument('--write-json',type=Path)
+    ap.add_argument('--expected-package-sha256')
+    ap.add_argument('--expected-subject-sha256')
+    ap.add_argument('--forbidden-action-id',action='append',default=[])
     args=ap.parse_args()
-    result=audit(args.run_dir)
+    result=audit(
+        args.run_dir,
+        expected_package_sha256=args.expected_package_sha256,
+        expected_subject_sha256=args.expected_subject_sha256,
+        forbidden_action_ids=tuple(args.forbidden_action_id),
+    )
     text=json.dumps(result,indent=2,ensure_ascii=False)
     if args.write_json:
         args.write_json.parent.mkdir(parents=True,exist_ok=True)

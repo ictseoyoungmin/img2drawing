@@ -1,7 +1,7 @@
 {
   "blockers": [],
-  "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
-  "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+  "drawing_artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
+  "drawing_state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
   "evaluator_id": "fresh-worker-independent-review",
   "history_cursor": 16,
   "manifest_id": "manifest_0c347f045bf8",

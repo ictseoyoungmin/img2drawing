@@ -5,7 +5,7 @@
   "inter_pass_actions": [
     {
       "action_id": "FW-P6-01",
-      "history_cursor": 40,
+      "history_cursor": 43,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "hair_part",
@@ -15,7 +15,7 @@
     },
     {
       "action_id": "FW-P6-02",
-      "history_cursor": 41,
+      "history_cursor": 44,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "hair_lock",
@@ -25,7 +25,7 @@
     },
     {
       "action_id": "FW-P6-03",
-      "history_cursor": 42,
+      "history_cursor": 45,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "eye_line",
@@ -35,7 +35,7 @@
     },
     {
       "action_id": "FW-P6-04",
-      "history_cursor": 43,
+      "history_cursor": 46,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "nose_mouth_relation",
@@ -45,7 +45,7 @@
     },
     {
       "action_id": "FW-P6-05",
-      "history_cursor": 44,
+      "history_cursor": 47,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "cardigan_tension_fold",
@@ -55,7 +55,7 @@
     },
     {
       "action_id": "FW-P6-06",
-      "history_cursor": 45,
+      "history_cursor": 48,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "cardigan_compression_fold",

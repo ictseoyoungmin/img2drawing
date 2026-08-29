@@ -8,7 +8,8 @@ to score a raster.  All findings remain authored by an independent evaluator;
 the runtime only checks identity, freshness, budgets, and provenance bindings.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace as dataclass_replace
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -468,6 +469,10 @@ class CalibrationSheet:
     samples: tuple[Mapping[str, Any], ...]
     selected_profile: str
     rationale: str
+    artifact_sha256: str | None = None
+    artifact_50pct_sha256: str | None = None
+    artifact_size: tuple[int, int] | None = None
+    artifact_50pct_size: tuple[int, int] | None = None
 
     def __post_init__(self) -> None:
         width, height = map(int, self.canvas_size)
@@ -485,44 +490,155 @@ class CalibrationSheet:
             points = sample.get("points") or []
             if len(points) < 2:
                 raise ValueError("each calibration sample needs a curve with at least two points")
+        for value, label in (
+            (self.artifact_sha256, "artifact_sha256"),
+            (self.artifact_50pct_sha256, "artifact_50pct_sha256"),
+        ):
+            if value is not None:
+                _digest(value, label=label)
+        for value, label in (
+            (self.artifact_size, "artifact_size"),
+            (self.artifact_50pct_size, "artifact_50pct_size"),
+        ):
+            if value is not None:
+                if len(value) != 2 or int(value[0]) <= 0 or int(value[1]) <= 0:
+                    raise ValueError(f"{label} must contain positive width and height")
         object.__setattr__(self, "canvas_size", (width, height))
         object.__setattr__(self, "samples", samples)
         object.__setattr__(self, "selected_profile", str(self.selected_profile).strip())
         object.__setattr__(self, "rationale", str(self.rationale).strip())
+        object.__setattr__(self, "artifact_sha256", None if self.artifact_sha256 is None else str(self.artifact_sha256).lower())
+        object.__setattr__(self, "artifact_50pct_sha256", None if self.artifact_50pct_sha256 is None else str(self.artifact_50pct_sha256).lower())
+        object.__setattr__(self, "artifact_size", None if self.artifact_size is None else (int(self.artifact_size[0]), int(self.artifact_size[1])))
+        object.__setattr__(self, "artifact_50pct_size", None if self.artifact_50pct_size is None else (int(self.artifact_50pct_size[0]), int(self.artifact_50pct_size[1])))
 
     @classmethod
     def default(cls, width: int, height: int, *, selected_profile: str = "pencil-contact-v9") -> "CalibrationSheet":
         width, height = int(width), int(height)
         x0, x1 = width * 0.10, width * 0.90
         y0 = height * 0.10
+        row = max(18.0, height * 0.075)
+        curves = ("straight", "c_curve", "s_curve", "taper_in", "taper_out")
+        pressures = (0.24, 0.40, 0.56, 0.72, 0.88)
         samples = []
-        for index, pressure in enumerate((0.24, 0.40, 0.56, 0.72, 0.88)):
-            yy = y0 + index * max(12.0, height * 0.045)
+        for index, (pressure, curve) in enumerate(zip(pressures, curves)):
+            yy = y0 + index * row
+            if curve == "straight":
+                points = [[x0, yy], [width * 0.50, yy], [x1, yy]]
+            elif curve == "c_curve":
+                points = [[x0, yy], [width * 0.34, yy - row * 0.55], [width * 0.65, yy - row * 0.55], [x1, yy]]
+            elif curve == "s_curve":
+                points = [[x0, yy], [width * 0.34, yy - row * 0.55], [width * 0.66, yy + row * 0.55], [x1, yy]]
+            elif curve == "taper_in":
+                points = [[x0, yy], [width * 0.34, yy - row * 0.25], [width * 0.66, yy], [x1, yy + row * 0.10]]
+            else:
+                points = [[x0, yy + row * 0.10], [width * 0.34, yy], [width * 0.66, yy - row * 0.25], [x1, yy]]
             samples.append({
-                "sample_id": f"pressure_{index + 1:02d}",
+                "sample_id": f"{curve}_{index + 1:02d}",
+                "curve": curve,
                 "pressure": pressure,
                 "role": ("construction", "construction", "form", "form", "accent")[index],
-                "points": [[x0, yy], [width * 0.45, yy - height * 0.012], [x1, yy]],
+                "points": points,
                 "taper": {"start": 0.20 + pressure * 0.25, "peak": pressure, "end": 0.16 + pressure * 0.18},
             })
         return cls(
             canvas_size=(width, height),
             samples=tuple(samples),
             selected_profile=selected_profile,
-            rationale="Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+            rationale="Profile pending inspection of the rendered actual-size and 50%-scale calibration artifacts.",
+        )
+
+    def render_artifacts(self, directory: str | Path, *, supersample: int = 3) -> "CalibrationSheet":
+        """Render calibration samples at actual size and 50% scale, then bind hashes.
+
+        Calibration is guidance evidence, not drawing geometry.  The samples are
+        rendered through the same pencil-contact path as review artifacts so a
+        worker can inspect the material at the scale it will actually use.
+        """
+        from PIL import Image
+        from ..core.ir import Stroke, StrokeIR
+        from ..render.pillow_pencil_contact import render as render_pencil
+
+        out = Path(directory)
+        out.mkdir(parents=True, exist_ok=True)
+        ir = StrokeIR(self.canvas_size[0], self.canvas_size[1], metadata={"calibration": True})
+        grades = {"construction": "2H", "form": "HB", "accent": "B"}
+        for sample in self.samples:
+            role = str(sample.get("role", "form"))
+            pressure = float(sample["pressure"])
+            points = [tuple(map(float, point)) for point in sample["points"]]
+            taper = sample.get("taper") or {}
+            count = len(points)
+            pressures = [
+                float(taper.get("start", pressure * 0.55))
+                + (float(taper.get("peak", pressure)) - float(taper.get("start", pressure * 0.55))) * (i / max(1, count - 1))
+                for i in range(count)
+            ]
+            if count > 1:
+                end = float(taper.get("end", pressure * 0.45))
+                pressures = [
+                    (p if i < count - 1 else end)
+                    for i, p in enumerate(pressures)
+                ]
+            ir.add(Stroke(
+                points=points,
+                width={"construction": 1.2, "form": 1.5, "accent": 1.8}.get(role, 1.5),
+                opacity={"construction": 0.42, "form": 0.58, "accent": 0.72}.get(role, 0.58),
+                role=role,
+                pressure=pressures,
+                tool_state={"pencil_grade": grades.get(role, "HB"), "taper_in": 0.6, "taper_out": 0.6},
+                part=str(sample.get("sample_id", "calibration")),
+                stage="calibration",
+                stroke_id=str(sample.get("sample_id", "calibration")),
+            ))
+        actual = out / "calibration_sheet.png"
+        half = out / "calibration_sheet_50pct.png"
+        render_pencil(ir, actual, supersample=max(2, int(supersample)))
+        with Image.open(actual) as image:
+            resized = image.resize((max(1, image.width // 2), max(1, image.height // 2)), Image.Resampling.LANCZOS)
+            resized.save(half)
+
+        def digest(path: Path) -> str:
+            h = hashlib.sha256()
+            with path.open("rb") as handle:
+                for block in iter(lambda: handle.read(1 << 20), b""):
+                    h.update(block)
+            return h.hexdigest()
+
+        with Image.open(actual) as image:
+            actual_size = tuple(image.size)
+        with Image.open(half) as image:
+            half_size = tuple(image.size)
+        return dataclass_replace(
+            self,
+            artifact_sha256=digest(actual),
+            artifact_50pct_sha256=digest(half),
+            artifact_size=actual_size,
+            artifact_50pct_size=half_size,
         )
 
     def digest(self) -> str:
         return sha256_obj(self._payload())
 
     def _payload(self) -> dict[str, Any]:
-        return {
+        payload = {
             "schema": "img2drawing.calibration_sheet.v1",
             "canvas_size": list(self.canvas_size),
             "samples": [dict(sample) for sample in self.samples],
             "selected_profile": self.selected_profile,
             "rationale": self.rationale,
         }
+        # Preserve the digest of pre-hardening v1 JSON when no rendered artifact
+        # binding exists; newly rendered sheets include the binding fields.
+        if self.artifact_sha256 is not None:
+            payload["artifact_sha256"] = self.artifact_sha256
+        if self.artifact_50pct_sha256 is not None:
+            payload["artifact_50pct_sha256"] = self.artifact_50pct_sha256
+        if self.artifact_size is not None:
+            payload["artifact_size"] = list(self.artifact_size)
+        if self.artifact_50pct_size is not None:
+            payload["artifact_50pct_size"] = list(self.artifact_50pct_size)
+        return payload
 
     def to_dict(self) -> dict[str, Any]:
         payload = self._payload()
@@ -538,6 +654,10 @@ class CalibrationSheet:
             samples=tuple(raw["samples"]),
             selected_profile=str(raw["selected_profile"]),
             rationale=str(raw["rationale"]),
+            artifact_sha256=raw.get("artifact_sha256"),
+            artifact_50pct_sha256=raw.get("artifact_50pct_sha256"),
+            artifact_size=None if raw.get("artifact_size") is None else tuple(raw["artifact_size"]),
+            artifact_50pct_size=None if raw.get("artifact_50pct_size") is None else tuple(raw["artifact_50pct_size"]),
         )
         if raw.get("digest") and str(raw["digest"]) != sheet.digest():
             raise ValueError("calibration sheet digest mismatch")

@@ -27,10 +27,13 @@ while an upstream decision is `revise` or a region is a blocker.
 
 ## Material contract
 
-`CalibrationSheet` records five pressure samples, curves and taper values in the actual
-canvas coordinate system. Translate construction/form/accent hierarchy to the current
-pencil `grade`, `pressure`, `width`, `opacity` and explicit per-point pressure. Values
-from another drawing engine are not portable. Every P6 action remains replayable.
+`CalibrationSheet` renders five pressure samples—straight, C, S, taper-in and taper-out—
+at actual canvas size and at 50% scale. The JSON records both PNG digests and dimensions;
+the P6 manifest cannot advance if either artifact is missing, blank or stale. Translate
+construction/form/accent hierarchy to the current pencil `grade`, `pressure`, `width`,
+`opacity` and explicit per-point pressure. Values from another drawing engine are not
+portable. Every P6 action remains replayable, and `stage_start("P6_identity_finish")`
+is required before preflight, drawing or review.
 
 The default profile limits identity marks to 48, confirmation marks to 12, micro-folds to
 8, and accents to at most 25% of identity marks. These are guardrails against blanket
@@ -40,5 +43,6 @@ darkening, not an artistic score.
 
 Keep P5 and P6 as separate deliverables. A fresh whole-view and applicable crop review
 must state the face relation, grouped hair, sparse garment structure and line hierarchy.
-Mechanical manifest validity proves only provenance and budget compliance; the evaluator
-still owns the visual decision.
+Mechanical manifest validity proves only provenance, artifact binding and budget
+compliance; the evaluator still owns the visual decision. P6 cannot correct an upstream
+stroke directly—those findings reopen the earliest responsible stage.

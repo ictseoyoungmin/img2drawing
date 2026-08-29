@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/strict_fresh_worker_input.schema.json",
+  "title": "Strict packaged fresh-worker input envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "allowed_inputs", "forbidden_context", "package", "subject", "user_goal", "worker_session_id", "evaluator_session_id"],
+  "properties": {
+    "schema": {"const": "img2drawing.strict_fresh_worker_input.v1"},
+    "allowed_inputs": {"const": ["package", "subject", "user_goal"]},
+    "forbidden_context": {"type": "array", "items": {"type": "string"}},
+    "package": {"$ref": "#/$defs/artifact"},
+    "subject": {"$ref": "#/$defs/artifact"},
+    "user_goal": {"type": "string", "minLength": 1},
+    "worker_session_id": {"type": "string", "minLength": 1},
+    "evaluator_session_id": {"type": "string", "minLength": 1},
+    "forbidden_action_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(^|/)\\.\\.(?:/|$)).+"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

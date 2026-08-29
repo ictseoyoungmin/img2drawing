@@ -4,11 +4,11 @@
       "subject_reference"
     ],
     "drawing": {
-      "artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
-      "history_cursor": 45,
+      "artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
+      "history_cursor": 48,
       "path": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/current_drawing.png",
       "stage": "P6_identity_finish",
-      "state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6"
+      "state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a"
     },
     "overview": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
@@ -117,7 +117,7 @@
     "inter_pass_actions": [
       {
         "action_id": "FW-P6-01",
-        "history_cursor": 40,
+        "history_cursor": 43,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "hair_part",
@@ -127,7 +127,7 @@
       },
       {
         "action_id": "FW-P6-02",
-        "history_cursor": 41,
+        "history_cursor": 44,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "hair_lock",
@@ -137,7 +137,7 @@
       },
       {
         "action_id": "FW-P6-03",
-        "history_cursor": 42,
+        "history_cursor": 45,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "eye_line",
@@ -147,7 +147,7 @@
       },
       {
         "action_id": "FW-P6-04",
-        "history_cursor": 43,
+        "history_cursor": 46,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "nose_mouth_relation",
@@ -157,7 +157,7 @@
       },
       {
         "action_id": "FW-P6-05",
-        "history_cursor": 44,
+        "history_cursor": 47,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "cardigan_tension_fold",
@@ -167,7 +167,7 @@
       },
       {
         "action_id": "FW-P6-06",
-        "history_cursor": 45,
+        "history_cursor": 48,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "cardigan_compression_fold",

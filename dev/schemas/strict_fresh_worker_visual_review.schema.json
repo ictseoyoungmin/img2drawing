@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/strict_fresh_worker_visual_review.schema.json",
+  "title": "Independent strict fresh-worker visual review v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "worker_session_id", "evaluator_session_id", "decision", "findings", "artifact_refs"],
+  "properties": {
+    "schema": {"const": "img2drawing.strict_fresh_worker_visual_review.v1"},
+    "worker_session_id": {"type": "string", "minLength": 1},
+    "evaluator_session_id": {"type": "string", "minLength": 1},
+    "decision": {"const": "advance"},
+    "findings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "artifact_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  }
+}

@@ -6,11 +6,11 @@
   ],
   "corrections": [],
   "decision": "advance",
-  "drawing_artifact_sha256": "5c765c7b5c3219ea35d2ed427c877f722f19e2b195c94b083af1fc28b22a1103",
+  "drawing_artifact_sha256": "b33706408062e25adca1e81d13539ff67f27ec2eb45b00293b61a2c24bdd0b62",
   "drawing_findings": [
     "Axes preserve shoulder/pelvis counter-tilt and both limb paths."
   ],
-  "drawing_state_sha256": "b750b122aefc86fad1bf7055b9dcceccf0cfd74aa42d9ed2a6baf3932f768db8",
+  "drawing_state_sha256": "66e21596783714823c0997332432d57b256a3452092e0ba33b41a09b938a235d",
   "grammar_findings": [
     "Construction/form roles remain sparse and pressure-aware."
   ],

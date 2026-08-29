@@ -1,10 +1,10 @@
 {
-  "blind_packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+  "blind_packet_digest": "ae1c54730b6614d8031317c1af8d9959dc811d18b5eb819e878986147ef71751",
   "blockers": [],
-  "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
-  "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+  "drawing_artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
+  "drawing_state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be",
   "evaluator_id": "fresh-worker-independent-review",
-  "history_cursor": 38,
+  "history_cursor": 40,
   "manifest_id": "resolved_79480b629220",
   "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
   "regions": [

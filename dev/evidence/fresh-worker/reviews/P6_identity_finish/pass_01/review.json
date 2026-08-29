@@ -6,15 +6,15 @@
   ],
   "corrections": [],
   "decision": "advance",
-  "drawing_artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
+  "drawing_artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
   "drawing_findings": [
     "No blanket confirmation or broad value band was added."
   ],
-  "drawing_state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
+  "drawing_state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a",
   "grammar_findings": [
     "Calibration and sparse fold budget are bound to the pass."
   ],
-  "history_cursor": 45,
+  "history_cursor": 48,
   "inter_pass_action_ids": [
     "FW-P6-01",
     "FW-P6-02",
@@ -31,7 +31,7 @@
     "No blanket confirmation or broad value band was added."
   ],
   "parent_review_digest": null,
-  "pass_memory_digest": "7ec36e0a1924d245844994caf6e913291fcbb05687e1105989a9db4b1408d434",
+  "pass_memory_digest": "1b0a40da65f2be6829cafe7ac8aa2f3b9dec70b22d5ed3ccf7237fb27261ae7c",
   "reference_authority_order": [
     "subject_reference"
   ],

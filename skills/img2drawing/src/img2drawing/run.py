@@ -9,7 +9,7 @@ from importlib import resources
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 from .canvas import CanvasEditor, CanvasInspector, CanvasRuntime
 from .core.action import AgentDrawingSession, DrawingAction
@@ -328,6 +328,54 @@ class DrawingRun:
         # Durability invariant: any successful state mutation is resumable.
         self.save_checkpoint()
 
+    def _require_stage_started(self, stage: str | None = None) -> int:
+        """Require the explicit lifecycle marker for the current stage."""
+        sid = stage or self.current_stage
+        if sid is None:
+            raise RuntimeError("no active stage")
+        self.progress.require_current(sid)
+        try:
+            return int(self.progress.started_cursor[sid])
+        except KeyError as exc:
+            raise RuntimeError(
+                f"stage_start({sid!r}) is required before drawing or review operations"
+            ) from exc
+
+    def _stage_actions(self, stage: str) -> tuple[Any, ...]:
+        if stage not in self.stage_by_id:
+            raise KeyError(f"unknown stage: {stage!r}")
+        try:
+            start = int(self.progress.started_cursor[stage])
+        except KeyError as exc:
+            raise RuntimeError(f"stage {stage!r} has not been started") from exc
+        return tuple(self.session.history.actions[start:self.session.history.cursor])
+
+    def _current_stroke(self, stroke_id: str):
+        sid = str(stroke_id)
+        for stroke in self.session.current_ir().strokes:
+            if str(stroke.stroke_id) == sid:
+                return stroke
+        return None
+
+    def _validate_target_action(self, action: DrawingAction) -> None:
+        target_kinds = {
+            "replace_stroke", "replace_segment", "soft_lift", "soft_lift_segment", "delete_stroke",
+        }
+        if action.kind not in target_kinds:
+            return
+        target = self._current_stroke(str(action.target_stroke_id))
+        if target is None:
+            raise ValueError(
+                f"{action.kind} target stroke does not exist in the current drawing: {action.target_stroke_id!r}"
+            )
+        if self.current_stage == "P6_identity_finish":
+            target_stage = str(target.stage or "")
+            if target_stage != "P6_identity_finish":
+                raise RuntimeError(
+                    "P6 cannot mutate an upstream-owned stroke; reopen its responsible stage "
+                    f"(target={action.target_stroke_id!r}, owner={target_stage or 'unknown'!r})"
+                )
+
     def _execute_draw(self,action: DrawingAction|dict[str,Any]):
         self._require_observation_lock()
         if self.current_stage is None:
@@ -345,6 +393,8 @@ class DrawingRun:
                 f"drawing action belongs to {normalized.stage}, "
                 f"current stage is {self.current_stage}"
             )
+        self._require_stage_started(normalized.stage)
+        self._validate_target_action(normalized)
 
         card = self._grammar_cards_by_stage.get(normalized.stage)
         binding_kinds={"draw_stroke", "replace_stroke", "replace_segment"}
@@ -392,6 +442,7 @@ class DrawingRun:
 
     def draw_many(self,actions: Iterable[DrawingAction|dict[str,Any]]):
         self._require_observation_lock()
+        self._require_stage_started()
         results=[self._execute_draw(a) for a in actions]
         # Batch durability without N checkpoint writes.
         self.save_checkpoint()
@@ -579,6 +630,7 @@ class DrawingRun:
     def _require_current_p3_artifacts(self):
         if self.current_stage != "P3_primary_masses":
             raise RuntimeError("visual fidelity closure is only available at P3_primary_masses")
+        self._require_stage_started("P3_primary_masses")
         artifacts = self._prepared.get("P3_primary_masses")
         if artifacts is None:
             raise RuntimeError("prepare_stage_review() must be called before visual fidelity review")
@@ -675,6 +727,7 @@ class DrawingRun:
         stage = stage or self.current_stage
         if stage not in {"P4_structural_connections", "P5_clean_blockin"}:
             raise RuntimeError("resolved-form review is available only at P4 or P5")
+        self._require_stage_started(stage)
         artifacts = self._prepared.get(stage)
         if artifacts is None:
             raise RuntimeError("prepare_stage_review() must be called before resolved-form review")
@@ -752,18 +805,87 @@ class DrawingRun:
         """Record P5 ownership handoff after the corresponding history edits."""
         if self.current_stage != "P5_clean_blockin":
             raise RuntimeError("construction retirement is only recorded during P5")
+        self._require_stage_started("P5_clean_blockin")
         if not isinstance(record, ConstructionRetirementRecord):
             raise TypeError("record_construction_retirement requires ConstructionRetirementRecord")
         if record.history_cursor != self.session.history.cursor:
             raise RuntimeError("construction retirement must bind to the current history cursor")
+
+        retired = tuple(str(item) for item in record.retired_stroke_ids)
+        ghosts = tuple(str(item) for item in record.retained_ghost_stroke_ids)
+        contours = tuple(str(item) for item in record.contour_stroke_ids)
+        if len(set(retired)) != len(retired) or len(set(ghosts)) != len(ghosts) or len(set(contours)) != len(contours):
+            raise ValueError("construction retirement stroke IDs must be unique")
+
+        stage_actions = self._stage_actions("P5_clean_blockin")
+        retirement_actions: dict[str, list[Any]] = {}
+        for item in stage_actions:
+            if item.action not in {"stroke.delete", "stroke.soft_lift", "stroke.segment_soft_lift"}:
+                continue
+            target_id = str(item.payload.get("stroke_id", ""))
+            if not target_id:
+                continue
+            # The target must have existed at the exact point before the edit;
+            # a fabricated erase record is not a retirement event.
+            before = self.session.history.state_at(max(0, int(item.seq) - 1))
+            if not any(str(stroke.stroke_id) == target_id for stroke in before.strokes):
+                raise ValueError(f"construction retirement target was not an existing stroke: {target_id!r}")
+            retirement_actions.setdefault(target_id, []).append(item)
+        missing_retirements = sorted(set(retired) - set(retirement_actions))
+        if missing_retirements:
+            raise ValueError(
+                "construction retirement requires an actual P5 delete/soft-lift for each retired stroke: "
+                + ", ".join(missing_retirements)
+            )
+
+        current_strokes = {str(stroke.stroke_id): stroke for stroke in self.session.current_ir().strokes}
+        missing_ghosts = sorted(set(ghosts) - set(current_strokes))
+        if missing_ghosts:
+            raise ValueError("retained ghost stroke does not exist in the current drawing: " + ", ".join(missing_ghosts))
+        missing_contours = sorted(set(contours) - set(current_strokes))
+        if missing_contours:
+            raise ValueError("contour owner stroke does not exist in the current drawing: " + ", ".join(missing_contours))
+        p5_owned = {
+            str(stroke.stroke_id)
+            for stroke in current_strokes.values()
+            if str(stroke.stage or "") == "P5_clean_blockin"
+        }
+        if not set(contours).issubset(p5_owned):
+            raise ValueError("contour ownership must reference active P5-owned strokes")
         self._construction_retirement = record
         self.save_checkpoint()
         return record
+
+    def identity_finish_counts(self) -> dict[str, int]:
+        """Derive bounded P6 stroke counts from the authoritative action history."""
+        actions = self._stage_actions("P6_identity_finish")
+        counts = {
+            "identity_stroke_count": 0,
+            "confirmation_stroke_count": 0,
+            "accent_stroke_count": 0,
+            "fold_stroke_count": 0,
+        }
+        for item in actions:
+            if item.action not in {"stroke.add", "stroke.replace", "stroke.segment_replace"}:
+                continue
+            role = str(item.role or "")
+            if not role and item.action in {"stroke.add", "stroke.replace"}:
+                role = str((item.payload.get("stroke") or {}).get("role") or "")
+            if role in {"identity", "form"}:
+                counts["identity_stroke_count"] += 1
+            elif role in {"restatement", "confirmation"}:
+                counts["confirmation_stroke_count"] += 1
+            elif role == "accent":
+                counts["accent_stroke_count"] += 1
+            elif role == "fold":
+                counts["fold_stroke_count"] += 1
+        return counts
 
     def prepare_identity_finish(self, profile: IdentityFinishProfile | None = None) -> dict[str, Any]:
         """Create the optional P6 preflight and actual-canvas calibration artifact."""
         if self.current_stage != "P6_identity_finish":
             raise RuntimeError("optional identity finish requires stage registry full_body_croquis_with_p6 and P6 current")
+        self._require_stage_started("P6_identity_finish")
         profile = profile or IdentityFinishProfile()
         decisions: dict[str, Any] = {}
         # Include the P3 visual gate explicitly when it exists.  Missing prior records
@@ -778,9 +900,9 @@ class DrawingRun:
                 "blockers": () if manifest is None else manifest.blockers,
             }
         self._identity_preflight = preflight_identity_finish(decisions, profile=profile)
-        self._calibration_sheet = CalibrationSheet.default(self.session.width, self.session.height)
         out = self.output_dir / "identity"
         out.mkdir(parents=True, exist_ok=True)
+        self._calibration_sheet = CalibrationSheet.default(self.session.width, self.session.height).render_artifacts(out)
         self._calibration_sheet.save(out / "calibration_sheet.json")
         (out / "preflight.json").write_text(json.dumps(self._identity_preflight.to_dict(), indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8")
         self.save_checkpoint()
@@ -789,6 +911,7 @@ class DrawingRun:
     def submit_identity_finish_manifest(self, manifest: IdentityFinishManifest) -> IdentityFinishManifest:
         if self.current_stage != "P6_identity_finish":
             raise RuntimeError("identity finish manifest requires P6 current")
+        self._require_stage_started("P6_identity_finish")
         if not isinstance(manifest, IdentityFinishManifest):
             raise TypeError("submit_identity_finish_manifest requires IdentityFinishManifest")
         if self._identity_preflight is None:
@@ -803,6 +926,44 @@ class DrawingRun:
             raise RuntimeError("identity manifest is stale for the current drawing state")
         if manifest.observation_lock_digest != self._require_observation_lock().observation_digest:
             raise RuntimeError("identity manifest is bound to a different observation lock")
+        calibration = self._calibration_sheet
+        if calibration is None or not calibration.artifact_sha256 or not calibration.artifact_50pct_sha256:
+            raise RuntimeError("P6 calibration artifacts are missing; render calibration before submission")
+        calibration_dir = self.output_dir / "identity"
+        calibration_paths = (
+            (calibration_dir / "calibration_sheet.png", calibration.artifact_sha256, calibration.artifact_size),
+            (calibration_dir / "calibration_sheet_50pct.png", calibration.artifact_50pct_sha256, calibration.artifact_50pct_size),
+        )
+        for path, expected_sha, expected_size in calibration_paths:
+            if not path.is_file() or sha256_file(path) != expected_sha:
+                raise RuntimeError(f"calibration artifact is missing or stale: {path.name}")
+            with Image.open(path) as image:
+                if expected_size is not None and tuple(image.size) != tuple(expected_size):
+                    raise RuntimeError(f"calibration artifact dimensions drifted: {path.name}")
+                if ImageChops.invert(image.convert("L")).getbbox() is None:
+                    raise RuntimeError(f"calibration artifact is blank: {path.name}")
+        artifacts = self._prepared.get("P6_identity_finish")
+        if artifacts is None:
+            raise RuntimeError("prepare_stage_review() must be called before submitting the P6 identity manifest")
+        assert_review_artifact_current(
+            artifacts,
+            current_state_sha256=self._state_sha(),
+            current_cursor=self.session.history.cursor,
+        )
+        if manifest.drawing_artifact_sha256 != artifacts.drawing.artifact_sha256:
+            raise RuntimeError("identity manifest is bound to a different P6 drawing artifact")
+        derived = self.identity_finish_counts()
+        declared = {
+            "identity_stroke_count": int(manifest.identity_stroke_count),
+            "confirmation_stroke_count": int(manifest.confirmation_stroke_count),
+            "accent_stroke_count": int(manifest.accent_stroke_count),
+            "fold_stroke_count": int(manifest.fold_stroke_count),
+        }
+        if declared != derived:
+            raise RuntimeError(
+                "identity manifest stroke counts do not match the P6 action history: "
+                f"declared={declared}, derived={derived}"
+            )
         self._identity_finish_manifest = manifest
         manifest.save(self.output_dir / "identity" / "identity_finish_manifest.json")
         self.save_checkpoint()
@@ -817,6 +978,7 @@ class DrawingRun:
         if stage is None:
             raise RuntimeError("no active stage")
         self.progress.require_current(stage)
+        self._require_stage_started(stage)
 
         out=self.output_dir/"reviews"/stage/f"pass_{len(self._reviews.get(stage,[]))+1:02d}"
         out.mkdir(parents=True,exist_ok=True)
@@ -946,6 +1108,7 @@ class DrawingRun:
         if stage is None:
             raise RuntimeError("no active stage")
         self.progress.require_current(stage)
+        self._require_stage_started(stage)
         artifacts=self._prepared.get(stage)
         if artifacts is None:
             raise RuntimeError(
@@ -1012,6 +1175,7 @@ class DrawingRun:
         if stage is None:
             raise RuntimeError("no active stage")
         self.progress.require_current(stage)
+        self._require_stage_started(stage)
 
         artifacts=self._prepared.get(stage)
         if artifacts is None:

@@ -1,0 +1,118 @@
+{
+  "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+  "blockers": [],
+  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "evaluator_id": "material-integration-independent-visual-review",
+  "history_cursor": 466,
+  "manifest_id": "resolved_5a4dce71fedf",
+  "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the face feature scaffold relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "face_feature_scaffold",
+      "subject_finding": "Subject relation for face feature scaffold was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the hair silhouette grouping relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "hair_silhouette_grouping",
+      "subject_finding": "Subject relation for hair silhouette grouping was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the garment contour and folds relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "garment_contour_and_folds",
+      "subject_finding": "Subject relation for garment contour and folds was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the joint contour continuity relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "joint_contour_continuity",
+      "subject_finding": "Subject relation for joint contour continuity was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the hands and footwear relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "hands_and_footwear",
+      "subject_finding": "Subject relation for hands and footwear was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the prop final topology relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "prop_final_topology",
+      "subject_finding": "Subject relation for prop final topology was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the contour ownership relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "contour_ownership",
+      "subject_finding": "Subject relation for contour ownership was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the construction retirement and line hierarchy relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "construction_retirement_and_line_hierarchy",
+      "subject_finding": "Subject relation for construction retirement and line hierarchy was inspected in the frozen reference."
+    }
+  ],
+  "schema": "img2drawing.resolved_form_manifest.v1",
+  "stage": "P5_clean_blockin"
+}

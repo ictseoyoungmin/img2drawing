@@ -4,48 +4,8 @@
   "correction_history": [],
   "inter_pass_actions": [
     {
-      "action_id": "R23-P6-L01",
-      "history_cursor": 468,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair silhouette must not own the face opening.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "contour_hair_left"
-    },
-    {
-      "action_id": "R23-P6-L02",
-      "history_cursor": 469,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair silhouette must not own the face opening.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "contour_hair_right"
-    },
-    {
-      "action_id": "R23-P6-L03",
-      "history_cursor": 470,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair mass needs grouped, selective ownership.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "hair_mass_left"
-    },
-    {
-      "action_id": "R23-P6-L04",
-      "history_cursor": 471,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair mass needs grouped, selective ownership.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "hair_mass_right"
-    },
-    {
       "action_id": "R23-P6-03",
-      "history_cursor": 472,
+      "history_cursor": 477,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "face_opening_left",
@@ -55,7 +15,7 @@
     },
     {
       "action_id": "R23-P6-04",
-      "history_cursor": 473,
+      "history_cursor": 478,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "face_opening_right",
@@ -65,7 +25,7 @@
     },
     {
       "action_id": "R23-P6-05",
-      "history_cursor": 474,
+      "history_cursor": 479,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "jaw_chin_relation",
@@ -75,7 +35,7 @@
     },
     {
       "action_id": "R23-P6-06",
-      "history_cursor": 475,
+      "history_cursor": 480,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "hair_group_outer_left",
@@ -85,7 +45,7 @@
     },
     {
       "action_id": "R23-P6-07",
-      "history_cursor": 476,
+      "history_cursor": 481,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "hair_group_outer_right",
@@ -95,7 +55,7 @@
     },
     {
       "action_id": "R23-P6-08",
-      "history_cursor": 477,
+      "history_cursor": 482,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "hair_part_and_bang",
@@ -105,7 +65,7 @@
     },
     {
       "action_id": "R23-P6-09",
-      "history_cursor": 478,
+      "history_cursor": 483,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "eye_line_relation",
@@ -115,7 +75,7 @@
     },
     {
       "action_id": "R23-P6-10",
-      "history_cursor": 479,
+      "history_cursor": 484,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "near_eye_pupil",
@@ -125,7 +85,7 @@
     },
     {
       "action_id": "R23-P6-11",
-      "history_cursor": 480,
+      "history_cursor": 485,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "far_eye_pupil",
@@ -135,7 +95,7 @@
     },
     {
       "action_id": "R23-P6-12",
-      "history_cursor": 481,
+      "history_cursor": 486,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "nose_plane",
@@ -145,7 +105,7 @@
     },
     {
       "action_id": "R23-P6-13",
-      "history_cursor": 482,
+      "history_cursor": 487,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "mouth_relation",
@@ -155,7 +115,7 @@
     },
     {
       "action_id": "R23-P6-14",
-      "history_cursor": 483,
+      "history_cursor": 488,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "jacket_fold_shoulder",
@@ -165,7 +125,7 @@
     },
     {
       "action_id": "R23-P6-15",
-      "history_cursor": 484,
+      "history_cursor": 489,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "jacket_fold_waist",
@@ -175,7 +135,7 @@
     },
     {
       "action_id": "R23-P6-16",
-      "history_cursor": 485,
+      "history_cursor": 490,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "jacket_fold_hem",
@@ -185,7 +145,7 @@
     },
     {
       "action_id": "R23-P6-17",
-      "history_cursor": 486,
+      "history_cursor": 491,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "near_elbow_rounding",
@@ -195,7 +155,7 @@
     },
     {
       "action_id": "R23-P6-18",
-      "history_cursor": 487,
+      "history_cursor": 492,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "near_knee_rounding",
@@ -205,7 +165,7 @@
     },
     {
       "action_id": "R23-P6-19",
-      "history_cursor": 488,
+      "history_cursor": 493,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "rifle_suppressor",
@@ -215,7 +175,7 @@
     },
     {
       "action_id": "R23-P6-20",
-      "history_cursor": 489,
+      "history_cursor": 494,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "rifle_barrel",
@@ -225,7 +185,7 @@
     },
     {
       "action_id": "R23-P6-21",
-      "history_cursor": 490,
+      "history_cursor": 495,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "rifle_receiver",
@@ -235,7 +195,7 @@
     },
     {
       "action_id": "R23-P6-22",
-      "history_cursor": 491,
+      "history_cursor": 496,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "rifle_scope",
@@ -245,7 +205,7 @@
     },
     {
       "action_id": "R23-P6-23",
-      "history_cursor": 492,
+      "history_cursor": 497,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "rifle_stock_cutout",
@@ -255,7 +215,7 @@
     },
     {
       "action_id": "R23-P6-24",
-      "history_cursor": 493,
+      "history_cursor": 498,
       "is_correction_action": false,
       "kind": "draw_stroke",
       "part": "sling_edge",
@@ -264,51 +224,11 @@
       "target_stroke_id": null
     }
   ],
-  "inter_pass_correction_actions": [
-    {
-      "action_id": "R23-P6-L01",
-      "history_cursor": 468,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair silhouette must not own the face opening.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "contour_hair_left"
-    },
-    {
-      "action_id": "R23-P6-L02",
-      "history_cursor": 469,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair silhouette must not own the face opening.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "contour_hair_right"
-    },
-    {
-      "action_id": "R23-P6-L03",
-      "history_cursor": 470,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair mass needs grouped, selective ownership.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "hair_mass_left"
-    },
-    {
-      "action_id": "R23-P6-L04",
-      "history_cursor": 471,
-      "is_correction_action": true,
-      "kind": "delete_stroke",
-      "part": null,
-      "reason": "Hair mass needs grouped, selective ownership.",
-      "stage": "P6_identity_finish",
-      "target_stroke_id": "hair_mass_right"
-    }
-  ],
+  "inter_pass_correction_actions": [],
   "memory_policy": [
-    "No prior stage review exists; begin from the stage contract and references.",
-    "Runtime memory never invents artistic conclusions.",
+    "This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.",
+    "Rebuild from the restored authoritative history, not from archived invalidated artifacts.",
+    "The reopen reason is Agent-authored evidence; runtime does not invent the correction.",
     "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
   ],
   "next_pass_index": 1,
@@ -317,8 +237,21 @@
   "previous_reported_corrections": [],
   "previous_review_digest": null,
   "prior_review_count": 0,
-  "reopen_context": null,
+  "reopen_context": {
+    "abandoned_review_digests": [],
+    "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_04",
+    "discovered_in_stage": "P6_identity_finish",
+    "findings": [
+      "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+    ],
+    "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+    "reopen_id": "reopen_04",
+    "role": "invalidated_downstream",
+    "stage": "P6_identity_finish",
+    "target_stage": "P5_clean_blockin",
+    "trigger_review_digest": null
+  },
   "schema": "img2drawing.stage_pass_memory.v2",
   "stage": "P6_identity_finish",
-  "state": "cold_start"
+  "state": "reopen_restart"
 }

@@ -4,8 +4,8 @@
   "drawing": {
     "stage": "P3_primary_masses",
     "path": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/current_drawing.png",
-    "artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
-    "state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+    "artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
+    "state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
     "history_cursor": 16
   },
   "authority_order": [

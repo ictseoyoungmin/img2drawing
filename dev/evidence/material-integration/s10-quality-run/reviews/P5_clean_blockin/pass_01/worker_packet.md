@@ -1,17 +1,27 @@
 # Autonomous worker packet — P5_clean_blockin / pass 1
 
 ## Stage pass memory
-- state: **cold_start**
+- state: **reopen_restart**
 - prior review count: 0
-- previous decision: _none_
-- carried concerns: _none_
-- inter-pass correction actions: _none_
+- previous decision: _archived / invalidated by reopen_
+- carried concerns: _read reopen context below_
 
-This is the first review pass for this stage. Start from the stage contract and references.
+### REOPEN CONTEXT
+- reopen id: `reopen_04`
+- role: **reopened_target**
+- target stage: `P5_clean_blockin`
+- discovered in: `P6_identity_finish`
+- reason: P6 preflight found that the P5 hair silhouette owns the face opening.
+
+#### Findings that caused the reopen
+- hair/face ownership is an upstream structural mismatch; P6 cannot repair it
+
+Do not reuse archived downstream judgements as current evidence. Rebuild from the restored authoritative history.
 
 ### Memory policy
-- No prior stage review exists; begin from the stage contract and references.
-- Runtime memory never invents artistic conclusions.
+- This active review epoch was restarted by an upstream/downstream reopen; read reopen_context before drawing.
+- Rebuild from the restored authoritative history, not from archived invalidated artifacts.
+- The reopen reason is Agent-authored evidence; runtime does not invent the correction.
 - Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime.
 
 ## Frozen stage representation contract

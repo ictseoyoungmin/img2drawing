@@ -4,8 +4,8 @@
   "drawing": {
     "stage": "P2_primary_axes",
     "path": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/current_drawing.png",
-    "artifact_sha256": "5c765c7b5c3219ea35d2ed427c877f722f19e2b195c94b083af1fc28b22a1103",
-    "state_sha256": "b750b122aefc86fad1bf7055b9dcceccf0cfd74aa42d9ed2a6baf3932f768db8",
+    "artifact_sha256": "b33706408062e25adca1e81d13539ff67f27ec2eb45b00293b61a2c24bdd0b62",
+    "state_sha256": "66e21596783714823c0997332432d57b256a3452092e0ba33b41a09b938a235d",
     "history_cursor": 10
   },
   "authority_order": [

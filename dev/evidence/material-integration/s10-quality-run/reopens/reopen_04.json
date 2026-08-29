@@ -1,0 +1,34 @@
+{
+  "abandoned_action_ids": [],
+  "abandoned_local_review_ids": [
+    "P5_clean_blockin:pass_01:face_breaks",
+    "P5_clean_blockin:pass_01:handoff_prop_garment",
+    "P5_clean_blockin:pass_01:waist_breaks",
+    "P5_clean_blockin:pass_01:whole_silhouette"
+  ],
+  "abandoned_review_digests": {
+    "P5_clean_blockin": [
+      "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073"
+    ]
+  },
+  "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_04",
+  "discovered_in_stage": "P6_identity_finish",
+  "findings": [
+    "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+  ],
+  "invalidated_stages": [
+    "P5_clean_blockin",
+    "P6_identity_finish"
+  ],
+  "policy": "reopen_earliest_responsible_stage",
+  "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+  "reopen_id": "reopen_04",
+  "restored_cursor": 466,
+  "restored_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "schema": "img2drawing.reopen_record.v1",
+  "semantic_authority": "agent",
+  "source_cursor": 468,
+  "source_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "target_stage": "P5_clean_blockin",
+  "trigger_review_digest": null
+}

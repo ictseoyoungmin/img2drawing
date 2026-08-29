@@ -58,8 +58,9 @@ def check_s10() -> None:
         raise AssertionError("S10 quality run is not closed")
     final = base / "s10-quality-run/final/drawing.png"
     _nonblank(final)
-    if _sha(final) != "9fb40326de73d3d70f682a4424e786b1b606f3f685cd6608b69317afb479f3e5":
-        raise AssertionError("S10 final artifact hash drifted; refresh the evidence report")
+    expected_final_sha = str(report.get("final_drawing_sha256", ""))
+    if not expected_final_sha or _sha(final) != expected_final_sha:
+        raise AssertionError("S10 final artifact hash drifted or is absent from the evidence report")
     gate = _load(base / "s10_residual_gate.json")
     if gate.get("status") != "closed" or len(gate.get("regions", [])) != 8:
         raise AssertionError("S10 residual gate is incomplete")
@@ -103,6 +104,21 @@ def check_s14() -> None:
     _relative_text_scan(report_path.parent)
 
 
+def check_s14b(evidence_dir: Path | None = None) -> None:
+    """Verify a real packaged fresh-worker return, if one was supplied.
+
+    Unlike ``check_s14`` this path never treats the repository's scripted fixture
+    as a fresh-worker run.  The strict verifier is intentionally fail-closed when
+    the external evidence directory has not been returned yet.
+    """
+    tools_dir = ROOT / "dev/tools"
+    if str(tools_dir) not in sys.path:
+        sys.path.insert(0, str(tools_dir))
+    from verify_strict_fresh_worker import verify
+
+    verify((ROOT / "dev/evidence/strict-fresh-worker") if evidence_dir is None else evidence_dir)
+
+
 def check_s15() -> None:
     report = _load(ROOT / "dev/release/r23/release_manifest.json")
     if report.get("version") != "0.5.2.dev23" or report.get("revision") != "R23":
@@ -116,14 +132,22 @@ def check_s15() -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--check", required=True, choices=("s10", "s11-s12", "s14", "s15"))
+    parser.add_argument("--check", required=True, choices=("s10", "s11-s12", "s14", "s14b", "s15"))
+    parser.add_argument(
+        "--evidence-dir", type=Path,
+        help="returned strict fresh-worker evidence directory (used by --check s14b)",
+    )
     args = parser.parse_args()
     try:
-        {"s10": check_s10, "s11-s12": check_s11_s12, "s14": check_s14, "s15": check_s15}[args.check]()
+        checks = {"s10": check_s10, "s11-s12": check_s11_s12, "s14": check_s14, "s15": check_s15}
+        if args.check == "s14b":
+            check_s14b(args.evidence_dir)
+        else:
+            checks[args.check]()
     except Exception as exc:
         print(f"{args.check.upper().replace('-', '_')}_VERIFICATION_FAIL: {exc}", file=sys.stderr)
         return 1
-    marker = {"s10": "S10_VERIFICATION_PASS", "s11-s12": "S11_S12_VERIFICATION_PASS", "s14": "S14_VERIFICATION_PASS", "s15": "S15_VERIFICATION_PASS"}[args.check]
+    marker = {"s10": "S10_VERIFICATION_PASS", "s11-s12": "S11_S12_VERIFICATION_PASS", "s14": "S14_VERIFICATION_PASS", "s14b": "S14B_VERIFICATION_PASS", "s15": "S15_VERIFICATION_PASS"}[args.check]
     print(marker)
     return 0
 

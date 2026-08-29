@@ -6,11 +6,11 @@
   ],
   "corrections": [],
   "decision": "advance",
-  "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
+  "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
   "drawing_findings": [
     "No resolved-form blocker remains."
   ],
-  "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+  "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
   "grammar_findings": [
     "Hair, garment, joints, and line roles are explicit."
   ],

@@ -1,20 +1,22 @@
 {
   "accent_stroke_count": 0,
-  "calibration_sheet_digest": "338a7cbf17cc03814da7eb5ebab74d78d304d0d6d4dd69f01e40399e808c19ac",
+  "calibration_sheet_digest": "108843d449ffa1eb0dbf006cbaad24dff50b690f87f3510bfe3f9f2eed413c67",
   "confirmation_stroke_count": 0,
   "decision": "advance",
-  "drawing_artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
-  "drawing_state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
+  "drawing_artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
+  "drawing_state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a",
   "evaluator_id": "fresh-worker-independent-review",
   "evidence_refs": [
     "reviews/P6_identity_finish/pass_01/current_drawing.png",
-    "identity/calibration_sheet.json"
+    "identity/calibration_sheet.json",
+    "identity/calibration_sheet.png",
+    "identity/calibration_sheet_50pct.png"
   ],
   "face_relation": "Face opening, eye line, nose and mouth remain inside grouped hair.",
   "fold_stroke_count": 2,
   "garment_mark_count": 2,
   "hair_group_count": 2,
-  "history_cursor": 45,
+  "history_cursor": 48,
   "identity_stroke_count": 4,
   "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
   "profile": {

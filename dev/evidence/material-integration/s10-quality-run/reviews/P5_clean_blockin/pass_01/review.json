@@ -6,15 +6,15 @@
   ],
   "corrections": [],
   "decision": "advance",
-  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+  "drawing_artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
   "drawing_findings": [
     "Whole-view inspection found no unresolved region blocker."
   ],
-  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "drawing_state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24",
   "grammar_findings": [
     "Line hierarchy is sparse and uses calibrated pencil roles."
   ],
-  "history_cursor": 466,
+  "history_cursor": 474,
   "inter_pass_action_ids": [
     "P5-C1",
     "P5-C2",
@@ -121,7 +121,14 @@
     "P5-L66",
     "P5-L67",
     "P5-L68",
-    "P5-L69"
+    "P5-L69",
+    "R23-P5-retire-01",
+    "R23-P5-retire-02",
+    "R23-P5-retire-03",
+    "R23-P5-retire-04",
+    "R23-P5-retire-05",
+    "R23-P5-retire-06",
+    "R23-P5-retire-07"
   ],
   "local_review_ids": [],
   "observations": [
@@ -131,7 +138,7 @@
     "Whole-view inspection found no unresolved region blocker."
   ],
   "parent_review_digest": null,
-  "pass_memory_digest": "c34d40533f049c4da1781c94e4ed84d53c005df8c19342c3c9986073bcb37785",
+  "pass_memory_digest": "40152dd99b4e573d45006b49fe92c09ffb2db23260e2dd2861b4d809b17a558a",
   "reference_authority_order": [
     "subject_reference"
   ],

@@ -1,14 +1,14 @@
 {
-  "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+  "blind_packet_digest": "dab814b7de67c44acf2d11ccd4406676b1eb39d5788212c34fddd38a3f154e89",
   "decision": "advance",
-  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
-  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "drawing_artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
+  "drawing_state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24",
   "evaluator_id": "material-integration-independent-visual-review",
   "findings": [
     "Subject and current drawing were inspected side-by-side and in whole view."
   ],
-  "history_cursor": 466,
-  "manifest_digest": "b4dfca6aaebb29ebdca4be342d6ed0a7140b2a544fc2d971c51b4e6cd413645f",
+  "history_cursor": 474,
+  "manifest_digest": "b4463df616972b6c548736122d9c824605fbeef9ac28e734d5c5eb59080c0803",
   "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
   "rationale": "Resolved-form boundary is accepted only after all eight regions were checked.",
   "schema": "img2drawing.resolved_form_review.v1",

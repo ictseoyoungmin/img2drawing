@@ -174,14 +174,49 @@ def build(out: Path = OUT) -> Path:
         "far_arm_joint_chain", "waist_leg_openings", "footwear_connection", "attached_object_structure",
     ))
 
-    # A construction-retirement record binds the contour ownership handoff.
+    # First close the existing P5 process boundary as the historical fixture did.
+    # The P6 inspection below then discovers that hair owns too much of the face
+    # opening and explicitly reopens P5 before any correction is authored.
     run.progress.current_index = 4
     run.stage_start("P5_clean_blockin")
+    _resolved(run, "P5_clean_blockin", out, (
+        "face_feature_scaffold", "hair_silhouette_grouping", "garment_contour_and_folds", "joint_contour_continuity",
+        "hands_and_footwear", "prop_final_topology", "contour_ownership", "construction_retirement_and_line_hierarchy",
+    ))
+    run.stage_start("P6_identity_finish")
+    run.prepare_identity_finish(IdentityFinishProfile())
+    run.reopen_stage(
+        "P5_clean_blockin",
+        discovered_in_stage="P6_identity_finish",
+        reason="P6 preflight found that the P5 hair silhouette owns the face opening.",
+        findings=("hair/face ownership is an upstream structural mismatch; P6 cannot repair it",),
+    )
+
+    # A construction-retirement record binds the corrected P5 ownership handoff.
+    run.stage_start("P5_clean_blockin")
+    # The previous positive fixture incorrectly repaired the hair/face ownership
+    # defect in P6.  Make the structural correction in P5, then review the
+    # resolved form from the repaired state before entering identity finish.
+    p5_retire_ids = (
+        "cranial_crown_arc", "cranial_left_temporal_jaw", "cranial_right_temporal_jaw",
+        "contour_hair_left", "contour_hair_right", "hair_mass_left", "hair_mass_right",
+    )
+    run.draw_many([
+        DrawingAction(
+            action_id=f"R23-P5-retire-{index:02d}", kind="delete_stroke", stage="P5_clean_blockin",
+            target_stroke_id=stroke_id, tool={"preset": "hard_eraser"},
+            observation_id=run.observation_lock.observation_id,
+            source_observation=f"P5 ownership review for {stroke_id}.",
+            reason="Move hair/face ownership correction to the earliest responsible structural stage.",
+            revision_of=stroke_id,
+        )
+        for index, stroke_id in enumerate(p5_retire_ids, 1)
+    ])
     def retire_before_advance(active: DrawingRun) -> None:
         active.record_construction_retirement(ConstructionRetirementRecord(
-            retired_stroke_ids=("cranial_crown_arc", "cranial_left_temporal_jaw", "cranial_right_temporal_jaw"),
+            retired_stroke_ids=p5_retire_ids,
             retained_ghost_stroke_ids=("crown_face_spine_support", "leg_chain_left_support", "leg_chain_right_brace", "rifle_major_axis", "pelvis_rhythm"),
-            contour_stroke_ids=("contour_hair_left", "contour_hair_right", "contour_jacket_left", "contour_jacket_right", "contour_rifle_left", "contour_rifle_right"),
+            contour_stroke_ids=("contour_jacket_left", "contour_jacket_right", "contour_rifle_left", "contour_rifle_right"),
             history_cursor=active.session.history.cursor,
             reason="P5 transfers ownership from construction to selective clean contour while retaining only five explanatory ghosts.",
         ))
@@ -189,18 +224,10 @@ def build(out: Path = OUT) -> Path:
         "face_feature_scaffold", "hair_silhouette_grouping", "garment_contour_and_folds", "joint_contour_continuity",
         "hands_and_footwear", "prop_final_topology", "contour_ownership", "construction_retirement_and_line_hierarchy",
     ), before_advance=retire_before_advance)
-    run.progress.current_index = 5
-
     # P6 is optional and strictly bounded. These strokes open the face from the
     # hair mass, add sparse garment folds, and split the rifle into major parts.
+    run.stage_start("P6_identity_finish")
     run.prepare_identity_finish(IdentityFinishProfile())
-    lifts = [
-        DrawingAction(action_id="R23-P6-L01", kind="delete_stroke", stage="P6_identity_finish", target_stroke_id="contour_hair_left", tool={"preset": "hard_eraser"}, observation_id=run.observation_lock.observation_id, source_observation="Remove blanket head circle; preserve grouped hair evidence.", reason="Hair silhouette must not own the face opening.", revision_of="contour_hair_left"),
-        DrawingAction(action_id="R23-P6-L02", kind="delete_stroke", stage="P6_identity_finish", target_stroke_id="contour_hair_right", tool={"preset": "hard_eraser"}, observation_id=run.observation_lock.observation_id, source_observation="Remove blanket head circle; preserve grouped hair evidence.", reason="Hair silhouette must not own the face opening.", revision_of="contour_hair_right"),
-        DrawingAction(action_id="R23-P6-L03", kind="delete_stroke", stage="P6_identity_finish", target_stroke_id="hair_mass_left", tool={"preset": "hard_eraser"}, observation_id=run.observation_lock.observation_id, source_observation="Remove broad mass that collapses hair and face.", reason="Hair mass needs grouped, selective ownership.", revision_of="hair_mass_left"),
-        DrawingAction(action_id="R23-P6-L04", kind="delete_stroke", stage="P6_identity_finish", target_stroke_id="hair_mass_right", tool={"preset": "hard_eraser"}, observation_id=run.observation_lock.observation_id, source_observation="Remove broad mass that collapses hair and face.", reason="Hair mass needs grouped, selective ownership.", revision_of="hair_mass_right"),
-    ]
-    run.draw_many(lifts)
     strokes = [
         _action(run, 3, "face_opening_left", ((207, 96), (213, 88), (226, 84), (240, 86)), role="identity", grade="2H", tool="form_pencil"),
         _action(run, 4, "face_opening_right", ((240, 86), (253, 90), (264, 101), (260, 116), (249, 128)), role="identity", grade="2H", tool="form_pencil"),
@@ -228,6 +255,7 @@ def build(out: Path = OUT) -> Path:
     run.draw_many(strokes)
     artifacts = run.prepare_stage_review("P6_identity_finish")
     profile = IdentityFinishProfile()
+    counts = run.identity_finish_counts()
     identity = IdentityFinishManifest(
         profile=profile,
         drawing_state_sha256=run._state_sha(),
@@ -238,11 +266,16 @@ def build(out: Path = OUT) -> Path:
         face_relation="Face opening is smaller than and separated from the grouped hair silhouette.",
         hair_group_count=3,
         garment_mark_count=3,
-        identity_stroke_count=20,
-        confirmation_stroke_count=4,
-        accent_stroke_count=2,
-        fold_stroke_count=3,
-        evidence_refs=("reviews/P6_identity_finish/pass_01/current_drawing.png", "identity/calibration_sheet.json"),
+        identity_stroke_count=counts["identity_stroke_count"],
+        confirmation_stroke_count=counts["confirmation_stroke_count"],
+        accent_stroke_count=counts["accent_stroke_count"],
+        fold_stroke_count=counts["fold_stroke_count"],
+        evidence_refs=(
+            "reviews/P6_identity_finish/pass_01/current_drawing.png",
+            "identity/calibration_sheet.json",
+            "identity/calibration_sheet.png",
+            "identity/calibration_sheet_50pct.png",
+        ),
         evaluator_id="material-integration-independent-visual-review",
         decision="advance",
         rationale="Selective identity finish accepted after whole-view and face/garment/rifle crops were inspected.",
@@ -277,19 +310,29 @@ def build(out: Path = OUT) -> Path:
             for old, new in replacements.items():
                 text = text.replace(old, new)
             path.write_text(text, encoding="utf-8")
+    portable_reopens = []
+    for item in run._reopens:
+        text = json.dumps(item.to_dict(), ensure_ascii=False)
+        for old, new in replacements.items():
+            text = text.replace(old, new)
+        portable_reopens.append(json.loads(text))
     report = {
         "schema": "img2drawing.material_integration_quality_run.v1",
         "status": "closed",
         "source_checkpoint": "dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json",
         "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
         "final_drawing": str(result.final_drawing.relative_to(ROOT)),
+        "final_drawing_sha256": sha256_file(result.final_drawing),
         "review_manifest": str(result.review_manifest.relative_to(ROOT)),
         "stage_registry": run.stage_registry_name,
         "current_stage": run.current_stage,
         "advanced_stages": list(run.progress.advanced_reviews),
+        "reopens": portable_reopens,
         "observation_lock_digest": run.observation_lock.observation_digest,
         "construction_retirement": run.construction_retirement.to_dict(),
         "identity_finish_manifest": run.identity_finish_manifest.to_dict(),
+        "identity_finish_counts": run.identity_finish_counts(),
+        "calibration_sheet": run.calibration_sheet.to_dict(),
         "timelapse_status": result.timelapse_status,
         "visual_authority": "independent whole-view and local-crop inspection; metrics are diagnostic only",
     }

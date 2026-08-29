@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/strict_fresh_worker_report.schema.json",
+  "title": "Strict packaged fresh-worker return report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "status", "mechanical_artistic_separation", "package_sha256", "subject_sha256", "worker_session_id", "evaluator_session_id", "run_dir", "visual_review_path"],
+  "properties": {
+    "schema": {"const": "img2drawing.strict_fresh_worker_report.v1"},
+    "status": {"const": "closed"},
+    "mechanical_artistic_separation": {"const": true},
+    "package_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "subject_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "worker_session_id": {"type": "string", "minLength": 1},
+    "evaluator_session_id": {"type": "string", "minLength": 1},
+    "run_dir": {"type": "string", "minLength": 1},
+    "visual_review_path": {"type": "string", "minLength": 1}
+  }
+}

@@ -1,20 +1,31 @@
 {
+  "artifact_50pct_sha256": "6411888de0566117a13f881432789f95b9c371956d59b5bc3edc9f7aede30539",
+  "artifact_50pct_size": [
+    256,
+    384
+  ],
+  "artifact_sha256": "a6c2fced32525b79d359322ccdfb61b5a121aec15b3079171e05736900c6009c",
+  "artifact_size": [
+    512,
+    768
+  ],
   "canvas_size": [
     512,
     768
   ],
-  "digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
-  "rationale": "Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+  "digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+  "rationale": "Profile pending inspection of the rendered actual-size and 50%-scale calibration artifacts.",
   "samples": [
     {
+      "curve": "straight",
       "points": [
         [
           51.2,
           76.80000000000001
         ],
         [
-          230.4,
-          67.584
+          256.0,
+          76.80000000000001
         ],
         [
           460.8,
@@ -23,7 +34,7 @@
       ],
       "pressure": 0.24,
       "role": "construction",
-      "sample_id": "pressure_01",
+      "sample_id": "straight_01",
       "taper": {
         "end": 0.2032,
         "peak": 0.24,
@@ -31,23 +42,28 @@
       }
     },
     {
+      "curve": "c_curve",
       "points": [
         [
           51.2,
-          111.36000000000001
+          134.4
         ],
         [
-          230.4,
-          102.144
+          174.08,
+          102.72
+        ],
+        [
+          332.8,
+          102.72
         ],
         [
           460.8,
-          111.36000000000001
+          134.4
         ]
       ],
       "pressure": 0.4,
       "role": "construction",
-      "sample_id": "pressure_02",
+      "sample_id": "c_curve_02",
       "taper": {
         "end": 0.23199999999999998,
         "peak": 0.4,
@@ -55,23 +71,28 @@
       }
     },
     {
+      "curve": "s_curve",
       "points": [
         [
           51.2,
-          145.92000000000002
+          192.0
         ],
         [
-          230.4,
-          136.704
+          174.08,
+          160.32
+        ],
+        [
+          337.92,
+          223.68
         ],
         [
           460.8,
-          145.92000000000002
+          192.0
         ]
       ],
       "pressure": 0.56,
       "role": "form",
-      "sample_id": "pressure_03",
+      "sample_id": "s_curve_03",
       "taper": {
         "end": 0.26080000000000003,
         "peak": 0.56,
@@ -79,23 +100,28 @@
       }
     },
     {
+      "curve": "taper_in",
       "points": [
         [
           51.2,
-          180.48000000000002
+          249.6
         ],
         [
-          230.4,
-          171.264
+          174.08,
+          235.2
+        ],
+        [
+          337.92,
+          249.6
         ],
         [
           460.8,
-          180.48000000000002
+          255.35999999999999
         ]
       ],
       "pressure": 0.72,
       "role": "form",
-      "sample_id": "pressure_04",
+      "sample_id": "taper_in_04",
       "taper": {
         "end": 0.28959999999999997,
         "peak": 0.72,
@@ -103,23 +129,28 @@
       }
     },
     {
+      "curve": "taper_out",
       "points": [
         [
           51.2,
-          215.04000000000002
+          312.96
         ],
         [
-          230.4,
-          205.824
+          174.08,
+          307.2
+        ],
+        [
+          337.92,
+          292.8
         ],
         [
           460.8,
-          215.04000000000002
+          307.2
         ]
       ],
       "pressure": 0.88,
       "role": "accent",
-      "sample_id": "pressure_05",
+      "sample_id": "taper_out_05",
       "taper": {
         "end": 0.3184,
         "peak": 0.88,

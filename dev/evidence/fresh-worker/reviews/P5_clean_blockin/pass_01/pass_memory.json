@@ -142,9 +142,50 @@
       "reason": null,
       "stage": "P5_clean_blockin",
       "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-retire-01",
+      "history_cursor": 39,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Transfer primary mass ownership to the selected clean contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "FW-P3-01"
+    },
+    {
+      "action_id": "FW-P5-retire-02",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Transfer primary mass ownership to the selected clean contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "FW-P3-02"
     }
   ],
-  "inter_pass_correction_actions": [],
+  "inter_pass_correction_actions": [
+    {
+      "action_id": "FW-P5-retire-01",
+      "history_cursor": 39,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Transfer primary mass ownership to the selected clean contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "FW-P3-01"
+    },
+    {
+      "action_id": "FW-P5-retire-02",
+      "history_cursor": 40,
+      "is_correction_action": true,
+      "kind": "delete_stroke",
+      "part": null,
+      "reason": "Transfer primary mass ownership to the selected clean contour.",
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": "FW-P3-02"
+    }
+  ],
   "memory_policy": [
     "No prior stage review exists; begin from the stage contract and references.",
     "Runtime memory never invents artistic conclusions.",

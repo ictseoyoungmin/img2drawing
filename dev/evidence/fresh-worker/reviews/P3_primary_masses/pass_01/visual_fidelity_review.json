@@ -1,14 +1,14 @@
 {
-  "blind_packet_digest": "6fee9faccade1467a7420ffbcc85df37acca9d95de6a8519a0938957c62165b0",
+  "blind_packet_digest": "294a387ddd3595994c4fc0b125d206e601133406c4f94eed4fd553b2659c0258",
   "decision": "advance",
-  "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
-  "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+  "drawing_artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
+  "drawing_state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
   "evaluator_id": "fresh-worker-independent-review",
   "findings": [
     "Whole view and subject comparison were inspected before process rationale."
   ],
   "history_cursor": 16,
-  "manifest_digest": "7cb17bf32d9b7420e5f1926ec6e27a6f5a873e9ed7fbab23f1d96d49c3837720",
+  "manifest_digest": "3d184625ac0603a6fcf3546e7b33e4e4efdbb582a412f0bcb3de31c481da3239",
   "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
   "rationale": "All required macro regions are closed.",
   "schema": "img2drawing.visual_fidelity_review.v1",

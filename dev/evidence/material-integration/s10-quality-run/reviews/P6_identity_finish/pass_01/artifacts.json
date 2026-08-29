@@ -4,9 +4,9 @@
   "drawing": {
     "stage": "P6_identity_finish",
     "path": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/current_drawing.png",
-    "artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
-    "state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
-    "history_cursor": 493
+    "artifact_sha256": "a5095127803b1ba5b6cb8cb0d0df5720796c5454de6af3bd0672c9f1d843d506",
+    "state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b",
+    "history_cursor": 498
   },
   "authority_order": [
     "subject_reference"

@@ -1,21 +1,32 @@
 {
   "calibration_sheet": {
+    "artifact_50pct_sha256": "e32324271699dfc3fe882d73953c5ebbff01e3d392b1e0e1e59168b71af7a7d0",
+    "artifact_50pct_size": [
+      256,
+      401
+    ],
+    "artifact_sha256": "6a73826fc13792ba08b721a910e1546033ff1886a6b83b40178dadf63d3572bd",
+    "artifact_size": [
+      512,
+      802
+    ],
     "canvas_size": [
       512,
       802
     ],
-    "digest": "338a7cbf17cc03814da7eb5ebab74d78d304d0d6d4dd69f01e40399e808c19ac",
-    "rationale": "Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+    "digest": "108843d449ffa1eb0dbf006cbaad24dff50b690f87f3510bfe3f9f2eed413c67",
+    "rationale": "Profile pending inspection of the rendered actual-size and 50%-scale calibration artifacts.",
     "samples": [
       {
+        "curve": "straight",
         "points": [
           [
             51.2,
             80.2
           ],
           [
-            230.4,
-            70.57600000000001
+            256.0,
+            80.2
           ],
           [
             460.8,
@@ -24,7 +35,7 @@
         ],
         "pressure": 0.24,
         "role": "construction",
-        "sample_id": "pressure_01",
+        "sample_id": "straight_01",
         "taper": {
           "end": 0.2032,
           "peak": 0.24,
@@ -32,23 +43,28 @@
         }
       },
       {
+        "curve": "c_curve",
         "points": [
           [
             51.2,
-            116.28999999999999
+            140.35
           ],
           [
-            230.4,
-            106.666
+            174.08,
+            107.26749999999998
+          ],
+          [
+            332.8,
+            107.26749999999998
           ],
           [
             460.8,
-            116.28999999999999
+            140.35
           ]
         ],
         "pressure": 0.4,
         "role": "construction",
-        "sample_id": "pressure_02",
+        "sample_id": "c_curve_02",
         "taper": {
           "end": 0.23199999999999998,
           "peak": 0.4,
@@ -56,23 +72,28 @@
         }
       },
       {
+        "curve": "s_curve",
         "points": [
           [
             51.2,
-            152.38
+            200.5
           ],
           [
-            230.4,
-            142.756
+            174.08,
+            167.4175
+          ],
+          [
+            337.92,
+            233.5825
           ],
           [
             460.8,
-            152.38
+            200.5
           ]
         ],
         "pressure": 0.56,
         "role": "form",
-        "sample_id": "pressure_03",
+        "sample_id": "s_curve_03",
         "taper": {
           "end": 0.26080000000000003,
           "peak": 0.56,
@@ -80,23 +101,28 @@
         }
       },
       {
+        "curve": "taper_in",
         "points": [
           [
             51.2,
-            188.46999999999997
+            260.65
           ],
           [
-            230.4,
-            178.84599999999998
+            174.08,
+            245.61249999999998
+          ],
+          [
+            337.92,
+            260.65
           ],
           [
             460.8,
-            188.46999999999997
+            266.66499999999996
           ]
         ],
         "pressure": 0.72,
         "role": "form",
-        "sample_id": "pressure_04",
+        "sample_id": "taper_in_04",
         "taper": {
           "end": 0.28959999999999997,
           "peak": 0.72,
@@ -104,23 +130,28 @@
         }
       },
       {
+        "curve": "taper_out",
         "points": [
           [
             51.2,
-            224.56
+            326.815
           ],
           [
-            230.4,
-            214.936
+            174.08,
+            320.8
+          ],
+          [
+            337.92,
+            305.7625
           ],
           [
             460.8,
-            224.56
+            320.8
           ]
         ],
         "pressure": 0.88,
         "role": "accent",
-        "sample_id": "pressure_05",
+        "sample_id": "taper_out_05",
         "taper": {
           "end": 0.3184,
           "peak": 0.88,
@@ -138,7 +169,7 @@
       "FW-P5-03",
       "FW-P5-04"
     ],
-    "history_cursor": 38,
+    "history_cursor": 40,
     "reason": "Fresh worker transfers mass ownership to selected contour while retaining gesture ghosts.",
     "retained_ghost_stroke_ids": [
       "FW-P1-01",
@@ -155,21 +186,23 @@
   "grammar_cards": [],
   "identity_finish_manifest": {
     "accent_stroke_count": 0,
-    "calibration_sheet_digest": "338a7cbf17cc03814da7eb5ebab74d78d304d0d6d4dd69f01e40399e808c19ac",
+    "calibration_sheet_digest": "108843d449ffa1eb0dbf006cbaad24dff50b690f87f3510bfe3f9f2eed413c67",
     "confirmation_stroke_count": 0,
     "decision": "advance",
-    "drawing_artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
-    "drawing_state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
+    "drawing_artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
+    "drawing_state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a",
     "evaluator_id": "fresh-worker-independent-review",
     "evidence_refs": [
       "reviews/P6_identity_finish/pass_01/current_drawing.png",
-      "identity/calibration_sheet.json"
+      "identity/calibration_sheet.json",
+      "identity/calibration_sheet.png",
+      "identity/calibration_sheet_50pct.png"
     ],
     "face_relation": "Face opening, eye line, nose and mouth remain inside grouped hair.",
     "fold_stroke_count": 2,
     "garment_mark_count": 2,
     "hair_group_count": 2,
-    "history_cursor": 45,
+    "history_cursor": 48,
     "identity_stroke_count": 4,
     "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
     "profile": {
@@ -259,12 +292,12 @@
   "observation_reopens": [],
   "progress": {
     "advanced_reviews": {
-      "P1_gesture": "1256908a0d12e5f663e896e1bc21027940c437c41fbf70a4be09280b61bf2853",
-      "P2_primary_axes": "a99938770cc3d463ac604667ceead253809e694f8f8bd6a25217840f2bec18ed",
-      "P3_primary_masses": "14a8e5fc0c2ca767794bdb873e5760679f5e21a3964a4066be4608c2e957072d",
-      "P4_structural_connections": "59bfe67a5e9ea410fc5a206361faf2c6c0fc903146757d26aa3342621351cf87",
-      "P5_clean_blockin": "7719441319df884db351608ed2489342276d4a08d3003cfd54f25be39a6ad8aa",
-      "P6_identity_finish": "d78f13dfe57399d3bcc446e0360094af7717bca040bb25048e7896773b2bcb65"
+      "P1_gesture": "46e040dccf05d34f7d8cb9a1843dc4cfa13953acc6b32882dca80ecd13be00bd",
+      "P2_primary_axes": "de15bbdd8cd82f5f8520ebad8a270f2e36741c1addffc7029bd129e5ccf5d8fe",
+      "P3_primary_masses": "0a2a2a3a52e71478f3f839b3b60f61fe77fc9c3fe1d9b853471d1fffb84aca8f",
+      "P4_structural_connections": "0feb39f3d64f2a1b5b9f02c3234114d8f2a4f6fd3bc540d111390f682a386791",
+      "P5_clean_blockin": "272c1f7e340169a525f25fbf8d1493038c0bf65650cea98fca1cfb4264e4f3b9",
+      "P6_identity_finish": "4b9831638e743906f91b8d7dc973da10c728f87d41485ac427530bea373bf9c4"
     },
     "current_stage": null
   },
@@ -308,8 +341,8 @@
   "region_closure_manifests": {
     "P3_primary_masses": {
       "blockers": [],
-      "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
-      "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+      "drawing_artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
+      "drawing_state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
       "evaluator_id": "fresh-worker-independent-review",
       "history_cursor": 16,
       "manifest_id": "manifest_0c347f045bf8",
@@ -420,10 +453,10 @@
   "require_grammar_card_bindings": false,
   "resolved_form_manifests": {
     "P4_structural_connections": {
-      "blind_packet_digest": "54c6585b9a1600a9f3422198317f682cdb43d94357f482e768c445711c5dc133",
+      "blind_packet_digest": "a4fd8f3997c58354a251f80a82d423bba50901bc2c6cf132ba47d9d065558c0d",
       "blockers": [],
-      "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
-      "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+      "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
+      "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
       "evaluator_id": "fresh-worker-independent-review",
       "history_cursor": 22,
       "manifest_id": "resolved_37ff22fe8503",
@@ -530,12 +563,12 @@
       "stage": "P4_structural_connections"
     },
     "P5_clean_blockin": {
-      "blind_packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+      "blind_packet_digest": "ae1c54730b6614d8031317c1af8d9959dc811d18b5eb819e878986147ef71751",
       "blockers": [],
-      "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
-      "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+      "drawing_artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
+      "drawing_state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be",
       "evaluator_id": "fresh-worker-independent-review",
-      "history_cursor": 38,
+      "history_cursor": 40,
       "manifest_id": "resolved_79480b629220",
       "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
       "regions": [
@@ -642,32 +675,32 @@
   },
   "resolved_form_reviews": {
     "P4_structural_connections": {
-      "blind_packet_digest": "54c6585b9a1600a9f3422198317f682cdb43d94357f482e768c445711c5dc133",
+      "blind_packet_digest": "a4fd8f3997c58354a251f80a82d423bba50901bc2c6cf132ba47d9d065558c0d",
       "decision": "advance",
-      "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
-      "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+      "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
+      "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
       "evaluator_id": "fresh-worker-independent-review",
       "findings": [
         "Subject and drawing were inspected in whole view and local relations."
       ],
       "history_cursor": 22,
-      "manifest_digest": "18dfcfa825f4aee43290a806cc167713981c679aa1ca353a3f5977154c217f18",
+      "manifest_digest": "9460eb131bb4a7acdcdc600df1f512e383d6970ccb42a41c4ae3165746b58e98",
       "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
       "rationale": "All eight resolved-form regions are closed.",
       "schema": "img2drawing.resolved_form_review.v1",
       "stage": "P4_structural_connections"
     },
     "P5_clean_blockin": {
-      "blind_packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+      "blind_packet_digest": "ae1c54730b6614d8031317c1af8d9959dc811d18b5eb819e878986147ef71751",
       "decision": "advance",
-      "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
-      "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+      "drawing_artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
+      "drawing_state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be",
       "evaluator_id": "fresh-worker-independent-review",
       "findings": [
         "Subject and drawing were inspected in whole view and local relations."
       ],
-      "history_cursor": 38,
-      "manifest_digest": "848c3452659cb1748676ad90113995c5f931b02d6bac03254150dadab4adc66c",
+      "history_cursor": 40,
+      "manifest_digest": "81de848da12bbc7fd630daf4abd629a292c5a0e25719dbc31882e8af567ecf3d",
       "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
       "rationale": "All eight resolved-form regions are closed.",
       "schema": "img2drawing.resolved_form_review.v1",
@@ -684,11 +717,11 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "232157859d4eb4385abeb68b0adfdd33dba1986a39036d47609593f82c28b2ea",
+        "drawing_artifact_sha256": "d001b11de1f5641bc1e343989ca6ce20f18e266d9ed1f11361c351a2149215f1",
         "drawing_findings": [
           "Gesture preserves the new subject's head, spine and weight transfer."
         ],
-        "drawing_state_sha256": "14654fd18857c562ff8409f4c18539fc60066d7c9b01c402c70e796fb82bb497",
+        "drawing_state_sha256": "c471142a7fee666ffe255787c276897b4132d59480a15893a80c4356d871c632",
         "grammar_findings": [
           "Construction/form roles remain sparse and pressure-aware."
         ],
@@ -732,11 +765,11 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "5c765c7b5c3219ea35d2ed427c877f722f19e2b195c94b083af1fc28b22a1103",
+        "drawing_artifact_sha256": "b33706408062e25adca1e81d13539ff67f27ec2eb45b00293b61a2c24bdd0b62",
         "drawing_findings": [
           "Axes preserve shoulder/pelvis counter-tilt and both limb paths."
         ],
-        "drawing_state_sha256": "b750b122aefc86fad1bf7055b9dcceccf0cfd74aa42d9ed2a6baf3932f768db8",
+        "drawing_state_sha256": "66e21596783714823c0997332432d57b256a3452092e0ba33b41a09b938a235d",
         "grammar_findings": [
           "Construction/form roles remain sparse and pressure-aware."
         ],
@@ -781,11 +814,11 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+        "drawing_artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
         "drawing_findings": [
           "No unresolved macro region blocker remains."
         ],
-        "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+        "drawing_state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
         "grammar_findings": [
           "Mass hierarchy is subordinate to the original geometry authority."
         ],
@@ -830,11 +863,11 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
+        "drawing_artifact_sha256": "05bdfbaaa05538e46a6727cd025f3994fc0a9c195cbfc44d51191a73b27f2b12",
         "drawing_findings": [
           "No resolved-form blocker remains."
         ],
-        "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+        "drawing_state_sha256": "d5a152cde96a27c44956b0a45ce18ead4360c026e386aca9a484fecb39cde96f",
         "grammar_findings": [
           "Hair, garment, joints, and line roles are explicit."
         ],
@@ -879,15 +912,15 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+        "drawing_artifact_sha256": "60245e18244d70cdb2a5b6cc5bdfb9cc8565c38ac7bb08898ff625fdb622e5d1",
         "drawing_findings": [
           "No resolved-form blocker remains."
         ],
-        "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+        "drawing_state_sha256": "f938fc24fe88bb30222f15e452889682a6f5957713ddf12a090480ccbe6046be",
         "grammar_findings": [
           "Hair, garment, joints, and line roles are explicit."
         ],
-        "history_cursor": 38,
+        "history_cursor": 40,
         "inter_pass_action_ids": [
           "FW-P5-01",
           "FW-P5-02",
@@ -902,7 +935,9 @@
           "FW-P5-11",
           "FW-P5-12",
           "FW-P5-13",
-          "FW-P5-14"
+          "FW-P5-14",
+          "FW-P5-retire-01",
+          "FW-P5-retire-02"
         ],
         "local_review_ids": [],
         "observations": [
@@ -912,7 +947,7 @@
           "No resolved-form blocker remains."
         ],
         "parent_review_digest": null,
-        "pass_memory_digest": "3b695065396e52d678fe1d3b92de0dfd339a72f23a191067103085d4e6ad1c26",
+        "pass_memory_digest": "adb85e14a6a580365d83f8531b98540d26dc7c64aeb4ee5421f3abc79b246ce8",
         "reference_authority_order": [
           "subject_reference"
         ],
@@ -938,15 +973,15 @@
         ],
         "corrections": [],
         "decision": "advance",
-        "drawing_artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
+        "drawing_artifact_sha256": "2f840ed8be67407c4f13c9dc624e1c19c139d8e6be1de2044c9fe9ccf832b178",
         "drawing_findings": [
           "No blanket confirmation or broad value band was added."
         ],
-        "drawing_state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
+        "drawing_state_sha256": "5a2df8893f443ca714f96b2090f2a3940e83a28ca9ec7603c6d3797a4ae09c1a",
         "grammar_findings": [
           "Calibration and sparse fold budget are bound to the pass."
         ],
-        "history_cursor": 45,
+        "history_cursor": 48,
         "inter_pass_action_ids": [
           "FW-P6-01",
           "FW-P6-02",
@@ -963,7 +998,7 @@
           "No blanket confirmation or broad value band was added."
         ],
         "parent_review_digest": null,
-        "pass_memory_digest": "7ec36e0a1924d245844994caf6e913291fcbb05687e1105989a9db4b1408d434",
+        "pass_memory_digest": "1b0a40da65f2be6829cafe7ac8aa2f3b9dec70b22d5ed3ccf7237fb27261ae7c",
         "reference_authority_order": [
           "subject_reference"
         ],
@@ -1310,16 +1345,16 @@
   "version": "0.5.2.dev23",
   "visual_fidelity_reviews": {
     "P3_primary_masses": {
-      "blind_packet_digest": "6fee9faccade1467a7420ffbcc85df37acca9d95de6a8519a0938957c62165b0",
+      "blind_packet_digest": "294a387ddd3595994c4fc0b125d206e601133406c4f94eed4fd553b2659c0258",
       "decision": "advance",
-      "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
-      "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+      "drawing_artifact_sha256": "11cb32ea7b40b2c8bb7090adf6d627b50a7e8c41156c7662ee7692604eb7b25b",
+      "drawing_state_sha256": "91aee588524b2287ab665a70d4dd35dc368dc9a8d9979ca2ca367f95d937f148",
       "evaluator_id": "fresh-worker-independent-review",
       "findings": [
         "Whole view and subject comparison were inspected before process rationale."
       ],
       "history_cursor": 16,
-      "manifest_digest": "7cb17bf32d9b7420e5f1926ec6e27a6f5a873e9ed7fbab23f1d96d49c3837720",
+      "manifest_digest": "3d184625ac0603a6fcf3546e7b33e4e4efdbb582a412f0bcb3de31c481da3239",
       "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
       "rationale": "All required macro regions are closed.",
       "schema": "img2drawing.visual_fidelity_review.v1",

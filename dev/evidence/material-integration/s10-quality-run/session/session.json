@@ -38730,10 +38730,15 @@
       "logical_time": 465.0,
       "part": null,
       "payload": {
-        "label": "stage_start:P5_clean_blockin"
+        "label": "stage_reopen:P5_clean_blockin"
       },
       "provenance": {
-        "api": "DrawingRun/0.5.2-r23"
+        "discovered_in_stage": "P6_identity_finish",
+        "findings": [
+          "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+        ],
+        "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+        "reopen_id": "reopen_04"
       },
       "role": null,
       "seq": 466,
@@ -38745,10 +38750,10 @@
       "logical_time": 466.0,
       "part": null,
       "payload": {
-        "label": "stage_end:P5_clean_blockin"
+        "label": "stage_start:P5_clean_blockin"
       },
       "provenance": {
-        "review_digest": "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073"
+        "api": "DrawingRun/0.5.2-r23"
       },
       "role": null,
       "seq": 467,
@@ -38760,7 +38765,7 @@
       "logical_time": 467.0,
       "part": null,
       "payload": {
-        "stroke_id": "contour_hair_left",
+        "stroke_id": "cranial_crown_arc",
         "tool_state": {
           "erase_strength": 1.0,
           "grain": 0.0,
@@ -38776,15 +38781,15 @@
         }
       },
       "provenance": {
-        "action_id": "R23-P6-L01",
+        "action_id": "R23-P5-retire-01",
         "observation_id": "sniper-girl-quality:observation:01",
-        "reason": "Hair silhouette must not own the face opening.",
-        "revision_of": "contour_hair_left",
-        "source_observation": "Remove blanket head circle; preserve grouped hair evidence."
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "cranial_crown_arc",
+        "source_observation": "P5 ownership review for cranial_crown_arc."
       },
       "role": null,
       "seq": 468,
-      "stage": "P6_identity_finish",
+      "stage": "P5_clean_blockin",
       "tool_state": {
         "erase_strength": 1.0,
         "grain": 0.0,
@@ -38804,7 +38809,7 @@
       "logical_time": 468.0,
       "part": null,
       "payload": {
-        "stroke_id": "contour_hair_right",
+        "stroke_id": "cranial_left_temporal_jaw",
         "tool_state": {
           "erase_strength": 1.0,
           "grain": 0.0,
@@ -38820,15 +38825,15 @@
         }
       },
       "provenance": {
-        "action_id": "R23-P6-L02",
+        "action_id": "R23-P5-retire-02",
         "observation_id": "sniper-girl-quality:observation:01",
-        "reason": "Hair silhouette must not own the face opening.",
-        "revision_of": "contour_hair_right",
-        "source_observation": "Remove blanket head circle; preserve grouped hair evidence."
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "cranial_left_temporal_jaw",
+        "source_observation": "P5 ownership review for cranial_left_temporal_jaw."
       },
       "role": null,
       "seq": 469,
-      "stage": "P6_identity_finish",
+      "stage": "P5_clean_blockin",
       "tool_state": {
         "erase_strength": 1.0,
         "grain": 0.0,
@@ -38848,7 +38853,7 @@
       "logical_time": 469.0,
       "part": null,
       "payload": {
-        "stroke_id": "hair_mass_left",
+        "stroke_id": "cranial_right_temporal_jaw",
         "tool_state": {
           "erase_strength": 1.0,
           "grain": 0.0,
@@ -38864,15 +38869,15 @@
         }
       },
       "provenance": {
-        "action_id": "R23-P6-L03",
+        "action_id": "R23-P5-retire-03",
         "observation_id": "sniper-girl-quality:observation:01",
-        "reason": "Hair mass needs grouped, selective ownership.",
-        "revision_of": "hair_mass_left",
-        "source_observation": "Remove broad mass that collapses hair and face."
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "cranial_right_temporal_jaw",
+        "source_observation": "P5 ownership review for cranial_right_temporal_jaw."
       },
       "role": null,
       "seq": 470,
-      "stage": "P6_identity_finish",
+      "stage": "P5_clean_blockin",
       "tool_state": {
         "erase_strength": 1.0,
         "grain": 0.0,
@@ -38892,6 +38897,138 @@
       "logical_time": 470.0,
       "part": null,
       "payload": {
+        "stroke_id": "contour_hair_left",
+        "tool_state": {
+          "erase_strength": 1.0,
+          "grain": 0.0,
+          "hardness": 0.96,
+          "jitter": 0.0,
+          "mode": "erase",
+          "opacity": 1.0,
+          "pressure": 0.82,
+          "taper_in": 0.05,
+          "taper_out": 0.05,
+          "tool": "hard_eraser",
+          "width": 14.0
+        }
+      },
+      "provenance": {
+        "action_id": "R23-P5-retire-04",
+        "observation_id": "sniper-girl-quality:observation:01",
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "contour_hair_left",
+        "source_observation": "P5 ownership review for contour_hair_left."
+      },
+      "role": null,
+      "seq": 471,
+      "stage": "P5_clean_blockin",
+      "tool_state": {
+        "erase_strength": 1.0,
+        "grain": 0.0,
+        "hardness": 0.96,
+        "jitter": 0.0,
+        "mode": "erase",
+        "opacity": 1.0,
+        "pressure": 0.82,
+        "taper_in": 0.05,
+        "taper_out": 0.05,
+        "tool": "hard_eraser",
+        "width": 14.0
+      }
+    },
+    {
+      "action": "stroke.delete",
+      "logical_time": 471.0,
+      "part": null,
+      "payload": {
+        "stroke_id": "contour_hair_right",
+        "tool_state": {
+          "erase_strength": 1.0,
+          "grain": 0.0,
+          "hardness": 0.96,
+          "jitter": 0.0,
+          "mode": "erase",
+          "opacity": 1.0,
+          "pressure": 0.82,
+          "taper_in": 0.05,
+          "taper_out": 0.05,
+          "tool": "hard_eraser",
+          "width": 14.0
+        }
+      },
+      "provenance": {
+        "action_id": "R23-P5-retire-05",
+        "observation_id": "sniper-girl-quality:observation:01",
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "contour_hair_right",
+        "source_observation": "P5 ownership review for contour_hair_right."
+      },
+      "role": null,
+      "seq": 472,
+      "stage": "P5_clean_blockin",
+      "tool_state": {
+        "erase_strength": 1.0,
+        "grain": 0.0,
+        "hardness": 0.96,
+        "jitter": 0.0,
+        "mode": "erase",
+        "opacity": 1.0,
+        "pressure": 0.82,
+        "taper_in": 0.05,
+        "taper_out": 0.05,
+        "tool": "hard_eraser",
+        "width": 14.0
+      }
+    },
+    {
+      "action": "stroke.delete",
+      "logical_time": 472.0,
+      "part": null,
+      "payload": {
+        "stroke_id": "hair_mass_left",
+        "tool_state": {
+          "erase_strength": 1.0,
+          "grain": 0.0,
+          "hardness": 0.96,
+          "jitter": 0.0,
+          "mode": "erase",
+          "opacity": 1.0,
+          "pressure": 0.82,
+          "taper_in": 0.05,
+          "taper_out": 0.05,
+          "tool": "hard_eraser",
+          "width": 14.0
+        }
+      },
+      "provenance": {
+        "action_id": "R23-P5-retire-06",
+        "observation_id": "sniper-girl-quality:observation:01",
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "revision_of": "hair_mass_left",
+        "source_observation": "P5 ownership review for hair_mass_left."
+      },
+      "role": null,
+      "seq": 473,
+      "stage": "P5_clean_blockin",
+      "tool_state": {
+        "erase_strength": 1.0,
+        "grain": 0.0,
+        "hardness": 0.96,
+        "jitter": 0.0,
+        "mode": "erase",
+        "opacity": 1.0,
+        "pressure": 0.82,
+        "taper_in": 0.05,
+        "taper_out": 0.05,
+        "tool": "hard_eraser",
+        "width": 14.0
+      }
+    },
+    {
+      "action": "stroke.delete",
+      "logical_time": 473.0,
+      "part": null,
+      "payload": {
         "stroke_id": "hair_mass_right",
         "tool_state": {
           "erase_strength": 1.0,
@@ -38908,15 +39045,15 @@
         }
       },
       "provenance": {
-        "action_id": "R23-P6-L04",
+        "action_id": "R23-P5-retire-07",
         "observation_id": "sniper-girl-quality:observation:01",
-        "reason": "Hair mass needs grouped, selective ownership.",
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
         "revision_of": "hair_mass_right",
-        "source_observation": "Remove broad mass that collapses hair and face."
+        "source_observation": "P5 ownership review for hair_mass_right."
       },
       "role": null,
-      "seq": 471,
-      "stage": "P6_identity_finish",
+      "seq": 474,
+      "stage": "P5_clean_blockin",
       "tool_state": {
         "erase_strength": 1.0,
         "grain": 0.0,
@@ -38932,8 +39069,38 @@
       }
     },
     {
+      "action": "snapshot",
+      "logical_time": 474.0,
+      "part": null,
+      "payload": {
+        "label": "stage_end:P5_clean_blockin"
+      },
+      "provenance": {
+        "review_digest": "a41070f85eddd958685d931788e88ae1d4772bf53c310e61559e4b66b5f094ad"
+      },
+      "role": null,
+      "seq": 475,
+      "stage": "P5_clean_blockin",
+      "tool_state": null
+    },
+    {
+      "action": "snapshot",
+      "logical_time": 475.0,
+      "part": null,
+      "payload": {
+        "label": "stage_start:P6_identity_finish"
+      },
+      "provenance": {
+        "api": "DrawingRun/0.5.2-r23"
+      },
+      "role": null,
+      "seq": 476,
+      "stage": "P6_identity_finish",
+      "tool_state": null
+    },
+    {
       "action": "stroke.add",
-      "logical_time": 471.0,
+      "logical_time": 476.0,
       "part": "face_opening_left",
       "payload": {
         "stroke": {
@@ -39005,7 +39172,7 @@
         "source_observation": "R23 observation lock: face_opening_left relationship checked against subject."
       },
       "role": "identity",
-      "seq": 472,
+      "seq": 477,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-03",
@@ -39034,7 +39201,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 472.0,
+      "logical_time": 477.0,
       "part": "face_opening_right",
       "payload": {
         "stroke": {
@@ -39111,7 +39278,7 @@
         "source_observation": "R23 observation lock: face_opening_right relationship checked against subject."
       },
       "role": "identity",
-      "seq": 473,
+      "seq": 478,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-04",
@@ -39140,7 +39307,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 473.0,
+      "logical_time": 478.0,
       "part": "jaw_chin_relation",
       "payload": {
         "stroke": {
@@ -39212,7 +39379,7 @@
         "source_observation": "R23 observation lock: jaw_chin_relation relationship checked against subject."
       },
       "role": "form",
-      "seq": 474,
+      "seq": 479,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-05",
@@ -39241,7 +39408,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 474.0,
+      "logical_time": 479.0,
       "part": "hair_group_outer_left",
       "payload": {
         "stroke": {
@@ -39323,7 +39490,7 @@
         "source_observation": "R23 observation lock: hair_group_outer_left relationship checked against subject."
       },
       "role": "form",
-      "seq": 475,
+      "seq": 480,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-06",
@@ -39352,7 +39519,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 475.0,
+      "logical_time": 480.0,
       "part": "hair_group_outer_right",
       "payload": {
         "stroke": {
@@ -39439,7 +39606,7 @@
         "source_observation": "R23 observation lock: hair_group_outer_right relationship checked against subject."
       },
       "role": "form",
-      "seq": 476,
+      "seq": 481,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-07",
@@ -39468,7 +39635,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 476.0,
+      "logical_time": 481.0,
       "part": "hair_part_and_bang",
       "payload": {
         "stroke": {
@@ -39540,7 +39707,7 @@
         "source_observation": "R23 observation lock: hair_part_and_bang relationship checked against subject."
       },
       "role": "identity",
-      "seq": 477,
+      "seq": 482,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-08",
@@ -39569,7 +39736,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 477.0,
+      "logical_time": 482.0,
       "part": "eye_line_relation",
       "payload": {
         "stroke": {
@@ -39641,7 +39808,7 @@
         "source_observation": "R23 observation lock: eye_line_relation relationship checked against subject."
       },
       "role": "identity",
-      "seq": 478,
+      "seq": 483,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-09",
@@ -39670,7 +39837,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 478.0,
+      "logical_time": 483.0,
       "part": "near_eye_pupil",
       "payload": {
         "stroke": {
@@ -39737,7 +39904,7 @@
         "source_observation": "R23 observation lock: near_eye_pupil relationship checked against subject."
       },
       "role": "accent",
-      "seq": 479,
+      "seq": 484,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-10",
@@ -39766,7 +39933,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 479.0,
+      "logical_time": 484.0,
       "part": "far_eye_pupil",
       "payload": {
         "stroke": {
@@ -39833,7 +40000,7 @@
         "source_observation": "R23 observation lock: far_eye_pupil relationship checked against subject."
       },
       "role": "accent",
-      "seq": 480,
+      "seq": 485,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-11",
@@ -39862,7 +40029,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 480.0,
+      "logical_time": 485.0,
       "part": "nose_plane",
       "payload": {
         "stroke": {
@@ -39929,7 +40096,7 @@
         "source_observation": "R23 observation lock: nose_plane relationship checked against subject."
       },
       "role": "identity",
-      "seq": 481,
+      "seq": 486,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-12",
@@ -39958,7 +40125,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 481.0,
+      "logical_time": 486.0,
       "part": "mouth_relation",
       "payload": {
         "stroke": {
@@ -40025,7 +40192,7 @@
         "source_observation": "R23 observation lock: mouth_relation relationship checked against subject."
       },
       "role": "identity",
-      "seq": 482,
+      "seq": 487,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-13",
@@ -40054,7 +40221,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 482.0,
+      "logical_time": 487.0,
       "part": "jacket_fold_shoulder",
       "payload": {
         "stroke": {
@@ -40121,7 +40288,7 @@
         "source_observation": "R23 observation lock: jacket_fold_shoulder relationship checked against subject."
       },
       "role": "form",
-      "seq": 483,
+      "seq": 488,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-14",
@@ -40150,7 +40317,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 483.0,
+      "logical_time": 488.0,
       "part": "jacket_fold_waist",
       "payload": {
         "stroke": {
@@ -40217,7 +40384,7 @@
         "source_observation": "R23 observation lock: jacket_fold_waist relationship checked against subject."
       },
       "role": "form",
-      "seq": 484,
+      "seq": 489,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-15",
@@ -40246,7 +40413,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 484.0,
+      "logical_time": 489.0,
       "part": "jacket_fold_hem",
       "payload": {
         "stroke": {
@@ -40313,7 +40480,7 @@
         "source_observation": "R23 observation lock: jacket_fold_hem relationship checked against subject."
       },
       "role": "form",
-      "seq": 485,
+      "seq": 490,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-16",
@@ -40342,7 +40509,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 485.0,
+      "logical_time": 490.0,
       "part": "near_elbow_rounding",
       "payload": {
         "stroke": {
@@ -40414,7 +40581,7 @@
         "source_observation": "R23 observation lock: near_elbow_rounding relationship checked against subject."
       },
       "role": "form",
-      "seq": 486,
+      "seq": 491,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-17",
@@ -40443,7 +40610,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 486.0,
+      "logical_time": 491.0,
       "part": "near_knee_rounding",
       "payload": {
         "stroke": {
@@ -40515,7 +40682,7 @@
         "source_observation": "R23 observation lock: near_knee_rounding relationship checked against subject."
       },
       "role": "form",
-      "seq": 487,
+      "seq": 492,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-18",
@@ -40544,7 +40711,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 487.0,
+      "logical_time": 492.0,
       "part": "rifle_suppressor",
       "payload": {
         "stroke": {
@@ -40611,7 +40778,7 @@
         "source_observation": "R23 observation lock: rifle_suppressor relationship checked against subject."
       },
       "role": "form",
-      "seq": 488,
+      "seq": 493,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-19",
@@ -40640,7 +40807,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 488.0,
+      "logical_time": 493.0,
       "part": "rifle_barrel",
       "payload": {
         "stroke": {
@@ -40707,7 +40874,7 @@
         "source_observation": "R23 observation lock: rifle_barrel relationship checked against subject."
       },
       "role": "form",
-      "seq": 489,
+      "seq": 494,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-20",
@@ -40736,7 +40903,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 489.0,
+      "logical_time": 494.0,
       "part": "rifle_receiver",
       "payload": {
         "stroke": {
@@ -40803,7 +40970,7 @@
         "source_observation": "R23 observation lock: rifle_receiver relationship checked against subject."
       },
       "role": "form",
-      "seq": 490,
+      "seq": 495,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-21",
@@ -40832,7 +40999,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 490.0,
+      "logical_time": 495.0,
       "part": "rifle_scope",
       "payload": {
         "stroke": {
@@ -40899,7 +41066,7 @@
         "source_observation": "R23 observation lock: rifle_scope relationship checked against subject."
       },
       "role": "identity",
-      "seq": 491,
+      "seq": 496,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-22",
@@ -40928,7 +41095,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 491.0,
+      "logical_time": 496.0,
       "part": "rifle_stock_cutout",
       "payload": {
         "stroke": {
@@ -41000,7 +41167,7 @@
         "source_observation": "R23 observation lock: rifle_stock_cutout relationship checked against subject."
       },
       "role": "form",
-      "seq": 492,
+      "seq": 497,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-23",
@@ -41029,7 +41196,7 @@
     },
     {
       "action": "stroke.add",
-      "logical_time": 492.0,
+      "logical_time": 497.0,
       "part": "sling_edge",
       "payload": {
         "stroke": {
@@ -41096,7 +41263,7 @@
         "source_observation": "R23 observation lock: sling_edge relationship checked against subject."
       },
       "role": "form",
-      "seq": 493,
+      "seq": 498,
       "stage": "P6_identity_finish",
       "tool_state": {
         "action_id": "R23-P6-24",
@@ -41125,16 +41292,16 @@
     },
     {
       "action": "snapshot",
-      "logical_time": 493.0,
+      "logical_time": 498.0,
       "part": null,
       "payload": {
         "label": "stage_end:P6_identity_finish"
       },
       "provenance": {
-        "review_digest": "5105f70fbbe27ab5bad0192d81e340fe95aa79a7a4f9f88d24e2f4dfda5d5ae8"
+        "review_digest": "cf742ab7c4d6df48bdaa9f39f95cda36c85728ce39235e92c17d7c18600bb79c"
       },
       "role": null,
-      "seq": 494,
+      "seq": 499,
       "stage": "P6_identity_finish",
       "tool_state": null
     }
@@ -41143,10 +41310,10 @@
     "height": 768,
     "width": 512
   },
-  "cursor": 494,
+  "cursor": 499,
   "digests": {
-    "action_log_sha256": "bd9a95b559a6fe88f33adf8759f337a4d8bd064d75a368e1e09f7968d2953288",
-    "state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa"
+    "action_log_sha256": "4dfe5eb8f7284e2fe666313050d64fa03b8bd527a4d3ff8f7078b70b8386e938",
+    "state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b"
   },
   "environment": {
     "numpy": "2.2.6",
@@ -42916,48 +43083,78 @@
         "target_stroke_id": "elbow_transition_right"
       },
       {
-        "action_id": "R23-P6-L01",
+        "action_id": "R23-P5-retire-01",
         "history_cursor": 468,
         "is_correction_action": true,
         "kind": "delete_stroke",
         "part": null,
-        "reason": "Hair silhouette must not own the face opening.",
-        "stage": "P6_identity_finish",
-        "target_stroke_id": "contour_hair_left"
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_crown_arc"
       },
       {
-        "action_id": "R23-P6-L02",
+        "action_id": "R23-P5-retire-02",
         "history_cursor": 469,
         "is_correction_action": true,
         "kind": "delete_stroke",
         "part": null,
-        "reason": "Hair silhouette must not own the face opening.",
-        "stage": "P6_identity_finish",
-        "target_stroke_id": "contour_hair_right"
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_left_temporal_jaw"
       },
       {
-        "action_id": "R23-P6-L03",
+        "action_id": "R23-P5-retire-03",
         "history_cursor": 470,
         "is_correction_action": true,
         "kind": "delete_stroke",
         "part": null,
-        "reason": "Hair mass needs grouped, selective ownership.",
-        "stage": "P6_identity_finish",
-        "target_stroke_id": "hair_mass_left"
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "cranial_right_temporal_jaw"
       },
       {
-        "action_id": "R23-P6-L04",
+        "action_id": "R23-P5-retire-04",
         "history_cursor": 471,
         "is_correction_action": true,
         "kind": "delete_stroke",
         "part": null,
-        "reason": "Hair mass needs grouped, selective ownership.",
-        "stage": "P6_identity_finish",
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_left"
+      },
+      {
+        "action_id": "R23-P5-retire-05",
+        "history_cursor": 472,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "contour_hair_right"
+      },
+      {
+        "action_id": "R23-P5-retire-06",
+        "history_cursor": 473,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": "hair_mass_left"
+      },
+      {
+        "action_id": "R23-P5-retire-07",
+        "history_cursor": 474,
+        "is_correction_action": true,
+        "kind": "delete_stroke",
+        "part": null,
+        "reason": "Move hair/face ownership correction to the earliest responsible structural stage.",
+        "stage": "P5_clean_blockin",
         "target_stroke_id": "hair_mass_right"
       },
       {
         "action_id": "R23-P6-03",
-        "history_cursor": 472,
+        "history_cursor": 477,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "face_opening_left",
@@ -42967,7 +43164,7 @@
       },
       {
         "action_id": "R23-P6-04",
-        "history_cursor": 473,
+        "history_cursor": 478,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "face_opening_right",
@@ -42977,7 +43174,7 @@
       },
       {
         "action_id": "R23-P6-05",
-        "history_cursor": 474,
+        "history_cursor": 479,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "jaw_chin_relation",
@@ -42987,7 +43184,7 @@
       },
       {
         "action_id": "R23-P6-06",
-        "history_cursor": 475,
+        "history_cursor": 480,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "hair_group_outer_left",
@@ -42997,7 +43194,7 @@
       },
       {
         "action_id": "R23-P6-07",
-        "history_cursor": 476,
+        "history_cursor": 481,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "hair_group_outer_right",
@@ -43007,7 +43204,7 @@
       },
       {
         "action_id": "R23-P6-08",
-        "history_cursor": 477,
+        "history_cursor": 482,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "hair_part_and_bang",
@@ -43017,7 +43214,7 @@
       },
       {
         "action_id": "R23-P6-09",
-        "history_cursor": 478,
+        "history_cursor": 483,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "eye_line_relation",
@@ -43027,7 +43224,7 @@
       },
       {
         "action_id": "R23-P6-10",
-        "history_cursor": 479,
+        "history_cursor": 484,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "near_eye_pupil",
@@ -43037,7 +43234,7 @@
       },
       {
         "action_id": "R23-P6-11",
-        "history_cursor": 480,
+        "history_cursor": 485,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "far_eye_pupil",
@@ -43047,7 +43244,7 @@
       },
       {
         "action_id": "R23-P6-12",
-        "history_cursor": 481,
+        "history_cursor": 486,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "nose_plane",
@@ -43057,7 +43254,7 @@
       },
       {
         "action_id": "R23-P6-13",
-        "history_cursor": 482,
+        "history_cursor": 487,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "mouth_relation",
@@ -43067,7 +43264,7 @@
       },
       {
         "action_id": "R23-P6-14",
-        "history_cursor": 483,
+        "history_cursor": 488,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "jacket_fold_shoulder",
@@ -43077,7 +43274,7 @@
       },
       {
         "action_id": "R23-P6-15",
-        "history_cursor": 484,
+        "history_cursor": 489,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "jacket_fold_waist",
@@ -43087,7 +43284,7 @@
       },
       {
         "action_id": "R23-P6-16",
-        "history_cursor": 485,
+        "history_cursor": 490,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "jacket_fold_hem",
@@ -43097,7 +43294,7 @@
       },
       {
         "action_id": "R23-P6-17",
-        "history_cursor": 486,
+        "history_cursor": 491,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "near_elbow_rounding",
@@ -43107,7 +43304,7 @@
       },
       {
         "action_id": "R23-P6-18",
-        "history_cursor": 487,
+        "history_cursor": 492,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "near_knee_rounding",
@@ -43117,7 +43314,7 @@
       },
       {
         "action_id": "R23-P6-19",
-        "history_cursor": 488,
+        "history_cursor": 493,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "rifle_suppressor",
@@ -43127,7 +43324,7 @@
       },
       {
         "action_id": "R23-P6-20",
-        "history_cursor": 489,
+        "history_cursor": 494,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "rifle_barrel",
@@ -43137,7 +43334,7 @@
       },
       {
         "action_id": "R23-P6-21",
-        "history_cursor": 490,
+        "history_cursor": 495,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "rifle_receiver",
@@ -43147,7 +43344,7 @@
       },
       {
         "action_id": "R23-P6-22",
-        "history_cursor": 491,
+        "history_cursor": 496,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "rifle_scope",
@@ -43157,7 +43354,7 @@
       },
       {
         "action_id": "R23-P6-23",
-        "history_cursor": 492,
+        "history_cursor": 497,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "rifle_stock_cutout",
@@ -43167,7 +43364,7 @@
       },
       {
         "action_id": "R23-P6-24",
-        "history_cursor": 493,
+        "history_cursor": 498,
         "is_correction_action": false,
         "kind": "draw_stroke",
         "part": "sling_edge",
@@ -43177,22 +43374,33 @@
       }
     ],
     "calibration_sheet": {
+      "artifact_50pct_sha256": "6411888de0566117a13f881432789f95b9c371956d59b5bc3edc9f7aede30539",
+      "artifact_50pct_size": [
+        256,
+        384
+      ],
+      "artifact_sha256": "a6c2fced32525b79d359322ccdfb61b5a121aec15b3079171e05736900c6009c",
+      "artifact_size": [
+        512,
+        768
+      ],
       "canvas_size": [
         512,
         768
       ],
-      "digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
-      "rationale": "Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+      "digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+      "rationale": "Profile pending inspection of the rendered actual-size and 50%-scale calibration artifacts.",
       "samples": [
         {
+          "curve": "straight",
           "points": [
             [
               51.2,
               76.80000000000001
             ],
             [
-              230.4,
-              67.584
+              256.0,
+              76.80000000000001
             ],
             [
               460.8,
@@ -43201,7 +43409,7 @@
           ],
           "pressure": 0.24,
           "role": "construction",
-          "sample_id": "pressure_01",
+          "sample_id": "straight_01",
           "taper": {
             "end": 0.2032,
             "peak": 0.24,
@@ -43209,23 +43417,28 @@
           }
         },
         {
+          "curve": "c_curve",
           "points": [
             [
               51.2,
-              111.36000000000001
+              134.4
             ],
             [
-              230.4,
-              102.144
+              174.08,
+              102.72
+            ],
+            [
+              332.8,
+              102.72
             ],
             [
               460.8,
-              111.36000000000001
+              134.4
             ]
           ],
           "pressure": 0.4,
           "role": "construction",
-          "sample_id": "pressure_02",
+          "sample_id": "c_curve_02",
           "taper": {
             "end": 0.23199999999999998,
             "peak": 0.4,
@@ -43233,23 +43446,28 @@
           }
         },
         {
+          "curve": "s_curve",
           "points": [
             [
               51.2,
-              145.92000000000002
+              192.0
             ],
             [
-              230.4,
-              136.704
+              174.08,
+              160.32
+            ],
+            [
+              337.92,
+              223.68
             ],
             [
               460.8,
-              145.92000000000002
+              192.0
             ]
           ],
           "pressure": 0.56,
           "role": "form",
-          "sample_id": "pressure_03",
+          "sample_id": "s_curve_03",
           "taper": {
             "end": 0.26080000000000003,
             "peak": 0.56,
@@ -43257,23 +43475,28 @@
           }
         },
         {
+          "curve": "taper_in",
           "points": [
             [
               51.2,
-              180.48000000000002
+              249.6
             ],
             [
-              230.4,
-              171.264
+              174.08,
+              235.2
+            ],
+            [
+              337.92,
+              249.6
             ],
             [
               460.8,
-              180.48000000000002
+              255.35999999999999
             ]
           ],
           "pressure": 0.72,
           "role": "form",
-          "sample_id": "pressure_04",
+          "sample_id": "taper_in_04",
           "taper": {
             "end": 0.28959999999999997,
             "peak": 0.72,
@@ -43281,23 +43504,28 @@
           }
         },
         {
+          "curve": "taper_out",
           "points": [
             [
               51.2,
-              215.04000000000002
+              312.96
             ],
             [
-              230.4,
-              205.824
+              174.08,
+              307.2
+            ],
+            [
+              337.92,
+              292.8
             ],
             [
               460.8,
-              215.04000000000002
+              307.2
             ]
           ],
           "pressure": 0.88,
           "role": "accent",
-          "sample_id": "pressure_05",
+          "sample_id": "taper_out_05",
           "taper": {
             "end": 0.3184,
             "peak": 0.88,
@@ -43497,14 +43725,12 @@
     },
     "construction_retirement": {
       "contour_stroke_ids": [
-        "contour_hair_left",
-        "contour_hair_right",
         "contour_jacket_left",
         "contour_jacket_right",
         "contour_rifle_left",
         "contour_rifle_right"
       ],
-      "history_cursor": 466,
+      "history_cursor": 474,
       "reason": "P5 transfers ownership from construction to selective clean contour while retaining only five explanatory ghosts.",
       "retained_ghost_stroke_ids": [
         "crown_face_spine_support",
@@ -43513,32 +43739,38 @@
         "rifle_major_axis",
         "pelvis_rhythm"
       ],
-      "retired_count": 3,
+      "retired_count": 7,
       "retired_stroke_ids": [
         "cranial_crown_arc",
         "cranial_left_temporal_jaw",
-        "cranial_right_temporal_jaw"
+        "cranial_right_temporal_jaw",
+        "contour_hair_left",
+        "contour_hair_right",
+        "hair_mass_left",
+        "hair_mass_right"
       ],
       "schema": "img2drawing.construction_retirement.v1"
     },
     "grammar_cards": [],
     "identity_finish_manifest": {
       "accent_stroke_count": 2,
-      "calibration_sheet_digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
-      "confirmation_stroke_count": 4,
+      "calibration_sheet_digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+      "confirmation_stroke_count": 0,
       "decision": "advance",
-      "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
-      "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+      "drawing_artifact_sha256": "a5095127803b1ba5b6cb8cb0d0df5720796c5454de6af3bd0672c9f1d843d506",
+      "drawing_state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b",
       "evaluator_id": "material-integration-independent-visual-review",
       "evidence_refs": [
         "reviews/P6_identity_finish/pass_01/current_drawing.png",
-        "identity/calibration_sheet.json"
+        "identity/calibration_sheet.json",
+        "identity/calibration_sheet.png",
+        "identity/calibration_sheet_50pct.png"
       ],
       "face_relation": "Face opening is smaller than and separated from the grouped hair silhouette.",
-      "fold_stroke_count": 3,
+      "fold_stroke_count": 0,
       "garment_mark_count": 3,
       "hair_group_count": 3,
-      "history_cursor": 493,
+      "history_cursor": 498,
       "identity_stroke_count": 20,
       "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
       "profile": {
@@ -44629,242 +44861,6 @@
         "selection_authority": "agent_explicit_boxes",
         "semantic_authority": "agent",
         "stage": "P4_structural_connections"
-      },
-      "P5_clean_blockin:pass_01:face_breaks": {
-        "auto_detection_used": false,
-        "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
-        "comparisons": {
-          "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/local_reference_overview.png",
-          "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_drawing_absdiff.png",
-          "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_drawing_overlay.png",
-          "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_vs_drawing.png",
-          "task_target_vs_drawing": null
-        },
-        "crops": {
-          "drawing": {
-            "box": {
-              "bottom": 150,
-              "left": 200,
-              "right": 290,
-              "top": 85
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/crops/drawing.png",
-            "crop_sha256": "94d1eeb037e0d79198ee499e6cb5d636441c6cf3fbeec5e2204ff5024c9f55ba",
-            "role": "current_drawing",
-            "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
-            "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-            "source_size": [
-              512,
-              768
-            ]
-          },
-          "subject": {
-            "box": {
-              "bottom": 300,
-              "left": 400,
-              "right": 580,
-              "top": 170
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/crops/subject.png",
-            "crop_sha256": "915f5b2b198918435bffece3c93757077d2c6d0ac021f827a50551afd929e0e8",
-            "role": "subject_reference",
-            "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
-            "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
-            "source_size": [
-              1024,
-              1536
-            ]
-          },
-          "task_target": null
-        },
-        "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-        "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
-        "history_cursor": 188,
-        "intent": "Verify the reopen fix: does the jaw/chin break now reach the observed face contour?",
-        "label": "face_breaks",
-        "local_review_id": "P5_clean_blockin:pass_01:face_breaks",
-        "pass_name": "pass_01",
-        "schema": "img2drawing.local_review_artifacts.v2",
-        "selection_authority": "agent_explicit_boxes",
-        "semantic_authority": "agent",
-        "stage": "P5_clean_blockin"
-      },
-      "P5_clean_blockin:pass_01:handoff_prop_garment": {
-        "auto_detection_used": false,
-        "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
-        "comparisons": {
-          "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/local_reference_overview.png",
-          "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_drawing_absdiff.png",
-          "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_drawing_overlay.png",
-          "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_vs_drawing.png",
-          "task_target_vs_drawing": null
-        },
-        "crops": {
-          "drawing": {
-            "box": {
-              "bottom": 350,
-              "left": 125,
-              "right": 215,
-              "top": 120
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/crops/drawing.png",
-            "crop_sha256": "ad3570e968bd857ef75803b54b018155fa2ed321e369b0c4d9bb1b61c4683d8e",
-            "role": "current_drawing",
-            "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
-            "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-            "source_size": [
-              512,
-              768
-            ]
-          },
-          "subject": {
-            "box": {
-              "bottom": 700,
-              "left": 250,
-              "right": 430,
-              "top": 240
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/crops/subject.png",
-            "crop_sha256": "38945df8aae9846b29e19ae32e1f70a543286dd45f8bb01f98e1c3dc3edc6993",
-            "role": "subject_reference",
-            "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
-            "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
-            "source_size": [
-              1024,
-              1536
-            ]
-          },
-          "task_target": null
-        },
-        "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-        "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
-        "history_cursor": 188,
-        "intent": "Re-verify the prop/garment ownership handoff on the rebuilt branch.",
-        "label": "handoff_prop_garment",
-        "local_review_id": "P5_clean_blockin:pass_01:handoff_prop_garment",
-        "pass_name": "pass_01",
-        "schema": "img2drawing.local_review_artifacts.v2",
-        "selection_authority": "agent_explicit_boxes",
-        "semantic_authority": "agent",
-        "stage": "P5_clean_blockin"
-      },
-      "P5_clean_blockin:pass_01:waist_breaks": {
-        "auto_detection_used": false,
-        "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
-        "comparisons": {
-          "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/local_reference_overview.png",
-          "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_drawing_absdiff.png",
-          "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_drawing_overlay.png",
-          "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_vs_drawing.png",
-          "task_target_vs_drawing": null
-        },
-        "crops": {
-          "drawing": {
-            "box": {
-              "bottom": 400,
-              "left": 150,
-              "right": 310,
-              "top": 295
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/crops/drawing.png",
-            "crop_sha256": "a666be0ba523d7ed6efc8d25060a3310c278c4acdc2fd11cdd27b6471bbcd908",
-            "role": "current_drawing",
-            "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
-            "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-            "source_size": [
-              512,
-              768
-            ]
-          },
-          "subject": {
-            "box": {
-              "bottom": 800,
-              "left": 300,
-              "right": 620,
-              "top": 590
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/crops/subject.png",
-            "crop_sha256": "5e142215be3999b4742cceef5863c2bc088f31ac77b349ea1d31238e4f8fcae3",
-            "role": "subject_reference",
-            "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
-            "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
-            "source_size": [
-              1024,
-              1536
-            ]
-          },
-          "task_target": null
-        },
-        "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-        "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
-        "history_cursor": 188,
-        "intent": "Verify the reopen fix: belt angle, jacket hem height and their relation to the shorts.",
-        "label": "waist_breaks",
-        "local_review_id": "P5_clean_blockin:pass_01:waist_breaks",
-        "pass_name": "pass_01",
-        "schema": "img2drawing.local_review_artifacts.v2",
-        "selection_authority": "agent_explicit_boxes",
-        "semantic_authority": "agent",
-        "stage": "P5_clean_blockin"
-      },
-      "P5_clean_blockin:pass_01:whole_silhouette": {
-        "auto_detection_used": false,
-        "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
-        "comparisons": {
-          "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/local_reference_overview.png",
-          "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_drawing_absdiff.png",
-          "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_drawing_overlay.png",
-          "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_vs_drawing.png",
-          "task_target_vs_drawing": null
-        },
-        "crops": {
-          "drawing": {
-            "box": {
-              "bottom": 760,
-              "left": 100,
-              "right": 390,
-              "top": 20
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/crops/drawing.png",
-            "crop_sha256": "fd72ea12667fb5076a21c7bffa07898f8a92c9dd364be3eaebba75c0b58d660c",
-            "role": "current_drawing",
-            "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
-            "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-            "source_size": [
-              512,
-              768
-            ]
-          },
-          "subject": {
-            "box": {
-              "bottom": 1520,
-              "left": 200,
-              "right": 780,
-              "top": 40
-            },
-            "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/crops/subject.png",
-            "crop_sha256": "b2aae2349c0b1fa91ff602b5eacadcc7480d9352677b47364748bd3ad66dc883",
-            "role": "subject_reference",
-            "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
-            "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
-            "source_size": [
-              1024,
-              1536
-            ]
-          },
-          "task_target": null
-        },
-        "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
-        "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
-        "history_cursor": 188,
-        "intent": "Residual sweep of the rebuilt clean block-in against the subject.",
-        "label": "whole_silhouette",
-        "local_review_id": "P5_clean_blockin:pass_01:whole_silhouette",
-        "pass_name": "pass_01",
-        "schema": "img2drawing.local_review_artifacts.v2",
-        "selection_authority": "agent_explicit_boxes",
-        "semantic_authority": "agent",
-        "stage": "P5_clean_blockin"
       }
     },
     "observation_lock": {
@@ -45329,6 +45325,40 @@
         "source_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
         "target_stage": "P5_clean_blockin",
         "trigger_review_digest": null
+      },
+      {
+        "abandoned_action_ids": [],
+        "abandoned_local_review_ids": [
+          "P5_clean_blockin:pass_01:face_breaks",
+          "P5_clean_blockin:pass_01:handoff_prop_garment",
+          "P5_clean_blockin:pass_01:waist_breaks",
+          "P5_clean_blockin:pass_01:whole_silhouette"
+        ],
+        "abandoned_review_digests": {
+          "P5_clean_blockin": [
+            "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073"
+          ]
+        },
+        "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_04",
+        "discovered_in_stage": "P6_identity_finish",
+        "findings": [
+          "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+        ],
+        "invalidated_stages": [
+          "P5_clean_blockin",
+          "P6_identity_finish"
+        ],
+        "policy": "reopen_earliest_responsible_stage",
+        "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+        "reopen_id": "reopen_04",
+        "restored_cursor": 466,
+        "restored_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "schema": "img2drawing.reopen_record.v1",
+        "semantic_authority": "agent",
+        "source_cursor": 468,
+        "source_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "target_stage": "P5_clean_blockin",
+        "trigger_review_digest": null
       }
     ],
     "require_grammar_card_bindings": false,
@@ -45452,12 +45482,12 @@
         "stage": "P4_structural_connections"
       },
       "P5_clean_blockin": {
-        "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+        "blind_packet_digest": "dab814b7de67c44acf2d11ccd4406676b1eb39d5788212c34fddd38a3f154e89",
         "blockers": [],
-        "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
-        "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "drawing_artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
+        "drawing_state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24",
         "evaluator_id": "material-integration-independent-visual-review",
-        "history_cursor": 466,
+        "history_cursor": 474,
         "manifest_id": "resolved_5a4dce71fedf",
         "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
         "regions": [
@@ -45588,16 +45618,16 @@
         "stage": "P4_structural_connections"
       },
       "P5_clean_blockin": {
-        "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+        "blind_packet_digest": "dab814b7de67c44acf2d11ccd4406676b1eb39d5788212c34fddd38a3f154e89",
         "decision": "advance",
-        "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
-        "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "drawing_artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
+        "drawing_state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24",
         "evaluator_id": "material-integration-independent-visual-review",
         "findings": [
           "Subject and current drawing were inspected side-by-side and in whole view."
         ],
-        "history_cursor": 466,
-        "manifest_digest": "b4dfca6aaebb29ebdca4be342d6ed0a7140b2a544fc2d971c51b4e6cd413645f",
+        "history_cursor": 474,
+        "manifest_digest": "b4463df616972b6c548736122d9c824605fbeef9ac28e734d5c5eb59080c0803",
         "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
         "rationale": "Resolved-form boundary is accepted only after all eight regions were checked.",
         "schema": "img2drawing.resolved_form_review.v1",
@@ -46329,15 +46359,15 @@
           ],
           "corrections": [],
           "decision": "advance",
-          "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+          "drawing_artifact_sha256": "ae3a4af00309d1d12e07fd896e0912737457ca36e549f2168a80c2d1d8365c35",
           "drawing_findings": [
             "Whole-view inspection found no unresolved region blocker."
           ],
-          "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+          "drawing_state_sha256": "8b2e101db72bd25a67ab87cca19046e17380fcd5627998ec8be3246c4e3d5b24",
           "grammar_findings": [
             "Line hierarchy is sparse and uses calibrated pencil roles."
           ],
-          "history_cursor": 466,
+          "history_cursor": 474,
           "inter_pass_action_ids": [
             "P5-C1",
             "P5-C2",
@@ -46444,7 +46474,14 @@
             "P5-L66",
             "P5-L67",
             "P5-L68",
-            "P5-L69"
+            "P5-L69",
+            "R23-P5-retire-01",
+            "R23-P5-retire-02",
+            "R23-P5-retire-03",
+            "R23-P5-retire-04",
+            "R23-P5-retire-05",
+            "R23-P5-retire-06",
+            "R23-P5-retire-07"
           ],
           "local_review_ids": [],
           "observations": [
@@ -46454,7 +46491,7 @@
             "Whole-view inspection found no unresolved region blocker."
           ],
           "parent_review_digest": null,
-          "pass_memory_digest": "c34d40533f049c4da1781c94e4ed84d53c005df8c19342c3c9986073bcb37785",
+          "pass_memory_digest": "40152dd99b4e573d45006b49fe92c09ffb2db23260e2dd2861b4d809b17a558a",
           "reference_authority_order": [
             "subject_reference"
           ],
@@ -46480,20 +46517,16 @@
           ],
           "corrections": [],
           "decision": "advance",
-          "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+          "drawing_artifact_sha256": "a5095127803b1ba5b6cb8cb0d0df5720796c5454de6af3bd0672c9f1d843d506",
           "drawing_findings": [
             "Whole-view inspection accepts the identity finish with sparse confirmation marks."
           ],
-          "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+          "drawing_state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b",
           "grammar_findings": [
             "Calibration sheet and selective accent budget are bound to the pass."
           ],
-          "history_cursor": 493,
+          "history_cursor": 498,
           "inter_pass_action_ids": [
-            "R23-P6-L01",
-            "R23-P6-L02",
-            "R23-P6-L03",
-            "R23-P6-L04",
             "R23-P6-03",
             "R23-P6-04",
             "R23-P6-05",
@@ -46525,7 +46558,7 @@
             "Whole-view inspection accepts the identity finish with sparse confirmation marks."
           ],
           "parent_review_digest": null,
-          "pass_memory_digest": "81629a958e15fc04846c9fab0e689b9f1781d9252cc193be3df706650037c0f0",
+          "pass_memory_digest": "5a7a2e469a4c0e46b5a6aaf0d81ba4eafa916bb28cb3748f56ad78708cd86195",
           "reference_authority_order": [
             "subject_reference"
           ],

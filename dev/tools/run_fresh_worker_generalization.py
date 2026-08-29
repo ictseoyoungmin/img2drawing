@@ -25,7 +25,7 @@ def action(run, aid, stage, part, points, *, role="construction", layer=10, grad
     return DrawingAction(
         action_id=aid, kind="draw_stroke", stage=stage, role=role, part=part,
         points=tuple((float(x), float(y)) for x, y in points), confidence=.84,
-        layer=layer, tool={"preset": preset, "grade": grade},
+        stroke_id=aid, layer=layer, tool={"preset": preset, "grade": grade},
         observation_id=run.observation_lock.observation_id,
         source_observation=f"Fresh worker observation: {part} was checked on the new subject.",
     )
@@ -184,6 +184,17 @@ def build() -> Path:
         action(run, "FW-P5-13", "P5_clean_blockin", "support_shoe", ((220, 686), (230, 700), (250, 706), (266, 700)), role="contour", layer=30, grade="HB", preset="form_pencil"),
         action(run, "FW-P5-14", "P5_clean_blockin", "counter_shoe", ((335, 710), (350, 724), (374, 728), (390, 718)), role="contour", layer=30, grade="HB", preset="form_pencil"),
     ])
+    run.draw_many([
+        DrawingAction(
+            action_id=f"FW-P5-retire-{index:02d}", kind="delete_stroke", stage="P5_clean_blockin",
+            target_stroke_id=stroke_id, tool={"preset": "hard_eraser"},
+            observation_id=run.observation_lock.observation_id,
+            source_observation=f"P5 ownership review for {stroke_id}.",
+            reason="Transfer primary mass ownership to the selected clean contour.",
+            revision_of=stroke_id,
+        )
+        for index, stroke_id in enumerate(("FW-P3-01", "FW-P3-02"), 1)
+    ])
     def retirement(active):
         active.record_construction_retirement(ConstructionRetirementRecord(
             retired_stroke_ids=("FW-P3-01", "FW-P3-02"),
@@ -193,6 +204,7 @@ def build() -> Path:
             history_cursor=active.session.history.cursor,
         ))
     resolved_advance(run, "P5_clean_blockin", ("face_feature_scaffold", "hair_silhouette_grouping", "garment_contour_and_folds", "joint_contour_continuity", "hands_and_footwear", "prop_final_topology", "contour_ownership", "construction_retirement_and_line_hierarchy"), before_advance=retirement)
+    run.stage_start("P6_identity_finish")
     run.prepare_identity_finish(IdentityFinishProfile())
     run.draw_many([
         action(run, "FW-P6-01", "P6_identity_finish", "hair_part", ((242, 47), (236, 62), (231, 78)), role="identity", layer=30, grade="2H", preset="form_pencil"),
@@ -203,6 +215,7 @@ def build() -> Path:
         action(run, "FW-P6-06", "P6_identity_finish", "cardigan_compression_fold", ((200, 277), (218, 284), (236, 280)), role="fold", layer=20, grade="2H", preset="form_pencil"),
     ])
     p6_artifacts = run.prepare_stage_review("P6_identity_finish")
+    counts = run.identity_finish_counts()
     identity = IdentityFinishManifest(
         profile=IdentityFinishProfile(),
         drawing_state_sha256=run._state_sha(),
@@ -211,9 +224,16 @@ def build() -> Path:
         observation_lock_digest=run.observation_lock.observation_digest,
         calibration_sheet_digest=run.calibration_sheet.digest(),
         face_relation="Face opening, eye line, nose and mouth remain inside grouped hair.",
-        hair_group_count=2, garment_mark_count=2, identity_stroke_count=4,
-        confirmation_stroke_count=0, accent_stroke_count=0, fold_stroke_count=2,
-        evidence_refs=("reviews/P6_identity_finish/pass_01/current_drawing.png", "identity/calibration_sheet.json"),
+        hair_group_count=2, garment_mark_count=2,
+        identity_stroke_count=counts["identity_stroke_count"],
+        confirmation_stroke_count=counts["confirmation_stroke_count"],
+        accent_stroke_count=counts["accent_stroke_count"], fold_stroke_count=counts["fold_stroke_count"],
+        evidence_refs=(
+            "reviews/P6_identity_finish/pass_01/current_drawing.png",
+            "identity/calibration_sheet.json",
+            "identity/calibration_sheet.png",
+            "identity/calibration_sheet_50pct.png",
+        ),
         evaluator_id="fresh-worker-independent-review", decision="advance",
         rationale="Bounded identity finish accepted after face/hair and garment crops were inspected.",
     )

@@ -7,16 +7,177 @@
     "P5_clean_blockin",
     "P6_identity_finish"
   ],
+  "calibration_sheet": {
+    "artifact_50pct_sha256": "6411888de0566117a13f881432789f95b9c371956d59b5bc3edc9f7aede30539",
+    "artifact_50pct_size": [
+      256,
+      384
+    ],
+    "artifact_sha256": "a6c2fced32525b79d359322ccdfb61b5a121aec15b3079171e05736900c6009c",
+    "artifact_size": [
+      512,
+      768
+    ],
+    "canvas_size": [
+      512,
+      768
+    ],
+    "digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+    "rationale": "Profile pending inspection of the rendered actual-size and 50%-scale calibration artifacts.",
+    "samples": [
+      {
+        "curve": "straight",
+        "points": [
+          [
+            51.2,
+            76.80000000000001
+          ],
+          [
+            256.0,
+            76.80000000000001
+          ],
+          [
+            460.8,
+            76.80000000000001
+          ]
+        ],
+        "pressure": 0.24,
+        "role": "construction",
+        "sample_id": "straight_01",
+        "taper": {
+          "end": 0.2032,
+          "peak": 0.24,
+          "start": 0.26
+        }
+      },
+      {
+        "curve": "c_curve",
+        "points": [
+          [
+            51.2,
+            134.4
+          ],
+          [
+            174.08,
+            102.72
+          ],
+          [
+            332.8,
+            102.72
+          ],
+          [
+            460.8,
+            134.4
+          ]
+        ],
+        "pressure": 0.4,
+        "role": "construction",
+        "sample_id": "c_curve_02",
+        "taper": {
+          "end": 0.23199999999999998,
+          "peak": 0.4,
+          "start": 0.30000000000000004
+        }
+      },
+      {
+        "curve": "s_curve",
+        "points": [
+          [
+            51.2,
+            192.0
+          ],
+          [
+            174.08,
+            160.32
+          ],
+          [
+            337.92,
+            223.68
+          ],
+          [
+            460.8,
+            192.0
+          ]
+        ],
+        "pressure": 0.56,
+        "role": "form",
+        "sample_id": "s_curve_03",
+        "taper": {
+          "end": 0.26080000000000003,
+          "peak": 0.56,
+          "start": 0.34
+        }
+      },
+      {
+        "curve": "taper_in",
+        "points": [
+          [
+            51.2,
+            249.6
+          ],
+          [
+            174.08,
+            235.2
+          ],
+          [
+            337.92,
+            249.6
+          ],
+          [
+            460.8,
+            255.35999999999999
+          ]
+        ],
+        "pressure": 0.72,
+        "role": "form",
+        "sample_id": "taper_in_04",
+        "taper": {
+          "end": 0.28959999999999997,
+          "peak": 0.72,
+          "start": 0.38
+        }
+      },
+      {
+        "curve": "taper_out",
+        "points": [
+          [
+            51.2,
+            312.96
+          ],
+          [
+            174.08,
+            307.2
+          ],
+          [
+            337.92,
+            292.8
+          ],
+          [
+            460.8,
+            307.2
+          ]
+        ],
+        "pressure": 0.88,
+        "role": "accent",
+        "sample_id": "taper_out_05",
+        "taper": {
+          "end": 0.3184,
+          "peak": 0.88,
+          "start": 0.42000000000000004
+        }
+      }
+    ],
+    "schema": "img2drawing.calibration_sheet.v1",
+    "selected_profile": "pencil-contact-v9"
+  },
   "construction_retirement": {
     "contour_stroke_ids": [
-      "contour_hair_left",
-      "contour_hair_right",
       "contour_jacket_left",
       "contour_jacket_right",
       "contour_rifle_left",
       "contour_rifle_right"
     ],
-    "history_cursor": 466,
+    "history_cursor": 474,
     "reason": "P5 transfers ownership from construction to selective clean contour while retaining only five explanatory ghosts.",
     "retained_ghost_stroke_ids": [
       "crown_face_spine_support",
@@ -25,33 +186,46 @@
       "rifle_major_axis",
       "pelvis_rhythm"
     ],
-    "retired_count": 3,
+    "retired_count": 7,
     "retired_stroke_ids": [
       "cranial_crown_arc",
       "cranial_left_temporal_jaw",
-      "cranial_right_temporal_jaw"
+      "cranial_right_temporal_jaw",
+      "contour_hair_left",
+      "contour_hair_right",
+      "hair_mass_left",
+      "hair_mass_right"
     ],
     "schema": "img2drawing.construction_retirement.v1"
   },
   "current_stage": null,
   "final_drawing": "dev/evidence/material-integration/s10-quality-run/final/drawing.png",
+  "final_drawing_sha256": "a609e3bd33b9a8cfb291dbac17358b0e9d8fe62f1f82778403f4526669068b96",
+  "identity_finish_counts": {
+    "accent_stroke_count": 2,
+    "confirmation_stroke_count": 0,
+    "fold_stroke_count": 0,
+    "identity_stroke_count": 20
+  },
   "identity_finish_manifest": {
     "accent_stroke_count": 2,
-    "calibration_sheet_digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
-    "confirmation_stroke_count": 4,
+    "calibration_sheet_digest": "1267af3bdfa4753ff295b2acf7c5c59ef6cd8d86be2fba9ec0096a6664adb240",
+    "confirmation_stroke_count": 0,
     "decision": "advance",
-    "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
-    "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+    "drawing_artifact_sha256": "a5095127803b1ba5b6cb8cb0d0df5720796c5454de6af3bd0672c9f1d843d506",
+    "drawing_state_sha256": "0fe26f3a66724c39bf9035ae73cdb202c3ae917cdeb4f91c5de9352afb636c2b",
     "evaluator_id": "material-integration-independent-visual-review",
     "evidence_refs": [
       "reviews/P6_identity_finish/pass_01/current_drawing.png",
-      "identity/calibration_sheet.json"
+      "identity/calibration_sheet.json",
+      "identity/calibration_sheet.png",
+      "identity/calibration_sheet_50pct.png"
     ],
     "face_relation": "Face opening is smaller than and separated from the grouped hair silhouette.",
-    "fold_stroke_count": 3,
+    "fold_stroke_count": 0,
     "garment_mark_count": 3,
     "hair_group_count": 3,
-    "history_cursor": 493,
+    "history_cursor": 498,
     "identity_stroke_count": 20,
     "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
     "profile": {
@@ -74,6 +248,397 @@
     "schema": "img2drawing.identity_finish_manifest.v1"
   },
   "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+  "reopens": [
+    {
+      "abandoned_action_ids": [
+        "P1-A1",
+        "P1-A2",
+        "P1-A3",
+        "P1-A4",
+        "P1-A5",
+        "P1-A6",
+        "P1-A7",
+        "P1-A8",
+        "P1-A9",
+        "P1-R1",
+        "P1-R2",
+        "P1-R3",
+        "P1-R4",
+        "P1-R5",
+        "P1-R6",
+        "P1-R7",
+        "P1-R8",
+        "P1-R9",
+        "P1-R10",
+        "P1-R11",
+        "P1-R12",
+        "P1-R13",
+        "P1-R14",
+        "P1-R15",
+        "P1-R16",
+        "P1-R17",
+        "P2-A1",
+        "P2-A2",
+        "P2-A3",
+        "P2-A4",
+        "P2-A5",
+        "P2-A6",
+        "P2-A7",
+        "P2-A8",
+        "P2-A9",
+        "P2-A10"
+      ],
+      "abandoned_local_review_ids": [
+        "P1_gesture:pass_01:head_face",
+        "P1_gesture:pass_01:pelvis_legs",
+        "P1_gesture:pass_02:head_face",
+        "P1_gesture:pass_02:pelvis_legs",
+        "P1_gesture:pass_03:head_face",
+        "P1_gesture:pass_03:pelvis_legs",
+        "P1_gesture:pass_03:prop_shoulder",
+        "P2_primary_axes:pass_01:pelvis_legs",
+        "P2_primary_axes:pass_01:head_shoulders"
+      ],
+      "abandoned_review_digests": {
+        "P1_gesture": [
+          "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+          "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+          "d3a297212c2893fac59d9d1ee87df9c3ac8765d6640dfb4c195ff780e2b4ef74"
+        ],
+        "P2_primary_axes": [
+          "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_01",
+      "discovered_in_stage": "P2_primary_axes",
+      "findings": [
+        "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+        "P1 counterbalance stroke sits at x~267-273 over the same range.",
+        "Result at P2 is a two-line pant-leg rail down the thigh."
+      ],
+      "invalidated_stages": [
+        "P1_gesture",
+        "P2_primary_axes"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+      "reopen_id": "reopen_01",
+      "restored_cursor": 1,
+      "restored_state_sha256": "ba8ac0066af57b421ece54bb23a0ed18143c9e8540e7436caf17e6fe7d864d91",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 39,
+      "source_state_sha256": "4e27285eb0842005f1d78413ccb2ac9fe5b3fda8314c216c099889c4edf93268",
+      "target_stage": "P1_gesture",
+      "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+    },
+    {
+      "abandoned_action_ids": [
+        "P3-H1",
+        "P3-H2",
+        "P3-H3",
+        "P3-H4",
+        "P3-H5",
+        "P3-N1",
+        "P3-N2",
+        "P3-T1",
+        "P3-T2",
+        "P3-T3",
+        "P3-T4",
+        "P3-T5",
+        "P3-T6",
+        "P3-P1",
+        "P3-P2",
+        "P3-P3",
+        "P3-P4",
+        "P3-L1",
+        "P3-L2",
+        "P3-L3",
+        "P3-L4",
+        "P3-B1",
+        "P3-B2",
+        "P3-R1",
+        "P3-R2",
+        "P3-R3",
+        "P3-R4",
+        "P3-D1",
+        "P3-D2",
+        "P3-R5",
+        "P3-R6",
+        "P4-S1",
+        "P4-S2",
+        "P4-E1",
+        "P4-E2",
+        "P4-E3",
+        "P4-W1",
+        "P4-W2",
+        "P4-W3",
+        "P4-W4",
+        "P4-P1",
+        "P4-P2",
+        "P4-K1",
+        "P4-K2",
+        "P4-A1",
+        "P4-F1",
+        "P4-F2",
+        "P4-A2",
+        "P4-F3",
+        "P4-F4",
+        "P4-R1",
+        "P4-R2",
+        "P4-R3",
+        "P4-R4",
+        "P4-X1",
+        "P4-X2",
+        "P4-X3",
+        "P4-X4",
+        "P4-X5",
+        "P4-X6",
+        "P4-X7",
+        "P4-X8",
+        "P4-X9",
+        "P4-X10"
+      ],
+      "abandoned_local_review_ids": [
+        "P3_primary_masses:pass_01:head_neck",
+        "P3_primary_masses:pass_01:pelvis_legs",
+        "P3_primary_masses:pass_01:prop_overlap",
+        "P3_primary_masses:pass_01:torso_pelvis",
+        "P3_primary_masses:pass_02:head_neck",
+        "P3_primary_masses:pass_02:pelvis_legs",
+        "P3_primary_masses:pass_02:torso_pelvis",
+        "P4_structural_connections:pass_01:boots_ground",
+        "P4_structural_connections:pass_01:hand_pocket",
+        "P4_structural_connections:pass_01:knee_ankle",
+        "P4_structural_connections:pass_01:shoulder_elbow",
+        "P4_structural_connections:pass_02:boots_ground",
+        "P4_structural_connections:pass_02:hand_pocket",
+        "P4_structural_connections:pass_02:knee_ankle",
+        "P4_structural_connections:pass_02:prop_attach",
+        "P4_structural_connections:pass_02:shoulder_elbow",
+        "P5_clean_blockin:pass_01:left_flank_preflight",
+        "P5_clean_blockin:pass_01:whole_silhouette_preflight"
+      ],
+      "abandoned_review_digests": {
+        "P3_primary_masses": [
+          "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee",
+          "fbfc17fc39002f28274020872a7cd112c9ea9cce1536520131cb9dc07e84ca6c"
+        ],
+        "P4_structural_connections": [
+          "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965",
+          "daa571261ff9cb75c422178373fd9098757f72f370fb83d55996448863dfdec2"
+        ],
+        "P5_clean_blockin": [
+          "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_02",
+      "discovered_in_stage": "P5_clean_blockin",
+      "findings": [
+        "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
+        "Inherited P3 rifle mass sits up to 16px right of that edge through the middle of the prop.",
+        "Inherited P3 torso-left contour underfills the observed occupied volume by about 12px over the same range.",
+        "Silhouette ownership handoff from prop to garment occurs near canvas y=205."
+      ],
+      "invalidated_stages": [
+        "P3_primary_masses",
+        "P4_structural_connections",
+        "P5_clean_blockin"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "P5 cleanup preflight proves the verified left outer silhouette cannot be stated without contradicting the inherited P3 prop and torso-left envelopes. The prop axis and extent are credible, so the underfilled P3 envelope, not P2 or P1, is the earliest responsible stage.",
+      "reopen_id": "reopen_02",
+      "restored_cursor": 26,
+      "restored_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 94,
+      "source_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+      "target_stage": "P3_primary_masses",
+      "trigger_review_digest": "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+    },
+    {
+      "abandoned_action_ids": [
+        "P5-C1",
+        "P5-C2",
+        "P5-C3",
+        "P5-C4",
+        "P5-C5",
+        "P5-C6",
+        "P5-C7",
+        "P5-C8",
+        "P5-C9",
+        "P5-C10",
+        "P5-C11",
+        "P5-C12",
+        "P5-C13",
+        "P5-C14",
+        "P5-C15",
+        "P5-B1",
+        "P5-B2",
+        "P5-B3",
+        "P5-B4",
+        "P5-B5",
+        "P5-B6",
+        "P5-B7",
+        "P5-B8",
+        "P5-B9",
+        "P5-B10",
+        "P5-B11",
+        "P5-B12",
+        "P5-B13",
+        "P5-B14",
+        "P5-B15",
+        "P5-B16",
+        "P5-L01",
+        "P5-L02",
+        "P5-L03",
+        "P5-L04",
+        "P5-L05",
+        "P5-L06",
+        "P5-L07",
+        "P5-L08",
+        "P5-L09",
+        "P5-L10",
+        "P5-L11",
+        "P5-L12",
+        "P5-L13",
+        "P5-L14",
+        "P5-L15",
+        "P5-L16",
+        "P5-L17",
+        "P5-L18",
+        "P5-L19",
+        "P5-L20",
+        "P5-L21",
+        "P5-L22",
+        "P5-L23",
+        "P5-L24",
+        "P5-L25",
+        "P5-L26",
+        "P5-L27",
+        "P5-L28",
+        "P5-L29",
+        "P5-L30",
+        "P5-L31",
+        "P5-L32",
+        "P5-L33",
+        "P5-L34",
+        "P5-L35",
+        "P5-L36",
+        "P5-L37",
+        "P5-L38",
+        "P5-L39",
+        "P5-L40",
+        "P5-L41",
+        "P5-L42",
+        "P5-L43",
+        "P5-L44",
+        "P5-L45",
+        "P5-L46",
+        "P5-L47",
+        "P5-L48",
+        "P5-L49",
+        "P5-L50",
+        "P5-L51",
+        "P5-L52",
+        "P5-L53",
+        "P5-L54",
+        "P5-L55",
+        "P5-L56",
+        "P5-L57",
+        "P5-L58",
+        "P5-L59",
+        "P5-L60",
+        "P5-L61",
+        "P5-L62",
+        "P5-L63",
+        "P5-L64",
+        "P5-L65",
+        "P5-L66",
+        "P5-L67",
+        "P5-L68",
+        "P5-L69",
+        "P5-H1",
+        "P5-H2",
+        "P5-H3",
+        "P5-H4",
+        "P5-H5",
+        "P5-H6"
+      ],
+      "abandoned_local_review_ids": [
+        "P5_clean_blockin:pass_01:handoff_hair_shoulder",
+        "P5_clean_blockin:pass_01:handoff_prop_garment",
+        "P5_clean_blockin:pass_01:prop_topology",
+        "P5_clean_blockin:pass_01:whole_silhouette",
+        "P5_clean_blockin:pass_02:handoff_hair_shoulder",
+        "P5_clean_blockin:pass_02:handoff_prop_garment",
+        "P5_clean_blockin:pass_02:prop_topology",
+        "P5_clean_blockin:pass_02:whole_silhouette"
+      ],
+      "abandoned_review_digests": {
+        "P5_clean_blockin": [
+          "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+          "80e48879003530c271c9175f2aac30f4dbcc2d17696013f9b9ec3dac58673638"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_03",
+      "discovered_in_stage": null,
+      "findings": [
+        "Belt upper edge measured at canvas (215,309) to (281,334); the stated break was horizontal at y=318-334.",
+        "Jacket hem measured at canvas (162,332) rising to (214,313); the stated break sat at y=352-366.",
+        "Face contour measured to canvas (273,107) with the chin at (247,143); the stated break turned back at (260,128) with the chin at (240,140)."
+      ],
+      "invalidated_stages": [
+        "P5_clean_blockin"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "Close-range re-observation for the identity finishing pass proves three P5 internal breaks are misplaced: the belt is diagonal, not horizontal; the jacket hem sits at the belt rather than 30 canvas pixels below it; and the jaw/chin break stops well short of the observed face contour. The outer silhouette and all upstream structure are unaffected, so P5 itself is the earliest responsible stage.",
+      "reopen_id": "reopen_03",
+      "restored_cursor": 81,
+      "restored_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 188,
+      "source_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
+      "target_stage": "P5_clean_blockin",
+      "trigger_review_digest": null
+    },
+    {
+      "abandoned_action_ids": [],
+      "abandoned_local_review_ids": [
+        "P5_clean_blockin:pass_01:face_breaks",
+        "P5_clean_blockin:pass_01:handoff_prop_garment",
+        "P5_clean_blockin:pass_01:waist_breaks",
+        "P5_clean_blockin:pass_01:whole_silhouette"
+      ],
+      "abandoned_review_digests": {
+        "P5_clean_blockin": [
+          "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_04",
+      "discovered_in_stage": "P6_identity_finish",
+      "findings": [
+        "hair/face ownership is an upstream structural mismatch; P6 cannot repair it"
+      ],
+      "invalidated_stages": [
+        "P5_clean_blockin",
+        "P6_identity_finish"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "P6 preflight found that the P5 hair silhouette owns the face opening.",
+      "reopen_id": "reopen_04",
+      "restored_cursor": 466,
+      "restored_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 468,
+      "source_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "target_stage": "P5_clean_blockin",
+      "trigger_review_digest": null
+    }
+  ],
   "review_manifest": "dev/evidence/material-integration/s10-quality-run/review_manifest.json",
   "schema": "img2drawing.material_integration_quality_run.v1",
   "source_checkpoint": "dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json",
