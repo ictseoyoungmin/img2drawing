@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 ACTIVE**
+- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — no ACTIVE slice**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -573,7 +573,7 @@ BASELINE
 
 FOUNDATION
   B01  vNext contract and architecture cut                    CLOSED
-  B02+B03  Inspection Foundation                              ACTIVE
+  B02+B03  Inspection Foundation                              CLOSED
            InspectionSheet + basic read-only measurement
 
 CORE WORKFLOW
@@ -604,9 +604,10 @@ RELEASE
 CLOSED
   B00  Legacy R23 freeze + failure dossier                    CLOSED
   B01  vNext contract and architecture cut                    CLOSED
+  B02+B03  Inspection Foundation                              CLOSED
 
 NEXT GATE
-  close the one-call sheet and read-only measurement gates
+  manually activate B04 after reviewing the B02+B03 context capsule
 ```
 
 **Production WIP Limit = 1.**
@@ -867,20 +868,20 @@ future candidate로 남긴다.
 
 ### Definition of Closed
 
-- [ ] 코 5px 수준의 alignment mismatch를 확대 view에서 판별 가능
-- [ ] 검은 재킷/부츠 위에서도 drawing stroke 위치가 overlay에서 보임
-- [ ] whole view와 local ROI를 별도 이미지 여러 개 열지 않고 한 장에서 읽을 수 있음
-- [ ] inspection sheet는 current drawing state에 hash-bind됨
-- [ ] subject ↔ canvas coordinate mapping이 명시적
-- [ ] grid overlay를 one-call로 생성 가능
-- [ ] 두 점 거리/각도 확인 가능
-- [ ] row/column profile을 이미지/JSON으로 볼 수 있음
-- [ ] pixel sample provenance가 남음
-- [ ] sheet/measurement 생성 자체가 PASS/FAIL을 만들지 않음
-- [ ] measurement 결과가 stroke를 자동 이동시키지 않음
-- [ ] Gemini/Claude dogfood fixture에서 useful한 known mismatch를 실제로 판별 가능
-- [ ] Claude dogfood에서 만든 임시 inspection/measurement script 대부분을 대체함
-- [ ] B04가 사용할 수 있는 standalone contract와 context capsule이 존재
+- [x] 코 5px 수준의 alignment mismatch를 확대 view에서 판별 가능
+- [x] 검은 재킷/부츠 위에서도 drawing stroke 위치가 overlay에서 보임
+- [x] whole view와 local ROI를 별도 이미지 여러 개 열지 않고 한 장에서 읽을 수 있음
+- [x] inspection sheet는 current drawing state에 hash-bind됨
+- [x] subject ↔ canvas coordinate mapping이 명시적
+- [x] grid overlay를 one-call로 생성 가능
+- [x] 두 점 거리/각도 확인 가능
+- [x] row/column profile을 이미지/JSON으로 볼 수 있음
+- [x] pixel sample provenance가 남음
+- [x] sheet/measurement 생성 자체가 PASS/FAIL을 만들지 않음
+- [x] measurement 결과가 stroke를 자동 이동시키지 않음
+- [x] Gemini/Claude dogfood fixture에서 useful한 known mismatch를 실제로 판별 가능
+- [x] Claude dogfood에서 만든 임시 inspection/measurement script 대부분을 대체함
+- [x] B04가 사용할 수 있는 standalone contract와 context capsule이 존재
 
 ### REOPEN
 
@@ -2173,9 +2174,9 @@ B00 — baseline/failure dossier                         CLOSED
  ↓
 B01 — architecture cut                                 CLOSED
  ↓
-B02+B03 — Inspection Foundation                       ACTIVE
+B02+B03 — Inspection Foundation                       CLOSED
  ↓
-B04 — minimal stage-agnostic session
+B04 — minimal stage-agnostic session                MANUAL ACTIVATION
  ↓
 B05 — ordered construction grammar
  ↓

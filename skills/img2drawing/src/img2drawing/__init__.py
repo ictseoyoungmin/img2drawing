@@ -55,6 +55,13 @@ from .registration import (
     PropTopologyObservation, PropTopologyIntegrityError,
     PropTopologyComparison, compare_prop_topology,
 )
+from .inspection import (
+    Box, GroundGuide, Grid, GridMeasurement, InspectionSheet, Measurement,
+    PixelSample, PlumbLine, Point, PointMapping, Profile, Registration, ROI, Size,
+    angle, distance, drawing_state_hash, drawing_state_payload, ground_guide, grid,
+    horizontal_profile, map_subject_to_canvas, point, plumb_line, sample_pixel,
+    stage_free_drawing_state_hash, vertical_profile,
+)
 
 __all__=[
     "DrawingRun","DrawingRunResult",
@@ -89,6 +96,11 @@ __all__=[
     "PropWidthChangePoint","PropTerminalMass","PropBodyOverlapPoint",
     "PropTopologyObservation","PropTopologyIntegrityError",
     "PropTopologyComparison","compare_prop_topology",
+    "Box","GroundGuide","Grid","GridMeasurement","InspectionSheet","Measurement",
+    "PixelSample","PlumbLine","Point","PointMapping","Profile","Registration","ROI","Size",
+    "angle","distance","drawing_state_hash","drawing_state_payload","ground_guide","grid",
+    "horizontal_profile","map_subject_to_canvas","point","plumb_line","sample_pixel",
+    "stage_free_drawing_state_hash","vertical_profile",
     "ABLATION_CONDITIONS","ModularGrammarCard","consume_grammar_card","AblationTrial",
     "ExemplarAblationReport","run_exemplar_ablation",
 ]
