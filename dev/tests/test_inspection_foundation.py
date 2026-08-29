@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageChops
@@ -35,10 +36,15 @@ def _ir(stage: str | None = "P1_gesture") -> StrokeIR:
                 role="structure",
                 part="torso",
                 stage=stage,
+                tool_state={"stage": "authored-tool-metadata"},
                 stroke_id="s0001",
             )
         ],
-        metadata={"history_cursor": 4, "material": "graphite"},
+        metadata={
+            "history_cursor": 4,
+            "material": "graphite",
+            "authored_metadata": {"stage": "authored-visible-label"},
+        },
     )
 
 
@@ -64,6 +70,34 @@ def test_drawing_state_hash_ignores_only_workflow_stage_and_cursor():
     changed = _ir("P1_gesture")
     changed.strokes[0].points[1] = (41.0, 45.0)
     assert drawing_state_hash(changed) != drawing_state_hash(_ir("P1_gesture"))
+    authored_metadata_changed = _ir("P1_gesture")
+    authored_metadata_changed.strokes[0].tool_state["stage"] = "different-authored-value"
+    assert drawing_state_hash(authored_metadata_changed) != drawing_state_hash(_ir("P1_gesture"))
+    nested_cursor_changed = _ir("P1_gesture")
+    nested_cursor_changed.metadata["authored_metadata"]["history_cursor"] = 99
+    assert drawing_state_hash(nested_cursor_changed) != drawing_state_hash(_ir("P1_gesture"))
+
+
+def test_non_identity_registration_reads_the_contract_coordinate(tmp_path: Path):
+    subject = Image.new("RGB", (3, 3), "white")
+    subject_path = tmp_path / "subject.png"
+    subject.save(subject_path)
+    drawing = Image.new("RGB", (8, 8), "white")
+    ImageDraw.Draw(drawing).rectangle((2, 2, 5, 5), fill=(0, 0, 0))
+    drawing_path = tmp_path / "drawing.png"
+    drawing.save(drawing_path)
+
+    output = tmp_path / "non-identity"
+    InspectionSheet.create(
+        subject=subject_path,
+        drawing=drawing_path,
+        drawing_state_hash="0" * 64,
+        registration=Registration((3, 3), (8, 8), scale=(2, 2), offset=(1, 1)),
+        out_dir=output,
+    )
+
+    with Image.open(output / "registered_drawing.png") as registered:
+        assert registered.getpixel((1, 1))[0] < 64
 
 
 def test_registration_and_read_only_measurements_are_explicit():
@@ -122,6 +156,9 @@ def test_one_call_sheet_writes_portable_whole_and_roi_evidence(tmp_path: Path):
     assert str(tmp_path) not in manifest_text
     assert "PASS" not in manifest_text and "FAIL" not in manifest_text
     assert manifest["inputs"] == {"subject": "subject.png", "drawing": "current_drawing.png"}
+    assert manifest["subject_sha256"] == hashlib.sha256(subject_path.read_bytes()).hexdigest()
+    assert manifest["drawing_artifact_sha256"] == hashlib.sha256(drawing_path.read_bytes()).hexdigest()
+    assert manifest["drawing_state_hash"] == drawing_state_hash(ir)
     assert manifest["artifacts"]["sheet"] == "inspection_sheet.png"
     assert manifest["rois"][0]["space"] == "subject"
 

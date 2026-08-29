@@ -51,18 +51,28 @@ def _jsonable(value: Any) -> Any:
     return value
 
 
-def _strip_stage(value: Any) -> Any:
-    """Remove workflow-stage labels from a drawing identity payload."""
+def _stage_free_payload(value: Any) -> dict[str, Any]:
+    """Exclude only known workflow fields at their structural locations."""
 
-    if isinstance(value, dict):
-        return {
-            key: _strip_stage(item)
-            for key, item in value.items()
-            if key not in {"stage", "stage_label", "workflow_stage", "history_cursor"}
-        }
-    if isinstance(value, list):
-        return [_strip_stage(item) for item in value]
-    return value
+    if not isinstance(value, dict):
+        raise TypeError("StrokeIR serialization must be a mapping")
+    payload = dict(value)
+    metadata = payload.get("metadata")
+    if isinstance(metadata, dict):
+        metadata = dict(metadata)
+        metadata.pop("history_cursor", None)
+        payload["metadata"] = metadata
+    strokes = payload.get("strokes")
+    if isinstance(strokes, list):
+        normalized_strokes = []
+        for stroke in strokes:
+            if not isinstance(stroke, dict):
+                raise TypeError("StrokeIR strokes must serialize as mappings")
+            normalized = dict(stroke)
+            normalized.pop("stage", None)
+            normalized_strokes.append(normalized)
+        payload["strokes"] = normalized_strokes
+    return payload
 
 
 def drawing_state_payload(ir: Any) -> dict[str, Any]:
@@ -76,10 +86,7 @@ def drawing_state_payload(ir: Any) -> dict[str, Any]:
     if not hasattr(ir, "to_dict"):
         raise TypeError("drawing_state_payload expects a StrokeIR-like object")
     raw = _jsonable(ir.to_dict())
-    payload = _strip_stage(raw)
-    if not isinstance(payload, dict):
-        raise TypeError("StrokeIR serialization must be a mapping")
-    return payload
+    return _stage_free_payload(raw)
 
 
 def drawing_state_hash(ir: Any) -> str:
@@ -137,6 +144,14 @@ def distance(
     space: str = "subject",
     registration: Registration | None = None,
 ) -> Measurement:
+    """Measure two points without mutation.
+
+    With ``space='canvas'`` and a registration, the arguments are still
+    subject-space points and the returned distance is in mapped canvas units.
+    Without a registration, the arguments are already interpreted in canvas
+    coordinates.  The provenance field records which case was used.
+    """
+
     a, b = _points_in_space((start, end), space=space, registration=registration)
     value = math.hypot(b[0] - a[0], b[1] - a[1])
     return Measurement(
@@ -156,6 +171,12 @@ def angle(
     space: str = "subject",
     registration: Registration | None = None,
 ) -> Measurement:
+    """Measure the interior angle at ``vertex`` without mutation.
+
+    The ``space='canvas'`` registration semantics match :func:`distance`:
+    supplied points are mapped from subject space before measuring.
+    """
+
     a, b, c = _points_in_space((start, vertex, end), space=space, registration=registration)
     first = (a[0] - b[0], a[1] - b[1])
     second = (c[0] - b[0], c[1] - b[1])

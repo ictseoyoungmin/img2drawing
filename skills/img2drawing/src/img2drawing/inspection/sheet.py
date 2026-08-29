@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -32,6 +33,14 @@ def _portable(value: Any) -> Any:
     return value
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _fit(image: Image.Image, box: tuple[int, int]) -> Image.Image:
     fitted = image.copy()
     fitted.thumbnail(box, Image.Resampling.LANCZOS)
@@ -53,12 +62,12 @@ def _registered_drawing(drawing: Image.Image, registration: Registration) -> Ima
     # PIL's affine transform maps each output subject pixel back to the input
     # canvas pixel.  This is a display mapping only; no drawing geometry moves.
     data = (
-        1.0 / scale_x,
+        scale_x,
         0.0,
-        -offset_x / scale_x,
+        offset_x,
         0.0,
-        1.0 / scale_y,
-        -offset_y / scale_y,
+        scale_y,
+        offset_y,
     )
     return drawing.transform(
         registration.subject_size,
@@ -137,6 +146,8 @@ class InspectionSheet:
 
     subject: Path
     drawing: Path
+    subject_sha256: str
+    drawing_artifact_sha256: str
     drawing_state_hash: str
     registration: Registration
     rois: tuple[ROI, ...] = ()
@@ -211,10 +222,14 @@ class InspectionSheet:
             raise ValueError("drawing_state_hash or drawing_ir is required")
         if not _SHA256.fullmatch(str(drawing_state_hash)):
             raise ValueError("drawing_state_hash must be a lowercase SHA-256 digest")
+        subject_sha256 = _sha256_file(subject_path)
+        drawing_artifact_sha256 = _sha256_file(drawing_path)
 
         sheet = cls(
             subject=subject_path,
             drawing=drawing_path,
+            subject_sha256=subject_sha256,
+            drawing_artifact_sha256=drawing_artifact_sha256,
             drawing_state_hash=str(drawing_state_hash),
             registration=registration,
             rois=tuple(rois),
@@ -232,6 +247,8 @@ class InspectionSheet:
         return {
             "format": "inspection-sheet/v1",
             "inputs": {"subject": self.subject.name, "drawing": self.drawing.name},
+            "subject_sha256": self.subject_sha256,
+            "drawing_artifact_sha256": self.drawing_artifact_sha256,
             "drawing_state_hash": self.drawing_state_hash,
             "registration": self.registration.to_dict(),
             "rois": [roi.to_dict() for roi in self.rois],
@@ -246,6 +263,10 @@ class InspectionSheet:
     def write(self, out_dir: str | Path) -> dict[str, Path]:
         output = Path(out_dir)
         output.mkdir(parents=True, exist_ok=True)
+        if _sha256_file(self.subject) != self.subject_sha256:
+            raise ValueError("subject changed after sheet creation")
+        if _sha256_file(self.drawing) != self.drawing_artifact_sha256:
+            raise ValueError("drawing artifact changed after sheet creation")
         raw_path = output / "raw_drawing.png"
         if self.drawing.resolve() != raw_path.resolve():
             shutil.copyfile(self.drawing, raw_path)
@@ -304,6 +325,8 @@ class InspectionSheet:
 
         measurement_payload = {
             "format": "inspection-measurements/v1",
+            "subject_sha256": self.subject_sha256,
+            "drawing_artifact_sha256": self.drawing_artifact_sha256,
             "drawing_state_hash": self.drawing_state_hash,
             "measurements": [_portable(item) for item in self.measurements],
         }
