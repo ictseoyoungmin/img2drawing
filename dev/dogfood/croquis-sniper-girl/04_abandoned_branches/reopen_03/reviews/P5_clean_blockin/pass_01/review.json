@@ -23,7 +23,7 @@
   "exemplar_findings": [
     "The bundled P5 exemplar carries a KNOWN AUDIT FAILURE for exceeding the clean-block-in ceiling with shading, micro folds and texture; only its silhouette-first ordering was used and none of its rendering was imitated."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "history_cursor": 181,
   "inter_pass_action_ids": [
     "P5-C1",
@@ -162,13 +162,13 @@
   "semantic_authority": "agent",
   "stage": "P5_clean_blockin",
   "stage_contract_id": "full_body_croquis.P5.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "subject_findings": [
     "The subject's rifle owns the outer left silhouette above roughly canvas y=225 and the jacket owns it below, so the two edges genuinely cross rather than merge.",
     "The subject's bob tips rest on top of both shoulders, so the hair edge continues inside the garment after the garment takes the outer silhouette.",
     "The subject's prop is readable only through its width changes, its scope and the large cutout in the skeleton buttstock."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

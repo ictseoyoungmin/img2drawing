@@ -2,11 +2,11 @@
   "auto_detection_used": false,
   "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
   "comparisons": {
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/local_reference_overview.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_overlay.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_vs_drawing.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/local_reference_overview.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_overlay.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_vs_drawing.png",
     "task_target_vs_drawing": null
   },
   "crops": {
@@ -17,10 +17,10 @@
         "right": 335,
         "top": 495
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/drawing.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/drawing.png",
       "crop_sha256": "b8b37be4c161e3d5f468696067833a776a14fc0e08465edd5d80cb08f83ee1f0",
       "role": "current_drawing",
-      "source_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/current_drawing.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/current_drawing.png",
       "source_sha256": "d52ba0e4e4d3873134e69096ce77778dff1f9f86930aeeaf35a2db1762fc79b7",
       "source_size": [
         512,
@@ -34,10 +34,10 @@
         "right": 275,
         "top": 40
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/grammar.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/grammar.png",
       "crop_sha256": "3f38650b056ed2cb3d9a468f4b8dc40595786a5fa3f363f68768937d664527cf",
       "role": "grammar_exemplar",
-      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+      "source_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
       "source_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
       "source_size": [
         289,
@@ -51,10 +51,10 @@
         "right": 660,
         "top": 1000
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/subject.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/subject.png",
       "crop_sha256": "3d981f9e09c35d759fe72fc2d4d81da9259dacaaa4bbddfc49058cdaa261d7ce",
       "role": "subject_reference",
-      "source_path": "/home/claude/work/subject.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
       "source_size": [
         1024,

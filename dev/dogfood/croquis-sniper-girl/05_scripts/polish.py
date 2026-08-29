@@ -1,8 +1,9 @@
 import sys
 from pathlib import Path
-sys.path.insert(0,'/home/claude/work/croquis')
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from img2drawing import DrawingRun, DrawingAction
-run=DrawingRun.resume(Path('/home/claude/work/croquis/out'))
+run=DrawingRun.resume(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run")
 sess=run.session
 ST='P6_identity_finish'
 
@@ -74,6 +75,6 @@ for i,(part,(op,w,pr,gr)) in enumerate(DARK.items(),1):
                 "width, so they read clearly while staying thinner than the outer contour.")})
 sess.execute_many_atomic([DrawingAction.from_dict(a) for a in acts2], label="identity-darken")
 run.canvas.sync(sess.history)
-run.canvas.render("/home/claude/work/final_croquis.png", supersample=4)
+run.canvas.render(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/final_croquis.png", supersample=4)
 run.save_checkpoint()
 print("polish", len(wisp), len(acts2))

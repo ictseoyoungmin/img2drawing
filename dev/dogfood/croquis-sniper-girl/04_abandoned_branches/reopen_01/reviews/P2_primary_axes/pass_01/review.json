@@ -17,7 +17,7 @@
   "exemplar_findings": [
     "The P2 grammar exemplar is the audited PASS exemplar and was used only for axis vocabulary and detail budget; no coordinates were taken from it."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
   "history_cursor": 39,
   "inter_pass_action_ids": [
     "P2-A1",
@@ -59,13 +59,13 @@
   "semantic_authority": "agent",
   "stage": "P2_primary_axes",
   "stage_contract_id": "full_body_croquis.P2.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
   "subject_findings": [
     "Re-measured the subject's braced right thigh directly: its visible skin band centres near canvas x=258-264 between canvas y=415 and y=460, not near x=267-273.",
     "The subject's support leg centre stays near canvas x=182-190 for its whole length, confirming the near-vertical weight-bearing chain.",
     "The subject's eye line drops toward image-right and compresses on the far side; the drawn head cross-axis matches."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

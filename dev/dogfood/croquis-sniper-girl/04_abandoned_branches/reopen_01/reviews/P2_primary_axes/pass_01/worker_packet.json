@@ -7,26 +7,26 @@
     "drawing": {
       "artifact_sha256": "0aec2f819e5a1219e3b0b365c34c5b4fa9ee4a738b5bc45bf4a935569122fa73",
       "history_cursor": 39,
-      "path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/current_drawing.png",
       "stage": "P2_primary_axes",
       "state_sha256": "4e27285eb0842005f1d78413ccb2ac9fe5b3fda8314c216c099889c4edf93268"
     },
-    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
-    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
+    "exemplar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+    "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
     "stage": "P2_primary_axes",
-    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
-    "subject_reference": "/home/claude/work/subject.png",
-    "subject_split": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_split.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
+    "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+    "subject_split": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
     "task_stage_target": null,
     "task_target_split": null,
     "task_target_vs_drawing": null,
-    "three_way": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
+    "three_way": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
   },
   "autonomous_loop": [
     "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
@@ -75,7 +75,7 @@
     "auto_checkpoint_after_mutation": true,
     "auto_checkpoint_after_prepare": true,
     "auto_checkpoint_after_review": true,
-    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "checkpoint_path": "dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json",
     "resume_method": "DrawingRun.resume"
   },
   "escalation_policy": [
@@ -266,7 +266,7 @@
         "subject-specific proportions",
         "subject-specific perspective"
       ],
-      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+      "path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
       "purpose": "representation_only",
       "role": "grammar_exemplar",
       "sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
@@ -289,7 +289,7 @@
         "stage abstraction vocabulary",
         "which construction convention belongs to a stage"
       ],
-      "path": "/home/claude/work/subject.png",
+      "path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "role": "subject_reference",
       "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
     },

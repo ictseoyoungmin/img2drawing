@@ -1,8 +1,10 @@
 import sys, json
 from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(Path(__file__).parent))
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from img2drawing import DrawingRun
-OUT=Path("/home/claude/work/croquis/out")
+OUT=PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run"
 run=DrawingRun.resume(OUT)
 run.prepare_stage_review()
 h=run.prepare_local_review(label="head_face",

@@ -1,9 +1,10 @@
 import sys, json
 from pathlib import Path
-sys.path.insert(0,'/home/claude/work/croquis')
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from helpers import S
 from img2drawing import DrawingRun
-run=DrawingRun.resume(Path("/home/claude/work/croquis/out"))
+run=DrawingRun.resume(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run")
 ed=run.canvas_editor if hasattr(run,'canvas_editor') else None
 sess=run.session
 ST="P6_identity_finish"
@@ -71,5 +72,5 @@ acts=[
 ]
 sess.execute_many_atomic([__import__('img2drawing').DrawingAction.from_dict(a) for a in acts], label="identity-face-hair")
 run.canvas.sync(sess.history)
-run.canvas.render("/home/claude/work/id_face.png", supersample=4)
+run.canvas.render(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/id_face.png", supersample=4)
 print("ok")

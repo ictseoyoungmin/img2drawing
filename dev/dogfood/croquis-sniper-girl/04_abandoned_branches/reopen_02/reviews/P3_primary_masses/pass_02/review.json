@@ -26,7 +26,7 @@
   "exemplar_findings": [
     "The PASS P3 exemplar's abstraction level is matched: connected organic masses with a small number of cross-contours and no joint or clothing detail."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "history_cursor": 57,
   "inter_pass_action_ids": [
     "P3-D1",
@@ -63,12 +63,12 @@
   "semantic_authority": "agent",
   "stage": "P3_primary_masses",
   "stage_contract_id": "full_body_croquis.P3.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "subject_findings": [
     "The subject's legs swell continuously through the sock top rather than stepping, and both taper to slim ankles before the boot volume begins.",
     "The subject's clothed occupied volume is unchanged by the corrections and still governs the torso, sleeve, pelvis and limb envelopes."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

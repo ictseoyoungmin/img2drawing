@@ -1782,7 +1782,7 @@
     "action_count": 463,
     "action_log_sha256": "c58cbaf9b253d1c7eece3cbaa1d26ba41897e1f87fa9a54423a74f25828a59b2",
     "cursor": 463,
-    "path": "/home/claude/work/croquis/out/session/session.json",
+    "path": "dev/dogfood/croquis-sniper-girl/02_run_record/session.json",
     "session_id": "sniper-girl-croquis-r1",
     "state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3"
   }

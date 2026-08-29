@@ -1,7 +1,7 @@
 {
   "schema": "img2drawing.fresh_worker_mechanical_audit.v1",
   "img2drawing_version": "0.5.2.dev21",
-  "run_dir": "/mnt/data/r20_results_extract/img2drawing_dogfood_r20",
+  "run_dir": "legacy-source/r20_results_extract/img2drawing_dogfood_r20",
   "complete": true,
   "stage_summary": {
     "P1_gesture": {
@@ -56,4 +56,4 @@
     "No upstream reopen occurred. This is not a failure; later visual audit must verify that no downstream compensation hid an earlier defect."
   ],
   "semantic_visual_audit_required": true
-}\n
+}

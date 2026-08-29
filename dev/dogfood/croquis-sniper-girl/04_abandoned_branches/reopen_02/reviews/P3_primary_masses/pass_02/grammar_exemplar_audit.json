@@ -1,6 +1,6 @@
 {
   "contract_id": "full_body_croquis.P3.v1",
-  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "exemplar_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "exemplar_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
   "findings": [
     "The simple foot endpoints are somewhat descriptive, but remain within the contract’s allowed simple endpoint vocabulary and do not add articulated joint detail."

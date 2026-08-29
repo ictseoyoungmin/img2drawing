@@ -3,7 +3,7 @@
   "stage": "P2_primary_axes",
   "drawing": {
     "stage": "P2_primary_axes",
-    "path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/current_drawing.png",
+    "path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/current_drawing.png",
     "artifact_sha256": "0aec2f819e5a1219e3b0b365c34c5b4fa9ee4a738b5bc45bf4a935569122fa73",
     "state_sha256": "4e27285eb0842005f1d78413ccb2ac9fe5b3fda8314c216c099889c4edf93268",
     "history_cursor": 39
@@ -12,18 +12,18 @@
     "subject_reference",
     "grammar_exemplar"
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
-  "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
-  "subject_split": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_split.png",
-  "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
-  "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
-  "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
-  "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
+  "subject_split": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_split.png",
+  "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
+  "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
+  "exemplar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/grammar_vs_drawing.png",
   "task_target_vs_drawing": null,
   "task_target_split": null,
-  "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
-  "three_way": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
+  "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
+  "three_way": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
 }

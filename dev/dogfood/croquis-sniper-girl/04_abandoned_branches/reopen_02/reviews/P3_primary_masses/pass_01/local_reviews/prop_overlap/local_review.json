@@ -2,11 +2,11 @@
   "auto_detection_used": false,
   "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
   "comparisons": {
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/local_reference_overview.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_drawing_overlay.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_vs_drawing.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/local_reference_overview.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_drawing_overlay.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/subject_vs_drawing.png",
     "task_target_vs_drawing": null
   },
   "crops": {
@@ -17,10 +17,10 @@
         "right": 280,
         "top": 30
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/drawing.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/drawing.png",
       "crop_sha256": "7581a96b9de37a3f26c80998f1419a78ece24fba8690219def6506573955e00c",
       "role": "current_drawing",
-      "source_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/current_drawing.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/current_drawing.png",
       "source_sha256": "5194194e0f62ed437d6ea6fc55e8d0ec735acf9760d2addde35421d96fc7d10c",
       "source_size": [
         512,
@@ -34,10 +34,10 @@
         "right": 275,
         "top": 40
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/grammar.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/grammar.png",
       "crop_sha256": "fdf02fbd4fe144b1235bdafb2073e39ced3d3c13320cc87743e56f528d2188e2",
       "role": "grammar_exemplar",
-      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+      "source_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
       "source_sha256": "12f987e8a72c9b35e38f2e11af5df854b2afa766c6a6f47e14b5b8b35a585e8b",
       "source_size": [
         290,
@@ -51,10 +51,10 @@
         "right": 560,
         "top": 60
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/subject.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P3_primary_masses/pass_01/local_reviews/prop_overlap/crops/subject.png",
       "crop_sha256": "e5f9696cbf10890add3444f061a7dc08d25a619deebec8327fd95761466a0185",
       "role": "subject_reference",
-      "source_path": "/home/claude/work/subject.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
       "source_size": [
         1024,

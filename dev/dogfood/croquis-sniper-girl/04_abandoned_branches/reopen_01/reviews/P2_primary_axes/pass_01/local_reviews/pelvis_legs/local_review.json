@@ -2,11 +2,11 @@
   "auto_detection_used": false,
   "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
   "comparisons": {
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
     "task_target_vs_drawing": null
   },
   "crops": {
@@ -17,10 +17,10 @@
         "right": 380,
         "top": 350
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
       "crop_sha256": "da0d09731aed2aaf588c81e601e7a792bfc36fe7d381f8e34b461b50d645efae",
       "role": "current_drawing",
-      "source_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/current_drawing.png",
       "source_sha256": "0aec2f819e5a1219e3b0b365c34c5b4fa9ee4a738b5bc45bf4a935569122fa73",
       "source_size": [
         512,
@@ -34,10 +34,10 @@
         "right": 275,
         "top": 400
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/grammar.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/grammar.png",
       "crop_sha256": "9d2f46441e6f024f3c4317199de72f7eba687d347a1b000781735096316ec114",
       "role": "grammar_exemplar",
-      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+      "source_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
       "source_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
       "source_size": [
         289,
@@ -51,10 +51,10 @@
         "right": 760,
         "top": 700
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/subject.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/subject.png",
       "crop_sha256": "3719caada6f67f8d2e5cc7c8ddc7cb515055840e59ed54cb7cd9922d7d2a7846",
       "role": "subject_reference",
-      "source_path": "/home/claude/work/subject.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
       "source_size": [
         1024,

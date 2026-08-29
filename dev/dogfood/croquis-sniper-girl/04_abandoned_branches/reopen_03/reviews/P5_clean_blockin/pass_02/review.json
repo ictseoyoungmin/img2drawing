@@ -27,7 +27,7 @@
   "exemplar_findings": [
     "The KNOWN-DEFECT P5 exemplar was used only for silhouette-first ordering; its shading, folds and texture stay outside this stage's ceiling."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "history_cursor": 187,
   "inter_pass_action_ids": [
     "P5-H1",
@@ -66,11 +66,11 @@
   "semantic_authority": "agent",
   "stage": "P5_clean_blockin",
   "stage_contract_id": "full_body_croquis.P5.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "subject_findings": [
     "The subject confirms the prop owns the outer left silhouette above roughly canvas y=225 and the jacket below, and that both bob tips rest on top of the shoulders."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

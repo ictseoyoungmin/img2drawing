@@ -1,9 +1,10 @@
 import sys, json
 from pathlib import Path
-sys.path.insert(0,'/home/claude/work/croquis')
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from helpers import S
 from img2drawing import DrawingRun, DrawingAction
-run=DrawingRun.resume(Path("/home/claude/work/croquis/out"))
+run=DrawingRun.resume(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run")
 sess=run.session
 ST="P6_identity_finish"
 def F(aid,part,pts,src,op=.70,w=1.6,pr=.55,grade="B",role="detail",layer=30):
@@ -247,10 +248,10 @@ for i,(part,(op,w,pr)) in enumerate(BOOST.items(),1):
     })
 sess.execute_many_atomic([DrawingAction.from_dict(a) for a in acts], label="identity-confirm")
 run.canvas.sync(sess.history)
-run.canvas.render("/home/claude/work/final_croquis.png", supersample=4)
+run.canvas.render(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/final_croquis.png", supersample=4)
 run.save_checkpoint()
 import json
-json.dump({"stage":ST,"identity_strokes":len(A),"confirmation_strokes":len(acts),"note":"Identity finishing pass drawn after the five-stage croquis closed. It deliberately exceeds the frozen P5 clean-block-in ceiling because the task requires the subject to be identifiable by face, hair and outfit."},open("/home/claude/work/croquis/out/identity_pass.json","w"),indent=2)
+json.dump({"stage":ST,"identity_strokes":len(A),"confirmation_strokes":len(acts),"note":"Identity finishing pass drawn after the five-stage croquis closed. It deliberately exceeds the frozen P5 clean-block-in ceiling because the task requires the subject to be identifiable by face, hair and outfit."},open(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run/identity_pass.json","w"),indent=2)
 print("identity",len(A),"confirm",len(acts))
 
 # ================= FINAL POLISH =================
@@ -322,6 +323,6 @@ for i,(part,(op,w,pr,gr)) in enumerate(DARK.items(),1):
                 "width, so they read clearly while staying thinner than the outer contour.")})
 sess.execute_many_atomic([DrawingAction.from_dict(a) for a in acts2], label="identity-darken")
 run.canvas.sync(sess.history)
-run.canvas.render("/home/claude/work/final_croquis.png", supersample=4)
+run.canvas.render(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/final_croquis.png", supersample=4)
 run.save_checkpoint()
 print("polish", len(wisp), len(acts2))

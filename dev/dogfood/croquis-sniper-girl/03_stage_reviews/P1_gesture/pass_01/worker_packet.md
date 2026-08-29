@@ -95,9 +95,9 @@ Do not reuse archived downstream judgements as current evidence. Rebuild from th
 ## Reference authority
 - reference mode: **subject_only**
 - authority order: `subject_reference > grammar_exemplar`
-- subject reference: `/home/claude/work/subject.png` — geometry truth
+- subject reference: `dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png` — geometry truth
 - task stage target: _not provided_
-- grammar exemplar: `/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png` — representation only
+- grammar exemplar: `skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png` — representation only
 - grammar exemplar audit: **FAIL**
 
 ### KNOWN GRAMMAR EXEMPLAR DEFECT
@@ -173,17 +173,17 @@ Capture the full craniofacial-to-ground gesture: face direction, spinal rhythm, 
 ## Review artifacts
 - schema: `img2drawing.reference_review_artifacts.v2`
 - stage: `P1_gesture`
-- subject_reference: `/home/claude/work/subject.png`
-- grammar_exemplar: `/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png`
-- stage_exemplar: `/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png`
-- subject_vs_drawing: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_vs_drawing.png`
-- subject_split: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_split.png`
-- subject_drawing_overlay: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_drawing_overlay.png`
-- subject_drawing_absdiff: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png`
-- grammar_vs_drawing: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/grammar_vs_drawing.png`
-- exemplar_vs_drawing: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/grammar_vs_drawing.png`
-- overview: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/reference_authority_overview.png`
-- three_way: `/home/claude/work/croquis/out/reviews/P1_gesture/pass_01/reference_authority_overview.png`
+- subject_reference: `dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png`
+- grammar_exemplar: `skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png`
+- stage_exemplar: `skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png`
+- subject_vs_drawing: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/subject_vs_drawing.png`
+- subject_split: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/subject_split.png`
+- subject_drawing_overlay: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/subject_drawing_overlay.png`
+- subject_drawing_absdiff: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/subject_drawing_absdiff.png`
+- grammar_vs_drawing: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/grammar_vs_drawing.png`
+- exemplar_vs_drawing: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/grammar_vs_drawing.png`
+- overview: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/reference_authority_overview.png`
+- three_way: `dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_01/reference_authority_overview.png`
 
 ## Canvas-scale pencil guidance
 - canvas: `512 × 768`
@@ -193,7 +193,7 @@ Capture the full craniofacial-to-ground gesture: face direction, spinal rhythm, 
 - Guidance only: do not silently rewrite explicit stroke intent.
 
 ## Checkpoint / resume
-- checkpoint: `/home/claude/work/croquis/out/session/checkpoint.json`
+- checkpoint: `dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json`
 - `submit_stage_review()` writes a resumable checkpoint automatically.
 - Resume with `DrawingRun.resume(output_dir)` after process loss; prepare a fresh review before judging new edits.
 

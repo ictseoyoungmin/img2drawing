@@ -21,7 +21,7 @@
   "exemplar_findings": [
     "The bundled P1 exemplar remains a KNOWN-DEFECT exemplar; nothing was imitated from it on the rebuilt branch."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "history_cursor": 11,
   "inter_pass_action_ids": [
     "P1B-A1",
@@ -63,13 +63,13 @@
   "semantic_authority": "agent",
   "stage": "P1_gesture",
   "stage_contract_id": "full_body_croquis.P1.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "subject_findings": [
     "The subject's braced-leg centre runs near canvas x=261-265 through the upper thigh before swinging image-right toward knee and ankle; the rebuilt flow follows that measurement.",
     "The support leg centre stays near canvas x=182-190 for its whole length and lands under the far boot.",
     "Head turn, shoulder rhythm, pelvis tilt, prop angle and both landing heights are unchanged from the verified observations and still agree with the subject."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

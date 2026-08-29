@@ -113,7 +113,7 @@
       "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
       "d3a297212c2893fac59d9d1ee87df9c3ac8765d6640dfb4c195ff780e2b4ef74"
     ],
-    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_01",
+    "archive_dir": "dev/dogfood/croquis-sniper-girl/04_abandoned_branches/reopen_01",
     "discovered_in_stage": "P2_primary_axes",
     "findings": [
       "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",

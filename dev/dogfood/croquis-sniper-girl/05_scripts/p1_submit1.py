@@ -1,8 +1,10 @@
 import sys
 from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(Path(__file__).parent))
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from img2drawing import DrawingRun
-run=DrawingRun.resume(Path("/home/claude/work/croquis/out"))
+run=DrawingRun.resume(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run")
 r=run.submit_stage_review(
  contract_findings=[
   "The artifact stays inside gesture_and_weight_path: no ribcage/pelvis mass contour, no limb thickness, no clothing contour, no facial features.",

@@ -21,7 +21,7 @@
     "The bundled P1 grammar exemplar carries a KNOWN GRAMMAR EXEMPLAR DEFECT (neck-origin gesture, near-closed oval head, no distinct counterbalance) and was used only as a reminder of stroke economy.",
     "No exemplar pose, coordinate or proportion was imported; all geometry came from the subject photograph."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "history_cursor": 10,
   "inter_pass_action_ids": [
     "P1-A1",
@@ -71,14 +71,14 @@
   "semantic_authority": "agent",
   "stage": "P1_gesture",
   "stage_contract_id": "full_body_croquis.P1.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "subject_findings": [
     "The subject is a back-three-quarter standing figure: the torso faces away and toward image-right, and the head is turned further right so the right ear sits image-left of the facial mass.",
     "The subject's facial centre bows clearly toward image-right between crown and chin; that bow is the only carrier of face direction at this abstraction.",
     "Weight sits on the far image-left leg, which runs almost vertically under the pelvis, while the near image-right leg is braced outward and lands lower and wider in frame.",
     "The subject's rifle axis runs from an upper-left suppressor tip down to a buttstock at the image-left hip, roughly 74 degrees from horizontal."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

@@ -1,6 +1,6 @@
 {
   "contract_id": "full_body_croquis.P1.v1",
-  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "exemplar_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "exemplar_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
   "findings": [
     "The exemplar shows only one long lower-body path and does not establish a distinct counterbalance-leg flow, so support versus counterbalance is not readable.",

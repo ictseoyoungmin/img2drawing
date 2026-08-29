@@ -22,7 +22,7 @@
     "The P3 grammar exemplar is an audited PASS exemplar; its abstraction level and detail budget were followed.",
     "Its bare-body mass vocabulary was deliberately NOT copied, because the clothed-mass policy requires the observed clothing bulk to define the envelope here."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "history_cursor": 53,
   "inter_pass_action_ids": [
     "P3-H1",
@@ -90,14 +90,14 @@
   "semantic_authority": "agent",
   "stage": "P3_primary_masses",
   "stage_contract_id": "full_body_croquis.P3.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "subject_findings": [
     "The subject's loose jacket, not a fitted body, defines the torso occupied volume; its widest point is at the near sleeve elbow around canvas y=340.",
     "The subject's bob is a genuine mass, wider than the cranium on both sides and slightly narrower on the turned image-right side.",
     "Measured leg extents confirm the support leg is the slimmer, more vertical volume and the braced leg is wider and leans image-right for its whole length.",
     "The subject's rifle is not a uniform rail: a fat suppressor steps down to a thin barrel, then widens at the scope/receiver and again at the skeleton buttstock."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

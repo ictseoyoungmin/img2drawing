@@ -21,7 +21,7 @@
   "exemplar_findings": [
     "The KNOWN-DEFECT P5 exemplar was used only for silhouette-first ordering."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "history_cursor": 188,
   "inter_pass_action_ids": [
     "P5-C1",
@@ -161,13 +161,13 @@
   "semantic_authority": "agent",
   "stage": "P5_clean_blockin",
   "stage_contract_id": "full_body_croquis.P5.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "subject_findings": [
     "Close-range measurement gives the belt's upper edge as canvas (215,309) to (281,334): it runs downhill toward image-right with the hip tilt.",
     "The jacket is cropped: its body ends at the belt with a pointed corner near canvas (172,339), and only the sleeves continue to the hips.",
     "The face contour reaches canvas x=273 at eye level and turns at a chin near canvas (247,143)."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

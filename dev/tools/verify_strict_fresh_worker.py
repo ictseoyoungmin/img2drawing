@@ -17,6 +17,8 @@ from pathlib import Path
 
 from jsonschema import validators
 
+from verify_repository_paths import MACHINE_PATH
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "skills/img2drawing/src"))
 from audit_fresh_worker import audit  # noqa: E402
@@ -72,9 +74,9 @@ def _portable_text_scan(root: Path) -> None:
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        for token in ("/home/claude/", "/home/ymin/.codex/attachments/", "REPLACE_FROM_"):
-            if token in text:
-                raise AssertionError(f"non-portable token {token!r} in {path}")
+        for line_number, line in enumerate(text.splitlines(), 1):
+            if MACHINE_PATH.search(line):
+                raise AssertionError(f"non-portable absolute path in {path}:{line_number}")
 
 
 def verify(evidence_dir: Path) -> dict:

@@ -1,12 +1,14 @@
 import sys, shutil, json
 from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(Path(__file__).parent))
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from helpers import S
 from img2drawing import DrawingRun
 
-OUT=Path("/home/claude/work/croquis/out")
+OUT=PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run"
 if OUT.exists(): shutil.rmtree(OUT)
-run=DrawingRun.create("/home/claude/work/subject.png", OUT,
+run=DrawingRun.create(PROJECT_ROOT / "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png", OUT,
     width=512, height=768, working_supersample=3,
     session_id="sniper-girl-croquis-r1")
 run.stage_start("P1_gesture")

@@ -3,7 +3,7 @@
   "stage": "P5_clean_blockin",
   "drawing": {
     "stage": "P5_clean_blockin",
-    "path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/current_drawing.png",
+    "path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/current_drawing.png",
     "artifact_sha256": "153acd5cddb17325acdcf6641e06ff2a763a3260f273a708f382f3210ed818a8",
     "state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
     "history_cursor": 187
@@ -12,18 +12,18 @@
     "subject_reference",
     "grammar_exemplar"
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
-  "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_vs_drawing.png",
-  "subject_split": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_split.png",
-  "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_drawing_overlay.png",
-  "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/subject_drawing_absdiff.png",
-  "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
-  "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/subject_vs_drawing.png",
+  "subject_split": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/subject_split.png",
+  "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/subject_drawing_absdiff.png",
+  "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
+  "exemplar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/grammar_vs_drawing.png",
   "task_target_vs_drawing": null,
   "task_target_split": null,
-  "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/reference_authority_overview.png",
-  "three_way": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_02/reference_authority_overview.png"
+  "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/reference_authority_overview.png",
+  "three_way": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_02/reference_authority_overview.png"
 }

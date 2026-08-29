@@ -1,6 +1,6 @@
 {
   "contract_id": "full_body_croquis.P4.v1",
-  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "exemplar_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
   "exemplar_sha256": "49e06eb9d5116da81a12a50a08c3419b70b8c3e9ead63457082d88aacc181e20",
   "findings": [
     "Elbows, knees and several other joints are represented primarily as dots on line chains rather than as directional structural transitions between connected masses.",

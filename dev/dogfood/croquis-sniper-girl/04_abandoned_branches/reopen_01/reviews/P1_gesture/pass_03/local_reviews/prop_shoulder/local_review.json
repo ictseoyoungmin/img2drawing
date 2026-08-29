@@ -2,11 +2,11 @@
   "auto_detection_used": false,
   "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
   "comparisons": {
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/local_reference_overview.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_drawing_overlay.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_vs_drawing.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/local_reference_overview.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_drawing_overlay.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/subject_vs_drawing.png",
     "task_target_vs_drawing": null
   },
   "crops": {
@@ -17,10 +17,10 @@
         "right": 350,
         "top": 30
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/drawing.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/drawing.png",
       "crop_sha256": "6818816ad4d50a363afed0265fad9210ce78373fc01f277c5e2dcd7e2c60153a",
       "role": "current_drawing",
-      "source_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/current_drawing.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/current_drawing.png",
       "source_sha256": "a6dcd146c6bc4c6b9633c11fe1a6f96e3845894b60a9a9063b48120b05d189b3",
       "source_size": [
         512,
@@ -34,10 +34,10 @@
         "right": 280,
         "top": 30
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/grammar.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/grammar.png",
       "crop_sha256": "5003170fc073e8983c66a233e16c301bd9d72475170a41210c750e381af90cc9",
       "role": "grammar_exemplar",
-      "source_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+      "source_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
       "source_sha256": "28951b5d5501a2db4f2958d0bead4b40105d22fe523530baef67e79204913ed0",
       "source_size": [
         290,
@@ -51,10 +51,10 @@
         "right": 700,
         "top": 60
       },
-      "crop_path": "/home/claude/work/croquis/out/reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/subject.png",
+      "crop_path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P1_gesture/pass_03/local_reviews/prop_shoulder/crops/subject.png",
       "crop_sha256": "9e090771c0ff222c380dd5a4e87896fa9bf6e3d00850dd1869f41f436235a9aa",
       "role": "subject_reference",
-      "source_path": "/home/claude/work/subject.png",
+      "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
       "source_size": [
         1024,

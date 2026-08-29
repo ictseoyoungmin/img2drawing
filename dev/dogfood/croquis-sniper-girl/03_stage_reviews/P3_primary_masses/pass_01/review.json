@@ -26,7 +26,7 @@
   "exemplar_findings": [
     "The PASS P3 exemplar decided abstraction level and detail budget only; its bare-body mass vocabulary was again rejected in favour of the clothed-mass policy."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "history_cursor": 53,
   "inter_pass_action_ids": [
     "P3C-H1",
@@ -88,13 +88,13 @@
   "semantic_authority": "agent",
   "stage": "P3_primary_masses",
   "stage_contract_id": "full_body_croquis.P3.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p3_masses.png",
   "subject_findings": [
     "Brightness-lifted measurement of the left flank gives the outer edge as canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396, with ownership passing from prop to garment near y=205.",
     "The subject's rifle handguard tapers along its own length and is far more vertical than a straight axis interpolation implies.",
     "The subject's thigh pouch, not the thigh, owns the image-right silhouette between canvas y=405 and y=470."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

@@ -120,7 +120,7 @@
       "D2-P5-L49"
     ],
     "trigger_review_digest": "43fee2238f0b2ccee94c33c76cbf94b7b8e15fc24323c4141bf729637ffc625c",
-    "archive_dir": "/mnt/data/img2drawing_r22_target_run/reopen_archive/reopen_03",
+    "archive_dir": "legacy-source/img2drawing_r22_target_run/reopen_archive/reopen_03",
     "policy": "reopen_earliest_responsible_stage",
     "semantic_authority": "agent"
   },
@@ -169,7 +169,7 @@
     "remaining_concerns": []
   },
   "current_stage": null,
-  "final_drawing": "/mnt/data/img2drawing_r22_target_run/final/drawing.png",
-  "subject_compare": "/mnt/data/img2drawing_r22_target_run/compare/subject_vs_final.png",
+  "final_drawing": "legacy-source/img2drawing_r22_target_run/final/drawing.png",
+  "subject_compare": "legacy-source/img2drawing_r22_target_run/compare/subject_vs_final.png",
   "timelapse_status": "skipped_budget"
 }

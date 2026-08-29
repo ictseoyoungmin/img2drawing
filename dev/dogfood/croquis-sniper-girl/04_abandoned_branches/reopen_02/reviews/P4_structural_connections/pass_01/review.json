@@ -21,7 +21,7 @@
   "exemplar_findings": [
     "The bundled P4 grammar exemplar carries a KNOWN AUDIT FAILURE for under-explained structural transitions, so it was used only for detail budget and not as a model for how to connect masses."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
   "history_cursor": 82,
   "inter_pass_action_ids": [
     "P4-S1",
@@ -84,13 +84,13 @@
   "semantic_authority": "agent",
   "stage": "P4_structural_connections",
   "stage_contract_id": "full_body_croquis.P4.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
   "subject_findings": [
     "The subject's boots are two distinct grounded volumes whose soles land at different heights, and both toes swing image-right.",
     "The subject's near hand disappears into the hip pocket, so only a partial wrist-to-palm volume is actually visible.",
     "The subject's joints are hidden under loose clothing everywhere except the bare thigh, so only functional transitions are observable, never anatomical joint shapes."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

@@ -1,6 +1,6 @@
 {
   "contract_id": "full_body_croquis.P2.v1",
-  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
+  "exemplar_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p2_axes.png",
   "exemplar_sha256": "ffb2a330920e176ad62f279e9c5859720985ad0497c35570e9160e7ba09eebc3",
   "findings": [
     "The corrected exemplar uses single arm/leg direction chains and no paired limb contours, torso mass closure, foot blocks, joint anatomy, clothing block-in, or shading.",

@@ -7,26 +7,26 @@
     "drawing": {
       "artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
       "history_cursor": 188,
-      "path": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+      "path": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/current_drawing.png",
       "stage": "P5_clean_blockin",
       "state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b"
     },
-    "exemplar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
-    "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
-    "grammar_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
-    "overview": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
+    "exemplar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+    "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "grammar_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/grammar_vs_drawing.png",
+    "overview": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
     "schema": "img2drawing.reference_review_artifacts.v2",
     "stage": "P5_clean_blockin",
-    "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
-    "subject_drawing_absdiff": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
-    "subject_drawing_overlay": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
-    "subject_reference": "/home/claude/work/subject.png",
-    "subject_split": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_split.png",
-    "subject_vs_drawing": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+    "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+    "subject_drawing_absdiff": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+    "subject_split": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
     "task_stage_target": null,
     "task_target_split": null,
     "task_target_vs_drawing": null,
-    "three_way": "/home/claude/work/croquis/out/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
+    "three_way": "dev/dogfood/croquis-sniper-girl/03_stage_reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
   },
   "autonomous_loop": [
     "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
@@ -75,7 +75,7 @@
     "auto_checkpoint_after_mutation": true,
     "auto_checkpoint_after_prepare": true,
     "auto_checkpoint_after_review": true,
-    "checkpoint_path": "/home/claude/work/croquis/out/session/checkpoint.json",
+    "checkpoint_path": "dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json",
     "resume_method": "DrawingRun.resume"
   },
   "escalation_policy": [
@@ -1911,7 +1911,7 @@
         "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
         "80e48879003530c271c9175f2aac30f4dbcc2d17696013f9b9ec3dac58673638"
       ],
-      "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_03",
+      "archive_dir": "dev/dogfood/croquis-sniper-girl/04_abandoned_branches/reopen_03",
       "discovered_in_stage": null,
       "findings": [
         "Belt upper edge measured at canvas (215,309) to (281,334); the stated break was horizontal at y=318-334.",
@@ -1957,7 +1957,7 @@
         "subject-specific proportions",
         "subject-specific perspective"
       ],
-      "path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+      "path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
       "purpose": "representation_only",
       "role": "grammar_exemplar",
       "sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
@@ -1980,7 +1980,7 @@
         "stage abstraction vocabulary",
         "which construction convention belongs to a stage"
       ],
-      "path": "/home/claude/work/subject.png",
+      "path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
       "role": "subject_reference",
       "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
     },

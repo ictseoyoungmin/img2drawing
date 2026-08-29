@@ -12,6 +12,8 @@ from pathlib import Path
 
 from PIL import Image, ImageChops
 
+from verify_repository_paths import find_machine_path_leaks
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -38,17 +40,10 @@ def _nonblank(path: Path) -> None:
 
 
 def _relative_text_scan(root: Path) -> None:
-    forbidden = ("/home/claude/", "/home/ymin/.codex/attachments/", "REPLACE_FROM_")
-    for path in root.rglob("*"):
-        if not path.is_file() or path.suffix.lower() in {".png", ".gif", ".zip", ".whl"}:
-            continue
-        try:
-            text = path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
-            continue
-        for token in forbidden:
-            if token in text:
-                raise AssertionError(f"non-portable or placeholder token {token!r} in {path}")
+    leaks = find_machine_path_leaks(root)
+    if leaks:
+        path, line_number = leaks[0]
+        raise AssertionError(f"non-portable absolute path in {path}:{line_number}")
 
 
 def check_s10() -> None:

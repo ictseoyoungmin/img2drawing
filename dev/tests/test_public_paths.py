@@ -9,7 +9,10 @@ from img2drawing.run import _resolve_checkpoint_paths
 
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_RUN = ROOT / "dev" / "p1_reference_run"
-MACHINE_PATH = re.compile(r"(?:/home/[^\s\"'`]+|/mnt/[^\s\"'`]+|[A-Za-z]:\\\\Users\\\\[^\s\"'`]+)")
+MACHINE_PATH = re.compile(
+    r"(?<![A-Za-z0-9_.-])/(?!/)(?:[A-Za-z0-9_.-]+/){2,}[A-Za-z0-9_.-]+"
+    r"|(?<![A-Za-z0-9_.-])[A-Za-z]:[\\/]"
+)
 
 
 def test_public_reference_run_contains_no_machine_absolute_paths():

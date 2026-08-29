@@ -17,7 +17,7 @@
   "exemplar_findings": [
     "The bundled P5 exemplar carries a KNOWN AUDIT FAILURE for exceeding the clean-block-in ceiling with shading, folds and texture, so it cannot be imitated and only its silhouette-first ordering is useful."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "history_cursor": 94,
   "inter_pass_action_ids": [],
   "local_review_ids": [
@@ -48,13 +48,13 @@
   "semantic_authority": "agent",
   "stage": "P5_clean_blockin",
   "stage_contract_id": "full_body_croquis.P5.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "subject_findings": [
     "Brightness-lifted inspection of the subject's left flank resolves the composite outer edge that ordinary viewing could not: the rifle owns the outer silhouette from the suppressor down to roughly canvas y=205, and the jacket/sling mass owns it below that.",
     "The measured left outer edge runs canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340 and 163 at y=396.",
     "The rifle's own left edge is far more vertical than a straight interpolation of its axis suggests, because the handguard tapers along its length."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

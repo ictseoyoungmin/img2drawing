@@ -28,7 +28,7 @@
   "exemplar_findings": [
     "The KNOWN-DEFECT P4 exemplar under-explains transitions, so the frozen contract and the stage reference, not the exemplar, decided how much articulation each joint needed."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
   "history_cursor": 92,
   "inter_pass_action_ids": [
     "P4-X1",
@@ -73,12 +73,12 @@
   "semantic_authority": "agent",
   "stage": "P4_structural_connections",
   "stage_contract_id": "full_body_croquis.P4.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p4_structure.png",
   "subject_findings": [
     "Re-observed the subject: every joint on this figure is either bare thigh or hidden under loose clothing, so only partial functional transitions are actually visible and full-width bands were never subject-derived.",
     "The subject's near hand is a smooth glove volume that disappears into the pocket; only its outer half has a real edge."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

@@ -30,7 +30,7 @@
   "exemplar_findings": [
     "The failed P1 exemplar still teaches nothing usable for craniofacial continuity; the skill's own line-hierarchy calibration guidance was used instead."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "history_cursor": 19,
   "inter_pass_action_ids": [
     "P1-R1",
@@ -75,13 +75,13 @@
   "semantic_authority": "agent",
   "stage": "P1_gesture",
   "stage_contract_id": "full_body_croquis.P1.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "subject_findings": [
     "Re-observed: the subject's facial centre bows toward image-right between brow and cheek, then returns left into the chin; the corrected stroke now matches that shape.",
     "Re-observed: the subject's weight passes through a rounded hip, not a corner; the corrected transfer matches.",
     "The subject's braced image-right leg is a clearly distinct structural role, not a faint echo of the support leg."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

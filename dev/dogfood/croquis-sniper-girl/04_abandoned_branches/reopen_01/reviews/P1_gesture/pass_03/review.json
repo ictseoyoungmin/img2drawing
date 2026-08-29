@@ -28,7 +28,7 @@
     "Only stroke economy was taken from the failed P1 grammar exemplar; its neck-origin gesture, closed oval head and undifferentiated legs were all rejected.",
     "The skill's line-hierarchy calibration ratios, not the exemplar, decided the final subordinate stroke weights."
   ],
-  "grammar_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "grammar_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "history_cursor": 27,
   "inter_pass_action_ids": [
     "P1-R10",
@@ -71,13 +71,13 @@
   "semantic_authority": "agent",
   "stage": "P1_gesture",
   "stage_contract_id": "full_body_croquis.P1.v1",
-  "stage_exemplar": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
+  "stage_exemplar": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p1_gesture.png",
   "subject_findings": [
     "Whole-view registration against the subject confirms head height, shoulder span, pelvis breadth, leg length and both landing heights are subject-derived and credible.",
     "The subject's rifle axis angle and its suppressor-tip and buttstock endpoints agree with the drawn axis.",
     "The subject's support side remains the far image-left leg; the near image-right leg remains braced and wider."
   ],
-  "subject_reference": "/home/claude/work/subject.png",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
   "task_stage_target": null,
   "task_target_findings": []
 }

@@ -1793,7 +1793,7 @@
       "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
       "80e48879003530c271c9175f2aac30f4dbcc2d17696013f9b9ec3dac58673638"
     ],
-    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_03",
+    "archive_dir": "dev/dogfood/croquis-sniper-girl/04_abandoned_branches/reopen_03",
     "discovered_in_stage": null,
     "findings": [
       "Belt upper edge measured at canvas (215,309) to (281,334); the stated break was horizontal at y=318-334.",

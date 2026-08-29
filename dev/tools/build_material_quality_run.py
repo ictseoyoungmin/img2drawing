@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -297,25 +298,34 @@ def build(out: Path = OUT) -> Path:
     result = run.finish(timelapse="none", timelapse_mode="every_n", timelapse_every_n=4)
     # The preserved source checkpoint contains paths from its original worker
     # checkout. They are useful only as historical provenance and must not be
-    # promoted into portable canonical evidence.
-    replacements = {
-        str(ROOT.resolve()) + "/": "",
-        "/home/claude/work/croquis/out": "dev/evidence/material-integration/s10-quality-run",
-        "/home/claude/work/subject.png": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
-        "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis",
-    }
+    # promoted into portable canonical evidence. Normalize by stable suffixes
+    # so this tool never embeds a worker's machine-local prefix.
+    def portable_text(text: str) -> str:
+        text = text.replace(str(ROOT.resolve()) + "/", "")
+        text = re.sub(
+            r"(?<![A-Za-z0-9_.-])/(?:[^/\s\"']+/)*croquis/out",
+            "dev/evidence/material-integration/s10-quality-run",
+            text,
+        )
+        text = re.sub(
+            r"(?<![A-Za-z0-9_.-])/(?:[^/\s\"']+/)*subject\.png",
+            "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+            text,
+        )
+        text = re.sub(
+            r"(?<![A-Za-z0-9_.-])/(?:[^/\s\"']+/)*img2drawing/src/img2drawing/data/exemplars/full_body_croquis",
+            "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis",
+            text,
+        )
+        return text
     for path in out.rglob("*"):
         if path.is_file() and path.suffix.lower() in {".json", ".md"}:
             text = path.read_text(encoding="utf-8")
-            for old, new in replacements.items():
-                text = text.replace(old, new)
-            path.write_text(text, encoding="utf-8")
+            path.write_text(portable_text(text), encoding="utf-8")
     portable_reopens = []
     for item in run._reopens:
         text = json.dumps(item.to_dict(), ensure_ascii=False)
-        for old, new in replacements.items():
-            text = text.replace(old, new)
-        portable_reopens.append(json.loads(text))
+        portable_reopens.append(json.loads(portable_text(text)))
     report = {
         "schema": "img2drawing.material_integration_quality_run.v1",
         "status": "closed",

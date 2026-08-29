@@ -1,6 +1,6 @@
 {
   "contract_id": "full_body_croquis.P5.v1",
-  "exemplar_path": "/tmp/skill/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
+  "exemplar_path": "skills/img2drawing/src/img2drawing/data/exemplars/full_body_croquis/p5_clean_blockin.png",
   "exemplar_sha256": "caa4ced51062f4b637a8dd562020207de0ca7cfa1a4b9b329f121d0cfefe30cf",
   "findings": [
     "The exemplar contains extensive tonal hatching/shading across hair, clothing and trousers, exceeding clean block-in scope.",

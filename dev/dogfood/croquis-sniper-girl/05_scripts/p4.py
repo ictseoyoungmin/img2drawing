@@ -1,9 +1,10 @@
 import sys
 from pathlib import Path
-sys.path.insert(0,'/home/claude/work/croquis')
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(PROJECT_ROOT / "skills/img2drawing/src"))
 from helpers import S
 from img2drawing import DrawingRun
-run=DrawingRun.resume(Path("/home/claude/work/croquis/out"))
+run=DrawingRun.resume(PROJECT_ROOT / "temp/dogfood/croquis-sniper-girl/run")
 run.stage_start("P4_structural_connections")
 def J(aid,part,pts,src,op=.62,w=2.3,pr=.54,grade="HB",role="connection"):
     return S(aid,"P4_structural_connections",part,pts,role=role,preset="construction_pencil",

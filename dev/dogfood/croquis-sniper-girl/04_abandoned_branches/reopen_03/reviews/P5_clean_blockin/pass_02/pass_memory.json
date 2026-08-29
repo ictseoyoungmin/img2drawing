@@ -128,7 +128,7 @@
     "abandoned_review_digests": [
       "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
     ],
-    "archive_dir": "/home/claude/work/croquis/out/reopen_archive/reopen_02",
+    "archive_dir": "dev/dogfood/croquis-sniper-girl/04_abandoned_branches/reopen_02",
     "discovered_in_stage": "P5_clean_blockin",
     "findings": [
       "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
