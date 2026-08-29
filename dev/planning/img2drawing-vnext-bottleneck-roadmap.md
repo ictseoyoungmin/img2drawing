@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 ACTIVE**
+- 상태: **B00 CLOSED — B01 CLOSED**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -566,13 +566,13 @@ runtime은 이 이동을 `reopen_stage()`로 관리하지 않는다. explicit st
 
 ```text
 SYSTEM
-  architecture sketched / contract not frozen
+  architecture contract frozen / B01 closed
 
 BASELINE
   25ec454  Legacy R23 reference baseline                      FROZEN
 
 FOUNDATION
-  B01  vNext contract and architecture cut                    ACTIVE
+  B01  vNext contract and architecture cut                    CLOSED
   B02+B03  Inspection Foundation                              SKELETON
            InspectionSheet + basic read-only measurement
 
@@ -603,9 +603,10 @@ RELEASE
 
 CLOSED
   B00  Legacy R23 freeze + failure dossier                    CLOSED
+  B01  vNext contract and architecture cut                    CLOSED
 
 NEXT GATE
-  complete B01 dependency audit and freeze the stage-free contract
+  manually activate B02+B03 after reviewing the B01 capsule
 ```
 
 **Production WIP Limit = 1.**
@@ -748,14 +749,14 @@ dependency direction, persistence boundary처럼 이후 CLOSED slice를 무효�
 
 ### Definition of Closed
 
-- [ ] vNext runtime의 canonical lifecycle이 1페이지 안에 설명 가능
-- [ ] `draw()`가 P1/P2/P3를 알 필요 없음
-- [ ] `inspect()`가 stage manifest를 생성하지 않음
-- [ ] correction은 earlier-stage reopen 없이 history-preserving edit로 가능
-- [ ] visual semantics는 Agent authority로 남음
-- [ ] legacy compatibility는 adapter에 격리됨
-- [ ] 기존 클래스 이름이 아니라 capability/invariant 기준으로 재사용 여부가 결정됨
-- [ ] vNext normal path와 frozen R23 path가 동등한 두 production implementation으로 남지 않음
+- [x] vNext runtime의 canonical lifecycle이 1페이지 안에 설명 가능
+- [x] `draw()`가 P1/P2/P3를 알 필요 없음
+- [x] `inspect()`가 stage manifest를 생성하지 않음
+- [x] correction은 earlier-stage reopen 없이 history-preserving edit로 가능
+- [x] visual semantics는 Agent authority로 남음
+- [x] legacy compatibility는 adapter에 격리됨
+- [x] 기존 클래스 이름이 아니라 capability/invariant 기준으로 재사용 여부가 결정됨
+- [x] vNext normal path와 frozen R23 path가 동등한 두 production implementation으로 남지 않음
 
 ### REOPEN
 
@@ -2170,9 +2171,9 @@ NOW
  ↓
 B00 — baseline/failure dossier                         CLOSED
  ↓
-B01 — architecture cut                                 ACTIVE
+B01 — architecture cut                                 CLOSED
  ↓
-B02+B03 — Inspection Foundation                       one slice
+B02+B03 — Inspection Foundation                       one slice / MANUAL ACTIVATION
  ↓
 B04 — minimal stage-agnostic session
  ↓
