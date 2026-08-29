@@ -3,12 +3,12 @@
 Updated: 2026-08-30
 
 ```text
-SYSTEM:   architecture sketched / contract not frozen
-ACTIVE:   none — B00 is CLOSED; no next slice is activated
+SYSTEM:   architecture sketched / B01 contract cut in progress
+ACTIVE:   B01 vNext contract and architecture cut
 SKELETON: B01 contract cut; B02+B03 inspection foundation; B04 session;
           B05 construction grammar; B06 correction loop; B07–B18 remaining slices
 CLOSED:   B00 Legacy R23 freeze + failure dossier
-NEXT GATE: manually activate B01 after reviewing the B00 capsule
+NEXT GATE: complete B01 dependency audit and freeze the stage-free contract
 ```
 
 ## B00 closure
@@ -21,5 +21,6 @@ NEXT GATE: manually activate B01 after reviewing the B00 capsule
 - Archived card: `archive/B00.md`
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
-regression, or provenance inspection, but none is vNext PASS evidence. No B01,
-Inspection Foundation, DrawingSession, or runtime work is activated by this closure.
+regression, or provenance inspection, but none is vNext PASS evidence. B01 is the
+only active production slice; no Inspection Foundation, DrawingSession, or runtime
+implementation work is included in this activation.

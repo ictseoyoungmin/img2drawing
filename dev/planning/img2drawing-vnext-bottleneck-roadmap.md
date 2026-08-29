@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 SKELETON**
+- 상태: **B00 CLOSED — B01 ACTIVE**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -572,7 +572,7 @@ BASELINE
   25ec454  Legacy R23 reference baseline                      FROZEN
 
 FOUNDATION
-  B01  vNext contract and architecture cut                    SKELETON
+  B01  vNext contract and architecture cut                    ACTIVE
   B02+B03  Inspection Foundation                              SKELETON
            InspectionSheet + basic read-only measurement
 
@@ -605,7 +605,7 @@ CLOSED
   B00  Legacy R23 freeze + failure dossier                    CLOSED
 
 NEXT GATE
-  manually activate B01 after reviewing the B00 capsule
+  complete B01 dependency audit and freeze the stage-free contract
 ```
 
 **Production WIP Limit = 1.**
@@ -2170,7 +2170,7 @@ NOW
  ↓
 B00 — baseline/failure dossier                         CLOSED
  ↓
-B01 — architecture cut                                 SKELETON / MANUAL ACTIVATION
+B01 — architecture cut                                 ACTIVE
  ↓
 B02+B03 — Inspection Foundation                       one slice
  ↓
