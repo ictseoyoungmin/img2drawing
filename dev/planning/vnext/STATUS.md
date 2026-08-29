@@ -1,6 +1,6 @@
 # img2drawing vNext status
 
-Updated: 2026-08-29
+Updated: 2026-08-30
 
 ```text
 SYSTEM:   architecture sketched / contract not frozen
@@ -18,6 +18,7 @@ NEXT GATE: manually activate B01 after reviewing the B00 capsule
 - Failure dossier: `failure-dossier/gemini.md`, `failure-dossier/claude.md`,
   `failure-dossier/r23-architecture.md`
 - Context capsule: `capsules/B00.md`
+- Archived card: `archive/B00.md`
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
 regression, or provenance inspection, but none is vNext PASS evidence. No B01,

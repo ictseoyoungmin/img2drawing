@@ -1,7 +1,7 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **ACTIVE — B00 legacy baseline freeze**
-- 기준일: 2026-08-29
+- 상태: **B00 CLOSED — B01 SKELETON**
+- 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
 - 기준 release line: `0.5.2.dev23 / R23_material_integrated_visual_quality`
@@ -569,7 +569,7 @@ SYSTEM
   architecture sketched / contract not frozen
 
 BASELINE
-  B00  Legacy R23 freeze + failure dossier                    ACTIVE
+  25ec454  Legacy R23 reference baseline                      FROZEN
 
 FOUNDATION
   B01  vNext contract and architecture cut                    SKELETON
@@ -602,10 +602,10 @@ RELEASE
   B18  Legacy workflow retirement                             SKELETON
 
 CLOSED
-  none
+  B00  Legacy R23 freeze + failure dossier                    CLOSED
 
 NEXT GATE
-  pin 25ec454 and close the reproducible R23 failure dossier
+  manually activate B01 after reviewing the B00 capsule
 ```
 
 **Production WIP Limit = 1.**
@@ -625,14 +625,15 @@ NEXT GATE
 dev/planning/vnext/
   STATUS.md              # 한 화면: SYSTEM / ACTIVE / SKELETON / CLOSED / NEXT GATE
   active/
-    B00.md               # ACTIVE bottleneck card는 정확히 하나
+    Bxx.md               # 현재 ACTIVE bottleneck card는 최대 하나
   capsules/
     Bxx.md               # CLOSED slice의 압축된 contract/evidence/reopen 조건
   failure-dossier/
     ...
 ```
 
-B00이 이 control plane을 생성하기 전까지는 위 status board가 bootstrap authority다.
+`STATUS.md`가 이 control plane의 현재 상태 authority다. roadmap의 status board는
+장기 계획과 현재 판정의 요약이며, 일상 상태를 별도로 누적하지 않는다.
 
 규칙:
 
@@ -665,16 +666,16 @@ vNext 작업이 시작되기 전에 현재 R23을 재현 가능한 baseline으�
 
 ### WIP boundary
 
-B00은 현재 유일한 `ACTIVE` slice다. 새 runtime/inspection 구현은 B00이 닫힐 때까지 시작하지 않는다.
-이 slice는 baseline과 reset 근거를 보존하는 짧은 작업이며, 새로운 review schema나 대규모 evidence
-machinery를 만드는 프로젝트로 확장하지 않는다.
+B00 활성화 당시에는 유일한 `ACTIVE` slice였으며, 새 runtime/inspection 구현은 B00이 닫힐 때까지
+시작하지 않았다. 이제 B00은 닫혔고, baseline과 reset 근거는 capsule과 archived card에 보존된다.
+이 slice는 새로운 review schema나 대규모 evidence machinery를 만드는 프로젝트로 확장하지 않는다.
 
 ### Deliverables
 
 ```text
 dev/planning/vnext/
   STATUS.md
-  active/
+  archive/
     B00.md
   BASELINE.md
   failure-dossier/
@@ -685,12 +686,12 @@ dev/planning/vnext/
 
 ### Definition of Closed
 
-- [ ] `25ec454` baseline SHA가 문서와 자동 check에 고정됨
-- [ ] R23의 KEEP / TRANSFORM / DEPRECATE 항목이 명확함
-- [ ] Gemini failure와 Claude failure가 서로 다른 failure mode로 기록됨
-- [ ] 기존 R23 artifact를 vNext PASS evidence로 자동 재사용하지 않음
-- [ ] vNext의 목표가 “더 많은 gate”가 아니라 “더 좋은 drawing with less review overhead”로 명시됨
-- [ ] B00 closure 후 재사용 가능한 context capsule이 작성됨
+- [x] `25ec454` baseline SHA가 문서와 자동 check에 고정됨
+- [x] R23의 KEEP / TRANSFORM / DEPRECATE 항목이 명확함
+- [x] Gemini failure와 Claude failure가 서로 다른 failure mode로 기록됨
+- [x] 기존 R23 artifact를 vNext PASS evidence로 자동 재사용하지 않음
+- [x] vNext의 목표가 “더 많은 gate”가 아니라 “더 좋은 drawing with less review overhead”로 명시됨
+- [x] B00 closure 후 재사용 가능한 context capsule이 작성됨
 
 ### REOPEN
 
@@ -2167,9 +2168,9 @@ adapter와 archive boundary만 둔다. B01 dependency audit 전에는 대규모 
 ```text
 NOW
  ↓
-B00 — baseline/failure dossier                         ACTIVE
+B00 — baseline/failure dossier                         CLOSED
  ↓
-B01 — architecture cut
+B01 — architecture cut                                 SKELETON / MANUAL ACTIVATION
  ↓
 B02+B03 — Inspection Foundation                       one slice
  ↓

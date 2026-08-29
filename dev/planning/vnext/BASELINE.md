@@ -7,9 +7,10 @@ Release line: `0.5.2.dev23 / R23_material_integrated_visual_quality`
 
 ## Pin and reproducibility
 
-`25ec454` is the legacy/reference baseline for the vNext reset. The current
-working revision is a descendant docs commit (`7789ddd`, `docs: reset img2drawing
-workflow around bottleneck vNext`); that does not move or replace the baseline.
+`25ec454` is the legacy/reference baseline for the vNext reset. The mutable
+working HEAD is intentionally not recorded here; it does not move or replace the
+baseline. Run the verifier below to check that the current revision descends from
+the pinned object.
 
 Run the read-only check from the repository root:
 
@@ -74,5 +75,8 @@ contract and dependency audit.
 - R23 assessment: external evidence ID `r23-assessment`, SHA-256
   `614645060e6718f51dae22e4ac146aa61f1a9942dda0be8eaa227b906b7ab91b`, lines 1–100.
 - Baseline object: `git show 25ec454`.
+- Sanitized working-tree JSON/MD records are portable documentary mirrors only; they
+  are not authoritative resumable state. The authoritative resumable legacy state
+  remains the frozen Git object at `25ec454`.
 - Existing fixture classification: `dev/evidence/material-integration/source_audit.md`,
   `dev/evidence/material-integration/s10_integration_report.md`, and `GATES.md`.
