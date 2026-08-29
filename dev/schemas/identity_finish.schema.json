@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/identity_finish.schema.json",
+  "title": "Optional P6 identity finish manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "drawing_state_sha256", "drawing_artifact_sha256", "history_cursor", "observation_lock_digest", "profile", "calibration_sheet_digest", "face_relation", "hair_group_count", "garment_mark_count", "identity_stroke_count", "confirmation_stroke_count", "accent_stroke_count", "fold_stroke_count", "evidence_refs", "evaluator_id", "decision", "rationale"],
+  "properties": {
+    "schema": {"const": "img2drawing.identity_finish_manifest.v1"},
+    "drawing_state_sha256": {"$ref": "#/$defs/sha256"}, "drawing_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "history_cursor": {"type": "integer", "minimum": 0}, "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "profile": {"type": "object"}, "calibration_sheet_digest": {"$ref": "#/$defs/sha256"},
+    "face_relation": {"type": "string", "minLength": 1}, "hair_group_count": {"type": "integer", "minimum": 0}, "garment_mark_count": {"type": "integer", "minimum": 0},
+    "identity_stroke_count": {"type": "integer", "minimum": 0}, "confirmation_stroke_count": {"type": "integer", "minimum": 0}, "accent_stroke_count": {"type": "integer", "minimum": 0}, "fold_stroke_count": {"type": "integer", "minimum": 0},
+    "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "evaluator_id": {"type": "string", "minLength": 1},
+    "decision": {"enum": ["revise", "advance"]}, "rationale": {"type": "string"}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

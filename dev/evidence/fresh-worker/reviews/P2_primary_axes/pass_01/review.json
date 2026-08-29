@@ -1,0 +1,47 @@
+{
+  "advance_rationale": "Independent process review accepted the fresh pass.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "Fresh worker checked the P2_primary_axes contract directly."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "5c765c7b5c3219ea35d2ed427c877f722f19e2b195c94b083af1fc28b22a1103",
+  "drawing_findings": [
+    "Axes preserve shoulder/pelvis counter-tilt and both limb paths."
+  ],
+  "drawing_state_sha256": "b750b122aefc86fad1bf7055b9dcceccf0cfd74aa42d9ed2a6baf3932f768db8",
+  "grammar_findings": [
+    "Construction/form roles remain sparse and pressure-aware."
+  ],
+  "history_cursor": 10,
+  "inter_pass_action_ids": [
+    "FW-P2-01",
+    "FW-P2-02",
+    "FW-P2-03",
+    "FW-P2-04"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "Fresh worker checked the P2_primary_axes contract directly.",
+    "The new subject, not material notes, supplied geometry.",
+    "Construction/form roles remain sparse and pressure-aware.",
+    "Axes preserve shoulder/pelvis counter-tilt and both limb paths."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "c9558b92b46348e53b011bd5e7f1d0e5b43746df4f56d6380525ba69760d8543",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P2_primary_axes",
+  "stage_contract_id": "full_body_croquis.P2.v3",
+  "subject_findings": [
+    "The new subject, not material notes, supplied geometry."
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

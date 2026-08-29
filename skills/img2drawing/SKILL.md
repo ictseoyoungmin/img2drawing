@@ -89,6 +89,12 @@ Never copy pose or coordinates from such an image.
 
 Do not sweep through them in one pass. Harden the current stage before moving on.
 
+For identity-sensitive requests an optional `P6_identity_finish` may follow P5 when the
+run is created with `stage_registry="full_body_croquis_with_p6"`. P6 is a bounded visual
+expression pass, not a second geometry pipeline: its preflight must report every P1–P5
+visual gate clear before it can draw. The default registry and default P1→P5 deliverable
+remain unchanged.
+
 ## Autonomous hardening loop
 For every stage:
 
@@ -359,6 +365,32 @@ Three rules survive every stage:
    final form; it does not go over everything with a heavier stroke. The result is an
    under-drawing solid enough that detail work will not collapse it — not a finished
    illustration.
+
+4. **Face and hair are separate forms.** At P3 the cranium, jaw plane and head turn are
+   separate from the outer hair envelope. At P4/P5 the face opening and grouped hair
+   locks must remain readable; a single enclosing circle is a blocker, not a shortcut.
+5. **Cloth and joints need structural events.** A jacket hangs from shoulder to sleeve to
+   elbow to cuff and a trouser/sock/boot break follows the volume underneath. Add folds
+   only at anchor, tension or compression events. Never replace a bent joint with a
+   squared corner or two parallel rails.
+6. **Features are relational, not decorative.** Eyes, nose, mouth and chin are placed from
+   the locked eye line, face centreline, jaw and head turn. A feature mark without that
+   relation is not identity evidence. P6 records the relation and may use only grouped
+   hair, sparse folds and selective restatement.
+
+### Line calibration and selective restatement
+
+Before an identity pass, call `run.prepare_identity_finish()` and inspect the generated
+`identity/calibration_sheet.json` at actual size and 50% scale. It records five pressure
+samples plus taper/curve examples in the current canvas coordinates. The sample is a
+calibration aid, never geometry truth. Translate material-1's construction/form/accent
+hierarchy to the current `grade`, `pressure`, `width`, `opacity` and per-point pressure
+fields; do not copy croquis-atelier `scale`, `strength` or `wobble` numbers.
+
+Accent is reserved for the small high-information portion of the drawing (normally
+15–25%). `IdentityFinishProfile` rejects blanket confirmation, broad value bands and
+unbounded micro-fold or hair-strand passes. Every pressure/taper sample remains in the
+action log so replay and resume reproduce the same line expression.
 
 `references/stages/pipeline-overview.png` shows one subject across all five stages on a
 single sheet. Open it when you want to see the shape of the progression.

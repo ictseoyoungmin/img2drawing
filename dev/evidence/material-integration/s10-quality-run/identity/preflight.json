@@ -1,0 +1,7 @@
+{
+  "allowed": true,
+  "blockers": [],
+  "profile_id": "p6_selective_identity_v1",
+  "required_reopens": [],
+  "schema": "img2drawing.identity_preflight.v1"
+}

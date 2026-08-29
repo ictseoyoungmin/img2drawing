@@ -1,0 +1,26 @@
+{
+  "artifacts": [
+    {
+      "bytes": 5062787,
+      "path": "dev/release/r23/img2drawing-skill-0.5.2-r23.zip",
+      "sha256": "374970000f2dcc6b9d826128af01f7745bb1eac0e90282129001cc18e294617c"
+    },
+    {
+      "bytes": 167495,
+      "path": "dev/release/r23/img2drawing-0.5.2.dev23-py3-none-any.whl",
+      "sha256": "7fb265dd468c953933ea2f46a617e0d26d1b66f7b7550074d011175c0c21e968"
+    },
+    {
+      "bytes": 6844,
+      "path": "dev/release/r23/img2drawing-0.5.2-r23-TREE.md",
+      "sha256": "f4874abd504bbe094bfac953538979a1ee535b5bc4a9e22c7a6d1819fdc98c8f"
+    }
+  ],
+  "mechanical_quality_authority": "dev/tools/verify_bottleneck_completion.py",
+  "release_slice": "R23_material_integrated_visual_quality",
+  "revision": "R23",
+  "schema": "img2drawing.release_manifest.v1",
+  "source_authority": "skills/img2drawing",
+  "version": "0.5.2.dev23",
+  "visual_evidence": "dev/evidence/material-integration and dev/evidence/fresh-worker"
+}

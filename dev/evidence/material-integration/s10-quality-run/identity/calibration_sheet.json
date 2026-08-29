@@ -1,0 +1,132 @@
+{
+  "canvas_size": [
+    512,
+    768
+  ],
+  "digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
+  "rationale": "Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+  "samples": [
+    {
+      "points": [
+        [
+          51.2,
+          76.80000000000001
+        ],
+        [
+          230.4,
+          67.584
+        ],
+        [
+          460.8,
+          76.80000000000001
+        ]
+      ],
+      "pressure": 0.24,
+      "role": "construction",
+      "sample_id": "pressure_01",
+      "taper": {
+        "end": 0.2032,
+        "peak": 0.24,
+        "start": 0.26
+      }
+    },
+    {
+      "points": [
+        [
+          51.2,
+          111.36000000000001
+        ],
+        [
+          230.4,
+          102.144
+        ],
+        [
+          460.8,
+          111.36000000000001
+        ]
+      ],
+      "pressure": 0.4,
+      "role": "construction",
+      "sample_id": "pressure_02",
+      "taper": {
+        "end": 0.23199999999999998,
+        "peak": 0.4,
+        "start": 0.30000000000000004
+      }
+    },
+    {
+      "points": [
+        [
+          51.2,
+          145.92000000000002
+        ],
+        [
+          230.4,
+          136.704
+        ],
+        [
+          460.8,
+          145.92000000000002
+        ]
+      ],
+      "pressure": 0.56,
+      "role": "form",
+      "sample_id": "pressure_03",
+      "taper": {
+        "end": 0.26080000000000003,
+        "peak": 0.56,
+        "start": 0.34
+      }
+    },
+    {
+      "points": [
+        [
+          51.2,
+          180.48000000000002
+        ],
+        [
+          230.4,
+          171.264
+        ],
+        [
+          460.8,
+          180.48000000000002
+        ]
+      ],
+      "pressure": 0.72,
+      "role": "form",
+      "sample_id": "pressure_04",
+      "taper": {
+        "end": 0.28959999999999997,
+        "peak": 0.72,
+        "start": 0.38
+      }
+    },
+    {
+      "points": [
+        [
+          51.2,
+          215.04000000000002
+        ],
+        [
+          230.4,
+          205.824
+        ],
+        [
+          460.8,
+          215.04000000000002
+        ]
+      ],
+      "pressure": 0.88,
+      "role": "accent",
+      "sample_id": "pressure_05",
+      "taper": {
+        "end": 0.3184,
+        "peak": 0.88,
+        "start": 0.42000000000000004
+      }
+    }
+  ],
+  "schema": "img2drawing.calibration_sheet.v1",
+  "selected_profile": "pencil-contact-v9"
+}

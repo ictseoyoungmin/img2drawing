@@ -1,0 +1,109 @@
+{
+  "blockers": [],
+  "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+  "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+  "evaluator_id": "fresh-worker-independent-review",
+  "history_cursor": 16,
+  "manifest_id": "manifest_0c347f045bf8",
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves head_hair.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "head_hair",
+      "subject_finding": "Fresh subject relation for head_hair inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves torso_orientation.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "torso_orientation",
+      "subject_finding": "Fresh subject relation for torso_orientation inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves near_arm.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "near_arm",
+      "subject_finding": "Fresh subject relation for near_arm inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves far_arm.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "far_arm",
+      "subject_finding": "Fresh subject relation for far_arm inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves pelvis.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "pelvis",
+      "subject_finding": "Fresh subject relation for pelvis inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves leg_A.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "leg_A",
+      "subject_finding": "Fresh subject relation for leg_A inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves leg_B.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "leg_B",
+      "subject_finding": "Fresh subject relation for leg_B inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current occupied volume preserves attached_object.",
+      "evidence_refs": [
+        "reviews/P3_primary_masses/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "attached_object",
+      "subject_finding": "Fresh subject relation for attached_object inspected."
+    }
+  ],
+  "schema": "img2drawing.region_closure_manifest.v1",
+  "stage": "P3_primary_masses"
+}

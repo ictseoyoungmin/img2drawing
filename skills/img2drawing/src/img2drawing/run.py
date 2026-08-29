@@ -29,6 +29,13 @@ from .review.fidelity import (
     RegionClosureManifest, VisualFidelityReviewRecord,
     build_blind_visual_packet,
 )
+from .review.resolved_form import (
+    P4_RESOLVED_REGIONS, P5_RESOLVED_REGIONS,
+    ResolvedFormManifest, ResolvedFormReviewRecord, ConstructionRetirementRecord,
+    IdentityFinishProfile, CalibrationSheet, IdentityFinishManifest,
+    IdentityPreflightResult, preflight_identity_finish, build_resolved_form_blind_packet,
+)
+from .review.preview import PreviewArtifact, render_preview
 from .review.pass_memory import ActionMemory, build_stage_pass_memory, make_action_memory
 from .review.reopen import ReopenRecord
 from .exemplar.ablation import consume_grammar_card as build_grammar_card_consumption
@@ -228,6 +235,13 @@ class DrawingRun:
         self._region_closure_manifests: dict[str, RegionClosureManifest] = {}
         self._visual_fidelity_reviews: dict[str, VisualFidelityReviewRecord] = {}
         self._blind_packets: dict[str, dict[str, Any]] = {}
+        self._resolved_form_manifests: dict[str, ResolvedFormManifest] = {}
+        self._resolved_form_reviews: dict[str, ResolvedFormReviewRecord] = {}
+        self._resolved_form_packets: dict[str, dict[str, Any]] = {}
+        self._construction_retirement: ConstructionRetirementRecord | None = None
+        self._calibration_sheet: CalibrationSheet | None = None
+        self._identity_preflight = None
+        self._identity_finish_manifest: IdentityFinishManifest | None = None
 
     @classmethod
     def create(
@@ -538,6 +552,30 @@ class DrawingRun:
         packet = self._blind_packets.get("P3_primary_masses")
         return None if packet is None else dict(packet)
 
+    @property
+    def resolved_form_manifests(self) -> dict[str, ResolvedFormManifest]:
+        return dict(self._resolved_form_manifests)
+
+    @property
+    def resolved_form_reviews(self) -> dict[str, ResolvedFormReviewRecord]:
+        return dict(self._resolved_form_reviews)
+
+    @property
+    def construction_retirement(self) -> ConstructionRetirementRecord | None:
+        return self._construction_retirement
+
+    @property
+    def calibration_sheet(self) -> CalibrationSheet | None:
+        return self._calibration_sheet
+
+    @property
+    def identity_finish_manifest(self) -> IdentityFinishManifest | None:
+        return self._identity_finish_manifest
+
+    def preview_current(self, path: str | Path, *, supersample: int = 1) -> PreviewArtifact:
+        """Write a quick, non-authoritative preview of the current state."""
+        return render_preview(self.session.current_ir(), path, supersample=supersample)
+
     def _require_current_p3_artifacts(self):
         if self.current_stage != "P3_primary_masses":
             raise RuntimeError("visual fidelity closure is only available at P3_primary_masses")
@@ -633,6 +671,143 @@ class DrawingRun:
         self.save_checkpoint()
         return record
 
+    def _require_current_resolved_artifacts(self, stage: str | None = None):
+        stage = stage or self.current_stage
+        if stage not in {"P4_structural_connections", "P5_clean_blockin"}:
+            raise RuntimeError("resolved-form review is available only at P4 or P5")
+        artifacts = self._prepared.get(stage)
+        if artifacts is None:
+            raise RuntimeError("prepare_stage_review() must be called before resolved-form review")
+        assert_review_artifact_current(
+            artifacts,
+            current_state_sha256=self._state_sha(),
+            current_cursor=self.session.history.cursor,
+        )
+        packet = self._resolved_form_packets.get(stage)
+        if packet is None:
+            raise RuntimeError("resolved-form blind packet is missing; prepare the stage again")
+        return artifacts, packet
+
+    def submit_resolved_form_manifest(self, manifest: ResolvedFormManifest) -> ResolvedFormManifest:
+        """Persist P4/P5 visual region evidence bound to the current drawing."""
+        if not isinstance(manifest, ResolvedFormManifest):
+            raise TypeError("submit_resolved_form_manifest requires ResolvedFormManifest")
+        artifacts, packet = self._require_current_resolved_artifacts(manifest.stage)
+        lock = self._require_observation_lock()
+        if manifest.drawing_state_sha256 != artifacts.drawing.state_sha256:
+            raise RuntimeError("resolved-form manifest is stale for the current drawing state")
+        if manifest.drawing_artifact_sha256 != artifacts.drawing.artifact_sha256:
+            raise RuntimeError("resolved-form manifest is stale for the current drawing artifact")
+        if manifest.history_cursor != artifacts.drawing.history_cursor:
+            raise RuntimeError("resolved-form manifest is stale for the current history cursor")
+        if manifest.observation_lock_digest != lock.observation_digest:
+            raise RuntimeError("resolved-form manifest is bound to a different observation lock")
+        if manifest.blind_packet_digest != str(packet["packet_digest"]):
+            raise RuntimeError("resolved-form manifest is bound to a different blind packet")
+        self._resolved_form_manifests[manifest.stage] = manifest
+        pass_dir = artifacts.drawing.path.parent
+        manifest.save(pass_dir / "resolved_form_manifest.json")
+        self.save_checkpoint()
+        return manifest
+
+    def submit_resolved_form_review(
+        self,
+        *,
+        manifest: ResolvedFormManifest | None = None,
+        evaluator_id: str,
+        findings,
+        decision: str = "revise",
+        rationale: str = "",
+        stage: str | None = None,
+    ) -> ResolvedFormReviewRecord:
+        stage = stage or self.current_stage
+        artifacts, packet = self._require_current_resolved_artifacts(stage)
+        if manifest is None:
+            manifest = self._resolved_form_manifests.get(stage)
+        if manifest is None:
+            raise RuntimeError("submit a resolved-form manifest before visual review")
+        if manifest is not self._resolved_form_manifests.get(stage):
+            self.submit_resolved_form_manifest(manifest)
+        if decision == "advance" and not manifest.can_advance:
+            raise RuntimeError("resolved-form visual review cannot advance while blockers remain: " + ", ".join(manifest.blockers))
+        record = ResolvedFormReviewRecord(
+            stage=stage,
+            manifest_digest=manifest.digest(),
+            drawing_state_sha256=artifacts.drawing.state_sha256,
+            drawing_artifact_sha256=artifacts.drawing.artifact_sha256,
+            history_cursor=artifacts.drawing.history_cursor,
+            observation_lock_digest=self._require_observation_lock().observation_digest,
+            evaluator_id=str(evaluator_id),
+            decision=str(decision),
+            findings=tuple(findings) if not isinstance(findings, str) else (findings,),
+            rationale=str(rationale),
+            blind_packet_digest=str(packet["packet_digest"]),
+        )
+        record.save(artifacts.drawing.path.parent / "resolved_form_review.json")
+        self._resolved_form_reviews[stage] = record
+        self.save_checkpoint()
+        return record
+
+    def record_construction_retirement(self, record: ConstructionRetirementRecord) -> ConstructionRetirementRecord:
+        """Record P5 ownership handoff after the corresponding history edits."""
+        if self.current_stage != "P5_clean_blockin":
+            raise RuntimeError("construction retirement is only recorded during P5")
+        if not isinstance(record, ConstructionRetirementRecord):
+            raise TypeError("record_construction_retirement requires ConstructionRetirementRecord")
+        if record.history_cursor != self.session.history.cursor:
+            raise RuntimeError("construction retirement must bind to the current history cursor")
+        self._construction_retirement = record
+        self.save_checkpoint()
+        return record
+
+    def prepare_identity_finish(self, profile: IdentityFinishProfile | None = None) -> dict[str, Any]:
+        """Create the optional P6 preflight and actual-canvas calibration artifact."""
+        if self.current_stage != "P6_identity_finish":
+            raise RuntimeError("optional identity finish requires stage registry full_body_croquis_with_p6 and P6 current")
+        profile = profile or IdentityFinishProfile()
+        decisions: dict[str, Any] = {}
+        # Include the P3 visual gate explicitly when it exists.  Missing prior records
+        # are a blocker, never an implicit pass.
+        if self.visual_fidelity_review is not None:
+            decisions["P3_primary_masses"] = {"decision": self.visual_fidelity_review.decision}
+        for stage in ("P4_structural_connections", "P5_clean_blockin"):
+            review = self._resolved_form_reviews.get(stage)
+            manifest = self._resolved_form_manifests.get(stage)
+            decisions[stage] = {
+                "decision": None if review is None else review.decision,
+                "blockers": () if manifest is None else manifest.blockers,
+            }
+        self._identity_preflight = preflight_identity_finish(decisions, profile=profile)
+        self._calibration_sheet = CalibrationSheet.default(self.session.width, self.session.height)
+        out = self.output_dir / "identity"
+        out.mkdir(parents=True, exist_ok=True)
+        self._calibration_sheet.save(out / "calibration_sheet.json")
+        (out / "preflight.json").write_text(json.dumps(self._identity_preflight.to_dict(), indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+        self.save_checkpoint()
+        return self._identity_preflight.to_dict()
+
+    def submit_identity_finish_manifest(self, manifest: IdentityFinishManifest) -> IdentityFinishManifest:
+        if self.current_stage != "P6_identity_finish":
+            raise RuntimeError("identity finish manifest requires P6 current")
+        if not isinstance(manifest, IdentityFinishManifest):
+            raise TypeError("submit_identity_finish_manifest requires IdentityFinishManifest")
+        if self._identity_preflight is None:
+            self.prepare_identity_finish(manifest.profile)
+        if not self._identity_preflight.allowed:
+            raise RuntimeError("P6 is blocked by upstream structural review: " + "; ".join(self._identity_preflight.blockers))
+        if self._identity_preflight.profile_id != manifest.profile.profile_id:
+            raise RuntimeError("identity manifest profile does not match the prepared P6 preflight")
+        if self._calibration_sheet is None or manifest.calibration_sheet_digest != self._calibration_sheet.digest():
+            raise RuntimeError("identity manifest calibration sheet is stale or missing")
+        if manifest.drawing_state_sha256 != self._state_sha() or manifest.history_cursor != self.session.history.cursor:
+            raise RuntimeError("identity manifest is stale for the current drawing state")
+        if manifest.observation_lock_digest != self._require_observation_lock().observation_digest:
+            raise RuntimeError("identity manifest is bound to a different observation lock")
+        self._identity_finish_manifest = manifest
+        manifest.save(self.output_dir / "identity" / "identity_finish_manifest.json")
+        self.save_checkpoint()
+        return manifest
+
     def _task_stage_target_path(self,stage: str) -> Path | None:
         item=self.references.for_stage(stage).task_stage_target
         return None if item is None else item.path
@@ -727,6 +902,23 @@ class DrawingRun:
                 encoding="utf-8",
             )
             self._blind_packets[stage] = blind_packet
+        elif stage in {"P4_structural_connections", "P5_clean_blockin"}:
+            # P4/P5 have the same rationale-free boundary as P3, but their
+            # region vocabularies are resolved-form specific.
+            resolved_packet = build_resolved_form_blind_packet(
+                stage=stage,
+                observation_lock_digest=self._require_observation_lock().observation_digest,
+                stage_contract=stage_contract.to_dict(),
+                drawing_artifact=artifact.to_dict(),
+                subject_reference_path=str(self.reference_path),
+            )
+            (out / "resolved_form_blind_packet.json").write_text(
+                json.dumps(resolved_packet, indent=2, ensure_ascii=False, sort_keys=True),
+                encoding="utf-8",
+            )
+            self._resolved_form_manifests.pop(stage, None)
+            self._resolved_form_reviews.pop(stage, None)
+            self._resolved_form_packets[stage] = resolved_packet
         self._prepared[stage]=artifacts
         self._prepared_memory[stage]=pass_memory
         # If prepare_stage_review() returns successfully, its drawing artifact and the
@@ -860,6 +1052,32 @@ class DrawingRun:
                 or visual.observation_lock_digest != self._require_observation_lock().observation_digest
             ):
                 raise RuntimeError("visual fidelity review is stale for the current process review artifact")
+
+        if stage in {"P4_structural_connections", "P5_clean_blockin"} and decision == "advance":
+            manifest = self._resolved_form_manifests.get(stage)
+            visual = self._resolved_form_reviews.get(stage)
+            if manifest is None or visual is None:
+                raise RuntimeError(
+                    f"{stage} advance requires an independent resolved-form manifest and visual review"
+                )
+            if visual.decision != "advance" or not manifest.can_advance:
+                raise RuntimeError(f"{stage} advance requires blocker-free resolved-form visual review")
+            if visual.manifest_digest != manifest.digest():
+                raise RuntimeError("resolved-form visual review is bound to a stale manifest")
+            if (
+                visual.drawing_state_sha256 != artifacts.drawing.state_sha256
+                or visual.drawing_artifact_sha256 != artifacts.drawing.artifact_sha256
+                or visual.history_cursor != artifacts.drawing.history_cursor
+                or visual.observation_lock_digest != self._require_observation_lock().observation_digest
+            ):
+                raise RuntimeError("resolved-form visual review is stale for the current process review artifact")
+
+        if stage == "P6_identity_finish" and decision == "advance":
+            identity = self._identity_finish_manifest
+            if identity is None or identity.decision != "advance":
+                raise RuntimeError("P6 advance requires an independent identity finish manifest with decision='advance'")
+            if identity.drawing_state_sha256 != self._state_sha() or identity.history_cursor != self.session.history.cursor:
+                raise RuntimeError("P6 identity manifest is stale for the current process review artifact")
 
         # 0.5.0/0.5.1 compatibility. This shortcut is not allowed when a
         # same-task stage target exists because that authority needs its
@@ -1078,6 +1296,9 @@ class DrawingRun:
             self._region_closure_manifests.pop(sid, None)
             self._visual_fidelity_reviews.pop(sid, None)
             self._blind_packets.pop(sid, None)
+            self._resolved_form_manifests.pop(sid, None)
+            self._resolved_form_reviews.pop(sid, None)
+            self._resolved_form_packets.pop(sid, None)
             self.progress.advanced_reviews.pop(sid,None)
             self.progress.started_cursor.pop(sid,None)
         for local_id in abandoned_local_review_ids:
@@ -1176,6 +1397,25 @@ class DrawingRun:
                 k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
             },
             "blind_packets":dict(self._blind_packets),
+            "resolved_form_manifests":{
+                k:v.to_dict() for k,v in self._resolved_form_manifests.items()
+            },
+            "resolved_form_reviews":{
+                k:v.to_dict() for k,v in self._resolved_form_reviews.items()
+            },
+            "resolved_form_packets":dict(self._resolved_form_packets),
+            "construction_retirement":(
+                None if self._construction_retirement is None else self._construction_retirement.to_dict()
+            ),
+            "calibration_sheet":(
+                None if self._calibration_sheet is None else self._calibration_sheet.to_dict()
+            ),
+            "identity_preflight":(
+                None if self._identity_preflight is None else self._identity_preflight.to_dict()
+            ),
+            "identity_finish_manifest":(
+                None if self._identity_finish_manifest is None else self._identity_finish_manifest.to_dict()
+            ),
         }
 
     def save_checkpoint(self,path: str|Path|None=None) -> Path:
@@ -1283,6 +1523,31 @@ class DrawingRun:
         obj._blind_packets={
             str(k): dict(v) for k,v in (data.get("blind_packets") or {}).items()
         }
+        obj._resolved_form_manifests={
+            str(k): ResolvedFormManifest.from_dict(v)
+            for k,v in (data.get("resolved_form_manifests") or {}).items()
+        }
+        obj._resolved_form_reviews={
+            str(k): ResolvedFormReviewRecord.from_dict(v)
+            for k,v in (data.get("resolved_form_reviews") or {}).items()
+        }
+        obj._resolved_form_packets={
+            str(k): dict(v) for k,v in (data.get("resolved_form_packets") or {}).items()
+        }
+        retirement=data.get("construction_retirement")
+        obj._construction_retirement=(
+            None if retirement is None else ConstructionRetirementRecord.from_dict(retirement)
+        )
+        calibration=data.get("calibration_sheet")
+        obj._calibration_sheet=(None if calibration is None else CalibrationSheet.from_dict(calibration))
+        preflight=data.get("identity_preflight")
+        if preflight is not None:
+            # Reconstructing this record keeps the digest-bound decision visible on resume.
+            obj._identity_preflight = IdentityPreflightResult.from_dict(preflight)
+        identity=data.get("identity_finish_manifest")
+        obj._identity_finish_manifest=(
+            None if identity is None else IdentityFinishManifest.from_dict(identity)
+        )
         obj._prepared={}
         obj._prepared_memory={}
         obj.canvas.sync(obj.session.history)
@@ -1363,6 +1628,24 @@ class DrawingRun:
                 "visual_fidelity_reviews":{
                     k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
                 },
+                "resolved_form_manifests":{
+                    k:v.to_dict() for k,v in self._resolved_form_manifests.items()
+                },
+                "resolved_form_reviews":{
+                    k:v.to_dict() for k,v in self._resolved_form_reviews.items()
+                },
+                "construction_retirement":(
+                    None if self._construction_retirement is None else self._construction_retirement.to_dict()
+                ),
+                "calibration_sheet":(
+                    None if self._calibration_sheet is None else self._calibration_sheet.to_dict()
+                ),
+                "identity_preflight":(
+                    None if self._identity_preflight is None else self._identity_preflight.to_dict()
+                ),
+                "identity_finish_manifest":(
+                    None if self._identity_finish_manifest is None else self._identity_finish_manifest.to_dict()
+                ),
             },
         )
         session_dir=self.output_dir/"session"; session_dir.mkdir(parents=True,exist_ok=True)
@@ -1391,6 +1674,24 @@ class DrawingRun:
             "visual_fidelity_reviews":{
                 k:v.to_dict() for k,v in self._visual_fidelity_reviews.items()
             },
+            "resolved_form_manifests":{
+                k:v.to_dict() for k,v in self._resolved_form_manifests.items()
+            },
+            "resolved_form_reviews":{
+                k:v.to_dict() for k,v in self._resolved_form_reviews.items()
+            },
+            "construction_retirement":(
+                None if self._construction_retirement is None else self._construction_retirement.to_dict()
+            ),
+            "calibration_sheet":(
+                None if self._calibration_sheet is None else self._calibration_sheet.to_dict()
+            ),
+            "identity_preflight":(
+                None if self._identity_preflight is None else self._identity_preflight.to_dict()
+            ),
+            "identity_finish_manifest":(
+                None if self._identity_finish_manifest is None else self._identity_finish_manifest.to_dict()
+            ),
         },indent=2,ensure_ascii=False,sort_keys=True),encoding="utf-8")
 
         tl_manifest=None; tl_gif=None; tl_status="disabled"

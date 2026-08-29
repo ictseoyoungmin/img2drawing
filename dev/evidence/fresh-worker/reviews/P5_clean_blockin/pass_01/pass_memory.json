@@ -1,0 +1,163 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "FW-P5-01",
+      "history_cursor": 25,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_group_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-02",
+      "history_cursor": 26,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "face_scaffold",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-03",
+      "history_cursor": 27,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cardigan_hem_fold",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-04",
+      "history_cursor": 28,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "shoe_connection",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-05",
+      "history_cursor": 29,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_group_contour_right",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-06",
+      "history_cursor": 30,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "face_jaw",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-07",
+      "history_cursor": 31,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_left_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-08",
+      "history_cursor": 32,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "torso_right_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-09",
+      "history_cursor": 33,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_left_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-10",
+      "history_cursor": 34,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "arm_right_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-11",
+      "history_cursor": 35,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "support_leg_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-12",
+      "history_cursor": 36,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "counter_leg_contour",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-13",
+      "history_cursor": 37,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "support_shoe",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P5-14",
+      "history_cursor": 38,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "counter_shoe",
+      "reason": null,
+      "stage": "P5_clean_blockin",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P5_clean_blockin",
+  "state": "cold_start"
+}

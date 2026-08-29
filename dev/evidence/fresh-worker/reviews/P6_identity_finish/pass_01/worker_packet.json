@@ -1,0 +1,306 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
+      "history_cursor": 45,
+      "path": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/current_drawing.png",
+      "stage": "P6_identity_finish",
+      "state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6"
+    },
+    "overview": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P6_identity_finish",
+    "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "dev/evidence/fresh-worker/reviews/P6_identity_finish/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      802
+    ],
+    "minimum_visible_opacity": 0.55,
+    "minimum_visible_pressure": 0.45,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.055,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.055,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P6_identity_finish",
+    "typical_width": 2.22
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "dev/evidence/fresh-worker/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "face relation",
+      "hair grouping",
+      "garment anchor/fold",
+      "hands/footwear/prop contact"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "FW-P6-01",
+        "history_cursor": 40,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_part",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P6-02",
+        "history_cursor": 41,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_lock",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P6-03",
+        "history_cursor": 42,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "eye_line",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P6-04",
+        "history_cursor": 43,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "nose_mouth_relation",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P6-05",
+        "history_cursor": 44,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cardigan_tension_fold",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P6-06",
+        "history_cursor": 45,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cardigan_compression_fold",
+        "reason": null,
+        "stage": "P6_identity_finish",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P6_identity_finish",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P6_identity_finish",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "skills/img2drawing/examples/full_body_croquis/subject.png",
+      "role": "subject_reference",
+      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "P1–P5 preflight is clear of structural blockers.",
+      "Feature, hair, garment and line-expression marks stay inside their declared budgets.",
+      "A fresh whole-view and applicable close-crop review finds no unresolved identity mismatch owned by P6."
+    ],
+    "avoid": [
+      "upstream pose, volume, view or contour-ownership correction",
+      "pixel-by-pixel edge tracing",
+      "blanket confirmation or whole-contour darkening",
+      "broad charcoal/value bands and unlimited micro-detail"
+    ],
+    "draw": [
+      "proportional eye/nose/mouth relationship bound to the observed head turn",
+      "outer hair mass plus a small number of grouped internal locks",
+      "sparse form-following folds at anchors, tension and compression events",
+      "selective contour accent and restatement with explicit pressure samples"
+    ],
+    "index": 6,
+    "intent": "Only after P1–P5 are visually closed, add a bounded set of identity-defining feature, hair, garment and line-expression marks.",
+    "observe": [
+      "the frozen head turn, eye line, jaw and feature intervals",
+      "hair parting, grouped locks and face occlusion",
+      "identity-defining garment breaks, sparse folds and prop contacts",
+      "the selected pressure/taper calibration on the actual canvas"
+    ],
+    "review_questions": [
+      "Does the eye line and facial centreline still state the locked head turn?",
+      "Are the eyes, nose, mouth and chin in a proportional relationship rather than arbitrary marks?",
+      "Does hair remain grouped into a seated mass with only representative locks?",
+      "Do sparse folds explain anchor, tension or compression rather than texture?",
+      "Is accent limited to the selected high-information 15–25% of marks?",
+      "Did no P1–P5 blocker get hidden under identity detail?"
+    ],
+    "stage_id": "P6_identity_finish",
+    "suggested_crops": [
+      "face relation",
+      "hair grouping",
+      "garment anchor/fold",
+      "hands/footwear/prop contact"
+    ],
+    "title": "Optional Identity Finish / Line Expression"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "proportional facial features bound to the observed head turn",
+      "grouped hair locks and representative tips",
+      "sparse structural garment folds",
+      "selective restatement with per-point pressure and taper"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P6.v1",
+    "detail_ceiling": [
+      "identity-defining relationships only",
+      "no rendering claim",
+      "bounded line-expression budget"
+    ],
+    "forbidden_representation": [
+      "pixel tracing",
+      "upstream structural correction",
+      "blanket confirmation",
+      "broad value bands",
+      "unlimited micro texture"
+    ],
+    "inherits_from": "P5_clean_blockin",
+    "must_preserve": [
+      "P5 contour ownership and clean block-in",
+      "P3 volume and proportion",
+      "P1/P2 head turn, balance and ground contact"
+    ],
+    "next_stage_unlocks": [],
+    "owns": [
+      "head-turn-preserving eye, nose, mouth and chin relationship",
+      "grouped hair locks and face occlusion",
+      "identity-defining garment and prop marks",
+      "selective pressure, taper and accent expression"
+    ],
+    "representation_name": "optional_identity_finish",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P6_identity_finish",
+    "tier": 6
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+      "history_cursor": 38,
+      "path": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+      "stage": "P5_clean_blockin",
+      "state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445"
+    },
+    "overview": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P5_clean_blockin",
+    "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      802
+    ],
+    "minimum_visible_opacity": 0.62,
+    "minimum_visible_pressure": 0.52,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.055,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.055,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P5_clean_blockin",
+    "typical_width": 2.43
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "dev/evidence/fresh-worker/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "head+face",
+      "hair silhouette",
+      "garment contour",
+      "hands",
+      "footwear",
+      "overlap handoff regions"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "FW-P5-01",
+        "history_cursor": 25,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_group_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-02",
+        "history_cursor": 26,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "face_scaffold",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-03",
+        "history_cursor": 27,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "cardigan_hem_fold",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-04",
+        "history_cursor": 28,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shoe_connection",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-05",
+        "history_cursor": 29,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hair_group_contour_right",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-06",
+        "history_cursor": 30,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "face_jaw",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-07",
+        "history_cursor": 31,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_left_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-08",
+        "history_cursor": 32,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_right_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-09",
+        "history_cursor": 33,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_left_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-10",
+        "history_cursor": 34,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_right_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-11",
+        "history_cursor": 35,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "support_leg_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-12",
+        "history_cursor": 36,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "counter_leg_contour",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-13",
+        "history_cursor": 37,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "support_shoe",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P5-14",
+        "history_cursor": 38,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "counter_shoe",
+        "reason": null,
+        "stage": "P5_clean_blockin",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P5_clean_blockin",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P5_clean_blockin",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "skills/img2drawing/examples/full_body_croquis/subject.png",
+      "role": "subject_reference",
+      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The silhouette is readable and the surviving internal lines are chosen, not accumulated.",
+      "Face, hair, garment, hands, footwear and equipment forms are decided.",
+      "Contour ownership is explicit wherever masses overlap.",
+      "Where a structural error surfaced, the earliest responsible stage was reopened rather than repainted over.",
+      "No major visible P5 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "tonal shading and filled black areas",
+      "surface texture",
+      "excessive garment folds",
+      "fine skin rendering",
+      "welding two independent masses into one continuous contour"
+    ],
+    "draw": [
+      "the decided contour drawn first",
+      "superseded construction subordinated with soft_lift or fully retired with delete_stroke when the current contour replaces it, while keeping history",
+      "resolved face and hair silhouette",
+      "major internal contour breaks",
+      "an explicit occlusion handoff where one mass passes behind another"
+    ],
+    "index": 5,
+    "intent": "Decide which lines are the final form. Clean means selection, not heavier strokes, and this is an under-drawing, not a finished illustration.",
+    "observe": [
+      "which explored line is the real contour",
+      "the face form",
+      "the hair silhouette",
+      "the garment contour",
+      "hands and footwear",
+      "equipment form",
+      "where overlapping lines need a break rather than a weld"
+    ],
+    "review_questions": [
+      "Was the final line selected, or were the existing lines merely darkened?",
+      "Is the face form clear without becoming rendered detail?",
+      "Is the hair a resolved silhouette rather than strands?",
+      "Are the garment contours decided?",
+      "Are hands, footwear and equipment tidy?",
+      "Where two masses overlap, does the contour hand off with a visible break instead of welding?",
+      "Is this an under-drawing solid enough that detail would not collapse it?",
+      "Did the worker avoid shading, texture and micro folds?"
+    ],
+    "stage_id": "P5_clean_blockin",
+    "suggested_crops": [
+      "head+face",
+      "hair silhouette",
+      "garment contour",
+      "hands",
+      "footwear",
+      "overlap handoff regions"
+    ],
+    "title": "Clean Block-in"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "selecting which explored line is the final form",
+      "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+      "resolved face and hair silhouette",
+      "major internal contour breaks",
+      "explicit occlusion handoff where one mass passes behind another"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P5.v2",
+    "detail_ceiling": [
+      "which lines survive",
+      "readable silhouette and tidy internal line",
+      "an under-drawing solid enough that detail will not collapse it",
+      "no tonal finish"
+    ],
+    "forbidden_representation": [
+      "tonal shading and filled black areas",
+      "surface texture",
+      "excessive garment folds",
+      "fine skin rendering",
+      "accidental contour welding between independent masses"
+    ],
+    "inherits_from": "P4_structural_connections",
+    "must_preserve": [
+      "P4 real-form structure",
+      "P3 volume and proportion",
+      "P1 balance and ground contact"
+    ],
+    "next_stage_unlocks": [],
+    "owns": [
+      "decisive outer silhouette",
+      "resolved face form",
+      "resolved hair silhouette",
+      "decided garment contour",
+      "tidied hands and footwear",
+      "settled equipment form",
+      "construction-line retirement",
+      "silhouette-owner handoff between overlapping masses"
+    ],
+    "representation_name": "clean_block_in",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P5_clean_blockin",
+    "tier": 5
+  }
+}

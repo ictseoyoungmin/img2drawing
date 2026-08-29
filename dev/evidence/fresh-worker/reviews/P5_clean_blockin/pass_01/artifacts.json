@@ -1,0 +1,24 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P5_clean_blockin",
+  "drawing": {
+    "stage": "P5_clean_blockin",
+    "path": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+    "artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+    "state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+    "history_cursor": 38
+  },
+  "authority_order": [
+    "subject_reference"
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+  "subject_split": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_split.png",
+  "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png",
+  "three_way": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/reference_authority_overview.png"
+}

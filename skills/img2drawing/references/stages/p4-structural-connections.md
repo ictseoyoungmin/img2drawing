@@ -16,6 +16,18 @@ It is still **not** a detail stage. It is a connection stage.
 - the major structure of a large attached object;
 - where straps, slings, holsters and pockets attach and overlap.
 
+P4 must make the form read as clothing and equipment on a body, not as a second flat
+silhouette. Use a short connection chain for every visible limb: shoulder insert → sleeve
+hang → elbow turn → cuff/hand. A bent joint needs an organic convex/concave transition;
+an unsupported right angle or a pair of parallel rails is a revise finding. Add only the
+folds that explain an anchor, a pull/tension line, or a compression pocket at the joint.
+
+Keep the skull/face wedge inside the hair envelope visible. The hair is a seated outer
+mass with a few grouped locks and a face-opening negative shape, never one closed balloon
+and never a cloud of individual strands. For a large prop, name and draw its major
+subparts (barrel, receiver, scope, stock, terminal mass) and at least one body-contact or
+occlusion handoff so a long axis does not collapse into a rod.
+
 ## Structure before decoration
 
 Drawing a jacket does not start with the buttons. It starts with:
@@ -38,6 +50,10 @@ placed, kept minimal — their form is resolved at P5.
 
 Keep out: buttons, stitching, individual hair strands, micro folds, surface texture, tonal
 rendering.
+
+Do not use broad charcoal/value bands to imply a garment or joint. The line renderer's
+pressure and taper provide material variation; geometry still comes from explicit,
+subject-observed strokes.
 
 ## Common failures
 - **Floating clothing.** A sleeve drawn beside the arm instead of on it.

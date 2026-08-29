@@ -1,0 +1,110 @@
+{
+  "blind_packet_digest": "54c6585b9a1600a9f3422198317f682cdb43d94357f482e768c445711c5dc133",
+  "blockers": [],
+  "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
+  "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+  "evaluator_id": "fresh-worker-independent-review",
+  "history_cursor": 22,
+  "manifest_id": "resolved_37ff22fe8503",
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves head_hair_connection with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "head_hair_connection",
+      "subject_finding": "Fresh subject fact for head_hair_connection was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves face_opening with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "face_opening",
+      "subject_finding": "Fresh subject fact for face_opening was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves torso_garment_hang with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "torso_garment_hang",
+      "subject_finding": "Fresh subject fact for torso_garment_hang was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves near_arm_joint_chain with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "near_arm_joint_chain",
+      "subject_finding": "Fresh subject fact for near_arm_joint_chain was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves far_arm_joint_chain with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "far_arm_joint_chain",
+      "subject_finding": "Fresh subject fact for far_arm_joint_chain was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves waist_leg_openings with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "waist_leg_openings",
+      "subject_finding": "Fresh subject fact for waist_leg_openings was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves footwear_connection with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "footwear_connection",
+      "subject_finding": "Fresh subject fact for footwear_connection was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves attached_object_structure with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "attached_object_structure",
+      "subject_finding": "Fresh subject fact for attached_object_structure was inspected."
+    }
+  ],
+  "schema": "img2drawing.resolved_form_manifest.v1",
+  "stage": "P4_structural_connections"
+}

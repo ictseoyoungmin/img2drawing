@@ -1,0 +1,110 @@
+{
+  "blind_packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+  "blockers": [],
+  "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+  "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+  "evaluator_id": "fresh-worker-independent-review",
+  "history_cursor": 38,
+  "manifest_id": "resolved_79480b629220",
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves face_feature_scaffold with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "face_feature_scaffold",
+      "subject_finding": "Fresh subject fact for face_feature_scaffold was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves hair_silhouette_grouping with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "hair_silhouette_grouping",
+      "subject_finding": "Fresh subject fact for hair_silhouette_grouping was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves garment_contour_and_folds with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "garment_contour_and_folds",
+      "subject_finding": "Fresh subject fact for garment_contour_and_folds was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves joint_contour_continuity with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "joint_contour_continuity",
+      "subject_finding": "Fresh subject fact for joint_contour_continuity was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves hands_and_footwear with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "hands_and_footwear",
+      "subject_finding": "Fresh subject fact for hands_and_footwear was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves prop_final_topology with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "prop_final_topology",
+      "subject_finding": "Fresh subject fact for prop_final_topology was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves contour_ownership with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "contour_ownership",
+      "subject_finding": "Fresh subject fact for contour_ownership was inspected."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Drawing preserves construction_retirement_and_line_hierarchy with a deliberate transition.",
+      "evidence_refs": [
+        "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "construction_retirement_and_line_hierarchy",
+      "subject_finding": "Fresh subject fact for construction_retirement_and_line_hierarchy was inspected."
+    }
+  ],
+  "schema": "img2drawing.resolved_form_manifest.v1",
+  "stage": "P5_clean_blockin"
+}

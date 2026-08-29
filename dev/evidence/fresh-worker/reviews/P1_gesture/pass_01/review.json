@@ -1,0 +1,46 @@
+{
+  "advance_rationale": "Independent process review accepted the fresh pass.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "Fresh worker checked the P1_gesture contract directly."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "232157859d4eb4385abeb68b0adfdd33dba1986a39036d47609593f82c28b2ea",
+  "drawing_findings": [
+    "Gesture preserves the new subject's head, spine and weight transfer."
+  ],
+  "drawing_state_sha256": "14654fd18857c562ff8409f4c18539fc60066d7c9b01c402c70e796fb82bb497",
+  "grammar_findings": [
+    "Construction/form roles remain sparse and pressure-aware."
+  ],
+  "history_cursor": 4,
+  "inter_pass_action_ids": [
+    "FW-P1-01",
+    "FW-P1-02",
+    "FW-P1-03"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "Fresh worker checked the P1_gesture contract directly.",
+    "The new subject, not material notes, supplied geometry.",
+    "Construction/form roles remain sparse and pressure-aware.",
+    "Gesture preserves the new subject's head, spine and weight transfer."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "070ea4f02dd846a1025f966246a2de63aeb3ac5ae4b7fb49d39255c5de3fc931",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P1_gesture",
+  "stage_contract_id": "full_body_croquis.P1.v6",
+  "subject_findings": [
+    "The new subject, not material notes, supplied geometry."
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

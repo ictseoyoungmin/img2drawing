@@ -1,0 +1,24 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P3_primary_masses",
+  "drawing": {
+    "stage": "P3_primary_masses",
+    "path": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+    "state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+    "history_cursor": 16
+  },
+  "authority_order": [
+    "subject_reference"
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_vs_drawing.png",
+  "subject_split": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_split.png",
+  "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/reference_authority_overview.png",
+  "three_way": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/reference_authority_overview.png"
+}

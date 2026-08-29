@@ -1,0 +1,57 @@
+{
+  "locked_at_cursor": 0,
+  "locked_at_stage": "P1_gesture",
+  "observation": {
+    "automatic_semantic_inference": false,
+    "drawing_priorities": [
+      "head turn",
+      "torso rhythm",
+      "support versus counterbalance leg",
+      "sparse folds"
+    ],
+    "evidence_refs": [
+      "subject.png"
+    ],
+    "global_relations": {
+      "counterbalance_side": "image_right",
+      "head_direction": "image_left",
+      "prop": "none",
+      "weight_side": "image_left"
+    },
+    "parts": {
+      "garment": "cardigan hangs over torso and sleeves",
+      "head": "face opening sits inside a smaller hair grouping",
+      "legs": "support and stepped leg have different knee paths"
+    },
+    "schema": "img2drawing.observation.v3",
+    "semantic_authority": "agent",
+    "subject_summary": "front three-quarter standing person with turned head, cardigan, jeans and two distinct shoes",
+    "uncertainties": [
+      "loose fabric obscures the exact knee contour"
+    ],
+    "view": {
+      "arm_occlusion": {
+        "subject_left": [
+          "pocket"
+        ],
+        "subject_right": []
+      },
+      "arm_visibility": {
+        "subject_left": "partial",
+        "subject_right": "visible"
+      },
+      "body_view": "front_three_quarter",
+      "near_side": "subject_left",
+      "prop_overlap_order": [],
+      "torso_turn": "left",
+      "uncertainties": [
+        "near hand partly occluded by pocket"
+      ]
+    }
+  },
+  "observation_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "observation_id": "fresh-worker-generalization-r23:observation:01",
+  "replacement_of": null,
+  "schema": "img2drawing.observation_lock.v1",
+  "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+}

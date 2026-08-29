@@ -1,0 +1,3194 @@
+{
+  "calibration_sheet": {
+    "canvas_size": [
+      512,
+      768
+    ],
+    "digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
+    "rationale": "Selected after comparing actual-size and 50%-scale pressure, taper, C-curve and S-curve samples.",
+    "samples": [
+      {
+        "points": [
+          [
+            51.2,
+            76.80000000000001
+          ],
+          [
+            230.4,
+            67.584
+          ],
+          [
+            460.8,
+            76.80000000000001
+          ]
+        ],
+        "pressure": 0.24,
+        "role": "construction",
+        "sample_id": "pressure_01",
+        "taper": {
+          "end": 0.2032,
+          "peak": 0.24,
+          "start": 0.26
+        }
+      },
+      {
+        "points": [
+          [
+            51.2,
+            111.36000000000001
+          ],
+          [
+            230.4,
+            102.144
+          ],
+          [
+            460.8,
+            111.36000000000001
+          ]
+        ],
+        "pressure": 0.4,
+        "role": "construction",
+        "sample_id": "pressure_02",
+        "taper": {
+          "end": 0.23199999999999998,
+          "peak": 0.4,
+          "start": 0.30000000000000004
+        }
+      },
+      {
+        "points": [
+          [
+            51.2,
+            145.92000000000002
+          ],
+          [
+            230.4,
+            136.704
+          ],
+          [
+            460.8,
+            145.92000000000002
+          ]
+        ],
+        "pressure": 0.56,
+        "role": "form",
+        "sample_id": "pressure_03",
+        "taper": {
+          "end": 0.26080000000000003,
+          "peak": 0.56,
+          "start": 0.34
+        }
+      },
+      {
+        "points": [
+          [
+            51.2,
+            180.48000000000002
+          ],
+          [
+            230.4,
+            171.264
+          ],
+          [
+            460.8,
+            180.48000000000002
+          ]
+        ],
+        "pressure": 0.72,
+        "role": "form",
+        "sample_id": "pressure_04",
+        "taper": {
+          "end": 0.28959999999999997,
+          "peak": 0.72,
+          "start": 0.38
+        }
+      },
+      {
+        "points": [
+          [
+            51.2,
+            215.04000000000002
+          ],
+          [
+            230.4,
+            205.824
+          ],
+          [
+            460.8,
+            215.04000000000002
+          ]
+        ],
+        "pressure": 0.88,
+        "role": "accent",
+        "sample_id": "pressure_05",
+        "taper": {
+          "end": 0.3184,
+          "peak": 0.88,
+          "start": 0.42000000000000004
+        }
+      }
+    ],
+    "schema": "img2drawing.calibration_sheet.v1",
+    "selected_profile": "pencil-contact-v9"
+  },
+  "construction_retirement": {
+    "contour_stroke_ids": [
+      "contour_hair_left",
+      "contour_hair_right",
+      "contour_jacket_left",
+      "contour_jacket_right",
+      "contour_rifle_left",
+      "contour_rifle_right"
+    ],
+    "history_cursor": 466,
+    "reason": "P5 transfers ownership from construction to selective clean contour while retaining only five explanatory ghosts.",
+    "retained_ghost_stroke_ids": [
+      "crown_face_spine_support",
+      "leg_chain_left_support",
+      "leg_chain_right_brace",
+      "rifle_major_axis",
+      "pelvis_rhythm"
+    ],
+    "retired_count": 3,
+    "retired_stroke_ids": [
+      "cranial_crown_arc",
+      "cranial_left_temporal_jaw",
+      "cranial_right_temporal_jaw"
+    ],
+    "schema": "img2drawing.construction_retirement.v1"
+  },
+  "grammar_cards": [],
+  "identity_finish_manifest": {
+    "accent_stroke_count": 2,
+    "calibration_sheet_digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
+    "confirmation_stroke_count": 4,
+    "decision": "advance",
+    "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+    "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+    "evaluator_id": "material-integration-independent-visual-review",
+    "evidence_refs": [
+      "reviews/P6_identity_finish/pass_01/current_drawing.png",
+      "identity/calibration_sheet.json"
+    ],
+    "face_relation": "Face opening is smaller than and separated from the grouped hair silhouette.",
+    "fold_stroke_count": 3,
+    "garment_mark_count": 3,
+    "hair_group_count": 3,
+    "history_cursor": 493,
+    "identity_stroke_count": 20,
+    "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+    "profile": {
+      "allowed_roles": [
+        "identity",
+        "form",
+        "accent",
+        "fold",
+        "restatement"
+      ],
+      "max_accent_fraction": 0.25,
+      "max_confirmation_strokes": 12,
+      "max_identity_strokes": 48,
+      "max_micro_fold_strokes": 8,
+      "profile_id": "p6_selective_identity_v1",
+      "require_calibration": true,
+      "schema": "img2drawing.identity_finish_profile.v1"
+    },
+    "rationale": "Selective identity finish accepted after whole-view and face/garment/rifle crops were inspected.",
+    "schema": "img2drawing.identity_finish_manifest.v1"
+  },
+  "identity_preflight": {
+    "allowed": true,
+    "blockers": [],
+    "profile_id": "p6_selective_identity_v1",
+    "required_reopens": [],
+    "schema": "img2drawing.identity_preflight.v1"
+  },
+  "local_reviews": {
+    "P1_gesture:pass_01:head_face": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 150,
+            "left": 150,
+            "right": 310,
+            "top": 25
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+          "crop_sha256": "742db5595bcffb46054fdc8a089e47fc692947efa91fd138ffaebee0434a9693",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 300,
+            "left": 300,
+            "right": 620,
+            "top": 50
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+          "crop_sha256": "c28ce0e0c09351e082e58ff151a0bd88be07d579be45e46f1eef26af73e8fdb1",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+      "drawing_state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9",
+      "history_cursor": 11,
+      "intent": "Re-verify on the rebuilt branch: crown origin, open unequal arcs, face direction.",
+      "label": "head_face",
+      "local_review_id": "P1_gesture:pass_01:head_face",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P1_gesture:pass_01:pelvis_legs": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 140,
+            "right": 380,
+            "top": 350
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "0f145f453a07f8ab75af8278b58de9d6d2ddb8cb8ddf83a9941ae126bc7bce18",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 280,
+            "right": 760,
+            "top": 700
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "3719caada6f67f8d2e5cc7c8ddc7cb515055840e59ed54cb7cd9922d7d2a7846",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+      "drawing_state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9",
+      "history_cursor": 11,
+      "intent": "Verify the reopen fix: does the corrected counterbalance flow now run down the subject's braced-leg centre?",
+      "label": "pelvis_legs",
+      "local_review_id": "P1_gesture:pass_01:pelvis_legs",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P1_gesture:pass_01:prop_shoulder": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 100,
+            "right": 350,
+            "top": 30
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/crops/drawing.png",
+          "crop_sha256": "aebf80d216d165d22ac3540d2041dfa4ee9de46adb04a4232e5a266a626ce5da",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/current_drawing.png",
+          "source_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 200,
+            "right": 700,
+            "top": 60
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P1_gesture/pass_01/local_reviews/prop_shoulder/crops/subject.png",
+          "crop_sha256": "9e090771c0ff222c380dd5a4e87896fa9bf6e3d00850dd1869f41f436235a9aa",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+      "drawing_state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9",
+      "history_cursor": 11,
+      "intent": "Re-verify on the rebuilt branch: prop axis registration and subordination.",
+      "label": "prop_shoulder",
+      "local_review_id": "P1_gesture:pass_01:prop_shoulder",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P1_gesture"
+    },
+    "P2_primary_axes:pass_01:arms": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 420,
+            "left": 140,
+            "right": 330,
+            "top": 140
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/crops/drawing.png",
+          "crop_sha256": "8b881d21b828bf2be0bfc7e5d9a9c0c4177557e5ee95e30a57405f3e83fbeac5",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+          "source_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 840,
+            "left": 280,
+            "right": 660,
+            "top": 280
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/arms/crops/subject.png",
+          "crop_sha256": "cfaea1f1ed1616d09f595bfadacacd73ec25ee00a2fe64d653027751c0cc9873",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+      "drawing_state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+      "history_cursor": 23,
+      "intent": "Check both arm direction chains against the sleeve centres and the occluded far arm.",
+      "label": "arms",
+      "local_review_id": "P2_primary_axes:pass_01:arms",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P2_primary_axes:pass_01:head_shoulders": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 220,
+            "left": 150,
+            "right": 330,
+            "top": 80
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/crops/drawing.png",
+          "crop_sha256": "d6b45aff5f9f72ba14980c4411405995c98dd40f0a2c509a215f033920f241f7",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+          "source_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 440,
+            "left": 300,
+            "right": 660,
+            "top": 160
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/head_shoulders/crops/subject.png",
+          "crop_sha256": "55e66eccfc1d17958ee77f6ff38cacf3a921f27d3068540cfabdbd960c506e51",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+      "drawing_state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+      "history_cursor": 23,
+      "intent": "Check head cross-axis against the eye line and the shoulder axis against the observed shoulder joints.",
+      "label": "head_shoulders",
+      "local_review_id": "P2_primary_axes:pass_01:head_shoulders",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P2_primary_axes:pass_01:pelvis_legs": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 140,
+            "right": 380,
+            "top": 350
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "f0c2cc3278da513075b5e61dcd46f43f8afeb53e316d743f26538bb2b0ca1bfd",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+          "source_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 280,
+            "right": 760,
+            "top": 700
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_01/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "3719caada6f67f8d2e5cc7c8ddc7cb515055840e59ed54cb7cd9922d7d2a7846",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+      "drawing_state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+      "history_cursor": 23,
+      "intent": "Check that the leg chains coincide with the verified P1 paths instead of doubling them.",
+      "label": "pelvis_legs",
+      "local_review_id": "P2_primary_axes:pass_01:pelvis_legs",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P2_primary_axes:pass_02:head_shoulders": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 220,
+            "left": 150,
+            "right": 330,
+            "top": 80
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/crops/drawing.png",
+          "crop_sha256": "7c082163845792be07d552f6a05d59533348e45c725443c7c6f10bf46588e1d4",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 440,
+            "left": 300,
+            "right": 660,
+            "top": 160
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/head_shoulders/crops/subject.png",
+          "crop_sha256": "55e66eccfc1d17958ee77f6ff38cacf3a921f27d3068540cfabdbd960c506e51",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Re-check the carried shoulder-axis concern after P2B-R1.",
+      "label": "head_shoulders",
+      "local_review_id": "P2_primary_axes:pass_02:head_shoulders",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P2_primary_axes:pass_02:prop_overlap": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 100,
+            "right": 280,
+            "top": 30
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/crops/drawing.png",
+          "crop_sha256": "60f070e73b91921dd49d1841b477da447ff3d1763144d9b11b53544ccf72b718",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 200,
+            "right": 560,
+            "top": 60
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/prop_overlap/crops/subject.png",
+          "crop_sha256": "e5f9696cbf10890add3444f061a7dc08d25a619deebec8327fd95761466a0185",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Residual sweep: do the prop extent and the two breadth axes agree with the subject's rifle without becoming a contour?",
+      "label": "prop_overlap",
+      "local_review_id": "P2_primary_axes:pass_02:prop_overlap",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P2_primary_axes:pass_02:torso_pelvis": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 140,
+            "right": 350,
+            "top": 130
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/crops/drawing.png",
+          "crop_sha256": "9c5e6199cd102e1f7045cfffc42e8df7a5786b3ab9a13c714069464b8467177d",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+          "source_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 280,
+            "right": 700,
+            "top": 260
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P2_primary_axes/pass_02/local_reviews/torso_pelvis/crops/subject.png",
+          "crop_sha256": "f3b29e92058e37783f87ccdc0849c8931b8b83ce3af1a2a49ca3b33e7fa963c8",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+      "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "history_cursor": 24,
+      "intent": "Residual sweep: do shoulder and pelvis axes together explain the same twist P1 established?",
+      "label": "torso_pelvis",
+      "local_review_id": "P2_primary_axes:pass_02:torso_pelvis",
+      "pass_name": "pass_02",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P2_primary_axes"
+    },
+    "P3_primary_masses:pass_01:head_neck": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 180,
+            "left": 150,
+            "right": 330,
+            "top": 20
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/drawing.png",
+          "crop_sha256": "1d6cd036c3dd85864efc6098607cb0f9c8f37183cede271f07f8b887234d8048",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 360,
+            "left": 300,
+            "right": 660,
+            "top": 40
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/head_neck/crops/subject.png",
+          "crop_sha256": "6ba5dc38954b65ec5210d6926d13338a40ccb81eeff748945b8f76198bc5a533",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: hair mass, face plane and neck bridge on the rebuilt branch.",
+      "label": "head_neck",
+      "local_review_id": "P3_primary_masses:pass_01:head_neck",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    "P3_primary_masses:pass_01:left_flank": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 430,
+            "left": 125,
+            "right": 215,
+            "top": 100
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/crops/drawing.png",
+          "crop_sha256": "12b368454122113b3d815b2576443f1b031b3c738fd35d84389497c9c53ea9de",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 860,
+            "left": 250,
+            "right": 430,
+            "top": 200
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/left_flank/crops/subject.png",
+          "crop_sha256": "abb14a7c9977a535e92b3e964e0a3ff54e4d149bb8177b3b8ce187c990f14fa1",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Verify the reopen fix: do the corrected prop and torso-left envelopes now reach the measured left outer silhouette?",
+      "label": "left_flank",
+      "local_review_id": "P3_primary_masses:pass_01:left_flank",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    "P3_primary_masses:pass_01:pelvis_legs": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 768,
+            "left": 140,
+            "right": 390,
+            "top": 380
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/crops/drawing.png",
+          "crop_sha256": "3537a57504e39dbe3e06b72dcea44f76aae75b5cfea31b36791ed1d6596a20ab",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 280,
+            "right": 780,
+            "top": 760
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/pelvis_legs/crops/subject.png",
+          "crop_sha256": "5aead4db0897e92b408097b7fdfa1547ab88d9c3574a09e03d5e56b3835a9a3d",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: leg taper, negative space and the newly stated thigh pouch.",
+      "label": "pelvis_legs",
+      "local_review_id": "P3_primary_masses:pass_01:pelvis_legs",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    "P3_primary_masses:pass_01:torso_pelvis": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 450,
+            "left": 140,
+            "right": 350,
+            "top": 140
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/crops/drawing.png",
+          "crop_sha256": "528598959230b84ab735438ffd06898fc1edc228e12dcd7282f1bd49de443142",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/current_drawing.png",
+          "source_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 900,
+            "left": 280,
+            "right": 700,
+            "top": 280
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P3_primary_masses/pass_01/local_reviews/torso_pelvis/crops/subject.png",
+          "crop_sha256": "40b9bef859f83b1bbf2e83cdb24455f7096d32134bd39eb2d3104a2b04b6425a",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+      "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+      "history_cursor": 53,
+      "intent": "Residual sweep: clothed occupied volume, cross-contours and basin-to-thigh flow after the correction.",
+      "label": "torso_pelvis",
+      "local_review_id": "P3_primary_masses:pass_01:torso_pelvis",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P3_primary_masses"
+    },
+    "P4_structural_connections:pass_01:boots_ground": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 150,
+            "right": 380,
+            "top": 610
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/crops/drawing.png",
+          "crop_sha256": "6d204dea18408a9c55ac664705fdec4eb8a80f46ed4d0c4694d2e5075c910f95",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1500,
+            "left": 300,
+            "right": 760,
+            "top": 1220
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/boots_ground/crops/subject.png",
+          "crop_sha256": "c8436013a84d960999b69f5d668432cc9fb1f5687cdf6844a0dbc1552b8852fc",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check both boot blocks, attachment and landing heights.",
+      "label": "boots_ground",
+      "local_review_id": "P4_structural_connections:pass_01:boots_ground",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    "P4_structural_connections:pass_01:hand_pocket": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 395,
+            "left": 255,
+            "right": 320,
+            "top": 285
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/crops/drawing.png",
+          "crop_sha256": "b4164dc6d762b384bb284cf989208c0b521fd384ca88f7510f1acce0530f0467",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 780,
+            "left": 500,
+            "right": 680,
+            "top": 580
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/hand_pocket/crops/subject.png",
+          "crop_sha256": "4f690205c439c757c3cdf56b0720c143fc41bf85f1f42b487609fa360d79ecc0",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check the near hand block and its pocket occlusion.",
+      "label": "hand_pocket",
+      "local_review_id": "P4_structural_connections:pass_01:hand_pocket",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    "P4_structural_connections:pass_01:knee_ankle": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 655,
+            "left": 150,
+            "right": 335,
+            "top": 495
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/drawing.png",
+          "crop_sha256": "f9cc3c7c87ce3e07341338c880abf7d47b5136b3bfcfb69ea5e09af4edaa5e25",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1300,
+            "left": 300,
+            "right": 660,
+            "top": 1000
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/knee_ankle/crops/subject.png",
+          "crop_sha256": "3d981f9e09c35d759fe72fc2d4d81da9259dacaaa4bbddfc49058cdaa261d7ce",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check knee planes and ankle bridges for banding.",
+      "label": "knee_ankle",
+      "local_review_id": "P4_structural_connections:pass_01:knee_ankle",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    "P4_structural_connections:pass_01:prop_attach": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 480,
+            "left": 160,
+            "right": 320,
+            "top": 140
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/crops/drawing.png",
+          "crop_sha256": "f8b5e0a52d4536c384a875b8aa9f80aeceace087dcc610cd8692b929f7629ced",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 960,
+            "left": 330,
+            "right": 640,
+            "top": 280
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/prop_attach/crops/subject.png",
+          "crop_sha256": "8e7a9257a4450451164be4410ece9d1d72ccdbb21935bb4ed6f4d179b1e72a62",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check the sling, the prop overlap marks and the new pouch strap on the corrected branch.",
+      "label": "prop_attach",
+      "local_review_id": "P4_structural_connections:pass_01:prop_attach",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    "P4_structural_connections:pass_01:shoulder_elbow": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 360,
+            "left": 140,
+            "right": 330,
+            "top": 140
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/crops/drawing.png",
+          "crop_sha256": "75db3723a872dea4cfa3e4f7c050b5fce40ad2e59c6fd212bae5be6117b96b22",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+          "source_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 700,
+            "left": 300,
+            "right": 660,
+            "top": 290
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/local_reviews/shoulder_elbow/crops/subject.png",
+          "crop_sha256": "0f64fae1569bfe09e4e006930cdddc4943b4a8bdf43a1735064516e2721d11b6",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "5b400b5be98873c99e2564475eb3d4f1a7ae6ad005f748a7da876b6df5697be5",
+      "drawing_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "history_cursor": 79,
+      "intent": "Check both arm chains on the rebuilt branch, with the far chain now on the corrected flank.",
+      "label": "shoulder_elbow",
+      "local_review_id": "P4_structural_connections:pass_01:shoulder_elbow",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P4_structural_connections"
+    },
+    "P5_clean_blockin:pass_01:face_breaks": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 150,
+            "left": 200,
+            "right": 290,
+            "top": 85
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/crops/drawing.png",
+          "crop_sha256": "94d1eeb037e0d79198ee499e6cb5d636441c6cf3fbeec5e2204ff5024c9f55ba",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+          "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 300,
+            "left": 400,
+            "right": 580,
+            "top": 170
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/face_breaks/crops/subject.png",
+          "crop_sha256": "915f5b2b198918435bffece3c93757077d2c6d0ac021f827a50551afd929e0e8",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+      "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
+      "history_cursor": 188,
+      "intent": "Verify the reopen fix: does the jaw/chin break now reach the observed face contour?",
+      "label": "face_breaks",
+      "local_review_id": "P5_clean_blockin:pass_01:face_breaks",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P5_clean_blockin"
+    },
+    "P5_clean_blockin:pass_01:handoff_prop_garment": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 350,
+            "left": 125,
+            "right": 215,
+            "top": 120
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/crops/drawing.png",
+          "crop_sha256": "ad3570e968bd857ef75803b54b018155fa2ed321e369b0c4d9bb1b61c4683d8e",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+          "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 700,
+            "left": 250,
+            "right": 430,
+            "top": 240
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/handoff_prop_garment/crops/subject.png",
+          "crop_sha256": "38945df8aae9846b29e19ae32e1f70a543286dd45f8bb01f98e1c3dc3edc6993",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+      "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
+      "history_cursor": 188,
+      "intent": "Re-verify the prop/garment ownership handoff on the rebuilt branch.",
+      "label": "handoff_prop_garment",
+      "local_review_id": "P5_clean_blockin:pass_01:handoff_prop_garment",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P5_clean_blockin"
+    },
+    "P5_clean_blockin:pass_01:waist_breaks": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 400,
+            "left": 150,
+            "right": 310,
+            "top": 295
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/crops/drawing.png",
+          "crop_sha256": "a666be0ba523d7ed6efc8d25060a3310c278c4acdc2fd11cdd27b6471bbcd908",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+          "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 800,
+            "left": 300,
+            "right": 620,
+            "top": 590
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/waist_breaks/crops/subject.png",
+          "crop_sha256": "5e142215be3999b4742cceef5863c2bc088f31ac77b349ea1d31238e4f8fcae3",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+      "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
+      "history_cursor": 188,
+      "intent": "Verify the reopen fix: belt angle, jacket hem height and their relation to the shorts.",
+      "label": "waist_breaks",
+      "local_review_id": "P5_clean_blockin:pass_01:waist_breaks",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P5_clean_blockin"
+    },
+    "P5_clean_blockin:pass_01:whole_silhouette": {
+      "auto_detection_used": false,
+      "automation_note": "Runtime crops/layouts the exact Agent-supplied boxes and may resize those paired crops for overlay/difference evidence; it does not locate anatomy, optimize registration, score similarity, or choose ROIs.",
+      "comparisons": {
+        "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/local_reference_overview.png",
+        "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_drawing_absdiff.png",
+        "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_drawing_overlay.png",
+        "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/subject_vs_drawing.png",
+        "task_target_vs_drawing": null
+      },
+      "crops": {
+        "drawing": {
+          "box": {
+            "bottom": 760,
+            "left": 100,
+            "right": 390,
+            "top": 20
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/crops/drawing.png",
+          "crop_sha256": "fd72ea12667fb5076a21c7bffa07898f8a92c9dd364be3eaebba75c0b58d660c",
+          "role": "current_drawing",
+          "source_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+          "source_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+          "source_size": [
+            512,
+            768
+          ]
+        },
+        "subject": {
+          "box": {
+            "bottom": 1520,
+            "left": 200,
+            "right": 780,
+            "top": 40
+          },
+          "crop_path": "dev/evidence/material-integration/s10-quality-run/reviews/P5_clean_blockin/pass_01/local_reviews/whole_silhouette/crops/subject.png",
+          "crop_sha256": "b2aae2349c0b1fa91ff602b5eacadcc7480d9352677b47364748bd3ad66dc883",
+          "role": "subject_reference",
+          "source_path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+          "source_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5",
+          "source_size": [
+            1024,
+            1536
+          ]
+        },
+        "task_target": null
+      },
+      "drawing_artifact_sha256": "d7e38c86226df9e75c83100ebdac089f2f427e20ca59d22e3fc115b9d38a23ef",
+      "drawing_state_sha256": "28d59b96dd10c049659103dd74682f73395904585d1b8b547a4a98cbf32c529b",
+      "history_cursor": 188,
+      "intent": "Residual sweep of the rebuilt clean block-in against the subject.",
+      "label": "whole_silhouette",
+      "local_review_id": "P5_clean_blockin:pass_01:whole_silhouette",
+      "pass_name": "pass_01",
+      "schema": "img2drawing.local_review_artifacts.v2",
+      "selection_authority": "agent_explicit_boxes",
+      "semantic_authority": "agent",
+      "stage": "P5_clean_blockin"
+    }
+  },
+  "observation_lock": {
+    "locked_at_cursor": 0,
+    "locked_at_stage": "P1_gesture",
+    "observation": {
+      "automatic_semantic_inference": false,
+      "drawing_priorities": [
+        "preserve face/hair separation",
+        "show garment-to-limb ownership",
+        "retain rifle topology",
+        "use sparse pressure-modulated graphite accents"
+      ],
+      "evidence_refs": [
+        "subject_reference.png"
+      ],
+      "global_relations": {
+        "body_view": "back_three_quarter",
+        "counterbalance_leg": "image-left",
+        "head_turn": "image-left",
+        "rifle_axis": "diagonal across torso",
+        "support_leg": "image-right"
+      },
+      "parts": {
+        "clothing": "a few directional folds describe hang without filling the garment",
+        "head_hair": "face opening is narrower than the grouped hair silhouette",
+        "joints": "elbows and knees turn through soft, non-orthogonal transitions",
+        "rifle": "suppressor, barrel, receiver, scope, stock, cutout, and sling remain legible",
+        "torso": "jacket hangs from both shoulder insertions to the waist"
+      },
+      "schema": "img2drawing.observation.v3",
+      "semantic_authority": "agent",
+      "subject_summary": "back-three-quarter standing figure with turned head, grouped hair, articulated clothing, counterbalance leg, and a rifle overlapping the torso",
+      "uncertainties": [
+        "facial micro-features are low resolution",
+        "far hand is partly occluded"
+      ],
+      "view": {
+        "arm_occlusion": {
+          "subject_left": [
+            "rifle overlap"
+          ],
+          "subject_right": [
+            "none"
+          ]
+        },
+        "arm_visibility": {
+          "subject_left": "partial",
+          "subject_right": "visible"
+        },
+        "body_view": "back_three_quarter",
+        "near_side": "image_right",
+        "prop_overlap_order": [
+          "rifle_over_torso",
+          "near_arm_over_rifle",
+          "hair_over_shoulder"
+        ],
+        "torso_turn": "right",
+        "uncertainties": [
+          "face turned away from camera"
+        ]
+      }
+    },
+    "observation_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+    "observation_id": "sniper-girl-quality:observation:01",
+    "replacement_of": null,
+    "schema": "img2drawing.observation_lock.v1",
+    "subject_reference_sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+  },
+  "observation_reopens": [],
+  "progress": {
+    "advanced_reviews": {
+      "P1_gesture": "031a831718b5ec7fb798dde16a256079b927f1b9c0131e60ad33502c04ad803c",
+      "P2_primary_axes": "c40171be7e7e81c5a6e09ccc5e5b7d3e5a9dc8d8ac2488f5a25142f73d3207f2",
+      "P3_primary_masses": "b166ce9fe8c1f1ec979c6442aa14b2283aa4934ceaefb2a209667a05b2c1ea19",
+      "P4_structural_connections": "2dd7312c59d6a33bbc812f123d85f8ae4009290adcea84bb22a3dc0dfdd34aa1",
+      "P5_clean_blockin": "5f835381492219084840893e748dbcf187ae91a3d6884a8a4713d11eb5f5f073",
+      "P6_identity_finish": "5105f70fbbe27ab5bad0192d81e340fe95aa79a7a4f9f88d24e2f4dfda5d5ae8"
+    },
+    "current_stage": null
+  },
+  "reference_bundle": {
+    "authority_policy": {
+      "notes": [
+        "The listed order is review sequence, not a geometry override hierarchy.",
+        "Task stage targets state intended same-task stage representation and placement.",
+        "Subject reference remains geometry and visible-edge truth and resolves contradictions about pose/proportion/perspective/overlap."
+      ],
+      "with_task_stage_target": [
+        "task_stage_target",
+        "subject_reference"
+      ],
+      "without_task_stage_target": [
+        "subject_reference"
+      ]
+    },
+    "default_reference_mode": "subject_only",
+    "schema": "img2drawing.reference_bundle.v1",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_targets": {}
+  },
+  "region_closure_manifests": {},
+  "reopens": [
+    {
+      "abandoned_action_ids": [
+        "P1-A1",
+        "P1-A2",
+        "P1-A3",
+        "P1-A4",
+        "P1-A5",
+        "P1-A6",
+        "P1-A7",
+        "P1-A8",
+        "P1-A9",
+        "P1-R1",
+        "P1-R2",
+        "P1-R3",
+        "P1-R4",
+        "P1-R5",
+        "P1-R6",
+        "P1-R7",
+        "P1-R8",
+        "P1-R9",
+        "P1-R10",
+        "P1-R11",
+        "P1-R12",
+        "P1-R13",
+        "P1-R14",
+        "P1-R15",
+        "P1-R16",
+        "P1-R17",
+        "P2-A1",
+        "P2-A2",
+        "P2-A3",
+        "P2-A4",
+        "P2-A5",
+        "P2-A6",
+        "P2-A7",
+        "P2-A8",
+        "P2-A9",
+        "P2-A10"
+      ],
+      "abandoned_local_review_ids": [
+        "P1_gesture:pass_01:head_face",
+        "P1_gesture:pass_01:pelvis_legs",
+        "P1_gesture:pass_02:head_face",
+        "P1_gesture:pass_02:pelvis_legs",
+        "P1_gesture:pass_03:head_face",
+        "P1_gesture:pass_03:pelvis_legs",
+        "P1_gesture:pass_03:prop_shoulder",
+        "P2_primary_axes:pass_01:pelvis_legs",
+        "P2_primary_axes:pass_01:head_shoulders"
+      ],
+      "abandoned_review_digests": {
+        "P1_gesture": [
+          "6f26015c86b19d34bd04ae5a76b07a9cb2c6c4c84679a8bd716748c3441fcad7",
+          "2b4c95a8e7a48ce5587f7d0127e2f2337ef03be4b6cf7affa28593473aa8d90b",
+          "d3a297212c2893fac59d9d1ee87df9c3ac8765d6640dfb4c195ff780e2b4ef74"
+        ],
+        "P2_primary_axes": [
+          "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_01",
+      "discovered_in_stage": "P2_primary_axes",
+      "findings": [
+        "Subject braced-thigh centre measured at canvas x~258-264 for y 415-460.",
+        "P1 counterbalance stroke sits at x~267-273 over the same range.",
+        "Result at P2 is a two-line pant-leg rail down the thigh."
+      ],
+      "invalidated_stages": [
+        "P1_gesture",
+        "P2_primary_axes"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "P2 evidence proves the inherited P1 counterbalance flow disagrees with the subject's braced thigh centre through the upper thigh, and correcting it downstream would harden a compensating P2 axis. Reopening the earliest responsible stage.",
+      "reopen_id": "reopen_01",
+      "restored_cursor": 1,
+      "restored_state_sha256": "ba8ac0066af57b421ece54bb23a0ed18143c9e8540e7436caf17e6fe7d864d91",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 39,
+      "source_state_sha256": "4e27285eb0842005f1d78413ccb2ac9fe5b3fda8314c216c099889c4edf93268",
+      "target_stage": "P1_gesture",
+      "trigger_review_digest": "cf0da662df3124ff73e7283976f0d3bf43cb4f7ef1a0b90cbc9fec99d14b5c3c"
+    },
+    {
+      "abandoned_action_ids": [
+        "P3-H1",
+        "P3-H2",
+        "P3-H3",
+        "P3-H4",
+        "P3-H5",
+        "P3-N1",
+        "P3-N2",
+        "P3-T1",
+        "P3-T2",
+        "P3-T3",
+        "P3-T4",
+        "P3-T5",
+        "P3-T6",
+        "P3-P1",
+        "P3-P2",
+        "P3-P3",
+        "P3-P4",
+        "P3-L1",
+        "P3-L2",
+        "P3-L3",
+        "P3-L4",
+        "P3-B1",
+        "P3-B2",
+        "P3-R1",
+        "P3-R2",
+        "P3-R3",
+        "P3-R4",
+        "P3-D1",
+        "P3-D2",
+        "P3-R5",
+        "P3-R6",
+        "P4-S1",
+        "P4-S2",
+        "P4-E1",
+        "P4-E2",
+        "P4-E3",
+        "P4-W1",
+        "P4-W2",
+        "P4-W3",
+        "P4-W4",
+        "P4-P1",
+        "P4-P2",
+        "P4-K1",
+        "P4-K2",
+        "P4-A1",
+        "P4-F1",
+        "P4-F2",
+        "P4-A2",
+        "P4-F3",
+        "P4-F4",
+        "P4-R1",
+        "P4-R2",
+        "P4-R3",
+        "P4-R4",
+        "P4-X1",
+        "P4-X2",
+        "P4-X3",
+        "P4-X4",
+        "P4-X5",
+        "P4-X6",
+        "P4-X7",
+        "P4-X8",
+        "P4-X9",
+        "P4-X10"
+      ],
+      "abandoned_local_review_ids": [
+        "P3_primary_masses:pass_01:head_neck",
+        "P3_primary_masses:pass_01:pelvis_legs",
+        "P3_primary_masses:pass_01:prop_overlap",
+        "P3_primary_masses:pass_01:torso_pelvis",
+        "P3_primary_masses:pass_02:head_neck",
+        "P3_primary_masses:pass_02:pelvis_legs",
+        "P3_primary_masses:pass_02:torso_pelvis",
+        "P4_structural_connections:pass_01:boots_ground",
+        "P4_structural_connections:pass_01:hand_pocket",
+        "P4_structural_connections:pass_01:knee_ankle",
+        "P4_structural_connections:pass_01:shoulder_elbow",
+        "P4_structural_connections:pass_02:boots_ground",
+        "P4_structural_connections:pass_02:hand_pocket",
+        "P4_structural_connections:pass_02:knee_ankle",
+        "P4_structural_connections:pass_02:prop_attach",
+        "P4_structural_connections:pass_02:shoulder_elbow",
+        "P5_clean_blockin:pass_01:left_flank_preflight",
+        "P5_clean_blockin:pass_01:whole_silhouette_preflight"
+      ],
+      "abandoned_review_digests": {
+        "P3_primary_masses": [
+          "cba9fbb8452e75710ce3f0a1aa54c053c79d60b7e7768cb297c929d687d19aee",
+          "fbfc17fc39002f28274020872a7cd112c9ea9cce1536520131cb9dc07e84ca6c"
+        ],
+        "P4_structural_connections": [
+          "bcb12f2735e2b6be9ad8ebafe412e2df1e51d84e387c1496eb880c0fb84c3965",
+          "daa571261ff9cb75c422178373fd9098757f72f370fb83d55996448863dfdec2"
+        ],
+        "P5_clean_blockin": [
+          "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_02",
+      "discovered_in_stage": "P5_clean_blockin",
+      "findings": [
+        "Measured left outer edge: canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396.",
+        "Inherited P3 rifle mass sits up to 16px right of that edge through the middle of the prop.",
+        "Inherited P3 torso-left contour underfills the observed occupied volume by about 12px over the same range.",
+        "Silhouette ownership handoff from prop to garment occurs near canvas y=205."
+      ],
+      "invalidated_stages": [
+        "P3_primary_masses",
+        "P4_structural_connections",
+        "P5_clean_blockin"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "P5 cleanup preflight proves the verified left outer silhouette cannot be stated without contradicting the inherited P3 prop and torso-left envelopes. The prop axis and extent are credible, so the underfilled P3 envelope, not P2 or P1, is the earliest responsible stage.",
+      "reopen_id": "reopen_02",
+      "restored_cursor": 26,
+      "restored_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 94,
+      "source_state_sha256": "5f2be2b453829bf4ff68692efabe94fd07f61015a378260f852044298679d8a9",
+      "target_stage": "P3_primary_masses",
+      "trigger_review_digest": "bfffbbcffd842eb613988b6364f33011d60706f089e05596e7a8389c2e2866f9"
+    },
+    {
+      "abandoned_action_ids": [
+        "P5-C1",
+        "P5-C2",
+        "P5-C3",
+        "P5-C4",
+        "P5-C5",
+        "P5-C6",
+        "P5-C7",
+        "P5-C8",
+        "P5-C9",
+        "P5-C10",
+        "P5-C11",
+        "P5-C12",
+        "P5-C13",
+        "P5-C14",
+        "P5-C15",
+        "P5-B1",
+        "P5-B2",
+        "P5-B3",
+        "P5-B4",
+        "P5-B5",
+        "P5-B6",
+        "P5-B7",
+        "P5-B8",
+        "P5-B9",
+        "P5-B10",
+        "P5-B11",
+        "P5-B12",
+        "P5-B13",
+        "P5-B14",
+        "P5-B15",
+        "P5-B16",
+        "P5-L01",
+        "P5-L02",
+        "P5-L03",
+        "P5-L04",
+        "P5-L05",
+        "P5-L06",
+        "P5-L07",
+        "P5-L08",
+        "P5-L09",
+        "P5-L10",
+        "P5-L11",
+        "P5-L12",
+        "P5-L13",
+        "P5-L14",
+        "P5-L15",
+        "P5-L16",
+        "P5-L17",
+        "P5-L18",
+        "P5-L19",
+        "P5-L20",
+        "P5-L21",
+        "P5-L22",
+        "P5-L23",
+        "P5-L24",
+        "P5-L25",
+        "P5-L26",
+        "P5-L27",
+        "P5-L28",
+        "P5-L29",
+        "P5-L30",
+        "P5-L31",
+        "P5-L32",
+        "P5-L33",
+        "P5-L34",
+        "P5-L35",
+        "P5-L36",
+        "P5-L37",
+        "P5-L38",
+        "P5-L39",
+        "P5-L40",
+        "P5-L41",
+        "P5-L42",
+        "P5-L43",
+        "P5-L44",
+        "P5-L45",
+        "P5-L46",
+        "P5-L47",
+        "P5-L48",
+        "P5-L49",
+        "P5-L50",
+        "P5-L51",
+        "P5-L52",
+        "P5-L53",
+        "P5-L54",
+        "P5-L55",
+        "P5-L56",
+        "P5-L57",
+        "P5-L58",
+        "P5-L59",
+        "P5-L60",
+        "P5-L61",
+        "P5-L62",
+        "P5-L63",
+        "P5-L64",
+        "P5-L65",
+        "P5-L66",
+        "P5-L67",
+        "P5-L68",
+        "P5-L69",
+        "P5-H1",
+        "P5-H2",
+        "P5-H3",
+        "P5-H4",
+        "P5-H5",
+        "P5-H6"
+      ],
+      "abandoned_local_review_ids": [
+        "P5_clean_blockin:pass_01:handoff_hair_shoulder",
+        "P5_clean_blockin:pass_01:handoff_prop_garment",
+        "P5_clean_blockin:pass_01:prop_topology",
+        "P5_clean_blockin:pass_01:whole_silhouette",
+        "P5_clean_blockin:pass_02:handoff_hair_shoulder",
+        "P5_clean_blockin:pass_02:handoff_prop_garment",
+        "P5_clean_blockin:pass_02:prop_topology",
+        "P5_clean_blockin:pass_02:whole_silhouette"
+      ],
+      "abandoned_review_digests": {
+        "P5_clean_blockin": [
+          "a7c117d9e3de59934888287c99bfb3dfb31a1dc7cc9906199c0deea0519974d1",
+          "80e48879003530c271c9175f2aac30f4dbcc2d17696013f9b9ec3dac58673638"
+        ]
+      },
+      "archive_dir": "dev/evidence/material-integration/s10-quality-run/reopen_archive/reopen_03",
+      "discovered_in_stage": null,
+      "findings": [
+        "Belt upper edge measured at canvas (215,309) to (281,334); the stated break was horizontal at y=318-334.",
+        "Jacket hem measured at canvas (162,332) rising to (214,313); the stated break sat at y=352-366.",
+        "Face contour measured to canvas (273,107) with the chin at (247,143); the stated break turned back at (260,128) with the chin at (240,140)."
+      ],
+      "invalidated_stages": [
+        "P5_clean_blockin"
+      ],
+      "policy": "reopen_earliest_responsible_stage",
+      "reason": "Close-range re-observation for the identity finishing pass proves three P5 internal breaks are misplaced: the belt is diagonal, not horizontal; the jacket hem sits at the belt rather than 30 canvas pixels below it; and the jaw/chin break stops well short of the observed face contour. The outer silhouette and all upstream structure are unaffected, so P5 itself is the earliest responsible stage.",
+      "reopen_id": "reopen_03",
+      "restored_cursor": 81,
+      "restored_state_sha256": "c115140d3cb19a2d46da0e4a59664bdcf5cd186d59b68a294b54f34e3ef8942a",
+      "schema": "img2drawing.reopen_record.v1",
+      "semantic_authority": "agent",
+      "source_cursor": 188,
+      "source_state_sha256": "845195d1d572a0bb50616c0f8695c0f2f8bce3cf158144b9effcec9ede4180e0",
+      "target_stage": "P5_clean_blockin",
+      "trigger_review_digest": null
+    }
+  ],
+  "require_grammar_card_bindings": false,
+  "resolved_form_manifests": {
+    "P4_structural_connections": {
+      "blind_packet_digest": "6a202b37dc52983c1f5f8403bad24f31ac21f03ca51461ac171264e948a84bb9",
+      "blockers": [],
+      "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+      "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "evaluator_id": "material-integration-independent-visual-review",
+      "history_cursor": 464,
+      "manifest_id": "resolved_95a51d356dd7",
+      "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+      "regions": [
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the head hair connection relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "head_hair_connection",
+          "subject_finding": "Subject relation for head hair connection was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the face opening relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "face_opening",
+          "subject_finding": "Subject relation for face opening was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the torso garment hang relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "torso_garment_hang",
+          "subject_finding": "Subject relation for torso garment hang was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the near arm joint chain relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "near_arm_joint_chain",
+          "subject_finding": "Subject relation for near arm joint chain was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the far arm joint chain relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "far_arm_joint_chain",
+          "subject_finding": "Subject relation for far arm joint chain was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the waist leg openings relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "waist_leg_openings",
+          "subject_finding": "Subject relation for waist leg openings was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the footwear connection relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "footwear_connection",
+          "subject_finding": "Subject relation for footwear connection was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the attached object structure relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+            "reviews/P4_structural_connections/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "attached_object_structure",
+          "subject_finding": "Subject relation for attached object structure was inspected in the frozen reference."
+        }
+      ],
+      "schema": "img2drawing.resolved_form_manifest.v1",
+      "stage": "P4_structural_connections"
+    },
+    "P5_clean_blockin": {
+      "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+      "blockers": [],
+      "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+      "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "evaluator_id": "material-integration-independent-visual-review",
+      "history_cursor": 466,
+      "manifest_id": "resolved_5a4dce71fedf",
+      "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+      "regions": [
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the face feature scaffold relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "face_feature_scaffold",
+          "subject_finding": "Subject relation for face feature scaffold was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the hair silhouette grouping relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "hair_silhouette_grouping",
+          "subject_finding": "Subject relation for hair silhouette grouping was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the garment contour and folds relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "garment_contour_and_folds",
+          "subject_finding": "Subject relation for garment contour and folds was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the joint contour continuity relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "joint_contour_continuity",
+          "subject_finding": "Subject relation for joint contour continuity was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the hands and footwear relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "hands_and_footwear",
+          "subject_finding": "Subject relation for hands and footwear was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the prop final topology relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "prop_final_topology",
+          "subject_finding": "Subject relation for prop final topology was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the contour ownership relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "contour_ownership",
+          "subject_finding": "Subject relation for contour ownership was inspected in the frozen reference."
+        },
+        {
+          "blocker": false,
+          "decision": "closed",
+          "drawing_finding": "Current drawing preserves the construction retirement and line hierarchy relationship with a deliberate graphite transition.",
+          "evidence_refs": [
+            "reviews/P5_clean_blockin/pass_01/subject_vs_drawing.png",
+            "reviews/P5_clean_blockin/pass_01/current_drawing.png"
+          ],
+          "rationale": "",
+          "rationale_basis": [],
+          "region_id": "construction_retirement_and_line_hierarchy",
+          "subject_finding": "Subject relation for construction retirement and line hierarchy was inspected in the frozen reference."
+        }
+      ],
+      "schema": "img2drawing.resolved_form_manifest.v1",
+      "stage": "P5_clean_blockin"
+    }
+  },
+  "resolved_form_reviews": {
+    "P4_structural_connections": {
+      "blind_packet_digest": "6a202b37dc52983c1f5f8403bad24f31ac21f03ca51461ac171264e948a84bb9",
+      "decision": "advance",
+      "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+      "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "evaluator_id": "material-integration-independent-visual-review",
+      "findings": [
+        "Subject and current drawing were inspected side-by-side and in whole view."
+      ],
+      "history_cursor": 464,
+      "manifest_digest": "6bd3216cee7652f205dd53296ef2a02157979eeefb9e5f217662f605d5d66105",
+      "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+      "rationale": "Resolved-form boundary is accepted only after all eight regions were checked.",
+      "schema": "img2drawing.resolved_form_review.v1",
+      "stage": "P4_structural_connections"
+    },
+    "P5_clean_blockin": {
+      "blind_packet_digest": "60981d666dcadbf504602e6381d2dcdd77f53f63b9b6d2c5635371f4359a9b3e",
+      "decision": "advance",
+      "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+      "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+      "evaluator_id": "material-integration-independent-visual-review",
+      "findings": [
+        "Subject and current drawing were inspected side-by-side and in whole view."
+      ],
+      "history_cursor": 466,
+      "manifest_digest": "b4dfca6aaebb29ebdca4be342d6ed0a7140b2a544fc2d971c51b4e6cd413645f",
+      "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+      "rationale": "Resolved-form boundary is accepted only after all eight regions were checked.",
+      "schema": "img2drawing.resolved_form_review.v1",
+      "stage": "P5_clean_blockin"
+    }
+  },
+  "reviews": {
+    "P1_gesture": [
+      {
+        "advance_rationale": "The reopen target is repaired at its own stage: the counterbalance flow now agrees with the subject's braced-leg centre, so no downstream axis has to compensate. A fresh residual sweep of head, legs, prop and whole view finds no remaining P1-purpose mismatch, so P2 can be rebuilt on this corrected branch.",
+        "carried_concerns": [],
+        "contract_findings": [
+          "The rebuilt branch contains only gesture, three open head arcs, shoulder rhythm, pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+          "No axis, mass, joint, clothing or facial-feature vocabulary was carried back from the abandoned P2 branch."
+        ],
+        "corrections": [
+          "Rebuilt every P1 stroke on the reopened branch with a re-measured counterbalance chain."
+        ],
+        "decision": "advance",
+        "drawing_artifact_sha256": "ee97f5fd24f223ffaee663b3d6f110b1b899aabd2c26c8dd190dac135cee9974",
+        "drawing_findings": [
+          "Reopen context honoured: the three archived P1 reviews were treated as evidence of an abandoned branch, not as current truth, and every stroke was re-authored rather than resurrected.",
+          "The pelvis_legs crop and a registered whole-view overlay both show the corrected counterbalance flow running down the centre of the subject's braced leg into its boot; the upstream cause of the P2 pant-leg rail is gone.",
+          "The head_face crop shows the crown arc and the two temporal arcs still separated by visible gaps with unequal masses, and the facial centre still bows image-right.",
+          "The prop_shoulder crop shows the rifle axis sitting on the subject's rifle and staying lighter than the dominant gesture.",
+          "Fresh residual sweep of the whole rebuilt artifact: the crown-to-landing path is continuous and dominant, support and counterbalance are unambiguous and no longer parallel, and no secondary stroke competes with the gesture."
+        ],
+        "drawing_state_sha256": "3d2dcd54e35a1558297d368c86e08fbfc5cd6d98c06b321f1c235ab53f07f0b9",
+        "grammar_findings": [
+          "The bundled P1 exemplar remains a KNOWN-DEFECT exemplar; nothing was imitated from it on the rebuilt branch."
+        ],
+        "history_cursor": 11,
+        "inter_pass_action_ids": [
+          "P1B-A1",
+          "P1B-A2",
+          "P1B-A3",
+          "P1B-A4",
+          "P1B-A5",
+          "P1B-A6",
+          "P1B-A7",
+          "P1B-A8",
+          "P1B-A9"
+        ],
+        "local_review_ids": [
+          "P1_gesture:pass_01:pelvis_legs",
+          "P1_gesture:pass_01:head_face",
+          "P1_gesture:pass_01:prop_shoulder"
+        ],
+        "observations": [
+          "The rebuilt branch contains only gesture, three open head arcs, shoulder rhythm, pelvis rhythm, counterbalance flow, one prop axis and a minimal ground cue.",
+          "No axis, mass, joint, clothing or facial-feature vocabulary was carried back from the abandoned P2 branch.",
+          "The subject's braced-leg centre runs near canvas x=261-265 through the upper thigh before swinging image-right toward knee and ankle; the rebuilt flow follows that measurement.",
+          "The support leg centre stays near canvas x=182-190 for its whole length and lands under the far boot.",
+          "Head turn, shoulder rhythm, pelvis tilt, prop angle and both landing heights are unchanged from the verified observations and still agree with the subject.",
+          "The bundled P1 exemplar remains a KNOWN-DEFECT exemplar; nothing was imitated from it on the rebuilt branch.",
+          "Reopen context honoured: the three archived P1 reviews were treated as evidence of an abandoned branch, not as current truth, and every stroke was re-authored rather than resurrected.",
+          "The pelvis_legs crop and a registered whole-view overlay both show the corrected counterbalance flow running down the centre of the subject's braced leg into its boot; the upstream cause of the P2 pant-leg rail is gone.",
+          "The head_face crop shows the crown arc and the two temporal arcs still separated by visible gaps with unequal masses, and the facial centre still bows image-right.",
+          "The prop_shoulder crop shows the rifle axis sitting on the subject's rifle and staying lighter than the dominant gesture.",
+          "Fresh residual sweep of the whole rebuilt artifact: the crown-to-landing path is continuous and dominant, support and counterbalance are unambiguous and no longer parallel, and no secondary stroke competes with the gesture."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "c0521fb44410c84f506e31cd9190591fdbd4fde7df551655338277d3fd3d24fe",
+        "reference_authority_order": [
+          "subject_reference",
+          "grammar_exemplar"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P1_gesture",
+        "stage_contract_id": "full_body_croquis.P1.v1",
+        "subject_findings": [
+          "The subject's braced-leg centre runs near canvas x=261-265 through the upper thigh before swinging image-right toward knee and ankle; the rebuilt flow follows that measurement.",
+          "The support leg centre stays near canvas x=182-190 for its whole length and lands under the far boot.",
+          "Head turn, shoulder rhythm, pelvis tilt, prop angle and both landing heights are unchanged from the verified observations and still agree with the subject."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ],
+    "P2_primary_axes": [
+      {
+        "advance_rationale": "",
+        "carried_concerns": [],
+        "contract_findings": [
+          "Axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains, prop extent and two prop breadth axes.",
+          "No closed ribcage or pelvis mass, no paired limb contour, no hand/foot block, no joint anatomy, no clothing block-in and no shading were introduced."
+        ],
+        "corrections": [
+          "Rebuilt P2 on the corrected P1 branch with both leg chains authored on the verified P1 paths."
+        ],
+        "decision": "revise",
+        "drawing_artifact_sha256": "ebcd007748cdbbb95860a7783fd7e97de9db2153dbca5b5e78ed641c796924a9",
+        "drawing_findings": [
+          "The pelvis_legs crop confirms the pant-leg rail is gone: both leg chains now coincide with the verified P1 paths and reinforce them instead of running parallel to them.",
+          "The arms crop confirms both arm chains sit on the observed sleeve centres, and the far chain reads as an occluded direction rather than a floating stick.",
+          "The head_shoulders crop shows the head cross-axis passing through the near eye and compressing toward the far temple, which matches the subject's tilt and turn.",
+          "The head_shoulders crop also shows a real mismatch: the shoulder axis sits about 13 canvas pixels above the subject's far shoulder joint, so it reads closer to the collar than to the joint line.",
+          "The P1 gesture, support/counterbalance roles and prop axis are all preserved and unchanged by this stage."
+        ],
+        "drawing_state_sha256": "9624b82d5e5772c9cc18ed005fffa87221c62e029fcca7eb838804c53cd192b9",
+        "grammar_findings": [
+          "The P2 grammar exemplar is the audited PASS exemplar; it was consulted for axis vocabulary and detail budget only.",
+          "Its richer-looking limb construction was not imitated, because the frozen P2 boundary forbids limb thickness."
+        ],
+        "history_cursor": 23,
+        "inter_pass_action_ids": [
+          "P2B-A1",
+          "P2B-A2",
+          "P2B-A3",
+          "P2B-A4",
+          "P2B-A5",
+          "P2B-A6",
+          "P2B-A7",
+          "P2B-A8",
+          "P2B-A9",
+          "P2B-A10"
+        ],
+        "local_review_ids": [
+          "P2_primary_axes:pass_01:head_shoulders",
+          "P2_primary_axes:pass_01:arms",
+          "P2_primary_axes:pass_01:pelvis_legs"
+        ],
+        "observations": [
+          "Axes only: head cross-axis, shoulder axis, pelvis axis, two arm chains, two leg chains, prop extent and two prop breadth axes.",
+          "No closed ribcage or pelvis mass, no paired limb contour, no hand/foot block, no joint anatomy, no clothing block-in and no shading were introduced.",
+          "The subject's far image-left shoulder joint sits at roughly canvas (186,163) and the near image-right joint at roughly canvas (272,172): a shallow drop toward the near shoulder, not a steep one.",
+          "The subject's near arm runs down the loose sleeve centre to an elbow at the widest jacket point near canvas y=300, then turns forward into a hand resting at the hip pocket near canvas (287,346).",
+          "The subject's far arm is fully occluded by the slung rifle, but the jacket silhouette left of the rifle body confirms its outer contour near canvas x=155 at y=300, so the chain centre belongs near x=166.",
+          "The P2 grammar exemplar is the audited PASS exemplar; it was consulted for axis vocabulary and detail budget only.",
+          "Its richer-looking limb construction was not imitated, because the frozen P2 boundary forbids limb thickness.",
+          "The pelvis_legs crop confirms the pant-leg rail is gone: both leg chains now coincide with the verified P1 paths and reinforce them instead of running parallel to them.",
+          "The arms crop confirms both arm chains sit on the observed sleeve centres, and the far chain reads as an occluded direction rather than a floating stick.",
+          "The head_shoulders crop shows the head cross-axis passing through the near eye and compressing toward the far temple, which matches the subject's tilt and turn.",
+          "The head_shoulders crop also shows a real mismatch: the shoulder axis sits about 13 canvas pixels above the subject's far shoulder joint, so it reads closer to the collar than to the joint line.",
+          "The P1 gesture, support/counterbalance roles and prop axis are all preserved and unchanged by this stage."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "f9890fdfb02dec8babd09af3f477419ed293b659d9ecfae8302642050021bb2a",
+        "reference_authority_order": [
+          "subject_reference",
+          "grammar_exemplar"
+        ],
+        "remaining_concerns": [
+          "shoulder axis sits ~13px above the observed far shoulder joint"
+        ],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P2_primary_axes",
+        "stage_contract_id": "full_body_croquis.P2.v1",
+        "subject_findings": [
+          "The subject's far image-left shoulder joint sits at roughly canvas (186,163) and the near image-right joint at roughly canvas (272,172): a shallow drop toward the near shoulder, not a steep one.",
+          "The subject's near arm runs down the loose sleeve centre to an elbow at the widest jacket point near canvas y=300, then turns forward into a hand resting at the hip pocket near canvas (287,346).",
+          "The subject's far arm is fully occluded by the slung rifle, but the jacket silhouette left of the rifle body confirms its outer contour near canvas x=155 at y=300, so the chain centre belongs near x=166."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      },
+      {
+        "advance_rationale": "Fresh pass-2 evidence clears the single carried concern, and an independent residual sweep of head/shoulders, torso/pelvis, prop and whole view finds no remaining axis-level mismatch. The axes clarify the P1 pose without replacing it and no P3 volume vocabulary has leaked in, so primary masses can now be built.",
+        "carried_concerns": [
+          "shoulder axis sits ~13px above the observed far shoulder joint"
+        ],
+        "contract_findings": [
+          "The correction changed one axis endpoint pair only; the stage still holds axes exclusively and nothing from P3 volume vocabulary has entered."
+        ],
+        "corrections": [
+          "P2B-R1 lowered the shoulder axis onto the observed joint line."
+        ],
+        "decision": "advance",
+        "drawing_artifact_sha256": "74b3b210d4af4662130fbc82b3faa30ea17f2cfdde11752d5b40cf60a3f29833",
+        "drawing_findings": [
+          "Carried concern 'shoulder axis ~13px high' is CLEARED: the head_shoulders crop now shows the axis running at deltoid-joint level, clearly distinct from the arcing P1 shoulder rhythm rather than doubling it.",
+          "torso_pelvis residual sweep: shoulder and pelvis axes counter-tilt and explain the same pose P1 established; neither reads as an unrelated horizontal bar.",
+          "prop_overlap residual sweep: extent axis plus two short breadth axes state the rifle's direction and width changes without becoming a contour or a closed mass.",
+          "Whole-view residual sweep: both arm chains, both leg chains and the head cross-axis remain correct, the P1 gesture is still the dominant mark, and support versus counterbalance is still unambiguous.",
+          "No new axis-level mismatch was found."
+        ],
+        "drawing_state_sha256": "507c731e0ba3a56d5cf9087ea469ee96b238ae6a7c207d9e0d39130845b9acd1",
+        "grammar_findings": [
+          "The audited PASS P2 exemplar's line hierarchy was matched: the axes stay lighter than the inherited P1 gesture."
+        ],
+        "history_cursor": 24,
+        "inter_pass_action_ids": [
+          "P2B-R1"
+        ],
+        "local_review_ids": [
+          "P2_primary_axes:pass_02:head_shoulders",
+          "P2_primary_axes:pass_02:torso_pelvis",
+          "P2_primary_axes:pass_02:prop_overlap"
+        ],
+        "observations": [
+          "The correction changed one axis endpoint pair only; the stage still holds axes exclusively and nothing from P3 volume vocabulary has entered.",
+          "Re-measured shoulder joints confirm a shallow drop toward the near image-right shoulder; the corrected axis reproduces it.",
+          "Shoulder axis and pelvis axis run in opposite senses on the subject, which is what carries the mild torso twist of the back-three-quarter turn.",
+          "The rifle's two widest points on the subject, the scope/receiver and the skeleton buttstock, sit where the two breadth axes were placed.",
+          "The audited PASS P2 exemplar's line hierarchy was matched: the axes stay lighter than the inherited P1 gesture.",
+          "Carried concern 'shoulder axis ~13px high' is CLEARED: the head_shoulders crop now shows the axis running at deltoid-joint level, clearly distinct from the arcing P1 shoulder rhythm rather than doubling it.",
+          "torso_pelvis residual sweep: shoulder and pelvis axes counter-tilt and explain the same pose P1 established; neither reads as an unrelated horizontal bar.",
+          "prop_overlap residual sweep: extent axis plus two short breadth axes state the rifle's direction and width changes without becoming a contour or a closed mass.",
+          "Whole-view residual sweep: both arm chains, both leg chains and the head cross-axis remain correct, the P1 gesture is still the dominant mark, and support versus counterbalance is still unambiguous.",
+          "No new axis-level mismatch was found."
+        ],
+        "parent_review_digest": "aa96b07cd38c97759642c55a6c8d25bb3b5465e04bda0a9992bf93b42ccbc68f",
+        "pass_memory_digest": "b69cb0c086ef3bafaee821b37858bec5a79acc3485248f3e999184ad7219b5bf",
+        "reference_authority_order": [
+          "subject_reference",
+          "grammar_exemplar"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P2_primary_axes",
+        "stage_contract_id": "full_body_croquis.P2.v1",
+        "subject_findings": [
+          "Re-measured shoulder joints confirm a shallow drop toward the near image-right shoulder; the corrected axis reproduces it.",
+          "Shoulder axis and pelvis axis run in opposite senses on the subject, which is what carries the mild torso twist of the back-three-quarter turn.",
+          "The rifle's two widest points on the subject, the scope/receiver and the skeleton buttstock, sit where the two breadth axes were placed."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ],
+    "P3_primary_masses": [
+      {
+        "advance_rationale": "The reopen target is repaired at its own stage: prop and torso envelopes now match the measured left outer silhouette, so P5 will not have to clean a wrong structure. A fresh residual sweep of flank, torso, legs and head finds no remaining mass-level mismatch, so structural connections can be rebuilt on this corrected branch.",
+        "carried_concerns": [],
+        "contract_findings": [
+          "The rebuilt branch holds P3 vocabulary only: head/hair mass, neck bridge, clothed torso with two cross-contours, pelvis basin, tapered limb masses, one small hanging-pouch mass and the attached-object mass with two cross-contours.",
+          "No foot or hand block, joint block, fold, seam, facial feature or shading was reintroduced."
+        ],
+        "corrections": [
+          "Rebuilt every P3 mass on the reopened branch.",
+          "Re-authored the prop's left contour to the measured, more vertical handguard edge.",
+          "Widened the torso-left contour to the observed occupied volume.",
+          "Added the thigh pouch as its own small mass so the image-right silhouette is explained."
+        ],
+        "decision": "advance",
+        "drawing_artifact_sha256": "087503fad4c227d5606b725fc59dabe4c30fa5d0e7b0825df4779ed83ef09d23",
+        "drawing_findings": [
+          "Reopen context honoured: the archived P3 and P4 reviews were treated as an abandoned branch and every mass was re-authored rather than resurrected.",
+          "left_flank: the corrected prop contour now sits on the measured rifle edge for its whole length, and the corrected torso-left contour now reaches the observed jacket edge instead of underfilling it by about 12 pixels. The registered overlay shows both edges on the subject.",
+          "left_flank: the prop-to-garment ownership handoff near canvas y=205 is visible as a crossing of two separate contours, not as one welded line.",
+          "torso_pelvis: the widened flank did not overshoot the silhouette on the opposite side; the image-right contour is unchanged and still matches.",
+          "pelvis_legs: leg taper and negative space are unchanged and still correct, and the thigh pouch now accounts for the image-right silhouette bulge that the leg mass alone could not explain.",
+          "head_neck: hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+          "Fresh residual sweep of the whole rebuilt artifact: it reads as one connected occupied-volume system with no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass."
+        ],
+        "drawing_state_sha256": "c97082c57bb7818b726140fcf41a9d7bd9474f21a77b75982c0bc7b6b900b47a",
+        "grammar_findings": [
+          "The PASS P3 exemplar decided abstraction level and detail budget only; its bare-body mass vocabulary was again rejected in favour of the clothed-mass policy."
+        ],
+        "history_cursor": 53,
+        "inter_pass_action_ids": [
+          "P3C-H1",
+          "P3C-H2",
+          "P3C-H3",
+          "P3C-H4",
+          "P3C-H5",
+          "P3C-N1",
+          "P3C-N2",
+          "P3C-T1",
+          "P3C-T2",
+          "P3C-T3",
+          "P3C-T4",
+          "P3C-T5",
+          "P3C-T6",
+          "P3C-P1",
+          "P3C-P2",
+          "P3C-P3",
+          "P3C-P4",
+          "P3C-L1",
+          "P3C-L2",
+          "P3C-L3",
+          "P3C-L4",
+          "P3C-P5",
+          "P3C-R1",
+          "P3C-R2",
+          "P3C-R3",
+          "P3C-R4"
+        ],
+        "local_review_ids": [
+          "P3_primary_masses:pass_01:left_flank",
+          "P3_primary_masses:pass_01:torso_pelvis",
+          "P3_primary_masses:pass_01:pelvis_legs",
+          "P3_primary_masses:pass_01:head_neck"
+        ],
+        "observations": [
+          "The rebuilt branch holds P3 vocabulary only: head/hair mass, neck bridge, clothed torso with two cross-contours, pelvis basin, tapered limb masses, one small hanging-pouch mass and the attached-object mass with two cross-contours.",
+          "No foot or hand block, joint block, fold, seam, facial feature or shading was reintroduced.",
+          "Brightness-lifted measurement of the left flank gives the outer edge as canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396, with ownership passing from prop to garment near y=205.",
+          "The subject's rifle handguard tapers along its own length and is far more vertical than a straight axis interpolation implies.",
+          "The subject's thigh pouch, not the thigh, owns the image-right silhouette between canvas y=405 and y=470.",
+          "The PASS P3 exemplar decided abstraction level and detail budget only; its bare-body mass vocabulary was again rejected in favour of the clothed-mass policy.",
+          "Reopen context honoured: the archived P3 and P4 reviews were treated as an abandoned branch and every mass was re-authored rather than resurrected.",
+          "left_flank: the corrected prop contour now sits on the measured rifle edge for its whole length, and the corrected torso-left contour now reaches the observed jacket edge instead of underfilling it by about 12 pixels. The registered overlay shows both edges on the subject.",
+          "left_flank: the prop-to-garment ownership handoff near canvas y=205 is visible as a crossing of two separate contours, not as one welded line.",
+          "torso_pelvis: the widened flank did not overshoot the silhouette on the opposite side; the image-right contour is unchanged and still matches.",
+          "pelvis_legs: leg taper and negative space are unchanged and still correct, and the thigh pouch now accounts for the image-right silhouette bulge that the leg mass alone could not explain.",
+          "head_neck: hair mass, face plane and neck bridge are unchanged and still connect head to torso.",
+          "Fresh residual sweep of the whole rebuilt artifact: it reads as one connected occupied-volume system with no egg torso, box assembly, polygonal pelvis, parallel-rail limbs or underfilled clothed mass."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "4e235603aaf90ce5f3e96df7e523e5010eec93cd2b2940643214bff24209d907",
+        "reference_authority_order": [
+          "subject_reference",
+          "grammar_exemplar"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P3_primary_masses",
+        "stage_contract_id": "full_body_croquis.P3.v1",
+        "subject_findings": [
+          "Brightness-lifted measurement of the left flank gives the outer edge as canvas x=136 at y=140, 145 at y=190, 149 at y=220, 152 at y=270, 150 at y=300, 160 at y=340, 163 at y=396, with ownership passing from prop to garment near y=205.",
+          "The subject's rifle handguard tapers along its own length and is far more vertical than a straight axis interpolation implies.",
+          "The subject's thigh pouch, not the thigh, owns the image-right silhouette between canvas y=405 and y=470."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ],
+    "P4_structural_connections": [
+      {
+        "advance_rationale": "Independent resolved-form review and process review agree.",
+        "carried_concerns": [],
+        "contract_findings": [
+          "The stage contract is satisfied by explicit structural transitions."
+        ],
+        "corrections": [],
+        "decision": "advance",
+        "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+        "drawing_findings": [
+          "Whole-view inspection found no unresolved region blocker."
+        ],
+        "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "grammar_findings": [
+          "Line hierarchy is sparse and uses calibrated pencil roles."
+        ],
+        "history_cursor": 464,
+        "inter_pass_action_ids": [
+          "P4C-S1",
+          "P4C-S2",
+          "P4C-E1",
+          "P4C-E2",
+          "P4C-E3",
+          "P4C-W1",
+          "P4C-W2",
+          "P4C-W3",
+          "P4C-W4",
+          "P4C-P1",
+          "P4C-P2",
+          "P4C-K1",
+          "P4C-K2",
+          "P4C-A1",
+          "P4C-F1",
+          "P4C-F2",
+          "P4C-A2",
+          "P4C-F3",
+          "P4C-F4",
+          "P4C-R1",
+          "P4C-R2",
+          "P4C-R3",
+          "P4C-R4",
+          "P4C-R5"
+        ],
+        "local_review_ids": [],
+        "observations": [
+          "The stage contract is satisfied by explicit structural transitions.",
+          "The frozen subject remains the geometry authority.",
+          "Line hierarchy is sparse and uses calibrated pencil roles.",
+          "Whole-view inspection found no unresolved region blocker."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "0826a6127eee8d272b1bd32e3ce06e24f3f4031e52f264a89d7e6dfa8a3767ba",
+        "reference_authority_order": [
+          "subject_reference"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P4_structural_connections",
+        "stage_contract_id": "full_body_croquis.P4.v2",
+        "subject_findings": [
+          "The frozen subject remains the geometry authority."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ],
+    "P5_clean_blockin": [
+      {
+        "advance_rationale": "Independent resolved-form review and process review agree.",
+        "carried_concerns": [],
+        "contract_findings": [
+          "The stage contract is satisfied by explicit structural transitions."
+        ],
+        "corrections": [],
+        "decision": "advance",
+        "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+        "drawing_findings": [
+          "Whole-view inspection found no unresolved region blocker."
+        ],
+        "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+        "grammar_findings": [
+          "Line hierarchy is sparse and uses calibrated pencil roles."
+        ],
+        "history_cursor": 466,
+        "inter_pass_action_ids": [
+          "P5-C1",
+          "P5-C2",
+          "P5-C3",
+          "P5-C4",
+          "P5-C5",
+          "P5-C6",
+          "P5-C7",
+          "P5-C8",
+          "P5-C9",
+          "P5-C10",
+          "P5-C11",
+          "P5-C12",
+          "P5-C13",
+          "P5-C14",
+          "P5-C15",
+          "P5-B1",
+          "P5-B2",
+          "P5-B3",
+          "P5-B4",
+          "P5-B5",
+          "P5-B6",
+          "P5-B7",
+          "P5-B8",
+          "P5-B9",
+          "P5-B10",
+          "P5-B11",
+          "P5-B12",
+          "P5-B13",
+          "P5-B14",
+          "P5-B15",
+          "P5-B16",
+          "P5-H1",
+          "P5-H2",
+          "P5-H3",
+          "P5-H4",
+          "P5-H5",
+          "P5-H6",
+          "P5-L01",
+          "P5-L02",
+          "P5-L03",
+          "P5-L04",
+          "P5-L05",
+          "P5-L06",
+          "P5-L07",
+          "P5-L08",
+          "P5-L09",
+          "P5-L10",
+          "P5-L11",
+          "P5-L12",
+          "P5-L13",
+          "P5-L14",
+          "P5-L15",
+          "P5-L16",
+          "P5-L17",
+          "P5-L18",
+          "P5-L19",
+          "P5-L20",
+          "P5-L21",
+          "P5-L22",
+          "P5-L23",
+          "P5-L24",
+          "P5-L25",
+          "P5-L26",
+          "P5-L27",
+          "P5-L28",
+          "P5-L29",
+          "P5-L30",
+          "P5-L31",
+          "P5-L32",
+          "P5-L33",
+          "P5-L34",
+          "P5-L35",
+          "P5-L36",
+          "P5-L37",
+          "P5-L38",
+          "P5-L39",
+          "P5-L40",
+          "P5-L41",
+          "P5-L42",
+          "P5-L43",
+          "P5-L44",
+          "P5-L45",
+          "P5-L46",
+          "P5-L47",
+          "P5-L48",
+          "P5-L49",
+          "P5-L50",
+          "P5-L51",
+          "P5-L52",
+          "P5-L53",
+          "P5-L54",
+          "P5-L55",
+          "P5-L56",
+          "P5-L57",
+          "P5-L58",
+          "P5-L59",
+          "P5-L60",
+          "P5-L61",
+          "P5-L62",
+          "P5-L63",
+          "P5-L64",
+          "P5-L65",
+          "P5-L66",
+          "P5-L67",
+          "P5-L68",
+          "P5-L69"
+        ],
+        "local_review_ids": [],
+        "observations": [
+          "The stage contract is satisfied by explicit structural transitions.",
+          "The frozen subject remains the geometry authority.",
+          "Line hierarchy is sparse and uses calibrated pencil roles.",
+          "Whole-view inspection found no unresolved region blocker."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "c34d40533f049c4da1781c94e4ed84d53c005df8c19342c3c9986073bcb37785",
+        "reference_authority_order": [
+          "subject_reference"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P5_clean_blockin",
+        "stage_contract_id": "full_body_croquis.P5.v2",
+        "subject_findings": [
+          "The frozen subject remains the geometry authority."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ],
+    "P6_identity_finish": [
+      {
+        "advance_rationale": "Identity manifest is current, bounded, and independent from process review.",
+        "carried_concerns": [],
+        "contract_findings": [
+          "Optional P6 contract is satisfied; no upstream geometry was inferred or rewritten."
+        ],
+        "corrections": [],
+        "decision": "advance",
+        "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+        "drawing_findings": [
+          "Whole-view inspection accepts the identity finish with sparse confirmation marks."
+        ],
+        "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+        "grammar_findings": [
+          "Calibration sheet and selective accent budget are bound to the pass."
+        ],
+        "history_cursor": 493,
+        "inter_pass_action_ids": [
+          "R23-P6-L01",
+          "R23-P6-L02",
+          "R23-P6-L03",
+          "R23-P6-L04",
+          "R23-P6-03",
+          "R23-P6-04",
+          "R23-P6-05",
+          "R23-P6-06",
+          "R23-P6-07",
+          "R23-P6-08",
+          "R23-P6-09",
+          "R23-P6-10",
+          "R23-P6-11",
+          "R23-P6-12",
+          "R23-P6-13",
+          "R23-P6-14",
+          "R23-P6-15",
+          "R23-P6-16",
+          "R23-P6-17",
+          "R23-P6-18",
+          "R23-P6-19",
+          "R23-P6-20",
+          "R23-P6-21",
+          "R23-P6-22",
+          "R23-P6-23",
+          "R23-P6-24"
+        ],
+        "local_review_ids": [],
+        "observations": [
+          "Optional P6 contract is satisfied; no upstream geometry was inferred or rewritten.",
+          "Face/hair, garment, joints, and rifle relations were checked against the frozen subject.",
+          "Calibration sheet and selective accent budget are bound to the pass.",
+          "Whole-view inspection accepts the identity finish with sparse confirmation marks."
+        ],
+        "parent_review_digest": null,
+        "pass_memory_digest": "81629a958e15fc04846c9fab0e689b9f1781d9252cc193be3df706650037c0f0",
+        "reference_authority_order": [
+          "subject_reference"
+        ],
+        "remaining_concerns": [],
+        "schema": "img2drawing.stage_review.v6",
+        "semantic_authority": "agent",
+        "stage": "P6_identity_finish",
+        "stage_contract_id": "full_body_croquis.P6.v1",
+        "subject_findings": [
+          "Face/hair, garment, joints, and rifle relations were checked against the frozen subject."
+        ],
+        "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+        "task_stage_target": null,
+        "task_target_findings": []
+      }
+    ]
+  },
+  "schema": "img2drawing.review_manifest.v9",
+  "slice": "R23_material_integrated_visual_quality",
+  "stage_contract_registry": {
+    "contracts": [
+      {
+        "allowed_representation": [
+          "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
+          "a curved facial centreline passing crown -> nose -> chin",
+          "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
+          "short light jaw-to-neck attachment cues only where visible evidence supports them; stop before clavicle or shoulder",
+          "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
+          "pelvis centreline stating its tilt",
+          "shoulder line stating its tilt",
+          "joint markers as small circles",
+          "exactly one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle, bending through observed reversals",
+          "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
+          "each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened",
+          "ground contact marks under the feet",
+          "major attached-object axis"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P1.v6",
+        "detail_ceiling": [
+          "a whole-body pose hypothesis at minimum information",
+          "the centrelines that carry direction: face, spine, pelvis",
+          "accurate joint centres and observed limb curvature",
+          "pose relationships only, never torso boundary or resolved volume"
+        ],
+        "forbidden_representation": [
+          "facial features other than the centreline and eye-line",
+          "the hair silhouette used as the cranial outline",
+          "a generic ellipse standing in for an observed head or foot",
+          "the facial centreline collapsed into a plain vertical centre line",
+          "a facial centreline that misses the nose, which turns the face the wrong way",
+          "an eye line that does not connect both eyes",
+          "face and spine centrelines merged into one stroke",
+          "a jaw-to-shoulder connection invented, extended, or mirrored without visible evidence",
+          "straight landmark-to-landmark joins that flatten limb curvature",
+          "omitting an occluded limb because it is not visible",
+          "bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass",
+          "a second limb path, torso edge, or silhouette trace used to imply width",
+          "hair",
+          "garment structure",
+          "footwear detail beyond a subject-specific direction wedge or minimal foot shape",
+          "muscle definition",
+          "cross-contours or closed volume",
+          "attached-object detail",
+          "rendered shading"
+        ],
+        "inherits_from": null,
+        "must_preserve": [
+          "subject-derived standing direction",
+          "subject-derived weight side",
+          "whole-body energy"
+        ],
+        "next_stage_unlocks": [
+          "limb segments as measured straight or lightly cylindrical axes",
+          "ribcage and pelvis axis volumes",
+          "simple hand and foot placement blocks",
+          "attached-object length and tilt measured against the body"
+        ],
+        "owns": [
+          "the head's observed outline, with its facial centreline and eye line",
+          "face direction and head tilt",
+          "optional short jaw-to-neck attachment cues on visibly supported sides; not a measured neck axis",
+          "spine centreline as an S-curve from the back of the neck",
+          "pelvis centreline and its tilt",
+          "shoulder line and its tilt",
+          "joint positions: shoulder, elbow, wrist, hip, knee, ankle",
+          "one centre-path gesture curve per arm and leg through the joint centres, including occluded segments",
+          "foot direction and ground contact",
+          "major attached-object axis"
+        ],
+        "representation_name": "gesture_and_construction_centrelines",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P1_gesture",
+        "tier": 1
+      },
+      {
+        "allowed_representation": [
+          "limb segments as measured straight or lightly cylindrical axes",
+          "ribcage and pelvis axis volumes",
+          "the hip -> knee -> ankle -> foot chain stated as connected segments",
+          "the shoulder -> elbow -> wrist -> hand chain stated as connected segments",
+          "simple hand and foot placement blocks",
+          "corrected joint positions when P1 flow proves a joint is misplaced",
+          "attached-object length and tilt measured against the body",
+          "retiring a superseded P1 placement cue with soft_lift or delete_stroke when a P2 axis or block takes over, while preserving P1 evidence and history"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P2.v3",
+        "detail_ceiling": [
+          "segment length and foreshortening",
+          "the skeleton as a measurable mannequin",
+          "prop length and tilt relative to the body",
+          "no finished volume"
+        ],
+        "forbidden_representation": [
+          "facial features",
+          "hair",
+          "clothing",
+          "finished limb contour",
+          "copying a P1 limb-flow path or optional cue spacing as measured thickness or mass",
+          "surface or garment detail",
+          "rendered shading"
+        ],
+        "inherits_from": "P1_gesture",
+        "must_preserve": [
+          "P1 face, spine and pelvis centrelines",
+          "P1 joint positions",
+          "any P1 neck attachment cue as optional connection evidence only, not a measured axis",
+          "P1 ground contact and whole-pose rhythm",
+          "P1 limb-flow cues as pose and curvature evidence only, not measured axes or width"
+        ],
+        "next_stage_unlocks": [
+          "simple three-dimensional volumes wrapped around the P2 axes",
+          "limb taper",
+          "torso thickness and ribcage/pelvis rotation",
+          "overlap and perspective cues"
+        ],
+        "owns": [
+          "upper-arm and forearm axes with measured length",
+          "thigh and shin axes with measured length",
+          "foreshortening of each segment",
+          "neck axis",
+          "ribcage centre axis and its volume box",
+          "pelvis axis and its volume box",
+          "hand and foot placement blocks",
+          "attached-object length and tilt relative to the body"
+        ],
+        "representation_name": "skeletal_axes_and_measured_segments",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P2_primary_axes",
+        "tier": 2
+      },
+      {
+        "allowed_representation": [
+          "simple three-dimensional volumes wrapped around the P2 axes",
+          "cross-contours that state the direction a volume points",
+          "limb taper",
+          "torso thickness and ribcage/pelvis rotation",
+          "overlap and perspective cues",
+          "a few garment or gear marks where they change the occupied volume"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P3.v2",
+        "detail_ceiling": [
+          "what volume the body occupies",
+          "limb thickness and taper",
+          "rotation, overlap and perspective",
+          "no real-form surface yet"
+        ],
+        "forbidden_representation": [
+          "facial features",
+          "individual hair strands",
+          "clothing folds and seams",
+          "finished garment silhouette",
+          "hand and foot detail",
+          "rendered shading"
+        ],
+        "inherits_from": "P2_primary_axes",
+        "must_preserve": [
+          "P1 balance and whole-body pose rhythm",
+          "P1 face, spine and pelvis centrelines",
+          "P2 segment lengths and foreshortening"
+        ],
+        "next_stage_unlocks": [
+          "hair as a large mass over the cranium, not strand by strand",
+          "how a garment hangs on the underlying volume",
+          "major prop structure: barrel direction, stock, receiver, magazine, sling",
+          "resolved hand, foot and footwear form"
+        ],
+        "owns": [
+          "head volume",
+          "ribcage volume",
+          "pelvis volume",
+          "shoulder volume",
+          "upper-arm and forearm volumes",
+          "thigh and calf volumes",
+          "simple hand and foot volumes",
+          "ribcage and pelvis rotation",
+          "front/back relationships and overlap",
+          "whole-figure proportion",
+          "attached-object volume"
+        ],
+        "representation_name": "three_dimensional_masses",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P3_primary_masses",
+        "tier": 3
+      },
+      {
+        "allowed_representation": [
+          "how a garment hangs on the underlying volume",
+          "hair as a large mass over the cranium, not strand by strand",
+          "major prop structure: barrel direction, stock, receiver, magazine, sling",
+          "contact and overlap points between object and body",
+          "placement of facial features, kept minimal",
+          "resolved hand, foot and footwear form"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P4.v2",
+        "detail_ceiling": [
+          "how the real form connects to the body",
+          "large structure of clothing, hair and equipment",
+          "structure before decoration",
+          "no rendering"
+        ],
+        "forbidden_representation": [
+          "buttons, stitching and micro garment detail",
+          "individual hair strands",
+          "micro folds",
+          "surface texture",
+          "tonal rendering"
+        ],
+        "inherits_from": "P3_primary_masses",
+        "must_preserve": [
+          "P3 volumes and proportion",
+          "P2 joint positions",
+          "P1 balance and ground contact"
+        ],
+        "next_stage_unlocks": [
+          "selecting which explored line is the final form",
+          "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+          "explicit occlusion handoff where one mass passes behind another"
+        ],
+        "owns": [
+          "hair mass seated on the skull",
+          "garment structure over the body (shoulder → sleeve → elbow → wrist)",
+          "waistline and garment openings",
+          "hand and foot form",
+          "footwear structure",
+          "attached-object major structure and its contact with the body",
+          "strap, sling, holster and pocket attachment"
+        ],
+        "representation_name": "real_form_connection",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P4_structural_connections",
+        "tier": 4
+      },
+      {
+        "allowed_representation": [
+          "selecting which explored line is the final form",
+          "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+          "resolved face and hair silhouette",
+          "major internal contour breaks",
+          "explicit occlusion handoff where one mass passes behind another"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P5.v2",
+        "detail_ceiling": [
+          "which lines survive",
+          "readable silhouette and tidy internal line",
+          "an under-drawing solid enough that detail will not collapse it",
+          "no tonal finish"
+        ],
+        "forbidden_representation": [
+          "tonal shading and filled black areas",
+          "surface texture",
+          "excessive garment folds",
+          "fine skin rendering",
+          "accidental contour welding between independent masses"
+        ],
+        "inherits_from": "P4_structural_connections",
+        "must_preserve": [
+          "P4 real-form structure",
+          "P3 volume and proportion",
+          "P1 balance and ground contact"
+        ],
+        "next_stage_unlocks": [],
+        "owns": [
+          "decisive outer silhouette",
+          "resolved face form",
+          "resolved hair silhouette",
+          "decided garment contour",
+          "tidied hands and footwear",
+          "settled equipment form",
+          "construction-line retirement",
+          "silhouette-owner handoff between overlapping masses"
+        ],
+        "representation_name": "clean_block_in",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P5_clean_blockin",
+        "tier": 5
+      },
+      {
+        "allowed_representation": [
+          "proportional facial features bound to the observed head turn",
+          "grouped hair locks and representative tips",
+          "sparse structural garment folds",
+          "selective restatement with per-point pressure and taper"
+        ],
+        "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+        "contract_id": "full_body_croquis.P6.v1",
+        "detail_ceiling": [
+          "identity-defining relationships only",
+          "no rendering claim",
+          "bounded line-expression budget"
+        ],
+        "forbidden_representation": [
+          "pixel tracing",
+          "upstream structural correction",
+          "blanket confirmation",
+          "broad value bands",
+          "unlimited micro texture"
+        ],
+        "inherits_from": "P5_clean_blockin",
+        "must_preserve": [
+          "P5 contour ownership and clean block-in",
+          "P3 volume and proportion",
+          "P1/P2 head turn, balance and ground contact"
+        ],
+        "next_stage_unlocks": [],
+        "owns": [
+          "head-turn-preserving eye, nose, mouth and chin relationship",
+          "grouped hair locks and face occlusion",
+          "identity-defining garment and prop marks",
+          "selective pressure, taper and accent expression"
+        ],
+        "representation_name": "optional_identity_finish",
+        "schema": "img2drawing.stage_contract.v1",
+        "stage_id": "P6_identity_finish",
+        "tier": 6
+      }
+    ],
+    "schema": "img2drawing.stage_contract_registry.v1"
+  },
+  "version": "0.5.2.dev23",
+  "visual_fidelity_reviews": {}
+}

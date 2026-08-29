@@ -1,0 +1,16 @@
+{
+  "blind_packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+  "decision": "advance",
+  "drawing_artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+  "drawing_state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445",
+  "evaluator_id": "fresh-worker-independent-review",
+  "findings": [
+    "Subject and drawing were inspected in whole view and local relations."
+  ],
+  "history_cursor": 38,
+  "manifest_digest": "848c3452659cb1748676ad90113995c5f931b02d6bac03254150dadab4adc66c",
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "rationale": "All eight resolved-form regions are closed.",
+  "schema": "img2drawing.resolved_form_review.v1",
+  "stage": "P5_clean_blockin"
+}

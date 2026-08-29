@@ -12,7 +12,7 @@ stage genuinely holds up, before moving on.
 ![Sniper Girl croquis timelapse](showcase/entries/croquis-sniper-girl-opus5-r22/croquis_timelapse.gif)
 
 - **Model:** Claude Opus 5
-- **Skill:** img2drawing `0.5.2` · release slice `R22`
+- **Skill:** img2drawing `0.5.2.dev23` · release slice `R23`
 - **Prompting:** single initial prompt
 
 This is the result of an autonomous run started from a single user prompt. The work does
@@ -37,11 +37,12 @@ recorded and replayable.
 
 ## Status
 
-Pre-1.0 (`0.5.2`, release slice R22). The core pipeline, dual-reference review,
+Pre-1.0 (`0.5.2.dev23`, release slice R23). The core pipeline, dual-reference review,
 pass-memory continuity, reopen/recovery, and fresh-worker autonomy are dogfooded and
 working. Stage grammar comes from the frozen `StageContract` and the stage references; two
-of those references keep a rendered example image beside the prose, which the agent opens
-when it wants one. The runtime has no grammar-exemplar concept of its own. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
+  of those references keep a rendered example image beside the prose, which the agent opens
+  when it wants one. Optional R23 identity finish adds bounded face/hair and line-expression
+  evidence after P1→P5 closure; it never replaces structural review. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
 
 ## Requirements
 

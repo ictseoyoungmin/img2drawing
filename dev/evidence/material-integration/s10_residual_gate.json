@@ -1,0 +1,33 @@
+{
+  "schema": "img2drawing.s10_residual_gate.v1",
+  "status": "closed",
+  "authority": "agent_independent_visual_review",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "positive_run": "dev/evidence/material-integration/s10-quality-run",
+  "negative_fixtures": [
+    "temp/meterial-sources/img2drawing-material-1/runs/subject_croquis/critic_report.json",
+    "temp/meterial-sources/img2drawing-material-1/runs/subject_croquis/subject_matte.png",
+    "temp/meterial-sources/img2drawing-material-2/output/subject_croquis/final_croquis.png",
+    "dev/dogfood/croquis-sniper-girl/01_output/croquis_final.png"
+  ],
+  "regions": [
+    {"id": "head_hair", "decision": "closed", "evidence": "s10-quality-run/final/drawing.png"},
+    {"id": "torso_orientation", "decision": "closed", "evidence": "s10-quality-run/compare/subject_vs_final.png"},
+    {"id": "near_arm", "decision": "closed", "evidence": "s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png"},
+    {"id": "far_arm", "decision": "closed", "evidence": "s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png"},
+    {"id": "pelvis", "decision": "closed", "evidence": "s10-quality-run/reviews/P5_clean_blockin/pass_01/current_drawing.png"},
+    {"id": "leg_A", "decision": "closed", "evidence": "s10-quality-run/final/drawing.png"},
+    {"id": "leg_B", "decision": "closed", "evidence": "s10-quality-run/final/drawing.png"},
+    {"id": "attached_object", "decision": "closed", "evidence": "s10-quality-run/final/drawing.png"}
+  ],
+  "visual_authority": "fresh subject and drawing facts; no metric or correction action is an acceptance authority",
+  "manual_inspection": {
+    "status": "closed",
+    "scope": ["raw whole view", "subject comparison", "face/hair", "garment/joints", "rifle relation"],
+    "inspector": "independent-material-integration-review"
+  },
+  "state_binding": {
+    "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+    "final_artifact_sha256": "9fb40326de73d3d70f682a4424e786b1b606f3f685cd6608b69317afb479f3e5"
+  }
+}

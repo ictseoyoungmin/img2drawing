@@ -1,0 +1,67 @@
+{
+  "advance_rationale": "Independent resolved-form review and process review agree.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "The stage contract is satisfied by explicit structural transitions."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+  "drawing_findings": [
+    "Whole-view inspection found no unresolved region blocker."
+  ],
+  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "grammar_findings": [
+    "Line hierarchy is sparse and uses calibrated pencil roles."
+  ],
+  "history_cursor": 464,
+  "inter_pass_action_ids": [
+    "P4C-S1",
+    "P4C-S2",
+    "P4C-E1",
+    "P4C-E2",
+    "P4C-E3",
+    "P4C-W1",
+    "P4C-W2",
+    "P4C-W3",
+    "P4C-W4",
+    "P4C-P1",
+    "P4C-P2",
+    "P4C-K1",
+    "P4C-K2",
+    "P4C-A1",
+    "P4C-F1",
+    "P4C-F2",
+    "P4C-A2",
+    "P4C-F3",
+    "P4C-F4",
+    "P4C-R1",
+    "P4C-R2",
+    "P4C-R3",
+    "P4C-R4",
+    "P4C-R5"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "The stage contract is satisfied by explicit structural transitions.",
+    "The frozen subject remains the geometry authority.",
+    "Line hierarchy is sparse and uses calibrated pencil roles.",
+    "Whole-view inspection found no unresolved region blocker."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "0826a6127eee8d272b1bd32e3ce06e24f3f4031e52f264a89d7e6dfa8a3767ba",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections",
+  "stage_contract_id": "full_body_croquis.P4.v2",
+  "subject_findings": [
+    "The frozen subject remains the geometry authority."
+  ],
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

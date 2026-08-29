@@ -1,0 +1,24 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P6_identity_finish",
+  "drawing": {
+    "stage": "P6_identity_finish",
+    "path": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/current_drawing.png",
+    "artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+    "state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+    "history_cursor": 493
+  },
+  "authority_order": [
+    "subject_reference"
+  ],
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "task_stage_target": null,
+  "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/subject_vs_drawing.png",
+  "subject_split": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/subject_split.png",
+  "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/reference_authority_overview.png",
+  "three_way": "dev/evidence/material-integration/s10-quality-run/reviews/P6_identity_finish/pass_01/reference_authority_overview.png"
+}

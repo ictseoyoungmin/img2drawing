@@ -18,6 +18,16 @@ The current release is tracked in `src/img2drawing/_version.py`
 reads from dynamically. That module is the single source of truth for "what
 version is this" — nothing else should hardcode it.
 
+## R23 — Material-integrated visual quality
+
+Translated the temporary material repositories into current-source contracts:
+independent P4/P5 resolved-form visual closure, optional bounded P6 identity
+finish with real-canvas pressure calibration, selective R23 evidence helpers,
+and a packaged fresh-worker generalization run. The material-1 matte critic and
+material-2 subject-specific PASS remain negative fixtures rather than geometry
+or likeness authorities. Release evidence is digest-bound and checkout-portable;
+mechanical verification stays separate from artistic inspection.
+
 ## Documentation restructuring (2026-08-22)
 `SKILL.md` and eight `references/` files were rewritten to drop release-codename
 framing (`## R09 P2 Hardening` → `## P2 Hardening`, etc.) and state rules

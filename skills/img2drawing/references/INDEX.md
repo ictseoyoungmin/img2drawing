@@ -2,6 +2,7 @@
 - `worker/autonomous-worker-contract.md`: when a fresh worker should act independently vs escalate.
 - `stages/stage-contracts.md`: frozen P1–P5 representation boundaries.
 - `stages/`: stage-specific expert guidance and hardening lessons.
+- `stages/p6-identity-finish.md`: optional relational identity marks, calibration and selective restatement.
 - `review/reference-authority.md`: subject / task-stage-target authority separation.
 - `review/worker-pass-memory.md`: pass-to-pass concern/correction continuity without semantic auto-judgement.
 - `review/self-visual-audit.md`: whole/crop/overlay visual assertions, blind self-review and fail→reopen decisions.
@@ -12,3 +13,4 @@
 - `figure/`: gesture, joints, attached objects.
 - `observation/`: visual-observation policy.
 - `pencil/`: material guidance.
+- `pencil/graphite.md`: pressure calibration, taper and accent hierarchy.

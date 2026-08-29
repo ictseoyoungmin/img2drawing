@@ -1,0 +1,39 @@
+{
+  "allowed_representation": [
+    "proportional facial features bound to the observed head turn",
+    "grouped hair locks and representative tips",
+    "sparse structural garment folds",
+    "selective restatement with per-point pressure and taper"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P6.v1",
+  "detail_ceiling": [
+    "identity-defining relationships only",
+    "no rendering claim",
+    "bounded line-expression budget"
+  ],
+  "forbidden_representation": [
+    "pixel tracing",
+    "upstream structural correction",
+    "blanket confirmation",
+    "broad value bands",
+    "unlimited micro texture"
+  ],
+  "inherits_from": "P5_clean_blockin",
+  "must_preserve": [
+    "P5 contour ownership and clean block-in",
+    "P3 volume and proportion",
+    "P1/P2 head turn, balance and ground contact"
+  ],
+  "next_stage_unlocks": [],
+  "owns": [
+    "head-turn-preserving eye, nose, mouth and chin relationship",
+    "grouped hair locks and face occlusion",
+    "identity-defining garment and prop marks",
+    "selective pressure, taper and accent expression"
+  ],
+  "representation_name": "optional_identity_finish",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P6_identity_finish",
+  "tier": 6
+}

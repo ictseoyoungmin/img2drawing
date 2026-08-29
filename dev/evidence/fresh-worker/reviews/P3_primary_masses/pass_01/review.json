@@ -1,0 +1,47 @@
+{
+  "advance_rationale": "P3 process and blind visual records agree.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "P3 occupied volumes follow the new subject observation."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+  "drawing_findings": [
+    "No unresolved macro region blocker remains."
+  ],
+  "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+  "grammar_findings": [
+    "Mass hierarchy is subordinate to the original geometry authority."
+  ],
+  "history_cursor": 16,
+  "inter_pass_action_ids": [
+    "FW-P3-01",
+    "FW-P3-02",
+    "FW-P3-03",
+    "FW-P3-04"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "P3 occupied volumes follow the new subject observation.",
+    "Head, torso, pelvis, limbs and feet were compared to the subject.",
+    "Mass hierarchy is subordinate to the original geometry authority.",
+    "No unresolved macro region blocker remains."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "6eb53cae5d29ffe736ec9a129b64658860f43534d31357667e37f2ef8b2faca3",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P3_primary_masses",
+  "stage_contract_id": "full_body_croquis.P3.v2",
+  "subject_findings": [
+    "Head, torso, pelvis, limbs and feet were compared to the subject."
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

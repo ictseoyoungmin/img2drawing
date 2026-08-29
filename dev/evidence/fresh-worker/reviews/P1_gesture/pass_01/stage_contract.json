@@ -1,0 +1,74 @@
+{
+  "allowed_representation": [
+    "the head outline read from the subject: its width, its jaw, and how much cranium the head's tilt exposes",
+    "a curved facial centreline passing crown -> nose -> chin",
+    "an eye line drawn through both eyes, taking its tilt from where those two eyes actually sit",
+    "short light jaw-to-neck attachment cues only where visible evidence supports them; stop before clavicle or shoulder",
+    "spine centreline starting behind the neck and running as an S-curve through mid-back, waist and sacrum",
+    "pelvis centreline stating its tilt",
+    "shoulder line stating its tilt",
+    "joint markers as small circles",
+    "exactly one flowing centre-path curve per limb through shoulder -> elbow -> wrist or hip -> knee -> ankle, bending through observed reversals",
+    "an inferred flow line through an occluded limb, ending where the hidden hand or foot must be",
+    "each foot's observed shape, linked to its ankle, stating which way it points and how much it is foreshortened",
+    "ground contact marks under the feet",
+    "major attached-object axis"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P1.v6",
+  "detail_ceiling": [
+    "a whole-body pose hypothesis at minimum information",
+    "the centrelines that carry direction: face, spine, pelvis",
+    "accurate joint centres and observed limb curvature",
+    "pose relationships only, never torso boundary or resolved volume"
+  ],
+  "forbidden_representation": [
+    "facial features other than the centreline and eye-line",
+    "the hair silhouette used as the cranial outline",
+    "a generic ellipse standing in for an observed head or foot",
+    "the facial centreline collapsed into a plain vertical centre line",
+    "a facial centreline that misses the nose, which turns the face the wrong way",
+    "an eye line that does not connect both eyes",
+    "face and spine centrelines merged into one stroke",
+    "a jaw-to-shoulder connection invented, extended, or mirrored without visible evidence",
+    "straight landmark-to-landmark joins that flatten limb curvature",
+    "omitting an occluded limb because it is not visible",
+    "bracketing a limb with two lines that read as limb thickness, sleeve width, trouser width, or mass",
+    "a second limb path, torso edge, or silhouette trace used to imply width",
+    "hair",
+    "garment structure",
+    "footwear detail beyond a subject-specific direction wedge or minimal foot shape",
+    "muscle definition",
+    "cross-contours or closed volume",
+    "attached-object detail",
+    "rendered shading"
+  ],
+  "inherits_from": null,
+  "must_preserve": [
+    "subject-derived standing direction",
+    "subject-derived weight side",
+    "whole-body energy"
+  ],
+  "next_stage_unlocks": [
+    "limb segments as measured straight or lightly cylindrical axes",
+    "ribcage and pelvis axis volumes",
+    "simple hand and foot placement blocks",
+    "attached-object length and tilt measured against the body"
+  ],
+  "owns": [
+    "the head's observed outline, with its facial centreline and eye line",
+    "face direction and head tilt",
+    "optional short jaw-to-neck attachment cues on visibly supported sides; not a measured neck axis",
+    "spine centreline as an S-curve from the back of the neck",
+    "pelvis centreline and its tilt",
+    "shoulder line and its tilt",
+    "joint positions: shoulder, elbow, wrist, hip, knee, ankle",
+    "one centre-path gesture curve per arm and leg through the joint centres, including occluded segments",
+    "foot direction and ground contact",
+    "major attached-object axis"
+  ],
+  "representation_name": "gesture_and_construction_centrelines",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P1_gesture",
+  "tier": 1
+}

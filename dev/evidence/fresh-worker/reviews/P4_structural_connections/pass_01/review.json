@@ -1,0 +1,47 @@
+{
+  "advance_rationale": "Independent resolved-form review accepted.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "P4_structural_connections contract checked."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "b70645d9891a53a8f3c3bc5b4275982c586662d8383be6e3e9dfe7350f8fd153",
+  "drawing_findings": [
+    "No resolved-form blocker remains."
+  ],
+  "drawing_state_sha256": "472aadaac395a7384e81961d5bf3fc862a79df5ac8a2a0aab521ec14e5c050fc",
+  "grammar_findings": [
+    "Hair, garment, joints, and line roles are explicit."
+  ],
+  "history_cursor": 22,
+  "inter_pass_action_ids": [
+    "FW-P4-01",
+    "FW-P4-02",
+    "FW-P4-03",
+    "FW-P4-04"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "P4_structural_connections contract checked.",
+    "The fresh subject remains the geometry authority.",
+    "Hair, garment, joints, and line roles are explicit.",
+    "No resolved-form blocker remains."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "bc42911040e5ab78016a3e0d5fa26495c4da6221b70f49259eaf590ba3e08d16",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P4_structural_connections",
+  "stage_contract_id": "full_body_croquis.P4.v2",
+  "subject_findings": [
+    "The fresh subject remains the geometry authority."
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

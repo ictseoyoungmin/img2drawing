@@ -1,0 +1,85 @@
+{
+  "advanced_stages": [
+    "P1_gesture",
+    "P2_primary_axes",
+    "P3_primary_masses",
+    "P4_structural_connections",
+    "P5_clean_blockin",
+    "P6_identity_finish"
+  ],
+  "construction_retirement": {
+    "contour_stroke_ids": [
+      "contour_hair_left",
+      "contour_hair_right",
+      "contour_jacket_left",
+      "contour_jacket_right",
+      "contour_rifle_left",
+      "contour_rifle_right"
+    ],
+    "history_cursor": 466,
+    "reason": "P5 transfers ownership from construction to selective clean contour while retaining only five explanatory ghosts.",
+    "retained_ghost_stroke_ids": [
+      "crown_face_spine_support",
+      "leg_chain_left_support",
+      "leg_chain_right_brace",
+      "rifle_major_axis",
+      "pelvis_rhythm"
+    ],
+    "retired_count": 3,
+    "retired_stroke_ids": [
+      "cranial_crown_arc",
+      "cranial_left_temporal_jaw",
+      "cranial_right_temporal_jaw"
+    ],
+    "schema": "img2drawing.construction_retirement.v1"
+  },
+  "current_stage": null,
+  "final_drawing": "dev/evidence/material-integration/s10-quality-run/final/drawing.png",
+  "identity_finish_manifest": {
+    "accent_stroke_count": 2,
+    "calibration_sheet_digest": "de76835eedb3bd3ff869504d8e02df5524ae711f3af0cf88d743cff1ae6327b2",
+    "confirmation_stroke_count": 4,
+    "decision": "advance",
+    "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+    "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+    "evaluator_id": "material-integration-independent-visual-review",
+    "evidence_refs": [
+      "reviews/P6_identity_finish/pass_01/current_drawing.png",
+      "identity/calibration_sheet.json"
+    ],
+    "face_relation": "Face opening is smaller than and separated from the grouped hair silhouette.",
+    "fold_stroke_count": 3,
+    "garment_mark_count": 3,
+    "hair_group_count": 3,
+    "history_cursor": 493,
+    "identity_stroke_count": 20,
+    "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+    "profile": {
+      "allowed_roles": [
+        "identity",
+        "form",
+        "accent",
+        "fold",
+        "restatement"
+      ],
+      "max_accent_fraction": 0.25,
+      "max_confirmation_strokes": 12,
+      "max_identity_strokes": 48,
+      "max_micro_fold_strokes": 8,
+      "profile_id": "p6_selective_identity_v1",
+      "require_calibration": true,
+      "schema": "img2drawing.identity_finish_profile.v1"
+    },
+    "rationale": "Selective identity finish accepted after whole-view and face/garment/rifle crops were inspected.",
+    "schema": "img2drawing.identity_finish_manifest.v1"
+  },
+  "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+  "review_manifest": "dev/evidence/material-integration/s10-quality-run/review_manifest.json",
+  "schema": "img2drawing.material_integration_quality_run.v1",
+  "source_checkpoint": "dev/dogfood/croquis-sniper-girl/02_run_record/checkpoint.json",
+  "stage_registry": "full_body_croquis_with_p6",
+  "status": "closed",
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "timelapse_status": "disabled",
+  "visual_authority": "independent whole-view and local-crop inspection; metrics are diagnostic only"
+}

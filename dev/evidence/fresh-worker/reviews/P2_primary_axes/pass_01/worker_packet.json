@@ -1,0 +1,323 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "5c765c7b5c3219ea35d2ed427c877f722f19e2b195c94b083af1fc28b22a1103",
+      "history_cursor": 10,
+      "path": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "stage": "P2_primary_axes",
+      "state_sha256": "b750b122aefc86fad1bf7055b9dcceccf0cfd74aa42d9ed2a6baf3932f768db8"
+    },
+    "overview": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P2_primary_axes",
+    "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "dev/evidence/fresh-worker/reviews/P2_primary_axes/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      802
+    ],
+    "minimum_visible_opacity": 0.6,
+    "minimum_visible_pressure": 0.48,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.055,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.055,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P2_primary_axes",
+    "typical_width": 2.32
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "dev/evidence/fresh-worker/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "neck+ribcage",
+      "ribcage+pelvis boxes",
+      "shoulder→elbow→wrist",
+      "hip→knee→ankle",
+      "hand blocks",
+      "attached object against the torso"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "FW-P2-01",
+        "history_cursor": 7,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shoulder_axis",
+        "reason": null,
+        "stage": "P2_primary_axes",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P2-02",
+        "history_cursor": 8,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "pelvis_axis",
+        "reason": null,
+        "stage": "P2_primary_axes",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P2-03",
+        "history_cursor": 9,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "arm_chain",
+        "reason": null,
+        "stage": "P2_primary_axes",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P2-04",
+        "history_cursor": 10,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "near_arm_chain",
+        "reason": null,
+        "stage": "P2_primary_axes",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P2_primary_axes",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P2_primary_axes",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "skills/img2drawing/examples/full_body_croquis/subject.png",
+      "role": "subject_reference",
+      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "Segment lengths and foreshortening agree with the subject.",
+      "Ribcage and pelvis turn the way the subject's do.",
+      "Hand and foot blocks are placed, including occluded ones.",
+      "The P1 pose hypothesis survives; any joint correction is subject-driven.",
+      "No major visible P2 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "facial features",
+      "hair",
+      "clothing",
+      "finished limb contour",
+      "surface or garment detail",
+      "copying a P1 flow path or optional cue spacing as measured thickness or mass"
+    ],
+    "draw": [
+      "limb segments as measured straight or lightly cylindrical axes",
+      "ribcage and pelvis axis volumes",
+      "the hip → knee → ankle → foot chain as connected segments",
+      "the shoulder → elbow → wrist → hand chain as connected segments",
+      "simple hand and foot placement blocks",
+      "corrected joint positions where the measured chain disagrees with P1",
+      "the attached object as a measuring axis against the body",
+      "retiring a superseded P1 placement cue with soft_lift or delete_stroke when a P2 axis or block takes over, while preserving P1 evidence and history"
+    ],
+    "index": 2,
+    "intent": "Turn P1's flow into measured structure: segment lengths, foreshortening and the ribcage/pelvis volumes the mannequin needs. P1 said where the joints are; P2 says how long each bone is and how it is turned. P1 flow is curvature evidence, not a measured axis or width; P2's neck axis is measured independently from any optional P1 neck attachment cue.",
+    "observe": [
+      "the length of each limb segment against the subject",
+      "foreshortening of each segment",
+      "neck axis",
+      "ribcage centre axis and how the ribcage box is turned",
+      "pelvis axis and how the pelvis box is turned",
+      "where the hands and feet sit as blocks",
+      "any P1 joint that the measured chain proves was misplaced",
+      "attached-object length and tilt relative to the body"
+    ],
+    "review_questions": [
+      "Are the P1 centrelines — face, spine and pelvis — and the pose rhythm still readable underneath?",
+      "Does each segment's length match the subject, or was it drawn to a comfortable proportion?",
+      "Were the P2 axes measured independently from the subject rather than copied from P1 flow-line spacing?",
+      "Does each segment read the subject's foreshortening? A limb coming toward the viewer is short.",
+      "Are the ribcage and pelvis boxes turned the way the subject's are?",
+      "Do the hand and foot blocks sit where the subject's hands and feet sit, including any in a pocket?",
+      "If a joint moved from P1, was that because the subject says so — or to make the drawing easier?",
+      "Is the attached object's length and tilt measured against the body rather than guessed?",
+      "Did the worker stop before finished contour, clothing and hair?"
+    ],
+    "stage_id": "P2_primary_axes",
+    "suggested_crops": [
+      "neck+ribcage",
+      "ribcage+pelvis boxes",
+      "shoulder→elbow→wrist",
+      "hip→knee→ankle",
+      "hand blocks",
+      "attached object against the torso"
+    ],
+    "title": "Primary Axes"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "limb segments as measured straight or lightly cylindrical axes",
+      "ribcage and pelvis axis volumes",
+      "the hip -> knee -> ankle -> foot chain stated as connected segments",
+      "the shoulder -> elbow -> wrist -> hand chain stated as connected segments",
+      "simple hand and foot placement blocks",
+      "corrected joint positions when P1 flow proves a joint is misplaced",
+      "attached-object length and tilt measured against the body",
+      "retiring a superseded P1 placement cue with soft_lift or delete_stroke when a P2 axis or block takes over, while preserving P1 evidence and history"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P2.v3",
+    "detail_ceiling": [
+      "segment length and foreshortening",
+      "the skeleton as a measurable mannequin",
+      "prop length and tilt relative to the body",
+      "no finished volume"
+    ],
+    "forbidden_representation": [
+      "facial features",
+      "hair",
+      "clothing",
+      "finished limb contour",
+      "copying a P1 limb-flow path or optional cue spacing as measured thickness or mass",
+      "surface or garment detail",
+      "rendered shading"
+    ],
+    "inherits_from": "P1_gesture",
+    "must_preserve": [
+      "P1 face, spine and pelvis centrelines",
+      "P1 joint positions",
+      "any P1 neck attachment cue as optional connection evidence only, not a measured axis",
+      "P1 ground contact and whole-pose rhythm",
+      "P1 limb-flow cues as pose and curvature evidence only, not measured axes or width"
+    ],
+    "next_stage_unlocks": [
+      "simple three-dimensional volumes wrapped around the P2 axes",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues"
+    ],
+    "owns": [
+      "upper-arm and forearm axes with measured length",
+      "thigh and shin axes with measured length",
+      "foreshortening of each segment",
+      "neck axis",
+      "ribcage centre axis and its volume box",
+      "pelvis axis and its volume box",
+      "hand and foot placement blocks",
+      "attached-object length and tilt relative to the body"
+    ],
+    "representation_name": "skeletal_axes_and_measured_segments",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P2_primary_axes",
+    "tier": 2
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "carried_concerns": [],
+  "concern_history": [],
+  "correction_history": [],
+  "inter_pass_actions": [
+    {
+      "action_id": "FW-P6-01",
+      "history_cursor": 40,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_part",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P6-02",
+      "history_cursor": 41,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "hair_lock",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P6-03",
+      "history_cursor": 42,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "eye_line",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P6-04",
+      "history_cursor": 43,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "nose_mouth_relation",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P6-05",
+      "history_cursor": 44,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cardigan_tension_fold",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    },
+    {
+      "action_id": "FW-P6-06",
+      "history_cursor": 45,
+      "is_correction_action": false,
+      "kind": "draw_stroke",
+      "part": "cardigan_compression_fold",
+      "reason": null,
+      "stage": "P6_identity_finish",
+      "target_stroke_id": null
+    }
+  ],
+  "inter_pass_correction_actions": [],
+  "memory_policy": [
+    "No prior stage review exists; begin from the stage contract and references.",
+    "Runtime memory never invents artistic conclusions.",
+    "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+  ],
+  "next_pass_index": 1,
+  "previous_decision": null,
+  "previous_remaining_concerns": [],
+  "previous_reported_corrections": [],
+  "previous_review_digest": null,
+  "prior_review_count": 0,
+  "reopen_context": null,
+  "schema": "img2drawing.stage_pass_memory.v2",
+  "stage": "P6_identity_finish",
+  "state": "cold_start"
+}

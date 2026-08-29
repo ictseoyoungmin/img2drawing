@@ -1,0 +1,49 @@
+{
+  "advance_rationale": "Identity manifest is current and bounded.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "Optional identity contract checked after P1-P5 closure."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "6464d1c0dafbf59b1ba0a1f65fe3d4110ab1eccb51ec4616bfea4ff968c6fc0f",
+  "drawing_findings": [
+    "No blanket confirmation or broad value band was added."
+  ],
+  "drawing_state_sha256": "ec78af0027e2926eea46e9c18d4f37081d0c1379d2720cd30ce1d202fd3d61a6",
+  "grammar_findings": [
+    "Calibration and sparse fold budget are bound to the pass."
+  ],
+  "history_cursor": 45,
+  "inter_pass_action_ids": [
+    "FW-P6-01",
+    "FW-P6-02",
+    "FW-P6-03",
+    "FW-P6-04",
+    "FW-P6-05",
+    "FW-P6-06"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "Optional identity contract checked after P1-P5 closure.",
+    "Face relation and grouped hair were compared with the fresh subject.",
+    "Calibration and sparse fold budget are bound to the pass.",
+    "No blanket confirmation or broad value band was added."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "7ec36e0a1924d245844994caf6e913291fcbb05687e1105989a9db4b1408d434",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P6_identity_finish",
+  "stage_contract_id": "full_body_croquis.P6.v1",
+  "subject_findings": [
+    "Face relation and grouped hair were compared with the fresh subject."
+  ],
+  "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

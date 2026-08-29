@@ -1,0 +1,18 @@
+{
+  "final_drawing": "dev/evidence/fresh-worker/final/drawing.png",
+  "limitation": "One fresh subject demonstrates generalization; additional failure regimes remain queued one at a time.",
+  "mechanical_artistic_separation": true,
+  "mechanical_note": "Hashes, replay, stage closure and provenance were checked mechanically; artistic closure is the independent visual record.",
+  "package_identity": "source-tree-current-r23-candidate",
+  "prohibited_coordinate_or_action_ids": false,
+  "schema": "img2drawing.fresh_worker_generalization.v1",
+  "stage_registry": "full_body_croquis_with_p6",
+  "status": "closed",
+  "subject": "skills/img2drawing/examples/full_body_croquis/subject.png",
+  "subject_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433",
+  "visual_evidence": [
+    "final/drawing.png",
+    "compare/subject_vs_final.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://img2drawing.local/schemas/adaptive_evidence.schema.json",
+  "title": "Selective adaptive evidence policy v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "observation_lock_digest", "proposals", "excluded_regions", "accepted_residuals", "preview_only", "authority"],
+  "properties": {
+    "schema": {"const": "img2drawing.adaptive_evidence_policy.v1"}, "observation_lock_digest": {"$ref": "#/$defs/sha256"},
+    "proposals": {"type": "array", "items": {"type": "object"}}, "excluded_regions": {"type": "array", "items": {"type": "object"}}, "accepted_residuals": {"type": "array", "items": {"type": "object"}},
+    "preview_only": {"type": "boolean"}, "authority": {"type": "string", "minLength": 1}
+  }, "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

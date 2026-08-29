@@ -1,0 +1,66 @@
+{
+  "drawing_artifact": {
+    "artifact_sha256": "9bd11d98f71c2bb662699822bbfb2ac8934b7c1169ab2fb77f160e2e6f847530",
+    "history_cursor": 38,
+    "path": "dev/evidence/fresh-worker/reviews/P5_clean_blockin/pass_01/current_drawing.png",
+    "stage": "P5_clean_blockin",
+    "state_sha256": "9b726561dbd21643f8a8667870093907724ba09abcdcf0f921ab30ee2cdc4445"
+  },
+  "evaluator_instruction": "Inspect subject and current drawing independently before reading any process rationale or prior verdict.",
+  "evidence_refs": [],
+  "hidden_from_evaluator": [
+    "worker_rationale",
+    "previous_review_findings",
+    "previous_advance_claim"
+  ],
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "packet_digest": "3152d5c9bac866fa6ff62dd2344efe2c087e3fe1ae2e4d6af6f722c3f1af475a",
+  "schema": "img2drawing.resolved_form_blind_packet.v1",
+  "stage": "P5_clean_blockin",
+  "stage_contract": {
+    "allowed_representation": [
+      "selecting which explored line is the final form",
+      "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+      "resolved face and hair silhouette",
+      "major internal contour breaks",
+      "explicit occlusion handoff where one mass passes behind another"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P5.v2",
+    "detail_ceiling": [
+      "which lines survive",
+      "readable silhouette and tidy internal line",
+      "an under-drawing solid enough that detail will not collapse it",
+      "no tonal finish"
+    ],
+    "forbidden_representation": [
+      "tonal shading and filled black areas",
+      "surface texture",
+      "excessive garment folds",
+      "fine skin rendering",
+      "accidental contour welding between independent masses"
+    ],
+    "inherits_from": "P4_structural_connections",
+    "must_preserve": [
+      "P4 real-form structure",
+      "P3 volume and proportion",
+      "P1 balance and ground contact"
+    ],
+    "next_stage_unlocks": [],
+    "owns": [
+      "decisive outer silhouette",
+      "resolved face form",
+      "resolved hair silhouette",
+      "decided garment contour",
+      "tidied hands and footwear",
+      "settled equipment form",
+      "construction-line retirement",
+      "silhouette-owner handoff between overlapping masses"
+    ],
+    "representation_name": "clean_block_in",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P5_clean_blockin",
+    "tier": 5
+  },
+  "subject_reference_path": "skills/img2drawing/examples/full_body_croquis/subject.png"
+}

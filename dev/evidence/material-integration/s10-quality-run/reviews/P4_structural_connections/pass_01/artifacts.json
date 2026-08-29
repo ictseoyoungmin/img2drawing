@@ -1,0 +1,24 @@
+{
+  "schema": "img2drawing.reference_review_artifacts.v2",
+  "stage": "P4_structural_connections",
+  "drawing": {
+    "stage": "P4_structural_connections",
+    "path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+    "artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+    "state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+    "history_cursor": 464
+  },
+  "authority_order": [
+    "subject_reference"
+  ],
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "task_stage_target": null,
+  "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+  "subject_split": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_split.png",
+  "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_drawing_overlay.png",
+  "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_drawing_absdiff.png",
+  "task_target_vs_drawing": null,
+  "task_target_split": null,
+  "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/reference_authority_overview.png",
+  "three_way": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/reference_authority_overview.png"
+}

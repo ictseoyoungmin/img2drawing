@@ -1,0 +1,118 @@
+{
+  "blind_packet_digest": "6a202b37dc52983c1f5f8403bad24f31ac21f03ca51461ac171264e948a84bb9",
+  "blockers": [],
+  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "evaluator_id": "material-integration-independent-visual-review",
+  "history_cursor": 464,
+  "manifest_id": "resolved_95a51d356dd7",
+  "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+  "regions": [
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the head hair connection relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "head_hair_connection",
+      "subject_finding": "Subject relation for head hair connection was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the face opening relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "face_opening",
+      "subject_finding": "Subject relation for face opening was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the torso garment hang relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "torso_garment_hang",
+      "subject_finding": "Subject relation for torso garment hang was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the near arm joint chain relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "near_arm_joint_chain",
+      "subject_finding": "Subject relation for near arm joint chain was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the far arm joint chain relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "far_arm_joint_chain",
+      "subject_finding": "Subject relation for far arm joint chain was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the waist leg openings relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "waist_leg_openings",
+      "subject_finding": "Subject relation for waist leg openings was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the footwear connection relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "footwear_connection",
+      "subject_finding": "Subject relation for footwear connection was inspected in the frozen reference."
+    },
+    {
+      "blocker": false,
+      "decision": "closed",
+      "drawing_finding": "Current drawing preserves the attached object structure relationship with a deliberate graphite transition.",
+      "evidence_refs": [
+        "reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+        "reviews/P4_structural_connections/pass_01/current_drawing.png"
+      ],
+      "rationale": "",
+      "rationale_basis": [],
+      "region_id": "attached_object_structure",
+      "subject_finding": "Subject relation for attached object structure was inspected in the frozen reference."
+    }
+  ],
+  "schema": "img2drawing.resolved_form_manifest.v1",
+  "stage": "P4_structural_connections"
+}

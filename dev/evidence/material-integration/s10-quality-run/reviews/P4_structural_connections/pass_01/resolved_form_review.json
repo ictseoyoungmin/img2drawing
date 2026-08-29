@@ -1,0 +1,16 @@
+{
+  "blind_packet_digest": "6a202b37dc52983c1f5f8403bad24f31ac21f03ca51461ac171264e948a84bb9",
+  "decision": "advance",
+  "drawing_artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+  "drawing_state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3",
+  "evaluator_id": "material-integration-independent-visual-review",
+  "findings": [
+    "Subject and current drawing were inspected side-by-side and in whole view."
+  ],
+  "history_cursor": 464,
+  "manifest_digest": "6bd3216cee7652f205dd53296ef2a02157979eeefb9e5f217662f605d5d66105",
+  "observation_lock_digest": "81286cca9d675fd514d9ce157fe9b7595b97443f8e3322d7f538c4de67ccfff5",
+  "rationale": "Resolved-form boundary is accepted only after all eight regions were checked.",
+  "schema": "img2drawing.resolved_form_review.v1",
+  "stage": "P4_structural_connections"
+}

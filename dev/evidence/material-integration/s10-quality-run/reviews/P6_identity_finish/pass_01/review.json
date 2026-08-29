@@ -1,0 +1,69 @@
+{
+  "advance_rationale": "Identity manifest is current, bounded, and independent from process review.",
+  "carried_concerns": [],
+  "contract_findings": [
+    "Optional P6 contract is satisfied; no upstream geometry was inferred or rewritten."
+  ],
+  "corrections": [],
+  "decision": "advance",
+  "drawing_artifact_sha256": "7a8549499321815f3fcde9e66fa50050e2e8f27f4c858241d932de8aeb948bd2",
+  "drawing_findings": [
+    "Whole-view inspection accepts the identity finish with sparse confirmation marks."
+  ],
+  "drawing_state_sha256": "da6221b1b35f55a1f34cdb73bc65c618e2d6db75991c8dd40ff737f7d2e010aa",
+  "grammar_findings": [
+    "Calibration sheet and selective accent budget are bound to the pass."
+  ],
+  "history_cursor": 493,
+  "inter_pass_action_ids": [
+    "R23-P6-L01",
+    "R23-P6-L02",
+    "R23-P6-L03",
+    "R23-P6-L04",
+    "R23-P6-03",
+    "R23-P6-04",
+    "R23-P6-05",
+    "R23-P6-06",
+    "R23-P6-07",
+    "R23-P6-08",
+    "R23-P6-09",
+    "R23-P6-10",
+    "R23-P6-11",
+    "R23-P6-12",
+    "R23-P6-13",
+    "R23-P6-14",
+    "R23-P6-15",
+    "R23-P6-16",
+    "R23-P6-17",
+    "R23-P6-18",
+    "R23-P6-19",
+    "R23-P6-20",
+    "R23-P6-21",
+    "R23-P6-22",
+    "R23-P6-23",
+    "R23-P6-24"
+  ],
+  "local_review_ids": [],
+  "observations": [
+    "Optional P6 contract is satisfied; no upstream geometry was inferred or rewritten.",
+    "Face/hair, garment, joints, and rifle relations were checked against the frozen subject.",
+    "Calibration sheet and selective accent budget are bound to the pass.",
+    "Whole-view inspection accepts the identity finish with sparse confirmation marks."
+  ],
+  "parent_review_digest": null,
+  "pass_memory_digest": "81629a958e15fc04846c9fab0e689b9f1781d9252cc193be3df706650037c0f0",
+  "reference_authority_order": [
+    "subject_reference"
+  ],
+  "remaining_concerns": [],
+  "schema": "img2drawing.stage_review.v6",
+  "semantic_authority": "agent",
+  "stage": "P6_identity_finish",
+  "stage_contract_id": "full_body_croquis.P6.v1",
+  "subject_findings": [
+    "Face/hair, garment, joints, and rifle relations were checked against the frozen subject."
+  ],
+  "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+  "task_stage_target": null,
+  "task_target_findings": []
+}

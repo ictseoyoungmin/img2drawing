@@ -1,0 +1,10 @@
+{
+  "schema": "img2drawing.timelapse.skip.v1",
+  "status": "disabled",
+  "policy": "none",
+  "estimated_pixel_work": 196608000,
+  "max_timelapse_pixel_work": 20000000,
+  "frame_count_if_exported": 125,
+  "frame_supersample": 2,
+  "note": "Final drawing, compare, session, checkpoint and review manifest were persisted before optional timelapse work."
+}

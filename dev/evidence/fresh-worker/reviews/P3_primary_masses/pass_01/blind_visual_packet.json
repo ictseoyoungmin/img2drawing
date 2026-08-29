@@ -1,0 +1,116 @@
+{
+  "drawing_artifact": {
+    "artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+    "history_cursor": 16,
+    "path": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "stage": "P3_primary_masses",
+    "state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b"
+  },
+  "evaluator_instruction": "Inspect subject and current drawing independently; do not use worker rationale or any prior verdict.",
+  "observation_lock": {
+    "hidden_from_evaluator": [
+      "worker_rationale",
+      "previous_review_findings",
+      "previous_advance_claim"
+    ],
+    "observation": {
+      "subject_summary": "front three-quarter standing person with turned head, cardigan, jeans and two distinct shoes",
+      "uncertainties": [
+        "loose fabric obscures the exact knee contour",
+        "near hand partly occluded by pocket"
+      ],
+      "view": {
+        "arm_occlusion": {
+          "subject_left": [
+            "pocket"
+          ],
+          "subject_right": []
+        },
+        "arm_visibility": {
+          "subject_left": "partial",
+          "subject_right": "visible"
+        },
+        "body_view": "front_three_quarter",
+        "near_side": "subject_left",
+        "prop_overlap_order": [],
+        "torso_turn": "left",
+        "uncertainties": [
+          "near hand partly occluded by pocket"
+        ]
+      }
+    },
+    "observation_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+    "observation_id": "fresh-worker-generalization-r23:observation:01",
+    "schema": "img2drawing.blind_observation_projection.v1",
+    "subject_reference_sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+  },
+  "packet_digest": "6fee9faccade1467a7420ffbcc85df37acca9d95de6a8519a0938957c62165b0",
+  "region_evidence_refs": [
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png",
+    "reviews/P3_primary_masses/pass_01/current_drawing.png"
+  ],
+  "schema": "img2drawing.blind_visual_packet.v1",
+  "stage": "P3_primary_masses",
+  "stage_contract": {
+    "allowed_representation": [
+      "simple three-dimensional volumes wrapped around the P2 axes",
+      "cross-contours that state the direction a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they change the occupied volume"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P3.v2",
+    "detail_ceiling": [
+      "what volume the body occupies",
+      "limb thickness and taper",
+      "rotation, overlap and perspective",
+      "no real-form surface yet"
+    ],
+    "forbidden_representation": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail",
+      "rendered shading"
+    ],
+    "inherits_from": "P2_primary_axes",
+    "must_preserve": [
+      "P1 balance and whole-body pose rhythm",
+      "P1 face, spine and pelvis centrelines",
+      "P2 segment lengths and foreshortening"
+    ],
+    "next_stage_unlocks": [
+      "hair as a large mass over the cranium, not strand by strand",
+      "how a garment hangs on the underlying volume",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "resolved hand, foot and footwear form"
+    ],
+    "owns": [
+      "head volume",
+      "ribcage volume",
+      "pelvis volume",
+      "shoulder volume",
+      "upper-arm and forearm volumes",
+      "thigh and calf volumes",
+      "simple hand and foot volumes",
+      "ribcage and pelvis rotation",
+      "front/back relationships and overlap",
+      "whole-figure proportion",
+      "attached-object volume"
+    ],
+    "representation_name": "three_dimensional_masses",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P3_primary_masses",
+    "tier": 3
+  },
+  "subject_reference_path": "skills/img2drawing/examples/full_body_croquis/subject.png"
+}

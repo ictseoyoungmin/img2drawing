@@ -1,0 +1,45 @@
+{
+  "allowed_representation": [
+    "selecting which explored line is the final form",
+    "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+    "resolved face and hair silhouette",
+    "major internal contour breaks",
+    "explicit occlusion handoff where one mass passes behind another"
+  ],
+  "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+  "contract_id": "full_body_croquis.P5.v2",
+  "detail_ceiling": [
+    "which lines survive",
+    "readable silhouette and tidy internal line",
+    "an under-drawing solid enough that detail will not collapse it",
+    "no tonal finish"
+  ],
+  "forbidden_representation": [
+    "tonal shading and filled black areas",
+    "surface texture",
+    "excessive garment folds",
+    "fine skin rendering",
+    "accidental contour welding between independent masses"
+  ],
+  "inherits_from": "P4_structural_connections",
+  "must_preserve": [
+    "P4 real-form structure",
+    "P3 volume and proportion",
+    "P1 balance and ground contact"
+  ],
+  "next_stage_unlocks": [],
+  "owns": [
+    "decisive outer silhouette",
+    "resolved face form",
+    "resolved hair silhouette",
+    "decided garment contour",
+    "tidied hands and footwear",
+    "settled equipment form",
+    "construction-line retirement",
+    "silhouette-owner handoff between overlapping masses"
+  ],
+  "representation_name": "clean_block_in",
+  "schema": "img2drawing.stage_contract.v1",
+  "stage_id": "P5_clean_blockin",
+  "tier": 5
+}

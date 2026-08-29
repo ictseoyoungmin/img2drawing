@@ -18,6 +18,12 @@ exploratory lines is the real contour, and subordinates the rest.
 - settled equipment form;
 - contour ownership where masses overlap.
 
+Before retiring construction, perform a resolved-form sweep: verify that the face opening
+is distinct from the grouped hair silhouette, each garment contour hands off around the
+underlying volume, and every visible elbow/knee/ankle retains a curved transition. Keep
+only a sparse set of structural folds. A final contour that is darker but still reads as a
+helmet, flat jacket, or rail-like limb is not clean and must reopen its earliest owner.
+
 ## What P5 is not
 
 P5 is not a finished illustration. It still has no:
@@ -70,6 +76,8 @@ read as one line after rendering, even though the renderer merges nothing.
 - **Repainting over an error.** A prettier line laid on top of wrong P3/P4 structure, instead of reopening the stage that owns it.
 - **Welded contours** between the arm and the torso, or the prop and the body.
 - **Hair strands** instead of a resolved hair silhouette.
+- **Blanket confirmation.** Repeating every identity mark or restating the whole outline
+  makes a line-heavy image, but does not repair a wrong face relation or body volume.
 
 ## Hardening order
 1. Cleanup preflight against P3/P4.

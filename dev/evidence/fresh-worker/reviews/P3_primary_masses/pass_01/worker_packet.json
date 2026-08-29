@@ -1,0 +1,314 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+      "history_cursor": 16,
+      "path": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/current_drawing.png",
+      "stage": "P3_primary_masses",
+      "state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b"
+    },
+    "overview": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P3_primary_masses",
+    "subject_drawing_absdiff": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "skills/img2drawing/examples/full_body_croquis/subject.png",
+    "subject_split": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "dev/evidence/fresh-worker/reviews/P3_primary_masses/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      802
+    ],
+    "minimum_visible_opacity": 0.66,
+    "minimum_visible_pressure": 0.54,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.055,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.055,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P3_primary_masses",
+    "typical_width": 2.64
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "dev/evidence/fresh-worker/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "head+ribcage",
+      "ribcage+pelvis",
+      "one full arm",
+      "one full leg",
+      "attached object volume"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "FW-P3-01",
+        "history_cursor": 13,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "skull_face_mass",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P3-02",
+        "history_cursor": 14,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "torso_garment_mass",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P3-03",
+        "history_cursor": 15,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "support_leg_mass",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "FW-P3-04",
+        "history_cursor": 16,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "counterbalance_leg_mass",
+        "reason": null,
+        "stage": "P3_primary_masses",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P3_primary_masses",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P3_primary_masses",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "skills/img2drawing/examples/full_body_croquis/subject.png",
+      "role": "subject_reference",
+      "sha256": "caa5023e62058b79d2484208d3c0337207a851f5200b1ef2c57694925d442433"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The figure reads as a body with volume rather than a stick figure.",
+      "Ribcage and pelvis rotation match the subject.",
+      "Limb thickness, taper and overlap match the subject.",
+      "Whole-figure proportion holds at mass level.",
+      "No major visible P3 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail"
+    ],
+    "draw": [
+      "simple three-dimensional volumes around head, ribcage, pelvis, shoulders, upper arms, forearms, thighs, calves, hands and feet",
+      "cross-contours that state which way a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they materially change the occupied volume"
+    ],
+    "index": 3,
+    "intent": "Turn the stick figure into a body with volume: wrap simple three-dimensional masses around the P2 axes.",
+    "observe": [
+      "how thick the torso is",
+      "ribcage and pelvis rotation",
+      "limb thickness and taper",
+      "which parts are in front of which",
+      "overlap",
+      "perspective",
+      "whole-figure proportion",
+      "the volume a large attached object occupies"
+    ],
+    "review_questions": [
+      "Does each limb read as a volume pointing somewhere, not two parallel outlines?",
+      "Do the ribcage and pelvis show their rotation?",
+      "Is the torso thickness credible against the subject?",
+      "Are front/back and overlap relationships explicit?",
+      "Does whole-figure proportion hold up at mass level?",
+      "Are the P2 joint positions and directions preserved underneath?",
+      "Did the worker keep garment detail and face out, adding only marks that change the occupied volume?"
+    ],
+    "stage_id": "P3_primary_masses",
+    "suggested_crops": [
+      "head+ribcage",
+      "ribcage+pelvis",
+      "one full arm",
+      "one full leg",
+      "attached object volume"
+    ],
+    "title": "Primary Masses"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "simple three-dimensional volumes wrapped around the P2 axes",
+      "cross-contours that state the direction a volume points",
+      "limb taper",
+      "torso thickness and ribcage/pelvis rotation",
+      "overlap and perspective cues",
+      "a few garment or gear marks where they change the occupied volume"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P3.v2",
+    "detail_ceiling": [
+      "what volume the body occupies",
+      "limb thickness and taper",
+      "rotation, overlap and perspective",
+      "no real-form surface yet"
+    ],
+    "forbidden_representation": [
+      "facial features",
+      "individual hair strands",
+      "clothing folds and seams",
+      "finished garment silhouette",
+      "hand and foot detail",
+      "rendered shading"
+    ],
+    "inherits_from": "P2_primary_axes",
+    "must_preserve": [
+      "P1 balance and whole-body pose rhythm",
+      "P1 face, spine and pelvis centrelines",
+      "P2 segment lengths and foreshortening"
+    ],
+    "next_stage_unlocks": [
+      "hair as a large mass over the cranium, not strand by strand",
+      "how a garment hangs on the underlying volume",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "resolved hand, foot and footwear form"
+    ],
+    "owns": [
+      "head volume",
+      "ribcage volume",
+      "pelvis volume",
+      "shoulder volume",
+      "upper-arm and forearm volumes",
+      "thigh and calf volumes",
+      "simple hand and foot volumes",
+      "ribcage and pelvis rotation",
+      "front/back relationships and overlap",
+      "whole-figure proportion",
+      "attached-object volume"
+    ],
+    "representation_name": "three_dimensional_masses",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P3_primary_masses",
+    "tier": 3
+  }
+}

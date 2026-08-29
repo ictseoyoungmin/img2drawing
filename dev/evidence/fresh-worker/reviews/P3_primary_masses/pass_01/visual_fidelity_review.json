@@ -1,0 +1,16 @@
+{
+  "blind_packet_digest": "6fee9faccade1467a7420ffbcc85df37acca9d95de6a8519a0938957c62165b0",
+  "decision": "advance",
+  "drawing_artifact_sha256": "b9062f904850fe72a562d45b55fa047182ba4384ae8a4c6b7b129941ad4ee2e0",
+  "drawing_state_sha256": "ce43c3c530551a59608e1eea9342ad654bcf370cfe23dd8c70a638c0c34e6a4b",
+  "evaluator_id": "fresh-worker-independent-review",
+  "findings": [
+    "Whole view and subject comparison were inspected before process rationale."
+  ],
+  "history_cursor": 16,
+  "manifest_digest": "7cb17bf32d9b7420e5f1926ec6e27a6f5a873e9ed7fbab23f1d96d49c3837720",
+  "observation_lock_digest": "99ac13ecb229547fabecd3ca6a6b87d1cc2a936b288ee4f99970de514fc9d47e",
+  "rationale": "All required macro regions are closed.",
+  "schema": "img2drawing.visual_fidelity_review.v1",
+  "stage": "P3_primary_masses"
+}

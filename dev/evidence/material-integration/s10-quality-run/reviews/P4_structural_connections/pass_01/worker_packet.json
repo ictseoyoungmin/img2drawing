@@ -1,0 +1,509 @@
+{
+  "artifacts": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "drawing": {
+      "artifact_sha256": "5d4a699f6cfef670df43483cda39a9b1e913a36e7fb19fca38d7b19dd8e2f5ef",
+      "history_cursor": 464,
+      "path": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/current_drawing.png",
+      "stage": "P4_structural_connections",
+      "state_sha256": "5cc390f6293f8157dfab6c81beca6578f6fd96a7574a02c18c3a84b688f609e3"
+    },
+    "overview": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/reference_authority_overview.png",
+    "schema": "img2drawing.reference_review_artifacts.v2",
+    "stage": "P4_structural_connections",
+    "subject_drawing_absdiff": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_drawing_absdiff.png",
+    "subject_drawing_overlay": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_drawing_overlay.png",
+    "subject_reference": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+    "subject_split": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_split.png",
+    "subject_vs_drawing": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/subject_vs_drawing.png",
+    "task_stage_target": null,
+    "task_target_split": null,
+    "task_target_vs_drawing": null,
+    "three_way": "dev/evidence/material-integration/s10-quality-run/reviews/P4_structural_connections/pass_01/reference_authority_overview.png"
+  },
+  "autonomous_loop": [
+    "Read pass memory first. If state is reopen_restart, treat archived target/downstream reviews as invalidated evidence and rebuild from the restored branch.",
+    "If carried concerns exist, re-check them before inventing new work.",
+    "Read the frozen stage contract before deciding what belongs in this stage.",
+    "Observe the subject at whole-body scale first; choose a local ROI only to answer a concrete uncertainty.",
+    "SUBJECT-ONLY MODE: no same-subject stage target exists. Construct the current stage from the subject geometry, frozen StageContract, and verified prior drawing state.",
+    "Before drawing, reject vocabulary listed in forbidden_representation.",
+    "Draw a bounded set of explicit strokes that serve the current stage ownership.",
+    "Render the exact current artifact with prepare_stage_review().",
+    "If a whole-view question remains unresolved, choose explicit ROI boxes and call prepare_local_review().",
+    "Compare fresh evidence against carried concerns and the inter-pass correction actions recorded in pass memory.",
+    "Write contract_findings separately from reference/artifact findings and cite useful local_review_ids.",
+    "If any important drawing mismatch remains, choose the highest-impact 1–3 issues and revise locally.",
+    "After every drawing mutation, prepare fresh stage/local reviews; never reuse stale judgement.",
+    "After carried concerns appear cleared, perform one fresh residual-mismatch sweep that is NOT limited to the prior concern list; inspect the whole view and a high-risk ROI before setting remaining_concerns=[] .",
+    "Advance only when both the carried-concern recheck and the fresh residual sweep find no important mismatch at the current stage purpose.",
+    "If a later stage exposes an earlier foundational error, reopen the earliest responsible stage."
+  ],
+  "autonomy_policy": [
+    "Do not stop after a pass merely to ask the user whether to continue.",
+    "Do not ask the user to approve routine stage transitions; the worker owns the self-review loop.",
+    "Use pass memory to continue unresolved work rather than resetting the stage mentally each pass.",
+    "Do not treat inter-pass action provenance as proof that a concern was solved.",
+    "Do not let the prior concern list become the review boundary; new defects found in the residual sweep can keep the stage at REVISE.",
+    "Never use CV/evidence maps or crop automation as semantic authority."
+  ],
+  "canvas_scale_guidance": {
+    "authority": "guidance_only",
+    "canvas": [
+      512,
+      768
+    ],
+    "minimum_visible_opacity": 0.58,
+    "minimum_visible_pressure": 0.48,
+    "note": "An early stage is not a faint stage. These are floors from a completed run, not ceilings.",
+    "recommended_width_multiplier": 1.033,
+    "rule": "Guidance only; runtime never silently rewrites Agent-authored stroke style.",
+    "scale_factor": 1.033,
+    "schema": "img2drawing.canvas_scale_guidance.v1",
+    "stage": "P4_structural_connections",
+    "typical_width": 2.17
+  },
+  "checkpoint_resume": {
+    "atomic_replace": true,
+    "auto_checkpoint_after_mutation": true,
+    "auto_checkpoint_after_prepare": true,
+    "auto_checkpoint_after_review": true,
+    "checkpoint_path": "dev/evidence/material-integration/s10-quality-run/session/checkpoint.json",
+    "resume_method": "DrawingRun.resume"
+  },
+  "escalation_policy": [
+    "Ask the user only when the source reference is missing/unreadable, the requested goal is internally contradictory, or a choice genuinely changes the intended artistic target.",
+    "Repeated visual failure is not itself a reason to ask the user; change observation strategy, crop, stroke plan, or reopen the responsible stage first."
+  ],
+  "grammar_cards": [],
+  "local_review_api": {
+    "auto_detection": false,
+    "coordinate_space": "source-image pixel coordinates; (left, top, right, bottom), right/bottom exclusive",
+    "method": "DrawingRun.prepare_local_review",
+    "paired_crop_evidence": [
+      "subject_drawing_overlay",
+      "subject_drawing_absdiff"
+    ],
+    "required_boxes": [
+      "subject_box",
+      "drawing_box"
+    ],
+    "rule": "Choose the ROI because of a concrete visual question. Runtime crops/layouts only; it never detects anatomy or decides similarity.",
+    "selection_authority": "agent_explicit_boxes",
+    "suggested_intents": [
+      "head+hair",
+      "shoulder→sleeve→wrist",
+      "waist+garment opening",
+      "hand",
+      "foot+footwear",
+      "object↔body contact"
+    ],
+    "task_target_box": "must_be_omitted"
+  },
+  "mandatory_review_views": [
+    "subject_vs_drawing",
+    "subject_split",
+    "subject_drawing_overlay",
+    "subject_drawing_absdiff",
+    "reference_authority_overview",
+    "stage-contract boundary review",
+    "Agent-selected local reviews when whole view is insufficient"
+  ],
+  "pass_index": 1,
+  "pass_memory": {
+    "carried_concerns": [],
+    "concern_history": [],
+    "correction_history": [],
+    "inter_pass_actions": [
+      {
+        "action_id": "P4C-S1",
+        "history_cursor": 56,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shoulder_insert_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-S2",
+        "history_cursor": 57,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "shoulder_insert_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-E1",
+        "history_cursor": 58,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "elbow_transition_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-E2",
+        "history_cursor": 59,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "elbow_transition_right_inner",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-E3",
+        "history_cursor": 60,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "elbow_transition_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-W1",
+        "history_cursor": 61,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "wrist_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-W2",
+        "history_cursor": 62,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hand_block_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-W3",
+        "history_cursor": 63,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hand_pocket_overlap_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-W4",
+        "history_cursor": 64,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hand_block_left_occluded",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-P1",
+        "history_cursor": 65,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hip_thigh_insert_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-P2",
+        "history_cursor": 66,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "hip_thigh_insert_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-K1",
+        "history_cursor": 67,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "knee_plane_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-K2",
+        "history_cursor": 68,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "knee_plane_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-A1",
+        "history_cursor": 69,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "ankle_bridge_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-F1",
+        "history_cursor": 70,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_block_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-F2",
+        "history_cursor": 71,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_sole_left",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-A2",
+        "history_cursor": 72,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "ankle_bridge_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-F3",
+        "history_cursor": 73,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_block_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-F4",
+        "history_cursor": 74,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "boot_sole_right",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-R1",
+        "history_cursor": 75,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "sling_strap_upper",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-R2",
+        "history_cursor": 76,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "sling_strap_lower",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-R3",
+        "history_cursor": 77,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_body_overlap",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-R4",
+        "history_cursor": 78,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "rifle_stock_hip_overlap",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      },
+      {
+        "action_id": "P4C-R5",
+        "history_cursor": 79,
+        "is_correction_action": false,
+        "kind": "draw_stroke",
+        "part": "pouch_strap_thigh",
+        "reason": null,
+        "stage": "P4_structural_connections",
+        "target_stroke_id": null
+      }
+    ],
+    "inter_pass_correction_actions": [],
+    "memory_policy": [
+      "No prior stage review exists; begin from the stage contract and references.",
+      "Runtime memory never invents artistic conclusions.",
+      "Concern resolution must be stated by the Agent in a fresh review, not inferred by the runtime."
+    ],
+    "next_pass_index": 1,
+    "previous_decision": null,
+    "previous_remaining_concerns": [],
+    "previous_reported_corrections": [],
+    "previous_review_digest": null,
+    "prior_review_count": 0,
+    "reopen_context": null,
+    "schema": "img2drawing.stage_pass_memory.v2",
+    "stage": "P4_structural_connections",
+    "state": "cold_start"
+  },
+  "references": {
+    "authority_order": [
+      "subject_reference"
+    ],
+    "reference_mode": "subject_only",
+    "stage_id": "P4_structural_connections",
+    "subject_only_rule": "Derive stage geometry from the subject and verified prior drawing state.",
+    "subject_reference": {
+      "authority": "geometry_truth",
+      "decides": [
+        "pose",
+        "proportion",
+        "perspective",
+        "overlap",
+        "weight distribution",
+        "subject-specific silhouette"
+      ],
+      "must_not_decide": [
+        "stage abstraction vocabulary",
+        "which construction convention belongs to a stage"
+      ],
+      "path": "dev/dogfood/croquis-sniper-girl/01_output/subject_reference.png",
+      "role": "subject_reference",
+      "sha256": "c6d6dc8646fa9b0d3e48144be0545378095253a5fa6864549274f3355ab3c6d5"
+    },
+    "task_stage_target": null
+  },
+  "schema": "img2drawing.autonomous_worker_packet.v7",
+  "stage": {
+    "advance_when": [
+      "The drawing reads as this specific subject, not a generic mannequin.",
+      "Clothing, hair and equipment are connected to the volumes beneath them.",
+      "Hands, feet and footwear have form and stay attached to their limbs.",
+      "The attached object's major structure and body contact are explicit.",
+      "No major visible P4 mismatch remains after whole-view and relevant crop review."
+    ],
+    "avoid": [
+      "buttons, stitching and micro garment detail",
+      "individual hair strands",
+      "micro folds",
+      "surface texture",
+      "tonal rendering"
+    ],
+    "draw": [
+      "hair as a large mass over the cranium",
+      "garment structure resolved over the underlying volume",
+      "hand and foot form and footwear structure",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "contact and overlap points between object and body",
+      "minimal placement of facial features"
+    ],
+    "index": 4,
+    "intent": "Connect the real subject's form to the body masses: how clothing, hair and equipment sit on the volumes underneath. Structure, not decoration.",
+    "observe": [
+      "how the hair mass sits on the skull",
+      "how the garment hangs across shoulder → sleeve → elbow → wrist",
+      "waistline and garment openings",
+      "hand and foot form",
+      "footwear structure",
+      "the major structure of a large attached object",
+      "where straps, slings, holsters and pockets attach and overlap"
+    ],
+    "review_questions": [
+      "Does the hair sit on the cranium as a mass, or was it drawn strand by strand?",
+      "Does the garment hang on the arm chain rather than float beside it?",
+      "Is the waistline placed on the pelvis volume from P3?",
+      "Do the hands and feet grow out of their limbs instead of reading as detached blocks?",
+      "Is the attached object's major structure connected to where it touches the body?",
+      "Was structure solved before decoration — no buttons or stitching yet?",
+      "Are the P3 volumes and proportion preserved underneath?"
+    ],
+    "stage_id": "P4_structural_connections",
+    "suggested_crops": [
+      "head+hair",
+      "shoulder→sleeve→wrist",
+      "waist+garment opening",
+      "hand",
+      "foot+footwear",
+      "object↔body contact"
+    ],
+    "title": "Structural Connections"
+  },
+  "stage_contract": {
+    "allowed_representation": [
+      "how a garment hangs on the underlying volume",
+      "hair as a large mass over the cranium, not strand by strand",
+      "major prop structure: barrel direction, stock, receiver, magazine, sling",
+      "contact and overlap points between object and body",
+      "placement of facial features, kept minimal",
+      "resolved hand, foot and footwear form"
+    ],
+    "authority_note": "This contract governs representation scope only. Subject/task references remain visual truth; the Agent remains semantic authority.",
+    "contract_id": "full_body_croquis.P4.v2",
+    "detail_ceiling": [
+      "how the real form connects to the body",
+      "large structure of clothing, hair and equipment",
+      "structure before decoration",
+      "no rendering"
+    ],
+    "forbidden_representation": [
+      "buttons, stitching and micro garment detail",
+      "individual hair strands",
+      "micro folds",
+      "surface texture",
+      "tonal rendering"
+    ],
+    "inherits_from": "P3_primary_masses",
+    "must_preserve": [
+      "P3 volumes and proportion",
+      "P2 joint positions",
+      "P1 balance and ground contact"
+    ],
+    "next_stage_unlocks": [
+      "selecting which explored line is the final form",
+      "subordinating superseded construction with soft_lift or fully retiring it with delete_stroke when the current contour replaces it, while preserving history",
+      "explicit occlusion handoff where one mass passes behind another"
+    ],
+    "owns": [
+      "hair mass seated on the skull",
+      "garment structure over the body (shoulder → sleeve → elbow → wrist)",
+      "waistline and garment openings",
+      "hand and foot form",
+      "footwear structure",
+      "attached-object major structure and its contact with the body",
+      "strap, sling, holster and pocket attachment"
+    ],
+    "representation_name": "real_form_connection",
+    "schema": "img2drawing.stage_contract.v1",
+    "stage_id": "P4_structural_connections",
+    "tier": 4
+  }
+}

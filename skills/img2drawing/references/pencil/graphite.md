@@ -13,6 +13,13 @@ Preferred P1→P3 hierarchy:
 - their pressure/opacity may stay slightly lower than the gesture;
 - cross-contours and minor construction stay subordinate;
 - within-stroke pressure variation, taper and graphite dynamics are preserved.
+- Calibrate construction/form/accent profiles on the actual output canvas before an
+  identity-sensitive pass. A useful starting observation is three distinct pressure
+  families (light construction, middle form, selective accent), but the run records the
+  chosen values rather than importing numbers from another drawing engine.
+- Accent is selective: reserve the darkest/highest-pressure treatment for roughly the
+  most informative 15–25% of marks. Broad value bands and blanket confirmation are not
+  pencil-line closure.
 
 The distinction that matters is **average weight vs. expressive modulation**: a primary stroke
 may be nearly as thick as the centreline while still changing pressure along its length. Do not
