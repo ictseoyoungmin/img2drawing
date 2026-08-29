@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 REOPENED**
+- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — no ACTIVE slice**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -573,7 +573,7 @@ BASELINE
 
 FOUNDATION
   B01  vNext contract and architecture cut                    CLOSED
-  B02+B03  Inspection Foundation                              REOPENED
+  B02+B03  Inspection Foundation                              CLOSED
            InspectionSheet + basic read-only measurement
 
 CORE WORKFLOW
@@ -606,7 +606,7 @@ CLOSED
   B01  vNext contract and architecture cut                    CLOSED
 
 NEXT GATE
-  close B02+B03 R1–R6; keep B04 inactive
+  manually activate B04 after reviewing the post-reopen B02+B03 capsule
 ```
 
 **Production WIP Limit = 1.**
@@ -2173,7 +2173,7 @@ B00 — baseline/failure dossier                         CLOSED
  ↓
 B01 — architecture cut                                 CLOSED
  ↓
- B02+B03 — Inspection Foundation                       REOPENED
+B02+B03 — Inspection Foundation                       CLOSED
  ↓
 B04 — minimal stage-agnostic session                MANUAL ACTIVATION
  ↓
