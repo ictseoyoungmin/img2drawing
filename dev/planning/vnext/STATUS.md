@@ -3,12 +3,12 @@
 Updated: 2026-08-30
 
 ```text
-SYSTEM:   architecture contract frozen / B01 closed
-ACTIVE:   none — B01 is CLOSED; no next slice is activated
-SKELETON: B02+B03 inspection foundation; B04 session;
-          B05 construction grammar; B06 correction loop; B07–B18 remaining slices
+SYSTEM:   architecture contract frozen / inspection foundation in progress
+ACTIVE:   B02+B03 Inspection Foundation
+SKELETON: B04 session; B05 construction grammar; B06 correction loop;
+          B07–B18 remaining slices
 CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut
-NEXT GATE: manually activate B02+B03 after reviewing the B01 capsule
+NEXT GATE: close the one-call sheet and read-only measurement gates
 ```
 
 ## B00 closure
@@ -25,6 +25,12 @@ NEXT GATE: manually activate B02+B03 after reviewing the B01 capsule
 - Contract/audit capsule: `capsules/B01.md`
 - Archived card and dependency audit: `archive/B01.md`
 - No source, runtime, or review-schema implementation was introduced.
+
+## B02+B03 activation
+
+- Active card: `active/B02-B03.md`
+- Scope: standalone unified inspection sheet and read-only measurement only.
+- B04 session and correction/runtime lifecycle work remain inactive.
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
 regression, or provenance inspection, but none is vNext PASS evidence. B01 froze
