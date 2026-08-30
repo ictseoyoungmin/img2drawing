@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — B04 CLOSED — no ACTIVE slice**
+- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — B04 REOPENED**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -566,7 +566,7 @@ runtime은 이 이동을 `reopen_stage()`로 관리하지 않는다. explicit st
 
 ```text
 SYSTEM
-  architecture contract frozen / B04 session foundation closed
+  architecture contract frozen / B04 session provenance hardening
 
 BASELINE
   25ec454  Legacy R23 reference baseline                      FROZEN
@@ -577,7 +577,7 @@ FOUNDATION
            InspectionSheet + basic read-only measurement
 
 CORE WORKFLOW
-  B04  Stage-agnostic DrawingSession                          CLOSED
+  B04  Stage-agnostic DrawingSession                          REOPENED / ACTIVE
   B05  Observation + construction grammar                         SKELETON
   B06  Correction loop + correction memory                    SKELETON
   B07  Evidence compaction / cost control                      SKELETON
@@ -605,10 +605,9 @@ CLOSED
   B00  Legacy R23 freeze + failure dossier                    CLOSED
   B01  vNext contract and architecture cut                    CLOSED
   B02+B03  Inspection Foundation                              CLOSED
-  B04  Stage-agnostic DrawingSession                          CLOSED
 
 NEXT GATE
-  manually activate B05 after reviewing the B04 capsule; do not activate automatically
+  close B04 artifact/provenance reopen gates; do not activate B05 automatically
 ```
 
 **Production WIP Limit = 1.**

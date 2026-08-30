@@ -3,14 +3,14 @@
 Updated: 2026-08-30
 
 ```text
-SYSTEM:   architecture contract frozen / session foundation closed
-ACTIVE:   none — B04 CLOSED; no next production slice activated
+SYSTEM:   architecture contract frozen / session provenance hardening
+ACTIVE:   B04 REOPENED — inspection evidence + provenance hardening
 SKELETON: B05 construction grammar; B06 correction loop;
           B07–B18 remaining slices
 CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut;
-          B02+B03 Inspection Foundation; B04 stage-agnostic DrawingSession
-NEXT GATE: manually activate B05 only after reviewing the B04 capsule;
-           do not activate B05 automatically
+          B02+B03 Inspection Foundation
+NEXT GATE: close B04 R1–R4 plus observation/checkpoint provenance regressions;
+           do not activate B05
 ```
 
 ## B00 closure
@@ -37,20 +37,21 @@ NEXT GATE: manually activate B05 only after reviewing the B04 capsule;
   direct visual evidence.
 - Full tests and all baseline/path gates pass; direct visual review is recorded under
   `dev/evidence/vnext/b02-b03/REVIEW.md`.
-- B04 is CLOSED. Its scope delivered the stage-agnostic session facade,
-  shared-capability adapter, atomic current-state inspection, and portable
-  checkpoint/resume boundary.
+- B04 was CLOSED, then REOPENED for artifact-level provenance hardening. The
+  reopened scope is limited to immutable repeated inspection evidence, failed-
+  checkpoint artifact rollback, observation-ID integrity, and custom checkpoint
+  path metadata.
 - B05 construction grammar and later correction/runtime lifecycle work remain inactive.
 
-## B04 closure
+## B04 reopened
 
-- Archived card: `archive/B04.md`
-- Context capsule: `capsules/B04.md`
-- Focused B04 tests cover stage-free mutations, batch IDs, atomic rollback,
-  current-state-bound inspection, subject provenance, and resume continuity.
-- B05 is not activated automatically.
+- Prior closed card: `archive/B04.md`
+- Prior capsule remains the pre-reopen context; it is superseded only after
+  re-closure.
+- Active reopen record: `active/B04.md`
+- B05 is not activated.
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
 regression, or provenance inspection, but none is vNext PASS evidence. B01 froze
-the contract boundary; B02+B03 and B04 now provide the closed inspection and
-session foundations. No later construction/correction slice is active.
+the contract boundary; B02+B03 remains closed while B04 is being hardened. No
+later construction/correction slice is active.
