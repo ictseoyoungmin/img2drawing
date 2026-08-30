@@ -147,7 +147,15 @@ def test_repeated_inspections_are_append_only_and_keep_prior_bytes(tmp_path: Pat
     assert first_dir != second_dir
     assert {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()} == first_bytes
     assert first_manifest["drawing_state_hash"] == session.inspection_history[0]["drawing_state_hash"]
+    assert first_manifest["drawing_artifact_sha256"] == hashlib.sha256(
+        (first_dir / "raw_drawing.png").read_bytes()
+    ).hexdigest()
+    assert first_manifest["drawing_artifact_sha256"] == session.inspection_history[0]["drawing_artifact_sha256"]
     assert second_manifest["drawing_state_hash"] == session.inspection_history[1]["drawing_state_hash"]
+    assert second_manifest["drawing_artifact_sha256"] == hashlib.sha256(
+        (second_dir / "raw_drawing.png").read_bytes()
+    ).hexdigest()
+    assert second_manifest["drawing_artifact_sha256"] == session.inspection_history[1]["drawing_artifact_sha256"]
     assert first_manifest["drawing_state_hash"] != second_manifest["drawing_state_hash"]
     assert session.inspection_history[0]["manifest"] != session.inspection_history[1]["manifest"]
 
@@ -178,6 +186,7 @@ def test_inspection_history_rolls_back_when_checkpoint_fails(tmp_path: Path, mon
     assert [record["inspection_id"] for record in session.inspection_history] == ["000001"]
     assert {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()} == first_bytes
     assert not (tmp_path / "run" / "inspections" / "000002").exists()
+    assert not any(path.name.startswith(".000002.") for path in (tmp_path / "run" / "inspections").iterdir())
 
 
 def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: Path):

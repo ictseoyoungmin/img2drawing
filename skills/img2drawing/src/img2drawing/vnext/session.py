@@ -707,7 +707,11 @@ class DrawingSession:
         with self._lock:
             self._assert_subject_current()
             snapshot = self._snapshot()
-            destination = self.output_dir / "inspections" if out_dir is None else Path(out_dir)
+            if out_dir is None:
+                destination = self.output_dir / "inspections"
+            else:
+                requested_output = Path(out_dir)
+                destination = requested_output if requested_output.is_absolute() else self.output_dir / requested_output
             _portable_artifact(destination, self.output_dir)
             destination.mkdir(parents=True, exist_ok=True)
             inspection_id = self._next_inspection_id(destination)
