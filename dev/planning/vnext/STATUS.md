@@ -4,12 +4,13 @@ Updated: 2026-08-30
 
 ```text
 SYSTEM:   architecture contract frozen / inspection foundation closed
-ACTIVE:   none — B02+B03 CLOSED; no next production slice activated
-SKELETON: B04 session; B05 construction grammar; B06 correction loop;
+ACTIVE:   B04 — stage-agnostic DrawingSession
+SKELETON: B05 construction grammar; B06 correction loop;
           B07–B18 remaining slices
 CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut;
           B02+B03 Inspection Foundation
-NEXT GATE: manually activate B04 after reviewing the post-reopen B02+B03 capsule
+NEXT GATE: B04 closure requires focused session, atomic inspect, and checkpoint/resume evidence;
+           do not activate B05 automatically
 ```
 
 ## B00 closure
@@ -36,7 +37,10 @@ NEXT GATE: manually activate B04 after reviewing the post-reopen B02+B03 capsule
   direct visual evidence.
 - Full tests and all baseline/path gates pass; direct visual review is recorded under
   `dev/evidence/vnext/b02-b03/REVIEW.md`.
-- B04 session and correction/runtime lifecycle work remain inactive.
+- B04 is the only ACTIVE production slice. Its scope is the stage-agnostic session
+  facade, shared-capability adapter, atomic current-state inspection, and portable
+  checkpoint/resume boundary.
+- B05 construction grammar and later correction/runtime lifecycle work remain inactive.
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
 regression, or provenance inspection, but none is vNext PASS evidence. B01 froze
