@@ -204,6 +204,23 @@ def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: P
     assert json.loads(checkpoint.read_text(encoding="utf-8"))["digests"]["drawing_state_hash"] == resumed.drawing_state_hash()
 
 
+def test_resume_rejects_mutated_historical_inspection_artifact(tmp_path: Path):
+    subject = _subject(tmp_path)
+    output = tmp_path / "run"
+    session = DrawingSession.create(subject=subject, output_dir=output)
+    session.draw([(10.0, 10.0), (28.0, 24.0)])
+    session.inspect()
+    session.draw([(40.0, 10.0), (58.0, 24.0)])
+    session.inspect()
+    checkpoint = session.checkpoint()
+    first_manifest = output / "inspections" / "000001" / "inspection.json"
+    manifest = json.loads(first_manifest.read_text(encoding="utf-8"))
+    manifest["drawing_state_hash"] = "0" * 64
+    first_manifest.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="inspection state digest mismatch"):
+        DrawingSession.resume(checkpoint, subject=subject)
+
+
 
 
 def test_observation_ids_are_unique_and_must_be_known_to_draw(tmp_path: Path):
@@ -217,10 +234,13 @@ def test_observation_ids_are_unique_and_must_be_known_to_draw(tmp_path: Path):
 
 
 def test_custom_checkpoint_path_records_actual_filename(tmp_path: Path):
-    session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
-    special = tmp_path / "run" / "special.json"
+    subject = _subject(tmp_path)
+    session = DrawingSession.create(subject=subject, output_dir=tmp_path / "run")
+    special = tmp_path / "special.json"
     assert session.checkpoint(special) == special
     payload = json.loads(special.read_text(encoding="utf-8"))
     assert payload["artifacts"]["checkpoint"] == "special.json"
+    assert payload["artifacts"]["inspection_root"] == "run"
     session.draw([(2.0, 2.0), (8.0, 8.0)])
     assert json.loads(special.read_text(encoding="utf-8"))["artifacts"]["checkpoint"] == "special.json"
+    assert DrawingSession.resume(special, subject=subject)
