@@ -11,9 +11,12 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import shutil
 import threading
 import uuid
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -27,10 +30,11 @@ from ..render.pillow_pencil_contact import render
 from ..render.presets import default_grade_name
 
 
-SESSION_SCHEMA = "img2drawing.vnext.session.v1"
+SESSION_SCHEMA = "img2drawing.vnext.session.v2"
 RENDERER_VERSION = "vnext-stage-free-1"
 SEED_DOMAIN = "vnext-stage-free"
 _COMPAT_STAGE = "__vnext_compat__"
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 def _portable(value: Any) -> Any:
@@ -192,15 +196,33 @@ class DrawingSession:
         if expected.get("action_log_sha256") != sha256_obj([a.to_dict() for a in agent.history.actions]):
             raise ValueError("checkpoint action log digest mismatch")
 
-        destination = Path(output_dir) if output_dir is not None else checkpoint_path.parent
+        observations = deepcopy(payload.get("observations") or [])
+        cls._validate_observation_records(observations)
+        observation_ids = {record["observation_id"] for record in observations}
+        for action in agent.history.actions:
+            provenance = action.provenance or {}
+            observation_id = provenance.get("observation_id")
+            if observation_id and observation_id != "vnext-unobserved" and observation_id not in observation_ids:
+                raise ValueError(f"checkpoint references unknown observation_id: {observation_id}")
+        inspection_history = deepcopy(payload.get("inspection_history") or [])
+        cls._validate_inspection_history(inspection_history)
+
+        if output_dir is None:
+            artifact_root = str((payload.get("artifacts") or {}).get("inspection_root", "."))
+            if Path(artifact_root).is_absolute():
+                raise ValueError("checkpoint inspection_root must be relative")
+            destination = (checkpoint_path.parent / artifact_root).resolve()
+        else:
+            destination = Path(output_dir)
+        cls._verify_inspection_artifacts(destination, inspection_history)
         return cls(
             session_id=str(payload["session_id"]),
             subject=subject_path,
             output_dir=destination,
             agent_session=agent,
             metadata=deepcopy(payload.get("metadata") or {}),
-            observations=deepcopy(payload.get("observations") or []),
-            inspection_history=deepcopy(payload.get("inspection_history") or []),
+            observations=observations,
+            inspection_history=inspection_history,
             finish_metadata=deepcopy(payload.get("finish_metadata")),
             checkpoint_path=checkpoint_path if output_dir is None else destination / "session.checkpoint.json",
             subject_sha256=actual_subject_hash,
@@ -220,6 +242,69 @@ class DrawingSession:
     def _assert_subject_current(self) -> None:
         if sha256_file(self.subject) != self._subject_sha256:
             raise ValueError("subject changed after session creation")
+
+    @staticmethod
+    def _validate_observation_records(records: Sequence[Mapping[str, Any]]) -> None:
+        seen: set[str] = set()
+        for record in records:
+            observation_id = str(record.get("observation_id", "")).strip()
+            if not observation_id:
+                raise ValueError("observation record requires non-empty observation_id")
+            if observation_id in seen:
+                raise ValueError(f"duplicate observation_id: {observation_id}")
+            if not _SHA256.fullmatch(str(record.get("digest", ""))):
+                raise ValueError(f"observation record requires digest: {observation_id}")
+            seen.add(observation_id)
+
+    @staticmethod
+    def _validate_inspection_history(records: Sequence[Mapping[str, Any]]) -> None:
+        seen: set[str] = set()
+        for record in records:
+            inspection_id = str(record.get("inspection_id", ""))
+            if len(inspection_id) != 6 or not inspection_id.isdigit():
+                raise ValueError("inspection history requires six-digit inspection_id")
+            if inspection_id in seen:
+                raise ValueError(f"duplicate inspection_id: {inspection_id}")
+            manifest = str(record.get("manifest", ""))
+            manifest_parts = manifest.split("/")
+            if (
+                len(manifest_parts) < 3
+                or any(part in {"", ".", ".."} for part in manifest_parts)
+                or manifest_parts[-2] != inspection_id
+                or manifest_parts[-1] != "inspection.json"
+            ):
+                raise ValueError(f"inspection manifest is not immutable: {record.get('manifest')!r}")
+            for key in ("drawing_state_hash", "drawing_artifact_sha256"):
+                if not _SHA256.fullmatch(str(record.get(key, ""))):
+                    raise ValueError(f"inspection history requires {key}")
+            seen.add(inspection_id)
+
+    @staticmethod
+    def _verify_inspection_artifacts(
+        root: Path, records: Sequence[Mapping[str, Any]]
+    ) -> None:
+        root = root.resolve()
+        for record in records:
+            manifest_path = (root / str(record["manifest"])).resolve()
+            try:
+                manifest_path.relative_to(root)
+            except ValueError as exc:
+                raise ValueError("inspection manifest escapes the session output directory") from exc
+            if not manifest_path.is_file():
+                raise FileNotFoundError(manifest_path)
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if manifest.get("drawing_state_hash") != record["drawing_state_hash"]:
+                raise ValueError(f"inspection state digest mismatch: {manifest_path}")
+            if manifest.get("drawing_artifact_sha256") != record["drawing_artifact_sha256"]:
+                raise ValueError(f"inspection artifact digest mismatch: {manifest_path}")
+            raw_name = str((manifest.get("artifacts") or {}).get("raw_drawing", ""))
+            raw_path = (manifest_path.parent / raw_name).resolve()
+            try:
+                raw_path.relative_to(manifest_path.parent.resolve())
+            except ValueError as exc:
+                raise ValueError("inspection raw artifact escapes its immutable directory") from exc
+            if not raw_path.is_file() or sha256_file(raw_path) != record["drawing_artifact_sha256"]:
+                raise ValueError(f"inspection raw artifact digest mismatch: {raw_path}")
 
     @property
     def width(self) -> int:
@@ -274,7 +359,10 @@ class DrawingSession:
                 "action_log_sha256": sha256_obj([a.to_dict() for a in self._agent.history.actions]),
                 "drawing_state_hash": drawing_state_hash(snapshot),
             },
-            "artifacts": {"checkpoint": self._checkpoint_path.name},
+            "artifacts": {
+                "checkpoint": self._checkpoint_path.name,
+                "inspection_root": _relative_reference(self.output_dir, self._checkpoint_path.parent),
+            },
         }
 
     def _write_checkpoint(self, path: Path) -> Path:
@@ -296,9 +384,13 @@ class DrawingSession:
     def checkpoint(self, path: str | Path | None = None) -> Path:
         with self._lock:
             destination = self._checkpoint_path if path is None else Path(path)
-            result = self._write_checkpoint(destination)
+            previous = self._checkpoint_path
             self._checkpoint_path = destination
-            return result
+            try:
+                return self._write_checkpoint(destination)
+            except Exception:
+                self._checkpoint_path = previous
+                raise
 
     def _commit(self, action: DrawingAction | Iterable[DrawingAction]) -> Any:
         actions = [action] if isinstance(action, DrawingAction) else list(action)
@@ -317,8 +409,12 @@ class DrawingSession:
         source_observation: str | None,
         reason: str | None = None,
     ) -> tuple[str, str, str | None]:
-        if observation_id is None:
-            observation_id = self._observations[-1]["observation_id"] if self._observations else "vnext-unobserved"
+        with self._lock:
+            known_observations = {record["observation_id"] for record in self._observations}
+            if observation_id is None:
+                observation_id = self._observations[-1]["observation_id"] if self._observations else "vnext-unobserved"
+            elif str(observation_id) not in known_observations:
+                raise ValueError(f"unknown observation_id: {observation_id}")
         if source_observation is None:
             source_observation = "agent-authored vNext drawing action"
         return str(observation_id), str(source_observation), None if reason is None else str(reason)
@@ -564,16 +660,22 @@ class DrawingSession:
     def observe(self, observation: Any, *, observation_id: str | None = None) -> str:
         payload = _portable(observation)
         digest = sha256_obj(payload)
-        record_id = str(observation_id or f"observation-{len(self._observations) + 1:04d}")
+        record_id = (
+            f"observation-{len(self._observations) + 1:04d}"
+            if observation_id is None
+            else str(observation_id).strip()
+        )
         if not record_id.strip():
             raise ValueError("observation_id must be non-empty")
-        record = {
-            "observation_id": record_id,
-            "cursor": self.history_cursor,
-            "digest": digest,
-            "payload": payload,
-        }
         with self._lock:
+            if any(record["observation_id"] == record_id for record in self._observations):
+                raise ValueError(f"duplicate observation_id: {record_id}")
+            record = {
+                "observation_id": record_id,
+                "cursor": self.history_cursor,
+                "digest": digest,
+                "payload": payload,
+            }
             before = deepcopy(self._observations)
             self._observations.append(record)
             try:
@@ -605,29 +707,44 @@ class DrawingSession:
         with self._lock:
             self._assert_subject_current()
             snapshot = self._snapshot()
-            destination = self.output_dir / "inspection" if out_dir is None else Path(out_dir)
+            destination = self.output_dir / "inspections" if out_dir is None else Path(out_dir)
+            _portable_artifact(destination, self.output_dir)
             destination.mkdir(parents=True, exist_ok=True)
-            raw_path = destination / "raw_drawing.png"
-            render(snapshot, raw_path, supersample=int(supersample))
+            inspection_id = self._next_inspection_id(destination)
+            final_dir = destination / inspection_id
+            temporary_dir = destination / f".{inspection_id}.{uuid.uuid4().hex}.tmp"
+            temporary_dir.mkdir(parents=True, exist_ok=False)
+            raw_path = temporary_dir / "raw_drawing.png"
             if registration is None:
                 if (self.width, self.height) != _subject_size(self.subject):
+                    shutil.rmtree(temporary_dir)
                     raise ValueError("registration is required when subject and canvas sizes differ")
                 registration = Registration.identity((self.width, self.height))
-            sheet = InspectionSheet.create(
-                subject=self.subject,
-                drawing=raw_path,
-                drawing_ir=snapshot,
-                registration=registration,
-                rois=rois,
-                subject_dim=subject_dim,
-                grid=grid,
-                guides=guides,
-                measurements=measurements,
-                out_dir=destination,
-            )
-            relative_manifest = _portable_artifact(destination / "inspection.json", self.output_dir)
+            try:
+                render(snapshot, raw_path, supersample=int(supersample))
+                sheet = InspectionSheet.create(
+                    subject=self.subject,
+                    drawing=raw_path,
+                    drawing_ir=snapshot,
+                    registration=registration,
+                    rois=rois,
+                    subject_dim=subject_dim,
+                    grid=grid,
+                    guides=guides,
+                    measurements=measurements,
+                    out_dir=temporary_dir,
+                )
+                os.replace(temporary_dir, final_dir)
+                sheet = replace(sheet, drawing=final_dir / "raw_drawing.png")
+            except Exception:
+                if temporary_dir.exists():
+                    shutil.rmtree(temporary_dir)
+                raise
+
+            relative_manifest = _portable_artifact(final_dir / "inspection.json", self.output_dir)
             before_history = deepcopy(self._inspection_history)
             self._inspection_history.append({
+                "inspection_id": inspection_id,
                 "manifest": relative_manifest,
                 "drawing_state_hash": sheet.drawing_state_hash,
                 "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
@@ -636,8 +753,21 @@ class DrawingSession:
                 self._write_checkpoint(self._checkpoint_path)
             except Exception:
                 self._inspection_history = before_history
+                if final_dir.exists():
+                    shutil.rmtree(final_dir)
                 raise
             return sheet
+
+    def _next_inspection_id(self, destination: Path) -> str:
+        ids = [
+            int(record["inspection_id"])
+            for record in self._inspection_history
+            if str(record.get("inspection_id", "")).isdigit()
+        ]
+        candidate = max(ids, default=0) + 1
+        while (destination / f"{candidate:06d}").exists():
+            candidate += 1
+        return f"{candidate:06d}"
 
     def finish(self, metadata: Mapping[str, Any] | None = None) -> dict[str, Any]:
         with self._lock:
@@ -661,6 +791,12 @@ def _portable_artifact(path: Path, root: Path) -> str:
         return path.resolve().relative_to(root.resolve()).as_posix()
     except ValueError as exc:
         raise ValueError("vNext inspection artifacts must live under the session output directory") from exc
+
+
+def _relative_reference(path: Path, base: Path) -> str:
+    """Return a portable relative reference for a checkpoint-owned path."""
+
+    return Path(os.path.relpath(Path(path).resolve(), Path(base).resolve())).as_posix()
 
 
 __all__ = ["DrawingSession", "SESSION_SCHEMA"]

@@ -70,7 +70,7 @@ def test_stage_free_session_supports_ten_strokes_edits_and_auto_checkpoint(tmp_p
     assert len(session.current_ir().strokes) == 9
 
     checkpoint = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
-    assert checkpoint["schema"] == "img2drawing.vnext.session.v1"
+    assert checkpoint["schema"] == "img2drawing.vnext.session.v2"
     assert checkpoint["subject"] == {
         "name": "subject.png",
         "sha256": hashlib.sha256(subject.read_bytes()).hexdigest(),
@@ -112,15 +112,44 @@ def test_inspect_binds_current_snapshot_and_raster_without_arbitrary_pairing(tmp
     session.draw([(12.0, 12.0), (30.0, 28.0), (50.0, 48.0)])
 
     sheet = session.inspect(registration=Registration.identity((96, 72)))
-    manifest = json.loads((output / "inspection" / "inspection.json").read_text(encoding="utf-8"))
-    raw = output / "inspection" / "raw_drawing.png"
+    manifest_path = output / "inspections" / "000001" / "inspection.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    raw = output / "inspections" / "000001" / "raw_drawing.png"
     assert sheet.drawing_state_hash == session.drawing_state_hash()
     assert manifest["drawing_state_hash"] == session.drawing_state_hash()
     assert manifest["drawing_artifact_sha256"] == hashlib.sha256(raw.read_bytes()).hexdigest()
     assert manifest["inputs"] == {"subject": "subject.png", "drawing": "raw_drawing.png"}
-    assert session.inspection_history[0]["manifest"] == "inspection/inspection.json"
+    assert session.inspection_history[0] == {
+        "inspection_id": "000001",
+        "manifest": "inspections/000001/inspection.json",
+        "drawing_state_hash": sheet.drawing_state_hash,
+        "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
+    }
     with pytest.raises(TypeError):
         session.inspect(drawing=raw, drawing_state_hash="0" * 64)  # type: ignore[call-arg]
+
+
+def test_repeated_inspections_are_append_only_and_keep_prior_bytes(tmp_path: Path):
+    subject = _subject(tmp_path)
+    output = tmp_path / "run"
+    session = DrawingSession.create(subject=subject, output_dir=output)
+    session.draw([(8.0, 8.0), (24.0, 24.0)])
+    session.inspect()
+    first_dir = output / "inspections" / "000001"
+    first_bytes = {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()}
+    first_manifest = json.loads((first_dir / "inspection.json").read_text(encoding="utf-8"))
+
+    session.draw([(40.0, 8.0), (56.0, 24.0)])
+    session.inspect()
+    second_dir = output / "inspections" / "000002"
+    second_manifest = json.loads((second_dir / "inspection.json").read_text(encoding="utf-8"))
+
+    assert first_dir != second_dir
+    assert {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()} == first_bytes
+    assert first_manifest["drawing_state_hash"] == session.inspection_history[0]["drawing_state_hash"]
+    assert second_manifest["drawing_state_hash"] == session.inspection_history[1]["drawing_state_hash"]
+    assert first_manifest["drawing_state_hash"] != second_manifest["drawing_state_hash"]
+    assert session.inspection_history[0]["manifest"] != session.inspection_history[1]["manifest"]
 
 
 def test_subject_mutation_is_rejected_by_session_provenance(tmp_path: Path):
@@ -132,7 +161,13 @@ def test_subject_mutation_is_rejected_by_session_provenance(tmp_path: Path):
 
 
 def test_inspection_history_rolls_back_when_checkpoint_fails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
+    subject = _subject(tmp_path)
+    session = DrawingSession.create(subject=subject, output_dir=tmp_path / "run")
+    session.draw([(4.0, 4.0), (16.0, 16.0)])
+    session.inspect()
+    first_dir = tmp_path / "run" / "inspections" / "000001"
+    first_bytes = {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()}
+    session.draw([(24.0, 4.0), (36.0, 16.0)])
 
     def fail_checkpoint(path):
         raise OSError("checkpoint storage unavailable")
@@ -140,7 +175,9 @@ def test_inspection_history_rolls_back_when_checkpoint_fails(tmp_path: Path, mon
     monkeypatch.setattr(session, "_write_checkpoint", fail_checkpoint)
     with pytest.raises(OSError, match="checkpoint storage unavailable"):
         session.inspect()
-    assert session.inspection_history == ()
+    assert [record["inspection_id"] for record in session.inspection_history] == ["000001"]
+    assert {path.name: path.read_bytes() for path in first_dir.iterdir() if path.is_file()} == first_bytes
+    assert not (tmp_path / "run" / "inspections" / "000002").exists()
 
 
 def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: Path):
@@ -150,6 +187,8 @@ def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: P
     session.observe({"weight": "image-left", "uncertain": ["far elbow"]}, observation_id="obs-1")
     session.draw([(10.0, 10.0), (40.0, 32.0), (52.0, 50.0)], observation_id="obs-1")
     session.inspect(registration=Registration.identity((96, 72)))
+    session.draw([(56.0, 14.0), (68.0, 30.0)])
+    session.inspect(registration=Registration.identity((96, 72)))
     expected_hash = session.drawing_state_hash()
     checkpoint = session.checkpoint()
 
@@ -158,6 +197,30 @@ def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: P
     assert resumed.drawing_state_hash() == expected_hash
     assert resumed.history_cursor == session.history_cursor
     assert resumed.inspection_history == session.inspection_history
+    assert [record["inspection_id"] for record in resumed.inspection_history] == ["000001", "000002"]
+    assert all((output / record["manifest"]).is_file() for record in resumed.inspection_history)
     resumed.draw([(60.0, 12.0), (72.0, 28.0)])
     assert resumed.history_cursor == session.history_cursor + 1
     assert json.loads(checkpoint.read_text(encoding="utf-8"))["digests"]["drawing_state_hash"] == resumed.drawing_state_hash()
+
+
+
+
+def test_observation_ids_are_unique_and_must_be_known_to_draw(tmp_path: Path):
+    session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
+    session.observe({"flow": "left"}, observation_id="obs-1")
+    with pytest.raises(ValueError, match="duplicate observation_id"):
+        session.observe({"flow": "right"}, observation_id="obs-1")
+    with pytest.raises(ValueError, match="unknown observation_id"):
+        session.draw([(2.0, 2.0), (8.0, 8.0)], observation_id="missing")
+    session.draw([(2.0, 2.0), (8.0, 8.0)])
+
+
+def test_custom_checkpoint_path_records_actual_filename(tmp_path: Path):
+    session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
+    special = tmp_path / "run" / "special.json"
+    assert session.checkpoint(special) == special
+    payload = json.loads(special.read_text(encoding="utf-8"))
+    assert payload["artifacts"]["checkpoint"] == "special.json"
+    session.draw([(2.0, 2.0), (8.0, 8.0)])
+    assert json.loads(special.read_text(encoding="utf-8"))["artifacts"]["checkpoint"] == "special.json"
