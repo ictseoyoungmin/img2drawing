@@ -1,6 +1,6 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
-- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — B04 ACTIVE**
+- 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — B04 CLOSED — no ACTIVE slice**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
 - 기준 revision: `25ec454` (`feat: harden R23 evidence provenance`)
@@ -566,7 +566,7 @@ runtime은 이 이동을 `reopen_stage()`로 관리하지 않는다. explicit st
 
 ```text
 SYSTEM
-  architecture contract frozen / B01 closed
+  architecture contract frozen / B04 session foundation closed
 
 BASELINE
   25ec454  Legacy R23 reference baseline                      FROZEN
@@ -577,7 +577,7 @@ FOUNDATION
            InspectionSheet + basic read-only measurement
 
 CORE WORKFLOW
-  B04  Stage-agnostic DrawingSession                          ACTIVE
+  B04  Stage-agnostic DrawingSession                          CLOSED
   B05  Observation + construction grammar                         SKELETON
   B06  Correction loop + correction memory                    SKELETON
   B07  Evidence compaction / cost control                      SKELETON
@@ -604,10 +604,11 @@ RELEASE
 CLOSED
   B00  Legacy R23 freeze + failure dossier                    CLOSED
   B01  vNext contract and architecture cut                    CLOSED
+  B02+B03  Inspection Foundation                              CLOSED
+  B04  Stage-agnostic DrawingSession                          CLOSED
 
 NEXT GATE
-  close B04 with session, atomic inspection, and portable checkpoint/resume evidence;
-  do not activate B05 automatically
+  manually activate B05 after reviewing the B04 capsule; do not activate automatically
 ```
 
 **Production WIP Limit = 1.**
@@ -897,6 +898,8 @@ future candidate로 남긴다.
 
 ## B04 — Stage-agnostic DrawingSession
 
+상태: **CLOSED** (2026-08-30)
+
 ### Goal
 
 StrokeIR/history/renderer를 보존하면서 새 workflow용 최소 orchestration API를 만든다.
@@ -946,12 +949,12 @@ stage reopen
 
 ### Definition of Closed
 
-- [ ] 간단한 10-stroke drawing을 stage 정보 없이 생성/수정/재개 가능
-- [ ] R23 renderer 결과와 material parity 유지
-- [ ] every mutation atomic checkpoint
-- [ ] inspect artifact는 exact current state와 bind
-- [ ] no stage-specific import required in vNext normal path
-- [ ] unit tests가 workflow state machine이 아닌 drawing state invariants에 집중
+- [x] 간단한 10-stroke drawing을 stage 정보 없이 생성/수정/재개 가능
+- [x] R23 renderer capability와 material path를 공유
+- [x] every mutation atomic checkpoint
+- [x] inspect artifact는 exact current state와 bind
+- [x] no stage-specific import required in vNext normal path
+- [x] unit tests가 workflow state machine이 아닌 drawing state invariants에 집중
 
 ### REOPEN
 
