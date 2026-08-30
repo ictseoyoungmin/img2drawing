@@ -4,13 +4,13 @@ Updated: 2026-08-30
 
 ```text
 SYSTEM:   architecture contract frozen / session foundation closed
-ACTIVE:   none — B04 CLOSED; no next production slice activated
-SKELETON: B05 construction grammar; B06 correction loop;
+ACTIVE:   B05 Observation + Construction Grammar
+SKELETON: B06 correction loop;
           B07–B18 remaining slices
 CLOSED:   B00 Legacy R23 freeze + failure dossier; B01 vNext contract and architecture cut;
           B02+B03 Inspection Foundation; B04 stage-agnostic DrawingSession
-NEXT GATE: manually activate B05 only after reviewing the corrected B04 capsule;
-           do not activate B05 automatically
+NEXT GATE: direct visual inspection of the B05 initial whole-figure dogfood;
+           do not add metadata ceremony or activate B06 automatically
 ```
 
 ## B00 closure
@@ -41,16 +41,18 @@ NEXT GATE: manually activate B05 only after reviewing the corrected B04 capsule;
   The reopened scope covered immutable repeated inspection evidence, failed-
   checkpoint artifact rollback, observation-ID integrity, and custom checkpoint
   path metadata.
-- B05 construction grammar and later correction/runtime lifecycle work remain inactive.
+- B05 was manually activated after reviewing the corrected B04 capsule. Its
+  construction phases are skill-side authoring vocabulary, not runtime stages.
+- B06 and later correction/runtime lifecycle work remain inactive.
 
 ## B04 closure after reopen
 
 - Archived card: `archive/B04.md` (includes the reopen record and resolution)
 - Corrected context capsule: `capsules/B04.md`
 - R1–R4 plus observation/checkpoint provenance regressions pass.
-- B05 is not activated automatically.
+- B05 is the sole active production slice. Do not activate B06 automatically.
 
 R23 is reference-only for vNext. Its artifacts may support historical comparison,
 regression, or provenance inspection, but none is vNext PASS evidence. B01 froze
 the contract boundary; B02+B03 and B04 provide the closed inspection and session
-foundations. No later construction/correction slice is active.
+foundations. No later correction slice is active.

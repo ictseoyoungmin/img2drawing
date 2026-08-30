@@ -1,6 +1,6 @@
 ---
 name: img2drawing
-description: Draws a subject/reference photo into a hand-drawn-style pencil croquis through an autonomous, self-reviewed stage pipeline (gesture, primary axes, primary masses, structural connections, clean block-in) using explicit programmatic strokes rather than image generation. Use whenever the user wants an agent to actually hand-draw or sketch from a reference image, asks for a full-body croquis or figure-drawing reconstruction from a photo, or wants a stage-by-stage drawing process with self-observation and dual-reference review instead of a single generated image.
+description: Draws a subject/reference photo into a hand-drawn-style pencil croquis through an autonomous, self-observed, stage-free construction grammar (pose read, line of action, masses, balance, joints and limbs) using explicit programmatic strokes rather than image generation. Use whenever the user wants an agent to actually hand-draw or sketch from a reference image, asks for a full-body croquis or figure-drawing reconstruction from a photo, or wants an inspectable drawing process instead of a single generated image.
 ---
 
 # img2drawing
@@ -21,7 +21,8 @@ Self-observe, draw, render, compare, revise and advance autonomously.
 Ask the user only if the source is missing/unreadable, the target itself is ambiguous, or two user requirements genuinely conflict.
 
 ## Authority model
-`DrawingRun` is the only orchestration authority.
+For new work, `DrawingSession` is the stage-free orchestration authority. `DrawingRun` remains
+the compatibility authority for legacy R23 stage-driven runs only.
 - `core/`: strokes, actions, history, session.
 - `observation/`: agent-authored semantic observations and the immutable pre-draw observation lock.
 - `stages/`: stage intent and expert drawing guidance, never semantic judgement.
@@ -29,6 +30,66 @@ Ask the user only if the source is missing/unreadable, the target itself is ambi
 - `canvas/`: inspect and edit the current drawing.
 - `render/`: pencil-contact material only.
 - `provenance/`: replay and timelapse.
+
+## vNext default: macro construction first
+
+New drawing tasks use `img2drawing.DrawingSession` and the compact helpers
+`PoseObservation`, `InitialConstruct`, `ConstructionMark`,
+`author_initial_construct()` and `inspect_initial_construct()`.
+
+The worker's first pass is one ordered whole-figure hypothesis:
+
+`read pose → line of action → head/ribcage/pelvis mass → balance/plumb → joints/limbs`
+
+Before drawing, write a short `PoseObservation` covering support side, dominant flow,
+head/ribcage/pelvis relationship, shoulder/pelvis opposition, silhouette keys, negative
+spaces, ground, prop axis and occluded-limb evidence. Then author explicit subject-space
+`ConstructionMark`s in that order. Use `author_initial_construct()` so the observation is
+recorded first and the marks are sent through the existing atomic `draw_many()` path.
+
+Use `inspect_initial_construct()` immediately after the first construct. It reuses the
+existing `InspectionSheet` and can show the whole view, focused ROIs, contrast overlay,
+`PlumbLine`, and `GroundGuide`. If the whole figure does not already read as this subject's
+pose, correct the construction premise before adding contour or detail. These construction
+phase names are drawing vocabulary only: they are not runtime stages, advancement gates,
+or manifests. The worker remains free to move backward when observation disproves a mark.
+
+The coordinates in this example are intentionally agent-authored from the current subject;
+never copy coordinates from a grammar exemplar.
+
+```python
+from img2drawing import (
+    ConstructionMark, DrawingSession, InitialConstruct, PoseObservation,
+    author_initial_construct, inspect_initial_construct,
+)
+
+session = DrawingSession.create(subject="subject.png", output_dir="out")
+
+observation = PoseObservation(
+    support_side="image-left with a wider counterbalance stance",
+    flow="head-left → torso-right → pelvis-left reversal",
+    head_ribcage_pelvis="head turns back over a three-quarter ribcage above a twisted pelvis",
+    shoulder_pelvis="shoulders slope against the pelvis tilt",
+    silhouette_keys=("light head mass", "long diagonal prop", "split boot stance"),
+    negative_spaces=("arm-to-torso opening", "space between legs"),
+    ground_relation="both feet land on the same ground plane",
+    major_prop_axis="diagonal from image-left shoulder toward lower center",
+    occluded_limb_evidence=("far arm continues behind the prop into the hand",),
+)
+construct = InitialConstruct(
+    observation=observation,
+    marks=(
+        ConstructionMark("loa", "line_of_action", "gesture", "body_flow", ((120, 180), (126, 240), (142, 310))),
+        ConstructionMark("head", "mass_blocking", "mass", "head", ((108, 110), (138, 96), (170, 118))),
+        # Add ribcage/pelvis, joints/limbs, feet, and the prop axis.
+    ),
+)
+author_initial_construct(session, construct)
+inspect_initial_construct(session, construct)
+```
+
+Until the initial whole figure reads as this subject's pose, do not spend the quality
+budget on metadata or detail coverage. `B06` adds correction prioritization and memory.
 
 ## Renderer policy
 
@@ -58,17 +119,19 @@ observation and reason, then render and review the mutated canvas afresh. Read
 `references/review/stroke-retirement.md` for the handoff test and examples.
 
 ## Required reading route
-For a full-body croquis job:
+For a new full-body croquis job:
 1. Read `SKILL.md`.
-2. Read `playbooks/autonomous-stage-hardening.md`.
-3. Read `playbooks/full-body-croquis.md`.
-4. Read `playbooks/subject-only-stage-derivation.md` unless explicit same-subject stage targets were supplied.
-5. Read **only the current stage reference** in `references/stages/`. Each one carries that
-   stage's boundary, hardening order, failure patterns and dogfood lessons — this file does
-   not repeat them.
-6. Use the `worker_packet.md` generated by `prepare_stage_review()` for each pass.
-7. For the visual decision and any stage handoff, read
-   `references/review/self-visual-audit.md`.
+2. Use the vNext `DrawingSession` construction route above.
+3. Read `references/observation/visual-observation.md`,
+   `references/figure/limbs-joints.md`, and `references/figure/attached-objects.md`
+   when those relationships are present.
+4. Inspect the first whole figure through `inspect_initial_construct()` before adding
+   contour or detail. Read `references/review/self-visual-audit.md` for the visual pass.
+
+For a legacy `DrawingRun` continuation only, read the compatibility route:
+`playbooks/autonomous-stage-hardening.md`, `playbooks/full-body-croquis.md`, and
+`playbooks/subject-only-stage-derivation.md` as needed, then the current stage reference
+and its `worker_packet.md`.
 
 Do not preload every anatomy/reference document. Pull extra references from
 `references/INDEX.md` only when a concrete uncertainty requires them.
@@ -84,10 +147,12 @@ those references keep a rendered example image beside the prose. **Open one when
 it**; the runtime does not hand it to you and never requires you to compare against it.
 Never copy pose or coordinates from such an image.
 
-## Default stage progression
+## Legacy compatibility stage progression
 `P1_gesture → P2_primary_axes → P3_primary_masses → P4_structural_connections → P5_clean_blockin`
 
-Do not sweep through them in one pass. Harden the current stage before moving on.
+This progression applies only to existing `DrawingRun` compatibility runs. New vNext work
+uses the ordered construction grammar above and does not call `stage_start()` or wait for
+stage closure.
 
 For identity-sensitive requests an optional `P6_identity_finish` may follow P5 when the
 run is created with `stage_registry="full_body_croquis_with_p6"`. P6 is a bounded visual

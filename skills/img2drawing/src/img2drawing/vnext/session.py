@@ -327,6 +327,12 @@ class DrawingSession:
         return tuple(deepcopy(self._inspection_history))
 
     @property
+    def observation_history(self) -> tuple[dict[str, Any], ...]:
+        """Return defensive copies of the short agent-authored observations."""
+
+        return tuple(deepcopy(self._observations))
+
+    @property
     def finish_metadata(self) -> dict[str, Any] | None:
         return None if self._finish_metadata is None else deepcopy(self._finish_metadata)
 

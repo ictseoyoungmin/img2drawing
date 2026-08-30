@@ -16,7 +16,17 @@ from .inspection import (
     horizontal_profile, map_subject_to_canvas, point, plumb_line, sample_pixel,
     stage_free_drawing_state_hash, vertical_profile,
 )
-from .vnext import DrawingSession
+from .vnext import (
+    CONSTRUCTION_PHASES,
+    ConstructionMark,
+    DrawingSession,
+    InitialConstruct,
+    InitialConstructResult,
+    PoseObservation,
+    author_initial_construct,
+    inspect_initial_construct,
+    observe_pose,
+)
 
 VNextDrawingSession = DrawingSession
 
@@ -139,6 +149,8 @@ __all__ = [
     "Box", "GroundGuide", "Grid", "GridMeasurement", "InspectionSheet", "Measurement", "PixelSample", "PlumbLine", "Point",
     "PointMapping", "Profile", "Registration", "ROI", "Size", "angle", "distance", "drawing_state_hash", "drawing_state_payload",
     "ground_guide", "grid", "horizontal_profile", "map_subject_to_canvas", "point", "plumb_line", "sample_pixel",
-    "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "ABLATION_CONDITIONS", "ModularGrammarCard",
+    "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "CONSTRUCTION_PHASES",
+    "ConstructionMark", "InitialConstruct", "InitialConstructResult", "PoseObservation", "author_initial_construct",
+    "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
     "consume_grammar_card", "AblationTrial", "ExemplarAblationReport", "run_exemplar_ablation",
 ]

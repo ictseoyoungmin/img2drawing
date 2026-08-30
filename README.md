@@ -4,10 +4,10 @@ An Agent Skill that makes Claude (or any Codex-style coding agent with skill sup
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating
 an image.
 
-Given one reference photo, the agent works through a five-stage construction pipeline
-(gesture → primary axes → primary masses → structural connections → clean block-in),
-rendering and re-inspecting its own drawing after every stage, revising until each
-stage genuinely holds up, before moving on.
+Given one reference photo, the agent reads the pose and authors an ordered whole-figure
+construction (line of action → head/ribcage/pelvis masses → balance/plumb → joints/limbs),
+then renders and inspects the actual drawing before adding detail. The legacy five-stage
+pipeline remains available for compatibility, but is not the default vNext workflow.
 
 ![Sniper Girl croquis timelapse](showcase/entries/croquis-sniper-girl-opus5-r22/croquis_timelapse.gif)
 
@@ -30,19 +30,19 @@ the entire file.
 
 Image generation models produce a finished image in one shot with no inspectable
 intermediate reasoning. img2drawing does the opposite: it drives a real stroke-based
-drawing session (`DrawingRun`) through explicit stages, where the agent is the one
-deciding pose, anatomy and correctness — the runtime only renders, checkpoints, and
-hands back evidence for the agent to judge. Every stroke, review, and revision is
-recorded and replayable.
+drawing session through explicit agent-authored construction marks, where the agent is the
+one deciding pose, anatomy and correctness — the runtime only renders, checkpoints, and
+hands back evidence for the agent to judge. Every stroke and revision is recorded and
+replayable.
 
 ## Status
 
-Pre-1.0 (`0.5.2.dev23`, release slice R23). The core pipeline, dual-reference review,
-pass-memory continuity, reopen/recovery, and fresh-worker autonomy are dogfooded and
-working. Stage grammar comes from the frozen `StageContract` and the stage references; two
-  of those references keep a rendered example image beside the prose, which the agent opens
-  when it wants one. Optional R23 identity finish adds bounded face/hair and line-expression
-  evidence after P1→P5 closure; it never replaces structural review. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
+Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free `DrawingSession` foundation and
+B05 observation/construction start path now sit alongside the dogfooded legacy R23 pipeline.
+R23's dual-reference review, pass-memory continuity, reopen/recovery, and fresh-worker
+evidence remain available for compatibility and historical comparison; they are not the
+default vNext construction loop. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release
+history.
 
 ## Requirements
 
@@ -72,17 +72,18 @@ pip install skills/img2drawing/
 ## Quickstart
 
 ```python
-from img2drawing import DrawingRun
+from img2drawing import DrawingSession
 
-run = DrawingRun.create("subject.png", "out")
-run.stage_start("P1_gesture")
+session = DrawingSession.create(subject="subject.png", output_dir="out")
 ```
 
-The agent then observes the subject, authors explicit strokes, calls
-`run.prepare_stage_review()`, inspects the rendered evidence, revises, and advances —
-one stage at a time, without asking for approval between routine passes. See
+The agent then records a short `PoseObservation`, authors explicit ordered
+`ConstructionMark`s inside an `InitialConstruct`, calls
+`author_initial_construct(session, construct)`, and inspects it with
+`inspect_initial_construct(session, construct)`. See
 [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for the complete
-autonomous loop and operating spec.
+autonomous loop and operating spec. `DrawingRun` and the P1–P5 stage loop remain
+available for legacy continuations.
 
 Run the bundled subject-only benchmark (dev-side regression fixture, not part of the
 shipped skill):
