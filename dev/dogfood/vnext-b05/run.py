@@ -1,4 +1,4 @@
-"""Canonical B05 dogfood rebuilt from the Imagen ideal-stroke reference.
+"""Canonical B05 dogfood authored from the subject-only fresh-worker input.
 
 The subject-space landmarks are authored once in x/y/z and projected into the
 existing DrawingSession. The runtime still receives ordinary 2D strokes; it
@@ -26,8 +26,7 @@ from img2drawing import (  # noqa: E402
 
 
 SUBJECT = ROOT / "dev" / "dogfood" / "target-subject" / "subject.png"
-IDEAL_REFERENCE = ROOT / "dev" / "dogfood" / "vnext-b05" / "ideal-stroke-reference.png"
-OUTPUT = ROOT / "dev" / "dogfood" / "vnext-b05" / "run-from-ideal-stroke"
+OUTPUT = ROOT / "dev" / "dogfood" / "vnext-b05" / "run-subject-only"
 
 
 # One simple orthographic projection is enough for this 2D graphite renderer.
@@ -67,30 +66,45 @@ def mark(
     )
 
 
-# The near arm is not a straight 2D drop. Its elbow comes forward, the
-# forearm turns out toward image-right, and the hand returns toward the waist.
+# The near/right arm is the large foreground overlap in the target. The upper
+# arm leaves the shoulder toward image-right, the elbow comes forward, the
+# forearm turns farther out, and the hand returns inward toward the waist.
 NEAR_ARM_CENTER = chain(
     (
-        (0.30, 0.43, 0.30),  # shoulder on the near side plane
-        (0.14, 1.28, 0.68),  # elbow: forward, down, and inward in x
-        (0.42, 2.30, 0.42),  # wrist: forearm changes direction outward
-        (0.65, 2.62, 0.25),  # hand returns toward the waist
+        (0.30, 0.42, 0.30),  # shoulder on the near side plane
+        (0.33, 0.69, 0.38),  # upper arm leaves the shoulder on a rightward slope
+        (0.37, 1.06, 0.48),
+        (0.42, 1.39, 0.60),  # elbow: the bend lands lower and farther image-right
+        (0.48, 1.67, 0.70),  # forearm carries down before turning outward
+        (0.59, 1.99, 0.65),
+        (0.65, 2.21, 0.55),  # forearm turn follows the visible sleeve mass
+        (0.60, 2.43, 0.38),  # wrist/hand returns inward toward the waist
     )
 )
 NEAR_ARM_OUTER = chain(
     (
-        (0.48, 0.40, 0.30),
-        (0.32, 1.22, 0.58),
-        (0.78, 2.18, 0.30),
-        (0.84, 2.55, 0.18),
+        (0.38, 0.36, 0.30),  # outer shoulder edge on the dark sleeve contour
+        (0.43, 0.63, 0.38),
+        (0.51, 1.06, 0.48),  # upper-arm outer sweep
+        (0.61, 1.42, 0.58),
+        (0.64, 1.75, 0.60),  # outer elbow edge follows the dark fold
+        (0.74, 2.04, 0.55),  # forearm exits the bend
+        (0.83, 2.23, 0.42),  # widest point stays on the sleeve silhouette
+        (0.76, 2.39, 0.35),  # cuff turns back inward
+        (0.64, 2.54, 0.30),  # hand returns toward the waist
     )
 )
 NEAR_ARM_INNER = chain(
     (
-        (0.16, 0.50, 0.28),
-        (-0.06, 1.20, 0.78),
-        (0.04, 2.18, 0.50),
-        (0.57, 2.58, 0.24),
+        (0.14, 0.48, 0.30),  # torso-side shoulder edge
+        (0.06, 0.75, 0.40),
+        (-0.07, 1.09, 0.55),  # inner upper-arm sweep, covering the side torso
+        (-0.14, 1.43, 0.68),
+        (-0.12, 1.67, 0.72),  # inner elbow edge follows the bend
+        (0.00, 1.96, 0.68),  # inner forearm edge stays medial
+        (0.19, 2.21, 0.55),  # inner forearm turn remains inside the silhouette
+        (0.48, 2.43, 0.40),  # inner cuff approach
+        (0.69, 2.56, 0.30),  # hand settles back at the waist
     )
 )
 
@@ -164,17 +178,25 @@ def build_construct() -> InitialConstruct:
 
             # 2. Mass blocking: turned head, asymmetric back/side ribcage, and
             # a pelvis that does not face the viewer squarely.
-            mark("head-cranium-left", "mass_blocking", "mass", "head_cranium", (
-                (440, 80), (395, 98), (355, 140), (330, 190), (338, 238), (370, 276),
+            mark("head-cranium-left", "mass_blocking", "mass", "head_cranium_back", (
+                (452, 78), (409, 80), (369, 102), (337, 139), (323, 187), (333, 235),
+                (365, 274), (405, 298),
             )),
-            mark("head-cranium-right", "mass_blocking", "mass", "head_cranium", (
-                (440, 80), (492, 75), (540, 98), (582, 135), (603, 180), (596, 226), (575, 270),
+            mark("head-cranium-right", "mass_blocking", "mass", "head_cranium_face_side", (
+                (452, 78), (501, 86), (542, 112), (571, 151), (582, 194), (568, 235),
+                (540, 267), (508, 282),
             )),
             mark("head-jaw-turn", "mass_blocking", "mass", "head_jaw", (
-                (370, 276), (410, 306), (458, 325), (510, 315), (550, 285),
+                (365, 274), (405, 301), (450, 316), (496, 310), (535, 282),
+            )),
+            mark("head-face-turn-plane", "mass_blocking", "construction", "head_face_turn_plane", (
+                (535, 126), (565, 164), (564, 206), (544, 246), (514, 276),
             )),
             mark("head-turn-axis", "mass_blocking", "construction", "head_turn_axis", chain(
-                ((0.18, -1.08, 0.12), (0.34, -0.72, 0.26), (0.42, -0.38, 0.22)),
+                ((0.12, -1.08, 0.12), (0.34, -0.78, 0.24), (0.56, -0.46, 0.24)),
+            )),
+            mark("head-neck-back-turn", "mass_blocking", "construction", "neck_back_turn", (
+                (397, 292), (419, 320), (461, 343),
             )),
             mark("ribcage-back-left", "mass_blocking", "mass", "back_ribcage", chain(
                 ((-0.65, 0.35, -0.10), (-0.80, 0.82, -0.12), (-0.78, 1.32, -0.08),
@@ -196,6 +218,9 @@ def build_construct() -> InitialConstruct:
             mark("pelvis-near-right", "mass_blocking", "mass", "pelvis_near_side", chain(
                 ((0.20, 2.18, 0.20), (0.55, 2.52, 0.28), (0.48, 2.92, 0.18)),
             )),
+            mark("pelvis-weight-tilt", "mass_blocking", "construction", "pelvis_weight_plane", (
+                (345, 757), (400, 774), (462, 793), (522, 786),
+            )),
             mark("pelvis-depth-contour", "mass_blocking", "construction", "pelvis_depth_contour", chain(
                 ((-0.45, 2.52, -0.06), (-0.08, 2.48, 0.04), (0.28, 2.62, 0.20), (0.50, 2.66, 0.24)),
             )),
@@ -212,29 +237,35 @@ def build_construct() -> InitialConstruct:
             mark("arm-near-outer", "joints_limbs", "mass", "near_arm_outer_boundary", NEAR_ARM_OUTER, width=3.0, opacity=0.86),
             mark("arm-near-inner", "joints_limbs", "mass", "near_arm_inner_boundary", NEAR_ARM_INNER, width=3.0, opacity=0.86),
             mark("arm-near-cross-upper", "joints_limbs", "construction", "near_arm_depth_contour", (
-                (530, 555), (590, 565), (638, 555),
+                (470, 495), (520, 510), (575, 535), (610, 545),
             ), width=2.3, opacity=0.76),
             mark("arm-near-cross-lower", "joints_limbs", "construction", "near_arm_depth_contour", (
-                (515, 650), (585, 662), (645, 650),
+                (495, 585), (545, 605), (605, 635), (650, 650),
             ), width=2.3, opacity=0.76),
             mark("leg-left-chain", "joints_limbs", "structure", "support_leg_chain", chain(
-                ((-0.35, 2.82, -0.08), (-0.50, 3.85, -0.05), (-0.48, 5.25, -0.02), (-0.42, 6.72, 0.00)),
+                ((-0.30, 2.82, -0.06), (-0.58, 3.68, -0.02), (-0.48, 5.35, -0.04), (-0.55, 6.55, -0.02)),
             )),
             mark("leg-right-chain", "joints_limbs", "structure", "counterbalance_leg_chain", chain(
-                ((0.25, 2.82, 0.10), (0.45, 3.88, 0.20), (0.56, 5.25, 0.18), (0.76, 6.72, 0.20)),
+                ((0.30, 2.82, 0.10), (0.65, 3.70, 0.20), (0.78, 5.45, 0.20), (0.98, 6.62, 0.20)),
             )),
             mark("leg-left-outer", "joints_limbs", "mass", "support_leg_outer", chain(
-                ((-0.52, 2.85, -0.08), (-0.72, 3.85, -0.05), (-0.70, 5.25, -0.02), (-0.62, 6.72, 0.00)),
+                ((-0.48, 2.85, -0.08), (-0.82, 3.68, -0.06), (-0.62, 5.35, -0.04), (-0.52, 6.62, -0.02)),
             )),
             mark("leg-right-outer", "joints_limbs", "mass", "counterbalance_leg_outer", chain(
-                ((0.42, 2.85, 0.12), (0.72, 3.88, 0.20), (0.86, 5.25, 0.18), (1.02, 6.72, 0.20)),
+                ((0.48, 2.85, 0.12), (0.85, 3.68, 0.22), (1.02, 5.35, 0.20), (1.28, 6.62, 0.18)),
             )),
             mark("leg-left-inner", "joints_limbs", "mass", "support_leg_inner", chain(
-                ((-0.18, 2.85, -0.04), (-0.32, 3.85, -0.02), (-0.28, 5.25, 0.00), (-0.24, 6.72, 0.00)),
+                ((-0.16, 2.85, -0.04), (-0.30, 3.72, 0.00), (-0.26, 5.35, 0.00), (-0.20, 6.62, 0.00)),
             )),
             mark("leg-right-inner", "joints_limbs", "mass", "counterbalance_leg_inner", chain(
-                ((0.05, 2.85, 0.06), (0.20, 3.88, 0.12), (0.30, 5.25, 0.10), (0.48, 6.72, 0.16)),
+                ((0.05, 2.85, 0.06), (0.38, 3.72, 0.12), (0.52, 5.45, 0.14), (0.72, 6.62, 0.16)),
             )),
+            mark("leg-left-knee-plane", "joints_limbs", "construction", "support_knee_plane", (
+                (318, 932), (360, 946), (402, 936),
+            ), width=1.8, opacity=0.64),
+            mark("leg-right-knee-plane", "joints_limbs", "construction", "counterbalance_knee_plane", (
+                (540, 937), (583, 924), (625, 942),
+            ), width=1.8, opacity=0.64),
             mark("foot-left", "joints_limbs", "mass", "support_foot", (
                 (374, 1325), (360, 1370), (370, 1415), (410, 1430), (449, 1418),
             )),
@@ -257,7 +288,7 @@ def build_construct() -> InitialConstruct:
                 (344, 600), (365, 630), (390, 690), (418, 758), (440, 810),
             )),
         ),
-        # The ideal reference has no permanent plumb line or node markers.
+        # The sparse construct has no permanent plumb line or node markers.
         plumb=None,
         ground=None,
         rois=(
@@ -271,12 +302,10 @@ def build_construct() -> InitialConstruct:
 def main() -> None:
     if not SUBJECT.is_file():
         raise FileNotFoundError(SUBJECT)
-    if not IDEAL_REFERENCE.is_file():
-        raise FileNotFoundError(IDEAL_REFERENCE)
     if OUTPUT.exists():
         raise FileExistsError(f"refusing to overwrite existing dogfood output: {OUTPUT}")
     construct = build_construct()
-    session = DrawingSession.create(subject=SUBJECT, output_dir=OUTPUT, session_id="vnext-b05-ideal-stroke")
+    session = DrawingSession.create(subject=SUBJECT, output_dir=OUTPUT, session_id="vnext-b05-subject-only")
     result = author_initial_construct(session, construct)
     sheet = inspect_initial_construct(session, construct, supersample=2)
     print(f"observation_id={result.observation_id}")

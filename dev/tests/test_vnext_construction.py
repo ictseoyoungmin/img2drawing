@@ -7,7 +7,6 @@ import pytest
 from PIL import Image
 
 from img2drawing import (
-    CONSTRUCTION_PHASES,
     ConstructionMark,
     DrawingSession,
     GroundGuide,
@@ -80,18 +79,18 @@ def test_pose_observation_is_short_portable_and_round_trips():
     assert observation.to_dict()["uncertain"] == ["far elbow under clothing"]
 
 
-def test_construction_marks_validate_geometry_and_phase_order():
+def test_construction_marks_validate_geometry_and_preserve_authored_order():
     with pytest.raises(ValueError, match="at least two points"):
         ConstructionMark("bad", "line_of_action", "gesture", "flow", ((1.0, 2.0),))
     with pytest.raises(ValueError, match="finite"):
         ConstructionMark("bad", "line_of_action", "gesture", "flow", ((1.0, 2.0), (float("nan"), 4.0)))
     with pytest.raises(ValueError, match="unknown construction phase"):
         ConstructionMark("bad", "not-a-stage", "gesture", "flow", ((1.0, 2.0), (3.0, 4.0)))
-    with pytest.raises(ValueError, match="ordered construction phases"):
-        InitialConstruct(
-            observation=_observation(),
-            marks=(_mark("mass", "mass_blocking", "head", 8.0), _mark("loa", "line_of_action", "flow", 18.0)),
-        )
+    construct = InitialConstruct(
+        observation=_observation(),
+        marks=(_mark("mass", "mass_blocking", "head", 8.0), _mark("loa", "line_of_action", "flow", 18.0)),
+    )
+    assert [mark.mark_id for mark in construct.marks] == ["mass", "loa"]
 
 
 def test_author_initial_construct_observes_first_and_preserves_order(tmp_path: Path):

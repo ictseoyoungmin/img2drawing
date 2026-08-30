@@ -1,4 +1,4 @@
-"""Agent-authored observation and ordered initial figure construction.
+"""Agent-authored observation and initial figure construction.
 
 This module deliberately stays small.  It gives a worker a vocabulary for
 making the first whole figure readable, while ``DrawingSession`` remains the
@@ -189,7 +189,7 @@ class ConstructionMark:
 
 @dataclass(frozen=True)
 class InitialConstruct:
-    """The ordered initial whole-figure hypothesis supplied by the Agent."""
+    """The authored initial whole-figure hypothesis supplied by the Agent."""
 
     observation: PoseObservation
     marks: tuple[ConstructionMark, ...]
@@ -208,9 +208,6 @@ class InitialConstruct:
         ids = [mark.mark_id for mark in marks]
         if len(set(ids)) != len(ids):
             raise ValueError("construction mark IDs must be unique")
-        phase_positions = [CONSTRUCTION_PHASES.index(mark.phase) for mark in marks]
-        if phase_positions != sorted(phase_positions):
-            raise ValueError("initial construct marks must follow ordered construction phases")
         object.__setattr__(self, "marks", marks)
         object.__setattr__(self, "rois", tuple(self.rois))
 
@@ -276,7 +273,7 @@ def author_initial_construct(
     registration: Registration | None = None,
     source_observation: str | None = None,
 ) -> InitialConstructResult:
-    """Observe, then commit the ordered initial construct as one drawing batch."""
+    """Observe, then commit the authored mark tuple as one drawing batch."""
 
     if not isinstance(construct, InitialConstruct):
         raise TypeError("author_initial_construct requires an InitialConstruct")

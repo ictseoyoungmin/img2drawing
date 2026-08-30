@@ -37,15 +37,17 @@ New drawing tasks use `img2drawing.DrawingSession` and the compact helpers
 `PoseObservation`, `InitialConstruct`, `ConstructionMark`,
 `author_initial_construct()` and `inspect_initial_construct()`.
 
-The worker's first pass is one ordered whole-figure hypothesis:
+The worker's first pass is one conceptual whole-figure hypothesis:
 
 `read pose → line of action → head/ribcage/pelvis mass → balance/plumb → joints/limbs`
 
 Before drawing, write a short `PoseObservation` covering support side, dominant flow,
 head/ribcage/pelvis relationship, shoulder/pelvis opposition, silhouette keys, negative
 spaces, ground, prop axis and occluded-limb evidence. Then author explicit subject-space
-`ConstructionMark`s in that order. Use `author_initial_construct()` so the observation is
-recorded first and the marks are sent through the existing atomic `draw_many()` path.
+`ConstructionMark`s that express the observed relationships. This sequence is drawing
+vocabulary only, not a runtime phase order; authored marks may be interleaved or revisited.
+Use `author_initial_construct()` so the observation is recorded first and the marks are
+sent through the existing atomic `draw_many()` path.
 
 Use `inspect_initial_construct()` immediately after the first construct. It reuses the
 existing `InspectionSheet` and can show the whole view, focused ROIs, contrast overlay,
@@ -146,6 +148,9 @@ the frozen `StageContract` and the current stage reference in `references/stages
 those references keep a rendered example image beside the prose. **Open one when you want
 it**; the runtime does not hand it to you and never requires you to compare against it.
 Never copy pose or coordinates from such an image.
+
+<details>
+<summary>Legacy R23 compatibility — do not use for new work</summary>
 
 ## Legacy compatibility stage progression
 `P1_gesture → P2_primary_axes → P3_primary_masses → P4_structural_connections → P5_clean_blockin`
@@ -484,3 +489,5 @@ explicit replace_stroke → fresh review → pass-memory continuation → ADVANC
 
 It intentionally stops at `P2_primary_axes`. Treat it as a workflow demonstration, never as
 subject-coordinate heuristics — its coordinates belong to its own subject.
+
+</details>
