@@ -131,6 +131,18 @@ def test_subject_mutation_is_rejected_by_session_provenance(tmp_path: Path):
         session.inspect()
 
 
+def test_inspection_history_rolls_back_when_checkpoint_fails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
+
+    def fail_checkpoint(path):
+        raise OSError("checkpoint storage unavailable")
+
+    monkeypatch.setattr(session, "_write_checkpoint", fail_checkpoint)
+    with pytest.raises(OSError, match="checkpoint storage unavailable"):
+        session.inspect()
+    assert session.inspection_history == ()
+
+
 def test_checkpoint_resume_preserves_state_and_inspection_continuity(tmp_path: Path):
     subject = _subject(tmp_path)
     output = tmp_path / "run"
