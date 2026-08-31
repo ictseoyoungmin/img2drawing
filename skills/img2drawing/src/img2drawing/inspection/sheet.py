@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import re
 import shutil
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 from PIL import Image, ImageChops, ImageDraw
 
@@ -156,6 +156,7 @@ class InspectionSheet:
     grid: Grid | None = None
     guides: tuple[PlumbLine | GroundGuide, ...] = ()
     measurements: tuple[Any, ...] = ()
+    evidence_policy: Mapping[str, Any] | None = None
 
     @classmethod
     def create(
@@ -172,6 +173,7 @@ class InspectionSheet:
         grid: Grid | bool | None = None,
         guides: Sequence[PlumbLine | GroundGuide] = (),
         measurements: Sequence[Any] = (),
+        evidence_policy: Mapping[str, Any] | None = None,
         out_dir: str | Path | None = None,
     ) -> "InspectionSheet":
         subject_path = Path(subject)
@@ -238,13 +240,14 @@ class InspectionSheet:
             grid=grid_spec,
             guides=tuple(guides),
             measurements=tuple(measurements),
+            evidence_policy=None if evidence_policy is None else _portable(dict(evidence_policy)),
         )
         if out_dir is not None:
             sheet.write(out_dir)
         return sheet
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        payload = {
             "format": "inspection-sheet/v1",
             "inputs": {"subject": self.subject.name, "drawing": self.drawing.name},
             "subject_sha256": self.subject_sha256,
@@ -259,6 +262,9 @@ class InspectionSheet:
             "measurements": [_portable(item) for item in self.measurements],
             "evidence_only": True,
         }
+        if self.evidence_policy is not None:
+            payload["evidence_policy"] = _portable(self.evidence_policy)
+        return payload
 
     def write(self, out_dir: str | Path) -> dict[str, Path]:
         output = Path(out_dir)

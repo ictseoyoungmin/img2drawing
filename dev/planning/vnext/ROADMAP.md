@@ -16,7 +16,7 @@ Workflow: Bottleneck, Production WIP Limit = 1
 | B04 | CLOSED | Stage-agnostic `DrawingSession` | B02+B03 | `capsules/B04.md` |
 | B05 | CLOSED | Embedded R23 attention leak 제거 및 fresh-worker proof 완료 | B04 | `capsules/B05.md` |
 | B06 | CLOSED | Residual-driven correction + resume-safe provenance | B05 reclosed | `capsules/B06.md` |
-| B07 | SKELETON | Evidence / cost control | B06 | `slices/B07.md` |
+| B07 | CLOSED | Evidence / cost control | B06 | `capsules/B07.md` |
 | B08 | SKELETON | `DrawingIntent` + mode/style scaffolding | B07 | `slices/B08.md` |
 | B09 | SKELETON | Mode-aware finish / recognition | B08 | `slices/B09.md` |
 | B10 | SKELETON | Intent-aware completion | B09 | `slices/B10.md` |
@@ -34,7 +34,7 @@ Workflow: Bottleneck, Production WIP Limit = 1
 ```text
 B00 → B01 → B02+B03 → B04 → B05 CLOSED
                                 ↓
-B06 CLOSED → B07 → B08 → B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
+B06 CLOSED → B07 CLOSED → B08 → B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 ```
 
 `B08`은 내부적으로 `DrawingIntent → ModeGuide → StyleGuide → override` 순서로

@@ -1,10 +1,10 @@
 # img2drawing vNext architecture contract
 
 Status: **CURRENT**
-Updated: 2026-08-31 (B06)
+Updated: 2026-08-31 (B07)
 
 이 문서는 `temp/img2drawing_vnext_universal_drawing_plan.html`의 설계를 현재
-B00–B06 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
+B00–B07 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
 slice의 제약을 구분한다.
 
 ## 1. 현재 닫힌 core
@@ -68,6 +68,11 @@ runtime cursor나 gate가 아니다.
   lifecycle gate, or duplicate history. Stale before/after evidence and orphan action
   references are rejected on record and checkpoint resume.
 - macro pose/form/composition residual이 detail/style polish보다 우선한다.
+- evidence budget은 `quick` whole-sheet 기본, Agent-selected 최대 3 ROI의 `focused`,
+  reason이 필요한 `deep` escalation으로 제한한다. 이는 lifecycle stage가 아니다.
+- `EvidenceTelemetry`는 inspection/read/artifact/review-turn/elapsed work만 세며,
+  `EvidenceReadRecord.stale`로 과거 immutable sheet를 표시한다. telemetry는 geometry,
+  residual priority, artistic PASS/FAIL을 결정하지 않는다.
 
 ## 4. 미래 intent model
 

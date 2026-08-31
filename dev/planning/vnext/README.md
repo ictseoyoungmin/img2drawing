@@ -6,10 +6,11 @@ drawing framework이지만, 구현은 Production WIP Limit = 1로 진행한다.
 ## 현재 한 줄 요약
 
 ```text
-B00–B06의 구현/증거는 닫혀 있다.
+B00–B07의 구현/증거는 닫혀 있다.
 B05 두 번째 재오픈에서 embedded R23 attention leak을 물리적으로 제거했고,
-B06에서 residual-driven correction과 resume-safe provenance를 닫았다.
-다음 작업은 B07 evidence/cost control이다.
+B06에서 residual-driven correction과 resume-safe provenance를 닫고,
+B07에서 evidence budget과 cost telemetry를 닫았다.
+다음 작업은 B08 DrawingIntent scaffolding이다.
 ```
 
 `temp/img2drawing_vnext_universal_drawing_plan.html`은 이번 재구성의 제품·설계
@@ -22,7 +23,7 @@ B06에서 residual-driven correction과 resume-safe provenance를 닫았다.
 1. [`STATUS.md`](STATUS.md) — 현재 WIP와 바로 다음 gate
 2. [`CONTRACT.md`](CONTRACT.md) — 이미 닫힌 core 계약과 향후 확장 불변식
 3. [`ROADMAP.md`](ROADMAP.md) — B00–B18 전체 순서와 상태
-4. [`slices/`](slices/) — 앞으로 실행할 B07–B18 작업 카드와 B06 closure record
+4. [`slices/`](slices/) — 앞으로 실행할 B08–B18 작업 카드와 최근 closure record
 5. [`capsules/`](capsules/) — 닫힌 구현을 재사용하기 위한 압축 문맥
 6. [`archive/`](archive/) — 과거 실행 카드와 재오픈 이력
 
@@ -51,7 +52,8 @@ B06에서 residual-driven correction과 resume-safe provenance를 닫았다.
 - `slices/`에는 실행 카드와 최근 closure record를 둔다.
 - B00–B04는 새 카드를 복제하지 않고 기존 capsule/archive를 가리킨다.
 - B05의 기존 closure는 유효한 역사다. 새 문서 정리 scope만 별도 재오픈한다.
-- B06 closure는 `capsules/B06.md`에 public correction contract와 evidence를 보존한다.
+- B06 closure는 `capsules/B06.md`에 public correction contract와 evidence를 보존하고,
+  B07 closure는 `capsules/B07.md`에 evidence budget/telemetry contract를 보존한다.
 - `DrawingIntent`, mode, style은 설계된 skeleton이며 현재 public API가 아니다.
 - 테스트나 schema가 시각 품질을 자동 판정하지 않는다.
 - mode/style을 이유로 별도 session이나 stage machine을 만들지 않는다.

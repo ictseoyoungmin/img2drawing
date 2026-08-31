@@ -3,12 +3,12 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B06 closed; canonical stage-free reading route physically isolated
+SYSTEM:   B00–B07 closed; canonical stage-free reading route physically isolated
 ACTIVE:   none
-NEXT:     B07 evidence / cost control (explicit activation required)
-SKELETON: B07 evidence cost control; B08–B18 platform/release
-CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06
-NEXT GATE: explicitly activate B07; no B08+ implementation is active
+NEXT:     activate B08 DrawingIntent scaffolding
+SKELETON: B08 DrawingIntent + mode/style; B09–B18 platform/release
+CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07
+NEXT GATE: B08 activation: intent/mode/style scaffolding contract and dogfood
 ```
 
 ## B05 second reopen resolution — attention boundary
@@ -42,7 +42,7 @@ The reopen record and evidence are in [`slices/B05.md`](slices/B05.md),
 [`capsules/B05.md`](capsules/B05.md), and
 [`../evidence/vnext/b05/canonical-route-fresh-worker.md`](../../evidence/vnext/b05/canonical-route-fresh-worker.md).
 B05 is closed. B06 was explicitly activated as the sole production WIP and is now closed;
-no later slice may be implemented until its own activation record exists.
+B07 was then activated and closed under the same WIP rule.
 
 ## B06 closure — residual-driven correction
 
@@ -75,25 +75,26 @@ and the public API is compressed in [`capsules/B06.md`](capsules/B06.md).
 | B04 | CLOSED | [`capsules/B04.md`](capsules/B04.md) |
 | B05 construction + canonical route de-anchoring | CLOSED | [`capsules/B05.md`](capsules/B05.md) |
 | B06 residual-driven correction | CLOSED | [`capsules/B06.md`](capsules/B06.md) |
+| B07 evidence / cost control | CLOSED | [`capsules/B07.md`](capsules/B07.md) |
 
 ## Current repository truth
 
 - Frozen R23 baseline: `25ec4544e86fe37fc28d64575df145a1b711d63a`
 - Current HEAD: this branch's latest closure commit (use `git log` for the exact SHA)
-- vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`
-- vNext tests: inspection, session, construction suites under `dev/tests/`
+- vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`, `vnext/evidence.py`
+- vNext tests: inspection, session, construction, correction, and evidence suites under `dev/tests/`
 - B05 dogfood: `dev/dogfood/vnext-b05/`
 - B06 correction dogfood: `dev/dogfood/vnext-b06/`
 - Representative visual evidence: `dev/evidence/vnext/b02-b03/`, `dev/evidence/vnext/b05/`,
-  and `dev/evidence/vnext/b06/`
+  `dev/evidence/vnext/b06/`, and `dev/evidence/vnext/b07/`
 - Legacy stage runtime remains in `run.py`, `stages/`, `review/`, playbooks, and
   `references/stages/`; it is compatibility/reference material, not the vNext path.
 
 ## WIP guard
 
-While B07 is not explicitly activated:
+With B07 closed and before B08 activation:
 
-- do not implement B08 or later slices;
+- do not implement B08 or later slices until B08 has an activation record;
 - do not reopen B05 unless new construction-quality evidence requires it;
 - do not add `DrawingIntent`, mode/style registries, tonal/free-draw pipelines, or
   renderer families;
@@ -101,7 +102,20 @@ While B07 is not explicitly activated:
 - do not rewrite the accepted B05 drawing geometry unless new visual evidence triggers a
   separate construction-quality reopen.
 
-## Next after B06 closure
+## B07 closure — evidence and cost control
 
-B07 may be activated after this B06 closure evidence, capsule, and full repository gates
-are committed and green. See [`ROADMAP.md`](ROADMAP.md) and [`slices/B07.md`](slices/B07.md).
+Activated and closed: **2026-08-31**. The existing `InspectionSheet` now carries an
+Agent-authored quick/focused/deep evidence policy, with a maximum of three prioritized
+ROIs and a reasoned deep escalation. `DrawingSession` persists immutable telemetry for
+inspection calls, review turns, generated/visual artifacts, elapsed work, and explicit
+artifact reads; stale snapshots are visible and unreadable evidence fails explicitly.
+
+The B05 representative correction used two review turns, four image reads, eight visual
+artifacts, and twelve generated artifacts, compared with the preserved R23 fixture's five
+review ceremonies, twelve visual files, and sixty stage-review files. Direct sheets,
+tests, and the capsule are committed under the B07 evidence paths.
+
+## Next after B07 closure
+
+B08 may be activated after this B07 closure evidence, capsule, and full repository gates
+are committed and green. See [`ROADMAP.md`](ROADMAP.md) and [`slices/B08.md`](slices/B08.md).

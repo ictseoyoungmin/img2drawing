@@ -104,6 +104,18 @@ accepted). A mutation makes prior evidence stale; the Agent chooses priority and
 or revises the residual. Read [`review/residual-correction.md`](references/review/residual-correction.md)
 for the compact record fields and provenance contract.
 
+### Evidence budget
+
+`DrawingSession.inspect()` defaults to one tiled whole-view sheet (`mode="quick"`).
+The Agent may add at most three prioritized ROIs for a focused read, or opt into
+`mode="deep"` when uncertainty warrants guides or measurements. Deep escalation must
+include a short human-readable `escalation_reason`; these modes are evidence budgets,
+not lifecycle stages or acceptance gates. Observable reads can be recorded with
+`session.record_evidence_read(inspection_id, artifact="sheet")`. Telemetry counts
+artifacts, reads, review turns, and elapsed work only; it never selects a residual,
+changes geometry, or emits an artistic PASS/FAIL. Earlier immutable sheets remain
+available and are marked stale when their drawing-state digest no longer matches.
+
 ## Renderer policy
 
 All normal drawing, review, replay, final export and timelapse paths use

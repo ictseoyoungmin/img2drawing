@@ -21,6 +21,9 @@ from .vnext import (
     ConstructionMark,
     CorrectionRecord,
     DrawingSession,
+    EvidencePolicy,
+    EvidenceReadRecord,
+    EvidenceTelemetry,
     InitialConstruct,
     InitialConstructResult,
     PoseObservation,
@@ -153,6 +156,6 @@ __all__ = [
     "ground_guide", "grid", "horizontal_profile", "map_subject_to_canvas", "point", "plumb_line", "sample_pixel",
     "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "CONSTRUCTION_PHASES",
     "ConstructionMark", "CorrectionRecord", "InitialConstruct", "InitialConstructResult", "PoseObservation",
-    "ResidualRecord", "author_initial_construct", "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
+    "ResidualRecord", "EvidencePolicy", "EvidenceReadRecord", "EvidenceTelemetry", "author_initial_construct", "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
     "consume_grammar_card", "AblationTrial", "ExemplarAblationReport", "run_exemplar_ablation",
 ]

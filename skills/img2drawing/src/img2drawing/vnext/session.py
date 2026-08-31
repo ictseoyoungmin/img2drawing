@@ -14,6 +14,7 @@ import os
 import re
 import shutil
 import threading
+import time
 import uuid
 from copy import deepcopy
 from dataclasses import replace
@@ -29,6 +30,13 @@ from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render.pillow_pencil_contact import render
 from ..render.presets import default_grade_name
 from .correction import CorrectionRecord, ResidualRecord
+from .evidence import (
+    EvidencePolicy,
+    EvidenceReadRecord,
+    EvidenceTelemetry,
+    INSPECTION_ARTIFACTS,
+    VISUAL_INSPECTION_ARTIFACTS,
+)
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
@@ -110,6 +118,7 @@ class DrawingSession:
         finish_metadata: dict[str, Any] | None = None,
         checkpoint_path: Path | None = None,
         subject_sha256: str | None = None,
+        evidence_telemetry: EvidenceTelemetry | Mapping[str, Any] | None = None,
     ):
         self.session_id = str(session_id)
         if not self.session_id.strip():
@@ -123,6 +132,11 @@ class DrawingSession:
         self._residuals = deepcopy(residuals or [])
         self._corrections = deepcopy(corrections or [])
         self._finish_metadata = None if finish_metadata is None else deepcopy(finish_metadata)
+        self._evidence_telemetry = (
+            evidence_telemetry
+            if isinstance(evidence_telemetry, EvidenceTelemetry)
+            else EvidenceTelemetry.from_dict(evidence_telemetry)
+        )
         self._lock = threading.RLock()
         self._subject_sha256 = subject_sha256 or sha256_file(self.subject)
         self._checkpoint_path = checkpoint_path or self.output_dir / "session.checkpoint.json"
@@ -211,6 +225,7 @@ class DrawingSession:
                 raise ValueError(f"checkpoint references unknown observation_id: {observation_id}")
         inspection_history = deepcopy(payload.get("inspection_history") or [])
         cls._validate_inspection_history(inspection_history)
+        evidence_telemetry = EvidenceTelemetry.from_dict(payload.get("evidence_telemetry"))
         residuals = deepcopy(payload.get("residuals") or [])
         cls._validate_residual_records(residuals, observations, inspection_history)
         corrections = deepcopy(payload.get("corrections") or [])
@@ -243,6 +258,7 @@ class DrawingSession:
             finish_metadata=deepcopy(payload.get("finish_metadata")),
             checkpoint_path=checkpoint_path if output_dir is None else destination / "session.checkpoint.json",
             subject_sha256=actual_subject_hash,
+            evidence_telemetry=evidence_telemetry,
         )
 
     @staticmethod
@@ -294,6 +310,8 @@ class DrawingSession:
             for key in ("drawing_state_hash", "drawing_artifact_sha256"):
                 if not _SHA256.fullmatch(str(record.get(key, ""))):
                     raise ValueError(f"inspection history requires {key}")
+            if record.get("evidence_policy") is not None:
+                EvidencePolicy.from_dict(record["evidence_policy"])
             seen.add(inspection_id)
 
     @staticmethod
@@ -392,6 +410,8 @@ class DrawingSession:
                 raise ValueError(f"inspection state digest mismatch: {manifest_path}")
             if manifest.get("drawing_artifact_sha256") != record["drawing_artifact_sha256"]:
                 raise ValueError(f"inspection artifact digest mismatch: {manifest_path}")
+            if manifest.get("evidence_policy") is not None:
+                EvidencePolicy.from_dict(manifest["evidence_policy"])
             raw_name = str((manifest.get("artifacts") or {}).get("raw_drawing", ""))
             raw_path = (manifest_path.parent / raw_name).resolve()
             try:
@@ -440,6 +460,12 @@ class DrawingSession:
         return tuple(CorrectionRecord.from_dict(record) for record in deepcopy(self._corrections))
 
     @property
+    def evidence_telemetry(self) -> EvidenceTelemetry:
+        """Return immutable counters for observable inspection evidence work."""
+
+        return self._evidence_telemetry
+
+    @property
     def finish_metadata(self) -> dict[str, Any] | None:
         return None if self._finish_metadata is None else deepcopy(self._finish_metadata)
 
@@ -470,6 +496,7 @@ class DrawingSession:
             "residuals": _portable(self._residuals),
             "corrections": _portable(self._corrections),
             "finish_metadata": _portable(self._finish_metadata),
+            "evidence_telemetry": self._evidence_telemetry.to_dict(),
             "digests": {
                 "action_log_sha256": sha256_obj([a.to_dict() for a in self._agent.history.actions]),
                 "drawing_state_hash": drawing_state_hash(snapshot),
@@ -1014,6 +1041,8 @@ class DrawingSession:
         measurements: Sequence[Any] = (),
         out_dir: str | Path | None = None,
         supersample: int = 3,
+        mode: str | None = None,
+        escalation_reason: str | None = None,
     ) -> InspectionSheet:
         """Render and inspect one authoritative snapshot atomically.
 
@@ -1024,6 +1053,17 @@ class DrawingSession:
 
         with self._lock:
             self._assert_subject_current()
+            roi_values = tuple(rois)
+            guide_values = tuple(guides)
+            measurement_values = tuple(measurements)
+            evidence_policy = EvidencePolicy.from_inputs(
+                mode=mode,
+                rois=roi_values,
+                guides=guide_values,
+                measurements=measurement_values,
+                escalation_reason=escalation_reason,
+            )
+            inspection_started = time.perf_counter()
             snapshot = self._snapshot()
             if out_dir is None:
                 destination = self.output_dir / "inspections"
@@ -1049,11 +1089,12 @@ class DrawingSession:
                     drawing=raw_path,
                     drawing_ir=snapshot,
                     registration=registration,
-                    rois=rois,
+                    rois=roi_values,
                     subject_dim=subject_dim,
                     grid=grid,
-                    guides=guides,
-                    measurements=measurements,
+                    guides=guide_values,
+                    measurements=measurement_values,
+                    evidence_policy=evidence_policy.to_dict(),
                     out_dir=temporary_dir,
                 )
                 os.replace(temporary_dir, final_dir)
@@ -1065,20 +1106,105 @@ class DrawingSession:
 
             relative_manifest = _portable_artifact(final_dir / "inspection.json", self.output_dir)
             before_history = deepcopy(self._inspection_history)
+            before_telemetry = self._evidence_telemetry
             self._inspection_history.append({
                 "inspection_id": inspection_id,
                 "manifest": relative_manifest,
                 "drawing_state_hash": sheet.drawing_state_hash,
                 "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
             })
+            self._evidence_telemetry = self._evidence_telemetry.after_inspection(
+                artifact_count=len(INSPECTION_ARTIFACTS),
+                visual_artifact_count=len(VISUAL_INSPECTION_ARTIFACTS),
+                elapsed_seconds=time.perf_counter() - inspection_started,
+            )
             try:
                 self._write_checkpoint(self._checkpoint_path)
             except Exception:
                 self._inspection_history = before_history
+                self._evidence_telemetry = before_telemetry
                 if final_dir.exists():
                     shutil.rmtree(final_dir)
                 raise
             return sheet
+
+    def record_evidence_read(
+        self,
+        inspection_id: str,
+        *,
+        artifact: str = "inspection_sheet.png",
+    ) -> EvidenceReadRecord:
+        """Record one readable artifact access and mark stale snapshots explicitly.
+
+        Reads are observational only: an artifact from an older drawing state is
+        accepted, but its event is marked ``stale`` so callers cannot mistake it
+        for current evidence.
+        """
+
+        with self._lock:
+            record = self._inspection_record(inspection_id)
+            manifest_path = (self.output_dir / str(record["manifest"])).resolve()
+            root = self.output_dir.resolve()
+            try:
+                manifest_path.relative_to(root)
+            except ValueError as exc:
+                raise ValueError("evidence unreadable: inspection manifest escapes output directory") from exc
+            if not manifest_path.is_file():
+                raise FileNotFoundError(f"evidence unreadable: {manifest_path}")
+            try:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                raise ValueError(f"evidence unreadable: {manifest_path}") from exc
+            artifacts = manifest.get("artifacts") or {}
+            requested = str(artifact).strip()
+            if not requested:
+                raise ValueError("evidence unreadable: artifact must be non-empty")
+            if requested in artifacts:
+                artifact_key = requested
+            else:
+                matching = [key for key, value in artifacts.items() if str(value) == requested]
+                if len(matching) != 1:
+                    raise ValueError(f"evidence unreadable: unknown artifact {requested!r}")
+                artifact_key = str(matching[0])
+            filename = str(artifacts[artifact_key])
+            if not filename or Path(filename).is_absolute() or any(part in {"", ".", ".."} for part in Path(filename).parts):
+                raise ValueError("evidence unreadable: artifact path is not confined to immutable inspection")
+            artifact_path = (manifest_path.parent / filename).resolve()
+            try:
+                artifact_path.relative_to(manifest_path.parent.resolve())
+            except ValueError as exc:
+                raise ValueError("evidence unreadable: artifact escapes immutable inspection") from exc
+            if not artifact_path.is_file() or artifact_path.stat().st_size <= 0:
+                raise FileNotFoundError(f"evidence unreadable: {artifact_path}")
+            try:
+                if artifact_path.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}:
+                    with Image.open(artifact_path) as image:
+                        image.verify()
+                elif artifact_path.suffix.lower() == ".json":
+                    json.loads(artifact_path.read_text(encoding="utf-8"))
+                else:
+                    artifact_path.read_bytes()
+            except Exception as exc:
+                raise ValueError(f"evidence unreadable: {artifact_path}") from exc
+
+            inspection_hash = str(record["drawing_state_hash"])
+            current_hash = self.drawing_state_hash()
+            event = EvidenceReadRecord(
+                event_id=f"evidence-read-{len(self._evidence_telemetry.read_events) + 1:06d}",
+                inspection_id=str(record["inspection_id"]),
+                artifact=artifact_key,
+                stale=inspection_hash != current_hash,
+                inspection_drawing_state_hash=inspection_hash,
+                current_drawing_state_hash=current_hash,
+            )
+            before_telemetry = self._evidence_telemetry
+            self._evidence_telemetry = self._evidence_telemetry.with_read(event)
+            try:
+                self._write_checkpoint(self._checkpoint_path)
+            except Exception:
+                self._evidence_telemetry = before_telemetry
+                raise
+            return event
 
     def _next_inspection_id(self, destination: Path) -> str:
         ids = [

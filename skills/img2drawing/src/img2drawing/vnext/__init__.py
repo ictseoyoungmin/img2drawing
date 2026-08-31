@@ -11,6 +11,7 @@ from .construction import (
     observe_pose,
 )
 from .correction import CorrectionRecord, ResidualRecord
+from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
 from .session import DrawingSession
 
 __all__ = [
@@ -18,6 +19,9 @@ __all__ = [
     "CorrectionRecord",
     "ConstructionMark",
     "DrawingSession",
+    "EvidencePolicy",
+    "EvidenceReadRecord",
+    "EvidenceTelemetry",
     "InitialConstruct",
     "InitialConstructResult",
     "PoseObservation",

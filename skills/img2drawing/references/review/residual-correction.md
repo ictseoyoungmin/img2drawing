@@ -35,6 +35,13 @@ hybrid 작업은 preserved constraint + transformation intent를 비교한다.
 자동 PASS/FAIL을 만들지 않는다. Agent가 직접 raw render, subject beside drawing,
 overlay 또는 적절한 crop을 보고 acceptance를 결정한다.
 
+기본 evidence budget은 `session.inspect(mode="quick")`의 단일 tiled sheet다. Agent가
+관계를 더 좁혀야 할 때만 최대 3개의 prioritized ROI를 `mode="focused"`로 추가하고,
+guide/measurement까지 필요한 `mode="deep"`는 짧은 `escalation_reason`과 함께 명시한다.
+이 mode들은 lifecycle이나 quality score가 아니다. 어떤 sheet/artifact를 실제로 읽었는지는
+`session.record_evidence_read(inspection_id, artifact="sheet")`로 남길 수 있으며, 이전
+state의 artifact를 읽으면 거부하지 않고 `stale=True` telemetry event로 표시한다.
+
 ## vNext correction records
 
 `DrawingSession.record_residual()` anchors the Agent's concern to the current

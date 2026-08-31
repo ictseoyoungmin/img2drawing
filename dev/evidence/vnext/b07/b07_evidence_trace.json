@@ -1,0 +1,150 @@
+{
+  "comparison": {
+    "legacy_r23_fixture": {
+      "custom_helper_scripts": "not isolated in stage-review directory",
+      "generated_files": 60,
+      "review_ceremonies": 5,
+      "source": "dev/dogfood/croquis-sniper-girl/03_stage_reviews",
+      "visual_images": 12
+    },
+    "vnext": {
+      "custom_helper_scripts": 0,
+      "generated_artifacts": 12,
+      "image_reads": 4,
+      "review_turns": 2,
+      "visual_artifacts": 8
+    }
+  },
+  "correction": {
+    "action_ids": [
+      "vnext-000040"
+    ],
+    "after_inspection_id": "000002",
+    "before_inspection_id": "000001",
+    "correction_id": "correction-0001",
+    "residual_id": "residual-0001"
+  },
+  "inspections": {
+    "focused": {
+      "inspection_id": "000002",
+      "policy": {
+        "escalation_reason": "quick whole view leaves the arm-to-torso overlap ambiguous",
+        "guide_count": 0,
+        "max_prioritized_rois": 3,
+        "measurement_count": 0,
+        "mode": "focused",
+        "roi_count": 2,
+        "schema": "img2drawing.vnext.evidence_policy.v1"
+      }
+    },
+    "quick": {
+      "inspection_id": "000001",
+      "policy": {
+        "escalation_reason": null,
+        "guide_count": 0,
+        "max_prioritized_rois": 3,
+        "measurement_count": 0,
+        "mode": "quick",
+        "roi_count": 0,
+        "schema": "img2drawing.vnext.evidence_policy.v1"
+      }
+    }
+  },
+  "reads": [
+    {
+      "artifact": "sheet",
+      "current_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+      "event_id": "evidence-read-000001",
+      "inspection_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+      "inspection_id": "000001",
+      "schema": "img2drawing.vnext.evidence_read.v1",
+      "stale": false
+    },
+    {
+      "artifact": "contrast_overlay",
+      "current_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+      "event_id": "evidence-read-000002",
+      "inspection_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+      "inspection_id": "000001",
+      "schema": "img2drawing.vnext.evidence_read.v1",
+      "stale": false
+    },
+    {
+      "artifact": "sheet",
+      "current_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+      "event_id": "evidence-read-000003",
+      "inspection_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+      "inspection_id": "000002",
+      "schema": "img2drawing.vnext.evidence_read.v1",
+      "stale": false
+    },
+    {
+      "artifact": "contrast_overlay",
+      "current_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+      "event_id": "evidence-read-000004",
+      "inspection_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+      "inspection_id": "000002",
+      "schema": "img2drawing.vnext.evidence_read.v1",
+      "stale": false
+    }
+  ],
+  "resumed": {
+    "history_cursor": 40,
+    "telemetry_digest": "602acc7d97bee27dd6cb0cb08984b8c1413f915179946f9cae05355ad123868a"
+  },
+  "route": "observe → draw → inspect → correct → inspect → finish",
+  "schema": "img2drawing.vnext.b07_evidence_trace.v1",
+  "session_id": "vnext-b07-evidence-budget",
+  "subject": "subject.png",
+  "telemetry": {
+    "elapsed_seconds": 10.55060846899869,
+    "generated_artifacts": 12,
+    "image_reads": 4,
+    "inspection_calls": 2,
+    "read_events": [
+      {
+        "artifact": "sheet",
+        "current_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+        "event_id": "evidence-read-000001",
+        "inspection_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+        "inspection_id": "000001",
+        "schema": "img2drawing.vnext.evidence_read.v1",
+        "stale": false
+      },
+      {
+        "artifact": "contrast_overlay",
+        "current_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+        "event_id": "evidence-read-000002",
+        "inspection_drawing_state_hash": "f350443f45632e014737a0b803c98e1835b951288c665668481591a4bdb855c4",
+        "inspection_id": "000001",
+        "schema": "img2drawing.vnext.evidence_read.v1",
+        "stale": false
+      },
+      {
+        "artifact": "sheet",
+        "current_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+        "event_id": "evidence-read-000003",
+        "inspection_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+        "inspection_id": "000002",
+        "schema": "img2drawing.vnext.evidence_read.v1",
+        "stale": false
+      },
+      {
+        "artifact": "contrast_overlay",
+        "current_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+        "event_id": "evidence-read-000004",
+        "inspection_drawing_state_hash": "c30530c09addee616216d27f4a226c07a157d57f4e90cf5c4fc6119f6d17cb51",
+        "inspection_id": "000002",
+        "schema": "img2drawing.vnext.evidence_read.v1",
+        "stale": false
+      }
+    ],
+    "review_turns": 2,
+    "schema": "img2drawing.vnext.evidence_telemetry.v1",
+    "visual_artifacts": 8
+  },
+  "visual_review": {
+    "focused": "inspections/000002/inspection_sheet.png",
+    "quick": "inspections/000001/inspection_sheet.png"
+  }
+}
