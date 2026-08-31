@@ -1,38 +1,36 @@
-# Stroke retirement and stage handoff
+# Stroke retirement and explicit replacement
 
 Retiring a stroke is a representation decision, not a judgement about whether the
-earlier stroke was originally correct. A valid gesture line may be removed from the
-visible current-stage drawing once a later stage owns that information in a different
-representation.
+earlier stroke was originally correct. A new contour, axis, mass, or gesture may carry
+the same information more clearly while the old mark becomes redundant.
 
-## Choose the operation by visible intent
+## Choose by visible intent
 
-- `soft_lift`: keep the stroke as a faint underdrawing when it still explains weight,
-  pose rhythm, construction or an occluded handoff. Use `soft_lift_segment` when only a
-  bounded part of a stroke should recede.
-- `delete_stroke`: remove the complete stroke from the active drawing when the current
-  stage's representation has taken over and the earlier line must no longer be visible.
-  The earlier stroke may have been correct in its own stage. Typical cases include a
-  measured block replacing a placement cue, a mass replacing an axis, or a final contour
-  replacing exploratory construction.
-- `hard_delete`: the history-layer operation executed by `delete_stroke`; it records a
-  `stroke.delete` event and removes the target from replayed active state. It is not a
-  separate `DrawingAction.kind`, and `kind="hard_delete"` is invalid.
+- `soft_lift`: keep a faint cue when it still explains weight, rhythm, construction, or
+  an occluded handoff. Use `soft_lift_segment` for a bounded part.
+- `delete_stroke`: remove a complete stroke from the current visible drawing when the new
+  representation fully replaces it. The old stroke and deletion event remain in history.
+- `hard_delete`: history-layer implementation behind `delete_stroke`; it is not a public
+  drawing action kind.
 
-Both retirement paths preserve the action history and provenance. “Delete” means remove
-the stroke from the current visible branch, not mutate or raster-erase the evidence.
-Use an explicit target stroke id, record the observation and reason, then render a fresh
-review after the mutation.
+## Handoff test
 
-## Stage handoff test
+Before the mutation, ask:
 
-Before retiring a line, ask:
+1. Is the old stroke's information carried by a new explicit representation?
+2. Would keeping it create a duplicate, welded contour, or misleading width?
+3. Does it still help the viewer read weight, rhythm, or occlusion?
 
-1. Does the current stage contract still require this line to remain visible?
-2. Is its information carried by a new axis, block, mass or contour?
-3. Should it remain as a useful faint cue, or would its presence create a duplicate or
-   violate the current stage grammar?
+Keep or soft-lift when the answer to (3) is yes. Delete when the old mark must be absent.
+In both cases, supply the target stroke, current observation, and reason through the
+session API. Never raster-edit the image or mutate history outside an action.
 
-Keep or `soft_lift` when the answer to (3) is “useful cue”. Use `delete_stroke` when the
-answer is “must be absent”. A hard deletion does not invalidate the earlier stage: its
-artifact, review evidence and history remain available as the prior.
+## Re-inspection
+
+Any replacement, lift, delete, or added stroke makes prior visual evidence stale. Render
+the new snapshot, inspect the affected relation and whole drawing, and retain the change
+only when the current state materially improves the declared intent. An edit event alone
+is not proof of improvement.
+
+For R23 stage-owned retirement and compatibility semantics, use the explicit
+[`legacy-r23.md`](../legacy-r23.md) route.

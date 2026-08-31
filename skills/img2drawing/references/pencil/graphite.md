@@ -1,29 +1,21 @@
 # Graphite
 
-Material simulation should express pressure and contact without changing the intended geometry.
+Material simulation expresses pressure and contact without changing intended geometry.
 
-## Stroke weight / line hierarchy calibration
+## Line hierarchy
 
-When the dominant gesture is readable but every other structural line is too faint, do **not**
-keep a "dark centreline + ghost construction" hierarchy by default.
+Keep the dominant gesture readable, let primary axes and mass contours approach a similar
+average width with slightly lower pressure/opacity, and keep cross-contours and minor
+construction subordinate. Preserve within-stroke pressure variation, taper, grade and
+contact dynamics; do not flatten them into constant darkness.
 
-Preferred P1→P3 hierarchy:
-- the dominant gesture remains the reference stroke;
-- primary axes and primary mass contours may approach roughly the same *average* width;
-- their pressure/opacity may stay slightly lower than the gesture;
-- cross-contours and minor construction stay subordinate;
-- within-stroke pressure variation, taper and graphite dynamics are preserved.
-- Calibrate construction/form/accent profiles on the actual output canvas before an
-  identity-sensitive pass. A useful starting observation is three distinct pressure
-  families (light construction, middle form, selective accent), but the run records the
-  chosen values rather than importing numbers from another drawing engine.
-- Accent is selective: reserve the darkest/highest-pressure treatment for roughly the
-  most informative 15–25% of marks. Broad value bands and blanket confirmation are not
-  pencil-line closure.
+Use the actual output canvas when calibrating construction, form, and selective accent.
+`2H`, `HB`, and `B` are material choices, not universal numeric targets. Reserve the
+darkest/highest-pressure treatment for the most informative part of the drawing instead
+of blanket confirmation or broad value bands.
 
-The distinction that matters is **average weight vs. expressive modulation**: a primary stroke
-may be nearly as thick as the centreline while still changing pressure along its length. Do not
-flatten per-point pressure into a constant width/darkness.
+## Render boundary
 
-`render.line_weight.calibrate_line_weight()` is a deterministic mechanical utility for A/B
-review. It does not decide geometry and is not an automatic artistic judge.
+`render.line_weight.calibrate_line_weight()` is a deterministic A/B aid. It does not
+choose geometry or judge the drawing. A style request must not be implemented as a final
+PNG filter that silently changes the authored stroke structure.

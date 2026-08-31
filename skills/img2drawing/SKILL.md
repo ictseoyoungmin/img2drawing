@@ -1,6 +1,6 @@
 ---
 name: img2drawing
-description: Draws a subject/reference photo into a hand-drawn-style pencil croquis through an autonomous, self-observed, stage-free construction grammar (pose read, line of action, masses, balance, joints and limbs) using explicit programmatic strokes rather than image generation. Use whenever the user wants an agent to actually hand-draw or sketch from a reference image, asks for a full-body croquis or figure-drawing reconstruction from a photo, or wants an inspectable drawing process instead of a single generated image.
+description: Draws observed, imaginative, or hybrid subjects as inspectable hand-drawn images through one stage-free, residual-driven stroke workflow. Use for croquis, figure drawing, tonal study, free-draw, or custom style requests where explicit programmatic strokes and a replayable process matter.
 ---
 
 # img2drawing
@@ -9,52 +9,52 @@ description: Draws a subject/reference photo into a hand-drawn-style pencil croq
 Draw from references with explicit strokes. The worker/Agent is the semantic authority. CV/evidence tools may help the worker see, but may not decide pose, anatomy, or artistic correctness.
 
 ## Fresh-worker guarantee
-A competent worker who receives only:
-- this skill,
-- the subject reference,
-- the requested drawing mode,
+A competent worker who receives only this skill, the available reference (if any), and
+the requested drawing mode/style must be able to act without pass-by-pass coaching.
 
-must be able to continue the job without the user teaching the workflow pass by pass.
-
-**Do not stop after a routine pass to ask "continue?" or "is this okay?".**
-Self-observe, draw, render, compare, revise and advance autonomously.
-Ask the user only if the source is missing/unreadable, the target itself is ambiguous, or two user requirements genuinely conflict.
+Observe or declare intent, draw explicit strokes, inspect the current snapshot, repair the
+highest-impact residual, and repeat until the declared finish intent is materially met.
+Do not stop after a routine pass to ask “continue?” or “is this okay?”. Ask only when the
+source is missing/unreadable, the target is genuinely ambiguous, or requirements conflict.
 
 ## Authority model
-For new work, `DrawingSession` is the stage-free orchestration authority. `DrawingRun` remains
-the compatibility authority for legacy R23 stage-driven runs only.
+For new work, `DrawingSession` is the only orchestration authority. `DrawingRun`,
+`stages/`, stage review, and stage-oriented playbooks are legacy R23 compatibility only;
+enter them through [`references/legacy-r23.md`](references/legacy-r23.md).
+
 - `core/`: strokes, actions, history, session.
-- `observation/`: agent-authored semantic observations and the immutable pre-draw observation lock.
-- `stages/`: stage intent and expert drawing guidance, never semantic judgement.
-- `review/`: artifact-bound dual-reference review and autonomous worker packet.
+- `observation/`: agent-authored semantic observations and read-only evidence.
+- `construction/`: stage-free pose, mass, balance, and joint guidance.
+- `modes/`: declarative drawing goals; never lifecycle state.
+- `review/`: current-state inspection and residual correction.
 - `canvas/`: inspect and edit the current drawing.
-- `render/`: pencil-contact material only.
+- `render/`: canonical pencil-contact material.
 - `provenance/`: replay and timelapse.
 
-## vNext default: macro construction first
+## Canonical drawing loop
 
-New drawing tasks use `img2drawing.DrawingSession` and the compact helpers
-`PoseObservation`, `InitialConstruct`, `ConstructionMark`,
-`author_initial_construct()` and `inspect_initial_construct()`.
+New observed figure tasks use `img2drawing.DrawingSession` and the compact helpers
+`PoseObservation`, `InitialConstruct`, `ConstructionMark`, `author_initial_construct()`,
+and `inspect_initial_construct()`. Other drawing modes use the same session/history and
+choose their own declarative guidance from [`references/INDEX.md`](references/INDEX.md).
 
-The worker's first pass is one conceptual whole-figure hypothesis:
+For a figure, the first pass is one conceptual whole-figure hypothesis:
 
 `read pose → line of action → head/ribcage/pelvis mass → balance/plumb → joints/limbs`
 
 Before drawing, write a short `PoseObservation` covering support side, dominant flow,
 head/ribcage/pelvis relationship, shoulder/pelvis opposition, silhouette keys, negative
-spaces, ground, prop axis and occluded-limb evidence. Then author explicit subject-space
-`ConstructionMark`s that express the observed relationships. This sequence is drawing
-vocabulary only, not a runtime phase order; authored marks may be interleaved or revisited.
+spaces, ground, prop axis, occlusion, and uncertainty. Then author explicit subject-space
+`ConstructionMark`s that express the observed relationships. This is drawing vocabulary,
+not a runtime phase order; authored marks may be interleaved or revisited.
 Use `author_initial_construct()` so the observation is recorded first and the marks are
 sent through the existing atomic `draw_many()` path.
 
 Use `inspect_initial_construct()` immediately after the first construct. It reuses the
 existing `InspectionSheet` and can show the whole view, focused ROIs, contrast overlay,
-`PlumbLine`, and `GroundGuide`. If the whole figure does not already read as this subject's
-pose, correct the construction premise before adding contour or detail. These construction
-phase names are drawing vocabulary only: they are not runtime stages, advancement gates,
-or manifests. The worker remains free to move backward when observation disproves a mark.
+`PlumbLine`, and `GroundGuide`. If the whole figure does not read as this subject's pose,
+correct the construction premise before contour or detail. The worker remains free to
+move backward when observation disproves a mark.
 
 The coordinates in this example are intentionally agent-authored from the current subject;
 never copy coordinates from a grammar exemplar.
@@ -91,7 +91,8 @@ inspect_initial_construct(session, construct)
 ```
 
 Until the initial whole figure reads as this subject's pose, do not spend the quality
-budget on metadata or detail coverage. `B06` adds correction prioritization and memory.
+budget on metadata or detail coverage. The shared residual correction loop applies after
+every mutation.
 
 ## Renderer policy
 
@@ -102,52 +103,44 @@ preserves pencil grade, pressure, contact, grain, paper interaction and eraser b
 Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
 material feature, not a reason to revive or silently emulate the removed renderer.
 
-## Stroke retirement and stage handoff
+## Explicit stroke edits and retirement
 
-Retirement is about current-stage representation ownership, not whether an earlier line
-was correct. A valid P1 gesture may be removed from the visible branch when a later axis,
-block, mass or contour takes over and the old line would duplicate or violate the current
-stage grammar.
+Retirement is about the current representation, not whether an earlier line was “wrong”.
+When a new axis, mass, or contour carries the information, choose whether the old cue
+should remain faint or leave the visible branch.
 
-- Use `soft_lift` (or `soft_lift_segment`) when the earlier construction should remain as
-  a faint cue for weight, rhythm, or an occluded handoff.
-- Use the public `delete_stroke` action when the complete earlier stroke must be absent
-  from the current drawing. The earlier stroke and the deletion event remain in history.
+- Use `soft_lift` (or `soft_lift_segment`) when the cue still explains weight, rhythm, or
+  an occluded handoff.
+- Use the public `delete_stroke` action when the complete stroke must be absent from the
+  current drawing. The earlier stroke and deletion event remain in history.
 - `hard_delete` is the history-layer method behind `delete_stroke`, recorded as
   `stroke.delete`; it is not a valid action kind by itself.
 
 Do not raster-edit files or mutate history to clean the image. Supply the target stroke,
-observation and reason, then render and review the mutated canvas afresh. Read
-`references/review/stroke-retirement.md` for the handoff test and examples.
+observation and reason, then render and inspect the mutated canvas afresh. Read
+`references/review/stroke-retirement.md` for the API details.
 
 ## Required reading route
-For a new full-body croquis job:
-1. Read `SKILL.md`.
-2. Use the vNext `DrawingSession` construction route above.
-3. Read `references/observation/visual-observation.md`,
-   `references/figure/limbs-joints.md`, and `references/figure/attached-objects.md`
-   when those relationships are present.
-4. Inspect the first whole figure through `inspect_initial_construct()` before adding
-   contour or detail. Read `references/review/self-visual-audit.md` for the visual pass.
 
-For a legacy `DrawingRun` continuation only, read the compatibility route:
-`playbooks/autonomous-stage-hardening.md`, `playbooks/full-body-croquis.md`, and
-`playbooks/subject-only-stage-derivation.md` as needed, then the current stage reference
-and its `worker_packet.md`.
+1. Read this file and [`references/INDEX.md`](references/INDEX.md).
+2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, or
+   free-draw.
+3. Read `observation/visual-observation.md` for observed subjects and the relevant
+   construction/figure/finish guide for the relationships present.
+4. Create the first drawing through `DrawingSession`; inspect the whole result before
+   adding detail, then use `review/residual-correction.md` for every repair loop.
+5. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
 
-Do not preload every anatomy/reference document. Pull extra references from
-`references/INDEX.md` only when a concrete uncertainty requires them.
+## Evidence boundary
 
-## What a stage review compares
-Every stage review distinguishes:
-1. **Subject reference** — pose, proportion, overlap, perspective and weight truth.
-2. **Current drawing** — the exact artifact being judged.
+`InspectionSheet`, registration, ROI, measurement, and renderer provenance make the
+current state inspectable. They do not choose geometry, select the highest-impact issue,
+or emit an artistic PASS/FAIL. The Agent compares the subject and current drawing (or
+declared intent and current drawing for imaginative work), then records explicit edits.
 
-Stage grammar — abstraction, stroke vocabulary, line hierarchy, detail budget — comes from
-the frozen `StageContract` and the current stage reference in `references/stages/`. Some of
-those references keep a rendered example image beside the prose. **Open one when you want
-it**; the runtime does not hand it to you and never requires you to compare against it.
-Never copy pose or coordinates from such an image.
+The default sequence is whole → relation → part → relation again. Macro pose, mass,
+balance, silhouette, and composition residuals outrank micro detail. A mutation makes
+prior visual evidence stale; render and inspect a fresh snapshot.
 
 <details>
 <summary>Legacy R23 compatibility — do not use for new work</summary>

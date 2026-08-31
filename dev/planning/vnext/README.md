@@ -7,20 +7,21 @@ drawing framework이지만, 구현은 Production WIP Limit = 1로 진행한다.
 
 ```text
 B00–B05의 구현/증거는 닫혀 있다.
-다음 작업은 B05를 다시 열어 canonical reading route에서 Pn 지침을 제거·이관하는 것이다.
-B05를 다시 닫기 전에는 B06 이후를 활성화하지 않는다.
+B05 재오픈에서 canonical reading route의 Pn 지침을 제거·이관했고 다시 닫았다.
+다음 작업은 B06 residual correction이며, 활성화 전까지는 skeleton으로 유지한다.
 ```
 
 `temp/img2drawing_vnext_universal_drawing_plan.html`은 이번 재구성의 제품·설계
 입력이다. 저장소 상태와 충돌하는 HTML의 `B05 ACTIVE` 표기는 HEAD와 사용자
-지시를 기준으로 `NEXT: REOPEN B05`로 보정했다. HTML은 상태 권위가 아니다.
+지시를 기준으로 B05를 재오픈해 canonical Pn de-anchoring을 완료한 뒤 `CLOSED`로
+보정했다. HTML은 상태 권위가 아니다.
 
 ## 읽기 순서
 
 1. [`STATUS.md`](STATUS.md) — 현재 WIP와 바로 다음 gate
 2. [`CONTRACT.md`](CONTRACT.md) — 이미 닫힌 core 계약과 향후 확장 불변식
 3. [`ROADMAP.md`](ROADMAP.md) — B00–B18 전체 순서와 상태
-4. [`slices/`](slices/) — 앞으로 실행할 B05 재오픈 및 B06–B18 작업 카드
+4. [`slices/`](slices/) — 앞으로 실행할 B06–B18 작업 카드
 5. [`capsules/`](capsules/) — 닫힌 구현을 재사용하기 위한 압축 문맥
 6. [`archive/`](archive/) — 과거 실행 카드와 재오픈 이력
 

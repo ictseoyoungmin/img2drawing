@@ -1,55 +1,38 @@
-# Canonical Full-body Croquis Hardening Example
+# Canonical full-body construction example
 
-This is a focused P1 workflow example, not the full P1→P5 subject-only benchmark.
+이 예제는 새 작업의 stage-free `DrawingSession` 경로를 보여준다. P1–P6 진행,
+stage review, answer image, target drawing, 또는 `DrawingRun` checkpoint를 사용하지
+않는다. bundled `subject.png`만 읽어 agent-authored observation과 initial construct를
+만들고, 하나의 inspection sheet를 기록한다.
 
-All frames and final artifacts use `img2drawing.render.pillow_pencil_contact`. The legacy
-uniform-pressure renderers have been removed.
+## What it demonstrates
 
-It demonstrates the required autonomous P1 sequence:
+- `PoseObservation`을 먼저 기록한다.
+- line of action, turned masses, balance, joint chains, feet, and prop relation을
+  `ConstructionMark`로 명시한다.
+- authored mark order는 drawing vocabulary이며 runtime phase gate가 아니다.
+- `DrawingSession`의 atomic `draw_many()`와 기존 `InspectionSheet`를 재사용한다.
+- initial whole figure가 pose로 읽히지 않으면 detail을 추가하지 않고 explicit stroke를
+  수정한 뒤 fresh inspection을 수행한다.
 
-`P1 gesture → subject/target/drawing review → Agent-selected local reviews → REVISE →
-explicit pelvis/hip/leg replacement → fresh review → pass-memory continuation → ADVANCE`
-
-## Non-negotiable details demonstrated
-- P1 states an observed head outline with a tilt mark, only the one short jaw-to-neck cue
-  supported by this view, spine/shoulder/pelvis rhythm, one curved centre-path flow per limb and ground
-  contact — and nothing else. No facial features, hair, clothing or muscle.
-- Each limb curve passes through its joint markers. The example does not bracket arms or
-  legs with paired lines that could be mistaken for sleeve, trouser or limb width.
-- Face, spine, shoulder, pelvis and limb flows share the construction hierarchy; the spine
-  is not promoted into a dominant black centre pole.
-- The pre-draw observation lock records view, near side, arm visibility/occlusion,
-  weight side and the subject-derived landmarks used by the stroke plan.
-- The frozen StageContract is the representation authority; `references/stages/` carries
-  the guidance and the rendered pipeline overview.
-- Local crops are selected explicitly by the Agent and both boxes are derived from one
-  normalized subject-to-canvas transform, so a crop cannot translate or stretch a mismatch
-  into a better-looking fit.
-- `p1_target.png` is the user-approved same-task P1 target. Whole-view and local reviews
-  therefore compare subject, target and current drawing without treating the target as a
-  substitute for subject evidence.
-- Pass 2 receives pass-1 remaining concerns and exact inter-pass correction provenance.
-- No user approval is requested between routine passes.
-- `advance` happens only after a fresh review clears the carried concerns.
+The coordinates in `run.py` belong only to the bundled subject. They are not a general
+landmark table or a target to copy for another subject.
 
 ## Run
 
+From the repository root:
+
 ```bash
-python run.py --output ./temp/img2drawing-canonical
+PYTHONPATH=skills/img2drawing/src python skills/img2drawing/examples/full_body_croquis/run.py \
+  --output ./tmp/full_body_croquis_example
 ```
 
-The run writes:
-- pass-1 and pass-2 worker packets;
-- `pass_memory.json` for each pass;
-- local review artifacts;
-- review records;
-- `canonical_trace.json`.
+The output contains the portable checkpoint, raw drawing, inspection sheet, and
+stage-free trace. The example does not claim a finished illustration; it is a minimal
+construction-and-inspection fixture for the canonical route.
 
-Pass 1 starts from a new target-registered construction but deliberately leaves the pelvis
-line through the provisional hip row, with medial femoral heads and a low image-left knee.
-The three-way review catches those mismatches. Pass 2 raises the pelvis line to the pelvic
-crest, moves the hip markers laterally, raises the support knee and redraws each leg from
-the corrected joint chain.
+## Legacy continuation
 
-It intentionally stops with `P2_primary_axes` as the current stage. The example
-proves the canonical hardening workflow; it does not claim a finished P1→P5 drawing.
+Existing R23 stage runs are documented separately in
+[`../../references/legacy-r23.md`](../../references/legacy-r23.md). Do not use that route
+for new work or for tonal/free-draw requests.

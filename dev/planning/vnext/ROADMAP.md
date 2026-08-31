@@ -14,7 +14,7 @@ Workflow: Bottleneck, Production WIP Limit = 1
 | B01 | CLOSED | vNext architecture cut | B00 | `capsules/B01.md` |
 | B02+B03 | CLOSED | Inspection + measurement foundation | B01 | `capsules/B02-B03.md` |
 | B04 | CLOSED | Stage-agnostic `DrawingSession` | B02+B03 | `capsules/B04.md` |
-| B05 | CLOSED; **NEXT REOPEN** | Observation/construction 유지 + canonical Pn de-anchoring | B04 | `slices/B05.md` |
+| B05 | CLOSED | Observation/construction 유지 + canonical Pn de-anchoring 완료 | B04 | `capsules/B05.md` |
 | B06 | SKELETON | Residual-driven correction | B05 reclosed | `slices/B06.md` |
 | B07 | SKELETON | Evidence / cost control | B06 | `slices/B07.md` |
 | B08 | SKELETON | `DrawingIntent` + mode/style scaffolding | B07 | `slices/B08.md` |
@@ -33,8 +33,6 @@ Workflow: Bottleneck, Production WIP Limit = 1
 
 ```text
 B00 → B01 → B02+B03 → B04 → B05 CLOSED
-                                ↓
-                         B05 REOPEN/RECLOSE
                                 ↓
 B06 → B07 → B08 → B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 ```
@@ -75,5 +73,5 @@ vNext release line은 다음을 모두 직접 입증해야 한다.
 - 제품/설계/slice 입력: `temp/img2drawing_vnext_universal_drawing_plan.html`
 - 기존 상세 초안: `temp/img2drawing-vnext-plan-dev-v2/`
 - 실제 상태: HEAD, tests, evidence, CLOSED capsules
-- 상태 보정: HTML의 `B05 ACTIVE`는 이미 닫힌 HEAD와 “다음 작업에서 reopen”이라는
-  지시에 따라 `CLOSED; NEXT REOPEN`으로 정정했다.
+- 상태 보정: HTML의 `B05 ACTIVE`는 실제 작업에서 한 번 재오픈해 canonical Pn
+  de-anchoring을 완료한 뒤 `CLOSED`로 정정했다. 다음 후보는 B06이다.

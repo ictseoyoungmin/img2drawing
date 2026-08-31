@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "img2drawing"
 dynamic = ["version"]
-description = "Observation-first agent drawing runtime with dual-reference stage review"
+description = "Observation-first, stage-free agent drawing runtime with explicit strokes and residual inspection"
 authors = [{name = "ictseoyoungmin"}]
 license = {file = "LICENSE"}
 requires-python = ">=3.10"

@@ -3,30 +3,33 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B05 implementation evidence closed; universal contract refreshed
+SYSTEM:   B00–B05 closed; canonical stage-free reading route established
 ACTIVE:   none
-NEXT:     reopen B05 for canonical Pn guidance de-anchoring
+NEXT:     B06 residual correction (manual activation required)
 SKELETON: B06 residual correction; B07 evidence cost control; B08–B18 platform/release
-CLOSED:   B00, B01, B02+B03, B04, B05 original construction + arm correction
-NEXT GATE: explicitly mark B05 REOPENED, then change only its documented reopen scope
+CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring
+NEXT GATE: explicitly activate B06; no B06 implementation is active yet
 ```
 
-## Why B05 is next again
+## B05 reopen resolution
 
-HEAD `ff459e8` closes B05 construction and the near/right-arm correction with committed
-subject-only visual evidence. That closure remains valid.
+The B05 construction and near/right-arm correction closure remained valid. On 2026-08-31
+B05 was reopened for a narrow documentation/attention migration and reclosed after the
+canonical route audit and example/test gates passed.
 
-The universal drawing plan adds new evidence that the normal skill reading route still
-contains substantial P1–P6 guidance. Before B06 or mode/style work begins, B05 must be
-reopened for a narrow documentation/attention migration:
+The completed migration:
 
-- remove Pn lifecycle guidance from the canonical path;
-- extract useful drawing knowledge into stage-free references;
-- retain one explicit legacy R23 compatibility entry;
-- prove a new-task worker does not enter Pn documents by default.
+- rewrote the canonical `SKILL.md` route around observe → draw → inspect → correct →
+  finish;
+- moved reusable gesture, mass, balance, contour, identity, mode, and residual guidance
+  into stage-free references;
+- retained legacy stage/runtime material behind the explicit `legacy-r23.md` gateway and
+  marker READMEs;
+- rewrote the bundled full-body example to use `DrawingSession` and no target/answer image.
 
-The planned reopen record and gates are in [`slices/B05.md`](slices/B05.md). This
-planning edit does not itself activate or implement that reopen.
+The reopen record and final evidence are in [`slices/B05.md`](slices/B05.md) and
+[`capsules/B05.md`](capsules/B05.md). B05 is closed; B06 is the sole candidate and remains
+inactive until explicitly activated.
 
 ## Closed foundation
 
@@ -41,7 +44,7 @@ planning edit does not itself activate or implement that reopen.
 ## Current repository truth
 
 - Frozen R23 baseline: `25ec4544e86fe37fc28d64575df145a1b711d63a`
-- Current HEAD at planning inspection: `ff459e8`
+- Current HEAD: this branch's latest closure commit (use `git log` for the exact SHA)
 - vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`
 - vNext tests: inspection, session, construction suites under `dev/tests/`
 - B05 dogfood: `dev/dogfood/vnext-b05/`
@@ -52,14 +55,14 @@ planning edit does not itself activate or implement that reopen.
 
 ## WIP guard
 
-Until B05 is explicitly reopened and reclosed:
+While B06 is not explicitly activated:
 
-- do not activate B06;
+- do not implement B06 or later slices;
 - do not add `DrawingIntent`, mode/style registries, tonal/free-draw pipelines, or
   renderer families;
 - do not physically remove R23 runtime or persistence;
-- do not rewrite the accepted B05 drawing geometry unless new visual evidence triggers
-  a separate construction-quality reopen.
+- do not rewrite the accepted B05 drawing geometry unless new visual evidence triggers a
+  separate construction-quality reopen.
 
 ## Next after B05 reclosure
 
