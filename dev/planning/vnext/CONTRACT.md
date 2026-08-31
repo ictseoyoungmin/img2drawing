@@ -68,8 +68,10 @@ runtime cursor나 gate가 아니다.
   lifecycle gate, or duplicate history. Stale before/after evidence and orphan action
   references are rejected on record and checkpoint resume.
 - macro pose/form/composition residual이 detail/style polish보다 우선한다.
-- evidence budget은 `quick` whole-sheet 기본, Agent-selected 최대 3 ROI의 `focused`,
-  reason이 필요한 `deep` escalation으로 제한한다. 이는 lifecycle stage가 아니다.
+- evidence budget은 `quick` whole-sheet(추가 evidence 없음), Agent-selected 1–3 ROI만
+  허용하는 `focused`, 최대 3 ROI와 guide/grid/measurement를 허용하며 reason이 필요한
+  `deep`으로 제한한다. 이는 lifecycle stage가 아니며 file generation count를
+  줄이는 계약이 아니라 inspection presentation/read budget 계약이다.
 - `EvidenceTelemetry`는 inspection/read/artifact/review-turn/elapsed work만 세며,
   `EvidenceReadRecord.stale`로 과거 immutable sheet를 표시한다. telemetry는 geometry,
   residual priority, artistic PASS/FAIL을 결정하지 않는다.

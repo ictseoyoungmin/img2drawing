@@ -29,6 +29,7 @@
       "inspection_id": "000002",
       "policy": {
         "escalation_reason": "quick whole view leaves the arm-to-torso overlap ambiguous",
+        "grid_count": 0,
         "guide_count": 0,
         "max_prioritized_rois": 3,
         "measurement_count": 0,
@@ -41,6 +42,7 @@
       "inspection_id": "000001",
       "policy": {
         "escalation_reason": null,
+        "grid_count": 0,
         "guide_count": 0,
         "max_prioritized_rois": 3,
         "measurement_count": 0,
@@ -90,14 +92,14 @@
   ],
   "resumed": {
     "history_cursor": 40,
-    "telemetry_digest": "602acc7d97bee27dd6cb0cb08984b8c1413f915179946f9cae05355ad123868a"
+    "telemetry_digest": "852f793cc0f7cb293dd5c833065448a94b5d9636aadb8cdbf067876efa9a9e20"
   },
   "route": "observe → draw → inspect → correct → inspect → finish",
   "schema": "img2drawing.vnext.b07_evidence_trace.v1",
   "session_id": "vnext-b07-evidence-budget",
   "subject": "subject.png",
   "telemetry": {
-    "elapsed_seconds": 10.55060846899869,
+    "elapsed_seconds": 11.72842756799946,
     "generated_artifacts": 12,
     "image_reads": 4,
     "inspection_calls": 2,

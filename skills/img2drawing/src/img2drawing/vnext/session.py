@@ -245,6 +245,7 @@ class DrawingSession:
         else:
             destination = Path(output_dir)
         cls._verify_inspection_artifacts(destination, inspection_history)
+        cls._validate_evidence_telemetry(evidence_telemetry, destination, inspection_history)
         return cls(
             session_id=str(payload["session_id"]),
             subject=subject_path,
@@ -313,6 +314,41 @@ class DrawingSession:
             if record.get("evidence_policy") is not None:
                 EvidencePolicy.from_dict(record["evidence_policy"])
             seen.add(inspection_id)
+
+    @staticmethod
+    def _validate_evidence_telemetry(
+        telemetry: EvidenceTelemetry,
+        root: Path,
+        inspections: Sequence[Mapping[str, Any]],
+    ) -> None:
+        """Validate read-event provenance against immutable inspection manifests."""
+
+        root = root.resolve()
+        inspection_by_id = {str(record.get("inspection_id")): record for record in inspections}
+        for event in telemetry.read_events:
+            inspection = inspection_by_id.get(event.inspection_id)
+            if inspection is None:
+                raise ValueError(
+                    f"evidence read references unknown inspection_id: {event.inspection_id}"
+                )
+            if event.inspection_drawing_state_hash != inspection["drawing_state_hash"]:
+                raise ValueError(
+                    f"evidence read inspection digest mismatch: {event.event_id}"
+                )
+            manifest_path = (root / str(inspection["manifest"])).resolve()
+            try:
+                manifest_path.relative_to(root)
+            except ValueError as exc:
+                raise ValueError("evidence read manifest escapes the session output directory") from exc
+            try:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                raise ValueError(f"evidence read manifest is unreadable: {manifest_path}") from exc
+            artifacts = manifest.get("artifacts")
+            if not isinstance(artifacts, Mapping) or event.artifact not in artifacts:
+                raise ValueError(
+                    f"evidence read references unknown artifact: {event.event_id}"
+                )
 
     @staticmethod
     def _validate_residual_records(
@@ -1061,6 +1097,7 @@ class DrawingSession:
                 rois=roi_values,
                 guides=guide_values,
                 measurements=measurement_values,
+                grid=grid,
                 escalation_reason=escalation_reason,
             )
             inspection_started = time.perf_counter()

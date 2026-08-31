@@ -107,10 +107,13 @@ for the compact record fields and provenance contract.
 ### Evidence budget
 
 `DrawingSession.inspect()` defaults to one tiled whole-view sheet (`mode="quick"`).
-The Agent may add at most three prioritized ROIs for a focused read, or opt into
-`mode="deep"` when uncertainty warrants guides or measurements. Deep escalation must
-include a short human-readable `escalation_reason`; these modes are evidence budgets,
-not lifecycle stages or acceptance gates. Observable reads can be recorded with
+Quick accepts no ROI, guide, grid, or measurement extras. The Agent may choose
+`mode="focused"` with one to three prioritized ROIs (and no guides, grid, or
+measurements), or opt into `mode="deep"` with up to three ROIs and guides/grid/measurements
+when uncertainty warrants it. Deep escalation must include a short human-readable
+`escalation_reason`;
+these are inspection presentation/read budgets, not lifecycle stages or acceptance
+gates. Observable reads can be recorded with
 `session.record_evidence_read(inspection_id, artifact="sheet")`. Telemetry counts
 artifacts, reads, review turns, and elapsed work only; it never selects a residual,
 changes geometry, or emits an artistic PASS/FAIL. Earlier immutable sheets remain

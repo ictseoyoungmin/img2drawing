@@ -318,13 +318,29 @@ def inspect_initial_construct(
     if not isinstance(construct, InitialConstruct):
         raise TypeError("inspect_initial_construct requires an InitialConstruct")
     registration = _registration_for(session, registration)
+    selected_rois = construct.rois if rois is None else tuple(rois)
+    if construct.guides or grid is not None:
+        mode = "deep"
+        escalation_reason = (
+            "initial construct includes authored balance guides for uncertainty review"
+            if construct.guides
+            else "initial construct requests a balance grid for uncertainty review"
+        )
+    elif selected_rois:
+        mode = "focused"
+        escalation_reason = None
+    else:
+        mode = "quick"
+        escalation_reason = None
     return session.inspect(
         registration=registration,
-        rois=construct.rois if rois is None else tuple(rois),
+        rois=selected_rois,
         grid=grid,
         guides=construct.guides,
         out_dir=out_dir,
         supersample=int(supersample),
+        mode=mode,
+        escalation_reason=escalation_reason,
     )
 
 

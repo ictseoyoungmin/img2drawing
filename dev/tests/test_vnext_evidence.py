@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing.inspection import ROI
+from img2drawing.inspection import Grid, ROI
 from img2drawing.vnext import DrawingSession
 
 
@@ -44,6 +44,17 @@ def test_roi_cap_and_deep_escalation(tmp_path: Path):
     with pytest.raises(ValueError, match="escalation_reason"):
         session.inspect(mode="deep", measurements=( {"kind": "distance"}, ))
 
+    with pytest.raises(ValueError, match="quick evidence budget"):
+        session.inspect(mode="quick", rois=rois[:1])
+    with pytest.raises(ValueError, match="focused evidence budget"):
+        session.inspect(mode="focused", rois=rois[:1], measurements=({"kind": "distance"},))
+    with pytest.raises(ValueError, match="focused evidence budget"):
+        session.inspect(mode="focused")
+    with pytest.raises(ValueError, match="deep evidence escalation"):
+        session.inspect(mode="deep")
+    with pytest.raises(ValueError, match="quick evidence budget"):
+        session.inspect(mode="quick", grid=Grid(columns=4, rows=4))
+
     sheet = session.inspect(
         mode="deep",
         rois=rois[:2],
@@ -53,6 +64,13 @@ def test_roi_cap_and_deep_escalation(tmp_path: Path):
     assert sheet.evidence_policy["mode"] == "deep"
     assert sheet.evidence_policy["roi_count"] == 2
     assert sheet.evidence_policy["measurement_count"] == 1
+
+    deep_with_grid = session.inspect(
+        mode="deep",
+        grid=Grid(columns=4, rows=4),
+        escalation_reason="the relation needs a coarse balance grid",
+    )
+    assert deep_with_grid.evidence_policy["grid_count"] == 1
 
 
 def test_reads_are_counted_and_stale_reads_marked(tmp_path: Path):
@@ -87,3 +105,34 @@ def test_evidence_telemetry_survives_resume(tmp_path: Path):
     resumed = DrawingSession.resume(session.checkpoint_path, subject=subject)
     assert resumed.evidence_telemetry.to_dict() == session.evidence_telemetry.to_dict()
     assert resumed.record_evidence_read("000001").event_id == "evidence-read-000002"
+
+
+def test_resume_rejects_orphan_or_cross_bound_evidence_read(tmp_path: Path):
+    subject = _subject(tmp_path)
+    session = DrawingSession.create(subject=subject, output_dir=tmp_path / "run")
+    session.inspect()
+    session.record_evidence_read("000001", artifact="sheet")
+    checkpoint = json.loads(session.checkpoint_path.read_text())
+
+    checkpoint["evidence_telemetry"]["read_events"][0]["inspection_id"] = "999999"
+    with pytest.raises(ValueError, match="unknown inspection_id"):
+        session.checkpoint_path.write_text(json.dumps(checkpoint), encoding="utf-8")
+        DrawingSession.resume(session.checkpoint_path, subject=subject)
+
+    session = DrawingSession.create(subject=subject, output_dir=tmp_path / "second-run")
+    session.inspect()
+    session.record_evidence_read("000001", artifact="sheet")
+    checkpoint = json.loads(session.checkpoint_path.read_text())
+    checkpoint["evidence_telemetry"]["read_events"][0]["artifact"] = "invented-artifact"
+    with pytest.raises(ValueError, match="unknown artifact"):
+        session.checkpoint_path.write_text(json.dumps(checkpoint), encoding="utf-8")
+        DrawingSession.resume(session.checkpoint_path, subject=subject)
+
+    session = DrawingSession.create(subject=subject, output_dir=tmp_path / "third-run")
+    session.inspect()
+    session.record_evidence_read("000001", artifact="sheet")
+    checkpoint = json.loads(session.checkpoint_path.read_text())
+    checkpoint["evidence_telemetry"]["read_events"][0]["inspection_drawing_state_hash"] = "0" * 64
+    with pytest.raises(ValueError, match="inspection digest mismatch"):
+        session.checkpoint_path.write_text(json.dumps(checkpoint), encoding="utf-8")
+        DrawingSession.resume(session.checkpoint_path, subject=subject)

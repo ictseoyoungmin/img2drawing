@@ -17,7 +17,7 @@ residual/correction provenance와 B07 evidence/cost closure는 각각
 
 | Order | Card | Activation condition |
 |---|---|---|
-| 1 | [`B07.md`](B07.md) | CLOSED — capsule recorded |
+| 1 | [`B07.md`](B07.md) | CLOSED — R1/R2 hardening reclosed |
 | 2 | [`B08.md`](B08.md) | B07 closed; explicit activation |
 | 3 | [`B09.md`](B09.md) | B08 closed |
 | 4 | [`B10.md`](B10.md) | B09 closed |

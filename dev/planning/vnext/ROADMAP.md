@@ -16,7 +16,7 @@ Workflow: Bottleneck, Production WIP Limit = 1
 | B04 | CLOSED | Stage-agnostic `DrawingSession` | B02+B03 | `capsules/B04.md` |
 | B05 | CLOSED | Embedded R23 attention leak 제거 및 fresh-worker proof 완료 | B04 | `capsules/B05.md` |
 | B06 | CLOSED | Residual-driven correction + resume-safe provenance | B05 reclosed | `capsules/B06.md` |
-| B07 | CLOSED | Evidence / cost control | B06 | `capsules/B07.md` |
+| B07 | CLOSED | Evidence / cost control (R1/R2 reclosed) | B06 | `capsules/B07.md` |
 | B08 | SKELETON | `DrawingIntent` + mode/style scaffolding | B07 | `slices/B08.md` |
 | B09 | SKELETON | Mode-aware finish / recognition | B08 | `slices/B09.md` |
 | B10 | SKELETON | Intent-aware completion | B09 | `slices/B10.md` |

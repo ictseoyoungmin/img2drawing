@@ -105,15 +105,27 @@ With B07 closed and before B08 activation:
 ## B07 closure — evidence and cost control
 
 Activated and closed: **2026-08-31**. The existing `InspectionSheet` now carries an
-Agent-authored quick/focused/deep evidence policy, with a maximum of three prioritized
-ROIs and a reasoned deep escalation. `DrawingSession` persists immutable telemetry for
+Agent-authored quick/focused/deep presentation/read policy: quick rejects extras, focused
+accepts only 1–3 prioritized ROIs, and deep allows up to three ROIs plus guide/grid/
+measurement evidence with a reason. `DrawingSession` persists immutable telemetry for
 inspection calls, review turns, generated/visual artifacts, elapsed work, and explicit
 artifact reads; stale snapshots are visible and unreadable evidence fails explicitly.
 
-The B05 representative correction used two review turns, four image reads, eight visual
-artifacts, and twelve generated artifacts, compared with the preserved R23 fixture's five
-review ceremonies, twelve visual files, and sixty stage-review files. Direct sheets,
+The B05 representative correction used two review turns and four image reads, compared
+with the preserved R23 fixture's five review ceremonies and twelve image files. The
+vNext 8 visual/12 total generated-file inventory and R23's 60 total stage-review files
+are recorded separately because those totals are not equivalent units. Direct sheets,
 tests, and the capsule are committed under the B07 evidence paths.
+
+## B07 narrow reopen — evidence hardening
+
+Reopened: **2026-08-31** by reviewer feedback. The original B07 evidence implementation
+was sound, but two contract gaps remained: mode names did not enforce their documented
+presentation/read budgets, and checkpoint resume accepted orphan or cross-bound evidence
+read records. Scope was limited to `EvidencePolicy.from_inputs()`, construction-helper
+mode selection, resume validation, misuse/orphan regression tests, and the matching
+documentation/capsule wording. No drawing geometry, renderer, inspection implementation,
+or B08 surface was reopened. R1/R2 passed and B07 was reclosed on 2026-08-31.
 
 ## Next after B07 closure
 

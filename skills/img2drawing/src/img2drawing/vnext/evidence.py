@@ -1,8 +1,8 @@
-"""Evidence-budget and observation telemetry primitives for vNext.
+"""Evidence presentation/read-budget and observation telemetry primitives for vNext.
 
-The policy controls how much evidence is rendered; it never chooses a residual or
-judges artistic quality.  Telemetry counts observable work only and deliberately has no
-score, pass/fail, or completion field.
+The policy controls inspection presentation and read budget; it never chooses a residual
+or judges artistic quality.  Telemetry counts observable work only and deliberately has
+no score, pass/fail, or completion field.
 """
 
 from __future__ import annotations
@@ -52,6 +52,7 @@ class EvidencePolicy:
     roi_count: int = 0
     guide_count: int = 0
     measurement_count: int = 0
+    grid_count: int = 0
 
     @classmethod
     def from_inputs(
@@ -62,22 +63,35 @@ class EvidencePolicy:
         guides: Sequence[Any],
         measurements: Sequence[Any],
         escalation_reason: str | None,
+        grid: Any = None,
     ) -> "EvidencePolicy":
         roi_count = len(rois)
         guide_count = len(guides)
         measurement_count = len(measurements)
+        grid_count = 0 if grid is None or grid is False else 1
         if roi_count > MAX_PRIORITIZED_ROIS:
             raise ValueError(
                 f"vNext inspection permits at most {MAX_PRIORITIZED_ROIS} prioritized ROIs"
             )
         explicit_mode = None if mode is None else _text(mode, "mode").lower()
+        has_guides_or_measurements = bool(guide_count or measurement_count or grid_count)
         selected_mode = explicit_mode or (
-            "quick" if not (roi_count or guide_count or measurement_count) else "focused"
+            "quick"
+            if not (roi_count or has_guides_or_measurements)
+            else ("deep" if has_guides_or_measurements else "focused")
         )
         if selected_mode not in EVIDENCE_MODES:
             raise ValueError(f"unsupported evidence mode: {selected_mode}")
         reason = None if escalation_reason is None else _text(escalation_reason, "escalation_reason")
-        if selected_mode == "deep" and (roi_count or guide_count or measurement_count) and reason is None:
+        has_extras = bool(roi_count or guide_count or measurement_count or grid_count)
+        if selected_mode == "quick" and has_extras:
+            raise ValueError("quick evidence budget allows no ROIs, guides, or measurements")
+        if selected_mode == "focused":
+            if not 1 <= roi_count <= MAX_PRIORITIZED_ROIS:
+                raise ValueError("focused evidence budget requires 1-3 prioritized ROIs")
+            if guide_count or measurement_count or grid_count:
+                raise ValueError("focused evidence budget allows ROIs only")
+        if selected_mode == "deep" and reason is None:
             raise ValueError("deep evidence escalation requires escalation_reason")
         return cls(
             mode=selected_mode,
@@ -85,6 +99,7 @@ class EvidencePolicy:
             roi_count=roi_count,
             guide_count=guide_count,
             measurement_count=measurement_count,
+            grid_count=grid_count,
         )
 
     def __post_init__(self) -> None:
@@ -94,20 +109,28 @@ class EvidencePolicy:
         object.__setattr__(self, "mode", mode)
         reason = None if self.escalation_reason is None else _text(self.escalation_reason, "escalation_reason")
         object.__setattr__(self, "escalation_reason", reason)
-        for field in ("roi_count", "guide_count", "measurement_count"):
+        for field in ("roi_count", "guide_count", "measurement_count", "grid_count"):
             value = int(getattr(self, field))
             if value < 0:
                 raise ValueError(f"{field} must be >= 0")
             object.__setattr__(self, field, value)
         if self.roi_count > MAX_PRIORITIZED_ROIS:
             raise ValueError(f"roi_count must be <= {MAX_PRIORITIZED_ROIS}")
-        if self.mode == "deep" and (self.roi_count or self.guide_count or self.measurement_count):
-            if self.escalation_reason is None:
-                raise ValueError("deep evidence escalation requires escalation_reason")
+        if self.mode == "quick" and (
+            self.roi_count or self.guide_count or self.measurement_count or self.grid_count
+        ):
+            raise ValueError("quick evidence budget allows no ROIs, guides, or measurements")
+        if self.mode == "focused":
+            if not 1 <= self.roi_count <= MAX_PRIORITIZED_ROIS:
+                raise ValueError("focused evidence budget requires 1-3 prioritized ROIs")
+            if self.guide_count or self.measurement_count or self.grid_count:
+                raise ValueError("focused evidence budget allows ROIs only")
+        if self.mode == "deep" and self.escalation_reason is None:
+            raise ValueError("deep evidence escalation requires escalation_reason")
 
     @property
     def escalated(self) -> bool:
-        return self.mode == "deep" or bool(self.guide_count or self.measurement_count)
+        return self.mode == "deep" or bool(self.guide_count or self.measurement_count or self.grid_count)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -117,6 +140,7 @@ class EvidencePolicy:
             "roi_count": self.roi_count,
             "guide_count": self.guide_count,
             "measurement_count": self.measurement_count,
+            "grid_count": self.grid_count,
             "max_prioritized_rois": MAX_PRIORITIZED_ROIS,
         }
 
@@ -130,6 +154,7 @@ class EvidencePolicy:
             roi_count=int(raw.get("roi_count", 0)),
             guide_count=int(raw.get("guide_count", 0)),
             measurement_count=int(raw.get("measurement_count", 0)),
+            grid_count=int(raw.get("grid_count", 0)),
         )
 
 
