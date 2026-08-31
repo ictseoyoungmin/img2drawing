@@ -1,5 +1,10 @@
 # img2drawing vNext — Workflow Reset & Bottleneck Roadmap
 
+> **SUPERSEDED STATUS DOCUMENT.** 이 문서는 초기 reset 결정과 B00 근거 보존용이다.
+> 현재 상태와 B00–B18 실행 순서는
+> `dev/planning/vnext/README.md`, `STATUS.md`, `CONTRACT.md`, `ROADMAP.md`를 따른다.
+> 아래의 과거 상태 표시는 현재 WIP 권위가 아니다.
+
 - 상태: **B00 CLOSED — B01 CLOSED — B02+B03 CLOSED — B04 CLOSED — no ACTIVE slice**
 - 기준일: 2026-08-30
 - 기준 저장소: `ictseoyoungmin/img2drawing`
