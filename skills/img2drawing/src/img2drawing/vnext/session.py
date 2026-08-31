@@ -480,8 +480,11 @@ class DrawingSession:
         if current is None:
             if parsed:
                 raise ValueError("intent history exists without a current intent")
-        elif parsed and parsed[-1].intent_digest != current.digest():
-            raise ValueError("current intent does not match the latest provenance event")
+        else:
+            if not parsed:
+                raise ValueError("current intent requires non-empty intent history")
+            if parsed[-1].intent_digest != current.digest():
+                raise ValueError("current intent does not match the latest provenance event")
 
     @staticmethod
     def _verify_inspection_artifacts(

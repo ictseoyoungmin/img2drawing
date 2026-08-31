@@ -2,8 +2,8 @@
 
 이 디렉터리에는 실행 카드와 최근 closure record를 둔다. B05의 construction 및
 canonical route de-anchoring, B06 residual correction, B07 evidence/cost control은
-닫혀 있고, B08도 plain-data intent와 provenance를 구현해 닫혔다. 실제 작업을 시작할
-때 `STATUS.md`와 해당 카드 하나만 `ACTIVE`/`REOPENED`로 바꾼다.
+닫혀 있고, B08은 reviewer 피드백에 따른 좁은 hardening까지 반영해 다시 닫혔다. 실제
+작업을 시작할 때 `STATUS.md`와 해당 카드 하나만 `ACTIVE`/`REOPENED`로 바꾼다.
 
 ## Closed work
 
@@ -18,7 +18,7 @@ residual/correction provenance와 B07 evidence/cost closure는 각각
 | Order | Card | Activation condition |
 |---|---|---|
 | 1 | [`B07.md`](B07.md) | CLOSED — R1/R2 hardening reclosed |
-| 2 | [`B08.md`](B08.md) | CLOSED — capsule recorded |
+| 2 | [`B08.md`](B08.md) | CLOSED — narrow hardening reclosed 2026-08-31 |
 | 3 | [`B09.md`](B09.md) | B08 closed |
 | 4 | [`B10.md`](B10.md) | B09 closed |
 | 5 | [`B11.md`](B11.md) | B10 closed |

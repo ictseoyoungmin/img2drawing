@@ -1,6 +1,6 @@
 ---
 name: img2drawing
-description: Draws observed, imaginative, or hybrid subjects as inspectable hand-drawn images through one stage-free, residual-driven stroke workflow. Use for croquis, figure drawing, tonal study, free-draw, or custom style requests where explicit programmatic strokes and a replayable process matter.
+description: Draws observed subjects as inspectable hand-drawn images through one stage-free, residual-driven stroke workflow. Imaginative/hybrid intents and croquis, figure drawing, tonal study, free-draw, or custom style declarations are scaffolded as plain data; subjectless authoring is not yet a production session path.
 ---
 
 # img2drawing
@@ -9,8 +9,14 @@ description: Draws observed, imaginative, or hybrid subjects as inspectable hand
 Draw from references with explicit strokes. The worker/Agent is the semantic authority. CV/evidence tools may help the worker see, but may not decide pose, anatomy, or artistic correctness.
 
 ## Fresh-worker guarantee
-A competent worker who receives only this skill, the available reference (if any), and
-the requested drawing mode/style must be able to act without pass-by-pass coaching.
+A competent worker who receives this skill, an available reference for observed work,
+and the requested drawing mode/style must be able to act without pass-by-pass coaching.
+
+`DrawingSession.create()` currently requires a readable subject image to establish the
+canvas. `DrawingIntent` can declare imaginative or free-draw goals, but starting a
+subjectless blank-canvas session is not a production-supported path yet; that behavior
+remains future mode work. Do not promise a subjectless output when no reference is
+available.
 
 Observe or declare intent, draw explicit strokes, inspect the current snapshot, repair the
 highest-impact residual, and repeat until the declared finish intent is materially met.

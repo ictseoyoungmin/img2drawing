@@ -3,12 +3,12 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B08 closed; canonical stage-free reading route physically isolated
+SYSTEM:   B00–B08 closed; canonical route physically isolated
 ACTIVE:   none
 NEXT:     activate B09 Mode-aware finish / recognition
 SKELETON: B09–B18 platform/release
 CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B08
-NEXT GATE: B09 activation record; preserve B08 plain-data intent boundaries
+NEXT GATE: B09 activation record; preserve B08 intent/history and capability boundaries
 ```
 
 ## B08 activation record — orthogonal plain-data intent
@@ -31,9 +31,23 @@ Activation risks and controls:
 - legacy aliases could leak lifecycle semantics → `full_body_croquis` is an explicit
   compatibility lookup returning an orthogonal intent, not a mode pipeline.
 
-While B08 was active, no B09+ work or broad preset catalog, renderer, completion, or
-legacy-retirement surface was allowed. B08 is now closed; B09 requires a fresh activation
-record before production work begins.
+While B08 hardening was active, no B09+ work or broad preset catalog, renderer,
+completion, or legacy-retirement surface was allowed. B08 is reclosed; B09 requires a
+fresh activation record before production work begins.
+
+## B08 narrow reopen — provenance and capability truth
+
+Reopened: **2026-08-31** by reviewer feedback. Scope is limited to two contract gaps:
+
+- resume must reject a current intent with an empty intent history, because every live
+  selection path creates an append-only `IntentChangeRecord`;
+- canonical skill/docs must state that imaginative/hybrid/free-draw values are intent
+  scaffolding only while `DrawingSession.create()` still requires a readable subject.
+
+No subjectless runtime, mode pipeline, renderer, schema redesign, or B09 work is in scope.
+
+Reclosed: **2026-08-31** after the invariant regression and capability wording passed.
+The production scope remains subject-backed; B09 is still inactive.
 
 ## B05 second reopen resolution — attention boundary
 
@@ -158,5 +172,6 @@ or B08 surface was reopened. R1/R2 passed and B07 was reclosed on 2026-08-31.
 ## B08 closure
 
 B08 closed on **2026-08-31** after plain-data models, session provenance, dogfood trace,
-documentation, duplicate/orphan audit, and full repository gates passed. The capsule is
-[`capsules/B08.md`](capsules/B08.md); B09 is the next slice and is not active.
+documentation, duplicate/orphan audit, capability-truth wording, and full repository
+gates passed. The capsule is [`capsules/B08.md`](capsules/B08.md); B09 is the next slice
+and is not active.

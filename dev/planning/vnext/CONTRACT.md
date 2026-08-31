@@ -1,10 +1,10 @@
 # img2drawing vNext architecture contract
 
 Status: **CURRENT**
-Updated: 2026-08-31 (B08 ACTIVE)
+Updated: 2026-08-31 (B08 reclosed)
 
 이 문서는 `temp/img2drawing_vnext_universal_drawing_plan.html`의 설계를 현재
-B00–B07 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
+B00–B08 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
 slice의 제약을 구분한다.
 
 ## 1. 현재 닫힌 core
@@ -81,6 +81,9 @@ runtime cursor나 gate가 아니다.
 
 `DrawingIntent`, `ModeGuide`, and `StyleGuide` are current portable plain-data APIs.
 They are data selections and guidance records, not lifecycle APIs.
+The current production `DrawingSession.create()` still requires a readable subject
+image; imaginative/hybrid and free-draw values are scaffolded declarations, not a
+subjectless blank-canvas runtime.
 
 ```text
 DrawingIntent

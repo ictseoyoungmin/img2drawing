@@ -16,6 +16,12 @@ intent = DrawingIntent(
 session = DrawingSession.create(subject="subject.png", output_dir="out", intent=intent)
 ```
 
+The current production session still requires `subject` to be a readable image. An
+imaginative, hybrid, or `free_draw` intent can be recorded and used as guidance, but a
+subjectless blank-canvas session is not implemented yet; later mode slices own that
+behavior. If no reference is available, state the limitation instead of calling
+`DrawingSession.create()` and promising an output.
+
 The allowed values are:
 
 - `reference_mode`: `observed`, `imaginative`, `hybrid`

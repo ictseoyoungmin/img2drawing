@@ -151,3 +151,17 @@ def test_resume_rejects_tampered_intent_provenance(tmp_path: Path) -> None:
     session.checkpoint_path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(ValueError, match="intent change digest"):
         DrawingSession.resume(session.checkpoint_path, subject=subject)
+
+
+def test_resume_rejects_current_intent_without_history(tmp_path: Path) -> None:
+    subject = _subject(tmp_path)
+    session = DrawingSession.create(
+        subject=subject,
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(drawing_mode="free_draw"),
+    )
+    payload = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
+    payload["intent_history"] = []
+    session.checkpoint_path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="current intent requires non-empty intent history"):
+        DrawingSession.resume(session.checkpoint_path, subject=subject)
