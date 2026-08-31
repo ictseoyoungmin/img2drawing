@@ -26,6 +26,8 @@ from PIL import Image
 from ..core.action import AgentDrawingSession, DrawingAction, sha256_file
 from ..core.ir import StrokeIR
 from ..core.session import RENDERER_ID, TOOLSET_ID, sha256_obj
+from ..core.fill import FillRegion, ReservedLight
+from ..render.tone_scale import resolve_tone
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render.pillow_pencil_contact import render
 from ..render.presets import default_grade_name
@@ -751,6 +753,76 @@ class DrawingSession:
             metadata=metadata,
         )
         return str(self._commit(action))
+
+    def fill_region(
+        self,
+        polygon: Sequence[Sequence[float]],
+        *,
+        value: float,
+        part: str,
+        fill_id: str | None = None,
+        angle: float = 0.0,
+        observation_id: str | None = None,
+        source_observation: str | None = None,
+        reason: str | None = None,
+        reserved: Sequence[Any] = (),
+        spacing: float | None = None,
+        role: str = "value",
+        layer: int = 0,
+        min_length: float = 6.0,
+        action_id: str | None = None,
+        tool: str = "form_pencil",
+        metadata: Mapping[str, Any] | None = None,
+    ) -> str:
+        """Lay one tone region at an observed value. One action, not one per line.
+
+        ``value`` is the mean grey the region should render to (0 black, 255 paper) -
+        read it off the subject rather than guessing opacity. The material that
+        reaches it comes from the cached deposition calibration, so no session ever
+        has to probe the renderer again.
+
+        ``reserved`` lights are left in the paper by the fill instead of being erased
+        back out of it afterwards.
+        """
+
+        recipe = resolve_tone(value)
+        lights = tuple(
+            light if isinstance(light, ReservedLight) else ReservedLight(**dict(light))
+            for light in reserved
+        )
+        region = FillRegion(
+            fill_id=fill_id or f"fill-{len(self._agent.history.actions) + 1:04d}",
+            polygon=tuple((float(x), float(y)) for x, y in polygon),
+            angle=float(angle),
+            spacing=float(recipe.spacing if spacing is None else spacing),
+            part=part,
+            role=role,
+            reserved=lights,
+            layer=int(layer),
+            min_length=float(min_length),
+        )
+        oid, source, normalized_reason = self._provenance(
+            observation_id=observation_id,
+            source_observation=source_observation,
+            reason=reason,
+        )
+        action = DrawingAction(
+            action_id=_action_id(self._agent.history, action_id),
+            kind="fill_region",
+            stage=_COMPAT_STAGE,
+            role=role,
+            part=part,
+            layer=int(layer),
+            tool=_tool_payload(tool, recipe.grade, recipe.tool_overrides()),
+            observation_id=oid,
+            source_observation=source,
+            reason=normalized_reason,
+            region=region.to_dict(),
+            metadata={**(dict(metadata) if metadata else {}),
+                      "tone": recipe.to_dict()},
+        )
+        self._commit(action)
+        return region.fill_id
 
     def draw_many(self, strokes: Iterable[Any], **defaults: Any) -> list[str | None]:
         actions: list[DrawingAction] = []

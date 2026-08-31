@@ -4,7 +4,9 @@ from copy import deepcopy
 from dataclasses import asdict, dataclass
 from typing import Any, Sequence
 
+from .fill import FillRegion, expand_fill
 from .ir import Stroke, StrokeIR
+from .stroke import shaped_pressure_profile
 from .tools import ToolState
 
 
@@ -38,11 +40,51 @@ class CanvasAction:
         return _json_native(data)
 
 
-def _stroke_from_dict(data: dict[str, Any]) -> Stroke:
+def _persisted_stroke(stroke: Stroke) -> dict[str, Any]:
+    """Serialize a stroke without the parts that are recomputed on load.
+
+    Two things are deliberately absent. A derived pressure curve is a pure
+    function of the point count and the tool taper, so persisting it stores the
+    renderer's arithmetic as if it were an authored decision. And ``tool_state``
+    lives once on the action record; repeating it inside the payload doubled the
+    largest field in the file.
+    """
+    data = asdict(stroke)
+    if not data.pop("pressure_authored", False):
+        data["pressure"] = None
+    data.pop("tool_state", None)
+    return data
+
+
+def _derive_pressure(tool_state: dict[str, Any] | None, n: int) -> list[float] | None:
+    if not isinstance(tool_state, dict) or n <= 0:
+        return None
+    try:
+        pressure = float(tool_state["pressure"])
+        taper_in = float(tool_state.get("taper_in", 0.0))
+        taper_out = float(tool_state.get("taper_out", 0.0))
+    except (KeyError, TypeError, ValueError):
+        return None
+    return shaped_pressure_profile(
+        n,
+        start=max(0.05, pressure * (0.25 + 0.20 * (1.0 - taper_in))),
+        peak=min(1.0, pressure * 1.18),
+        end=max(0.04, pressure * (0.20 + 0.20 * (1.0 - taper_out))),
+    )
+
+
+def _stroke_from_dict(data: dict[str, Any], tool_state: dict[str, Any] | None = None) -> Stroke:
     d = deepcopy(data)
     d["points"] = [tuple(map(float, p)) for p in d.get("points", [])]
+    if d.get("tool_state") is None and tool_state is not None:
+        d["tool_state"] = deepcopy(tool_state)
     if d.get("pressure") is not None:
+        # An older session, or an explicitly authored curve: keep exactly what it stored.
         d["pressure"] = [float(v) for v in d["pressure"]]
+        d.setdefault("pressure_authored", True)
+    else:
+        d["pressure"] = _derive_pressure(d.get("tool_state"), len(d["points"]))
+        d["pressure_authored"] = False
     return Stroke(**d)
 
 
@@ -203,7 +245,7 @@ class CanvasHistory:
         s.stroke_id = sid
         self._append(
             "stroke.add",
-            {"stroke": asdict(s)},
+            {"stroke": _persisted_stroke(s)},
             stage=s.stage or "unspecified",
             part=s.part,
             role=s.role,
@@ -211,6 +253,26 @@ class CanvasHistory:
             provenance=provenance,
         )
         return sid
+
+    def fill_region(
+        self,
+        region: FillRegion,
+        tool_state: dict[str, Any],
+        *,
+        stage: str = "value_pass",
+        provenance: dict[str, Any] | None = None,
+    ) -> str:
+        """Record one tone region. The hatch it stands for is expanded on replay."""
+        self._append(
+            "region.fill",
+            {"region": region.to_dict()},
+            stage=stage,
+            part=region.part,
+            role=region.role,
+            tool_state=deepcopy(tool_state),
+            provenance=provenance,
+        )
+        return region.fill_id
 
     def replace_stroke(
         self,
@@ -227,7 +289,7 @@ class CanvasHistory:
         s.stroke_id = sid
         self._append(
             "stroke.replace",
-            {"stroke_id": stroke_id, "stroke": asdict(s)},
+            {"stroke_id": stroke_id, "stroke": _persisted_stroke(s)},
             stage=s.stage or "unspecified",
             part=s.part,
             role=s.role,
@@ -371,7 +433,7 @@ class CanvasHistory:
         for item in self.actions[:limit]:
             p = item.payload
             if item.action == "stroke.add":
-                s = _stroke_from_dict(p["stroke"])
+                s = _stroke_from_dict(p["stroke"], item.tool_state)
                 sid = s.stroke_id
                 if sid is None:
                     raise ValueError("history stroke.add missing stroke_id")
@@ -380,7 +442,7 @@ class CanvasHistory:
                 state[sid] = s
             elif item.action == "stroke.replace":
                 old_sid = p["stroke_id"]
-                s = _stroke_from_dict(p["stroke"])
+                s = _stroke_from_dict(p["stroke"], item.tool_state)
                 sid = s.stroke_id
                 if sid is None:
                     raise ValueError("history stroke.replace missing replacement stroke_id")
@@ -409,6 +471,31 @@ class CanvasHistory:
                     state[sid] = _replay_segment_soft_lift(state[sid], item)
             elif item.action == "stroke.delete":
                 state.pop(p["stroke_id"], None)
+            elif item.action == "region.fill":
+                region = FillRegion.from_dict(p["region"])
+                base = item.tool_state or {}
+                for line in expand_fill(region):
+                    sid = line["stroke_id"]
+                    ts = deepcopy(base)
+                    attenuation = float(line["attenuation"])
+                    stroke = Stroke(
+                        points=[tuple(map(float, q)) for q in line["points"]],
+                        width=float(ts.get("width", 1.5)),
+                        opacity=float(ts.get("opacity", 1.0)) * attenuation,
+                        role=region.role,
+                        layer=region.layer,
+                        tool_state=ts,
+                        part=region.part,
+                        stage=item.stage,
+                        stroke_id=sid,
+                    )
+                    # A fill line is a tone mark, not a gesture: it carries the tool's
+                    # constant pressure. Deriving a taper here would spend the whole of a
+                    # two-point line on its own entry and exit and render far too light.
+                    stroke.pressure = None
+                    if sid not in state:
+                        order.append(sid)
+                    state[sid] = stroke
             elif item.action == "snapshot":
                 pass
             else:

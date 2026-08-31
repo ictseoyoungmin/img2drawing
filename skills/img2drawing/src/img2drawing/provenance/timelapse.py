@@ -90,6 +90,9 @@ def _frame_duration_ms(cursors: list[int], i: int, session: DrawingSession) -> i
         label = _snapshot_label(action)
         if label and (label.startswith("stage_end:") or label.startswith("stage_reopen:")):
             duration = max(duration, 320)
+        elif action.action == "region.fill":
+            # one action, but a whole value region lands in that frame
+            duration = max(duration, 260)
         elif action.action in {
             "stroke.delete", "stroke.soft_lift", "stroke.segment_replace", "stroke.segment_soft_lift"
         }:

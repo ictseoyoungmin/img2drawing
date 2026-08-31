@@ -16,6 +16,9 @@ class Stroke:
     part: str | None = None
     stage: str | None = None
     stroke_id: str | None = None
+    # False when `pressure` is the deterministic taper the tool derives from the
+    # point count; such a curve is recomputed on load instead of persisted.
+    pressure_authored: bool = False
 
     def cleaned(self) -> "Stroke":
         # Preserve pressure alignment while removing consecutive duplicate points.

@@ -1,0 +1,98 @@
+{
+  "schema": "img2drawing.tone_scale/v1",
+  "renderer": "pillow_pencil_contact",
+  "tool": "form_pencil",
+  "note": "mean rendered value of a flat single-direction hatch patch; regenerate with dev/calibration/calibrate_tone_scale.py",
+  "steps": [
+    {
+      "value": 235,
+      "measured": 234.0,
+      "grade": "2B",
+      "opacity": 0.45,
+      "pressure": 0.55,
+      "width": 3.0,
+      "spacing": 9.0
+    },
+    {
+      "value": 215,
+      "measured": 214.9,
+      "grade": "HB",
+      "opacity": 0.6,
+      "pressure": 0.68,
+      "width": 3.6,
+      "spacing": 6.5
+    },
+    {
+      "value": 195,
+      "measured": 194.7,
+      "grade": "HB",
+      "opacity": 0.45,
+      "pressure": 0.55,
+      "width": 5.5,
+      "spacing": 4.0
+    },
+    {
+      "value": 170,
+      "measured": 169.1,
+      "grade": "6B",
+      "opacity": 0.3,
+      "pressure": 0.42,
+      "width": 6.5,
+      "spacing": 3.0
+    },
+    {
+      "value": 145,
+      "measured": 145.1,
+      "grade": "6B",
+      "opacity": 0.72,
+      "pressure": 0.78,
+      "width": 3.6,
+      "spacing": 6.5
+    },
+    {
+      "value": 120,
+      "measured": 120.0,
+      "grade": "6B",
+      "opacity": 0.6,
+      "pressure": 0.68,
+      "width": 4.4,
+      "spacing": 5.0
+    },
+    {
+      "value": 95,
+      "measured": 95.2,
+      "grade": "B",
+      "opacity": 0.85,
+      "pressure": 0.88,
+      "width": 4.4,
+      "spacing": 5.0
+    },
+    {
+      "value": 70,
+      "measured": 71.1,
+      "grade": "B",
+      "opacity": 0.94,
+      "pressure": 0.94,
+      "width": 4.4,
+      "spacing": 5.0
+    },
+    {
+      "value": 50,
+      "measured": 48.7,
+      "grade": "4B",
+      "opacity": 0.94,
+      "pressure": 0.94,
+      "width": 4.4,
+      "spacing": 5.0
+    },
+    {
+      "value": 35,
+      "measured": 35.2,
+      "grade": "6B",
+      "opacity": 0.85,
+      "pressure": 0.88,
+      "width": 6.5,
+      "spacing": 3.0
+    }
+  ]
+}

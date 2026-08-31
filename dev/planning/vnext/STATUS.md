@@ -3,13 +3,42 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B08 closed; canonical route physically isolated
+SYSTEM:   B00–B08 closed; B07 reopened and reclosed as B07-R1 (value authoring + session compaction)
 ACTIVE:   none
-NEXT:     activate B09 Mode-aware finish / recognition
+NEXT:     fresh post-B07-R1 dogfood, then activate B09 Mode-aware finish / recognition
 SKELETON: B09–B18 platform/release
-CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B08
-NEXT GATE: B09 activation record; preserve B08 intent/history and capability boundaries
+CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B07-R1, B08
+NEXT GATE: a dogfood croquis whose canonical session stays within ~2x the R23 baseline
+           while carrying a value pass R23 never had
 ```
+
+## B07-R1 reopen — value authoring and canonical session compaction
+
+Reopened and closed: **2026-08-31** from post-B08 dogfood evidence. A completed croquis
+produced a **313,391-line** canonical session against R23's **39,866** (7.86x) with no
+quality gain.
+
+The reopen was triggered on the hypothesis that correction/inspection/residual
+bookkeeping had over-grown. Measurement rejected that hypothesis: that bookkeeping is
+**1.3%** of the file, and per stored point the vNext record is **2.6x more compact**
+than R23. The real causes were a missing value primitive, uncalibrated deposition,
+duplicated `tool_state`, and persisted derived pressure. Full breakdown:
+[`dogfood/vnext-b07r1/README.md`](../../dogfood/vnext-b07r1/README.md).
+
+Scope taken:
+
+- `fill_region()` — one authored action per tone region, deterministically expanded on
+  replay, with reserved lights instead of after-the-fact erasing;
+- a cached tone scale so deposition is calibrated **out of session**, never probed
+  inside a drawing;
+- canonical compaction: `tool_state` recorded once per action, derived pressure
+  recomputed on load, explicitly authored pressure still stored verbatim;
+- guidance that names the failure directly, since a surface that permits brute-forced
+  tone will be brute-forced.
+
+Explicitly out of scope: residual/correction bookkeeping compaction (1.3%, not the
+bottleneck) and any raw-trace/canonical file split, which the measurement did not
+justify.
 
 ## B08 activation record — orthogonal plain-data intent
 

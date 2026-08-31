@@ -13,6 +13,7 @@
 - `figure/attached-objects.md`: prop axis, volume, topology, body contact
 - `resolution/contour-and-overlap.md`: contour ownership과 explicit stroke retirement
 - `finish/identity-and-value.md`: identity relation, value family, edge, accent
+- `value/tone-and-fill.md`: region fill, calibrated tone scale, reserved lights
 - `review/correction-loop.md`: 한 줄짜리 residual loop
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
