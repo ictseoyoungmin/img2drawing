@@ -17,6 +17,8 @@
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
+- `intent.md`: portable `DrawingIntent`, `ModeGuide`, `StyleGuide`, provenance, and
+  compatibility lookup
 
 ## Drawing modes (guidance, not stages)
 
@@ -27,7 +29,8 @@
 
 각 mode는 목적, 관찰 우선순위, 추천 grammar, 생략, completion 질문만 제공한다.
 `phase_start`, `advance`, `close`, `reopen` state를 만들지 않는다. `DrawingIntent`,
-StyleGuide, RenderProfile schema는 B08 이후에 동결한다.
+`ModeGuide`, and `StyleGuide` are implemented B08 plain-data schemas. `RenderProfile`
+remains a later output/replay contract; style guidance never acts as a renderer filter.
 
 ## Legacy R23 compatibility
 

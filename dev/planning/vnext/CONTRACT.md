@@ -1,7 +1,7 @@
 # img2drawing vNext architecture contract
 
 Status: **CURRENT**
-Updated: 2026-08-31 (B07)
+Updated: 2026-08-31 (B08 ACTIVE)
 
 이 문서는 `temp/img2drawing_vnext_universal_drawing_plan.html`의 설계를 현재
 B00–B07 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
@@ -18,6 +18,7 @@ DrawingSession
   ├─ replace / soft_lift / delete
   ├─ inspect
   ├─ record_residual / record_correction
+  ├─ intent / intent_history / set_intent
   ├─ checkpoint / resume
   └─ finish
 
@@ -76,20 +77,25 @@ runtime cursor나 gate가 아니다.
   `EvidenceReadRecord.stale`로 과거 immutable sheet를 표시한다. telemetry는 geometry,
   residual priority, artistic PASS/FAIL을 결정하지 않는다.
 
-## 4. 미래 intent model
+## 4. B08 current intent model
 
-`DrawingIntent`는 B08에서 처음 구현할 plain-data skeleton이다. 현재 API라고
-가정하지 않는다.
+`DrawingIntent`, `ModeGuide`, and `StyleGuide` are current portable plain-data APIs.
+They are data selections and guidance records, not lifecycle APIs.
 
 ```text
 DrawingIntent
   ├─ reference_mode: observed | imaginative | hybrid
   ├─ drawing_mode: croquis | figure_drawing | tonal_study | free_draw
   ├─ finish_intent: pose | subject | form_light | expressive
-  └─ style_profile: preset/custom profile identifier
+  ├─ style_profile: pencil_loose | graphite_academic | custom:<identifier>
+  └─ provenance: optional source/reason/compatibility key
 ```
 
 네 축은 독립적이다. 어느 값도 lifecycle state나 phase cursor가 아니다.
+`IntentChangeRecord` stores a full intent snapshot, previous digest, reason, and the
+existing action-history cursor. `DrawingSession` is the sole owner; changing intent
+never rewrites geometry or creates a parallel history branch. Sessions without intent
+remain resumable.
 
 ## 5. residual 의미
 
@@ -102,9 +108,10 @@ intent model이 들어와도 correction core 자체를 복제하지 않는다.
 
 ## 6. mode와 style
 
-`ModeGuide`는 primary observations, recommended grammar, typical omissions,
-finish emphasis, completion questions를 선언한다. required phase count, cursor,
-advance/close operation을 갖지 않는다.
+`ModeGuide`는 primary observations, recommended grammar, omissions, finish emphasis,
+completion questions를 선언한다. required phase count, stage/cursor, advance/close
+operation, or visual verdict를 갖지 않는다. `resolve_mode_guide()`는 one of the
+small built-in data records를 반환한다.
 
 style은 두 층으로 분리한다.
 
@@ -114,7 +121,9 @@ style은 두 층으로 분리한다.
   deterministic seed domain
 
 style은 완성 PNG post-filter가 아니며 renderer가 geometry를 몰래 바꾸는 권한도
-아니다. preset 상속은 one base + explicit overrides까지만 허용한다.
+아니다. B08은 `pencil_loose`와 `graphite_academic` 두 base 및 one-base + explicit
+field overrides만 제공한다. custom prose를 자동 구조화하거나 plugin registry를
+만들지 않는다.
 
 ## 7. replay/output parity
 
@@ -145,7 +154,7 @@ history 밖의 raster-only geometry mutation
 
 ## 10. 아직 동결하지 않은 것
 
-- `DrawingIntent`, `ModeGuide`, `StyleGuide`, `RenderProfile`의 구체 schema/API 이름
+- `RenderProfile`의 구체 schema/API 이름
 - custom prose parsing 전략
 - charcoal/ink 등 새 renderer family
 - mode별 최종 completion record shape

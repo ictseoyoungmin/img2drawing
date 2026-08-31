@@ -12,6 +12,21 @@ from .construction import (
 )
 from .correction import CorrectionRecord, ResidualRecord
 from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
+from .intent import (
+    COMPATIBILITY_INTENTS,
+    DRAWING_MODES,
+    FINISH_INTENTS,
+    REFERENCE_MODES,
+    STYLE_PROFILES,
+    DrawingIntent,
+    IntentChangeRecord,
+    IntentProvenance,
+    ModeGuide,
+    StyleGuide,
+    compatibility_intent,
+    resolve_mode_guide,
+    resolve_style_guide,
+)
 from .session import DrawingSession
 
 __all__ = [
@@ -22,6 +37,19 @@ __all__ = [
     "EvidencePolicy",
     "EvidenceReadRecord",
     "EvidenceTelemetry",
+    "COMPATIBILITY_INTENTS",
+    "DRAWING_MODES",
+    "FINISH_INTENTS",
+    "REFERENCE_MODES",
+    "STYLE_PROFILES",
+    "DrawingIntent",
+    "IntentChangeRecord",
+    "IntentProvenance",
+    "ModeGuide",
+    "StyleGuide",
+    "compatibility_intent",
+    "resolve_mode_guide",
+    "resolve_style_guide",
     "InitialConstruct",
     "InitialConstructResult",
     "PoseObservation",

@@ -31,6 +31,26 @@ enter them through [`references/legacy-r23.md`](references/legacy-r23.md).
 - `render/`: canonical pencil-contact material.
 - `provenance/`: replay and timelapse.
 
+## Plain-data drawing intent
+
+Use `DrawingIntent` when the request names a reference relationship, drawing mode,
+finish emphasis, or style profile. Its four fields are orthogonal data selections:
+`reference_mode` (`observed`, `imaginative`, `hybrid`), `drawing_mode` (`croquis`,
+`figure_drawing`, `tonal_study`, `free_draw`), `finish_intent` (`pose`, `subject`,
+`form_light`, `expressive`), and `style_profile` (the built-ins `pencil_loose`,
+`graphite_academic`, or an explicit `custom:<identifier>`). No field is a stage, cursor,
+pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
+selection; `session.set_intent(..., reason=...)` records a later selection as provenance
+without changing geometry or forking the action history.
+
+Resolve the matching `ModeGuide` for observations, grammar, omissions, finish emphasis,
+and questions, and `StyleGuide` for direct authoring decisions about line, construction,
+detail, value, and edges. These guides are immutable plain data: they do not advance,
+close, judge, select a renderer, or apply a raster post-filter. A guide may be read again
+when an inspection changes the Agent's hypothesis. The explicit compatibility lookup
+`full_body_croquis` returns an ordinary `observed`/`croquis` intent and is not a lifecycle
+state. See [`references/intent.md`](references/intent.md).
+
 ## Canonical drawing loop
 
 New observed figure tasks use `img2drawing.DrawingSession` and the compact helpers
@@ -149,7 +169,7 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
 
 1. Read this file and [`references/INDEX.md`](references/INDEX.md).
 2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, or
-   free-draw.
+   free-draw; select a style guide only when the request calls for one.
 3. Read `observation/visual-observation.md` for observed subjects and the relevant
    construction/figure/finish guide for the relationships present.
 4. Create the first drawing through `DrawingSession`; inspect the whole result before

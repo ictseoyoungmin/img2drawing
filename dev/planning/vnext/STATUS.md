@@ -3,13 +3,37 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B07 closed; canonical stage-free reading route physically isolated
+SYSTEM:   B00–B08 closed; canonical stage-free reading route physically isolated
 ACTIVE:   none
-NEXT:     activate B08 DrawingIntent scaffolding
-SKELETON: B08 DrawingIntent + mode/style; B09–B18 platform/release
-CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07
-NEXT GATE: B08 activation: intent/mode/style scaffolding contract and dogfood
+NEXT:     activate B09 Mode-aware finish / recognition
+SKELETON: B09–B18 platform/release
+CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B08
+NEXT GATE: B09 activation record; preserve B08 plain-data intent boundaries
 ```
+
+## B08 activation record — orthogonal plain-data intent
+
+Activated: **2026-08-31** after B07 closure and green repository gates. B08 is the sole
+production WIP. Its contract is intentionally small: introduce `DrawingIntent` with
+independent `reference_mode`, `drawing_mode`, `finish_intent`, and `style_profile`
+values, plus immutable `ModeGuide`/`StyleGuide` authoring guidance and explicit
+override resolution. These names are data selections, never lifecycle cursors.
+
+Activation risks and controls:
+
+- mode names could become hidden pipelines or phase transitions → guides expose only
+  observations, grammar, omissions, finish emphasis, and questions; no stage/cursor/
+  advance/close/verdict fields or methods;
+- intent changes could fork or rewrite drawing history → `DrawingSession` remains the
+  sole authority and records append-only intent provenance beside the existing history;
+- style could be mistaken for a renderer/post-filter → built-ins describe authoring
+  behavior and explicitly do not alter pixels or select a renderer;
+- legacy aliases could leak lifecycle semantics → `full_body_croquis` is an explicit
+  compatibility lookup returning an orthogonal intent, not a mode pipeline.
+
+While B08 was active, no B09+ work or broad preset catalog, renderer, completion, or
+legacy-retirement surface was allowed. B08 is now closed; B09 requires a fresh activation
+record before production work begins.
 
 ## B05 second reopen resolution — attention boundary
 
@@ -76,27 +100,31 @@ and the public API is compressed in [`capsules/B06.md`](capsules/B06.md).
 | B05 construction + canonical route de-anchoring | CLOSED | [`capsules/B05.md`](capsules/B05.md) |
 | B06 residual-driven correction | CLOSED | [`capsules/B06.md`](capsules/B06.md) |
 | B07 evidence / cost control | CLOSED | [`capsules/B07.md`](capsules/B07.md) |
+| B08 orthogonal intent scaffolding | CLOSED | [`capsules/B08.md`](capsules/B08.md) |
 
 ## Current repository truth
 
 - Frozen R23 baseline: `25ec4544e86fe37fc28d64575df145a1b711d63a`
 - Current HEAD: this branch's latest closure commit (use `git log` for the exact SHA)
-- vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`, `vnext/evidence.py`
-- vNext tests: inspection, session, construction, correction, and evidence suites under `dev/tests/`
+- vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`, `vnext/evidence.py`,
+  and B08 `vnext/intent.py`
+- vNext tests: inspection, session, construction, correction, evidence, and intent suites
+  under `dev/tests/`
 - B05 dogfood: `dev/dogfood/vnext-b05/`
 - B06 correction dogfood: `dev/dogfood/vnext-b06/`
 - Representative visual evidence: `dev/evidence/vnext/b02-b03/`, `dev/evidence/vnext/b05/`,
-  `dev/evidence/vnext/b06/`, and `dev/evidence/vnext/b07/`
+  `dev/evidence/vnext/b06/`, and `dev/evidence/vnext/b07/`; B08 trace is under
+  `dev/evidence/vnext/b08/` (fixture source: `dev/dogfood/vnext-b08/`)
 - Legacy stage runtime remains in `run.py`, `stages/`, `review/`, playbooks, and
   `references/stages/`; it is compatibility/reference material, not the vNext path.
 
 ## WIP guard
 
-With B07 closed and before B08 activation:
+With B08 closed and before B09 activation:
 
-- do not implement B08 or later slices until B08 has an activation record;
+- do not implement B09 or later slices until a fresh B09 activation record exists;
 - do not reopen B05 unless new construction-quality evidence requires it;
-- do not add `DrawingIntent`, mode/style registries, tonal/free-draw pipelines, or
+- do not add mode/style registries, tonal/free-draw pipelines, completion contracts, or
   renderer families;
 - do not physically remove R23 runtime or persistence;
 - do not rewrite the accepted B05 drawing geometry unless new visual evidence triggers a
@@ -127,7 +155,8 @@ mode selection, resume validation, misuse/orphan regression tests, and the match
 documentation/capsule wording. No drawing geometry, renderer, inspection implementation,
 or B08 surface was reopened. R1/R2 passed and B07 was reclosed on 2026-08-31.
 
-## Next after B07 closure
+## B08 closure
 
-B08 may be activated after this B07 closure evidence, capsule, and full repository gates
-are committed and green. See [`ROADMAP.md`](ROADMAP.md) and [`slices/B08.md`](slices/B08.md).
+B08 closed on **2026-08-31** after plain-data models, session provenance, dogfood trace,
+documentation, duplicate/orphan audit, and full repository gates passed. The capsule is
+[`capsules/B08.md`](capsules/B08.md); B09 is the next slice and is not active.

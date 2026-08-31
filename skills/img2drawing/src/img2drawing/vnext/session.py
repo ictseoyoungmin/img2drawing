@@ -37,6 +37,7 @@ from .evidence import (
     INSPECTION_ARTIFACTS,
     VISUAL_INSPECTION_ARTIFACTS,
 )
+from .intent import DrawingIntent, IntentChangeRecord
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
@@ -119,6 +120,8 @@ class DrawingSession:
         checkpoint_path: Path | None = None,
         subject_sha256: str | None = None,
         evidence_telemetry: EvidenceTelemetry | Mapping[str, Any] | None = None,
+        intent: DrawingIntent | Mapping[str, Any] | None = None,
+        intent_history: Sequence[IntentChangeRecord | Mapping[str, Any]] = (),
     ):
         self.session_id = str(session_id)
         if not self.session_id.strip():
@@ -137,6 +140,11 @@ class DrawingSession:
             if isinstance(evidence_telemetry, EvidenceTelemetry)
             else EvidenceTelemetry.from_dict(evidence_telemetry)
         )
+        self._intent = None if intent is None else _coerce_intent(intent)
+        self._intent_history = [
+            record if isinstance(record, IntentChangeRecord) else IntentChangeRecord.from_dict(record)
+            for record in intent_history
+        ]
         self._lock = threading.RLock()
         self._subject_sha256 = subject_sha256 or sha256_file(self.subject)
         self._checkpoint_path = checkpoint_path or self.output_dir / "session.checkpoint.json"
@@ -149,6 +157,7 @@ class DrawingSession:
         output_dir: str | Path,
         session_id: str | None = None,
         metadata: Mapping[str, Any] | None = None,
+        intent: DrawingIntent | Mapping[str, Any] | None = None,
     ) -> "DrawingSession":
         subject_path = Path(subject)
         if not subject_path.is_file():
@@ -164,7 +173,18 @@ class DrawingSession:
             output_dir=output,
             agent_session=AgentDrawingSession(width, height, metadata={"vnext": True}),
             metadata=deepcopy(dict(metadata or {})),
+            intent=intent,
         )
+        if session._intent is not None:
+            session._intent_history.append(
+                IntentChangeRecord(
+                    event_id="intent-000001",
+                    intent=session._intent,
+                    previous_intent_digest=None,
+                    reason="initial intent selection",
+                    history_cursor=session.history_cursor,
+                )
+            )
         session._write_checkpoint(session._checkpoint_path)
         return session
 
@@ -236,6 +256,12 @@ class DrawingSession:
             inspection_history,
             agent.history.actions,
         )
+        intent = None if payload.get("intent") is None else DrawingIntent.from_dict(payload["intent"])
+        intent_history = [
+            IntentChangeRecord.from_dict(record)
+            for record in (payload.get("intent_history") or [])
+        ]
+        cls._validate_intent_records(intent_history, intent, len(agent.history.actions))
 
         if output_dir is None:
             artifact_root = str((payload.get("artifacts") or {}).get("inspection_root", "."))
@@ -260,6 +286,8 @@ class DrawingSession:
             checkpoint_path=checkpoint_path if output_dir is None else destination / "session.checkpoint.json",
             subject_sha256=actual_subject_hash,
             evidence_telemetry=evidence_telemetry,
+            intent=intent,
+            intent_history=intent_history,
         )
 
     @staticmethod
@@ -429,6 +457,33 @@ class DrawingSession:
             seen.add(record.correction_id)
 
     @staticmethod
+    def _validate_intent_records(
+        records: Sequence[IntentChangeRecord | Mapping[str, Any]],
+        current: DrawingIntent | None,
+        action_count: int,
+    ) -> None:
+        parsed = [
+            record if isinstance(record, IntentChangeRecord) else IntentChangeRecord.from_dict(record)
+            for record in records
+        ]
+        seen: set[str] = set()
+        previous_digest: str | None = None
+        for record in parsed:
+            if record.event_id in seen:
+                raise ValueError(f"duplicate intent event_id: {record.event_id}")
+            if record.previous_intent_digest != previous_digest:
+                raise ValueError(f"intent provenance chain mismatch: {record.event_id}")
+            if record.history_cursor > int(action_count):
+                raise ValueError(f"intent history_cursor exceeds action history: {record.event_id}")
+            seen.add(record.event_id)
+            previous_digest = record.intent_digest
+        if current is None:
+            if parsed:
+                raise ValueError("intent history exists without a current intent")
+        elif parsed and parsed[-1].intent_digest != current.digest():
+            raise ValueError("current intent does not match the latest provenance event")
+
+    @staticmethod
     def _verify_inspection_artifacts(
         root: Path, records: Sequence[Mapping[str, Any]]
     ) -> None:
@@ -502,6 +557,18 @@ class DrawingSession:
         return self._evidence_telemetry
 
     @property
+    def intent(self) -> DrawingIntent | None:
+        """Return the current plain-data intent, if one has been selected."""
+
+        return self._intent
+
+    @property
+    def intent_history(self) -> tuple[IntentChangeRecord, ...]:
+        """Return immutable provenance for selected or changed intents."""
+
+        return tuple(self._intent_history)
+
+    @property
     def finish_metadata(self) -> dict[str, Any] | None:
         return None if self._finish_metadata is None else deepcopy(self._finish_metadata)
 
@@ -532,6 +599,8 @@ class DrawingSession:
             "residuals": _portable(self._residuals),
             "corrections": _portable(self._corrections),
             "finish_metadata": _portable(self._finish_metadata),
+            "intent": None if self._intent is None else _portable(self._intent),
+            "intent_history": _portable(self._intent_history),
             "evidence_telemetry": self._evidence_telemetry.to_dict(),
             "digests": {
                 "action_log_sha256": sha256_obj([a.to_dict() for a in self._agent.history.actions]),
@@ -866,6 +935,38 @@ class DrawingSession:
                 self._observations = before
                 raise
         return record_id
+
+    def set_intent(
+        self,
+        intent: DrawingIntent | Mapping[str, Any],
+        *,
+        reason: str = "agent-selected intent",
+    ) -> IntentChangeRecord:
+        """Select or change plain-data intent without mutating drawing history."""
+
+        parsed = _coerce_intent(intent)
+        normalized_reason = str(reason).strip()
+        if not normalized_reason:
+            raise ValueError("intent change reason must be non-empty")
+        with self._lock:
+            previous_intent = self._intent
+            previous_history = list(self._intent_history)
+            event = IntentChangeRecord(
+                event_id=f"intent-{len(self._intent_history) + 1:06d}",
+                intent=parsed,
+                previous_intent_digest=None if previous_intent is None else previous_intent.digest(),
+                reason=normalized_reason,
+                history_cursor=self.history_cursor,
+            )
+            self._intent = parsed
+            self._intent_history.append(event)
+            try:
+                self._write_checkpoint(self._checkpoint_path)
+            except Exception:
+                self._intent = previous_intent
+                self._intent_history = previous_history
+                raise
+            return event
 
     def _inspection_record(self, inspection_id: str) -> dict[str, Any]:
         requested = str(inspection_id).strip()
@@ -1269,6 +1370,14 @@ class DrawingSession:
 def _subject_size(path: Path) -> tuple[int, int]:
     with Image.open(path) as image:
         return image.size
+
+
+def _coerce_intent(value: DrawingIntent | Mapping[str, Any]) -> DrawingIntent:
+    if isinstance(value, DrawingIntent):
+        return value
+    if isinstance(value, Mapping):
+        return DrawingIntent.from_dict(value)
+    raise TypeError("intent must be a DrawingIntent or mapping")
 
 
 def _portable_artifact(path: Path, root: Path) -> str:
