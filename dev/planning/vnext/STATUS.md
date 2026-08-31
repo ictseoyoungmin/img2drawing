@@ -33,6 +33,11 @@ Affected surface and risk:
 The accepted construction geometry, `DrawingSession`, inspection/checkpoint semantics,
 stage-free references, and subject-only example remain frozen.
 
+The post-reclosure CI follow-up also updated `dev/release/validate_r23_release.py` so the
+R23 release gate verifies identity and preserved compatibility assets instead of requiring
+Pn doctrine in canonical `SKILL.md`. The fix is covered by
+`dev/tests/test_r23_release_validator.py`; no drawing or canonical route content changed.
+
 The reopen record and evidence are in [`slices/B05.md`](slices/B05.md),
 [`capsules/B05.md`](capsules/B05.md), and
 [`../evidence/vnext/b05/canonical-route-fresh-worker.md`](../../evidence/vnext/b05/canonical-route-fresh-worker.md).

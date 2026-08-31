@@ -1,4 +1,9 @@
-"""Release-identity validator for img2drawing R23."""
+"""Validate R23 release identity and preserved legacy compatibility assets.
+
+The canonical skill is intentionally stage-free.  This validator therefore checks that
+R23 remains reachable and importable, rather than requiring Pn doctrine to be copied into
+the canonical ``SKILL.md`` reading route.
+"""
 from __future__ import annotations
 
 import json
@@ -18,9 +23,31 @@ if RELEASE_SLICE != "R23_material_integrated_visual_quality":
     raise SystemExit("R23 release slice drift")
 
 skill = (ROOT / "skills/img2drawing/SKILL.md").read_text(encoding="utf-8")
-for phrase in ("P4", "P5", "P6", "face", "hair", "pressure"):
-    if phrase.lower() not in skill.lower():
-        raise SystemExit(f"R23 doctrine missing from SKILL.md: {phrase}")
+for marker in ("DrawingSession", "references/legacy-r23.md"):
+    if marker not in skill:
+        raise SystemExit(f"canonical SKILL.md compatibility marker missing: {marker}")
+
+gateway = ROOT / "skills/img2drawing/references/legacy-r23.md"
+if not gateway.is_file():
+    raise SystemExit(
+        "missing R23 compatibility gateway: "
+        "skills/img2drawing/references/legacy-r23.md"
+    )
+
+for relative in (
+    "skills/img2drawing/references/stages/p4-structural-connections.md",
+    "skills/img2drawing/references/stages/p5-clean-blockin.md",
+    "skills/img2drawing/references/stages/p6-identity-finish.md",
+):
+    if not (ROOT / relative).is_file():
+        raise SystemExit(f"missing preserved R23 compatibility asset: {relative}")
+
+try:
+    from img2drawing.run import DrawingRun
+except Exception as exc:  # pragma: no cover - exercised by the release environment
+    raise SystemExit(f"DrawingRun compatibility import failed: {exc}") from exc
+if not hasattr(DrawingRun, "resume"):
+    raise SystemExit("DrawingRun compatibility surface is missing resume")
 
 manifest = ROOT / "dev/release/r23/release_manifest.json"
 data = json.loads(manifest.read_text(encoding="utf-8"))
