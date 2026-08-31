@@ -28,6 +28,7 @@ from ..core.session import RENDERER_ID, TOOLSET_ID, sha256_obj
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render.pillow_pencil_contact import render
 from ..render.presets import default_grade_name
+from .correction import CorrectionRecord, ResidualRecord
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
@@ -104,6 +105,8 @@ class DrawingSession:
         metadata: dict[str, Any] | None = None,
         observations: list[dict[str, Any]] | None = None,
         inspection_history: list[dict[str, Any]] | None = None,
+        residuals: list[dict[str, Any]] | None = None,
+        corrections: list[dict[str, Any]] | None = None,
         finish_metadata: dict[str, Any] | None = None,
         checkpoint_path: Path | None = None,
         subject_sha256: str | None = None,
@@ -117,6 +120,8 @@ class DrawingSession:
         self.metadata = deepcopy(metadata or {})
         self._observations = deepcopy(observations or [])
         self._inspection_history = deepcopy(inspection_history or [])
+        self._residuals = deepcopy(residuals or [])
+        self._corrections = deepcopy(corrections or [])
         self._finish_metadata = None if finish_metadata is None else deepcopy(finish_metadata)
         self._lock = threading.RLock()
         self._subject_sha256 = subject_sha256 or sha256_file(self.subject)
@@ -206,6 +211,16 @@ class DrawingSession:
                 raise ValueError(f"checkpoint references unknown observation_id: {observation_id}")
         inspection_history = deepcopy(payload.get("inspection_history") or [])
         cls._validate_inspection_history(inspection_history)
+        residuals = deepcopy(payload.get("residuals") or [])
+        cls._validate_residual_records(residuals, observations, inspection_history)
+        corrections = deepcopy(payload.get("corrections") or [])
+        cls._validate_correction_records(
+            corrections,
+            residuals,
+            observations,
+            inspection_history,
+            agent.history.actions,
+        )
 
         if output_dir is None:
             artifact_root = str((payload.get("artifacts") or {}).get("inspection_root", "."))
@@ -223,6 +238,8 @@ class DrawingSession:
             metadata=deepcopy(payload.get("metadata") or {}),
             observations=observations,
             inspection_history=inspection_history,
+            residuals=residuals,
+            corrections=corrections,
             finish_metadata=deepcopy(payload.get("finish_metadata")),
             checkpoint_path=checkpoint_path if output_dir is None else destination / "session.checkpoint.json",
             subject_sha256=actual_subject_hash,
@@ -280,6 +297,84 @@ class DrawingSession:
             seen.add(inspection_id)
 
     @staticmethod
+    def _validate_residual_records(
+        records: Sequence[Mapping[str, Any]],
+        observations: Sequence[Mapping[str, Any]] = (),
+        inspections: Sequence[Mapping[str, Any]] = (),
+    ) -> None:
+        seen: set[str] = set()
+        observation_ids = {str(record.get("observation_id")) for record in observations}
+        inspection_by_id = {str(record.get("inspection_id")): record for record in inspections}
+        for raw in records:
+            record = ResidualRecord.from_dict(raw)
+            if record.residual_id in seen:
+                raise ValueError(f"duplicate residual_id: {record.residual_id}")
+            if observations and record.observation_id not in observation_ids:
+                raise ValueError(f"residual references unknown observation_id: {record.observation_id}")
+            if inspections:
+                before = inspection_by_id.get(record.before_inspection_id)
+                if before is None:
+                    raise ValueError(f"residual references unknown before inspection: {record.residual_id}")
+                if before["drawing_state_hash"] != record.before_drawing_state_hash:
+                    raise ValueError(f"residual before digest mismatch: {record.residual_id}")
+                if record.after_inspection_id is not None:
+                    after = inspection_by_id.get(record.after_inspection_id)
+                    if after is None or after["drawing_state_hash"] != record.after_drawing_state_hash:
+                        raise ValueError(f"residual after digest mismatch: {record.residual_id}")
+            seen.add(record.residual_id)
+
+    @staticmethod
+    def _validate_correction_records(
+        records: Sequence[Mapping[str, Any]],
+        residuals: Sequence[Mapping[str, Any]],
+        observations: Sequence[Mapping[str, Any]] = (),
+        inspections: Sequence[Mapping[str, Any]] = (),
+        actions: Sequence[Any] = (),
+    ) -> None:
+        residual_by_id = {}
+        for raw in residuals:
+            parsed = ResidualRecord.from_dict(raw)
+            residual_by_id[parsed.residual_id] = parsed
+        observation_ids = {str(record.get("observation_id")) for record in observations}
+        inspection_by_id = {str(record.get("inspection_id")): record for record in inspections}
+        action_by_id = {
+            str((action.provenance or {}).get("action_id", "")).strip(): (position, action)
+            for position, action in enumerate(actions)
+            if str((action.provenance or {}).get("action_id", "")).strip()
+        }
+        seen: set[str] = set()
+        for raw in records:
+            record = CorrectionRecord.from_dict(raw)
+            if record.correction_id in seen:
+                raise ValueError(f"duplicate correction_id: {record.correction_id}")
+            residual = residual_by_id.get(record.residual_id)
+            if residual is None:
+                raise ValueError(f"correction references unknown residual_id: {record.residual_id}")
+            if record.observation_id != residual.observation_id:
+                raise ValueError(f"correction observation mismatch: {record.correction_id}")
+            if observations and record.observation_id not in observation_ids:
+                raise ValueError(f"correction references unknown observation_id: {record.observation_id}")
+            if inspections:
+                before = inspection_by_id.get(record.before_inspection_id)
+                after = inspection_by_id.get(record.after_inspection_id)
+                if before is None or before["drawing_state_hash"] != record.before_drawing_state_hash:
+                    raise ValueError(f"correction before digest mismatch: {record.correction_id}")
+                if after is None or after["drawing_state_hash"] != record.after_drawing_state_hash:
+                    raise ValueError(f"correction after digest mismatch: {record.correction_id}")
+            if actions:
+                for action_id in record.action_ids:
+                    action_entry = action_by_id.get(action_id)
+                    if action_entry is None:
+                        raise ValueError(f"correction references unknown action_id: {action_id}")
+                    position, action = action_entry
+                    if position < record.before_history_cursor:
+                        raise ValueError(f"correction action predates residual: {action_id}")
+                    action_observation = (action.provenance or {}).get("observation_id")
+                    if action_observation not in (None, "vnext-unobserved", record.observation_id):
+                        raise ValueError(f"correction action observation mismatch: {action_id}")
+            seen.add(record.correction_id)
+
+    @staticmethod
     def _verify_inspection_artifacts(
         root: Path, records: Sequence[Mapping[str, Any]]
     ) -> None:
@@ -333,6 +428,18 @@ class DrawingSession:
         return tuple(deepcopy(self._observations))
 
     @property
+    def residual_history(self) -> tuple[ResidualRecord, ...]:
+        """Return the Agent-authored residual memory as immutable records."""
+
+        return tuple(ResidualRecord.from_dict(record) for record in deepcopy(self._residuals))
+
+    @property
+    def correction_history(self) -> tuple[CorrectionRecord, ...]:
+        """Return explicit correction records with their fresh evidence bindings."""
+
+        return tuple(CorrectionRecord.from_dict(record) for record in deepcopy(self._corrections))
+
+    @property
     def finish_metadata(self) -> dict[str, Any] | None:
         return None if self._finish_metadata is None else deepcopy(self._finish_metadata)
 
@@ -360,6 +467,8 @@ class DrawingSession:
             "executed_action_ids": sorted(self._agent.executed_action_ids),
             "observations": _portable(self._observations),
             "inspection_history": _portable(self._inspection_history),
+            "residuals": _portable(self._residuals),
+            "corrections": _portable(self._corrections),
             "finish_metadata": _portable(self._finish_metadata),
             "digests": {
                 "action_log_sha256": sha256_obj([a.to_dict() for a in self._agent.history.actions]),
@@ -632,7 +741,10 @@ class DrawingSession:
             reason=normalized_reason,
             metadata=metadata,
         )
-        return str(self._commit(action))
+        self._commit(action)
+        # Eraser actions do not create a replacement stroke, so expose their
+        # canonical history ID for correction provenance.
+        return action.action_id
 
     def delete_stroke(
         self,
@@ -645,7 +757,7 @@ class DrawingSession:
         observation_id: str | None = None,
         source_observation: str | None = None,
         reason: str | None = None,
-    ) -> None:
+    ) -> str:
         oid, source, normalized_reason = self._provenance(
             observation_id=observation_id,
             source_observation=source_observation,
@@ -662,6 +774,7 @@ class DrawingSession:
             reason=normalized_reason,
         )
         self._commit(action)
+        return action.action_id
 
     def observe(self, observation: Any, *, observation_id: str | None = None) -> str:
         payload = _portable(observation)
@@ -690,6 +803,205 @@ class DrawingSession:
                 self._observations = before
                 raise
         return record_id
+
+    def _inspection_record(self, inspection_id: str) -> dict[str, Any]:
+        requested = str(inspection_id).strip()
+        for record in self._inspection_history:
+            if str(record.get("inspection_id")) == requested:
+                return deepcopy(record)
+        raise ValueError(f"unknown inspection_id: {requested}")
+
+    def record_residual(
+        self,
+        residual: ResidualRecord | None = None,
+        **fields: Any,
+    ) -> str:
+        """Anchor one Agent-selected residual to the current inspection snapshot.
+
+        Pass a ``ResidualRecord`` or its fields.  When fields are supplied, the
+        before-state digest is derived from ``before_inspection_id`` rather than trusted
+        from the caller.  Recording a concern after the drawing has already changed is
+        rejected as stale.
+        """
+
+        if residual is not None and fields:
+            raise TypeError("record_residual accepts a ResidualRecord or keyword fields, not both")
+        with self._lock:
+            if residual is None:
+                values = dict(fields)
+                before_id = values.get("before_inspection_id")
+                if before_id is None:
+                    raise TypeError("record_residual requires before_inspection_id")
+                before = self._inspection_record(str(before_id))
+                values.setdefault("residual_id", f"residual-{len(self._residuals) + 1:04d}")
+                values["before_drawing_state_hash"] = before["drawing_state_hash"]
+                values.setdefault("before_history_cursor", self.history_cursor)
+                residual = ResidualRecord(**values)
+            if not isinstance(residual, ResidualRecord):
+                raise TypeError("record_residual requires a ResidualRecord")
+            if residual.status != "open":
+                raise ValueError("only open residuals can be recorded")
+            before = self._inspection_record(residual.before_inspection_id)
+            if before["drawing_state_hash"] != residual.before_drawing_state_hash:
+                raise ValueError("residual before evidence digest does not match inspection")
+            if self.drawing_state_hash() != residual.before_drawing_state_hash:
+                raise ValueError("residual evidence is stale; inspect the current drawing first")
+            if residual.observation_id not in {record["observation_id"] for record in self._observations}:
+                raise ValueError(f"unknown observation_id: {residual.observation_id}")
+            if any(record.get("residual_id") == residual.residual_id for record in self._residuals):
+                raise ValueError(f"duplicate residual_id: {residual.residual_id}")
+            payload = residual.to_dict()
+            self._residuals.append(payload)
+            try:
+                self._write_checkpoint(self._checkpoint_path)
+            except Exception:
+                self._residuals.pop()
+                raise
+            return residual.residual_id
+
+    def record_correction(
+        self,
+        residual_id: str,
+        *,
+        action_ids: Iterable[str],
+        after_inspection_id: str,
+        rationale: str,
+        decision: str = "keep",
+        correction_id: str | None = None,
+    ) -> CorrectionRecord:
+        """Bind explicit history actions to fresh after-inspection evidence.
+
+        ``decision="revise"`` records an attempt while leaving the residual open.  The
+        default ``keep`` marks it resolved only after the Agent supplies a current
+        inspection whose digest differs from the before snapshot.
+        """
+
+        requested = str(residual_id).strip()
+        with self._lock:
+            index = next(
+                (i for i, record in enumerate(self._residuals) if record.get("residual_id") == requested),
+                None,
+            )
+            if index is None:
+                raise ValueError(f"unknown residual_id: {requested}")
+            residual = ResidualRecord.from_dict(self._residuals[index])
+            if residual.status != "open":
+                raise ValueError(f"residual is already resolved: {requested}")
+            before = self._inspection_record(residual.before_inspection_id)
+            after = self._inspection_record(after_inspection_id)
+            if before["drawing_state_hash"] != residual.before_drawing_state_hash:
+                raise ValueError("residual before inspection no longer matches its record")
+            if self.drawing_state_hash() != after["drawing_state_hash"]:
+                raise ValueError("after inspection is stale; inspect the current drawing first")
+            if after["drawing_state_hash"] == residual.before_drawing_state_hash:
+                raise ValueError("correction requires a changed after drawing state")
+
+            requested_actions = (action_ids,) if isinstance(action_ids, str) else tuple(action_ids)
+            actions: dict[str, tuple[int, Any]] = {}
+            stroke_refs: dict[str, list[tuple[int, str]]] = {}
+            for position, action in enumerate(self._agent.history.actions):
+                action_id = str((action.provenance or {}).get("action_id", "")).strip()
+                if not action_id:
+                    continue
+                actions[action_id] = (position, action)
+                # History actions use the target/source id at the payload level
+                # and may assign a fresh generated id to the nested stroke.  Both
+                # are useful caller references; the cursor filter below prevents
+                # a pre-residual source stroke from being selected accidentally.
+                stroke_ids = []
+                payload_stroke_id = action.payload.get("stroke_id")
+                if payload_stroke_id is not None:
+                    stroke_ids.append(payload_stroke_id)
+                stroke = action.payload.get("stroke") or {}
+                nested_stroke_id = stroke.get("stroke_id")
+                if nested_stroke_id is not None:
+                    stroke_ids.append(nested_stroke_id)
+                for stroke_id in dict.fromkeys(str(stroke_id) for stroke_id in stroke_ids):
+                    stroke_refs.setdefault(stroke_id, []).append((position, action_id))
+            normalized_actions: list[str] = []
+            for requested_action in requested_actions:
+                requested_id = str(requested_action).strip()
+                if not requested_id:
+                    raise ValueError("correction action_ids must be non-empty")
+                action_id = requested_id
+                candidates = stroke_refs.get(requested_id, ())
+                eligible = [item for item in candidates if item[0] >= residual.before_history_cursor]
+                # Construction marks are themselves action IDs.  Once that
+                # mark has been revised, prefer the latest eligible action
+                # carrying the same target stroke instead of rejecting the
+                # original pre-residual action as stale.
+                if action_id not in actions or (
+                    actions[action_id][0] < residual.before_history_cursor and eligible
+                ):
+                    if eligible:
+                        action_id = eligible[-1][1]
+                if action_id not in actions:
+                    raise ValueError(f"correction references unknown action_id: {requested_id}")
+                normalized_actions.append(action_id)
+                position, action = actions[action_id]
+                if position < residual.before_history_cursor:
+                    raise ValueError(f"correction action predates residual: {requested_id}")
+                provenance = action.provenance or {}
+                action_observation = provenance.get("observation_id")
+                if action_observation not in (None, "vnext-unobserved", residual.observation_id):
+                    raise ValueError(f"correction action observation mismatch: {requested_id}")
+            if len(set(normalized_actions)) != len(normalized_actions):
+                raise ValueError("correction action_ids must be unique")
+
+            correction = CorrectionRecord(
+                correction_id=correction_id or f"correction-{len(self._corrections) + 1:04d}",
+                residual_id=residual.residual_id,
+                observation_id=residual.observation_id,
+                before_inspection_id=residual.before_inspection_id,
+                before_drawing_state_hash=residual.before_drawing_state_hash,
+                before_history_cursor=residual.before_history_cursor,
+                action_ids=tuple(normalized_actions),
+                after_inspection_id=str(after_inspection_id),
+                after_drawing_state_hash=after["drawing_state_hash"],
+                decision=decision,
+                rationale=rationale,
+            )
+            if any(record.get("correction_id") == correction.correction_id for record in self._corrections):
+                raise ValueError(f"duplicate correction_id: {correction.correction_id}")
+            updated = residual
+            if correction.decision == "keep":
+                updated = replace(
+                    residual,
+                    status="resolved",
+                    after_inspection_id=correction.after_inspection_id,
+                    after_drawing_state_hash=correction.after_drawing_state_hash,
+                )
+            before_residuals = deepcopy(self._residuals)
+            before_corrections = deepcopy(self._corrections)
+            self._residuals[index] = updated.to_dict()
+            self._corrections.append(correction.to_dict())
+            try:
+                self._write_checkpoint(self._checkpoint_path)
+            except Exception:
+                self._residuals = before_residuals
+                self._corrections = before_corrections
+                raise
+            return correction
+
+    def resolve_residual(
+        self,
+        residual_id: str,
+        *,
+        action_ids: Iterable[str],
+        after_inspection_id: str,
+        rationale: str,
+        correction_id: str | None = None,
+    ) -> CorrectionRecord:
+        """Resolve a residual after the Agent accepts fresh visual evidence."""
+
+        return self.record_correction(
+            residual_id,
+            action_ids=action_ids,
+            after_inspection_id=after_inspection_id,
+            rationale=rationale,
+            decision="keep",
+            correction_id=correction_id,
+        )
 
     def inspect(
         self,

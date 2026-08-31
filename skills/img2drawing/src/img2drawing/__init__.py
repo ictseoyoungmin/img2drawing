@@ -19,10 +19,12 @@ from .inspection import (
 from .vnext import (
     CONSTRUCTION_PHASES,
     ConstructionMark,
+    CorrectionRecord,
     DrawingSession,
     InitialConstruct,
     InitialConstructResult,
     PoseObservation,
+    ResidualRecord,
     author_initial_construct,
     inspect_initial_construct,
     observe_pose,
@@ -150,7 +152,7 @@ __all__ = [
     "PointMapping", "Profile", "Registration", "ROI", "Size", "angle", "distance", "drawing_state_hash", "drawing_state_payload",
     "ground_guide", "grid", "horizontal_profile", "map_subject_to_canvas", "point", "plumb_line", "sample_pixel",
     "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "CONSTRUCTION_PHASES",
-    "ConstructionMark", "InitialConstruct", "InitialConstructResult", "PoseObservation", "author_initial_construct",
-    "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
+    "ConstructionMark", "CorrectionRecord", "InitialConstruct", "InitialConstructResult", "PoseObservation",
+    "ResidualRecord", "author_initial_construct", "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
     "consume_grammar_card", "AblationTrial", "ExemplarAblationReport", "run_exemplar_ablation",
 ]

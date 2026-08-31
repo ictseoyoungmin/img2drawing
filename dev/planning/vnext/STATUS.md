@@ -3,12 +3,12 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B05 closed; canonical stage-free reading route physically isolated
+SYSTEM:   B00–B06 closed; canonical stage-free reading route physically isolated
 ACTIVE:   none
-NEXT:     B06 residual correction (manual activation required)
-SKELETON: B06 residual correction; B07 evidence cost control; B08–B18 platform/release
-CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring
-NEXT GATE: explicitly activate B06; no B06 implementation is active yet
+NEXT:     B07 evidence / cost control (explicit activation required)
+SKELETON: B07 evidence cost control; B08–B18 platform/release
+CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06
+NEXT GATE: explicitly activate B07; no B08+ implementation is active
 ```
 
 ## B05 second reopen resolution — attention boundary
@@ -41,7 +41,29 @@ Pn doctrine in canonical `SKILL.md`. The fix is covered by
 The reopen record and evidence are in [`slices/B05.md`](slices/B05.md),
 [`capsules/B05.md`](capsules/B05.md), and
 [`../evidence/vnext/b05/canonical-route-fresh-worker.md`](../../evidence/vnext/b05/canonical-route-fresh-worker.md).
-B05 is closed; B06 is the sole candidate and remains inactive until explicitly activated.
+B05 is closed. B06 was explicitly activated as the sole production WIP and is now closed;
+no later slice may be implemented until its own activation record exists.
+
+## B06 closure — residual-driven correction
+
+Activated: 2026-08-31 after B05 reclosure and the R23 release-gate compatibility fix.
+The slice is deliberately narrow: add Agent-authored residual/correction provenance on
+the existing `DrawingSession` and inspection boundary, prove premise/global and local
+repairs against the B05 subject, and preserve checkpoint/resume integrity. No stage
+runtime, renderer, inspection implementation, mode registry, or automatic visual score
+is in scope.
+
+Activation risks:
+
+- stale before/after inspection evidence could be accepted after a later mutation;
+- correction actions could become detached from the observation that motivated them;
+- residual memory could accidentally become a lifecycle gate or duplicate history.
+
+The B06 contract addressed these with immutable inspection digests, explicit action and
+observation references, `keep`/`revise` decisions, and atomic checkpoint writes. The
+closure evidence is [`../evidence/vnext/b06/REVIEW.md`](../../evidence/vnext/b06/REVIEW.md),
+the executable fixture is [`../dogfood/vnext-b06/README.md`](../../dogfood/vnext-b06/README.md),
+and the public API is compressed in [`capsules/B06.md`](capsules/B06.md).
 
 ## Closed foundation
 
@@ -52,6 +74,7 @@ B05 is closed; B06 is the sole candidate and remains inactive until explicitly a
 | B02+B03 | CLOSED | [`capsules/B02-B03.md`](capsules/B02-B03.md) |
 | B04 | CLOSED | [`capsules/B04.md`](capsules/B04.md) |
 | B05 construction + canonical route de-anchoring | CLOSED | [`capsules/B05.md`](capsules/B05.md) |
+| B06 residual-driven correction | CLOSED | [`capsules/B06.md`](capsules/B06.md) |
 
 ## Current repository truth
 
@@ -60,24 +83,25 @@ B05 is closed; B06 is the sole candidate and remains inactive until explicitly a
 - vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`
 - vNext tests: inspection, session, construction suites under `dev/tests/`
 - B05 dogfood: `dev/dogfood/vnext-b05/`
-- Representative visual evidence: `dev/evidence/vnext/b02-b03/` and
-  `dev/evidence/vnext/b05/`
+- B06 correction dogfood: `dev/dogfood/vnext-b06/`
+- Representative visual evidence: `dev/evidence/vnext/b02-b03/`, `dev/evidence/vnext/b05/`,
+  and `dev/evidence/vnext/b06/`
 - Legacy stage runtime remains in `run.py`, `stages/`, `review/`, playbooks, and
   `references/stages/`; it is compatibility/reference material, not the vNext path.
 
 ## WIP guard
 
-While B06 is not explicitly activated:
+While B07 is not explicitly activated:
 
-- do not implement B06 or later slices;
+- do not implement B08 or later slices;
+- do not reopen B05 unless new construction-quality evidence requires it;
 - do not add `DrawingIntent`, mode/style registries, tonal/free-draw pipelines, or
   renderer families;
 - do not physically remove R23 runtime or persistence;
 - do not rewrite the accepted B05 drawing geometry unless new visual evidence triggers a
   separate construction-quality reopen.
 
-## Next after B05 reclosure
+## Next after B06 closure
 
-B06 becomes the sole candidate for activation. It will add residual records and
-responsible-stroke correction policy over the existing B04/B05 surface. See
-[`ROADMAP.md`](ROADMAP.md) and [`slices/B06.md`](slices/B06.md).
+B07 may be activated after this B06 closure evidence, capsule, and full repository gates
+are committed and green. See [`ROADMAP.md`](ROADMAP.md) and [`slices/B07.md`](slices/B07.md).

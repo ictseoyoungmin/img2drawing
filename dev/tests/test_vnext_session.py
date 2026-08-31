@@ -64,9 +64,11 @@ def test_stage_free_session_supports_ten_strokes_edits_and_auto_checkpoint(tmp_p
         stroke_ids[1], 0, 2, [(10.0, 8.0), (24.0, 20.0)], reason="local contour correction"
     )
     before_lift = session.current_ir().strokes[2].opacity
-    session.soft_lift(stroke_ids[2], strength=0.5, reason="reduce misplaced mark")
+    lift_action_id = session.soft_lift(stroke_ids[2], strength=0.5, reason="reduce misplaced mark")
+    assert lift_action_id.startswith("vnext-")
     assert session.current_ir().strokes[2].opacity < before_lift
-    session.delete_stroke(stroke_ids[3], reason="remove duplicate mark")
+    delete_action_id = session.delete_stroke(stroke_ids[3], reason="remove duplicate mark")
+    assert delete_action_id.startswith("vnext-")
     assert len(session.current_ir().strokes) == 9
 
     checkpoint = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))

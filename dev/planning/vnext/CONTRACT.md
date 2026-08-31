@@ -1,10 +1,10 @@
 # img2drawing vNext architecture contract
 
 Status: **CURRENT**
-Updated: 2026-08-31
+Updated: 2026-08-31 (B06)
 
 이 문서는 `temp/img2drawing_vnext_universal_drawing_plan.html`의 설계를 현재
-B00–B05 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
+B00–B06 구현과 맞춰 압축한 architecture contract다. 이미 구현된 계약과 미래
 slice의 제약을 구분한다.
 
 ## 1. 현재 닫힌 core
@@ -17,6 +17,7 @@ DrawingSession
   ├─ draw / draw_many
   ├─ replace / soft_lift / delete
   ├─ inspect
+  ├─ record_residual / record_correction
   ├─ checkpoint / resume
   └─ finish
 
@@ -44,7 +45,7 @@ DrawingSession → one authoritative action history → StrokeIR snapshot
 ## 2. canonical lifecycle
 
 ```text
-create → observe → draw → inspect → correct → repeat → finish
+create → observe → draw → inspect → choose residual → correct → inspect → repeat → finish
 ```
 
 여기에는 `P1`–`P6`, `stage_start`, `advance`, `close_stage`, `reopen_stage`,
@@ -59,6 +60,13 @@ runtime cursor나 gate가 아니다.
 - inspection은 exact subject bytes, drawing artifact, stage-free state digest에 묶인다.
 - checkpoint는 portable하고 atomic하며 resume 후 history/evidence 연속성을 보존한다.
 - 수정 action 자체는 개선 증거가 아니다. fresh render/inspection이 필요하다.
+- `ResidualRecord`는 Agent가 선택한 mismatch를 observation, before inspection digest,
+  responsible premise/strokes, scope, severity, impact rationale, planned edit에
+  묶는다. `CorrectionRecord`는 explicit history action과 fresh after inspection을
+  묶으며 `keep`만 residual을 resolved로 만든다; `revise`는 열린 concern으로 남긴다.
+- residual/correction records are correction memory, not a score, priority selector,
+  lifecycle gate, or duplicate history. Stale before/after evidence and orphan action
+  references are rejected on record and checkpoint resume.
 - macro pose/form/composition residual이 detail/style polish보다 우선한다.
 
 ## 4. 미래 intent model

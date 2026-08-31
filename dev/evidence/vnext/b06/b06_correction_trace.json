@@ -1,0 +1,54 @@
+{
+  "schema": "img2drawing.vnext.b06_correction_trace.v1",
+  "session_id": "vnext-b06-residual-correction",
+  "subject": "subject.png",
+  "observation_id": "observation-0001",
+  "initial_inspection_id": "000001",
+  "seeded_action_id": "h0039",
+  "global": {
+    "residual_id": "residual-0001",
+    "before_inspection_id": "000002",
+    "after_inspection_id": "000003",
+    "correction_id": "correction-0001",
+    "action_ids": [
+      "vnext-000040"
+    ],
+    "before_drawing_state_hash": "59afbd1df1c3417deed44276366ea6cc305abb2f9feda04154c542a3b7f895ed",
+    "after_drawing_state_hash": "2c61d7d59c752661289d4d09d7612c1d0be4d6a3b28f80f7b5bcf55f5ad83f81"
+  },
+  "local": {
+    "residual_id": "residual-0002",
+    "before_inspection_id": "000003",
+    "after_inspection_id": "000004",
+    "correction_id": "correction-0002",
+    "action_ids": [
+      "vnext-000041"
+    ]
+  },
+  "inspection_ids": [
+    "000001",
+    "000002",
+    "000003",
+    "000004"
+  ],
+  "resumed": {
+    "history_cursor": 41,
+    "residual_statuses": [
+      "resolved",
+      "resolved"
+    ],
+    "correction_ids": [
+      "correction-0001",
+      "correction-0002"
+    ]
+  },
+  "route": "observe → draw → inspect → choose residual → edit → inspect → keep → finish",
+  "visual_review": {
+    "initial": "inspections/000001/inspection_sheet.png",
+    "seeded_residual": "inspections/000002/inspection_sheet.png",
+    "global_before": "inspections/000002/inspection_sheet.png",
+    "global_after": "inspections/000003/inspection_sheet.png",
+    "local_before": "inspections/000003/inspection_sheet.png",
+    "local_after": "inspections/000004/inspection_sheet.png"
+  }
+}

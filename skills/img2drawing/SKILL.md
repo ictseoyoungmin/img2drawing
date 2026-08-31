@@ -94,6 +94,16 @@ Until the initial whole figure reads as this subject's pose, do not spend the qu
 budget on metadata or detail coverage. The shared residual correction loop applies after
 every mutation.
 
+For each repair, anchor the Agent's selected mismatch with `DrawingSession.record_residual()`
+against the latest inspection and observation. Choose `scope="global"` when a premise or
+mass must be reconstructed, or `scope="local"` for a bounded contour/segment concern.
+Apply an explicit `replace_stroke`, `replace_segment`, `soft_lift`, `delete_stroke`, or
+`draw` action, inspect the new snapshot, and bind the action plus fresh inspection with
+`resolve_residual()` (or `record_correction(decision="revise")` when the attempt is not
+accepted). A mutation makes prior evidence stale; the Agent chooses priority and keeps
+or revises the residual. Read [`review/residual-correction.md`](references/review/residual-correction.md)
+for the compact record fields and provenance contract.
+
 ## Renderer policy
 
 All normal drawing, review, replay, final export and timelapse paths use
