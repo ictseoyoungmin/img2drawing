@@ -7,14 +7,14 @@ drawing framework이지만, 구현은 Production WIP Limit = 1로 진행한다.
 
 ```text
 B00–B05의 구현/증거는 닫혀 있다.
-B05 재오픈에서 canonical reading route의 Pn 지침을 제거·이관했고 다시 닫았다.
+B05 두 번째 재오픈에서 embedded R23 attention leak을 물리적으로 제거했다.
 다음 작업은 B06 residual correction이며, 활성화 전까지는 skeleton으로 유지한다.
 ```
 
 `temp/img2drawing_vnext_universal_drawing_plan.html`은 이번 재구성의 제품·설계
 입력이다. 저장소 상태와 충돌하는 HTML의 `B05 ACTIVE` 표기는 HEAD와 사용자
-지시를 기준으로 B05를 재오픈해 canonical Pn de-anchoring을 완료한 뒤 `CLOSED`로
-보정했다. HTML은 상태 권위가 아니다.
+지시를 기준으로 B05를 두 차례 재오픈해 canonical Pn de-anchoring을 완료한 뒤
+`CLOSED`로 보정했다. HTML은 상태 권위가 아니다.
 
 ## 읽기 순서
 

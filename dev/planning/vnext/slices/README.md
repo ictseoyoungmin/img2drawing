@@ -1,7 +1,8 @@
 # vNext work slices
 
-이 디렉터리에는 아직 수행할 production slice만 둔다. 모든 카드는 `SKELETON`
-상태이며, 실제 작업을 시작할 때 `STATUS.md`와 해당 카드 하나만 `ACTIVE`로 바꾼다.
+이 디렉터리에는 아직 수행할 production slice만 둔다. B05의 construction 및
+canonical route de-anchoring은 닫혀 있고, 나머지 카드는 `SKELETON`이다. 실제 작업을
+시작할 때 `STATUS.md`와 해당 카드 하나만 `ACTIVE`/`REOPENED`로 바꾼다.
 
 ## Closed work
 

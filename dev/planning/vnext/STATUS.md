@@ -3,7 +3,7 @@
 Updated: 2026-08-31
 
 ```text
-SYSTEM:   B00–B05 closed; canonical stage-free reading route established
+SYSTEM:   B00–B05 closed; canonical stage-free reading route physically isolated
 ACTIVE:   none
 NEXT:     B06 residual correction (manual activation required)
 SKELETON: B06 residual correction; B07 evidence cost control; B08–B18 platform/release
@@ -11,25 +11,32 @@ CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchorin
 NEXT GATE: explicitly activate B06; no B06 implementation is active yet
 ```
 
-## B05 reopen resolution
+## B05 second reopen resolution — attention boundary
 
-The B05 construction and near/right-arm correction closure remained valid. On 2026-08-31
-B05 was reopened for a narrow documentation/attention migration and reclosed after the
-canonical route audit and example/test gates passed.
+The B05 construction and near/right-arm correction closure remain valid. A review of the
+first documentation migration found that the full R23 body was still embedded in the
+same `SKILL.md` file under a collapsed `<details>` element. That is not an LLM attention
+boundary, so B05 was reopened narrowly on 2026-08-31 and reclosed after the physical
+separation and fresh-worker evidence gates passed.
 
-The completed migration:
+Affected surface and risk:
 
-- rewrote the canonical `SKILL.md` route around observe → draw → inspect → correct →
-  finish;
-- moved reusable gesture, mass, balance, contour, identity, mode, and residual guidance
-  into stage-free references;
-- retained legacy stage/runtime material behind the explicit `legacy-r23.md` gateway and
-  marker READMEs;
-- rewrote the bundled full-body example to use `DrawingSession` and no target/answer image.
+- `skills/img2drawing/SKILL.md`: remove the embedded legacy body while preserving one
+  short pointer to `references/legacy-r23.md`;
+- `skills/img2drawing/references/INDEX.md`: stop enumerating legacy descendants in the
+  canonical index and retain only the gateway;
+- `dev/evidence/vnext/b05/canonical-route-fresh-worker.md`: record the actual fresh-route
+  file set and explicit non-reads;
+- risk addressed: compatibility remains discoverable through the gateway, and the
+  fresh-worker result is recorded as a concrete trace artifact.
 
-The reopen record and final evidence are in [`slices/B05.md`](slices/B05.md) and
-[`capsules/B05.md`](capsules/B05.md). B05 is closed; B06 is the sole candidate and remains
-inactive until explicitly activated.
+The accepted construction geometry, `DrawingSession`, inspection/checkpoint semantics,
+stage-free references, and subject-only example remain frozen.
+
+The reopen record and evidence are in [`slices/B05.md`](slices/B05.md),
+[`capsules/B05.md`](capsules/B05.md), and
+[`../evidence/vnext/b05/canonical-route-fresh-worker.md`](../../evidence/vnext/b05/canonical-route-fresh-worker.md).
+B05 is closed; B06 is the sole candidate and remains inactive until explicitly activated.
 
 ## Closed foundation
 
@@ -39,7 +46,7 @@ inactive until explicitly activated.
 | B01 | CLOSED | [`capsules/B01.md`](capsules/B01.md) |
 | B02+B03 | CLOSED | [`capsules/B02-B03.md`](capsules/B02-B03.md) |
 | B04 | CLOSED | [`capsules/B04.md`](capsules/B04.md) |
-| B05 original | CLOSED | [`capsules/B05.md`](capsules/B05.md) |
+| B05 construction + canonical route de-anchoring | CLOSED | [`capsules/B05.md`](capsules/B05.md) |
 
 ## Current repository truth
 

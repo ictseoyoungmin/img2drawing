@@ -29,19 +29,9 @@
 `phase_start`, `advance`, `close`, `reopen` state를 만들지 않는다. `DrawingIntent`,
 StyleGuide, RenderProfile schema는 B08 이후에 동결한다.
 
-## Legacy R23 compatibility (new work must not use)
+## Legacy R23 compatibility
 
-- `legacy-r23.md`: 유일한 compatibility gateway
-- `stages/`: P1–P6 stage guidance와 historical images
-- `../playbooks/`: `DrawingRun` continuation playbooks
-- `stages/stage-contracts.md`: legacy representation contracts
-- stage-coupled review helpers such as `review/dual-reference-review.md`,
-  `review/fresh-worker-defect-closure.md`, `review/local-review-api.md`,
-  `review/reference-authority.md`, `review/reopen-recovery.md`,
-  `review/self-visual-audit.md`, `review/when-to-advance.md`, and
-  `review/worker-pass-memory.md`: 기존 R23 실행을 이어갈 때만 읽는다.
-- `worker/autonomous-worker-contract.md`: legacy worker packet contract; new work uses
-  this file's canonical route instead.
+Existing R23 runs only: [`legacy-r23.md`](legacy-r23.md).
 
-R23 자료는 history, regression, migration 근거다. 새 작업의 geometry authority,
-visual PASS, mode lifecycle, 또는 canonical reading route가 아니다.
+The gateway links to the preserved stage, playbook, and review compatibility material.
+New work must not follow that route or use its Pn lifecycle as a mode or finish contract.

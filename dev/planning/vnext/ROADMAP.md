@@ -14,7 +14,7 @@ Workflow: Bottleneck, Production WIP Limit = 1
 | B01 | CLOSED | vNext architecture cut | B00 | `capsules/B01.md` |
 | B02+B03 | CLOSED | Inspection + measurement foundation | B01 | `capsules/B02-B03.md` |
 | B04 | CLOSED | Stage-agnostic `DrawingSession` | B02+B03 | `capsules/B04.md` |
-| B05 | CLOSED | Observation/construction 유지 + canonical Pn de-anchoring 완료 | B04 | `capsules/B05.md` |
+| B05 | CLOSED | Embedded R23 attention leak 제거 및 fresh-worker proof 완료 | B04 | `capsules/B05.md` |
 | B06 | SKELETON | Residual-driven correction | B05 reclosed | `slices/B06.md` |
 | B07 | SKELETON | Evidence / cost control | B06 | `slices/B07.md` |
 | B08 | SKELETON | `DrawingIntent` + mode/style scaffolding | B07 | `slices/B08.md` |
@@ -73,5 +73,5 @@ vNext release line은 다음을 모두 직접 입증해야 한다.
 - 제품/설계/slice 입력: `temp/img2drawing_vnext_universal_drawing_plan.html`
 - 기존 상세 초안: `temp/img2drawing-vnext-plan-dev-v2/`
 - 실제 상태: HEAD, tests, evidence, CLOSED capsules
-- 상태 보정: HTML의 `B05 ACTIVE`는 실제 작업에서 한 번 재오픈해 canonical Pn
-  de-anchoring을 완료한 뒤 `CLOSED`로 정정했다. 다음 후보는 B06이다.
+- 상태 보정: HTML의 `B05 ACTIVE`는 실제 작업에서 두 번째로 좁게 재오픈해 embedded
+  R23 attention leak을 제거한 뒤 `CLOSED`로 정정했다. 다음 후보는 B06이다.
