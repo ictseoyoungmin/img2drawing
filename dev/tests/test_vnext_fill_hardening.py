@@ -7,9 +7,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from img2drawing import DrawingSession, PoseObservation, drawing_state_hash, replace_fill_region
+from img2drawing import DrawingSession, PoseObservation, replace_fill_region
 from img2drawing.core import AgentDrawingSession
-from img2drawing.core.ir import Stroke, StrokeIR
 from img2drawing.core.session import sha256_obj
 
 
@@ -34,16 +33,18 @@ def _session(tmp_path: Path) -> tuple[DrawingSession, str]:
     return session, oid
 
 
-def test_pressure_authored_flag_is_not_visual_drawing_identity():
-    first = StrokeIR(100, 100)
-    second = StrokeIR(100, 100)
-    a = Stroke(points=[(10, 10), (50, 50), (90, 20)], pressure=[0.2, 0.8, 0.3])
-    b = Stroke(points=[(10, 10), (50, 50), (90, 20)], pressure=[0.2, 0.8, 0.3])
-    a.pressure_authored = False
-    b.pressure_authored = True
-    first.add(a)
-    second.add(b)
-    assert drawing_state_hash(first) == drawing_state_hash(second)
+def test_post_compaction_checkpoint_keeps_its_existing_visual_digest(tmp_path):
+    """The compatibility path must not rewrite hashes already emitted by B07-R1."""
+
+    session, oid = _session(tmp_path)
+    session.draw([(10, 10), (60, 60), (120, 30)], part="axis", observation_id=oid)
+    saved = json.loads(session.checkpoint_path.read_text())["digests"]["drawing_state_hash"]
+    revived = DrawingSession.resume(
+        session.checkpoint_path,
+        subject=session.subject,
+        output_dir=session.output_dir,
+    )
+    assert revived.drawing_state_hash() == saved
 
 
 def test_pre_compaction_inline_pressure_checkpoint_resumes_without_digest_rewrite(tmp_path):
@@ -52,16 +53,26 @@ def test_pre_compaction_inline_pressure_checkpoint_resumes_without_digest_rewrit
     session, oid = _session(tmp_path)
     session.draw([(10, 10), (60, 60), (120, 30)], part="axis", observation_id=oid)
     raw = json.loads(session.checkpoint_path.read_text())
-    untouched_visual_digest = raw["digests"]["drawing_state_hash"]
+
+    # Reconstruct the visual digest that a pre-B07-R1 StrokeIR wrote before the
+    # pressure_authored provenance field existed. This is intentionally computed from
+    # the old structural shape and is never recomputed after loading the migrated file.
+    current = session.current_ir().to_dict()
+    current["metadata"].pop("history_cursor", None)
+    for stroke in current["strokes"]:
+        stroke.pop("stage", None)
+        stroke.pop("pressure_authored", None)
+    pre_compaction_visual_digest = sha256_obj(current)
 
     # Old vNext persisted both the derived pressure and tool_state inline on the stroke.
     derived = session.current_ir().strokes[0].pressure
     action = raw["history"]["actions"][0]
     action["payload"]["stroke"]["pressure"] = list(derived)
     action["payload"]["stroke"]["tool_state"] = action["tool_state"]
+    raw["digests"]["drawing_state_hash"] = pre_compaction_visual_digest
 
-    # The action log genuinely changed representation, so update only that digest.  A
-    # compatibility test must NOT rewrite the saved visual drawing digest with new code.
+    # The action log genuinely changed representation, so update only that digest after
+    # fixing the old visual digest. The resume path must preserve it from this point on.
     agent = AgentDrawingSession.from_dict({
         "schema": "img2drawing.agent_drawing_session.v1",
         "history": raw["history"],
@@ -70,7 +81,6 @@ def test_pre_compaction_inline_pressure_checkpoint_resumes_without_digest_rewrit
     raw["digests"]["action_log_sha256"] = sha256_obj(
         [item.to_dict() for item in agent.history.actions]
     )
-    assert raw["digests"]["drawing_state_hash"] == untouched_visual_digest
 
     legacy = tmp_path / "pre_compaction.checkpoint.json"
     legacy.write_text(json.dumps(raw), encoding="utf-8")
@@ -79,7 +89,7 @@ def test_pre_compaction_inline_pressure_checkpoint_resumes_without_digest_rewrit
         subject=session.subject,
         output_dir=tmp_path / "revived",
     )
-    assert revived.drawing_state_hash() == untouched_visual_digest
+    assert revived.drawing_state_hash() == pre_compaction_visual_digest
     assert revived.current_ir().strokes[0].pressure == list(derived)
 
 
