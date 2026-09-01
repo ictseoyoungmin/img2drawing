@@ -128,6 +128,7 @@ def test_inspect_binds_current_snapshot_and_raster_without_arbitrary_pairing(tmp
         "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
         "history_cursor": 1,
         "intent_digest": None,
+        "reference_authority_digest": session.reference_authority.digest(),
     }
     with pytest.raises(TypeError):
         session.inspect(drawing=raw, drawing_state_hash="0" * 64)  # type: ignore[call-arg]

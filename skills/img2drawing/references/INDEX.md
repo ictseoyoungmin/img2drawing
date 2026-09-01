@@ -24,6 +24,8 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
 - `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and
   compatibility lookup
+- `reference-authority.md`: observed, imaginative, and hybrid comparison authority;
+  subjectless creation, drawing-only inspection, and explicit unavailable operations
 
 ## Drawing modes (guidance, not stages)
 

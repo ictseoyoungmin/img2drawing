@@ -7,10 +7,10 @@ a general drawing framework, and implementation always follows **Production WIP 
 ## Current summary
 
 ```text
-B00–B12 plus B01-R1/B07-R1 hardening are CLOSED.
-B13–B18 complete the remaining product surface.
+B00–B13 plus B01-R1/B07-R1 hardening are CLOSED.
+B14–B18 complete the remaining product surface.
 No fresh visual dogfood starts before the B18 freeze.
-B13 reference authority/subjectless runtime is the sole production WIP.
+B14 drawing-mode capability completion is the sole production WIP.
 ```
 
 Earlier dogfood exposed enough foundation defects to drive B01-R1 subject-boundary

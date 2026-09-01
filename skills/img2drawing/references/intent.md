@@ -22,11 +22,11 @@ finish = resolve_finish_guide(intent.finish_intent)
 style = resolve_style_guide(intent.style_profile)
 ```
 
-The current production session still requires `subject` to be a readable image. An
-imaginative, hybrid, or `free_draw` intent can be recorded and used as guidance, but a
-subjectless blank-canvas session is not implemented yet; later mode slices own that
-behavior. If no reference is available, state the limitation instead of calling
-`DrawingSession.create()` and promising an output.
+`DrawingIntent.reference_mode` must match the session's immutable `ReferenceAuthority`.
+Observed work uses a readable subject; imaginative work uses an explicit canvas and
+declared goals; hybrid work separates preserved constraints from deliberate
+transformations. See [`reference-authority.md`](reference-authority.md) for creation,
+inspection, persistence, and error behavior.
 
 The allowed values are:
 
@@ -39,8 +39,9 @@ The allowed values are:
 `session.set_intent(next_intent, reason="...")` appends an `IntentChangeRecord` containing
 the full data snapshot, previous digest, reason, and current action-history cursor. It
 does not mutate strokes, invalidate an action, or fork a second history. A checkpoint
-stores the current intent and its provenance; old sessions with no intent continue to
-resume normally.
+stores the current intent and its provenance; old observed sessions with no intent
+continue to resume normally. `set_intent()` cannot change `reference_mode`, because that
+would silently redefine the comparison authority for existing evidence and residuals.
 
 ## ModeGuide
 

@@ -3,12 +3,12 @@
 Updated: 2026-09-01
 
 ```text
-SYSTEM:   stage-free product surface closed through B12, including B01-R1 and B07-R1 hardening
-ACTIVE:   B13 Reference authority + subjectless runtime
-NEXT:     B14 Drawing-mode capability completion
-SKELETON: B14–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B13, including B01-R1 and B07-R1 hardening
+ACTIVE:   B14 Drawing-mode capability completion
+NEXT:     B15 Style authoring completion
+SKELETON: B15–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,24 +45,24 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B13
+## Active slice — B14
 
-B13 is the sole production WIP.
+B14 is the sole production WIP.
 
-Goal: make observed, imaginative, and hybrid reference authority operational through one
-`DrawingSession`, including subjectless creation and inspection/correction behavior that
-does not fabricate a reference.
+Goal: complete a deliberately small set of useful drawing-mode authoring guides on the
+same session/history/inspection/correction/output core, without mode lifecycle state or
+renderer-only styling.
 
-B13 inherits these closed constraints:
+B14 inherits these closed constraints:
 
-- observed sessions remain subject-backed and hash-compatible;
-- imaginative sessions use declared intent/canvas authority rather than fake subject data;
-- hybrid sessions distinguish preserved constraints from explicit transformations;
-- all authority modes reuse one history, inspection, residual/correction, checkpoint,
-  replay, and output core; and
-- reference-only tools fail clearly when no reference exists.
+- retained modes must provide distinct authoring value rather than aliases;
+- `ModeGuide` may describe observations, grammar, omissions, finish emphasis, and
+  completion questions only;
+- tonal study must use authored value/form/edge decisions rather than a raster filter;
+- free-draw must work with B13 observed, imaginative, and hybrid authority; and
+- no mode may own a session, history, renderer, inspection, cursor, advance, or PASS.
 
-B13 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B14 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -84,6 +84,7 @@ those claims belong to D01–D06 after B18.
 | B10 | CLOSED | intent/state/inspection-bound `FinishRecord` with stale-state and tamper validation |
 | B11 | CLOSED | canonical `RenderProfile`, cursor replay, exact PNG parity, bounded GIF export |
 | B12 | CLOSED | explicit lazy `legacy.r23` boundary, R23 v1–v3 resume/migration, canonical root exports |
+| B13 | CLOSED | immutable observed/imaginative/hybrid authority, subjectless drawing-only inspection, shared correction/output |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -141,8 +142,8 @@ B09  Finish / recognition authoring                     CLOSED
 B10  Intent-aware completion                            CLOSED
 B11  Canonical RenderProfile + replay/GIF parity         CLOSED
 B12  Legacy runtime / persistence isolation              CLOSED
-B13  Reference authority + subjectless runtime           ACTIVE
-B14  Drawing-mode capability completion                  SKELETON
+B13  Reference authority + subjectless runtime           CLOSED
+B14  Drawing-mode capability completion                  ACTIVE
 B15  Style authoring completion                          SKELETON
 B16  Agent authoring / editing ergonomics                SKELETON
 B17  Package / public API / release-candidate truth      SKELETON
@@ -188,3 +189,5 @@ Dogfood defects always route back to the responsible implementation slice. Examp
   correction core.
 - Legacy stage runtime is isolated under `img2drawing.legacy.r23` and remains
   compatibility/history material until post-dogfood R03 retirement.
+- Observed, imaginative, and hybrid work share one immutable `ReferenceAuthority`
+  contract; subjectless evidence is drawing-only and never fabricates a reference.

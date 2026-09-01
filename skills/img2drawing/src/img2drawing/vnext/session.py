@@ -38,10 +38,12 @@ from .evidence import (
     EvidencePolicy,
     EvidenceReadRecord,
     EvidenceTelemetry,
-    INSPECTION_ARTIFACTS,
-    VISUAL_INSPECTION_ARTIFACTS,
 )
 from .intent import DrawingIntent, IntentChangeRecord
+from .reference_authority import (
+    ReferenceAuthority,
+    ReferenceUnavailableError,
+)
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
@@ -112,7 +114,7 @@ class DrawingSession:
         self,
         *,
         session_id: str,
-        subject: Path,
+        subject: Path | None,
         output_dir: Path,
         agent_session: AgentDrawingSession,
         metadata: dict[str, Any] | None = None,
@@ -128,11 +130,12 @@ class DrawingSession:
         intent: DrawingIntent | Mapping[str, Any] | None = None,
         intent_history: Sequence[IntentChangeRecord | Mapping[str, Any]] = (),
         render_profile: RenderProfile | Mapping[str, Any] | None = None,
+        reference_authority: ReferenceAuthority | Mapping[str, Any] | None = None,
     ):
         self.session_id = str(session_id)
         if not self.session_id.strip():
             raise ValueError("session_id must be non-empty")
-        self.subject = Path(subject)
+        self.subject = None if subject is None else Path(subject)
         self.output_dir = Path(output_dir)
         self._agent = agent_session
         self.metadata = deepcopy(metadata or {})
@@ -170,27 +173,69 @@ class DrawingSession:
         if self._render_profile is not None:
             self._render_profile.validate_canvas(self._agent.width, self._agent.height)
         self._lock = threading.RLock()
-        self._subject_sha256 = subject_sha256 or sha256_file(self.subject)
+        actual_subject_sha256 = (
+            None
+            if self.subject is None
+            else subject_sha256 or sha256_file(self.subject)
+        )
+        self._reference_authority = (
+            ReferenceAuthority.observed(actual_subject_sha256)
+            if reference_authority is None and actual_subject_sha256 is not None
+            else _coerce_reference_authority(reference_authority)
+        )
+        _validate_reference_context(
+            self._reference_authority,
+            subject=self.subject,
+            subject_sha256=actual_subject_sha256,
+            intent=self._intent,
+        )
+        self._subject_sha256 = actual_subject_sha256
         self._checkpoint_path = checkpoint_path or self.output_dir / "session.checkpoint.json"
 
     @classmethod
     def create(
         cls,
         *,
-        subject: str | Path,
+        subject: str | Path | None = None,
+        canvas: Sequence[int] | None = None,
         output_dir: str | Path,
         session_id: str | None = None,
         metadata: Mapping[str, Any] | None = None,
         intent: DrawingIntent | Mapping[str, Any] | None = None,
         render_profile: RenderProfile | Mapping[str, Any] | None = None,
+        reference_authority: ReferenceAuthority | Mapping[str, Any] | None = None,
     ) -> "DrawingSession":
-        subject_path = Path(subject)
-        if not subject_path.is_file():
-            raise FileNotFoundError(subject_path)
-        with Image.open(subject_path) as image:
-            width, height = image.size
+        subject_path = None if subject is None else Path(subject)
+        selected_intent = None if intent is None else _coerce_intent(intent)
+        if subject_path is not None:
+            if not subject_path.is_file():
+                raise FileNotFoundError(subject_path)
+            with Image.open(subject_path) as image:
+                subject_size = image.size
+        else:
+            subject_size = None
+        if canvas is None:
+            if subject_size is None:
+                raise ValueError("subjectless session creation requires canvas=(width, height)")
+            width, height = subject_size
+        else:
+            if len(canvas) != 2:
+                raise ValueError("canvas requires width and height")
+            width, height = int(canvas[0]), int(canvas[1])
         if width <= 0 or height <= 0:
-            raise ValueError("subject image must have positive dimensions")
+            raise ValueError("canvas dimensions must be positive")
+        subject_digest = None if subject_path is None else sha256_file(subject_path)
+        selected_authority = (
+            ReferenceAuthority.observed(subject_digest)
+            if reference_authority is None and subject_digest is not None
+            else _coerce_reference_authority(reference_authority)
+        )
+        _validate_reference_context(
+            selected_authority,
+            subject=subject_path,
+            subject_sha256=subject_digest,
+            intent=selected_intent,
+        )
         output = Path(output_dir)
         selected_profile = (
             RenderProfile.canonical(width, height)
@@ -206,8 +251,10 @@ class DrawingSession:
             output_dir=output,
             agent_session=AgentDrawingSession(width, height, metadata={"vnext": True}),
             metadata=deepcopy(dict(metadata or {})),
-            intent=intent,
+            intent=selected_intent,
             render_profile=selected_profile,
+            reference_authority=selected_authority,
+            subject_sha256=subject_digest,
         )
         if session._intent is not None:
             session._intent_history.append(
@@ -229,6 +276,7 @@ class DrawingSession:
         *,
         subject: str | Path | None = None,
         output_dir: str | Path | None = None,
+        reference_authority: ReferenceAuthority | Mapping[str, Any] | None = None,
     ) -> "DrawingSession":
         checkpoint_path = Path(checkpoint)
         payload = json.loads(checkpoint_path.read_text(encoding="utf-8"))
@@ -262,13 +310,25 @@ class DrawingSession:
         if toolset.get("id") != TOOLSET_ID or str(toolset.get("version")) != "1":
             raise ValueError("vNext toolset identity/version mismatch")
 
-        subject_record = payload.get("subject") or {}
-        subject_path = Path(subject) if subject is not None else checkpoint_path.parent / str(subject_record.get("name", ""))
-        if not subject_path.is_file():
-            raise FileNotFoundError(subject_path)
-        actual_subject_hash = sha256_file(subject_path)
-        if actual_subject_hash != str(subject_record.get("sha256", "")).lower():
-            raise ValueError("checkpoint subject sha256 does not match supplied subject")
+        subject_record = payload.get("subject")
+        if subject_record is None:
+            if subject is not None:
+                raise ValueError("subjectless checkpoint cannot accept a supplied subject")
+            subject_path = None
+            actual_subject_hash = None
+        else:
+            if not isinstance(subject_record, Mapping):
+                raise ValueError("checkpoint subject must be an object or null")
+            subject_path = (
+                Path(subject)
+                if subject is not None
+                else checkpoint_path.parent / str(subject_record.get("name", ""))
+            )
+            if not subject_path.is_file():
+                raise FileNotFoundError(subject_path)
+            actual_subject_hash = sha256_file(subject_path)
+            if actual_subject_hash != str(subject_record.get("sha256", "")).lower():
+                raise ValueError("checkpoint subject sha256 does not match supplied subject")
 
         canvas = payload.get("canvas") or {}
         agent_payload = {
@@ -310,12 +370,38 @@ class DrawingSession:
             agent.history.actions,
         )
         intent = None if payload.get("intent") is None else DrawingIntent.from_dict(payload["intent"])
+        raw_authority = payload.get("reference_authority")
+        if raw_authority is not None and reference_authority is not None:
+            raise ValueError("cannot override persisted reference authority")
+        if raw_authority is not None:
+            selected_authority = _coerce_reference_authority(raw_authority)
+        elif reference_authority is not None:
+            selected_authority = _coerce_reference_authority(reference_authority)
+        elif actual_subject_hash is not None and (
+            intent is None or intent.reference_mode == "observed"
+        ):
+            selected_authority = ReferenceAuthority.observed(actual_subject_hash)
+        else:
+            raise ValueError(
+                "pre-B13 checkpoint has no usable reference authority; pass an explicit "
+                "reference_authority or continue it with the older compatible runtime"
+            )
+        _validate_reference_context(
+            selected_authority,
+            subject=subject_path,
+            subject_sha256=actual_subject_hash,
+            intent=intent,
+        )
         intent_history = [
             IntentChangeRecord.from_dict(record)
             for record in (payload.get("intent_history") or [])
         ]
         cls._validate_intent_records(intent_history, intent, len(agent.history.actions))
         cls._validate_inspection_intent_bindings(inspection_history, intent_history)
+        cls._validate_inspection_authority_bindings(
+            inspection_history,
+            selected_authority,
+        )
         finish_record = (
             None
             if payload.get("finish_record") is None
@@ -353,6 +439,7 @@ class DrawingSession:
             intent=intent,
             intent_history=intent_history,
             render_profile=render_profile,
+            reference_authority=selected_authority,
         )
 
     @staticmethod
@@ -367,7 +454,7 @@ class DrawingSession:
         return self._stage_free_projection(self._agent.current_ir())
 
     def _assert_subject_current(self) -> None:
-        if sha256_file(self.subject) != self._subject_sha256:
+        if self.subject is not None and sha256_file(self.subject) != self._subject_sha256:
             raise ValueError("subject changed after session creation")
 
     @staticmethod
@@ -436,6 +523,25 @@ class DrawingSession:
             ):
                 raise ValueError(
                     f"inspection intent digest has no prior provenance: {inspection.get('inspection_id')}"
+                )
+
+    @staticmethod
+    def _validate_inspection_authority_bindings(
+        inspections: Sequence[Mapping[str, Any]],
+        authority: ReferenceAuthority,
+    ) -> None:
+        expected = authority.digest()
+        for inspection in inspections:
+            supplied = inspection.get("reference_authority_digest")
+            if supplied is None:
+                if authority.mode != "observed":
+                    raise ValueError(
+                        "subjectless/hybrid inspection requires reference authority provenance"
+                    )
+                continue
+            if str(supplied).lower() != expected:
+                raise ValueError(
+                    f"inspection reference authority mismatch: {inspection.get('inspection_id')}"
                 )
 
     @staticmethod
@@ -696,6 +802,28 @@ class DrawingSession:
         return tuple(self._intent_history)
 
     @property
+    def reference_authority(self) -> ReferenceAuthority:
+        """Return the immutable comparison authority for this session."""
+
+        return self._reference_authority
+
+    @property
+    def has_reference(self) -> bool:
+        """Whether subject-backed evidence is available."""
+
+        return self.subject is not None
+
+    def require_reference(self, operation: str = "reference-dependent operation") -> Path:
+        """Return the subject path or fail without fabricating reference evidence."""
+
+        if self.subject is None:
+            raise ReferenceUnavailableError(
+                f"{str(operation).strip() or 'reference-dependent operation'} requires a "
+                f"readable subject; this {self._reference_authority.mode} session is subjectless"
+            )
+        return self.subject
+
+    @property
     def render_profile(self) -> RenderProfile | None:
         """Return the canonical output profile, or ``None`` for an unmigrated checkpoint."""
 
@@ -751,7 +879,12 @@ class DrawingSession:
             "renderer": {"id": RENDERER_ID, "version": RENDERER_VERSION, "seed_domain": SEED_DOMAIN},
             "toolset": {"id": TOOLSET_ID, "version": "1"},
             "canvas": {"width": self.width, "height": self.height},
-            "subject": {"name": self.subject.name, "sha256": self._subject_sha256},
+            "subject": (
+                None
+                if self.subject is None
+                else {"name": self.subject.name, "sha256": self._subject_sha256}
+            ),
+            "reference_authority": self._reference_authority.checkpoint_dict(),
             "metadata": _portable(self.metadata),
             "history": _portable(history),
             "executed_action_ids": sorted(self._agent.executed_action_ids),
@@ -1231,6 +1364,11 @@ class DrawingSession:
         """Select or change plain-data intent without mutating drawing history."""
 
         parsed = _coerce_intent(intent)
+        if parsed.reference_mode != self._reference_authority.mode:
+            raise ValueError(
+                "intent reference_mode cannot change the session's immutable reference authority; "
+                f"expected {self._reference_authority.mode!r}, got {parsed.reference_mode!r}"
+            )
         normalized_reason = str(reason).strip()
         if not normalized_reason:
             raise ValueError("intent change reason must be non-empty")
@@ -1479,6 +1617,19 @@ class DrawingSession:
             roi_values = tuple(rois)
             guide_values = tuple(guides)
             measurement_values = tuple(measurements)
+            if not self.has_reference and (
+                registration is not None
+                or roi_values
+                or grid not in (None, False)
+                or guide_values
+                or measurement_values
+                or float(subject_dim) != 0.35
+            ):
+                raise ReferenceUnavailableError(
+                    "subject registration, overlay controls, subject-space ROIs, guides, "
+                    "and measurements require a readable reference; use drawing-only "
+                    "inspection for this subjectless session"
+                )
             evidence_policy = EvidencePolicy.from_inputs(
                 mode=mode,
                 rois=roi_values,
@@ -1501,8 +1652,9 @@ class DrawingSession:
             temporary_dir = destination / f".{inspection_id}.{uuid.uuid4().hex}.tmp"
             temporary_dir.mkdir(parents=True, exist_ok=False)
             raw_path = temporary_dir / "raw_drawing.png"
-            if registration is None:
-                if (self.width, self.height) != _subject_size(self.subject):
+            if self.has_reference and registration is None:
+                subject_path = self.require_reference("inspection registration")
+                if (self.width, self.height) != _subject_size(subject_path):
                     shutil.rmtree(temporary_dir)
                     raise ValueError("registration is required when subject and canvas sizes differ")
                 registration = Registration.identity((self.width, self.height))
@@ -1519,6 +1671,10 @@ class DrawingSession:
                     guides=guide_values,
                     measurements=measurement_values,
                     evidence_policy=evidence_policy.to_dict(),
+                    reference_authority={
+                        "mode": self._reference_authority.mode,
+                        "digest": self._reference_authority.digest(),
+                    },
                     out_dir=temporary_dir,
                 )
                 os.replace(temporary_dir, final_dir)
@@ -1538,10 +1694,18 @@ class DrawingSession:
                 "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
                 "history_cursor": self.history_cursor,
                 "intent_digest": None if self._intent is None else self._intent.digest(),
+                "reference_authority_digest": self._reference_authority.digest(),
             })
+            inspection_manifest = json.loads(
+                (final_dir / "inspection.json").read_text(encoding="utf-8")
+            )
+            artifact_names = tuple((inspection_manifest.get("artifacts") or {}).values())
             self._evidence_telemetry = self._evidence_telemetry.after_inspection(
-                artifact_count=len(INSPECTION_ARTIFACTS),
-                visual_artifact_count=len(VISUAL_INSPECTION_ARTIFACTS),
+                artifact_count=len(artifact_names),
+                visual_artifact_count=sum(
+                    str(name).lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+                    for name in artifact_names
+                ),
                 elapsed_seconds=time.perf_counter() - inspection_started,
             )
             try:
@@ -1727,6 +1891,44 @@ def _coerce_intent(value: DrawingIntent | Mapping[str, Any]) -> DrawingIntent:
     if isinstance(value, Mapping):
         return DrawingIntent.from_dict(value)
     raise TypeError("intent must be a DrawingIntent or mapping")
+
+
+def _coerce_reference_authority(
+    value: ReferenceAuthority | Mapping[str, Any] | None,
+) -> ReferenceAuthority:
+    if isinstance(value, ReferenceAuthority):
+        return value
+    if isinstance(value, Mapping):
+        return ReferenceAuthority.from_dict(value)
+    raise TypeError(
+        "reference_authority must be supplied as a ReferenceAuthority or mapping"
+    )
+
+
+def _validate_reference_context(
+    authority: ReferenceAuthority,
+    *,
+    subject: Path | None,
+    subject_sha256: str | None,
+    intent: DrawingIntent | None,
+) -> None:
+    has_subject = subject is not None
+    if authority.mode == "imaginative":
+        if has_subject or subject_sha256 is not None:
+            raise ValueError("imaginative authority requires a subjectless session")
+    else:
+        if not has_subject or subject_sha256 is None:
+            raise ValueError(f"{authority.mode} authority requires a readable subject")
+        if authority.subject_sha256 != str(subject_sha256).lower():
+            raise ValueError("reference authority subject_sha256 does not match the subject")
+    if intent is None:
+        if authority.mode != "observed":
+            raise ValueError(f"{authority.mode} authority requires a declared DrawingIntent")
+    elif intent.reference_mode != authority.mode:
+        raise ValueError(
+            "DrawingIntent reference_mode does not match reference authority: "
+            f"{intent.reference_mode!r} != {authority.mode!r}"
+        )
 
 
 def _portable_artifact(path: Path, root: Path) -> str:

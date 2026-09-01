@@ -16,8 +16,10 @@ capture current snapshot
 
 A correction action is not evidence of improvement. A previous inspection becomes
 stale after mutation, so fresh evidence bound to the new state digest is required.
-The Agent selects local crops. Measurements only help expose relationships; they
-are not automatic authority over pose, anatomy, or likeness.
+The Agent selects local crops when a subject exists. Measurements only help expose
+relationships; they are not automatic authority over pose, anatomy, or likeness.
+Subjectless work uses the drawing-only sheet and declared-goal observations. It cannot
+request subject overlays, registration, subject-space crops, or subject measurements.
 
 ## Residual categories
 
@@ -46,6 +48,8 @@ Record which sheet or artifact was actually read with
 `session.record_evidence_read(inspection_id, artifact="sheet")`. Reading an artifact
 from an earlier state is not rejected, but is marked by a `stale=True` telemetry
 event.
+
+For authority-specific behavior, see [`../reference-authority.md`](../reference-authority.md).
 
 ## vNext correction records
 

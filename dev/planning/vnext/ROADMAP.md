@@ -41,8 +41,8 @@ observe/read subject or declare intent
 | B10 | CLOSED | intent-aware completion | B09 |
 | B11 | CLOSED | canonical `RenderProfile` and replay/GIF parity | B10 |
 | B12 | CLOSED | legacy runtime and persistence isolation | B11 |
-| B13 | ACTIVE | reference authority and subjectless runtime | B12 |
-| B14 | SKELETON | drawing-mode capability completion | B13 |
+| B13 | CLOSED | reference authority and subjectless runtime | B12 |
+| B14 | ACTIVE | drawing-mode capability completion | B13 |
 | B15 | SKELETON | style authoring completion | B14 |
 | B16 | SKELETON | Agent authoring/editing ergonomics | B15 |
 | B17 | SKELETON | package/public API/release-candidate truth | B16 |

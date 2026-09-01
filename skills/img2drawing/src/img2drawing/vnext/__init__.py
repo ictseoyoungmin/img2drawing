@@ -13,6 +13,14 @@ from .construction import (
 from .correction import CorrectionRecord, ResidualRecord
 from .completion import FINISH_RECORD_SCHEMA, FinishRecord
 from .render_profile import RENDER_PROFILE_SCHEMA, RenderProfile
+from .reference_authority import (
+    CONSTRAINT_DISPOSITIONS,
+    REFERENCE_AUTHORITY_SCHEMA,
+    REFERENCE_CONSTRAINT_SCHEMA,
+    ReferenceAuthority,
+    ReferenceConstraint,
+    ReferenceUnavailableError,
+)
 from .output import (
     RENDER_ARTIFACT_SCHEMA,
     REPLAY_EXPORT_SCHEMA,
@@ -50,6 +58,12 @@ __all__ = [
     "FinishRecord",
     "RENDER_PROFILE_SCHEMA",
     "RenderProfile",
+    "CONSTRAINT_DISPOSITIONS",
+    "REFERENCE_AUTHORITY_SCHEMA",
+    "REFERENCE_CONSTRAINT_SCHEMA",
+    "ReferenceAuthority",
+    "ReferenceConstraint",
+    "ReferenceUnavailableError",
     "RENDER_ARTIFACT_SCHEMA",
     "REPLAY_EXPORT_SCHEMA",
     "RenderArtifact",

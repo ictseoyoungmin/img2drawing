@@ -1,6 +1,6 @@
 ---
 name: img2drawing
-description: Draws observed subjects as inspectable hand-drawn images through one stage-free, residual-driven stroke workflow. Imaginative/hybrid intents and croquis, figure drawing, tonal study, free-draw, or custom style declarations are scaffolded as plain data; subjectless authoring is not yet a production session path.
+description: Creates inspectable hand-drawn images through one stage-free, residual-driven stroke workflow using observed, imaginative, or hybrid reference authority. Supports subject-backed and subjectless sessions without fabricating reference evidence.
 ---
 
 # img2drawing
@@ -12,11 +12,12 @@ Draw from references with explicit strokes. The worker/Agent is the semantic aut
 A competent worker who receives this skill, an available reference for observed work,
 and the requested drawing mode/style must be able to act without pass-by-pass coaching.
 
-`DrawingSession.create()` currently requires a readable subject image to establish the
-canvas. `DrawingIntent` can declare imaginative or free-draw goals, but starting a
-subjectless blank-canvas session is not a production-supported path yet; that behavior
-remains future mode work. Do not promise a subjectless output when no reference is
-available.
+Observed work supplies a readable subject. Imaginative work supplies an explicit canvas,
+an imaginative `DrawingIntent`, and `ReferenceAuthority.imaginative()` with concrete
+composition/shape goals. Hybrid work supplies a subject plus distinct preserved and
+transformed `ReferenceConstraint` records. Never create a blank placeholder subject or
+claim overlay/registration evidence when no reference exists. Read
+[`references/reference-authority.md`](references/reference-authority.md).
 
 Observe or declare intent, draw explicit strokes, inspect the current snapshot, repair the
 highest-impact residual, and repeat until the declared finish intent is materially met.
@@ -49,7 +50,9 @@ finish emphasis, or style profile. Its four fields are orthogonal data selection
 `graphite_academic`, or an explicit `custom:<identifier>`). No field is a stage, cursor,
 pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
 selection; `session.set_intent(..., reason=...)` records a later selection as provenance
-without changing geometry or forking the action history.
+without changing geometry or forking the action history. A session's reference authority
+mode is immutable: an intent change may adjust drawing/finish/style axes but cannot
+silently redefine what counts as comparison truth.
 
 Resolve the matching `ModeGuide` for observations and construction vocabulary,
 `FinishGuide` for the relationships and omissions required by the stopping target, and
@@ -229,23 +232,27 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
 1. Read this file and [`references/INDEX.md`](references/INDEX.md).
 2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, or
    free-draw; select a style guide only when the request calls for one.
-3. Read `observation/visual-observation.md` for observed subjects, and
-   `observation/measuring-boundaries.md` before profiling anything, then the relevant
+3. Read `references/reference-authority.md`, then
+   `references/observation/visual-observation.md` for observed
+   subjects, and
+   `references/observation/measuring-boundaries.md` before profiling anything, then the relevant
    construction/figure/finish guide for the relationships present.
 4. Create the first drawing through `DrawingSession`; inspect the whole result before
-   adding detail, then use `review/residual-correction.md` for every repair loop.
-5. Read `review/completion.md` and bind the Agent's decision to the latest current
+   adding detail, then use `references/review/residual-correction.md` for every repair loop.
+5. Read `references/review/completion.md` and bind the Agent's decision to the latest current
    inspection; continue the same correction loop if that record becomes stale.
-6. Use `output/render-profile-and-replay.md` for final PNG or process export.
-7. Use `legacy-r23.md` and `img2drawing.legacy.r23` only when explicitly continuing or
+6. Use `references/output/render-profile-and-replay.md` for final PNG or process export.
+7. Use `references/legacy-r23.md` and `img2drawing.legacy.r23` only when explicitly continuing or
    migrating a `DrawingRun` checkpoint.
 
 ## Evidence boundary
 
 `InspectionSheet`, registration, ROI, measurement, and renderer provenance make the
 current state inspectable. They do not choose geometry, select the highest-impact issue,
-or emit an artistic PASS/FAIL. The Agent compares the subject and current drawing (or
-declared intent and current drawing for imaginative work), then records explicit edits.
+or emit an artistic PASS/FAIL. Subjectless sessions produce an honest drawing-only sheet;
+subject overlay, registration, subject-space ROI, and subject measurements fail explicitly.
+The Agent compares the subject or declared authority with the current drawing, then
+records explicit edits.
 
 The default sequence is whole → relation → part → relation again. Macro pose, mass,
 balance, silhouette, and composition residuals outrank micro detail. A mutation makes

@@ -144,69 +144,88 @@ def _draw_roi_boxes(image: Image.Image, rois: Sequence[ROI]) -> Image.Image:
 class InspectionSheet:
     """A portable inspection product bound to one authored drawing digest."""
 
-    subject: Path
     drawing: Path
-    subject_sha256: str
     drawing_artifact_sha256: str
     drawing_state_hash: str
-    registration: Registration
+    subject: Path | None = None
+    subject_sha256: str | None = None
+    registration: Registration | None = None
     rois: tuple[ROI, ...] = ()
-    overlay: str = "contrast"
-    subject_dim: float = 0.35
+    overlay: str | None = "contrast"
+    subject_dim: float | None = 0.35
     grid: Grid | None = None
     guides: tuple[PlumbLine | GroundGuide, ...] = ()
     measurements: tuple[Any, ...] = ()
     evidence_policy: Mapping[str, Any] | None = None
+    reference_authority: Mapping[str, Any] | None = None
 
     @classmethod
     def create(
         cls,
         *,
-        subject: str | Path,
+        subject: str | Path | None,
         drawing: str | Path,
         drawing_state_hash: str | None = None,
         drawing_ir: Any | None = None,
-        registration: Registration,
+        registration: Registration | None,
         rois: Sequence[ROI] = (),
-        overlay: str = "contrast",
+        overlay: str | None = None,
         subject_dim: float = 0.35,
         grid: Grid | bool | None = None,
         guides: Sequence[PlumbLine | GroundGuide] = (),
         measurements: Sequence[Any] = (),
         evidence_policy: Mapping[str, Any] | None = None,
+        reference_authority: Mapping[str, Any] | None = None,
         out_dir: str | Path | None = None,
     ) -> "InspectionSheet":
-        subject_path = Path(subject)
+        subject_path = None if subject is None else Path(subject)
         drawing_path = Path(drawing)
-        if not subject_path.is_file():
+        if subject_path is not None and not subject_path.is_file():
             raise FileNotFoundError(subject_path)
         if not drawing_path.is_file():
             raise FileNotFoundError(drawing_path)
-        if overlay != "contrast":
-            raise ValueError("the B02 overlay mode is 'contrast'")
-        subject_dim = float(subject_dim)
-        if not 0.0 < subject_dim <= 1.0:
-            raise ValueError("subject_dim must be in (0,1]")
-
-        with Image.open(subject_path) as subject_image, Image.open(drawing_path) as drawing_image:
-            subject_size = subject_image.size
+        with Image.open(drawing_path) as drawing_image:
             drawing_size = drawing_image.size
-        if subject_size != registration.subject_size:
-            raise ValueError(
-                f"subject image size {subject_size} does not match registration {registration.subject_size}"
-            )
-        if drawing_size != registration.canvas_size:
-            raise ValueError(
-                f"drawing image size {drawing_size} does not match registration {registration.canvas_size}"
-            )
+        if subject_path is None:
+            if registration is not None:
+                raise ValueError("drawing-only inspection cannot declare subject registration")
+            if overlay not in (None, "drawing_only"):
+                raise ValueError("drawing-only inspection has no subject overlay")
+            if rois or grid not in (None, False) or guides or measurements:
+                raise ValueError("drawing-only inspection cannot use subject-space evidence")
+            selected_overlay = None
+            selected_subject_dim = None
+            subject_size = None
+        else:
+            if registration is None:
+                raise ValueError("subject-backed inspection requires registration")
+            selected_overlay = "contrast" if overlay is None else overlay
+            if selected_overlay != "contrast":
+                raise ValueError("the B02 overlay mode is 'contrast'")
+            selected_subject_dim = float(subject_dim)
+            if not 0.0 < selected_subject_dim <= 1.0:
+                raise ValueError("subject_dim must be in (0,1]")
+            with Image.open(subject_path) as subject_image:
+                subject_size = subject_image.size
+            if subject_size != registration.subject_size:
+                raise ValueError(
+                    f"subject image size {subject_size} does not match registration {registration.subject_size}"
+                )
+            if drawing_size != registration.canvas_size:
+                raise ValueError(
+                    f"drawing image size {drawing_size} does not match registration {registration.canvas_size}"
+                )
         grid_spec = None if grid is False else grid
         if grid_spec is not None and not isinstance(grid_spec, Grid):
             raise TypeError("grid must be a Grid, False, or None")
         for roi in rois:
+            assert subject_size is not None
             roi.validate_for_size(subject_size)
         if grid_spec is not None:
+            assert subject_size is not None
             grid_spec.resolved_bounds(subject_size)
         for guide in guides:
+            assert subject_size is not None
             if isinstance(guide, PlumbLine) and not 0.0 <= guide.anchor[0] <= subject_size[0]:
                 raise ValueError("plumb line anchor must lie within subject width")
             if isinstance(guide, GroundGuide) and not 0.0 <= guide.y <= subject_size[1]:
@@ -224,23 +243,26 @@ class InspectionSheet:
             raise ValueError("drawing_state_hash or drawing_ir is required")
         if not _SHA256.fullmatch(str(drawing_state_hash)):
             raise ValueError("drawing_state_hash must be a lowercase SHA-256 digest")
-        subject_sha256 = _sha256_file(subject_path)
+        subject_sha256 = None if subject_path is None else _sha256_file(subject_path)
         drawing_artifact_sha256 = _sha256_file(drawing_path)
 
         sheet = cls(
-            subject=subject_path,
             drawing=drawing_path,
-            subject_sha256=subject_sha256,
             drawing_artifact_sha256=drawing_artifact_sha256,
             drawing_state_hash=str(drawing_state_hash),
+            subject=subject_path,
+            subject_sha256=subject_sha256,
             registration=registration,
             rois=tuple(rois),
-            overlay=overlay,
-            subject_dim=subject_dim,
+            overlay=selected_overlay,
+            subject_dim=selected_subject_dim,
             grid=grid_spec,
             guides=tuple(guides),
             measurements=tuple(measurements),
             evidence_policy=None if evidence_policy is None else _portable(dict(evidence_policy)),
+            reference_authority=(
+                None if reference_authority is None else _portable(dict(reference_authority))
+            ),
         )
         if out_dir is not None:
             sheet.write(out_dir)
@@ -249,27 +271,36 @@ class InspectionSheet:
     def to_dict(self) -> dict[str, Any]:
         payload = {
             "format": "inspection-sheet/v1",
-            "inputs": {"subject": self.subject.name, "drawing": self.drawing.name},
+            "inputs": {
+                "subject": None if self.subject is None else self.subject.name,
+                "drawing": self.drawing.name,
+            },
             "subject_sha256": self.subject_sha256,
             "drawing_artifact_sha256": self.drawing_artifact_sha256,
             "drawing_state_hash": self.drawing_state_hash,
-            "registration": self.registration.to_dict(),
+            "registration": None if self.registration is None else self.registration.to_dict(),
             "rois": [roi.to_dict() for roi in self.rois],
             "overlay": self.overlay,
             "subject_dim": self.subject_dim,
-            "grid": None if self.grid is None else self.grid.to_dict(self.registration.subject_size),
+            "grid": (
+                None
+                if self.grid is None
+                else self.grid.to_dict(self.registration.subject_size)
+            ),
             "guides": [guide.to_dict() for guide in self.guides],
             "measurements": [_portable(item) for item in self.measurements],
             "evidence_only": True,
         }
         if self.evidence_policy is not None:
             payload["evidence_policy"] = _portable(self.evidence_policy)
+        if self.reference_authority is not None:
+            payload["reference_authority"] = _portable(self.reference_authority)
         return payload
 
     def write(self, out_dir: str | Path) -> dict[str, Path]:
         output = Path(out_dir)
         output.mkdir(parents=True, exist_ok=True)
-        if _sha256_file(self.subject) != self.subject_sha256:
+        if self.subject is not None and _sha256_file(self.subject) != self.subject_sha256:
             raise ValueError("subject changed after sheet creation")
         if _sha256_file(self.drawing) != self.drawing_artifact_sha256:
             raise ValueError("drawing artifact changed after sheet creation")
@@ -277,9 +308,15 @@ class InspectionSheet:
         if self.drawing.resolve() != raw_path.resolve():
             shutil.copyfile(self.drawing, raw_path)
 
-        with Image.open(self.subject) as subject_source, Image.open(self.drawing) as drawing_source:
-            subject = subject_source.convert("RGB")
+        with Image.open(self.drawing) as drawing_source:
             drawing = drawing_source.convert("RGB")
+
+        if self.subject is None:
+            return self._write_drawing_only(output, raw_path, drawing)
+
+        assert self.registration is not None
+        with Image.open(self.subject) as subject_source:
+            subject = subject_source.convert("RGB")
         if subject.size != self.registration.subject_size or drawing.size != self.registration.canvas_size:
             raise ValueError("source image dimensions changed after sheet creation")
 
@@ -362,6 +399,47 @@ class InspectionSheet:
             "contrast_overlay": contrast_path,
             "manifest": manifest_path,
             "measurements": measurements_path,
+        }
+
+    def _write_drawing_only(
+        self,
+        output: Path,
+        raw_path: Path,
+        drawing: Image.Image,
+    ) -> dict[str, Path]:
+        """Write honest subjectless evidence without an invented reference tile."""
+
+        tile_width, tile_height = 720, 620
+        margin = 18
+        tile = _tile(drawing, "DRAWING — DECLARED INTENT AUTHORITY", (tile_width, tile_height))
+        sheet = Image.new(
+            "RGB",
+            (tile_width + 2 * margin, tile_height + 2 * margin),
+            _BACKGROUND,
+        )
+        sheet.paste(tile, (margin, margin))
+        sheet_path = output / "inspection_sheet.png"
+        sheet.save(sheet_path)
+        artifacts = {
+            "sheet": "inspection_sheet.png",
+            "raw_drawing": "raw_drawing.png",
+            "manifest": "inspection.json",
+        }
+        manifest_path = output / "inspection.json"
+        manifest_path.write_text(
+            json.dumps(
+                {**self.to_dict(), "artifacts": artifacts},
+                indent=2,
+                ensure_ascii=False,
+                sort_keys=True,
+                allow_nan=False,
+            ),
+            encoding="utf-8",
+        )
+        return {
+            "sheet": sheet_path,
+            "raw_drawing": raw_path,
+            "manifest": manifest_path,
         }
 
 

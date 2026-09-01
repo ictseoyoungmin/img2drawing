@@ -19,7 +19,8 @@ declare intent → draw a hypothesis → inspect composition/rhythm/focal
 
 For imaginative work, compare intent with drawing. For hybrid work, compare both
 the reference constraints to preserve and the intended transformation. The
-runtime does not automatically replace artistic judgment.
+runtime does not automatically replace artistic judgment. Use the concrete creation and
+inspection contract in [`../reference-authority.md`](../reference-authority.md).
 
 ## Completion questions
 

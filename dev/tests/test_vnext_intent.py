@@ -95,7 +95,7 @@ def test_session_intent_provenance_resumes_without_geometry_rewrite(tmp_path: Pa
     before_cursor = session.history_cursor
     changed = session.set_intent(
         DrawingIntent(
-            reference_mode="hybrid",
+            reference_mode="observed",
             drawing_mode="figure_drawing",
             finish_intent="subject",
             style_profile="graphite_academic",
