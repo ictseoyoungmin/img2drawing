@@ -7,8 +7,9 @@ from pathlib import Path
 import pytest
 from jsonschema import validators
 
-from img2drawing import (
-    DrawingAction, DrawingRun, ObservationContract, ViewObservation,
+from img2drawing import DrawingAction
+from img2drawing.legacy.r23 import (
+    DrawingRun, ObservationContract, ViewObservation,
     ResolvedFormEntry, ResolvedFormManifest, IdentityFinishProfile,
     IdentityFinishManifest, ConstructionRetirementRecord,
     CalibrationSheet,
@@ -165,7 +166,7 @@ def test_resolved_form_requires_visual_gate_and_roundtrips(tmp_path: Path):
 
 
 def test_p6_preflight_blocks_upstream_revise():
-    from img2drawing import preflight_identity_finish
+    from img2drawing.legacy.r23 import preflight_identity_finish
     result = preflight_identity_finish({"P3_primary_masses": {"decision": "revise", "blockers": ("head_hair",)}})
     assert not result.allowed
     assert "P3_primary_masses" in result.required_reopens

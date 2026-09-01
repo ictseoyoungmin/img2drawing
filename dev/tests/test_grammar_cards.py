@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from img2drawing import DrawingRun, ModularGrammarCard, ObservationContract, ViewObservation
+from img2drawing.legacy.r23 import DrawingRun, ModularGrammarCard, ObservationContract, ViewObservation
 
 
 ROOT = Path(__file__).resolve().parents[1]

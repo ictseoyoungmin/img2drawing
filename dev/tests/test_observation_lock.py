@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from jsonschema import RefResolver, validators
 
-from img2drawing import (
+from img2drawing.legacy.r23 import (
     DrawingRun,
     FrozenObservationRecord,
     ObservationContract,

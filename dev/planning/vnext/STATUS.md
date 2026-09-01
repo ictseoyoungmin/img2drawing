@@ -3,12 +3,12 @@
 Updated: 2026-09-01
 
 ```text
-SYSTEM:   stage-free product surface closed through B11, including B01-R1 and B07-R1 hardening
-ACTIVE:   B12 Legacy runtime / persistence isolation
-NEXT:     B13 Reference authority + subjectless runtime
-SKELETON: B13–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B12, including B01-R1 and B07-R1 hardening
+ACTIVE:   B13 Reference authority + subjectless runtime
+NEXT:     B14 Drawing-mode capability completion
+SKELETON: B14–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,22 +45,24 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B12
+## Active slice — B13
 
-B12 is the sole production WIP.
+B13 is the sole production WIP.
 
-Goal: isolate legacy stage runtime and persistence behind an explicit compatibility
-namespace/adapter while keeping one shared stroke, history, renderer, and tool core.
+Goal: make observed, imaginative, and hybrid reference authority operational through one
+`DrawingSession`, including subjectless creation and inspection/correction behavior that
+does not fabricate a reference.
 
-B12 inherits these closed constraints:
+B13 inherits these closed constraints:
 
-- importing or using canonical vNext must not load stage registry/review/reopen modules;
-- supported old checkpoints enter only through explicit compatibility behavior;
-- migration preserves subject, action, state, intent, completion, and renderer provenance;
-- shared core code is reused rather than copied into a `core_v2` tree; and
-- physical R23 deletion remains deferred until post-dogfood R03.
+- observed sessions remain subject-backed and hash-compatible;
+- imaginative sessions use declared intent/canvas authority rather than fake subject data;
+- hybrid sessions distinguish preserved constraints from explicit transformations;
+- all authority modes reuse one history, inspection, residual/correction, checkpoint,
+  replay, and output core; and
+- reference-only tools fail clearly when no reference exists.
 
-B12 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B13 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -81,6 +83,7 @@ those claims belong to D01–D06 after B18.
 | B09 | CLOSED | stage-free `FinishGuide`, relational recognition, form-before-value and preserved-constraint policy |
 | B10 | CLOSED | intent/state/inspection-bound `FinishRecord` with stale-state and tamper validation |
 | B11 | CLOSED | canonical `RenderProfile`, cursor replay, exact PNG parity, bounded GIF export |
+| B12 | CLOSED | explicit lazy `legacy.r23` boundary, R23 v1–v3 resume/migration, canonical root exports |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -137,8 +140,8 @@ Until B18 closes:
 B09  Finish / recognition authoring                     CLOSED
 B10  Intent-aware completion                            CLOSED
 B11  Canonical RenderProfile + replay/GIF parity         CLOSED
-B12  Legacy runtime / persistence isolation              ACTIVE
-B13  Reference authority + subjectless runtime           SKELETON
+B12  Legacy runtime / persistence isolation              CLOSED
+B13  Reference authority + subjectless runtime           ACTIVE
 B14  Drawing-mode capability completion                  SKELETON
 B15  Style authoring completion                          SKELETON
 B16  Agent authoring / editing ergonomics                SKELETON
@@ -183,5 +186,5 @@ Dogfood defects always route back to the responsible implementation slice. Examp
   `731a04db37ecda14d8f5de28d946a97adaa8dde6`.
 - Canonical vNext remains one `DrawingSession` / history / renderer / inspection /
   correction core.
-- Legacy stage runtime remains compatibility/history material until B12 isolation and
-  post-dogfood R03 retirement.
+- Legacy stage runtime is isolated under `img2drawing.legacy.r23` and remains
+  compatibility/history material until post-dogfood R03 retirement.

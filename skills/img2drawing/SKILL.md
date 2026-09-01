@@ -25,8 +25,10 @@ source is missing/unreadable, the target is genuinely ambiguous, or requirements
 
 ## Authority model
 For new work, `DrawingSession` is the only orchestration authority. `DrawingRun`,
-`stages/`, stage review, and stage-oriented playbooks are legacy R23 compatibility only;
-enter them through [`references/legacy-r23.md`](references/legacy-r23.md).
+`stages/`, stage review, and stage-oriented playbooks are legacy R23 compatibility only.
+Enter them explicitly through `img2drawing.legacy.r23` and read
+[`references/legacy-r23.md`](references/legacy-r23.md). Root legacy attributes are
+deprecated, non-advertised compatibility shims—not a normal import route.
 
 - `core/`: strokes, actions, history, session.
 - `observation/`: agent-authored semantic observations, material palette, read-only evidence.
@@ -235,7 +237,8 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
 5. Read `review/completion.md` and bind the Agent's decision to the latest current
    inspection; continue the same correction loop if that record becomes stale.
 6. Use `output/render-profile-and-replay.md` for final PNG or process export.
-7. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
+7. Use `legacy-r23.md` and `img2drawing.legacy.r23` only when explicitly continuing or
+   migrating a `DrawingRun` checkpoint.
 
 ## Evidence boundary
 
@@ -265,4 +268,5 @@ completion.
 Only when explicitly continuing an existing `DrawingRun` / R23 checkpoint, read
 [`references/legacy-r23.md`](references/legacy-r23.md).
 
-Do not use R23 P1–P6 lifecycle guidance for new work.
+Import compatibility operations from `img2drawing.legacy.r23`; do not use deprecated
+root shims in new code. Do not use R23 P1–P6 lifecycle guidance for new work.

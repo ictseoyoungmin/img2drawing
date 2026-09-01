@@ -3,8 +3,8 @@
 
 The source checkpoint is a preserved, old worker run.  This tool migrates its
 portable subject reference, binds a fresh observation lock, then performs the
-new P4/P5 resolved-form and optional P6 identity boundaries through the public
-DrawingRun API.  It intentionally does not use critic metrics as a visual
+new P4/P5 resolved-form and optional P6 identity boundaries through the explicit
+legacy R23 API.  It intentionally does not use critic metrics as a visual
 decision authority.
 """
 from __future__ import annotations
@@ -15,8 +15,8 @@ import re
 import shutil
 from pathlib import Path
 
-from img2drawing import (
-    DrawingAction,
+from img2drawing import DrawingAction
+from img2drawing.legacy.r23 import (
     DrawingRun,
     ObservationContract,
     ViewObservation,

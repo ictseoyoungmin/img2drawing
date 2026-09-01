@@ -40,7 +40,13 @@ from .review.pass_memory import ActionMemory, build_stage_pass_memory, make_acti
 from .review.reopen import ReopenRecord
 from .exemplar.ablation import consume_grammar_card as build_grammar_card_consumption
 from .stages import StageProgress, get_stage_registry, get_stage_contract_registry
-from ._version import __version__, RELEASE_REVISION, RELEASE_SLICE, PUBLIC_API, DEFAULT_SESSION_ID
+from ._version import (
+    __version__,
+    RELEASE_REVISION,
+    RELEASE_SLICE,
+    LEGACY_R23_PUBLIC_API as PUBLIC_API,
+    LEGACY_R23_DEFAULT_SESSION_ID as DEFAULT_SESSION_ID,
+)
 
 
 def _normalize_grammar_cards(cards):

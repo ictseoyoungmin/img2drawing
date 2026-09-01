@@ -8,7 +8,7 @@ import warnings
 import pytest
 from jsonschema import validators
 
-from img2drawing import (
+from img2drawing.legacy.r23 import (
     TorsoOrientationIntegrityError,
     TorsoOrientationObservation,
     compare_torso_orientation,

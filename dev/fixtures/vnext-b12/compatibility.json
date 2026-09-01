@@ -1,0 +1,29 @@
+{
+  "schema": "img2drawing.vnext.b12_compatibility_matrix.v1",
+  "canonical": {
+    "checkpoint_schema": "img2drawing.vnext.session.v2",
+    "import": "from img2drawing import DrawingSession",
+    "status": "supported"
+  },
+  "legacy": [
+    {
+      "checkpoint_schema": "img2drawing.run_checkpoint.v1",
+      "migrate": "supported",
+      "resume": "supported through img2drawing.legacy.r23"
+    },
+    {
+      "checkpoint_schema": "img2drawing.run_checkpoint.v2",
+      "migrate": "supported",
+      "resume": "supported through img2drawing.legacy.r23"
+    },
+    {
+      "checkpoint_schema": "img2drawing.run_checkpoint.v3",
+      "migrate": "supported",
+      "resume": "supported through img2drawing.legacy.r23"
+    }
+  ],
+  "unsupported": {
+    "behavior": "refuse with schema-specific migration guidance"
+  },
+  "renderer_note": "R23 checkpoints did not persist renderer identity. Migration records that absence and binds an explicit canonical target RenderProfile."
+}

@@ -1,90 +1,84 @@
 # img2drawing vNext planning
 
-이 디렉터리는 img2drawing vNext의 현재 계획 권위다. 제품 방향은 범용 drawing
-framework이며, 구현은 항상 **Production WIP Limit = 1**로 진행한다.
+This directory is the current planning authority for img2drawing vNext. The product is
+a general drawing framework, and implementation always follows **Production WIP Limit =
+1**.
 
-## 현재 한 줄 요약
+## Current summary
 
 ```text
-B00–B11 + B01-R1/B07-R1 hardening은 CLOSED.
-B12–B18은 남은 product surface를 완성하는 implementation phase다.
-새 fresh visual dogfood는 B18 freeze 이전에 시작하지 않는다.
-B12 Legacy runtime / persistence isolation이 현재 production WIP다.
+B00–B12 plus B01-R1/B07-R1 hardening are CLOSED.
+B13–B18 complete the remaining product surface.
+No fresh visual dogfood starts before the B18 freeze.
+B13 reference authority/subjectless runtime is the sole production WIP.
 ```
 
-최근 dogfood는 이미 foundation 결함을 충분히 드러냈다. 특히 B07-R1의 value-region
-compaction과 B01-R1의 subject-boundary observation hardening은 그 결과를 흡수한
-closure다. 이제 같은 subject를 반복해서 사용하며 architecture를 흔드는 대신,
-남은 제품 surface를 B09→B18 순서로 먼저 닫고 그 뒤 하나의 통합 dogfood campaign을
-실행한다.
+Earlier dogfood exposed enough foundation defects to drive B01-R1 subject-boundary
+observation hardening and B07-R1 compact value-region authoring. The plan now completes
+B09→B18 in order before running one integrated dogfood campaign. Historical HTML or
+temporary plans are design input, not status authority; current HEAD, `STATUS.md`, and
+the active slice win.
 
-`temp/img2drawing_vnext_universal_drawing_plan.html`은 제품·설계 입력이지만 상태
-권위가 아니다. 실제 HEAD, `STATUS.md`, active slice가 우선한다.
+## Reading order
 
-## 읽기 순서
+1. [`STATUS.md`](STATUS.md) — sole WIP and immediate next gate.
+2. [`CONTRACT.md`](CONTRACT.md) — architecture invariants and implementation/validation boundary.
+3. [`ROADMAP.md`](ROADMAP.md) — implementation order and later dogfood/release phases.
+4. [`slices/`](slices/) — B09–B18 execution cards.
+5. [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md) — D01–D06 and R01–R04 after B18.
+6. [`capsules/`](capsules/) — compressed authoritative context for closed work.
+7. [`archive/`](archive/) — historical execution cards and reopen history.
 
-1. [`STATUS.md`](STATUS.md) — 현재 WIP와 바로 다음 gate
-2. [`CONTRACT.md`](CONTRACT.md) — architecture invariant와 구현/검증 경계
-3. [`ROADMAP.md`](ROADMAP.md) — B00–B18 구현 순서와 이후 D/R phase
-4. [`slices/`](slices/) — B09–B18 실행 카드
-5. [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md) — B18 이후 D01–D06 dogfood와 R01–R04 release
-6. [`capsules/`](capsules/) — 닫힌 구현을 재사용하기 위한 압축 문맥
-7. [`archive/`](archive/) — 과거 실행 카드와 재오픈 이력
+Read these only when needed:
 
-필요할 때만 읽는다.
+- [`BASELINE.md`](BASELINE.md): read-only R23 baseline.
+- [`failure-dossier/`](failure-dossier/): evidence that justified the reset.
+- [`path-sanitization-GATES.md`](path-sanitization-GATES.md): completed repository-path hygiene.
 
-- [`BASELINE.md`](BASELINE.md): R23 read-only baseline
-- [`failure-dossier/`](failure-dossier/): reset을 정당화한 실패 증거
-- [`path-sanitization-GATES.md`](path-sanitization-GATES.md): 완료된 저장소 경로 위생 작업
+## Authority order
 
-## 권위 우선순위
+Resolve conflicts in this order:
 
-충돌 시 다음 순서로 해석한다.
+1. Current user direction and actual HEAD.
+2. `STATUS.md` and the one active `slices/Bxx.md` card.
+3. `CONTRACT.md`.
+4. `ROADMAP.md` and `VALIDATION_RELEASE.md`.
+5. Closed capsules.
+6. Archives, failure dossiers, and temporary planning artifacts.
 
-1. 현재 사용자 지시와 실제 HEAD
-2. `STATUS.md`와 해당 `slices/Bxx.md`
-3. `CONTRACT.md`
-4. `ROADMAP.md` / `VALIDATION_RELEASE.md`
-5. CLOSED capsule
-6. archive, failure dossier, `temp/` 계획 산출물
+Historical documents remain evidence but cannot override current state. Reopen a closed
+slice explicitly before changing its contract.
 
-과거 문서는 근거로 보존하지만 현재 상태를 덮어쓰지 않는다. CLOSED capsule을
-수정해야 할 때는 먼저 해당 slice를 명시적으로 재오픈한다.
+## Planning invariants
 
-## 계획 구조 원칙
+- B09–B18 is a product-surface implementation phase, not a fresh visual-dogfood phase.
+- Each implementation slice closes with deterministic fixtures, unit/integration tests,
+  preserved evidence, direct review, a capsule, and one dedicated commit.
+- B18 freezes the dogfood-ready system. D01–D06 defects reopen the responsible B-slice;
+  they do not create parallel workflows.
+- `DrawingIntent`, `ModeGuide`, `FinishGuide`, and `StyleGuide` are plain-data authoring
+  guidance, not lifecycle cursors or renderer pipelines.
+- `StyleGuide` and `RenderProfile` remain separate.
+- Tests and schemas do not issue artistic verdicts.
+- Mode or style never justifies a second session/history/renderer/inspection tree.
+- Physical R23 retirement occurs only at R03 after integrated dogfood and regression.
 
-- B09→B18은 **기능 구현/계약 완성** phase다. fresh unseen-subject dogfood를 closure
-  gate로 끼워 넣지 않는다.
-- 각 implementation slice는 synthetic/deterministic fixture, unit/integration test,
-  이미 보존된 evidence만으로 기술적 계약을 닫는다.
-- B18은 "dogfood-ready system freeze"다. 이후 새 기능을 추가하지 않고 D01–D06에서
-  발견한 defect는 responsible B-slice를 REOPEN해 고친다.
-- `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`는 plain-data authoring guidance이며
-  lifecycle cursor나 renderer pipeline이 아니다.
-- `StyleGuide`와 `RenderProfile`은 분리한다.
-- 테스트나 schema가 시각 품질을 자동 판정하지 않는다.
-- mode/style을 이유로 별도 session, history, renderer, inspection tree를 만들지 않는다.
-- R23의 물리 삭제는 통합 dogfood와 regression을 통과한 뒤 R03에서만 수행한다.
+## Product target
 
-## 제품 목표
+One `DrawingSession`, explicit action/stroke history, renderer, inspection, residual
+correction, checkpoint, and replay core serves:
 
-하나의 `DrawingSession`, 명시적 action/stroke history, renderer, inspection,
-residual correction, checkpoint/replay를 공유하면서 다음 intent를 처리한다.
-
-- observed / imaginative / hybrid reference mode
-- croquis / figure drawing / tonal study / line study / free-draw
-- pose / subject / form-light / expressive finish intent
-- preset / override / custom style guidance
-
-공통 loop는 다음과 같다.
+- observed, imaginative, and hybrid reference authority;
+- croquis, figure drawing, tonal study, line study, and free-draw modes;
+- pose, subject, form-light, and expressive finish intent;
+- preset, override, and structured custom style guidance.
 
 ```text
 observe or declare intent
 → draw
-→ render
-→ inspect
+→ render and inspect
 → choose the highest-impact residual
-→ correct explicit authored representation
+→ correct the responsible authored representation
 → inspect again
 → finish for the declared intent
 ```

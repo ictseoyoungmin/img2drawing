@@ -6,8 +6,9 @@ import json
 import shutil
 from pathlib import Path
 
-from img2drawing import (
-    DrawingAction, DrawingRun, ObservationContract, ViewObservation,
+from img2drawing import DrawingAction
+from img2drawing.legacy.r23 import (
+    DrawingRun, ObservationContract, ViewObservation,
     RegionClosureEntry, RegionClosureManifest,
     ResolvedFormEntry, ResolvedFormManifest, ConstructionRetirementRecord,
     IdentityFinishProfile, IdentityFinishManifest,

@@ -7,7 +7,7 @@ import warnings
 import pytest
 from jsonschema import validators
 
-from img2drawing import HeadHairIntegrityError, HeadHairObservation, compare_head_hair
+from img2drawing.legacy.r23 import HeadHairIntegrityError, HeadHairObservation, compare_head_hair
 
 
 ROOT = Path(__file__).resolve().parents[1]

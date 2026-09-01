@@ -7,7 +7,12 @@ import warnings
 import pytest
 from jsonschema import validators
 
-from img2drawing import AblationTrial, ModularGrammarCard, consume_grammar_card, run_exemplar_ablation
+from img2drawing.legacy.r23 import (
+    AblationTrial,
+    ModularGrammarCard,
+    consume_grammar_card,
+    run_exemplar_ablation,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]

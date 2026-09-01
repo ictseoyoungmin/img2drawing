@@ -1,19 +1,12 @@
 # vNext work slices
 
-이 디렉터리에는 실행 카드와 최근 closure record를 둔다. B05의 construction 및
-canonical route de-anchoring, B06 residual correction, B07 evidence/cost control은
-닫혀 있고, B08은 reviewer 피드백에 따른 좁은 hardening까지 반영해 다시 닫혔다. 실제
-작업을 시작할 때 `STATUS.md`와 해당 카드 하나만 `ACTIVE`/`REOPENED`로 바꾼다.
+This directory owns executable cards for current and upcoming work. Closed public
+contracts and evidence belong in `../capsules/`; archived execution history belongs in
+`../archive/`. Do not create duplicate cards for B00–B04.
 
-## Closed work
+Only `STATUS.md` and one card may be `ACTIVE` or `REOPENED` at a time.
 
-B00–B04는 중복 카드를 만들지 않는다. `../capsules/`에서 public contract와
-evidence를 읽고, 실행 이력이 필요할 때만 `../archive/`를 연다. B05의 construction
-closure와 canonical route de-anchoring 결과도 `../capsules/B05.md`에 보존한다. B06
-residual/correction provenance와 B07 evidence/cost closure는 각각
-`../capsules/B06.md`, `../capsules/B07.md`에 보존한다.
-
-## Pending cards
+## Card sequence
 
 | Order | Card | Activation condition |
 |---|---|---|
@@ -34,8 +27,9 @@ residual/correction provenance와 B07 evidence/cost closure는 각각
 
 ```text
 SKELETON → ACTIVE → CLOSED
-CLOSED → REOPENED → CLOSED (예외적 재오픈)
+CLOSED → REOPENED → CLOSED  (exceptional correction)
 ```
 
-한 번에 하나만 `ACTIVE` 또는 `REOPENED`일 수 있다. 각 closure에는 direct
-quality inspection, tests, duplicate/orphan check, authoritative capsule이 필요하다.
+Every closure requires direct quality/contract review, relevant tests, a
+duplicate/orphan check, synchronized status, an authoritative capsule, and its own
+commit. A plan update alone never closes a card.

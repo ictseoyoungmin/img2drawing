@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from img2drawing import (
+from img2drawing.legacy.r23 import (
     AcceptedResidual,
     AdaptiveEvidencePolicy,
     AssistiveROIProposal,

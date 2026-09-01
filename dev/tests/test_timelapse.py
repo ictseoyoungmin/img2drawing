@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from img2drawing import DrawingRun
+from img2drawing.legacy.r23 import DrawingRun
 from img2drawing.core.session import DrawingSession, RENDERER_ID
 from img2drawing.provenance import timelapse
 from img2drawing.provenance.timelapse import select_cursors
