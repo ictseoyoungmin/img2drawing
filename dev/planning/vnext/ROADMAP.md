@@ -38,8 +38,8 @@ observe/read subject or intent
 | ID | State now | Goal | Depends |
 |---|---|---|---|
 | B09 | CLOSED | Finish / recognition authoring | B08 + B01-R1/B07-R1 |
-| B10 | ACTIVE | Intent-aware completion | B09 |
-| B11 | SKELETON | Canonical `RenderProfile` + replay/GIF parity | B10 |
+| B10 | CLOSED | Intent-aware completion | B09 |
+| B11 | ACTIVE | Canonical `RenderProfile` + replay/GIF parity | B10 |
 | B12 | SKELETON | Legacy runtime / persistence isolation | B11 |
 | B13 | SKELETON | Reference authority + subjectless runtime | B12 |
 | B14 | SKELETON | Drawing-mode capability completion | B13 |

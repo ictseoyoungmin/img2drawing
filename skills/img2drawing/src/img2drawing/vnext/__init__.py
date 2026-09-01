@@ -11,6 +11,7 @@ from .construction import (
     observe_pose,
 )
 from .correction import CorrectionRecord, ResidualRecord
+from .completion import FINISH_RECORD_SCHEMA, FinishRecord
 from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
 from .intent import (
     COMPATIBILITY_INTENTS,
@@ -38,6 +39,8 @@ from .value import replace_fill_region
 __all__ = [
     "CONSTRUCTION_PHASES",
     "CorrectionRecord",
+    "FINISH_RECORD_SCHEMA",
+    "FinishRecord",
     "ConstructionMark",
     "DrawingSession",
     "EvidencePolicy",

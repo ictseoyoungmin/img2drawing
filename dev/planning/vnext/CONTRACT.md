@@ -3,7 +3,7 @@
 Status: **CURRENT**
 Updated: 2026-09-01
 
-이 문서는 현재 닫힌 B00–B09(+B01-R1/B07-R1) 기반과 B10–B18 구현 phase가
+이 문서는 현재 닫힌 B00–B10(+B01-R1/B07-R1) 기반과 B11–B18 구현 phase가
 공유해야 하는 architecture invariant를 정의한다. 새 fresh visual dogfood는 B18
 freeze 이후에만 시작한다.
 
@@ -170,7 +170,7 @@ B15에서도 one base + explicit overrides를 유지하며 inheritance graph/DSL
 
 ## 9. completion
 
-B10에서 `finish()` 의미를 portable `FinishRecord`로 강화한다.
+B10에서 `finish()` 의미를 portable `FinishRecord`로 강화했다.
 
 ```text
 FinishRecord
@@ -252,10 +252,9 @@ style이 subject geometry truth를 덮는 renderer/post-filter
 imaginative mode가 fake reference authority를 만드는 것
 ```
 
-## 14. B10–B18 아직 구현할 surface
+## 14. B11–B18 아직 구현할 surface
 
 ```text
-B10  intent-aware completion
 B11  RenderProfile + replay/GIF parity
 B12  legacy isolation
 B13  subjectless/reference authority

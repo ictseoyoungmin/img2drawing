@@ -3,24 +3,13 @@
 
 from __future__ import annotations
 
-import argparse
-import os
-import subprocess
 import sys
-from pathlib import Path
 
-
-ROOT = Path(__file__).resolve().parents[2]
-SRC = ROOT / "skills" / "img2drawing" / "src"
-ENV = {**os.environ, "PYTHONPATH": str(SRC)}
-
-
-def _run(*command: str) -> None:
-    subprocess.run(command, cwd=ROOT, env=ENV, check=True)
+from vnext_verification import ROOT, SRC, run_cli, run_pytest
 
 
 def focused() -> None:
-    _run(sys.executable, "-m", "pytest", "-q", "dev/tests/test_vnext_finish.py", "dev/tests/test_vnext_intent.py")
+    run_pytest("dev/tests/test_vnext_finish.py", "dev/tests/test_vnext_intent.py")
     print("B09_FOCUSED_VERIFICATION_PASS")
 
 
@@ -42,7 +31,7 @@ def contract() -> None:
 
 
 def full() -> None:
-    _run(sys.executable, "-m", "pytest", "-q", "dev/tests")
+    run_pytest("dev/tests")
     print("B09_FULL_REGRESSION_PASS")
 
 
@@ -65,19 +54,10 @@ def closure() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("mode", nargs="?", choices=("focused", "contract", "full", "closure"))
-    group = parser.add_mutually_exclusive_group()
-    for name in ("focused", "contract", "full", "closure"):
-        group.add_argument(f"--{name}", action="store_true")
-    args = parser.parse_args()
-    selected = args.mode or next(
-        (name for name in ("focused", "contract", "full", "closure") if getattr(args, name)),
-        None,
+    run_cli(
+        __doc__ or "B09 verification",
+        {"focused": focused, "contract": contract, "full": full, "closure": closure},
     )
-    if selected is None:
-        parser.error("select a verification mode")
-    globals()[selected]()
 
 
 if __name__ == "__main__":

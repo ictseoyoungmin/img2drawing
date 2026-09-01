@@ -3,12 +3,12 @@
 Updated: 2026-09-01
 
 ```text
-SYSTEM:   stage-free product surface closed through B09, including B01-R1 and B07-R1 hardening
-ACTIVE:   B10 Intent-aware completion
-NEXT:     B11 Canonical RenderProfile + replay/GIF parity
-SKELETON: B11–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B10, including B01-R1 and B07-R1 hardening
+ACTIVE:   B11 Canonical RenderProfile + replay/GIF parity
+NEXT:     B12 Legacy runtime / persistence isolation
+SKELETON: B12–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,26 +45,24 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B10
+## Active slice — B11
 
-B10 is the sole production WIP.
+B11 is the sole production WIP.
 
-Goal: bind an Agent completion decision to the exact current drawing state, intent,
-history cursor, and fresh inspection without creating an artistic certificate or finish
-stage.
+Goal: make final PNG, action replay, and GIF frames derive from one versioned canonical
+`RenderProfile`, renderer, and action history with deterministic final-state parity.
 
-B10 inherits these closed constraints:
+B11 inherits these closed constraints:
 
-- completion is an Agent decision that no material residual remains for the declared
-  intent, not a score, stage count, checklist percentage, or automatic PASS;
-- the record must bind to the exact intent digest, drawing-state hash, history cursor,
-  and fresh inspection evidence;
-- any later material mutation or intent change makes the prior completion stale;
-- accepted limitations must be explicit and cannot hide a known material residual; and
-- a post-finish defect returns to the ordinary residual/correction loop without reopening
-  a finish stage.
+- `StyleGuide` remains Agent authoring advice while `RenderProfile` owns raster material,
+  canvas, seed, supersampling, compositing, and encoding;
+- final render, replay latest state, and GIF final frame consume the same history/profile;
+- action 0 and latest state have explicit replay semantics;
+- value regions replay as compact authored regions rather than expanded artistic actions;
+  and
+- rendering must not mutate geometry or create a second history.
 
-B10 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B11 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -83,6 +81,7 @@ those claims belong to D01–D06 after B18.
 | B07-R1 | CLOSED | value-region authoring, session compaction, fill revision, form-before-value |
 | B08 | CLOSED | orthogonal `DrawingIntent`, `ModeGuide`, `StyleGuide`, intent provenance |
 | B09 | CLOSED | stage-free `FinishGuide`, relational recognition, form-before-value and preserved-constraint policy |
+| B10 | CLOSED | intent/state/inspection-bound `FinishRecord` with stale-state and tamper validation |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -137,8 +136,8 @@ Until B18 closes:
 
 ```text
 B09  Finish / recognition authoring                     CLOSED
-B10  Intent-aware completion                            ACTIVE
-B11  Canonical RenderProfile + replay/GIF parity         SKELETON
+B10  Intent-aware completion                            CLOSED
+B11  Canonical RenderProfile + replay/GIF parity         ACTIVE
 B12  Legacy runtime / persistence isolation              SKELETON
 B13  Reference authority + subjectless runtime           SKELETON
 B14  Drawing-mode capability completion                  SKELETON

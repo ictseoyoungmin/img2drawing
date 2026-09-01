@@ -38,11 +38,13 @@ replayable.
 ## Status
 
 Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free vNext product surface is closed
-through B09: one `DrawingSession` now carries observation/construction, bounded inspection,
-residual correction, orthogonal `DrawingIntent`, and finish-specific authoring guidance.
+through B10: one `DrawingSession` now carries observation/construction, bounded inspection,
+residual correction, orthogonal `DrawingIntent`, finish-specific authoring guidance, and
+intent/state/inspection-bound completion provenance.
 Legacy R23 review and recovery remain available for compatibility and historical
-comparison; they are not the default vNext loop. B10 intent-aware completion is the sole
-active implementation slice. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
+comparison; they are not the default vNext loop. Intent-aware completion binds an Agent
+decision to the exact current intent, drawing, action cursor, and inspection; it does not
+automatically judge quality. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
 
 ## Requirements
 

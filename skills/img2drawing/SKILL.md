@@ -223,7 +223,9 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
    construction/figure/finish guide for the relationships present.
 4. Create the first drawing through `DrawingSession`; inspect the whole result before
    adding detail, then use `review/residual-correction.md` for every repair loop.
-5. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
+5. Read `review/completion.md` and bind the Agent's decision to the latest current
+   inspection; continue the same correction loop if that record becomes stale.
+6. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
 
 ## Evidence boundary
 
@@ -235,6 +237,18 @@ declared intent and current drawing for imaginative work), then records explicit
 The default sequence is whole → relation → part → relation again. Macro pose, mass,
 balance, silhouette, and composition residuals outrank micro detail. A mutation makes
 prior visual evidence stale; render and inspect a fresh snapshot.
+
+## Completion provenance
+
+Finish only after a fresh inspection under the current `DrawingIntent` and after every
+recorded material residual is resolved. Call `session.finish(final_inspection_id=...,
+rationale=..., accepted_limitations=..., unresolved_nonmaterial_notes=...)`; do not write
+arbitrary finish metadata. `FinishRecord` binds the Agent decision to the exact intent
+digest, drawing-state hash, history cursor, and inspection. It is not an artistic PASS or
+a lock. A later mark, intent change, or newly recorded material residual makes
+`session.finish_is_current` false, after which the ordinary correction loop continues.
+Read [`references/review/completion.md`](references/review/completion.md) before recording
+completion.
 
 ## Legacy R23 continuation
 

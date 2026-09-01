@@ -18,6 +18,7 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `value/tone-and-fill.md`: region fill, calibrated tone scale, reserved lights
 - `review/correction-loop.md`: the one-line residual loop
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
+- `review/completion.md`: bind the Agent's finish decision to current intent/state/evidence
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
 - `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and

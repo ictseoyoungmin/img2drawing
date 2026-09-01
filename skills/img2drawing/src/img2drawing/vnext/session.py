@@ -32,6 +32,7 @@ from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render.pillow_pencil_contact import render
 from ..render.presets import default_grade_name
 from .correction import CorrectionRecord, ResidualRecord
+from .completion import FinishRecord
 from .evidence import (
     EvidencePolicy,
     EvidenceReadRecord,
@@ -118,7 +119,8 @@ class DrawingSession:
         inspection_history: list[dict[str, Any]] | None = None,
         residuals: list[dict[str, Any]] | None = None,
         corrections: list[dict[str, Any]] | None = None,
-        finish_metadata: dict[str, Any] | None = None,
+        finish_record: FinishRecord | Mapping[str, Any] | None = None,
+        legacy_finish_metadata: Mapping[str, Any] | None = None,
         checkpoint_path: Path | None = None,
         subject_sha256: str | None = None,
         evidence_telemetry: EvidenceTelemetry | Mapping[str, Any] | None = None,
@@ -136,7 +138,16 @@ class DrawingSession:
         self._inspection_history = deepcopy(inspection_history or [])
         self._residuals = deepcopy(residuals or [])
         self._corrections = deepcopy(corrections or [])
-        self._finish_metadata = None if finish_metadata is None else deepcopy(finish_metadata)
+        self._finish_record = (
+            None
+            if finish_record is None
+            else finish_record
+            if isinstance(finish_record, FinishRecord)
+            else FinishRecord.from_dict(finish_record)
+        )
+        self._legacy_finish_metadata = (
+            None if legacy_finish_metadata is None else deepcopy(dict(legacy_finish_metadata))
+        )
         self._evidence_telemetry = (
             evidence_telemetry
             if isinstance(evidence_telemetry, EvidenceTelemetry)
@@ -246,7 +257,7 @@ class DrawingSession:
             if observation_id and observation_id != "vnext-unobserved" and observation_id not in observation_ids:
                 raise ValueError(f"checkpoint references unknown observation_id: {observation_id}")
         inspection_history = deepcopy(payload.get("inspection_history") or [])
-        cls._validate_inspection_history(inspection_history)
+        cls._validate_inspection_history(inspection_history, len(agent.history.actions))
         evidence_telemetry = EvidenceTelemetry.from_dict(payload.get("evidence_telemetry"))
         residuals = deepcopy(payload.get("residuals") or [])
         cls._validate_residual_records(residuals, observations, inspection_history)
@@ -264,6 +275,16 @@ class DrawingSession:
             for record in (payload.get("intent_history") or [])
         ]
         cls._validate_intent_records(intent_history, intent, len(agent.history.actions))
+        cls._validate_inspection_intent_bindings(inspection_history, intent_history)
+        finish_record = (
+            None
+            if payload.get("finish_record") is None
+            else FinishRecord.from_dict(payload["finish_record"])
+        )
+        cls._validate_finish_record(finish_record, inspection_history, len(agent.history.actions))
+        legacy_finish_metadata = payload.get("finish_metadata")
+        if legacy_finish_metadata is not None and not isinstance(legacy_finish_metadata, Mapping):
+            raise ValueError("legacy finish_metadata must be an object")
 
         if output_dir is None:
             artifact_root = str((payload.get("artifacts") or {}).get("inspection_root", "."))
@@ -284,7 +305,8 @@ class DrawingSession:
             inspection_history=inspection_history,
             residuals=residuals,
             corrections=corrections,
-            finish_metadata=deepcopy(payload.get("finish_metadata")),
+            finish_record=finish_record,
+            legacy_finish_metadata=deepcopy(legacy_finish_metadata),
             checkpoint_path=checkpoint_path if output_dir is None else destination / "session.checkpoint.json",
             subject_sha256=actual_subject_hash,
             evidence_telemetry=evidence_telemetry,
@@ -321,7 +343,9 @@ class DrawingSession:
             seen.add(observation_id)
 
     @staticmethod
-    def _validate_inspection_history(records: Sequence[Mapping[str, Any]]) -> None:
+    def _validate_inspection_history(
+        records: Sequence[Mapping[str, Any]], action_count: int | None = None
+    ) -> None:
         seen: set[str] = set()
         for record in records:
             inspection_id = str(record.get("inspection_id", ""))
@@ -343,7 +367,35 @@ class DrawingSession:
                     raise ValueError(f"inspection history requires {key}")
             if record.get("evidence_policy") is not None:
                 EvidencePolicy.from_dict(record["evidence_policy"])
+            history_cursor = record.get("history_cursor")
+            if history_cursor is not None:
+                history_cursor = int(history_cursor)
+                if history_cursor < 0:
+                    raise ValueError("inspection history_cursor must be >= 0")
+                if action_count is not None and history_cursor > int(action_count):
+                    raise ValueError("inspection history_cursor exceeds action history")
+            intent_digest = record.get("intent_digest")
+            if intent_digest is not None and not _SHA256.fullmatch(str(intent_digest)):
+                raise ValueError("inspection history requires a valid intent_digest")
             seen.add(inspection_id)
+
+    @staticmethod
+    def _validate_inspection_intent_bindings(
+        inspections: Sequence[Mapping[str, Any]],
+        intent_history: Sequence[IntentChangeRecord],
+    ) -> None:
+        for inspection in inspections:
+            digest = inspection.get("intent_digest")
+            cursor = inspection.get("history_cursor")
+            if digest is None or cursor is None:
+                continue
+            if not any(
+                event.intent_digest == digest and event.history_cursor <= int(cursor)
+                for event in intent_history
+            ):
+                raise ValueError(
+                    f"inspection intent digest has no prior provenance: {inspection.get('inspection_id')}"
+                )
 
     @staticmethod
     def _validate_evidence_telemetry(
@@ -489,6 +541,35 @@ class DrawingSession:
                 raise ValueError("current intent does not match the latest provenance event")
 
     @staticmethod
+    def _validate_finish_record(
+        record: FinishRecord | None,
+        inspections: Sequence[Mapping[str, Any]],
+        action_count: int,
+    ) -> None:
+        """Validate a finish record's immutable source facts while allowing staleness."""
+
+        if record is None:
+            return
+        if record.history_cursor > int(action_count):
+            raise ValueError("finish history_cursor exceeds action history")
+        inspection = next(
+            (
+                item
+                for item in inspections
+                if str(item.get("inspection_id")) == record.final_inspection_id
+            ),
+            None,
+        )
+        if inspection is None:
+            raise ValueError("finish record references unknown final inspection")
+        if inspection.get("drawing_state_hash") != record.drawing_state_hash:
+            raise ValueError("finish drawing-state digest does not match final inspection")
+        if inspection.get("history_cursor") != record.history_cursor:
+            raise ValueError("finish history_cursor does not match final inspection")
+        if inspection.get("intent_digest") != record.intent_digest:
+            raise ValueError("finish intent digest does not match final inspection")
+
+    @staticmethod
     def _verify_inspection_artifacts(
         root: Path, records: Sequence[Mapping[str, Any]]
     ) -> None:
@@ -575,7 +656,35 @@ class DrawingSession:
 
     @property
     def finish_metadata(self) -> dict[str, Any] | None:
-        return None if self._finish_metadata is None else deepcopy(self._finish_metadata)
+        """Compatibility view; canonical callers should use ``finish_record``."""
+
+        if self._finish_record is not None:
+            return deepcopy(self._finish_record.to_dict())
+        return (
+            None
+            if self._legacy_finish_metadata is None
+            else deepcopy(self._legacy_finish_metadata)
+        )
+
+    @property
+    def finish_record(self) -> FinishRecord | None:
+        """Return the latest Agent-authored completion provenance, if present."""
+
+        return self._finish_record
+
+    @property
+    def finish_is_current(self) -> bool:
+        """Whether the stored decision still matches current truth and no open residual."""
+
+        if self._finish_record is None or self._intent is None:
+            return False
+        if any(ResidualRecord.from_dict(raw).status == "open" for raw in self._residuals):
+            return False
+        return self._finish_record.matches(
+            intent_digest=self._intent.digest(),
+            drawing_state_hash=self.drawing_state_hash(),
+            history_cursor=self.history_cursor,
+        )
 
     def current_ir(self) -> StrokeIR:
         with self._lock:
@@ -603,7 +712,8 @@ class DrawingSession:
             "inspection_history": _portable(self._inspection_history),
             "residuals": _portable(self._residuals),
             "corrections": _portable(self._corrections),
-            "finish_metadata": _portable(self._finish_metadata),
+            "finish_record": _portable(self._finish_record),
+            "finish_metadata": _portable(self._legacy_finish_metadata),
             "intent": None if self._intent is None else _portable(self._intent),
             "intent_history": _portable(self._intent_history),
             "evidence_telemetry": self._evidence_telemetry.to_dict(),
@@ -1325,6 +1435,8 @@ class DrawingSession:
                 "manifest": relative_manifest,
                 "drawing_state_hash": sheet.drawing_state_hash,
                 "drawing_artifact_sha256": sheet.drawing_artifact_sha256,
+                "history_cursor": self.history_cursor,
+                "intent_digest": None if self._intent is None else self._intent.digest(),
             })
             self._evidence_telemetry = self._evidence_telemetry.after_inspection(
                 artifact_count=len(INSPECTION_ARTIFACTS),
@@ -1430,16 +1542,77 @@ class DrawingSession:
             candidate += 1
         return f"{candidate:06d}"
 
-    def finish(self, metadata: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    def finish(
+        self,
+        metadata: Mapping[str, Any] | None = None,
+        *,
+        final_inspection_id: str | None = None,
+        rationale: str | None = None,
+        accepted_limitations: Sequence[str] = (),
+        unresolved_nonmaterial_notes: Sequence[str] = (),
+    ) -> FinishRecord:
+        """Record an Agent completion decision bound to current immutable facts.
+
+        Completion never locks the session. Later edits or intent changes preserve this
+        record as historical provenance while making ``finish_is_current`` false.
+        """
+
+        if metadata is not None:
+            raise TypeError(
+                "arbitrary finish metadata is no longer a completion claim; pass "
+                "final_inspection_id, rationale, accepted_limitations, and "
+                "unresolved_nonmaterial_notes"
+            )
+        if final_inspection_id is None:
+            raise TypeError("finish requires final_inspection_id")
+        if rationale is None:
+            raise TypeError("finish requires rationale")
         with self._lock:
-            before = self._finish_metadata
-            self._finish_metadata = _portable(dict(metadata or {}))
+            if self._intent is None:
+                raise ValueError("finish requires a declared DrawingIntent")
+            if not self._inspection_history:
+                raise ValueError("finish requires a fresh inspection")
+            inspection = self._inspection_record(final_inspection_id)
+            if inspection["inspection_id"] != self._inspection_history[-1]["inspection_id"]:
+                raise ValueError("finish requires the latest inspection")
+            current_hash = self.drawing_state_hash()
+            if inspection["drawing_state_hash"] != current_hash:
+                raise ValueError("final inspection is stale; inspect the current drawing first")
+            if inspection.get("history_cursor") != self.history_cursor:
+                raise ValueError("final inspection history cursor is stale")
+            intent_digest = self._intent.digest()
+            if inspection.get("intent_digest") != intent_digest:
+                raise ValueError("final inspection predates the current intent")
+            open_residual_ids = tuple(
+                record.residual_id
+                for record in (ResidualRecord.from_dict(raw) for raw in self._residuals)
+                if record.status == "open"
+            )
+            if open_residual_ids:
+                raise ValueError(
+                    "finish requires all material residuals to be resolved: "
+                    + ", ".join(open_residual_ids)
+                )
+            if self.finish_is_current:
+                raise ValueError("a current finish decision is already recorded")
+            record = FinishRecord(
+                record_id=f"finish-{inspection['inspection_id']}",
+                intent_digest=intent_digest,
+                drawing_state_hash=current_hash,
+                final_inspection_id=str(inspection["inspection_id"]),
+                history_cursor=self.history_cursor,
+                accepted_limitations=tuple(accepted_limitations),
+                unresolved_nonmaterial_notes=tuple(unresolved_nonmaterial_notes),
+                rationale=rationale,
+            )
+            before = self._finish_record
+            self._finish_record = record
             try:
                 self._write_checkpoint(self._checkpoint_path)
             except Exception:
-                self._finish_metadata = before
+                self._finish_record = before
                 raise
-            return deepcopy(self._finish_metadata)
+            return self._finish_record
 
 
 def _subject_size(path: Path) -> tuple[int, int]:

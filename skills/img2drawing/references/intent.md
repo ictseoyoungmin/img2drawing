@@ -82,8 +82,9 @@ form-before-value; and `expressive` records constraints before selective simplif
 Guide precedence is deliberate: subject/reference geometry and explicit preserved
 constraints outrank finish advice, and finish advice outranks a conflicting style
 preference. See [`finish/identity-and-value.md`](finish/identity-and-value.md) for the
-canonical finish method. Completion recording is a separate later capability; these
-questions do not certify that the drawing is done.
+canonical finish method. The questions still do not certify that the drawing is done;
+when the Agent finds no material residual, bind that decision through the separate
+[`review/completion.md`](review/completion.md) `FinishRecord` contract.
 
 ## Compatibility lookup
 
