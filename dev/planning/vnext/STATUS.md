@@ -44,9 +44,10 @@ justify.
 
 The first B07-R1 implementation was kept, then hardened without broadening into B09:
 
-- `pressure_authored` is provenance-only and is excluded from the visual drawing-state
-  digest, so pre-compaction vNext checkpoints do not become visually different merely
-  because the loader now distinguishes authored from derived pressure;
+- pre-compaction histories that persisted derived pressure and `tool_state` inline carry
+  a transient compatibility marker during replay. Only that proven old representation
+  omits the later `pressure_authored` provenance field when reproducing its saved visual
+  digest; already-emitted B07-R1 checkpoint digests remain byte-for-byte stable;
 - value regions now have an append-only `replace_fill_region()` path. A later inspection
   revises the region definition instead of stacking another fill or enumerating hundreds
   of generated hatch strokes; the returned action id binds directly to B06 correction
