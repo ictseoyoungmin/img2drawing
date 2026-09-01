@@ -17,7 +17,7 @@ from .tools import ToolState, get_tool
 
 DRAW_KINDS = {
     "draw_stroke", "replace_stroke", "soft_lift", "delete_stroke", "marker",
-    "replace_segment", "soft_lift_segment", "fill_region",
+    "replace_segment", "soft_lift_segment", "fill_region", "replace_fill_region",
 }
 TOOL_OVERRIDE_FIELDS = {
     "width", "pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter",
@@ -164,16 +164,23 @@ class DrawingAction:
                 raise ValueError("soft_lift_segment requires observation and correction provenance")
             if self.revision_of != self.target_stroke_id:
                 raise ValueError("soft_lift_segment revision_of must match target_stroke_id")
-        elif self.kind == "fill_region":
+        elif self.kind in {"fill_region", "replace_fill_region"}:
             if self.points:
-                raise ValueError("fill_region carries a region, not loose points")
+                raise ValueError(f"{self.kind} carries a region, not loose points")
             if not isinstance(self.region, dict):
-                raise ValueError("fill_region requires a region payload")
+                raise ValueError(f"{self.kind} requires a region payload")
             if not isinstance(self.tool, dict) or not str(self.tool.get("preset", "")).strip():
-                raise ValueError("fill_region requires an explicit tool preset")
+                raise ValueError(f"{self.kind} requires an explicit tool preset")
             if not self.observation_id or not self.source_observation:
-                raise ValueError("fill_region requires observation provenance")
-            FillRegion.from_dict(self.region)
+                raise ValueError(f"{self.kind} requires observation provenance")
+            region = FillRegion.from_dict(self.region)
+            if self.kind == "replace_fill_region":
+                if not self.revision_of:
+                    raise ValueError("replace_fill_region requires revision_of fill_id")
+                if region.fill_id != self.revision_of:
+                    raise ValueError("replace_fill_region preserves fill identity")
+                if not self.reason:
+                    raise ValueError("replace_fill_region requires correction reason")
         elif self.kind in {"soft_lift", "delete_stroke"}:
             if not self.target_stroke_id:
                 raise ValueError(f"{self.kind} requires target_stroke_id")
@@ -333,7 +340,7 @@ class AgentDrawingSession:
         if action.action_id in self.executed_action_ids:
             raise ValueError(f"duplicate action_id: {action.action_id}")
         bounds_points = list(action.points)
-        if action.kind == "fill_region" and isinstance(action.region, dict):
+        if action.kind in {"fill_region", "replace_fill_region"} and isinstance(action.region, dict):
             bounds_points += [tuple(map(float, q)) for q in action.region.get("polygon", ())]
         for x, y in bounds_points:
             if not (0.0 <= float(x) <= self.width - 1 and 0.0 <= float(y) <= self.height - 1):
@@ -348,19 +355,25 @@ class AgentDrawingSession:
             result = self.history.replace_stroke(
                 str(action.target_stroke_id), stroke, new_stroke_id=action.stroke_id, provenance=provenance
             )
-        elif action.kind == "fill_region":
+        elif action.kind in {"fill_region", "replace_fill_region"}:
             assert action.tool is not None and action.region is not None
             tool, grade = _resolve_tool(action.tool)
             if tool.mode != "draw":
-                raise ValueError(f"fill_region cannot use erase-mode tool: {tool.tool}")
+                raise ValueError(f"{action.kind} cannot use erase-mode tool: {tool.tool}")
             tool_state = tool.to_dict()
             tool_state["pencil_grade"] = grade
             tool_state["action_id"] = action.action_id
             tool_state["provenance"] = provenance
-            result = self.history.fill_region(
-                FillRegion.from_dict(action.region), tool_state,
-                stage=action.stage, provenance=provenance,
-            )
+            region = FillRegion.from_dict(action.region)
+            if action.kind == "fill_region":
+                result = self.history.fill_region(
+                    region, tool_state, stage=action.stage, provenance=provenance,
+                )
+            else:
+                result = self.history.replace_fill_region(
+                    str(action.revision_of), region, tool_state,
+                    stage=action.stage, provenance=provenance,
+                )
         elif action.kind == "replace_segment":
             result = self.history.replace_segment(
                 str(action.target_stroke_id), int(action.segment_start), int(action.segment_end),

@@ -51,8 +51,8 @@ def _jsonable(value: Any) -> Any:
     return value
 
 
-def _stage_free_payload(value: Any) -> dict[str, Any]:
-    """Exclude only known workflow fields at their structural locations."""
+def _stage_free_payload(value: Any, *, legacy_inline_pressure: bool = False) -> dict[str, Any]:
+    """Exclude workflow fields, plus one proven pre-compaction provenance field."""
 
     if not isinstance(value, dict):
         raise TypeError("StrokeIR serialization must be a mapping")
@@ -70,6 +70,12 @@ def _stage_free_payload(value: Any) -> dict[str, Any]:
                 raise TypeError("StrokeIR strokes must serialize as mappings")
             normalized = dict(stroke)
             normalized.pop("stage", None)
+            if legacy_inline_pressure:
+                # Before B07-R1 the field did not exist. The loader can identify that
+                # representation because it persisted pressure and tool_state inline.
+                # Drop only for that migrated history so post-B07-R1 checkpoint hashes
+                # remain byte-for-byte compatible with the digest they already stored.
+                normalized.pop("pressure_authored", None)
             normalized_strokes.append(normalized)
         payload["strokes"] = normalized_strokes
     return payload
@@ -86,7 +92,10 @@ def drawing_state_payload(ir: Any) -> dict[str, Any]:
     if not hasattr(ir, "to_dict"):
         raise TypeError("drawing_state_payload expects a StrokeIR-like object")
     raw = _jsonable(ir.to_dict())
-    return _stage_free_payload(raw)
+    return _stage_free_payload(
+        raw,
+        legacy_inline_pressure=bool(getattr(ir, "_legacy_inline_pressure", False)),
+    )
 
 
 def drawing_state_hash(ir: Any) -> str:

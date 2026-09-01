@@ -1,6 +1,6 @@
 # img2drawing vNext status
 
-Updated: 2026-08-31
+Updated: 2026-09-01
 
 ```text
 SYSTEM:   B00–B08 closed; B07 reopened and reclosed as B07-R1 (value authoring + session compaction)
@@ -8,8 +8,8 @@ ACTIVE:   none
 NEXT:     fresh post-B07-R1 dogfood, then activate B09 Mode-aware finish / recognition
 SKELETON: B09–B18 platform/release
 CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B07-R1, B08
-NEXT GATE: a dogfood croquis whose canonical session stays within ~2x the R23 baseline
-           while carrying a value pass R23 never had
+NEXT GATE: fresh dogfood whose canonical session stays within ~2x the R23 baseline AND
+           whose major limb/torso/clothing volume + overlap remain readable with tone removed
 ```
 
 ## B07-R1 reopen — value authoring and canonical session compaction
@@ -39,6 +39,26 @@ Scope taken:
 Explicitly out of scope: residual/correction bookkeeping compaction (1.3%, not the
 bottleneck) and any raw-trace/canonical file split, which the measurement did not
 justify.
+
+### 2026-09-01 post-review hardening
+
+The first B07-R1 implementation was kept, then hardened without broadening into B09:
+
+- pre-compaction histories that persisted derived pressure and `tool_state` inline carry
+  a transient compatibility marker during replay. Only that proven old representation
+  omits the later `pressure_authored` provenance field when reproducing its saved visual
+  digest; already-emitted B07-R1 checkpoint digests remain byte-for-byte stable;
+- value regions now have an append-only `replace_fill_region()` path. A later inspection
+  revises the region definition instead of stacking another fill or enumerating hundreds
+  of generated hatch strokes; the returned action id binds directly to B06 correction
+  provenance;
+- canonical value guidance now requires **form before value**. With tone mentally removed,
+  major limb thickness, torso/limb separation, clothing volume, prop contact, and overlap
+  must already read. `ReservedLight` may preserve observed light inside a correct form;
+  it may not manufacture missing structure.
+
+The next dogfood therefore has two simultaneous acceptance axes: **record cost** and
+**representation quality**. Passing the session-size target alone is insufficient.
 
 ## B08 activation record — orthogonal plain-data intent
 
@@ -150,9 +170,9 @@ and the public API is compressed in [`capsules/B06.md`](capsules/B06.md).
 - Frozen R23 baseline: `25ec4544e86fe37fc28d64575df145a1b711d63a`
 - Current HEAD: this branch's latest closure commit (use `git log` for the exact SHA)
 - vNext code: `inspection/`, `vnext/session.py`, `vnext/construction.py`, `vnext/evidence.py`,
-  and B08 `vnext/intent.py`
-- vNext tests: inspection, session, construction, correction, evidence, and intent suites
-  under `dev/tests/`
+  `vnext/value.py`, and B08 `vnext/intent.py`
+- vNext tests: inspection, session, construction, correction, evidence, value, and intent
+  suites under `dev/tests/`
 - B05 dogfood: `dev/dogfood/vnext-b05/`
 - B06 correction dogfood: `dev/dogfood/vnext-b06/`
 - Representative visual evidence: `dev/evidence/vnext/b02-b03/`, `dev/evidence/vnext/b05/`,
