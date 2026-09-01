@@ -1,18 +1,18 @@
 # Legacy R23 compatibility route
 
-이 문서는 기존 `DrawingRun` 작업을 이어갈 때만 읽는다. 새 작업의 canonical
-경로가 아니다.
+Read this document only when continuing an existing `DrawingRun`. It is not the
+canonical route for new work.
 
 ## Scope
 
-R23은 다음을 보존한다.
+R23 preserves:
 
-- `DrawingRun`과 stage registry를 사용하는 기존 checkpoint/resume
+- existing checkpoint/resume behavior using `DrawingRun` and the stage registry;
 - P1–P6 stage contract, stage review, local review, pass memory
-- legacy manifest와 reopen 기록의 provenance
+- provenance for legacy manifests and reopen records.
 
-이 자산은 역사·회귀·호환성용이다. vNext의 drawing quality PASS나 새 작업의
-기본 지침으로 승격하지 않는다.
+These assets exist for history, regression, and compatibility. Do not promote
+them into a vNext drawing-quality PASS or default guidance for new work.
 
 ## Compatibility entry points
 
@@ -23,13 +23,14 @@ R23은 다음을 보존한다.
 - stage-coupled documentation: [`review/`](review/) and
   [`worker/autonomous-worker-contract.md`](worker/autonomous-worker-contract.md)
 
-기존 R23 checkpoint를 재개할 때만 위 경로를 따라가며, vNext 작업에서는
-[`../SKILL.md`](../SKILL.md)의 canonical route와 `img2drawing.DrawingSession`을
-사용한다. R23 지침을 vNext API에 섞거나 Pn을 새 mode의 lifecycle로 재사용하지 않는다.
+Follow the paths above only when resuming an existing R23 checkpoint. For vNext
+work, use the canonical route in [`../SKILL.md`](../SKILL.md) and
+`img2drawing.DrawingSession`. Do not mix R23 guidance into the vNext API or reuse
+Pn as the lifecycle of a new mode.
 
 ## Migration rule
 
-R23 지식에서 gesture, masses, balance, limb curvature, attached-object topology,
-contour selection, face/hair relation 같은 drawing knowledge가 필요하면 먼저
-stage-free references를 읽는다. stage ownership, `advance`, `reopen_stage`,
-manifest closure는 호환성 경계 밖으로 가져오지 않는다.
+When you need drawing knowledge from R23—gesture, masses, balance, limb curvature,
+attached-object topology, contour selection, or face/hair relationships—read the
+stage-free references first. Do not carry stage ownership, `advance`,
+`reopen_stage`, or manifest closure beyond the compatibility boundary.

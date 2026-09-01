@@ -5,12 +5,39 @@ Updated: 2026-09-01
 ```text
 SYSTEM:   B00–B08 closed; B07 reopened and reclosed as B07-R1 (value authoring + session compaction)
 ACTIVE:   none
-NEXT:     fresh post-B07-R1 dogfood, then activate B09 Mode-aware finish / recognition
+NEXT:     third dogfood on an unseen subject, then activate B09
 SKELETON: B09–B18 platform/release
 CLOSED:   B00, B01, B02+B03, B04, B05 construction + canonical route de-anchoring, B06, B07, B07-R1, B08
 NEXT GATE: fresh dogfood whose canonical session stays within ~2x the R23 baseline AND
            whose major limb/torso/clothing volume + overlap remain readable with tone removed
 ```
+
+## B01-R1 reopen — observation method, not observation ceremony
+
+Reopened and closed: **2026-08-31** from the second dogfood. The line-only re-draw hit no
+value-authoring problems (B07-R1 held) but still needed 12 residuals, six of them the
+same three method failures repeating on a single figure.
+
+The common shape: every one passed a self-consistent correction loop. Comparing the
+drawing to itself cannot catch a boundary found with a method that could not see it, a
+line that separates nothing, or an ending that was assumed rather than observed.
+
+Scope taken:
+
+- `SubjectPalette` — the Agent samples materials it has already identified by eye and the
+  palette reports which one a pixel is nearest, plus `ambiguous_pairs()` naming the
+  materials this subject cannot separate. A luminance threshold cannot find bare skin
+  inside dark clothing; on the dogfood subject `background vs skin = 29.6`;
+- `observation/measuring-boundaries.md` — a line separates two named things; a luminance
+  profile answers only a luminance question; do not draw a termination you did not
+  observe; a correction is a new premise and inherits none of these;
+- the three questions promoted into `SKILL.md` at the point of use, and applied again on
+  every correction rather than only before the first mark;
+- "the chain before its end" in `figure/limbs-joints.md`, the duplication test in
+  `resolution/contour-and-overlap.md`, repeated-mark variation in
+  `finish/identity-and-value.md`.
+
+Full failure table: [`dogfood/vnext-b07r1/README.md`](../../dogfood/vnext-b07r1/README.md).
 
 ## B07-R1 reopen — value authoring and canonical session compaction
 

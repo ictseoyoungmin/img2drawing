@@ -1,7 +1,7 @@
 # Residual-driven correction
 
-vNext의 공통 review loop는 단계 통과가 아니라 현재 drawing의 가장 큰 visual
-residual을 줄이는 것이다.
+The shared vNext review loop reduces the largest visual residual in the current
+drawing; it does not pass through stages.
 
 ```text
 capture current snapshot
@@ -14,10 +14,10 @@ capture current snapshot
 → keep, revise, or finish for the declared intent
 ```
 
-수정 action은 개선의 증거가 아니다. 이전 inspection은 mutation 뒤 stale하며,
-새 state digest에 묶인 fresh evidence가 필요하다. local crop은 Agent가 선택하고
-measurement는 관계를 더 잘 보기 위한 aid일 뿐 pose·anatomy·likeness의 자동
-authority가 아니다.
+A correction action is not evidence of improvement. A previous inspection becomes
+stale after mutation, so fresh evidence bound to the new state digest is required.
+The Agent selects local crops. Measurements only help expose relationships; they
+are not automatic authority over pose, anatomy, or likeness.
 
 ## Residual categories
 
@@ -25,24 +25,27 @@ authority가 아니다.
 - relationship: overlap, negative space, joint chain, prop/body contact
 - finish: identity relation, value grouping, edge hierarchy, line economy
 
-macro residual이 남아 있으면 micro detail을 highest-impact로 선택하지 않는다.
-observed 작업은 subject ↔ drawing, imaginative 작업은 declared intent ↔ drawing,
-hybrid 작업은 preserved constraint + transformation intent를 비교한다.
+While a macro residual remains, do not select micro detail as the highest-impact
+issue. Compare subject ↔ drawing for observed work, declared intent ↔ drawing for
+imaginative work, and preserved constraint + transformation intent for hybrid work.
 
 ## Evidence boundary
 
-`InspectionSheet`와 read-only measurements는 current state와 provenance를 기록하지만
-자동 PASS/FAIL을 만들지 않는다. Agent가 직접 raw render, subject beside drawing,
-overlay 또는 적절한 crop을 보고 acceptance를 결정한다.
+`InspectionSheet` and read-only measurements record current state and provenance,
+but they do not produce an automatic PASS/FAIL. The Agent decides acceptance by
+viewing the raw render, subject beside drawing, overlay, or an appropriate crop.
 
-기본 evidence budget은 `session.inspect(mode="quick")`의 단일 tiled sheet이며 ROI,
-guide, grid, measurement를 추가할 수 없다. 관계를 더 좁혀야 할 때만 1–3개의
-prioritized ROI만 `mode="focused"`로 추가하고, guide/grid/measurement까지 필요한
-`mode="deep"`는 최대 3개 ROI와 짧은 `escalation_reason`을 함께 명시한다. 이 mode들은
-lifecycle이나 quality score가 아니다. 현재 구현은 파일 생성량보다 inspection
-presentation/read budget을 제한한다. 어떤 sheet/artifact를 실제로 읽었는지는
-`session.record_evidence_read(inspection_id, artifact="sheet")`로 남길 수 있으며, 이전
-state의 artifact를 읽으면 거부하지 않고 `stale=True` telemetry event로 표시한다.
+The default evidence budget is one tiled sheet from
+`session.inspect(mode="quick")`; it accepts no ROI, guide, grid, or measurement.
+Only when a relationship needs narrowing, add one to three prioritized ROIs with
+`mode="focused"`. When guides, a grid, or measurements are also needed, use
+`mode="deep"` with at most three ROIs and a short `escalation_reason`. These modes
+are neither lifecycle states nor quality scores. The current implementation limits
+the inspection presentation/read budget rather than the number of generated files.
+Record which sheet or artifact was actually read with
+`session.record_evidence_read(inspection_id, artifact="sheet")`. Reading an artifact
+from an earlier state is not rejected, but is marked by a `stale=True` telemetry
+event.
 
 ## vNext correction records
 

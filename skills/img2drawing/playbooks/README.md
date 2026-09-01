@@ -1,7 +1,8 @@
 # Legacy R23 playbooks
 
-이 디렉터리는 `references/legacy-r23.md`가 가리키는 기존 `DrawingRun` continuation
-자료다. 새 작업의 canonical reading route에서는 읽지 않는다.
+This directory contains existing `DrawingRun` continuation material referenced by
+`references/legacy-r23.md`. Do not read it on the canonical route for new work.
 
-playbook의 P1–P6, stage review, advance, reopen, manifest 절차는 historical
-compatibility contract이며, stage-free `DrawingSession`에 적용하지 않는다.
+The playbooks' P1–P6, stage review, advance, reopen, and manifest procedures form a
+historical compatibility contract. Do not apply them to stage-free
+`DrawingSession` work.

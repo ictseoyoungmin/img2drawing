@@ -1,19 +1,19 @@
 # Canonical full-body construction example
 
-이 예제는 새 작업의 stage-free `DrawingSession` 경로를 보여준다. P1–P6 진행,
-stage review, answer image, target drawing, 또는 `DrawingRun` checkpoint를 사용하지
-않는다. bundled `subject.png`만 읽어 agent-authored observation과 initial construct를
-만들고, 하나의 inspection sheet를 기록한다.
+This example demonstrates the stage-free `DrawingSession` route for new work. It
+does not use P1–P6 progression, stage review, an answer image, a target drawing,
+or a `DrawingRun` checkpoint. It reads only the bundled `subject.png`, creates an
+agent-authored observation and initial construct, and records one inspection sheet.
 
 ## What it demonstrates
 
-- `PoseObservation`을 먼저 기록한다.
-- line of action, turned masses, balance, joint chains, feet, and prop relation을
-  `ConstructionMark`로 명시한다.
-- authored mark order는 drawing vocabulary이며 runtime phase gate가 아니다.
-- `DrawingSession`의 atomic `draw_many()`와 기존 `InspectionSheet`를 재사용한다.
-- initial whole figure가 pose로 읽히지 않으면 detail을 추가하지 않고 explicit stroke를
-  수정한 뒤 fresh inspection을 수행한다.
+- Records `PoseObservation` first.
+- Expresses the line of action, turned masses, balance, joint chains, feet, and
+  prop relation as `ConstructionMark` values.
+- Treats authored mark order as drawing vocabulary, not a runtime phase gate.
+- Reuses `DrawingSession`'s atomic `draw_many()` and the existing `InspectionSheet`.
+- If the initial whole figure does not read as the pose, corrects explicit strokes
+  and performs a fresh inspection before adding detail.
 
 The coordinates in `run.py` belong only to the bundled subject. They are not a general
 landmark table or a target to copy for another subject.

@@ -10,6 +10,7 @@ from importlib import import_module
 from ._version import __version__
 from .core import DrawingAction, AgentDrawingSession, Stroke, StrokeIR, CanvasHistory
 from .core.fill import FillRegion, ReservedLight, expand_fill
+from .observation.palette import MaterialSample, SubjectPalette
 from .render.tone_scale import ToneRecipe, available_values, resolve_tone
 from .inspection import (
     Box, GroundGuide, Grid, GridMeasurement, InspectionSheet, Measurement,
@@ -167,7 +168,7 @@ __all__ = [
     "LowerBodyObservation", "LowerBodyIntegrityError", "LowerBodyComparison", "compare_lower_body", "HeadHairObservation",
     "HeadHairIntegrityError", "HeadHairComparison", "compare_head_hair", "PropWidthChangePoint", "PropTerminalMass",
     "PropBodyOverlapPoint", "PropTopologyObservation", "PropTopologyIntegrityError", "PropTopologyComparison", "compare_prop_topology",
-    "FillRegion", "ReservedLight", "expand_fill", "ToneRecipe", "resolve_tone", "available_values",
+    "FillRegion", "ReservedLight", "expand_fill", "SubjectPalette", "MaterialSample", "ToneRecipe", "resolve_tone", "available_values",
     "Box", "GroundGuide", "Grid", "GridMeasurement", "InspectionSheet", "Measurement", "PixelSample", "PlumbLine", "Point",
     "PointMapping", "Profile", "Registration", "ROI", "Size", "angle", "distance", "drawing_state_hash", "drawing_state_payload",
     "ground_guide", "grid", "horizontal_profile", "map_subject_to_canvas", "point", "plumb_line", "sample_pixel",

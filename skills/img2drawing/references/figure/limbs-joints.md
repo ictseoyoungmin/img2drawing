@@ -27,6 +27,16 @@ shape that matches foreshortening, not a repeated oval. An arm or leg hidden beh
 or garment still needs a minimum gesture inferred from shoulder/elbow/wrist or
 hip/knee/ankle evidence.
 
+## The chain before its end
+
+Establish the limb before refining what it ends in. A cuff, a hand or a foot drawn while
+its arm or leg has no inner contour is hanging off a limb that does not exist yet, and
+every correction to it will be spent re-placing it rather than improving it.
+
+Order within a region is the same rule as whole-before-part: shoulder to elbow to wrist
+first, then the hand; hip to knee to ankle first, then the boot. If a correction to a
+terminal is the third in a row, stop and check whether the parent chain is actually drawn.
+
 ## Correction
 
 If later inspection shows a wrong premise, replace the responsible explicit strokes and

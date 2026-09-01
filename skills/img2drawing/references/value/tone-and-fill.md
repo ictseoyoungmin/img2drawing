@@ -1,37 +1,40 @@
 # Tone, value and fill
 
-값을 만드는 것은 stroke를 많이 쌓는 일이 아니라 region 하나를 선언하는 일이다.
+Creating value means declaring a region, not accumulating many strokes.
 
 ## Form before value
 
-값은 **이미 성립한 형체를 보강하는 수단**이다. silhouette, contour, overlap이 틀린
-상태를 어두운 hatch나 reserved light로 가려서 해결하지 않는다.
+Value is **a means of reinforcing form that is already established**. Do not hide
+incorrect silhouette, contour, or overlap with dark hatching or reserved light.
 
-fill을 넣기 전에 현재 그림을 line-only / tone-off 상태라고 가정해서 다시 읽는다.
-이 상태에서도 다음이 보여야 한다.
+Before adding a fill, reread the current drawing as though it were in a line-only,
+tone-off state. The following must still read:
 
-- 팔과 다리의 실제 두께와 앞뒤 관계
-- 몸통과 팔다리의 분리 및 접속
-- 재킷·치마·부츠 같은 큰 착장 덩어리의 부피
-- 손과 prop의 접촉 및 주요 overlap
+- the actual thickness and near/far relationships of arms and legs;
+- the separation and connection of torso and limbs;
+- the volume of large garment masses such as jackets, skirts, and boots; and
+- hand/prop contact and major overlaps.
 
-이 중 하나가 값이 있어야만 읽힌다면 현재 bottleneck은 value가 아니라 form이다.
-`replace_stroke()`, `replace_segment()`, `soft_lift()` 등으로 contour/overlap premise를
-먼저 고치고 다시 inspect한다. 그 뒤에만 tone을 추가한다.
+If any of these reads only when value is present, the current bottleneck is form,
+not value. First correct the contour or overlap premise with `replace_stroke()`,
+`replace_segment()`, `soft_lift()`, or a related explicit action, then inspect
+again. Add tone only afterward.
 
-`ReservedLight`도 같은 원칙을 따른다. 이미 올바르게 분리된 형태 안에서 subject에
-실제로 관찰되는 rim light, fold light, reflected light를 남기는 장치이지, 존재하지 않는
-팔-몸통 경계나 부피를 만들어내는 장치가 아니다.
+`ReservedLight` follows the same principle. It preserves rim light, fold light, or
+reflected light actually observed in the subject inside forms that are already
+separated correctly. It does not create a nonexistent arm–torso boundary or
+volume.
 
-## Region fill로 값을 만든다
+## Create value with region fills
 
-검은 옷, 스타킹, 부츠, 머리 그림자처럼 넓은 값 영역은 `DrawingSession.fill_region()`
-하나로 만든다. 개별 명암선을 손으로 반복해서 쌓지 않는다.
+Create broad value areas—black clothing, stockings, boots, or hair shadow—with
+one `DrawingSession.fill_region()` call. Do not build them by manually repeating
+individual value lines.
 
 ```python
 fill_id = session.fill_region(
     jacket_polygon,
-    value=120,                    # subject에서 읽은 평균 값 (0 검정 - 255 종이)
+    value=120,                    # mean value read from subject (0 black - 255 paper)
     part="jacket_tone",
     angle=74.0,
     observation_id="observation-0001",
@@ -39,24 +42,11 @@ fill_id = session.fill_region(
 )
 ```
 
-`value`는 **subject에서 직접 측정해서 넣는다.** opacity/pressure를 추측하지 않는다.
-그 둘은 캘리브레이션된 [tone scale](../../src/img2drawing/data/tone_scale.json)에서
-자동으로 결정된다.
+## If the value is wrong, revise the region itself
 
-### 왜 opacity를 직접 쓰지 않는가
-
-pencil-contact 렌더러의 침착량은 opacity 숫자에 비례하지 않는다. `opacity=0.24`는
-합리적으로 보이지만 거의 빈 종이로 렌더된다. 한 dogfood 세션은 이 사실을 모른 채
-값을 한 단계 움직이려고 stroke 372개를 쌓았고, 최종 session이 31만 줄이 되었다.
-렌더러 특성은 그림의 provenance가 아니므로 세션 안에서 탐색하지 않는다.
-
-**세션 안에서 renderer probe를 돌리지 않는다.** 캘리브레이션이 틀렸다고 판단되면
-`dev/calibration/calibrate_tone_scale.py`를 다시 돌려 표를 갱신한다.
-
-## 값이 틀렸으면 region 자체를 수정한다
-
-fresh inspection이 이전 value premise를 반박하면 같은 영역에 fill을 하나 더 겹치지
-않는다. `replace_fill_region()`으로 기존 fill identity를 유지한 채 새 정의를 append한다.
+When a fresh inspection disproves the previous value premise, do not stack another
+fill over the same area. Use `replace_fill_region()` to append a new definition
+while preserving the existing fill identity.
 
 ```python
 from img2drawing import replace_fill_region
@@ -70,15 +60,17 @@ correction_action_id = replace_fill_region(
 )
 ```
 
-`replace_fill_region()`은 새 `action_id`를 반환한다. residual correction을 기록할 때 그
-값을 그대로 `record_correction(..., action_ids=[correction_action_id])`에 사용한다. generated
-hatch stroke 수백 개를 correction action으로 열거하지 않는다.
+`replace_fill_region()` returns a new `action_id`. When recording the residual
+correction, pass that value directly to
+`record_correction(..., action_ids=[correction_action_id])`. Do not enumerate
+hundreds of generated hatch strokes as correction actions.
 
-## 빛은 남기는 것이지 지우는 것이 아니다
+## Preserve light; do not erase it back out
 
-옷의 하이라이트, 이미 contour/overlap로 분리된 팔이나 착장의 rim light, 부츠의 끈
-패널처럼 어두운 덩어리 안에서 실제로 관찰되는 밝은 부분은 **칠한 뒤 지우지 않는다.**
-fill이 처음부터 비워두게 한다.
+Do not fill and then erase light areas actually observed inside a dark mass, such
+as clothing highlights, rim light on an arm or garment already separated by
+contour and overlap, or a boot's lace panel. Make the fill leave them open from
+the start.
 
 ```python
 session.fill_region(
@@ -90,18 +82,24 @@ session.fill_region(
 )
 ```
 
-`strength=1.0`은 예약한 빛을 완전히 남기고, 낮은 값은 일부 명암을 통과시킨다.
+`strength=1.0` preserves the reserved light completely; lower values allow some
+tone to pass through.
 
-## 값의 위계
+## Value hierarchy
 
-한 그림 안에서 값 군(family)은 서너 단계면 충분하다. 단계마다 `fill_region`을 한 번씩
-쓰고, 같은 영역에 여러 번 덧대어 값을 만들지 않는다. 영역의 명암 밀도는 `value` 하나로
-조절한다. 이미 만든 영역의 판단을 바꿀 때는 `replace_fill_region()`을 사용한다.
+Three or four value families are sufficient in one drawing. Use `fill_region`
+once for each family; do not build value by repeatedly layering the same area.
+Control a region's tonal density with `value` alone. Use `replace_fill_region()`
+when revising the judgment behind an existing region.
 
-## 하지 말 것
+## Do not
 
-- form이 line-only 상태에서 읽히지 않는데 hatch로 두께·분리를 대신하는 것.
-- `for` 루프로 개별 명암선을 만들어 `draw_many()`에 넘기는 것. `fill_region()`이 있다.
-- 직선 명암선을 일정 간격으로 샘플링해 점 10~20개로 저장하는 것.
-- 값이 안 나온다고 같은 영역에 fill을 여러 번 겹치는 것. 기존 region을 revise한다.
-- opacity/pressure/grade를 직접 조합해 값을 맞추는 것. `value`로 말한다.
+- Substitute hatching for thickness or separation when form does not read in a
+  line-only state.
+- Generate individual value lines in a `for` loop and pass them to `draw_many()`;
+  use `fill_region()`.
+- Sample straight value lines at fixed intervals and store each as 10–20 points.
+- Stack fills repeatedly over the same area because the value did not appear;
+  revise the existing region.
+- Tune value by combining opacity, pressure, and grade manually; express it with
+  `value`.

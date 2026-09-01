@@ -1,25 +1,41 @@
 # Contour, overlap and selective cleanup
 
-clean은 더 진하게 덧칠한다는 뜻이 아니라 어떤 선이 현재 form을 가장 잘 전달하는지
-선택한다는 뜻이다.
+Clean does not mean drawing over everything more darkly. It means selecting which
+lines communicate the current form best.
 
 ## Ownership
 
-외곽·face opening·hair mass·garment·prop가 겹치는 곳에서는 contour ownership을
-명시한다. 한 mass가 다른 mass로 넘어갈 때 선을 끊거나 occlusion을 남기고, 독립된
-contour를 하나의 welded line으로 합치지 않는다.
+Make contour ownership explicit where silhouettes, face openings, hair masses,
+garments, and props overlap. Break a line or preserve an occlusion where one mass
+passes into another; do not weld independent contours into a single line.
+
+## Every new line must identify what it separates
+
+Before drawing a contour, name what lies on each side. If both names are the same,
+the line adds no new information; it merely repeats an existing line. In
+particular, a line running parallel to an existing contour within one line width
+is duplication, not articulation.
+
+An arm's inner line separates the *arm* from the *torso*, so it belongs at the
+armhole rather than beside the silhouette. A line that simply tracks a short
+distance inside the silhouette fails to separate the arm and becomes a shadow
+line instead.
+
+For detailed judgment, read
+[`observation/measuring-boundaries.md`](../observation/measuring-boundaries.md).
 
 ## Structure before surface
 
-hair는 cranium 위의 큰 mass, 옷은 shoulder–sleeve–joint chain 위의 hang, footwear는
-ankle에서 자라는 volume, prop은 axis·width change·body contact로 먼저 해결한다.
-주름·머리카락 한 올·표면 texture는 이런 구조가 읽힌 뒤에만 선택한다.
+Resolve hair first as a large mass over the cranium, clothing as a hang over the
+shoulder–sleeve–joint chain, footwear as volume growing from the ankle, and props
+through axis, width change, and body contact. Select folds, individual hairs, and
+surface texture only after those structures read.
 
 ## Retire without raster editing
 
-새 representation이 이전 선의 정보를 이어받으면 `soft_lift`로 유용한 cue를 남기거나
-`delete_stroke`로 현재 branch에서 제거한다. 두 경우 모두 history와 provenance는
-보존한다. 파일을 raster-edit하거나 history 밖에서 지우지 말고, fresh render와
-inspection으로 실제 개선을 확인한다. 자세한 공통 API는
-[`review/stroke-retirement.md`](../review/stroke-retirement.md)의 stage-free 부분을
-참조한다.
+When a new representation inherits the information of an earlier line, use
+`soft_lift` to retain a useful cue or `delete_stroke` to remove it from the current
+branch. Both preserve history and provenance. Do not raster-edit the file or erase
+outside history; confirm the actual improvement with a fresh render and inspection.
+For the shared API, see the stage-free section of
+[`review/stroke-retirement.md`](../review/stroke-retirement.md).

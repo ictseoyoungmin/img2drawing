@@ -1,23 +1,38 @@
 # Identity, value and finish emphasis
 
-finish는 모든 그림을 같은 밀도로 채우는 것이 아니다. declared drawing goal에
-필요한 관계를 선택적으로 강화한다.
+Finish does not mean filling every drawing to the same density. Selectively
+reinforce the relationships required by the declared drawing goal.
 
 ## Identity relations
 
-subject recognition이 목적이면 눈·코·입·chin을 각각 장식으로 찍지 말고 eye
-spacing, facial centreline, nose base, mouth–chin interval, head turn과 함께 본다.
-hair는 얼굴 opening을 설명하는 grouped mass로 시작하고, distinctive garment나
-prop도 anchor/contact가 있을 때만 추가한다.
+When subject recognition is the goal, do not place the eyes, nose, mouth, and
+chin as isolated decorations. Read them together with eye spacing, the facial
+centreline, nose base, mouth–chin interval, and head turn. Begin hair as a grouped
+mass that explains the face opening, and add a distinctive garment or prop only
+when its anchor and contact are established.
 
 ## Value and edge
 
-tonal work는 arbitrary dark bands가 아니라 light family, shadow family, value range,
-edge hierarchy, form turn을 묶어야 한다. line-only construction을 완성 PNG filter로
-바꾸는 것이 tonal finish가 아니다.
+Tonal work must organize the light family, shadow family, value range, edge
+hierarchy, and form turn rather than adding arbitrary dark bands. Converting a
+line-only construction with a final PNG filter is not tonal finish.
+
+## Repeated marks inherit variation from structure
+
+Unless specified in the user's order, the hatch is not used.
+Do not draw repeated marks—hair tips, folds, laces, or strands—as decorative
+rows. Five tips with identical length, angle, width, and aligned bases read as
+saw teeth rather than hair. Two widely spaced crossing hatch layers read as a
+net rather than black cloth.
+
+Each mark must inherit its length, direction, and width from the structure it
+terminates. A tip is the end of its strand group; a fold is the consequence of
+the joint beneath it. Before drawing repeated elements, first answer: "What are
+these the ends of?"
 
 ## Selective accent
 
-가장 정보량이 높은 일부 선만 accent로 restate한다. blanket confirmation, 무제한
-micro-fold, hair-strand 반복은 finish가 아니라 residual을 가리는 행위가 될 수 있다.
-현재 render profile과 canvas에서 재질을 확인하되 geometry truth는 바꾸지 않는다.
+Restate only a few of the most informative lines as accents. Blanket confirmation,
+unlimited micro-folds, and repeated hair strands can hide residuals rather than
+finish the drawing. Check the material on the current render profile and canvas
+without changing geometric truth.

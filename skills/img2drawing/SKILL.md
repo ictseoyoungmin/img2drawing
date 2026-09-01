@@ -29,7 +29,7 @@ For new work, `DrawingSession` is the only orchestration authority. `DrawingRun`
 enter them through [`references/legacy-r23.md`](references/legacy-r23.md).
 
 - `core/`: strokes, actions, history, session.
-- `observation/`: agent-authored semantic observations and read-only evidence.
+- `observation/`: agent-authored semantic observations, material palette, read-only evidence.
 - `construction/`: stage-free pose, mass, balance, and joint guidance.
 - `modes/`: declarative drawing goals; never lifecycle state.
 - `review/`: current-state inspection and residual correction.
@@ -145,6 +145,31 @@ artifacts, reads, review turns, and elapsed work only; it never selects a residu
 changes geometry, or emits an artistic PASS/FAIL. Earlier immutable sheets remain
 available and are marked stale when their drawing-state digest no longer matches.
 
+## Three questions before a mark, and again before a correction
+
+These are cheap to ask and they are where completed drawings actually go wrong. A
+correction is a new premise and inherits none of them, so ask them again on every repair.
+
+1. **What does this line separate?** Name both sides. Same name on both sides means the
+   stroke duplicates an existing contour instead of articulating anything; an inner limb
+   edge that separates sleeve from sleeve is in the wrong place. Put the relation in
+   `part`.
+2. **Could my measurement see this boundary?** A luminance profile answers only a
+   luminance question. On a subject in dark clothing, bare skin and a mid-grey background
+   sit together far from the garment, so a darkness scan reports skin as absent body and
+   cuts a false notch where a hand emerges. Build a `SubjectPalette`, read
+   `ambiguous_pairs()`, and ask `boundary_kind()` before trusting an edge.
+3. **Did I observe this ending, or assume it?** Hands, feet, features and hair tips are
+   where invention is cheapest. Two arms do not imply two visible hands; a gloved hand in
+   a pocket has no visible knuckles; a jaw does not continue under hair. Occluded means
+   draw no ending - the limb's contour runs into whatever hides it.
+
+Establish a chain before refining what it ends in: shoulder to elbow to wrist, then the
+hand. A third correction in a row to one terminal means its parent limb was never drawn.
+
+Read [`references/observation/measuring-boundaries.md`](references/observation/measuring-boundaries.md)
+before the first measurement of a new subject.
+
 ## Value and tone
 
 A value region is one authored decision. Use `DrawingSession.fill_region()` with
@@ -190,7 +215,8 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
 1. Read this file and [`references/INDEX.md`](references/INDEX.md).
 2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, or
    free-draw; select a style guide only when the request calls for one.
-3. Read `observation/visual-observation.md` for observed subjects and the relevant
+3. Read `observation/visual-observation.md` for observed subjects, and
+   `observation/measuring-boundaries.md` before profiling anything, then the relevant
    construction/figure/finish guide for the relationships present.
 4. Create the first drawing through `DrawingSession`; inspect the whole result before
    adding detail, then use `review/residual-correction.md` for every repair loop.

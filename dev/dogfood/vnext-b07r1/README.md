@@ -95,3 +95,37 @@ covered. Timelapse is still wired only to the legacy R23 `core.session.DrawingSe
 when B11 brings vNext to timelapse parity it must decide how a fill frame reads — one
 action deposits a whole value region at once, and the frame duration heuristic in
 `provenance/timelapse.py` already reserves a longer hold for it.
+
+---
+
+# Second dogfood: where a *finished* drawing still goes wrong
+
+The line-only re-draw produced a 16,388-line session (0.41x R23) with no value-authoring
+problems at all — the B07-R1 fixes held. But it took **12 residuals**, and six of them
+were the same three method failures repeating. Those are subject-independent, so they
+were closed in guidance rather than left to the next agent to rediscover.
+
+## Failure classes and what closed each
+
+| # | class | errors it produced | closure |
+|---|---|---|---|
+| 1 | measured with a method that cannot see the distinction | wrist placed 70px too high; a false notch cut into the silhouette; face contour inset 10–14px | `SubjectPalette` + `measuring-boundaries.md` |
+| 2 | drew what anatomy usually has, not what this subject shows | a gloved hand invented where the rifle stock occludes it; knuckles and a thumb on a gloved hand in a pocket; a jaw continued under hair, which read as a grin | "do not draw a termination you did not observe" |
+| 3 | a contour that separates nothing | knuckle mass duplicating the jacket silhouette; the arm's inner edge hugging the silhouette instead of sitting at the armhole; a cuff arch mislabelled as a hand underside | "a line separates two named things" |
+| 4 | repeated marks authored as a row | hair tips as a regular sawtooth; ruled radiating strands; crossed hatch reading as fishnet | "repeated marks inherit variation from the structure they terminate" |
+| 5 | clean geometry with nothing overlapping | collar as a folded-card chevron; belt drawn straight through the hand in front of it | existing overlap-ownership guidance, now cross-referenced |
+| 6 | refined a part before its parent existed | four consecutive corrections to a hand hanging off an arm that was never drawn | "the chain before its end" |
+
+## The most expensive one
+
+Class 1 cost four residuals on its own. Profiling `< threshold` on luminance segments an
+image into dark and not-dark; on a subject in dark clothing, bare skin and a mid-grey
+background sit together far from the garment, so the profile reports skin as *absent
+body*. The silhouette gets a notch cut where a hand emerges, and the cuff — the wrist,
+and therefore the whole forearm chain — lands tens of pixels away.
+
+`SubjectPalette` closes it by refusing to classify on its own: the Agent supplies
+reference patches it has already identified by eye, and the palette reports which of
+those a pixel is nearest, plus `ambiguous_pairs()` naming the materials this subject
+cannot separate. On the dogfood subject it returns `background vs skin = 29.6` — the trap
+itself, surfaced before the first profile instead of after the fourth correction.

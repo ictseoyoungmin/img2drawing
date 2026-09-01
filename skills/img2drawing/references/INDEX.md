@@ -1,20 +1,22 @@
 # Reference index
 
-새 작업은 아래 stage-free 경로에서 시작한다. 이 문서의 순서는 runtime lifecycle이
-아니라 필요할 때 꺼내 읽는 지식 분류다.
+Start new work on the stage-free route below. The order in this document is a
+knowledge taxonomy to consult as needed, not a runtime lifecycle.
 
 ## Canonical vNext references
 
-- `observation/visual-observation.md`: whole → region → part → relation 관찰과
-  evidence 경계
+- `observation/visual-observation.md`: whole → region → part → relation observation
+  and the evidence boundary
+- `observation/measuring-boundaries.md`: what a line separates, the material palette,
+  and avoiding unobserved terminals
 - `construction/gesture-and-masses.md`: pose, flow, head/ribcage/pelvis mass
 - `construction/balance-and-limbs.md`: balance, joints, limbs, feet, occlusion
-- `figure/limbs-joints.md`: body chain과 garment landmark 함정
+- `figure/limbs-joints.md`: body chains and garment-landmark traps
 - `figure/attached-objects.md`: prop axis, volume, topology, body contact
-- `resolution/contour-and-overlap.md`: contour ownership과 explicit stroke retirement
+- `resolution/contour-and-overlap.md`: contour ownership and explicit stroke retirement
 - `finish/identity-and-value.md`: identity relation, value family, edge, accent
 - `value/tone-and-fill.md`: region fill, calibrated tone scale, reserved lights
-- `review/correction-loop.md`: 한 줄짜리 residual loop
+- `review/correction-loop.md`: the one-line residual loop
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
@@ -28,8 +30,9 @@
 - `modes/tonal-study.md`
 - `modes/free-draw.md`
 
-각 mode는 목적, 관찰 우선순위, 추천 grammar, 생략, completion 질문만 제공한다.
-`phase_start`, `advance`, `close`, `reopen` state를 만들지 않는다. `DrawingIntent`,
+Each mode provides only a purpose, observation priorities, suggested grammar,
+omissions, and completion questions. It does not create `phase_start`, `advance`,
+`close`, or `reopen` state. `DrawingIntent`,
 `ModeGuide`, and `StyleGuide` are implemented B08 plain-data schemas. `RenderProfile`
 remains a later output/replay contract; style guidance never acts as a renderer filter.
 
