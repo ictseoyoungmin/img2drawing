@@ -230,6 +230,8 @@ class CanvasHistory:
         self.actions: list[CanvasAction] = []
         self.cursor = 0
         self._next_id = 1
+        # Transient loader evidence only. It is never persisted into history metadata.
+        self._legacy_inline_pressure = False
 
     def _append(
         self,
@@ -588,6 +590,10 @@ class CanvasHistory:
             else:
                 raise ValueError(f"unsupported replay action: {item.action}")
         ir = StrokeIR(self.width, self.height, metadata={**self.metadata, "history_cursor": limit})
+        if self._legacy_inline_pressure:
+            # Inspection hashing uses this transient signal only to reproduce a genuine
+            # pre-compaction digest. It is intentionally absent from ``ir.to_dict()``.
+            setattr(ir, "_legacy_inline_pressure", True)
         for sid in order:
             if sid in state:
                 ir.add(deepcopy(state[sid]))
@@ -606,9 +612,16 @@ class CanvasHistory:
     def from_dict(cls, data: dict[str, Any]) -> "CanvasHistory":
         h = cls(data["width"], data["height"], data.get("metadata"))
         actions = []
+        legacy_inline_pressure = False
         for raw in data.get("actions", []):
             payload = deepcopy(raw.get("payload", {}))
             stage = raw.get("stage") or "unspecified"
+            stroke_payload = payload.get("stroke")
+            if isinstance(stroke_payload, dict):
+                if stroke_payload.get("pressure") is not None and stroke_payload.get("tool_state") is not None:
+                    # Pre-B07-R1 vNext persisted both derived pressure and tool state
+                    # inline. Keep this only as transient compatibility evidence.
+                    legacy_inline_pressure = True
             actions.append(
                 CanvasAction(
                     seq=int(raw["seq"]),
@@ -627,6 +640,7 @@ class CanvasHistory:
                 raise ValueError("action seq must be contiguous and 1-based")
         h.actions = actions
         h.cursor = max(0, min(int(data.get("cursor", len(actions))), len(actions)))
+        h._legacy_inline_pressure = legacy_inline_pressure
         ids = []
         for a in actions:
             if a.action in {"stroke.add", "stroke.replace"}:
