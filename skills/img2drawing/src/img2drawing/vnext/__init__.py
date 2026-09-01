@@ -28,6 +28,7 @@ from .intent import (
     resolve_style_guide,
 )
 from .session import DrawingSession
+from .value import replace_fill_region
 
 __all__ = [
     "CONSTRUCTION_PHASES",
@@ -57,4 +58,5 @@ __all__ = [
     "author_initial_construct",
     "inspect_initial_construct",
     "observe_pose",
+    "replace_fill_region",
 ]
