@@ -188,6 +188,34 @@ def _replay_segment_soft_lift(stroke: Stroke, action: CanvasAction) -> Stroke:
     return out.cleaned()
 
 
+def _fill_strokes(region: FillRegion, action: CanvasAction) -> list[Stroke]:
+    """Expand one authored region into deterministic rendered pencil strokes."""
+
+    base = action.tool_state or {}
+    strokes: list[Stroke] = []
+    for line in expand_fill(region):
+        sid = line["stroke_id"]
+        ts = deepcopy(base)
+        attenuation = float(line["attenuation"])
+        stroke = Stroke(
+            points=[tuple(map(float, q)) for q in line["points"]],
+            width=float(ts.get("width", 1.5)),
+            opacity=float(ts.get("opacity", 1.0)) * attenuation,
+            role=region.role,
+            layer=region.layer,
+            tool_state=ts,
+            part=region.part,
+            stage=action.stage,
+            stroke_id=sid,
+        )
+        # A fill line is a tone mark, not a gesture: it carries the tool's constant
+        # pressure. Deriving a taper here would spend the whole of a two-point line on
+        # its own entry and exit and render far too light.
+        stroke.pressure = None
+        strokes.append(stroke)
+    return strokes
+
+
 class CanvasHistory:
     """Replayable authoritative drawing history.
 
@@ -238,6 +266,23 @@ class CanvasHistory:
                 return stroke
         raise ValueError(f"missing stroke: {stroke_id}")
 
+    def current_fill_region(self, fill_id: str) -> FillRegion:
+        """Return the latest authored definition for an existing fill identity."""
+
+        requested = str(fill_id).strip()
+        if not requested:
+            raise ValueError("fill_id must be non-empty")
+        for item in reversed(self.actions[: self.cursor]):
+            if item.action not in {"region.fill", "region.replace"}:
+                continue
+            raw = item.payload.get("region")
+            if not isinstance(raw, dict):
+                continue
+            region = FillRegion.from_dict(raw)
+            if region.fill_id == requested:
+                return region
+        raise ValueError(f"missing fill region: {requested}")
+
     def add_stroke(self, stroke: Stroke, *, stroke_id: str | None = None, provenance: dict[str, Any] | None = None) -> str:
         s = deepcopy(stroke).cleaned()
         sid = stroke_id or s.stroke_id or f"h{self._next_id:04d}"
@@ -263,6 +308,15 @@ class CanvasHistory:
         provenance: dict[str, Any] | None = None,
     ) -> str:
         """Record one tone region. The hatch it stands for is expanded on replay."""
+
+        try:
+            self.current_fill_region(region.fill_id)
+        except ValueError:
+            pass
+        else:
+            raise ValueError(
+                f"fill_id already exists: {region.fill_id}; use replace_fill_region() to revise it"
+            )
         self._append(
             "region.fill",
             {"region": region.to_dict()},
@@ -273,6 +327,31 @@ class CanvasHistory:
             provenance=provenance,
         )
         return region.fill_id
+
+    def replace_fill_region(
+        self,
+        fill_id: str,
+        region: FillRegion,
+        tool_state: dict[str, Any],
+        *,
+        stage: str = "value_pass",
+        provenance: dict[str, Any] | None = None,
+    ) -> str:
+        """Append one replacement for an existing tone region, preserving fill identity."""
+
+        current = self.current_fill_region(fill_id)
+        if region.fill_id != current.fill_id:
+            raise ValueError("replace_fill_region must preserve fill identity")
+        self._append(
+            "region.replace",
+            {"fill_id": current.fill_id, "region": region.to_dict()},
+            stage=stage,
+            part=region.part,
+            role=region.role,
+            tool_state=deepcopy(tool_state),
+            provenance=provenance,
+        )
+        return current.fill_id
 
     def replace_stroke(
         self,
@@ -430,6 +509,7 @@ class CanvasHistory:
         limit = self.cursor if cursor is None else max(0, min(int(cursor), len(self.actions)))
         order: list[str] = []
         state: dict[str, Stroke] = {}
+        fill_members: dict[str, set[str]] = {}
         for item in self.actions[:limit]:
             p = item.payload
             if item.action == "stroke.add":
@@ -473,29 +553,36 @@ class CanvasHistory:
                 state.pop(p["stroke_id"], None)
             elif item.action == "region.fill":
                 region = FillRegion.from_dict(p["region"])
-                base = item.tool_state or {}
-                for line in expand_fill(region):
-                    sid = line["stroke_id"]
-                    ts = deepcopy(base)
-                    attenuation = float(line["attenuation"])
-                    stroke = Stroke(
-                        points=[tuple(map(float, q)) for q in line["points"]],
-                        width=float(ts.get("width", 1.5)),
-                        opacity=float(ts.get("opacity", 1.0)) * attenuation,
-                        role=region.role,
-                        layer=region.layer,
-                        tool_state=ts,
-                        part=region.part,
-                        stage=item.stage,
-                        stroke_id=sid,
-                    )
-                    # A fill line is a tone mark, not a gesture: it carries the tool's
-                    # constant pressure. Deriving a taper here would spend the whole of a
-                    # two-point line on its own entry and exit and render far too light.
-                    stroke.pressure = None
+                members: set[str] = set()
+                for stroke in _fill_strokes(region, item):
+                    sid = str(stroke.stroke_id)
+                    members.add(sid)
                     if sid not in state:
                         order.append(sid)
                     state[sid] = stroke
+                fill_members[region.fill_id] = members
+            elif item.action == "region.replace":
+                region = FillRegion.from_dict(p["region"])
+                target = str(p.get("fill_id") or region.fill_id)
+                if region.fill_id != target:
+                    raise ValueError("region.replace fill identity mismatch")
+                previous_members = fill_members.get(target, set())
+                prior_positions = [index for index, sid in enumerate(order) if sid in previous_members]
+                insert_at = min(prior_positions) if prior_positions else len(order)
+                for sid in previous_members:
+                    state.pop(sid, None)
+                if previous_members:
+                    order = [sid for sid in order if sid not in previous_members]
+                replacement_strokes = _fill_strokes(region, item)
+                members = set()
+                for offset, stroke in enumerate(replacement_strokes):
+                    sid = str(stroke.stroke_id)
+                    members.add(sid)
+                    if sid in order:
+                        order.remove(sid)
+                    order.insert(min(insert_at + offset, len(order)), sid)
+                    state[sid] = stroke
+                fill_members[target] = members
             elif item.action == "snapshot":
                 pass
             else:
