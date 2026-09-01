@@ -44,6 +44,7 @@ from .vnext import (
     inspect_initial_construct,
     observe_pose,
     compatibility_intent,
+    replace_fill_region,
     resolve_mode_guide,
     resolve_style_guide,
 )
@@ -172,7 +173,7 @@ __all__ = [
     "ground_guide", "grid", "horizontal_profile", "map_subject_to_canvas", "point", "plumb_line", "sample_pixel",
     "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "CONSTRUCTION_PHASES",
     "ConstructionMark", "CorrectionRecord", "InitialConstruct", "InitialConstructResult", "PoseObservation",
-    "ResidualRecord", "EvidencePolicy", "EvidenceReadRecord", "EvidenceTelemetry", "author_initial_construct", "inspect_initial_construct", "observe_pose", "ABLATION_CONDITIONS", "ModularGrammarCard",
+    "ResidualRecord", "EvidencePolicy", "EvidenceReadRecord", "EvidenceTelemetry", "author_initial_construct", "inspect_initial_construct", "observe_pose", "replace_fill_region", "ABLATION_CONDITIONS", "ModularGrammarCard",
     "COMPATIBILITY_INTENTS", "DRAWING_MODES", "FINISH_INTENTS", "REFERENCE_MODES", "STYLE_PROFILES",
     "DrawingIntent", "IntentChangeRecord", "IntentProvenance", "ModeGuide", "StyleGuide",
     "compatibility_intent", "resolve_mode_guide", "resolve_style_guide",
