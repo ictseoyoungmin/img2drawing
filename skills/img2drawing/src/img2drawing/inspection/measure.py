@@ -52,7 +52,7 @@ def _jsonable(value: Any) -> Any:
 
 
 def _stage_free_payload(value: Any) -> dict[str, Any]:
-    """Exclude only known workflow fields at their structural locations."""
+    """Exclude workflow/provenance-only fields from visual drawing identity."""
 
     if not isinstance(value, dict):
         raise TypeError("StrokeIR serialization must be a mapping")
@@ -70,6 +70,10 @@ def _stage_free_payload(value: Any) -> dict[str, Any]:
                 raise TypeError("StrokeIR strokes must serialize as mappings")
             normalized = dict(stroke)
             normalized.pop("stage", None)
+            # Whether pressure samples were authored or deterministically derived is
+            # provenance. It does not alter rendered geometry/material and older vNext
+            # checkpoints predate this field, so it must not change drawing identity.
+            normalized.pop("pressure_authored", None)
             normalized_strokes.append(normalized)
         payload["strokes"] = normalized_strokes
     return payload
