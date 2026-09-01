@@ -19,6 +19,7 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `review/correction-loop.md`: the one-line residual loop
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
 - `review/completion.md`: bind the Agent's finish decision to current intent/state/evidence
+- `output/render-profile-and-replay.md`: canonical PNG, cursor replay, GIF, parity, migration
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
 - `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and
@@ -35,8 +36,8 @@ Each mode provides only a purpose, observation priorities, suggested grammar,
 omissions, and completion questions. It does not create `phase_start`, `advance`,
 `close`, or `reopen` state. `DrawingIntent`,
 `ModeGuide` and `StyleGuide` are B08 plain-data schemas; `FinishGuide` is the B09
-plain-data authoring target. `RenderProfile`
-remains a later output/replay contract; style guidance never acts as a renderer filter.
+plain-data authoring target. `RenderProfile` is the B11 output/replay contract; style
+guidance never acts as a renderer filter.
 
 ## Legacy R23 compatibility
 

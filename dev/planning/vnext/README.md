@@ -6,10 +6,10 @@ framework이며, 구현은 항상 **Production WIP Limit = 1**로 진행한다.
 ## 현재 한 줄 요약
 
 ```text
-B00–B10 + B01-R1/B07-R1 hardening은 CLOSED.
-B11–B18은 남은 product surface를 완성하는 implementation phase다.
+B00–B11 + B01-R1/B07-R1 hardening은 CLOSED.
+B12–B18은 남은 product surface를 완성하는 implementation phase다.
 새 fresh visual dogfood는 B18 freeze 이전에 시작하지 않는다.
-B11 Canonical RenderProfile / replay / GIF parity가 현재 production WIP다.
+B12 Legacy runtime / persistence isolation이 현재 production WIP다.
 ```
 
 최근 dogfood는 이미 foundation 결함을 충분히 드러냈다. 특히 B07-R1의 value-region

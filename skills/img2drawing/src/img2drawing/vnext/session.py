@@ -25,14 +25,15 @@ from PIL import Image
 
 from ..core.action import AgentDrawingSession, DrawingAction, sha256_file
 from ..core.ir import StrokeIR
-from ..core.session import RENDERER_ID, TOOLSET_ID, sha256_obj
+from ..core.session import TOOLSET_ID, sha256_obj
 from ..core.fill import FillRegion, ReservedLight
 from ..render.tone_scale import resolve_tone
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
-from ..render.pillow_pencil_contact import render
+from ..render.pillow_pencil_contact import RENDERER_ID, RENDERER_VERSION, render
 from ..render.presets import default_grade_name
 from .correction import CorrectionRecord, ResidualRecord
 from .completion import FinishRecord
+from .render_profile import SEED_DOMAIN, RenderProfile
 from .evidence import (
     EvidencePolicy,
     EvidenceReadRecord,
@@ -44,8 +45,8 @@ from .intent import DrawingIntent, IntentChangeRecord
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
-RENDERER_VERSION = "vnext-stage-free-1"
-SEED_DOMAIN = "vnext-stage-free"
+_LEGACY_RENDERER_VERSION = "vnext-stage-free-1"
+_LEGACY_SEED_DOMAIN = "vnext-stage-free"
 _COMPAT_STAGE = "__vnext_compat__"
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
@@ -126,6 +127,7 @@ class DrawingSession:
         evidence_telemetry: EvidenceTelemetry | Mapping[str, Any] | None = None,
         intent: DrawingIntent | Mapping[str, Any] | None = None,
         intent_history: Sequence[IntentChangeRecord | Mapping[str, Any]] = (),
+        render_profile: RenderProfile | Mapping[str, Any] | None = None,
     ):
         self.session_id = str(session_id)
         if not self.session_id.strip():
@@ -158,6 +160,15 @@ class DrawingSession:
             record if isinstance(record, IntentChangeRecord) else IntentChangeRecord.from_dict(record)
             for record in intent_history
         ]
+        self._render_profile = (
+            None
+            if render_profile is None
+            else render_profile
+            if isinstance(render_profile, RenderProfile)
+            else RenderProfile.from_dict(render_profile)
+        )
+        if self._render_profile is not None:
+            self._render_profile.validate_canvas(self._agent.width, self._agent.height)
         self._lock = threading.RLock()
         self._subject_sha256 = subject_sha256 or sha256_file(self.subject)
         self._checkpoint_path = checkpoint_path or self.output_dir / "session.checkpoint.json"
@@ -171,6 +182,7 @@ class DrawingSession:
         session_id: str | None = None,
         metadata: Mapping[str, Any] | None = None,
         intent: DrawingIntent | Mapping[str, Any] | None = None,
+        render_profile: RenderProfile | Mapping[str, Any] | None = None,
     ) -> "DrawingSession":
         subject_path = Path(subject)
         if not subject_path.is_file():
@@ -180,6 +192,14 @@ class DrawingSession:
         if width <= 0 or height <= 0:
             raise ValueError("subject image must have positive dimensions")
         output = Path(output_dir)
+        selected_profile = (
+            RenderProfile.canonical(width, height)
+            if render_profile is None
+            else render_profile
+            if isinstance(render_profile, RenderProfile)
+            else RenderProfile.from_dict(render_profile)
+        )
+        selected_profile.validate_canvas(width, height)
         session = cls(
             session_id=session_id or f"vnext-{uuid.uuid4().hex[:12]}",
             subject=subject_path,
@@ -187,6 +207,7 @@ class DrawingSession:
             agent_session=AgentDrawingSession(width, height, metadata={"vnext": True}),
             metadata=deepcopy(dict(metadata or {})),
             intent=intent,
+            render_profile=selected_profile,
         )
         if session._intent is not None:
             session._intent_history.append(
@@ -214,12 +235,29 @@ class DrawingSession:
         if payload.get("schema") != SESSION_SCHEMA:
             raise ValueError(f"unsupported vNext session schema: {payload.get('schema')!r}")
         renderer = payload.get("renderer") or {}
-        if (
-            renderer.get("id") != RENDERER_ID
-            or str(renderer.get("version")) != RENDERER_VERSION
-            or renderer.get("seed_domain") != SEED_DOMAIN
+        raw_render_profile = payload.get("render_profile")
+        render_profile = (
+            None if raw_render_profile is None else RenderProfile.from_dict(raw_render_profile)
+        )
+        legacy_renderer_header = (
+            raw_render_profile is None
+            and renderer.get("id") == RENDERER_ID
+            and str(renderer.get("version")) == _LEGACY_RENDERER_VERSION
+            and renderer.get("seed_domain") == _LEGACY_SEED_DOMAIN
+        )
+        if render_profile is None:
+            if not legacy_renderer_header and (
+                renderer.get("id") != RENDERER_ID
+                or str(renderer.get("version")) != RENDERER_VERSION
+                or renderer.get("seed_domain") != SEED_DOMAIN
+            ):
+                raise ValueError("vNext renderer identity/version mismatch")
+        elif (
+            renderer.get("id") != render_profile.renderer_id
+            or str(renderer.get("version")) != render_profile.renderer_version
+            or renderer.get("seed_domain") != render_profile.seed_domain
         ):
-            raise ValueError("vNext renderer identity/version mismatch")
+            raise ValueError("checkpoint renderer header does not match RenderProfile")
         toolset = payload.get("toolset") or {}
         if toolset.get("id") != TOOLSET_ID or str(toolset.get("version")) != "1":
             raise ValueError("vNext toolset identity/version mismatch")
@@ -241,6 +279,8 @@ class DrawingSession:
         agent = AgentDrawingSession.from_dict(agent_payload)
         if agent.width != int(canvas.get("width", -1)) or agent.height != int(canvas.get("height", -1)):
             raise ValueError("checkpoint canvas dimensions do not match history")
+        if render_profile is not None:
+            render_profile.validate_canvas(agent.width, agent.height)
         expected = payload.get("digests") or {}
         state = cls._stage_free_projection(agent.current_ir())
         if expected.get("drawing_state_hash") != drawing_state_hash(state):
@@ -312,6 +352,7 @@ class DrawingSession:
             evidence_telemetry=evidence_telemetry,
             intent=intent,
             intent_history=intent_history,
+            render_profile=render_profile,
         )
 
     @staticmethod
@@ -655,6 +696,12 @@ class DrawingSession:
         return tuple(self._intent_history)
 
     @property
+    def render_profile(self) -> RenderProfile | None:
+        """Return the canonical output profile, or ``None`` for an unmigrated checkpoint."""
+
+        return self._render_profile
+
+    @property
     def finish_metadata(self) -> dict[str, Any] | None:
         """Compatibility view; canonical callers should use ``finish_record``."""
 
@@ -714,6 +761,7 @@ class DrawingSession:
             "corrections": _portable(self._corrections),
             "finish_record": _portable(self._finish_record),
             "finish_metadata": _portable(self._legacy_finish_metadata),
+            "render_profile": _portable(self._render_profile),
             "intent": None if self._intent is None else _portable(self._intent),
             "intent_history": _portable(self._intent_history),
             "evidence_telemetry": self._evidence_telemetry.to_dict(),
@@ -753,6 +801,59 @@ class DrawingSession:
             except Exception:
                 self._checkpoint_path = previous
                 raise
+
+    def migrate_render_profile(self) -> RenderProfile:
+        """Explicitly attach the canonical profile to a pre-B11 vNext checkpoint."""
+
+        with self._lock:
+            if self._render_profile is not None:
+                return self._render_profile
+            profile = RenderProfile.canonical(self.width, self.height)
+            self._render_profile = profile
+            try:
+                self._write_checkpoint(self._checkpoint_path)
+            except Exception:
+                self._render_profile = None
+                raise
+            return profile
+
+    def render_at(self, cursor: int, out: str | Path):
+        """Render one authoritative cursor through the session's bound profile."""
+
+        from .output import render_session_at
+
+        with self._lock:
+            return render_session_at(self, cursor, out)
+
+    def render_final(self, out: str | Path):
+        """Render the latest authoritative cursor through the bound profile."""
+
+        return self.render_at(self.history_cursor, out)
+
+    def export_timelapse(
+        self,
+        out_dir: str | Path,
+        *,
+        mode: str = "every_n",
+        every_n: int = 4,
+        max_pixel_work: int = 20_000_000,
+        max_gif_bytes: int = 25_000_000,
+        clean: bool = True,
+    ):
+        """Export action-ordered PNG frames and GIF from one history/profile."""
+
+        from .output import export_session_timelapse
+
+        with self._lock:
+            return export_session_timelapse(
+                self,
+                out_dir,
+                mode=mode,
+                every_n=every_n,
+                max_pixel_work=max_pixel_work,
+                max_gif_bytes=max_gif_bytes,
+                clean=clean,
+            )
 
     def _commit(self, action: DrawingAction | Iterable[DrawingAction]) -> Any:
         actions = [action] if isinstance(action, DrawingAction) else list(action)

@@ -12,6 +12,13 @@ from .construction import (
 )
 from .correction import CorrectionRecord, ResidualRecord
 from .completion import FINISH_RECORD_SCHEMA, FinishRecord
+from .render_profile import RENDER_PROFILE_SCHEMA, RenderProfile
+from .output import (
+    RENDER_ARTIFACT_SCHEMA,
+    REPLAY_EXPORT_SCHEMA,
+    RenderArtifact,
+    ReplayExport,
+)
 from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
 from .intent import (
     COMPATIBILITY_INTENTS,
@@ -41,6 +48,12 @@ __all__ = [
     "CorrectionRecord",
     "FINISH_RECORD_SCHEMA",
     "FinishRecord",
+    "RENDER_PROFILE_SCHEMA",
+    "RenderProfile",
+    "RENDER_ARTIFACT_SCHEMA",
+    "REPLAY_EXPORT_SCHEMA",
+    "RenderArtifact",
+    "ReplayExport",
     "ConstructionMark",
     "DrawingSession",
     "EvidencePolicy",

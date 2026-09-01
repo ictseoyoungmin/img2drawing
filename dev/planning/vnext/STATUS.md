@@ -3,12 +3,12 @@
 Updated: 2026-09-01
 
 ```text
-SYSTEM:   stage-free product surface closed through B10, including B01-R1 and B07-R1 hardening
-ACTIVE:   B11 Canonical RenderProfile + replay/GIF parity
-NEXT:     B12 Legacy runtime / persistence isolation
-SKELETON: B12–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B11, including B01-R1 and B07-R1 hardening
+ACTIVE:   B12 Legacy runtime / persistence isolation
+NEXT:     B13 Reference authority + subjectless runtime
+SKELETON: B13–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,24 +45,22 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B11
+## Active slice — B12
 
-B11 is the sole production WIP.
+B12 is the sole production WIP.
 
-Goal: make final PNG, action replay, and GIF frames derive from one versioned canonical
-`RenderProfile`, renderer, and action history with deterministic final-state parity.
+Goal: isolate legacy stage runtime and persistence behind an explicit compatibility
+namespace/adapter while keeping one shared stroke, history, renderer, and tool core.
 
-B11 inherits these closed constraints:
+B12 inherits these closed constraints:
 
-- `StyleGuide` remains Agent authoring advice while `RenderProfile` owns raster material,
-  canvas, seed, supersampling, compositing, and encoding;
-- final render, replay latest state, and GIF final frame consume the same history/profile;
-- action 0 and latest state have explicit replay semantics;
-- value regions replay as compact authored regions rather than expanded artistic actions;
-  and
-- rendering must not mutate geometry or create a second history.
+- importing or using canonical vNext must not load stage registry/review/reopen modules;
+- supported old checkpoints enter only through explicit compatibility behavior;
+- migration preserves subject, action, state, intent, completion, and renderer provenance;
+- shared core code is reused rather than copied into a `core_v2` tree; and
+- physical R23 deletion remains deferred until post-dogfood R03.
 
-B11 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B12 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -82,6 +80,7 @@ those claims belong to D01–D06 after B18.
 | B08 | CLOSED | orthogonal `DrawingIntent`, `ModeGuide`, `StyleGuide`, intent provenance |
 | B09 | CLOSED | stage-free `FinishGuide`, relational recognition, form-before-value and preserved-constraint policy |
 | B10 | CLOSED | intent/state/inspection-bound `FinishRecord` with stale-state and tamper validation |
+| B11 | CLOSED | canonical `RenderProfile`, cursor replay, exact PNG parity, bounded GIF export |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -137,8 +136,8 @@ Until B18 closes:
 ```text
 B09  Finish / recognition authoring                     CLOSED
 B10  Intent-aware completion                            CLOSED
-B11  Canonical RenderProfile + replay/GIF parity         ACTIVE
-B12  Legacy runtime / persistence isolation              SKELETON
+B11  Canonical RenderProfile + replay/GIF parity         CLOSED
+B12  Legacy runtime / persistence isolation              ACTIVE
 B13  Reference authority + subjectless runtime           SKELETON
 B14  Drawing-mode capability completion                  SKELETON
 B15  Style authoring completion                          SKELETON

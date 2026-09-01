@@ -16,7 +16,7 @@ from ..core.session import DrawingSession, sha256_file
 TIMELAPSE_SCHEMA = "img2drawing.timelapse.manifest.v1"
 
 
-def _pixel_sha256(path: str | Path) -> str:
+def pixel_sha256(path: str | Path) -> str:
     im = Image.open(path).convert("RGBA")
     return hashlib.sha256(im.tobytes()).hexdigest()
 
@@ -119,7 +119,15 @@ def _debug_overlay(path: Path, frame_info: dict[str, Any]) -> None:
     im.save(path)
 
 
-def _save_gif(frame_paths: list[Path], durations: list[int], out_path: Path) -> None:
+def save_gif(
+    frame_paths: list[Path],
+    durations: list[int],
+    out_path: Path,
+    *,
+    colors: int = 64,
+    loop: int = 0,
+    disposal: int = 2,
+) -> None:
     if not frame_paths:
         raise ValueError("cannot write GIF with no frames")
     images = [Image.open(p).convert("RGBA") for p in frame_paths]
@@ -128,17 +136,21 @@ def _save_gif(frame_paths: list[Path], durations: list[int], out_path: Path) -> 
     for im in images:
         bg=Image.new("RGBA", im.size, (255,255,255,255))
         bg.alpha_composite(im)
-        flattened.append(bg.convert("RGB").quantize(colors=64, method=Image.Quantize.MEDIANCUT))
+        flattened.append(
+            bg.convert("RGB").quantize(colors=int(colors), method=Image.Quantize.MEDIANCUT)
+        )
     flattened[0].save(
         out_path,
         save_all=True,
         append_images=flattened[1:],
         duration=durations,
-        loop=0,
+        loop=int(loop),
         optimize=False,
-        disposal=2,
+        disposal=int(disposal),
     )
     for im in images:
+        im.close()
+    for im in flattened:
         im.close()
 
 
@@ -203,21 +215,21 @@ def export_timelapse(
         if debug_overlay:
             _debug_overlay(path, info)
         info["png_sha256"] = sha256_file(path)
-        info["pixel_sha256"] = _pixel_sha256(path)
+        info["pixel_sha256"] = pixel_sha256(path)
         frames.append(info)
         frame_paths.append(path)
         durations.append(info["duration_ms"])
 
     gif_path = out_dir / ("debug_timelapse.gif" if debug_overlay else "timelapse.gif") if gif else None
     if gif_path is not None:
-        _save_gif(frame_paths, durations, gif_path)
+        save_gif(frame_paths, durations, gif_path)
 
     final_frame_path = frame_paths[-1]
     final_state = session.history.state_at(session.history.cursor)
     expected_final = out_dir / "_expected_final.png"
     render_fn(final_state, str(expected_final), **final_render_kwargs)
-    expected_pixel_hash = _pixel_sha256(expected_final)
-    final_frame_match = _pixel_sha256(final_frame_path) == expected_pixel_hash
+    expected_pixel_hash = pixel_sha256(expected_final)
+    final_frame_match = pixel_sha256(final_frame_path) == expected_pixel_hash
     # Debug overlays intentionally alter the visible frame, but the underlying state was
     # rendered from the same cursor before overlay decoration. Public exports must match
     # the session final pixel-for-pixel.
@@ -227,7 +239,7 @@ def export_timelapse(
         ext = Path(expected_final_path)
         if not ext.exists():
             raise FileNotFoundError(ext)
-        external_final_match = _pixel_sha256(ext) == expected_pixel_hash
+        external_final_match = pixel_sha256(ext) == expected_pixel_hash
     expected_final.unlink()
 
     manifest={

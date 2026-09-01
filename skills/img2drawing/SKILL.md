@@ -193,6 +193,15 @@ All normal drawing, review, replay, final export and timelapse paths use
 `img2drawing.render.pillow_pencil_contact`. This is the sole default renderer because it
 preserves pencil grade, pressure, contact, grain, paper interaction and eraser behavior.
 
+Final PNG, cursor replay, and GIF export use the session's immutable `RenderProfile`.
+Call `session.render_final()`, `session.render_at()`, and `session.export_timelapse()`;
+do not call a different renderer or change supersampling/material kwargs per output.
+Replay always includes cursor 0 and latest. A value region is one authored replay action,
+not one frame per generated contact. Read
+[`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md)
+before exporting. A pre-B11 checkpoint must call `migrate_render_profile()` explicitly
+before canonical output.
+
 Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
 material feature, not a reason to revive or silently emulate the removed renderer.
 
@@ -225,7 +234,8 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
    adding detail, then use `review/residual-correction.md` for every repair loop.
 5. Read `review/completion.md` and bind the Agent's decision to the latest current
    inspection; continue the same correction loop if that record becomes stale.
-6. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
+6. Use `output/render-profile-and-replay.md` for final PNG or process export.
+7. Use `legacy-r23.md` only when explicitly continuing a `DrawingRun` checkpoint.
 
 ## Evidence boundary
 

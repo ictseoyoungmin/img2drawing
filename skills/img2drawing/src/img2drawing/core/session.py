@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import Any
 
 from .history import CanvasHistory
+from ..render.pillow_pencil_contact import RENDERER_ID, RENDERER_VERSION
 
 SESSION_SCHEMA_VERSION="1.0"
-RENDERER_ID="pillow-pencil-contact-v9"
 TOOLSET_ID="atelier-core-a2"
 
 
@@ -88,7 +88,7 @@ class DrawingSession:
         return {
             "schema_version":self.schema_version,
             "session_id":self.session_id,
-            "renderer":{"id":RENDERER_ID,"version":"1"},
+            "renderer":{"id":RENDERER_ID,"version":RENDERER_VERSION},
             "toolset":{"id":TOOLSET_ID,"version":"1"},
             "environment":self.environment(),
             "canvas":{"width":self.history.width,"height":self.history.height},
@@ -110,7 +110,7 @@ class DrawingSession:
         if verify:
             renderer=data.get("renderer",{})
             toolset=data.get("toolset",{})
-            if renderer.get("id") != RENDERER_ID or str(renderer.get("version")) != "1":
+            if renderer.get("id") != RENDERER_ID or str(renderer.get("version")) != RENDERER_VERSION:
                 raise ValueError("renderer version mismatch")
             if toolset.get("id") != TOOLSET_ID or str(toolset.get("version")) != "1":
                 raise ValueError("toolset version mismatch")
