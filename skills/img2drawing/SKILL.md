@@ -49,11 +49,14 @@ pipeline, or completion gate. `DrawingSession.create(intent=...)` records the in
 selection; `session.set_intent(..., reason=...)` records a later selection as provenance
 without changing geometry or forking the action history.
 
-Resolve the matching `ModeGuide` for observations, grammar, omissions, finish emphasis,
-and questions, and `StyleGuide` for direct authoring decisions about line, construction,
-detail, value, and edges. These guides are immutable plain data: they do not advance,
-close, judge, select a renderer, or apply a raster post-filter. A guide may be read again
-when an inspection changes the Agent's hypothesis. The explicit compatibility lookup
+Resolve the matching `ModeGuide` for observations and construction vocabulary,
+`FinishGuide` for the relationships and omissions required by the stopping target, and
+`StyleGuide` for the material behavior of the selected marks. Reference/geometry truth
+outranks finish advice, which outranks a conflicting style preference. These guides are
+immutable plain data: they do not advance, close, judge, select a renderer, or apply a
+raster post-filter. Read [`references/finish/identity-and-value.md`](references/finish/identity-and-value.md)
+before subject, form-light, or expressive refinement. A guide may be read again when an
+inspection changes the Agent's hypothesis. The explicit compatibility lookup
 `full_body_croquis` returns an ordinary `observed`/`croquis` intent and is not a lifecycle
 state. See [`references/intent.md`](references/intent.md).
 

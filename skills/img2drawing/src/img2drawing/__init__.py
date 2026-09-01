@@ -30,9 +30,13 @@ from .vnext import (
     COMPATIBILITY_INTENTS,
     DRAWING_MODES,
     FINISH_INTENTS,
+    FINISH_GUIDE_SCHEMA,
+    FINISH_RELATION_SCHEMA,
     REFERENCE_MODES,
     STYLE_PROFILES,
     DrawingIntent,
+    FinishGuide,
+    FinishRelation,
     IntentChangeRecord,
     IntentProvenance,
     ModeGuide,
@@ -47,6 +51,7 @@ from .vnext import (
     compatibility_intent,
     replace_fill_region,
     resolve_mode_guide,
+    resolve_finish_guide,
     resolve_style_guide,
 )
 
@@ -175,8 +180,8 @@ __all__ = [
     "stage_free_drawing_state_hash", "vertical_profile", "DrawingSession", "VNextDrawingSession", "CONSTRUCTION_PHASES",
     "ConstructionMark", "CorrectionRecord", "InitialConstruct", "InitialConstructResult", "PoseObservation",
     "ResidualRecord", "EvidencePolicy", "EvidenceReadRecord", "EvidenceTelemetry", "author_initial_construct", "inspect_initial_construct", "observe_pose", "replace_fill_region", "ABLATION_CONDITIONS", "ModularGrammarCard",
-    "COMPATIBILITY_INTENTS", "DRAWING_MODES", "FINISH_INTENTS", "REFERENCE_MODES", "STYLE_PROFILES",
-    "DrawingIntent", "IntentChangeRecord", "IntentProvenance", "ModeGuide", "StyleGuide",
-    "compatibility_intent", "resolve_mode_guide", "resolve_style_guide",
+    "COMPATIBILITY_INTENTS", "DRAWING_MODES", "FINISH_INTENTS", "FINISH_GUIDE_SCHEMA", "FINISH_RELATION_SCHEMA", "REFERENCE_MODES", "STYLE_PROFILES",
+    "DrawingIntent", "FinishGuide", "FinishRelation", "IntentChangeRecord", "IntentProvenance", "ModeGuide", "StyleGuide",
+    "compatibility_intent", "resolve_finish_guide", "resolve_mode_guide", "resolve_style_guide",
     "consume_grammar_card", "AblationTrial", "ExemplarAblationReport", "run_exemplar_ablation",
 ]

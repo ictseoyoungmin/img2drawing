@@ -6,10 +6,10 @@ framework이며, 구현은 항상 **Production WIP Limit = 1**로 진행한다.
 ## 현재 한 줄 요약
 
 ```text
-B00–B08 + B01-R1/B07-R1 hardening은 CLOSED.
-B09–B18은 남은 product surface를 완성하는 implementation phase다.
+B00–B09 + B01-R1/B07-R1 hardening은 CLOSED.
+B10–B18은 남은 product surface를 완성하는 implementation phase다.
 새 fresh visual dogfood는 B18 freeze 이전에 시작하지 않는다.
-B09 Mode-aware finish / recognition이 다음 production WIP다.
+B10 Intent-aware completion이 현재 production WIP다.
 ```
 
 최근 dogfood는 이미 foundation 결함을 충분히 드러냈다. 특히 B07-R1의 value-region
@@ -59,7 +59,7 @@ closure다. 이제 같은 subject를 반복해서 사용하며 architecture를 �
   이미 보존된 evidence만으로 기술적 계약을 닫는다.
 - B18은 "dogfood-ready system freeze"다. 이후 새 기능을 추가하지 않고 D01–D06에서
   발견한 defect는 responsible B-slice를 REOPEN해 고친다.
-- `DrawingIntent`, `ModeGuide`, `StyleGuide`는 plain-data authoring guidance이며
+- `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`는 plain-data authoring guidance이며
   lifecycle cursor나 renderer pipeline이 아니다.
 - `StyleGuide`와 `RenderProfile`은 분리한다.
 - 테스트나 schema가 시각 품질을 자동 판정하지 않는다.

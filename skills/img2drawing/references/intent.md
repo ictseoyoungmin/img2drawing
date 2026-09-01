@@ -5,7 +5,10 @@ not a workflow state machine. The four axes are independent and can be combined 
 deriving a hidden stage:
 
 ```python
-from img2drawing import DrawingIntent, DrawingSession
+from img2drawing import (
+    DrawingIntent, DrawingSession,
+    resolve_finish_guide, resolve_mode_guide, resolve_style_guide,
+)
 
 intent = DrawingIntent(
     reference_mode="observed",
@@ -14,6 +17,9 @@ intent = DrawingIntent(
     style_profile="pencil_loose",
 )
 session = DrawingSession.create(subject="subject.png", output_dir="out", intent=intent)
+mode = resolve_mode_guide(intent.drawing_mode)
+finish = resolve_finish_guide(intent.finish_intent)
+style = resolve_style_guide(intent.style_profile)
 ```
 
 The current production session still requires `subject` to be a readable image. An
@@ -58,6 +64,26 @@ bases are `pencil_loose` and `graphite_academic`. Overrides replace explicit fie
 one base only; unknown fields, a second base, inheritance, and plugin registries are
 rejected. The advice must be enacted in authored strokes. It is not a renderer selector
 or a post-filter for an already rendered PNG.
+
+## FinishGuide
+
+`resolve_finish_guide(finish_intent)` returns an immutable authoring policy for `pose`,
+`subject`, `form_light`, or `expressive`. It contains priorities, constraints to preserve,
+mark/value/edge policies, deliberate omissions, relational observations, and questions
+for the Agent. The relation records say what to observe, how to author it, and which
+shortcuts to avoid.
+
+The guide does not mutate geometry or history. The Agent reads it and authors explicit
+`draw()`, `fill_region()`, or correction actions through the existing session. It has no
+finish stage, cursor, likeness score, PASS/FAIL, or close operation. `pose` preserves an
+economical macro statement; `subject` adds relational recognition; `form_light` requires
+form-before-value; and `expressive` records constraints before selective simplification.
+
+Guide precedence is deliberate: subject/reference geometry and explicit preserved
+constraints outrank finish advice, and finish advice outranks a conflicting style
+preference. See [`finish/identity-and-value.md`](finish/identity-and-value.md) for the
+canonical finish method. Completion recording is a separate later capability; these
+questions do not certify that the drawing is done.
 
 ## Compatibility lookup
 

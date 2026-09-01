@@ -20,7 +20,7 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
-- `intent.md`: portable `DrawingIntent`, `ModeGuide`, `StyleGuide`, provenance, and
+- `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and
   compatibility lookup
 
 ## Drawing modes (guidance, not stages)
@@ -33,7 +33,8 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 Each mode provides only a purpose, observation priorities, suggested grammar,
 omissions, and completion questions. It does not create `phase_start`, `advance`,
 `close`, or `reopen` state. `DrawingIntent`,
-`ModeGuide`, and `StyleGuide` are implemented B08 plain-data schemas. `RenderProfile`
+`ModeGuide` and `StyleGuide` are B08 plain-data schemas; `FinishGuide` is the B09
+plain-data authoring target. `RenderProfile`
 remains a later output/replay contract; style guidance never acts as a renderer filter.
 
 ## Legacy R23 compatibility

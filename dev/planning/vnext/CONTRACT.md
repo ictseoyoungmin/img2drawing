@@ -3,7 +3,7 @@
 Status: **CURRENT**
 Updated: 2026-09-01
 
-이 문서는 현재 닫힌 B00–B08(+B01-R1/B07-R1) 기반과 B09–B18 구현 phase가
+이 문서는 현재 닫힌 B00–B09(+B01-R1/B07-R1) 기반과 B10–B18 구현 phase가
 공유해야 하는 architecture invariant를 정의한다. 새 fresh visual dogfood는 B18
 freeze 이후에만 시작한다.
 
@@ -106,7 +106,7 @@ geometry/residual priority/artistic PASS를 결정하지 않는다.
 
 ## 6. current intent model
 
-`DrawingIntent`, `ModeGuide`, `StyleGuide`는 portable plain-data API다.
+`DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`는 portable plain-data API다.
 
 ```text
 DrawingIntent
@@ -155,7 +155,7 @@ free_draw
 
 ### Finish intent
 
-B09은 `pose | subject | form_light | expressive`를 actual authoring guidance에 연결하지만
+B09은 `pose | subject | form_light | expressive`를 actual authoring guidance에 연결했고
 `FinishStage`나 P7를 만들지 않는다. recognition은 relational target이다.
 
 ### StyleGuide vs RenderProfile
@@ -252,10 +252,9 @@ style이 subject geometry truth를 덮는 renderer/post-filter
 imaginative mode가 fake reference authority를 만드는 것
 ```
 
-## 14. B09–B18 아직 구현할 surface
+## 14. B10–B18 아직 구현할 surface
 
 ```text
-B09  finish / recognition authoring
 B10  intent-aware completion
 B11  RenderProfile + replay/GIF parity
 B12  legacy isolation

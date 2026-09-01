@@ -3,12 +3,12 @@
 Updated: 2026-09-01
 
 ```text
-SYSTEM:   stage-free foundation closed through B08, including B01-R1 and B07-R1 hardening
-ACTIVE:   B09 Finish / recognition authoring
-NEXT:     B10 Intent-aware completion
-SKELETON: B10–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B09, including B01-R1 and B07-R1 hardening
+ACTIVE:   B10 Intent-aware completion
+NEXT:     B11 Canonical RenderProfile + replay/GIF parity
+SKELETON: B11–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,27 +45,26 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B09
+## Active slice — B10
 
-B09 is the sole production WIP.
+B10 is the sole production WIP.
 
-Goal: finish/recognition intent must guide actual authoring decisions without creating a
-P7, finish stage, likeness score, or mode-specific session.
+Goal: bind an Agent completion decision to the exact current drawing state, intent,
+history cursor, and fresh inspection without creating an artistic certificate or finish
+stage.
 
-B09 inherits these closed constraints:
+B10 inherits these closed constraints:
 
-- **macro before detail** — pose, proportion, mass, balance, overlap/contact, and major
-  prop relation cannot be masked by finish;
-- **form before value** — major limb/clothing volume and overlap must read without tone;
-- **observation before anatomy defaults** — do not invent an occluded hand, jaw, hair
-  ending, or repeated detail merely because anatomy/style usually contains it;
-- **a line separates two named things** — duplicated contour that separates nothing is
-  not a valid form solution;
-- recognition is relational: face/hair/hands/feet/clothing/prop are judged by spacing,
-  direction, overlap, contact, topology, termination, and hierarchy, not by "detail
-  exists" checks.
+- completion is an Agent decision that no material residual remains for the declared
+  intent, not a score, stage count, checklist percentage, or automatic PASS;
+- the record must bind to the exact intent digest, drawing-state hash, history cursor,
+  and fresh inspection evidence;
+- any later material mutation or intent change makes the prior completion stale;
+- accepted limitations must be explicit and cannot hide a known material residual; and
+- a post-finish defect returns to the ordinary residual/correction loop without reopening
+  a finish stage.
 
-B09 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B10 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -83,6 +82,7 @@ those claims belong to D01–D06 after B18.
 | B07 | CLOSED | quick/focused/deep evidence read budget + telemetry |
 | B07-R1 | CLOSED | value-region authoring, session compaction, fill revision, form-before-value |
 | B08 | CLOSED | orthogonal `DrawingIntent`, `ModeGuide`, `StyleGuide`, intent provenance |
+| B09 | CLOSED | stage-free `FinishGuide`, relational recognition, form-before-value and preserved-constraint policy |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -136,8 +136,8 @@ Until B18 closes:
 ## Remaining implementation queue
 
 ```text
-B09  Finish / recognition authoring                     ACTIVE
-B10  Intent-aware completion                            SKELETON
+B09  Finish / recognition authoring                     CLOSED
+B10  Intent-aware completion                            ACTIVE
 B11  Canonical RenderProfile + replay/GIF parity         SKELETON
 B12  Legacy runtime / persistence isolation              SKELETON
 B13  Reference authority + subjectless runtime           SKELETON

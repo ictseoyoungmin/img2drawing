@@ -37,12 +37,12 @@ replayable.
 
 ## Status
 
-Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free `DrawingSession` foundation and
-B05 observation/construction start path now sit alongside the dogfooded legacy R23 pipeline.
-R23's dual-reference review, pass-memory continuity, reopen/recovery, and fresh-worker
-evidence remain available for compatibility and historical comparison; they are not the
-default vNext construction loop. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release
-history.
+Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free vNext product surface is closed
+through B09: one `DrawingSession` now carries observation/construction, bounded inspection,
+residual correction, orthogonal `DrawingIntent`, and finish-specific authoring guidance.
+Legacy R23 review and recovery remain available for compatibility and historical
+comparison; they are not the default vNext loop. B10 intent-aware completion is the sole
+active implementation slice. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for release history.
 
 ## Requirements
 
@@ -72,15 +72,18 @@ pip install skills/img2drawing/
 ## Quickstart
 
 ```python
-from img2drawing import DrawingSession
+from img2drawing import DrawingIntent, DrawingSession, resolve_finish_guide
 
-session = DrawingSession.create(subject="subject.png", output_dir="out")
+intent = DrawingIntent(drawing_mode="croquis", finish_intent="subject")
+session = DrawingSession.create(subject="subject.png", output_dir="out", intent=intent)
+finish = resolve_finish_guide(intent.finish_intent)
 ```
 
 The agent then records a short `PoseObservation`, authors explicit ordered
 `ConstructionMark`s inside an `InitialConstruct`, calls
 `author_initial_construct(session, construct)`, and inspects it with
-`inspect_initial_construct(session, construct)`. See
+`inspect_initial_construct(session, construct)`. The Agent reads `finish` to select
+relational mark/value/edge decisions; the guide does not mutate or close the session. See
 [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for the complete
 autonomous loop and operating spec. `DrawingRun` and the P1–P5 stage loop remain
 available for legacy continuations.
