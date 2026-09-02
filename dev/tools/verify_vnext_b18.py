@@ -17,7 +17,8 @@ from jsonschema import Draft7Validator
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
 SOURCE = PACKAGE / "src" / "img2drawing"
-FREEZE = PACKAGE / "CONTRACT_FREEZE.json"
+RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
+FREEZE = RELEASE_RECORDS / "CONTRACT_FREEZE.json"
 TEMPLATE = ROOT / "dev" / "dogfood" / "vnext-template"
 
 
@@ -207,7 +208,7 @@ def check_planning_and_completeness() -> None:
     value_text = (SOURCE / "vnext" / "value.py").read_text(encoding="utf-8")
     assert "return session.replace_fill_region(" in value_text
     assert "session._agent" not in value_text
-    freeze_text = (PACKAGE / "FREEZE.md").read_text(encoding="utf-8")
+    freeze_text = (RELEASE_RECORDS / "FREEZE.md").read_text(encoding="utf-8")
     assert "core.session.DrawingSession" in freeze_text and "not root-exported" in freeze_text
 
 
@@ -292,13 +293,19 @@ def check_dogfood_contracts() -> None:
         assert case in readme
     validation = (ROOT / "dev" / "planning" / "vnext" / "VALIDATION_RELEASE.md").read_text(encoding="utf-8")
     assert "vnext-template" in validation
-    assert "CONTRACT_FREEZE.json" in validation
+    assert "dev/release/vnext/CONTRACT_FREEZE.json" in validation
 
 
 def check_package_boundary() -> None:
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
-    assert "include FREEZE.md" in manifest
-    assert "include CONTRACT_FREEZE.json" in manifest
+    for forbidden in (
+        "FREEZE.md", "CONTRACT_FREEZE.json", "SUPPORT.md", "RELEASE.md", "MIGRATION.md", "NOTICE"
+    ):
+        assert f"include {forbidden}" not in manifest
+        assert not (PACKAGE / forbidden).exists(), forbidden
+    assert not (PACKAGE / "playbooks").exists()
+    assert not (PACKAGE / "references" / "stages").exists()
+    assert FREEZE.is_file()
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     assert "verify_vnext_b18.py" in workflow
     assert (ROOT / "dev" / "tools" / "seal_vnext_dogfood_input.py").is_file()
