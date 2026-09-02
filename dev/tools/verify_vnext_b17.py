@@ -159,7 +159,8 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
                 assert stream is not None
                 _scan_text(member.name, stream.read())
         required = {
-            "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md",
+            "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
+            "CONTRACT_FREEZE.json",
             "references/reference-authority.md", "references/legacy-r23.md",
             "examples/mechanical_workflows.py", "examples/observed/run.py",
             "examples/subjectless/run.py",

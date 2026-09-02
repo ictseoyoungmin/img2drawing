@@ -18,6 +18,14 @@ The current release is tracked in `src/img2drawing/_version.py`
 reads from dynamically. That module is the single source of truth for "what
 version is this" at build/runtime; release notes may record the version they describe.
 
+## B18 — Dogfood-ready vNext contract freeze
+
+Pinned the `0.6.0rc1` public exports, `DrawingSession` members, persisted schemas, intent
+axes, canonical RenderProfile, ownership, and explicit R23 checkpoint boundary in one
+machine-readable snapshot. Audited B09–B17 for incomplete and duplicate paths and added
+schema-validated sealed worker input, post-run evaluator, and evidence templates for
+D01–D06. No fresh dogfood or visual-quality certification occurred in B18.
+
 ## 0.6.0rc1 — vNext package and public API candidate
 
 Aligned the stage-free source, wheel/sdist inventory, installed API, support and migration

@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://img2drawing.local/schemas/vnext_dogfood_sealed_input.schema.json",
+  "title": "img2drawing vNext sealed dogfood input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "case_id", "user_request", "intent", "subject", "authority"],
+  "properties": {
+    "schema": {"const": "img2drawing.dogfood.sealed_input.v1"},
+    "case_id": {"enum": ["D01", "D02", "D03", "D04", "D05-A", "D05-B", "D06"]},
+    "user_request": {"type": "string", "minLength": 1},
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_mode", "drawing_mode", "finish_intent", "style_profile"],
+      "properties": {
+        "reference_mode": {"enum": ["observed", "imaginative", "hybrid"]},
+        "drawing_mode": {"enum": ["croquis", "figure_drawing", "tonal_study", "line_study", "free_draw"]},
+        "finish_intent": {"enum": ["pose", "subject", "form_light", "expressive"]},
+        "style_profile": {
+          "anyOf": [
+            {"enum": ["pencil_loose", "graphite_academic", "graphite_tonal"]},
+            {"type": "string", "pattern": "^custom:[a-z0-9][a-z0-9._-]*$"}
+          ]
+        }
+      }
+    },
+    "subject": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["file", "sha256"],
+          "properties": {
+            "file": {"type": "string", "pattern": "^[^/\\\\]+$"},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        }
+      ]
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "declared_goals", "constraints"],
+      "properties": {
+        "mode": {"enum": ["observed", "imaginative", "hybrid"]},
+        "declared_goals": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["constraint_id", "description", "disposition"],
+            "properties": {
+              "constraint_id": {"type": "string", "minLength": 1},
+              "description": {"type": "string", "minLength": 1},
+              "disposition": {"enum": ["preserved", "transformed"]},
+              "transformation": {"type": ["string", "null"]},
+              "rationale": {"type": ["string", "null"]}
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"intent": {"properties": {"reference_mode": {"const": "imaginative"}}}}},
+      "then": {
+        "properties": {
+          "subject": {"type": "null"},
+          "authority": {
+            "properties": {
+              "mode": {"const": "imaginative"},
+              "declared_goals": {"minItems": 1},
+              "constraints": {"maxItems": 0}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"intent": {"properties": {"reference_mode": {"const": "observed"}}}}},
+      "then": {
+        "properties": {
+          "subject": {"type": "object"},
+          "authority": {
+            "properties": {"mode": {"const": "observed"}}
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"intent": {"properties": {"reference_mode": {"const": "hybrid"}}}}},
+      "then": {
+        "properties": {
+          "authority": {
+            "properties": {
+              "mode": {"const": "hybrid"},
+              "constraints": {
+                "minItems": 2,
+                "allOf": [
+                  {"contains": {"properties": {"disposition": {"const": "preserved"}}}},
+                  {"contains": {"properties": {"disposition": {"const": "transformed"}}}}
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

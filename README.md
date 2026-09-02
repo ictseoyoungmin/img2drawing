@@ -27,7 +27,8 @@ replayable.
 ## Status
 
 Pre-1.0 release candidate (`0.6.0rc1`, release slice B17). The stage-free vNext product
-surface and package integration are closed through B17: one `DrawingSession` carries observation/construction, bounded inspection,
+surface is frozen for validation through B18: one `DrawingSession` carries
+observation/construction, bounded inspection,
 residual correction, orthogonal `DrawingIntent`, finish-specific authoring guidance,
 intent/state/inspection-bound completion provenance, and immutable observed, imaginative,
 or hybrid reference authority. Subjectless sessions use drawing-only evidence rather than

@@ -46,7 +46,7 @@ observe/read subject or declare intent
 | B15 | CLOSED | style authoring completion | B14 |
 | B16 | CLOSED | Agent authoring/editing ergonomics | B15 |
 | B17 | CLOSED | package/public API/release-candidate truth | B16 |
-| B18 | ACTIVE | dogfood-ready system freeze | B17 |
+| B18 | CLOSED | dogfood-ready system freeze | B17 |
 
 ```text
 B00…B08 CLOSED

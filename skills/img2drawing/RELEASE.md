@@ -11,3 +11,7 @@ migration boundary, and CI before visual dogfood begins.
 
 The RC proves packaging and deterministic mechanical integration. It does not certify
 unseen-subject, cross-agent, or artistic quality.
+
+B18 freezes this candidate's public exports, session methods, persisted schemas, intent
+axes, canonical render profile, and compatibility boundary in `CONTRACT_FREEZE.json`
+before D01-D06. That freeze adds no artistic-quality claim.

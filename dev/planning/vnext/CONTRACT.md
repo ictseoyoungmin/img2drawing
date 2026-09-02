@@ -1,11 +1,12 @@
 # img2drawing vNext architecture contract
 
-Status: **CURRENT**
-Updated: 2026-09-01
+Status: **FROZEN FOR D01–D06**
+Updated: 2026-09-02
 
-This document owns architecture invariants shared by the closed B00–B11 foundation
-(including B01-R1/B07-R1) and B12–B18 implementation. `ROADMAP.md` owns sequencing;
-slice cards own deliverables. Fresh visual dogfood starts only after the B18 freeze.
+This document owns architecture invariants shared by the closed B00–B18 implementation
+(including B01-R1/B07-R1). `CONTRACT_FREEZE.json` pins the machine-readable public and
+persisted surface. `ROADMAP.md` owns sequencing; fresh visual dogfood begins only with an
+explicitly started D01.
 
 ## 1. One canonical core
 
@@ -225,17 +226,14 @@ style renderer/post-filter overriding geometry truth
 imaginative mode inventing reference authority
 ```
 
-## 13. Remaining implementation surface
+## 13. Frozen implementation surface
 
 ```text
-B12  legacy isolation
-B13  subjectless/reference authority
-B14  mode capability completion
-B15  style authoring completion
-B16  edit ergonomics
-B17  package/public API/release-candidate truth
-B18  system freeze for dogfood
+B09–B17  CLOSED product and package capabilities
+B18      CLOSED dogfood-ready contract freeze
+D01–D06 NEXT validation; defects REOPEN the responsible B-slice
 ```
 
-Each active slice freezes only the smallest required schema/API. D01–D06 after B18 own
-full visual robustness claims.
+Private helpers remain changeable, but a frozen public/schema/profile/ownership change
+requires an explicit responsible-slice reopen and version/schema update. D01–D06 own full
+visual robustness claims.

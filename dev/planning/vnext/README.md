@@ -7,10 +7,10 @@ a general drawing framework, and implementation always follows **Production WIP 
 ## Current summary
 
 ```text
-B00–B17 plus B01-R1/B07-R1 hardening are CLOSED.
-B18 freezes the completed product surface for dogfood.
-No fresh visual dogfood starts before the B18 freeze.
-B18 dogfood-ready system freeze is the sole production WIP.
+B00–B18 plus B01-R1/B07-R1 hardening are CLOSED.
+The completed product surface is frozen for dogfood.
+No fresh visual dogfood ran during the implementation phase.
+There is no active implementation slice; D01 is the next authorized work.
 ```
 
 Earlier dogfood exposed enough foundation defects to drive B01-R1 subject-boundary
@@ -54,7 +54,7 @@ slice explicitly before changing its contract.
 - B09–B18 is a product-surface implementation phase, not a fresh visual-dogfood phase.
 - Each implementation slice closes with deterministic fixtures, unit/integration tests,
   preserved evidence, direct review, a capsule, and one dedicated commit.
-- B18 freezes the dogfood-ready system. D01–D06 defects reopen the responsible B-slice;
+- B18 froze the dogfood-ready system. D01–D06 defects reopen the responsible B-slice;
   they do not create parallel workflows.
 - `DrawingIntent`, `ModeGuide`, `FinishGuide`, and `StyleGuide` are plain-data authoring
   guidance, not lifecycle cursors or renderer pipelines.

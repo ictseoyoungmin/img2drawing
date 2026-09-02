@@ -1,0 +1,33 @@
+{
+  "schema": "img2drawing.dogfood.evaluator_brief.v1",
+  "case_id": "D01",
+  "independent_review": true,
+  "review_axes": [
+    "whole-image pose and balance",
+    "major form, overlap, and silhouette",
+    "highest-impact residual correction",
+    "line economy and authored record cost",
+    "final PNG and replay parity"
+  ],
+  "artifacts": {
+    "sealed_input": "evidence/sealed_input.json",
+    "checkpoint": "evidence/session/session.checkpoint.json",
+    "final_png": "evidence/output/canonical_final.png",
+    "replay_manifest": "evidence/output/replay_manifest.json",
+    "timelapse_gif": "evidence/output/timelapse.gif"
+  },
+  "reopen_routing": {
+    "observation or boundary method": "B01-R1",
+    "construction or major form": "B05",
+    "correction provenance": "B06",
+    "evidence budget": "B07",
+    "finish policy or relational identity": "B09",
+    "completion provenance": "B10",
+    "render or replay parity": "B11",
+    "reference authority": "B13",
+    "mode guidance": "B14",
+    "style guidance": "B15",
+    "editing ergonomics": "B16",
+    "package or public API": "B17"
+  }
+}

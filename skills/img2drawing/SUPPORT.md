@@ -2,6 +2,9 @@
 
 Version: **0.6.0rc1** · public contract: **DrawingSession/0.6.0-vnext**
 
+The complete dogfood baseline is frozen in `CONTRACT_FREEZE.json`; change its public or
+persisted entries only with a version/schema update and responsible-slice review.
+
 ## Canonical vNext
 
 New work imports `DrawingSession` and related plain-data records from `img2drawing`.

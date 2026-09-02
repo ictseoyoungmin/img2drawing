@@ -3,12 +3,12 @@
 Updated: 2026-09-02
 
 ```text
-SYSTEM:   stage-free product surface and RC integration closed through B17
-ACTIVE:   B18 Dogfood-ready system freeze
-NEXT:     D01 after B18 closes
-SKELETON: none in the B implementation phase
-DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17
+SYSTEM:   vNext product/API/schema/package contract frozen through B18
+ACTIVE:   none — awaiting explicit D01 start
+NEXT:     D01 difficult observed croquis
+SKELETON: D01–D06 validation contracts only
+DOGFOOD:  not started; sealed D01 input must be prepared first
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17, B18
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,14 +45,16 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B18
+## B18 freeze closure and next work
 
-B18 is the sole production WIP.
+B18 is closed and there is no active production WIP. D01 is next but has not started.
 
-Goal: freeze the completed implementation contract, audit cross-slice consistency and
-known TODOs, and prepare sealed dogfood inputs without running fresh dogfood.
+The completed implementation contract is pinned by
+`skills/img2drawing/CONTRACT_FREEZE.json`. The B09–B17 inventory, package/install
+regression, TODO/duplicate-path review, and leak-resistant dogfood input/evaluator
+templates are complete.
 
-B18 inherits these closed constraints:
+The post-freeze validation inherits these constraints:
 
 - normal docs/imports/examples lead to canonical vNext `DrawingSession`, never R23/Pn;
 - B17 wheel/sdist contain only justified runtime modules/data/docs/examples;
@@ -61,9 +63,8 @@ B18 inherits these closed constraints:
 - public API, package version, built metadata, support/migration docs, and CI agree; and
 - B12 legacy compatibility remains explicit and isolated rather than physically removed.
 
-B18 may rerun deterministic/synthetic fixtures and preserved regression. It must not
-claim general visual quality, unseen-subject robustness, or cross-agent proof; those
-claims belong to D01–D06 after B18.
+D01 must begin from a newly prepared and digest-sealed input. B18 made no general visual
+quality, unseen-subject robustness, or cross-agent claim; those claims belong to D01–D06.
 
 ## Closed foundation truth
 
@@ -88,6 +89,7 @@ claims belong to D01–D06 after B18.
 | B15 | CLOSED | three style presets, one-base overrides, structured custom guidance, explicit conflict/provenance semantics |
 | B16 | CLOSED | derived authored-element lookup, replacement resolution, bounded summaries, orphan-safe unified edit surface |
 | B17 | CLOSED | lean wheel/sdist policy, `0.6.0rc1` API/support truth, clean-installed observed/subjectless examples, package/link/license/security CI audit |
+| B18 | CLOSED | versioned API/schema/profile freeze, B09–B17 completeness audit, sealed dogfood/evaluator/evidence templates, clean integrated regression |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -122,9 +124,9 @@ geometry authority.
 - session size is an operational quality signal, but shrinking the file cannot justify a
   visually weak representation.
 
-## Implementation phase guard — B09 through B18
+## Closed implementation-phase guard — B09 through B18
 
-Until B18 closes:
+B09–B18 closure was governed by:
 
 - Production WIP Limit = 1.
 - Do not start a new fresh/unseen-subject dogfood run.
@@ -151,14 +153,12 @@ B14  Drawing-mode capability completion                  CLOSED
 B15  Style authoring completion                          CLOSED
 B16  Agent authoring / editing ergonomics                CLOSED
 B17  Package / public API / release-candidate truth      CLOSED
-B18  Dogfood-ready system freeze                         ACTIVE
+B18  Dogfood-ready system freeze                         CLOSED
 ```
 
 Each slice has its execution contract in `slices/B09.md` … `slices/B18.md`.
 
 ## Post-freeze validation and release
-
-After B18 only:
 
 ```text
 D01 difficult observed croquis

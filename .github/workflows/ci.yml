@@ -36,3 +36,5 @@ jobs:
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python dev/tools/verify_vnext_b17.py
+      - name: Verify B18 dogfood-ready contract freeze
+        run: python dev/tools/verify_vnext_b18.py

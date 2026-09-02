@@ -8,6 +8,7 @@ The Python wheel contains the runtime, required JSON data, license, and notice. 
 distribution additionally contains the Agent Skill, canonical references, support and
 migration guidance, and the selected observed and subjectless mechanical examples.
 
-Start with `SKILL.md` for Agent operation, `SUPPORT.md` for the public boundary, and
+Start with `SKILL.md` for Agent operation, `SUPPORT.md` for the public boundary,
+`FREEZE.md` for the dogfood contract, and
 `examples/` for deterministic integration mechanics. These examples prove API and
 artifact behavior only; they make no claim about general drawing quality.

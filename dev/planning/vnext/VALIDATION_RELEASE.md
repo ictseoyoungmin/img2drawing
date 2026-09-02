@@ -1,6 +1,6 @@
 # img2drawing vNext post-freeze validation and release
 
-Updated: 2026-09-01
+Updated: 2026-09-02
 Starts only after: **B18 CLOSED**
 
 This document defines the first new full visual dogfood after the B09–B18 implementation
@@ -24,6 +24,12 @@ Dogfood is validation, not a new architecture layer. A D-run never owns permanen
 code or a second workflow.
 
 ## Sealed input contract
+
+The machine-readable vNext baseline is
+`skills/img2drawing/CONTRACT_FREEZE.json`. Start each case from
+`dev/dogfood/vnext-template/`, validate the worker input and post-run evaluator brief
+against their `dev/schemas/vnext_dogfood_*.schema.json` contracts, and bind the final
+input digest before dispatch. Do not edit a sealed input to accommodate a worker.
 
 Fresh workers may receive only what the product is supposed to provide:
 

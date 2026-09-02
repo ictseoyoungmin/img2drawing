@@ -32,7 +32,8 @@ def test_release_candidate_version_and_root_api_are_canonical():
 def test_manifest_selects_current_docs_examples_and_excludes_answer_routes():
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
     for required in (
-        "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md",
+        "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
+        "CONTRACT_FREEZE.json",
         "references/reference-authority.md", "examples/observed", "examples/subjectless",
     ):
         assert required in manifest

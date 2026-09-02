@@ -1,0 +1,20 @@
+{
+  "schema": "img2drawing.dogfood.sealed_input.v1",
+  "case_id": "D01",
+  "user_request": "Create an uncolored croquis from the supplied fresh reference.",
+  "intent": {
+    "reference_mode": "observed",
+    "drawing_mode": "croquis",
+    "finish_intent": "pose",
+    "style_profile": "pencil_loose"
+  },
+  "subject": {
+    "file": "subject.png",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "authority": {
+    "mode": "observed",
+    "declared_goals": [],
+    "constraints": []
+  }
+}
