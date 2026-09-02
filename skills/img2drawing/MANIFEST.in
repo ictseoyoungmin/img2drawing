@@ -1,11 +1,5 @@
 include LICENSE
-include NOTICE
 include README.md
-include FREEZE.md
-include CONTRACT_FREEZE.json
-include RELEASE.md
-include SUPPORT.md
-include MIGRATION.md
 include SKILL.md
 include references/INDEX.md
 include references/intent.md
