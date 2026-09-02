@@ -13,7 +13,7 @@ from jsonschema import validators
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT.parent
-SUBJECT = PROJECT / "skills" / "img2drawing" / "examples" / "full_body_croquis" / "subject.png"
+SUBJECT = ROOT / "fixtures" / "r23" / "full_body_croquis" / "subject.png"
 
 
 def _load_tool(name: str):
