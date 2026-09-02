@@ -2,7 +2,7 @@
 
 The current package is intentionally vNext. This historical validator checks that the
 frozen R23 release remains internally identified and explicitly reachable; it must never
-require the current package itself to masquerade as R23.
+require the deployable skill surface itself to carry R23 stage documentation.
 """
 from __future__ import annotations
 
@@ -40,13 +40,15 @@ if not gateway.is_file():
         "skills/img2drawing/references/legacy-r23.md"
     )
 
-for relative in (
-    "skills/img2drawing/references/stages/p4-structural-connections.md",
-    "skills/img2drawing/references/stages/p5-clean-blockin.md",
-    "skills/img2drawing/references/stages/p6-identity-finish.md",
+compatibility_root = ROOT / "dev/release/r23/compatibility/stages"
+for filename in (
+    "p4-structural-connections.md",
+    "p5-clean-blockin.md",
+    "p6-identity-finish.md",
 ):
-    if not (ROOT / relative).is_file():
-        raise SystemExit(f"missing preserved R23 compatibility asset: {relative}")
+    path = compatibility_root / filename
+    if not path.is_file():
+        raise SystemExit(f"missing preserved R23 compatibility asset: {path.relative_to(ROOT)}")
 
 try:
     from img2drawing.legacy.r23 import DrawingRun
