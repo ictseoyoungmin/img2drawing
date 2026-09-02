@@ -39,7 +39,7 @@ from .evidence import (
     EvidenceReadRecord,
     EvidenceTelemetry,
 )
-from .intent import DrawingIntent, IntentChangeRecord
+from .intent import DrawingIntent, IntentChangeRecord, ModeGuide, resolve_mode_guide
 from .reference_authority import (
     ReferenceAuthority,
     ReferenceUnavailableError,
@@ -794,6 +794,12 @@ class DrawingSession:
         """Return the current plain-data intent, if one has been selected."""
 
         return self._intent
+
+    @property
+    def mode_guide(self) -> ModeGuide | None:
+        """Resolve current authoring guidance without adding mode lifecycle state."""
+
+        return None if self._intent is None else resolve_mode_guide(self._intent.drawing_mode)
 
     @property
     def intent_history(self) -> tuple[IntentChangeRecord, ...]:

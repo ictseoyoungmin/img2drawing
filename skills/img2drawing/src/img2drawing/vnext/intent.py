@@ -16,7 +16,7 @@ from ..core.session import sha256_obj
 
 
 REFERENCE_MODES = ("observed", "imaginative", "hybrid")
-DRAWING_MODES = ("croquis", "figure_drawing", "tonal_study", "free_draw")
+DRAWING_MODES = ("croquis", "figure_drawing", "tonal_study", "line_study", "free_draw")
 FINISH_INTENTS = ("pose", "subject", "form_light", "expressive")
 STYLE_PROFILES = ("pencil_loose", "graphite_academic")
 COMPATIBILITY_INTENTS = ("full_body_croquis",)
@@ -510,36 +510,149 @@ class StyleGuide:
 
 _MODE_GUIDES = {
     "croquis": ModeGuide(
-        "mode-croquis-v1", "croquis",
-        ("gesture direction", "weight and balance", "major turning points"),
-        ("whole pose", "flow through masses", "selected contour"),
-        ("small features", "uniform contour polishing"),
-        ("liveliness of the pose", "economical decisive marks"),
-        ("Does the gesture read at a glance?", "Do the largest masses balance?")
+        "mode-croquis-v2", "croquis",
+        (
+            "gesture direction and reversal",
+            "weight, support side, and balance",
+            "head, ribcage, and pelvis mass relation",
+            "stance, overlap, and major negative space",
+        ),
+        (
+            "whole-silhouette read",
+            "line of action",
+            "major mass blocking",
+            "weight-bearing limb chain",
+            "selective contour",
+        ),
+        (
+            "small anatomy and surface detail that do not change the pose read",
+            "uniform contour polishing",
+            "features before the whole stance reads",
+        ),
+        ("gesture, balance, and stance", "major overlap and line economy"),
+        (
+            "Does the gesture and weight-bearing stance read at a glance?",
+            "Do the largest masses, overlaps, and negative spaces agree?",
+            "Can any line be removed without weakening the pose?",
+        ),
     ),
     "figure_drawing": ModeGuide(
-        "mode-figure-drawing-v1", "figure_drawing",
-        ("landmark alignment", "joint relationships", "weight-bearing structure"),
-        ("envelope", "mass relationships", "limb connections", "selected contour"),
-        ("decorative detail before structure", "isolated local polish"),
-        ("clarity of anatomy and overlap", "coherent contour rhythm"),
-        ("Do the landmarks agree across the pose?", "Are overlaps and weight legible?")
+        "mode-figure-drawing-v2", "figure_drawing",
+        (
+            "pose and form continuity",
+            "shoulder-elbow-wrist and hip-knee-ankle chains",
+            "anatomy, garment, and landmark relationships",
+            "overlap, contact, hands, feet, and identity-bearing relations",
+        ),
+        (
+            "gesture and envelope",
+            "connected volume masses",
+            "joint and limb continuity",
+            "garment-to-body relation",
+            "contact and selective identity finish",
+        ),
+        (
+            "decorative detail before connected form",
+            "isolated local polish that contradicts the whole pose",
+            "invented terminals at occluded hands or feet",
+        ),
+        (
+            "continuous anatomy and garment-supported form",
+            "legible contact, hands, feet, and requested identity",
+        ),
+        (
+            "Do the landmarks and body chains agree across the whole pose?",
+            "Are overlaps, contacts, hands, and feet structurally legible?",
+            "Does requested identity arise from relationships rather than isolated symbols?",
+        ),
     ),
     "tonal_study": ModeGuide(
-        "mode-tonal-study-v1", "tonal_study",
-        ("value grouping", "light direction", "dominant shadow mass"),
-        ("large value fields", "form turns", "edge accents"),
-        ("micro-detail without value support", "equal emphasis everywhere"),
-        ("stable value hierarchy", "edges serving the light"),
-        ("Is the light direction consistent?", "Do the value groups describe form?")
+        "mode-tonal-study-v2", "tonal_study",
+        (
+            "light and shadow families",
+            "largest value shapes and dominant shadow mass",
+            "form turn within correct geometry",
+            "hard, soft, and lost edge hierarchy",
+        ),
+        (
+            "form before value",
+            "authored fill_region decisions for large value families",
+            "reserved lights inside established forms",
+            "edge transitions and selective dark accents",
+        ),
+        (
+            "machine-authored microhatching as artistic decisions",
+            "local values that fragment the large family",
+            "renderer filters used to simulate authored light or form",
+        ),
+        (
+            "stable large-value hierarchy",
+            "form turns and edges that explain the declared light",
+        ),
+        (
+            "Do the light and shadow families read before local detail?",
+            "Does every value region sit inside a structurally correct form?",
+            "Do edge changes explain light, material, or spatial turn?",
+        ),
+    ),
+    "line_study": ModeGuide(
+        "mode-line-study-v1", "line_study",
+        (
+            "contour ownership and what each line separates",
+            "shape rhythm and directional energy",
+            "overlap, occlusion, and negative space",
+            "selective emphasis and termination evidence",
+        ),
+        (
+            "shape envelope",
+            "directional structural lines",
+            "overlap handoffs",
+            "varied selective contour",
+            "economical line accents",
+        ),
+        (
+            "broad value construction unless a line relation requires it",
+            "uniform tracing of every visible boundary",
+            "unobserved terminals and decorative hatching",
+        ),
+        (
+            "clear shape, rhythm, overlap, and directional emphasis",
+            "few lines with explicit relational jobs",
+        ),
+        (
+            "Does each retained line separate or connect named things?",
+            "Do overlap and negative space remain legible without broad value?",
+            "Does line weight follow structural emphasis instead of uniform tracing?",
+        ),
     ),
     "free_draw": ModeGuide(
-        "mode-free-draw-v1", "free_draw",
-        ("chosen motif", "spatial rhythm", "mark intent"),
-        ("motif selection", "rhythmic construction", "selective emphasis"),
-        ("unselected detail", "accidental uniformity"),
-        ("expressive coherence", "intentional variation"),
-        ("What is the drawing asking the viewer to notice?", "Do the marks support that choice?")
+        "mode-free-draw-v2", "free_draw",
+        (
+            "declared subject or motif",
+            "composition, gesture, and focal hierarchy",
+            "shape language, spatial rhythm, and mark intent",
+            "preserved and transformed constraints when reference authority exists",
+        ),
+        (
+            "declare concrete goals",
+            "compose dominant and supporting shapes",
+            "build rhythmic gesture and shape relations",
+            "apply selective focal emphasis",
+        ),
+        (
+            "detail unrelated to declared goals",
+            "accidental uniformity",
+            "fabricated reference evidence for imaginative work",
+        ),
+        (
+            "coherent composition, focal hierarchy, and shape language",
+            "intentional variation under the declared authority",
+        ),
+        (
+            "What is the drawing asking the viewer to notice?",
+            "Do composition, gesture, and shape language support that choice?",
+            "Are observed or hybrid constraints preserved or transformed as declared?",
+        ),
     ),
 }
 

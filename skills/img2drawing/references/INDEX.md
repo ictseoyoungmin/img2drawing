@@ -32,6 +32,7 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `modes/croquis.md`
 - `modes/figure-drawing.md`
 - `modes/tonal-study.md`
+- `modes/line-study.md`
 - `modes/free-draw.md`
 
 Each mode provides only a purpose, observation priorities, suggested grammar,

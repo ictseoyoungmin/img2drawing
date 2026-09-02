@@ -2,15 +2,15 @@
 
 ## Purpose
 
-Read pose energy, balance, major masses, silhouette, and line economy in a short
-time. Retain face, value, and surface detail only when the request or a residual
-requires them.
+Read gesture direction and reversal, support-side balance, head/ribcage/pelvis mass
+relation, stance, overlap, major negative space, and line economy. Retain face, value,
+and surface detail only when the request or a material residual requires them.
 
 ## Suggested grammar
 
 ```text
-whole pose → line of action → head/ribcage/pelvis → balance → limbs/feet
-→ inspect → selective contour
+whole-silhouette read → line of action → head/ribcage/pelvis masses
+→ weight-bearing limb chain → overlap/negative space → selective contour
 ```
 
 This is not a runtime stage. If a later inspection disproves an earlier hypothesis,
@@ -19,5 +19,6 @@ explain the pose.
 
 ## Completion questions
 
-Does a material mismatch remain in pose, stance, major silhouette, limb relation,
-ground contact, or prop/body relation?
+Does gesture and weight-bearing stance read at a glance? Do the largest masses, overlap,
+negative spaces, ground contact, and prop/body relation agree? Can any line be removed
+without weakening the pose?

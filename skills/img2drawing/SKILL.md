@@ -45,7 +45,7 @@ deprecated, non-advertised compatibility shims—not a normal import route.
 Use `DrawingIntent` when the request names a reference relationship, drawing mode,
 finish emphasis, or style profile. Its four fields are orthogonal data selections:
 `reference_mode` (`observed`, `imaginative`, `hybrid`), `drawing_mode` (`croquis`,
-`figure_drawing`, `tonal_study`, `free_draw`), `finish_intent` (`pose`, `subject`,
+`figure_drawing`, `tonal_study`, `line_study`, `free_draw`), `finish_intent` (`pose`, `subject`,
 `form_light`, `expressive`), and `style_profile` (the built-ins `pencil_loose`,
 `graphite_academic`, or an explicit `custom:<identifier>`). No field is a stage, cursor,
 pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
@@ -230,8 +230,8 @@ observation and reason, then render and inspect the mutated canvas afresh. Read
 ## Required reading route
 
 1. Read this file and [`references/INDEX.md`](references/INDEX.md).
-2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, or
-   free-draw; select a style guide only when the request calls for one.
+2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, line
+   study, or free-draw; select a style guide only when the request calls for one.
 3. Read `references/reference-authority.md`, then
    `references/observation/visual-observation.md` for observed
    subjects, and

@@ -38,11 +38,13 @@ replayable.
 ## Status
 
 Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free vNext product surface is closed
-through B13: one `DrawingSession` now carries observation/construction, bounded inspection,
+through B14: one `DrawingSession` now carries observation/construction, bounded inspection,
 residual correction, orthogonal `DrawingIntent`, finish-specific authoring guidance,
 intent/state/inspection-bound completion provenance, and immutable observed, imaginative,
 or hybrid reference authority. Subjectless sessions use drawing-only evidence rather than
 fabricating a reference image, overlay, registration, or subject-space measurement.
+Croquis, figure drawing, tonal study, line study, and free-draw resolve to distinct
+plain-data guidance while sharing that same session/history/inspection/output core.
 Canonical vNext PNG, cursor replay, and GIF export share one persisted `RenderProfile`
 and renderer; the latest replay frame is checked against an independently rendered final.
 Legacy R23 review and recovery remain available for compatibility and historical

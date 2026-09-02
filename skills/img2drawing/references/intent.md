@@ -31,7 +31,7 @@ inspection, persistence, and error behavior.
 The allowed values are:
 
 - `reference_mode`: `observed`, `imaginative`, `hybrid`
-- `drawing_mode`: `croquis`, `figure_drawing`, `tonal_study`, `free_draw`
+- `drawing_mode`: `croquis`, `figure_drawing`, `tonal_study`, `line_study`, `free_draw`
 - `finish_intent`: `pose`, `subject`, `form_light`, `expressive`
 - `style_profile`: `pencil_loose`, `graphite_academic`, or an explicit
   `custom:<identifier>` for prose that the Agent structures itself
@@ -56,6 +56,13 @@ would silently redefine the comparison authority for existing evidence and resid
 The guide contains no phase count, stage, cursor, advance/close operation, or visual
 verdict. If inspection contradicts the current hypothesis, select a different intent or
 read the guide again; nothing needs to be reopened or advanced.
+
+The retained modes are intentionally small and distinct: croquis prioritizes gesture and
+line economy; figure drawing carries connected anatomy, garment, contact, and requested
+identity; tonal study authors value families, form turns, and edges; line study carries
+shape and overlap through economical relational lines; and free-draw follows explicit
+composition, focal, gesture, and shape-language goals under any reference authority.
+`session.mode_guide` is a derived lookup of the current intent, not persisted mode state.
 
 ## StyleGuide
 
