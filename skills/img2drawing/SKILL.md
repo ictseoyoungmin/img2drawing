@@ -219,8 +219,8 @@ do not call a different renderer or change supersampling/material kwargs per out
 Replay always includes cursor 0 and latest. A value region is one authored replay action,
 not one frame per generated contact. Read
 [`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md)
-before exporting. A pre-B11 checkpoint must call `migrate_render_profile()` explicitly
-before canonical output.
+before exporting. A checkpoint created before `RenderProfile` was persisted must call
+`migrate_render_profile()` explicitly before canonical output.
 
 Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
 material feature, not a reason to revive or silently emulate the removed renderer.
