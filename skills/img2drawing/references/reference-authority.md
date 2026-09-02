@@ -21,7 +21,7 @@ session = DrawingSession.create(
 ```
 
 The session derives `ReferenceAuthority.observed(subject_sha256)`. A caller may provide an
-explicit observed authority, but its hash must match the readable subject. A pre-B13
+explicit observed authority, but its hash must match the readable subject. An older
 observed checkpoint with no authority record resumes by deriving the same authority;
 drawing/action hashes do not change.
 
@@ -105,7 +105,7 @@ or a preserved feature from being silently discarded.
 
 The checkpoint stores the complete authority plus its digest. Every new inspection binds
 that digest. Resume rejects mismatched authority/subject/intent or tampered authority
-payloads. A pre-B13 hybrid checkpoint that only scaffolded the intent may resume only when
+payloads. An older hybrid checkpoint that recorded only the intent may resume only when
 the caller supplies an explicit matching `reference_authority`; the runtime does not infer
 preserved or transformed constraints.
 
