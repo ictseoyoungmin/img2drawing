@@ -26,7 +26,7 @@ code or a second workflow.
 ## Sealed input contract
 
 The machine-readable vNext baseline is
-`skills/img2drawing/CONTRACT_FREEZE.json`. Start each case from
+`dev/release/vnext/CONTRACT_FREEZE.json`. Start each case from
 `dev/dogfood/vnext-template/`, validate the worker input and post-run evaluator brief
 against their `dev/schemas/vnext_dogfood_*.schema.json` contracts, and bind the final
 input digest before dispatch. Do not edit a sealed input to accommodate a worker.
@@ -296,9 +296,10 @@ retain as explicit time-bounded compatibility adapter
 historical Git only
 ```
 
-Candidates include stage runtime, stage review manifests, playbooks, Pn references,
-stale exports/tests/examples, and obsolete package data. Do not delete the frozen Git
-baseline or historical evidence.
+Candidates include stage runtime, stage review manifests, Pn references, stale
+exports/tests/examples, and obsolete package data. Historical stage/playbook/reference
+documents have already been removed from the deployable skill surface; Git history remains
+the archival source for those documents.
 
 After removal, verify:
 
