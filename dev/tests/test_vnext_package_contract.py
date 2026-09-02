@@ -29,18 +29,49 @@ def test_release_candidate_version_and_root_api_are_canonical():
     assert "DrawingRun" not in img2drawing.__all__
 
 
-def test_manifest_selects_current_docs_examples_and_excludes_answer_routes():
+def test_manifest_selects_current_skill_surface_and_excludes_control_plane():
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
     for required in (
-        "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
-        "CONTRACT_FREEZE.json",
-        "references/reference-authority.md", "examples/observed", "examples/subjectless",
+        "LICENSE",
+        "README.md",
+        "SKILL.md",
+        "references/INDEX.md",
+        "references/reference-authority.md",
+        "examples/observed",
+        "examples/subjectless",
     ):
         assert required in manifest
-    for forbidden in ("dev/", "dogfood", "p1_target.png", "references/stages"):
+
+    for forbidden in (
+        "dev/",
+        "dogfood",
+        "NOTICE",
+        "SUPPORT.md",
+        "MIGRATION.md",
+        "RELEASE.md",
+        "FREEZE.md",
+        "CONTRACT_FREEZE.json",
+        "references/stages",
+        "playbooks",
+        "full_body_croquis",
+    ):
         assert forbidden not in manifest
+
+    for removed in (
+        "NOTICE",
+        "NOTICE.md",
+        "SUPPORT.md",
+        "MIGRATION.md",
+        "RELEASE.md",
+        "FREEZE.md",
+        "CONTRACT_FREEZE.json",
+        "playbooks",
+        "references/stages",
+        "examples/full_body_croquis",
+    ):
+        assert not (PACKAGE / removed).exists()
+
     assert not (PACKAGE / "references" / "review" / "reference-authority.md").exists()
-    assert not (PACKAGE / "examples" / "full_body_croquis" / "p1_target.png").exists()
 
 
 def test_selected_examples_complete_observed_and_subjectless_mechanics(tmp_path: Path):
