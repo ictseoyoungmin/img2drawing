@@ -268,6 +268,17 @@ class CanvasHistory:
                 return stroke
         raise ValueError(f"missing stroke: {stroke_id}")
 
+    def _stroke_identity_exists(self, stroke_id: str) -> bool:
+        requested = str(stroke_id)
+        for item in self.actions[: self.cursor]:
+            if item.action == "stroke.add":
+                if str((item.payload.get("stroke") or {}).get("stroke_id")) == requested:
+                    return True
+            elif item.action == "stroke.replace":
+                if str((item.payload.get("stroke") or {}).get("stroke_id")) == requested:
+                    return True
+        return False
+
     def current_fill_region(self, fill_id: str) -> FillRegion:
         """Return the latest authored definition for an existing fill identity."""
 
@@ -288,6 +299,8 @@ class CanvasHistory:
     def add_stroke(self, stroke: Stroke, *, stroke_id: str | None = None, provenance: dict[str, Any] | None = None) -> str:
         s = deepcopy(stroke).cleaned()
         sid = stroke_id or s.stroke_id or f"h{self._next_id:04d}"
+        if self._stroke_identity_exists(sid):
+            raise ValueError(f"stroke_id already exists: {sid}")
         self._next_id += 1
         s.stroke_id = sid
         self._append(
@@ -366,6 +379,8 @@ class CanvasHistory:
         self._current_stroke(stroke_id)
         s = deepcopy(replacement).cleaned()
         sid = new_stroke_id or s.stroke_id or f"h{self._next_id:04d}"
+        if sid != stroke_id and self._stroke_identity_exists(sid):
+            raise ValueError(f"replacement stroke_id already exists: {sid}")
         self._next_id += 1
         s.stroke_id = sid
         self._append(
@@ -427,6 +442,7 @@ class CanvasHistory:
                   stage: str = "A2_eraser_history", provenance: dict[str, Any] | None = None) -> None:
         if eraser.mode != "erase":
             raise ValueError("soft_lift requires an erase-mode tool")
+        self._current_stroke(stroke_id)
         k = eraser.erase_strength if strength is None else float(strength)
         if not 0.0 <= k <= 1.0:
             raise ValueError("erase strength must be in [0,1]")
@@ -489,6 +505,7 @@ class CanvasHistory:
                     provenance: dict[str, Any] | None = None) -> None:
         if eraser.mode != "erase":
             raise ValueError("hard_delete requires an erase-mode tool")
+        self._current_stroke(stroke_id)
         ts = eraser.to_dict()
         self._append(
             "stroke.delete",

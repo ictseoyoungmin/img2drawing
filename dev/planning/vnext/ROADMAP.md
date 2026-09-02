@@ -44,8 +44,8 @@ observe/read subject or declare intent
 | B13 | CLOSED | reference authority and subjectless runtime | B12 |
 | B14 | CLOSED | drawing-mode capability completion | B13 |
 | B15 | CLOSED | style authoring completion | B14 |
-| B16 | ACTIVE | Agent authoring/editing ergonomics | B15 |
-| B17 | SKELETON | package/public API/release-candidate truth | B16 |
+| B16 | CLOSED | Agent authoring/editing ergonomics | B15 |
+| B17 | ACTIVE | package/public API/release-candidate truth | B16 |
 | B18 | SKELETON | dogfood-ready system freeze | B17 |
 
 ```text

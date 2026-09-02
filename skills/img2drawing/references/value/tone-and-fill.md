@@ -45,14 +45,11 @@ fill_id = session.fill_region(
 ## If the value is wrong, revise the region itself
 
 When a fresh inspection disproves the previous value premise, do not stack another
-fill over the same area. Use `replace_fill_region()` to append a new definition
+fill over the same area. Use `session.replace_fill_region()` to append a new definition
 while preserving the existing fill identity.
 
 ```python
-from img2drawing import replace_fill_region
-
-correction_action_id = replace_fill_region(
-    session,
+correction_action_id = session.replace_fill_region(
     fill_id,
     value=90,
     reason="fresh inspection shows the jacket is darker than the first estimate",
@@ -60,7 +57,9 @@ correction_action_id = replace_fill_region(
 )
 ```
 
-`replace_fill_region()` returns a new `action_id`. When recording the residual
+`session.replace_fill_region()` returns a new `action_id`. The historical root function
+`replace_fill_region(session, ...)` delegates to this method for compatibility and is not
+a second implementation. When recording the residual
 correction, pass that value directly to
 `record_correction(..., action_ids=[correction_action_id])`. Do not enumerate
 hundreds of generated hatch strokes as correction actions.
@@ -89,7 +88,7 @@ tone to pass through.
 
 Three or four value families are sufficient in one drawing. Use `fill_region`
 once for each family; do not build value by repeatedly layering the same area.
-Control a region's tonal density with `value` alone. Use `replace_fill_region()`
+Control a region's tonal density with `value` alone. Use `session.replace_fill_region()`
 when revising the judgment behind an existing region.
 
 ## Do not

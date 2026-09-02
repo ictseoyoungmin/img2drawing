@@ -28,6 +28,14 @@ from .output import (
     ReplayExport,
 )
 from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
+from .editing import (
+    AUTHORED_ELEMENT_SCHEMA,
+    AUTHORING_SUMMARY_SCHEMA,
+    ELEMENT_STATUSES,
+    ELEMENT_TYPES,
+    AuthoredElement,
+    AuthoringSummary,
+)
 from .intent import (
     COMPATIBILITY_INTENTS,
     DRAWING_MODES,
@@ -75,6 +83,12 @@ __all__ = [
     "EvidencePolicy",
     "EvidenceReadRecord",
     "EvidenceTelemetry",
+    "AUTHORED_ELEMENT_SCHEMA",
+    "AUTHORING_SUMMARY_SCHEMA",
+    "ELEMENT_STATUSES",
+    "ELEMENT_TYPES",
+    "AuthoredElement",
+    "AuthoringSummary",
     "COMPATIBILITY_INTENTS",
     "DRAWING_MODES",
     "FINISH_INTENTS",

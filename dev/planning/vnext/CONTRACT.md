@@ -72,7 +72,8 @@ not a runtime cursor or gate.
   remain legible without tone. A value primitive cannot replace missing structure.
 - Broad value is one authored region decision such as `fill_region()`, not hundreds of
   persisted generated microstrokes.
-- A disproved value premise is revised append-only through `replace_fill_region()` and
+- A disproved value premise is revised append-only through
+  `DrawingSession.replace_fill_region()` and
   correction provenance.
 
 ## 4. Observation and measurement authority

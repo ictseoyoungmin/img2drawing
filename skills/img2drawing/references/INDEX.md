@@ -21,6 +21,8 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `review/completion.md`: bind the Agent's finish decision to current intent/state/evidence
 - `output/render-profile-and-replay.md`: canonical PNG, cursor replay, GIF, parity, migration
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
+- `review/authored-element-navigation.md`: derived current/superseded stroke/fill lookup,
+  bounded context, and one canonical edit surface
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
 - `styles/authoring-styles.md`: preset, single-base override, structured custom style,
   precedence, and explicit mid-session edits

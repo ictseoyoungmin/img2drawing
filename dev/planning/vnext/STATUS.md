@@ -3,12 +3,12 @@
 Updated: 2026-09-02
 
 ```text
-SYSTEM:   stage-free product surface closed through B15, including B01-R1 and B07-R1 hardening
-ACTIVE:   B16 Agent authoring and editing ergonomics
-NEXT:     B17 Package, public API, and release-candidate truth
-SKELETON: B17–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B16, including B01-R1 and B07-R1 hardening
+ACTIVE:   B17 Package, public API, and release-candidate truth
+NEXT:     B18 Dogfood-ready system freeze
+SKELETON: B18 dogfood-ready system freeze
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,24 +45,24 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B16
+## Active slice — B17
 
-B16 is the sole production WIP.
+B17 is the sole production WIP.
 
-Goal: make the existing append-only drawing/edit surface practical to navigate and repair
-in long correction loops without a second ownership lifecycle or edit history.
+Goal: make the source tree, built artifacts, clean-installed behavior, public/support
+matrix, docs, examples, version metadata, migration surface, and CI tell the same
+release-candidate truth.
 
-B16 inherits these closed constraints:
+B17 inherits these closed constraints:
 
-- reuse `part`, `role`, observation/correction provenance, action ids, stroke ids, fill
-  ids, and existing supersession records as the responsibility vocabulary;
-- queries and summaries are derived read models, never a second source of truth;
-- local helpers append ordinary replayable mutations through the same transaction path;
-- stroke and value-region revisions need consistent current/superseded lookup semantics;
-  and
-- prefer one authored action per artistic decision rather than persisted microstrokes.
+- normal docs/imports/examples lead to canonical vNext `DrawingSession`, never R23/Pn;
+- wheel/sdist contain only justified runtime modules/data/docs/examples;
+- clean-install smoke covers observed and subjectless mechanical workflows through
+  create/resume/inspect/correct/finish/replay/output;
+- public API, package version, built metadata, support/migration docs, and CI agree; and
+- B12 legacy compatibility remains explicit and isolated rather than physically removed.
 
-B16 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B17 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -87,6 +87,7 @@ those claims belong to D01–D06 after B18.
 | B13 | CLOSED | immutable observed/imaginative/hybrid authority, subjectless drawing-only inspection, shared correction/output |
 | B14 | CLOSED | five distinct portable mode guides, authored tonal value, free-draw across all authorities, one shared core |
 | B15 | CLOSED | three style presets, one-base overrides, structured custom guidance, explicit conflict/provenance semantics |
+| B16 | CLOSED | derived authored-element lookup, replacement resolution, bounded summaries, orphan-safe unified edit surface |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -112,7 +113,8 @@ geometry authority.
 
 - broad tone/value is one authored `fill_region()` decision, not hundreds of hand/machine
   actions persisted as artistic decisions;
-- a disproved value premise is revised through append-only `replace_fill_region()` and can
+- a disproved value premise is revised through append-only
+  `DrawingSession.replace_fill_region()` and can
   bind directly to B06 correction provenance;
 - renderer deposition calibration happens outside the drawing session;
 - `ReservedLight` may preserve observed light inside a correct form but may not invent
@@ -147,8 +149,8 @@ B12  Legacy runtime / persistence isolation              CLOSED
 B13  Reference authority + subjectless runtime           CLOSED
 B14  Drawing-mode capability completion                  CLOSED
 B15  Style authoring completion                          CLOSED
-B16  Agent authoring / editing ergonomics                ACTIVE
-B17  Package / public API / release-candidate truth      SKELETON
+B16  Agent authoring / editing ergonomics                CLOSED
+B17  Package / public API / release-candidate truth      ACTIVE
 B18  Dogfood-ready system freeze                         SKELETON
 ```
 
@@ -198,3 +200,5 @@ Dogfood defects always route back to the responsible implementation slice. Examp
 - Three retained style presets, single-base overrides, and complete structured custom
   guidance affect authored policy only; style selection never mutates geometry or the
   canonical RenderProfile.
+- Current/superseded/deleted stroke and fill responsibility is derived from authoritative
+  history on demand; bounded summaries are cursor/state-bound and never checkpointed.

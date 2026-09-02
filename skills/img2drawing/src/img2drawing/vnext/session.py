@@ -24,7 +24,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from PIL import Image
 
 from ..core.action import AgentDrawingSession, DrawingAction, sha256_file
-from ..core.ir import StrokeIR
+from ..core.ir import Stroke, StrokeIR
 from ..core.session import TOOLSET_ID, sha256_obj
 from ..core.fill import FillRegion, ReservedLight
 from ..render.tone_scale import resolve_tone
@@ -38,6 +38,13 @@ from .evidence import (
     EvidencePolicy,
     EvidenceReadRecord,
     EvidenceTelemetry,
+)
+from .editing import (
+    AuthoredElement,
+    AuthoringSummary,
+    authored_elements as _derived_authored_elements,
+    filter_elements as _filter_authored_elements,
+    resolve_current_element as _resolve_current_element,
 )
 from .intent import DrawingIntent, IntentChangeRecord, ModeGuide, resolve_mode_guide
 from .reference_authority import (
@@ -875,6 +882,116 @@ class DrawingSession:
         with self._lock:
             return drawing_state_hash(self._snapshot())
 
+    def authored_elements(
+        self,
+        *,
+        element_type: str | None = None,
+        status: str | None = "current",
+        part: str | None = None,
+        role: str | None = None,
+        action_id: str | None = None,
+        observation_id: str | None = None,
+    ) -> tuple[AuthoredElement, ...]:
+        """Query a fresh identity/provenance index derived from authoritative history."""
+
+        with self._lock:
+            elements = _derived_authored_elements(self._agent.history)
+            return _filter_authored_elements(
+                elements,
+                element_type=element_type,
+                status=status,
+                part=part,
+                role=role,
+                action_id=action_id,
+                observation_id=observation_id,
+            )
+
+    def resolve_authored_element(
+        self,
+        element_id: str,
+        *,
+        element_type: str | None = None,
+    ) -> AuthoredElement | None:
+        """Resolve replacement ancestry to a current element, or ``None`` if deleted."""
+
+        with self._lock:
+            return _resolve_current_element(
+                _derived_authored_elements(self._agent.history),
+                element_id,
+                element_type=element_type,
+            )
+
+    def current_stroke(self, stroke_id: str) -> Stroke:
+        """Return a detached current stroke, following explicit replacement ancestry."""
+
+        with self._lock:
+            element = self.resolve_authored_element(stroke_id, element_type="stroke")
+            if element is None:
+                raise ValueError(f"authored stroke is deleted: {stroke_id}")
+            for stroke in self._snapshot().strokes:
+                if stroke.stroke_id == element.element_id:
+                    return deepcopy(stroke)
+            raise ValueError(f"current authored stroke is missing from replay state: {element.element_id}")
+
+    def current_fill_region(self, fill_id: str) -> FillRegion:
+        """Return the latest authored definition for one stable fill identity."""
+
+        with self._lock:
+            element = self.resolve_authored_element(fill_id, element_type="fill")
+            if element is None:
+                raise ValueError(f"authored fill is deleted: {fill_id}")
+            return self._agent.history.current_fill_region(element.element_id)
+
+    def authoring_summary(
+        self,
+        *,
+        limit: int = 12,
+        part: str | None = None,
+        role: str | None = None,
+    ) -> AuthoringSummary:
+        """Return bounded current context tied to the current cursor and state digest."""
+
+        selected_limit = int(limit)
+        if selected_limit < 0 or selected_limit > 100:
+            raise ValueError("authoring summary limit must be in [0,100]")
+        with self._lock:
+            all_elements = _derived_authored_elements(self._agent.history)
+            matching = _filter_authored_elements(
+                all_elements,
+                status="current",
+                part=part,
+                role=role,
+            )
+            open_residuals = tuple(
+                str(raw["residual_id"])
+                for raw in self._residuals
+                if str(raw.get("status", "open")) == "open"
+            )
+            return AuthoringSummary(
+                history_cursor=self.history_cursor,
+                drawing_state_hash=drawing_state_hash(self._snapshot()),
+                current_strokes=sum(
+                    element.element_type == "stroke" and element.status == "current"
+                    for element in all_elements
+                ),
+                current_fills=sum(
+                    element.element_type == "fill" and element.status == "current"
+                    for element in all_elements
+                ),
+                superseded_strokes=sum(
+                    element.element_type == "stroke" and element.status == "superseded"
+                    for element in all_elements
+                ),
+                deleted_strokes=sum(
+                    element.element_type == "stroke" and element.status == "deleted"
+                    for element in all_elements
+                ),
+                open_residual_ids=open_residuals,
+                elements=matching[:selected_limit],
+                total_matching_elements=len(matching),
+                truncated=len(matching) > selected_limit,
+            )
+
     def _checkpoint_payload(self) -> dict[str, Any]:
         self._assert_subject_current()
         snapshot = self._snapshot()
@@ -1173,6 +1290,80 @@ class DrawingSession:
         )
         self._commit(action)
         return region.fill_id
+
+    def replace_fill_region(
+        self,
+        fill_id: str,
+        *,
+        value: float,
+        reason: str,
+        polygon: Sequence[Sequence[float]] | None = None,
+        part: str | None = None,
+        angle: float | None = None,
+        observation_id: str | None = None,
+        source_observation: str | None = None,
+        reserved: Sequence[Any] | None = None,
+        spacing: float | None = None,
+        role: str | None = None,
+        layer: int | None = None,
+        min_length: float | None = None,
+        action_id: str | None = None,
+        tool: str = "form_pencil",
+        metadata: Mapping[str, Any] | None = None,
+    ) -> str:
+        """Append one fill revision while preserving the authored fill identity."""
+
+        target = str(fill_id).strip()
+        if not target:
+            raise ValueError("fill_id must be non-empty")
+        normalized_reason = str(reason).strip()
+        if not normalized_reason:
+            raise ValueError("replace_fill_region requires a correction reason")
+        current = self.current_fill_region(target)
+        recipe = resolve_tone(value)
+        if reserved is None:
+            lights = current.reserved
+        else:
+            lights = tuple(
+                light if isinstance(light, ReservedLight) else ReservedLight(**dict(light))
+                for light in reserved
+            )
+        points = current.polygon if polygon is None else tuple(
+            (float(x), float(y)) for x, y in polygon
+        )
+        region = FillRegion(
+            fill_id=target,
+            polygon=points,
+            angle=current.angle if angle is None else float(angle),
+            spacing=float(recipe.spacing if spacing is None else spacing),
+            part=current.part if part is None else str(part),
+            role=current.role if role is None else str(role),
+            reserved=lights,
+            layer=current.layer if layer is None else int(layer),
+            min_length=current.min_length if min_length is None else float(min_length),
+        )
+        oid, source, _ = self._provenance(
+            observation_id=observation_id,
+            source_observation=source_observation,
+            reason=normalized_reason,
+        )
+        action = DrawingAction(
+            action_id=_action_id(self._agent.history, action_id),
+            kind="replace_fill_region",
+            stage=_COMPAT_STAGE,
+            role=region.role,
+            part=region.part,
+            layer=region.layer,
+            tool=_tool_payload(tool, recipe.grade, recipe.tool_overrides()),
+            observation_id=oid,
+            source_observation=source,
+            reason=normalized_reason,
+            revision_of=target,
+            region=region.to_dict(),
+            metadata={**(dict(metadata) if metadata else {}), "tone": recipe.to_dict()},
+        )
+        self._commit(action)
+        return action.action_id
 
     def draw_many(self, strokes: Iterable[Any], **defaults: Any) -> list[str | None]:
         actions: list[DrawingAction] = []

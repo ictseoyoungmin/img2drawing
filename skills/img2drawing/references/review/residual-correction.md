@@ -92,3 +92,8 @@ session.resolve_residual(
 residual. `decision="keep"` (or `resolve_residual()`) closes it only when the current
 after inspection is fresh and its drawing digest differs from the before snapshot. This
 is correction memory, not a numerical quality gate or an automatic priority selector.
+
+For long histories, locate current responsibility with `session.authored_elements()` and
+follow replacement ancestry with `session.resolve_authored_element()` before editing.
+`session.authoring_summary()` provides a bounded cursor/state-bound view without becoming
+a second history. See [`authored-element-navigation.md`](authored-element-navigation.md).
