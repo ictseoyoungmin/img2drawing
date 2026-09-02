@@ -16,7 +16,16 @@ docs to a specific revision.
 The current release is tracked in `src/img2drawing/_version.py`
 (`__version__`, `RELEASE_REVISION`, `RELEASE_SLICE`), which `pyproject.toml`
 reads from dynamically. That module is the single source of truth for "what
-version is this" — nothing else should hardcode it.
+version is this" at build/runtime; release notes may record the version they describe.
+
+## 0.6.0rc1 — vNext package and public API candidate
+
+Aligned the stage-free source, wheel/sdist inventory, installed API, support and migration
+documents, canonical observed/subjectless mechanical examples, and CI. The wheel ships
+only runtime/data/license material; the sdist adds selected current Agent guidance and
+examples. Removed an unused answer target and a duplicate stage-era authority document.
+R23 remains an explicit, frozen compatibility boundary rather than the current package
+identity. This candidate proves integration mechanics, not visual quality.
 
 ## R23 — Material-integrated visual quality
 

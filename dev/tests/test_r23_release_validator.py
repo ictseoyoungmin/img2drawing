@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_r23_release_validator_accepts_stage_free_canonical_skill() -> None:
+def test_r23_release_validator_checks_frozen_manifest_under_current_vnext() -> None:
     env = dict(os.environ)
     env["PYTHONPATH"] = str(ROOT / "skills/img2drawing/src")
     result = subprocess.run(
@@ -20,4 +20,4 @@ def test_r23_release_validator_accepts_stage_free_canonical_skill() -> None:
         text=True,
     )
     assert result.returncode == 0, result.stderr
-    assert "R23_RELEASE_VALIDATION_PASS 0.5.2.dev23" in result.stdout
+    assert "R23_COMPATIBILITY_VALIDATION_PASS 0.5.2.dev23 under 0.6.0rc1" in result.stdout

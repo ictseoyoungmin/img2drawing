@@ -3,12 +3,12 @@
 Updated: 2026-09-02
 
 ```text
-SYSTEM:   stage-free product surface closed through B16, including B01-R1 and B07-R1 hardening
-ACTIVE:   B17 Package, public API, and release-candidate truth
-NEXT:     B18 Dogfood-ready system freeze
-SKELETON: B18 dogfood-ready system freeze
+SYSTEM:   stage-free product surface and RC integration closed through B17
+ACTIVE:   B18 Dogfood-ready system freeze
+NEXT:     D01 after B18 closes
+SKELETON: none in the B implementation phase
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,26 +45,25 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B17
+## Active slice — B18
 
-B17 is the sole production WIP.
+B18 is the sole production WIP.
 
-Goal: make the source tree, built artifacts, clean-installed behavior, public/support
-matrix, docs, examples, version metadata, migration surface, and CI tell the same
-release-candidate truth.
+Goal: freeze the completed implementation contract, audit cross-slice consistency and
+known TODOs, and prepare sealed dogfood inputs without running fresh dogfood.
 
-B17 inherits these closed constraints:
+B18 inherits these closed constraints:
 
 - normal docs/imports/examples lead to canonical vNext `DrawingSession`, never R23/Pn;
-- wheel/sdist contain only justified runtime modules/data/docs/examples;
+- B17 wheel/sdist contain only justified runtime modules/data/docs/examples;
 - clean-install smoke covers observed and subjectless mechanical workflows through
   create/resume/inspect/correct/finish/replay/output;
 - public API, package version, built metadata, support/migration docs, and CI agree; and
 - B12 legacy compatibility remains explicit and isolated rather than physically removed.
 
-B17 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
-must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
-those claims belong to D01–D06 after B18.
+B18 may rerun deterministic/synthetic fixtures and preserved regression. It must not
+claim general visual quality, unseen-subject robustness, or cross-agent proof; those
+claims belong to D01–D06 after B18.
 
 ## Closed foundation truth
 
@@ -88,6 +87,7 @@ those claims belong to D01–D06 after B18.
 | B14 | CLOSED | five distinct portable mode guides, authored tonal value, free-draw across all authorities, one shared core |
 | B15 | CLOSED | three style presets, one-base overrides, structured custom guidance, explicit conflict/provenance semantics |
 | B16 | CLOSED | derived authored-element lookup, replacement resolution, bounded summaries, orphan-safe unified edit surface |
+| B17 | CLOSED | lean wheel/sdist policy, `0.6.0rc1` API/support truth, clean-installed observed/subjectless examples, package/link/license/security CI audit |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -150,8 +150,8 @@ B13  Reference authority + subjectless runtime           CLOSED
 B14  Drawing-mode capability completion                  CLOSED
 B15  Style authoring completion                          CLOSED
 B16  Agent authoring / editing ergonomics                CLOSED
-B17  Package / public API / release-candidate truth      ACTIVE
-B18  Dogfood-ready system freeze                         SKELETON
+B17  Package / public API / release-candidate truth      CLOSED
+B18  Dogfood-ready system freeze                         ACTIVE
 ```
 
 Each slice has its execution contract in `slices/B09.md` … `slices/B18.md`.

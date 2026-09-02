@@ -1,6 +1,6 @@
 # img2drawing vNext full roadmap
 
-Updated: 2026-09-01
+Updated: 2026-09-02
 Workflow: Bottleneck · Production WIP Limit = 1
 
 This roadmap reflects current HEAD and user direction. The governing change is that no
@@ -45,8 +45,8 @@ observe/read subject or declare intent
 | B14 | CLOSED | drawing-mode capability completion | B13 |
 | B15 | CLOSED | style authoring completion | B14 |
 | B16 | CLOSED | Agent authoring/editing ergonomics | B15 |
-| B17 | ACTIVE | package/public API/release-candidate truth | B16 |
-| B18 | SKELETON | dogfood-ready system freeze | B17 |
+| B17 | CLOSED | package/public API/release-candidate truth | B16 |
+| B18 | ACTIVE | dogfood-ready system freeze | B17 |
 
 ```text
 B00…B08 CLOSED

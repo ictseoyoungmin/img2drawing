@@ -1,0 +1,32 @@
+include LICENSE
+include NOTICE
+include README.md
+include RELEASE.md
+include SUPPORT.md
+include MIGRATION.md
+include SKILL.md
+include references/INDEX.md
+include references/intent.md
+include references/legacy-r23.md
+include references/reference-authority.md
+recursive-include references/construction *.md
+recursive-include references/figure *.md
+recursive-include references/finish *.md
+recursive-include references/modes *.md
+recursive-include references/observation *.md
+recursive-include references/output *.md
+recursive-include references/pencil *.md
+recursive-include references/resolution *.md
+recursive-include references/styles *.md
+recursive-include references/value *.md
+include references/review/authored-element-navigation.md
+include references/review/completion.md
+include references/review/correction-loop.md
+include references/review/residual-correction.md
+include references/review/stroke-retirement.md
+include examples/mechanical_workflows.py
+recursive-include examples/observed *.md *.py
+recursive-include examples/subjectless *.md *.py
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store

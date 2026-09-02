@@ -4,27 +4,16 @@ An Agent Skill that makes Claude (or any Codex-style coding agent with skill sup
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating
 an image.
 
-Given one reference photo, the agent reads the pose and authors an ordered whole-figure
-construction (line of action → head/ribcage/pelvis masses → balance/plumb → joints/limbs),
-then renders and inspects the actual drawing before adding detail. The legacy five-stage
-pipeline remains available for compatibility, but is not the default vNext workflow.
+With a readable reference, the agent observes the pose and authors explicit whole-figure
+relationships before refining contour, value, and identity. Without a reference, it uses
+declared imaginative goals and drawing-only evidence—never a fabricated subject or
+overlay. Both routes render and inspect the current drawing before correction.
 
-![Sniper Girl croquis timelapse](showcase/entries/croquis-sniper-girl-opus5-r22/croquis_timelapse.gif)
-
-- **Model:** Claude Opus 5
-- **Skill:** img2drawing `0.5.2.dev23` · release slice `R23`
-- **Prompting:** single initial prompt
-
-This is the result of an autonomous run started from a single user prompt. The work does
-not end with the finished drawing: the same or another agent can continue editing it using
-the JSON action log and checkpoint. Because `checkpoint.json` contains more than 43,000
-lines, agents should query only the required stage/action/reopen ranges instead of reading
-the entire file.
-
-[Detailed showcase entry](showcase/entries/croquis-sniper-girl-opus5-r22/README.md) ·
-[Full showcase](showcase/README.md)
-
-![img2drawing subject-only P1→P5 progression](dev/dogfood/target-subject/img2drawing-r21-target-progression.png)
+The ordered JSON action log and checkpoint keep every revision inspectable, resumable,
+and replayable. See the deterministic [observed](skills/img2drawing/examples/observed/README.md)
+and [subjectless](skills/img2drawing/examples/subjectless/README.md) integration examples.
+They demonstrate mechanics, not general artistic quality. Curated historical results live
+in the [showcase](showcase/README.md).
 
 ## Why this exists
 
@@ -37,8 +26,8 @@ replayable.
 
 ## Status
 
-Pre-1.0 (`0.5.2.dev23`, release slice R23). The stage-free vNext product surface is closed
-through B16: one `DrawingSession` now carries observation/construction, bounded inspection,
+Pre-1.0 release candidate (`0.6.0rc1`, release slice B17). The stage-free vNext product
+surface and package integration are closed through B17: one `DrawingSession` carries observation/construction, bounded inspection,
 residual correction, orthogonal `DrawingIntent`, finish-specific authoring guidance,
 intent/state/inspection-bound completion provenance, and immutable observed, imaginative,
 or hybrid reference authority. Subjectless sessions use drawing-only evidence rather than
@@ -59,7 +48,7 @@ automatically judge quality. See [`dev/CHANGELOG.md`](dev/CHANGELOG.md) for rele
 ## Requirements
 
 - Python 3.10+
-- `numpy`, `Pillow`, `svgwrite` (installed automatically); `pytest`, `jsonschema` for the
+- `numpy`, `Pillow` (installed automatically); `pytest`, `jsonschema`, `build` for the
   `dev/` test suite (`pip install "skills/img2drawing/[dev]"`)
 - A coding agent that supports Agent Skills (Claude Code, Claude.ai, or similar)
 
@@ -97,15 +86,10 @@ The agent then records a short `PoseObservation`, authors explicit ordered
 `inspect_initial_construct(session, construct)`. The Agent reads `finish` to select
 relational mark/value/edge decisions; the guide does not mutate or close the session. See
 [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for the complete
-autonomous loop and operating spec. `DrawingRun` and the P1–P5 stage loop remain
-available for legacy continuations.
-
-Run the bundled subject-only benchmark (dev-side regression fixture, not part of the
-shipped skill):
-
-```bash
-python dev/benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_smoke.py
-```
+autonomous loop and operating spec. See
+[`skills/img2drawing/SUPPORT.md`](skills/img2drawing/SUPPORT.md) for the public API matrix
+and [`skills/img2drawing/MIGRATION.md`](skills/img2drawing/MIGRATION.md) only when handling
+an old checkpoint.
 
 ## How it's organized
 
@@ -115,8 +99,7 @@ python dev/benchmarks/stage_reconstruction/full_body_croquis_subject_only/run_sm
 │   ├── README.md      # showcase index
 │   └── entries/       # one page and its display assets per result
 ├── skills/
-│   └── img2drawing/   # the deployable skill: SKILL.md, runtime source, references,
-│                       # playbooks, references — everything that ships
+│   └── img2drawing/   # deployable skill, runtime, canonical references, and examples
 ├── dev/                # release builds, dogfood runs, verification evidence,
 │   ├── dogfood/        # persistent reproducible runs and continuation records
 │   ├── tests/          # pytest suite for skills/img2drawing's runtime

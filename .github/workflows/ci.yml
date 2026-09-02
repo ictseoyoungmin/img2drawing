@@ -1,4 +1,4 @@
-name: img2drawing-r23
+name: img2drawing-vnext-rc
 
 on:
   push:
@@ -27,12 +27,12 @@ jobs:
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python -m pytest -q dev/tests
-      - name: Verify material and fresh-worker evidence
+      - name: Verify preserved foundation evidence
         run: |
           python dev/tools/verify_bottleneck_completion.py --check s10
           python dev/tools/verify_bottleneck_completion.py --check s11-s12
           python dev/tools/verify_bottleneck_completion.py --check s14
-      - name: Verify release identity and artifact hashes
-        run: |
-          python dev/release/validate_r23_release.py
-          python dev/tools/verify_bottleneck_completion.py --check s15
+      - name: Verify B17 package, installed API, examples, and supply-chain boundary
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: python dev/tools/verify_vnext_b17.py

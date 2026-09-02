@@ -30,6 +30,8 @@ For new work, `DrawingSession` is the only orchestration authority. `DrawingRun`
 Enter them explicitly through `img2drawing.legacy.r23` and read
 [`references/legacy-r23.md`](references/legacy-r23.md). Root legacy attributes are
 deprecated, non-advertised compatibility shims—not a normal import route.
+The release-candidate API matrix is in [`SUPPORT.md`](SUPPORT.md); use
+[`MIGRATION.md`](MIGRATION.md) only for old checkpoints.
 
 - `core/`: strokes, actions, history, session.
 - `observation/`: agent-authored semantic observations, material palette, read-only evidence.

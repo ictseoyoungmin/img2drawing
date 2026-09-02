@@ -7,10 +7,10 @@ a general drawing framework, and implementation always follows **Production WIP 
 ## Current summary
 
 ```text
-B00–B16 plus B01-R1/B07-R1 hardening are CLOSED.
-B17–B18 complete the remaining product surface.
+B00–B17 plus B01-R1/B07-R1 hardening are CLOSED.
+B18 freezes the completed product surface for dogfood.
 No fresh visual dogfood starts before the B18 freeze.
-B17 package, public API, and release-candidate truth is the sole production WIP.
+B18 dogfood-ready system freeze is the sole production WIP.
 ```
 
 Earlier dogfood exposed enough foundation defects to drive B01-R1 subject-boundary
