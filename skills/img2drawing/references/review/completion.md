@@ -53,6 +53,6 @@ material residual also makes it false. Inspect the new state, use the same corre
 loop, and record another finish decision. There is no finish stage to reopen.
 
 Checkpoint/resume validates the record against its inspection, intent provenance, and
-history bounds. Pre-B10 arbitrary `finish_metadata` may resume as noncanonical historical
+history bounds. Older arbitrary `finish_metadata` may resume as noncanonical historical
 metadata for compatibility, but it is not a `FinishRecord` and never makes
 `finish_is_current` true.
