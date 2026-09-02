@@ -3,7 +3,7 @@
 Start new work on the stage-free route below. The order in this document is a
 knowledge taxonomy to consult as needed, not a runtime lifecycle.
 
-## Canonical vNext references
+## Canonical references
 
 - `observation/visual-observation.md`: whole → region → part → relation observation
   and the evidence boundary
@@ -41,14 +41,15 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 
 Each mode provides only a purpose, observation priorities, suggested grammar,
 omissions, and completion questions. It does not create `phase_start`, `advance`,
-`close`, or `reopen` state. `DrawingIntent`,
-`ModeGuide` and `StyleGuide` began as B08 plain-data schemas and are completed by B14 and
-B15 respectively; `FinishGuide` is the B09 plain-data authoring target. `RenderProfile`
-is the B11 output/replay contract; style guidance never acts as a renderer filter.
+`close`, or `reopen` state. `DrawingIntent`, `ModeGuide`, `FinishGuide`, and `StyleGuide`
+remain plain-data authoring guidance. `RenderProfile` is the output/replay contract;
+style guidance never acts as a renderer filter.
 
 ## Legacy R23 compatibility
 
 Existing R23 runs only: [`legacy-r23.md`](legacy-r23.md).
 
-The gateway links to the preserved stage, playbook, and review compatibility material.
-New work must not follow that route or use its Pn lifecycle as a mode or finish contract.
+The gateway documents the compatibility boundary only. Historical stage, playbook, and
+stage-review documents are intentionally absent from the deployable skill; use Git history
+or repository development records when maintaining that legacy implementation. New work
+must not use its Pn lifecycle as a mode or finish contract.

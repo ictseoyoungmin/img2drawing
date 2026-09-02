@@ -18,7 +18,7 @@ from img2drawing.legacy.r23 import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SUBJECT = ROOT.parent / "skills" / "img2drawing" / "examples" / "full_body_croquis" / "subject.png"
+SUBJECT = ROOT / "fixtures" / "r23" / "full_body_croquis" / "subject.png"
 
 
 def _obs() -> ObservationContract:

@@ -22,12 +22,22 @@ from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
+RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
 VERSION = "0.6.0rc1"
 PUBLIC_API = "DrawingSession/0.6.0-vnext"
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
     "dogfood", "drawings", "showcase", "temp",
+}
+CONTROL_PLANE_FILES = {
+    "CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "NOTICE", "NOTICE.md",
+    "RELEASE.md", "SUPPORT.md",
+}
+LEGACY_REVIEW_FILES = {
+    "dual-reference-review.md", "fresh-worker-defect-closure.md", "local-review-api.md",
+    "reopen-recovery.md", "self-visual-audit.md", "when-to-advance.md",
+    "worker-pass-memory.md",
 }
 
 
@@ -59,15 +69,7 @@ def _safe_member(name: str) -> PurePosixPath:
 def _canonical_docs() -> list[Path]:
     documents = [ROOT / "README.md"]
     documents.extend(PACKAGE.glob("*.md"))
-    documents.extend(
-        path for path in (PACKAGE / "references").rglob("*.md")
-        if "stages" not in path.parts
-        and path.name not in {
-            "dual-reference-review.md", "fresh-worker-defect-closure.md",
-            "local-review-api.md", "reopen-recovery.md", "self-visual-audit.md",
-            "when-to-advance.md", "worker-pass-memory.md",
-        }
-    )
+    documents.extend(path for path in (PACKAGE / "references").rglob("*.md"))
     documents.extend((PACKAGE / "examples" / name / "README.md") for name in ("observed", "subjectless"))
     return sorted(set(documents))
 
@@ -80,9 +82,19 @@ def check_source() -> None:
     pyproject = (PACKAGE / "pyproject.toml").read_text()
     assert '"numpy>=1.24"' in pyproject and '"Pillow>=10"' in pyproject
     assert "svgwrite" not in pyproject
+    assert 'license-files = ["LICENSE"]' in pyproject
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text()
     assert "verify_vnext_b17.py" in workflow
     assert "validate_r23_release.py" not in workflow
+
+    for name in CONTROL_PLANE_FILES:
+        assert not (PACKAGE / name).exists(), f"control-plane file leaked into skill root: {name}"
+    assert not (PACKAGE / "playbooks").exists(), "legacy playbooks leaked into deployable skill"
+    assert not (PACKAGE / "references" / "stages").exists(), "legacy stage references leaked into deployable skill"
+    for name in LEGACY_REVIEW_FILES:
+        assert not (PACKAGE / "references" / "review" / name).exists(), f"legacy review doc leaked: {name}"
+    for name in ("CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "RELEASE.md", "SUPPORT.md"):
+        assert (RELEASE_RECORDS / name).is_file(), f"missing maintainer release record: {name}"
 
     link_pattern = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
     missing: list[str] = []
@@ -121,8 +133,6 @@ def _scan_text(name: str, payload: bytes) -> None:
 
 def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
     dist = work / "dist"
-    # Exercise the declared PEP 517 build contract in its own isolated build environment.
-    # Do not rely on the editable development environment already containing setuptools/wheel.
     _run(
         [sys.executable, "-m", "build", "--outdir", str(dist)],
         cwd=PACKAGE,
@@ -148,7 +158,7 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
         assert any(value.lower().startswith("pillow>=") for value in runtime_requires)
         assert len(runtime_requires) == 2
         assert any(name.endswith(".dist-info/licenses/LICENSE") for name in wheel_names)
-        assert any(name.endswith(".dist-info/licenses/NOTICE") for name in wheel_names)
+        assert not any(name.endswith(".dist-info/licenses/NOTICE") or name.endswith(".dist-info/licenses/NOTICE.md") for name in wheel_names)
 
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
@@ -161,16 +171,18 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
             assert relative[:1] != ("playbooks",), member.name
             assert relative[:2] != ("references", "stages"), member.name
             assert "full_body_croquis" not in relative and "p1_target.png" not in relative
+            if relative and relative[-1] in CONTROL_PLANE_FILES:
+                raise AssertionError(f"control-plane file shipped in sdist: {member.name}")
+            if len(relative) >= 3 and relative[:2] == ("references", "review") and relative[-1] in LEGACY_REVIEW_FILES:
+                raise AssertionError(f"legacy review file shipped in sdist: {member.name}")
             if member.isfile():
                 stream = archive.extractfile(member)
                 assert stream is not None
                 _scan_text(member.name, stream.read())
         required = {
-            "SKILL.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
-            "CONTRACT_FREEZE.json",
-            "references/reference-authority.md", "references/legacy-r23.md",
-            "examples/mechanical_workflows.py", "examples/observed/run.py",
-            "examples/subjectless/run.py",
+            "SKILL.md", "references/INDEX.md", "references/reference-authority.md",
+            "references/legacy-r23.md", "examples/mechanical_workflows.py",
+            "examples/observed/run.py", "examples/subjectless/run.py",
         }
         relative_names = {"/".join(PurePosixPath(name).parts[1:]) for name in names}
         assert required.issubset(relative_names), sorted(required - relative_names)
@@ -181,8 +193,6 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
 
 def check_clean_install(work: Path, wheel: Path, extracted: Path) -> None:
     environment = work / "venv"
-    # This must be a genuinely isolated install: no host/system site-packages are visible,
-    # and the wheel resolves its declared runtime dependencies inside the fresh venv.
     venv.EnvBuilder(with_pip=True, system_site_packages=False).create(environment)
     python = environment / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     clean_env = os.environ.copy()

@@ -22,7 +22,7 @@ where = ["src"]
 include = ["img2drawing*"]
 
 [tool.setuptools]
-license-files = ["LICENSE", "NOTICE"]
+license-files = ["LICENSE"]
 
 [tool.setuptools.package-data]
 "img2drawing.data" = ["*.json"]
