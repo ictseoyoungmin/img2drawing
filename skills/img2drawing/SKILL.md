@@ -47,8 +47,8 @@ finish emphasis, or style profile. Its four fields are orthogonal data selection
 `reference_mode` (`observed`, `imaginative`, `hybrid`), `drawing_mode` (`croquis`,
 `figure_drawing`, `tonal_study`, `line_study`, `free_draw`), `finish_intent` (`pose`, `subject`,
 `form_light`, `expressive`), and `style_profile` (the built-ins `pencil_loose`,
-`graphite_academic`, or an explicit `custom:<identifier>`). No field is a stage, cursor,
-pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
+`graphite_academic`, `graphite_tonal`, or an explicit `custom:<identifier>`). No field is
+a stage, cursor, pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
 selection; `session.set_intent(..., reason=...)` records a later selection as provenance
 without changing geometry or forking the action history. A session's reference authority
 mode is immutable: an intent change may adjust drawing/finish/style axes but cannot
@@ -64,6 +64,13 @@ before subject, form-light, or expressive refinement. A guide may be read again 
 inspection changes the Agent's hypothesis. The explicit compatibility lookup
 `full_body_croquis` returns an ordinary `observed`/`croquis` intent and is not a lifecycle
 state. See [`references/intent.md`](references/intent.md).
+
+For style requests, read
+[`references/styles/authoring-styles.md`](references/styles/authoring-styles.md). Resolve
+one preset base with explicit field overrides, or structure every field of a custom guide.
+Surface unresolved language or conflicts with task/reference/geometry truth explicitly.
+Changing style records intent provenance only; keep, retire, replace, or add marks through
+the ordinary history-safe edit API.
 
 ## Canonical drawing loop
 

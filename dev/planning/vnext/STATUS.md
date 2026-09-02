@@ -3,12 +3,12 @@
 Updated: 2026-09-02
 
 ```text
-SYSTEM:   stage-free product surface closed through B14, including B01-R1 and B07-R1 hardening
-ACTIVE:   B15 Style authoring completion
-NEXT:     B16 Agent authoring and editing ergonomics
-SKELETON: B16–B18 product-surface completion
+SYSTEM:   stage-free product surface closed through B15, including B01-R1 and B07-R1 hardening
+ACTIVE:   B16 Agent authoring and editing ergonomics
+NEXT:     B17 Package, public API, and release-candidate truth
+SKELETON: B17–B18 product-surface completion
 DOGFOOD:  deferred until B18 dogfood-ready freeze
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14
+CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15
 ```
 
 ## Current planning decision — implementation first, dogfood after freeze
@@ -45,25 +45,24 @@ B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
 See [`ROADMAP.md`](ROADMAP.md) and
 [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
 
-## Active slice — B15
+## Active slice — B16
 
-B15 is the sole production WIP.
+B16 is the sole production WIP.
 
-Goal: complete a deliberately small style-authoring surface on the same geometry,
-session, history, and renderer core, without raster post-filters, inheritance graphs, or
-style-specific pipelines.
+Goal: make the existing append-only drawing/edit surface practical to navigate and repair
+in long correction loops without a second ownership lifecycle or edit history.
 
-B15 inherits these closed constraints:
+B16 inherits these closed constraints:
 
-- style guides describe how the Agent authors marks; `RenderProfile` remains the sole
-  materialization contract;
-- subject geometry and reference constraints outrank style preferences;
-- begin with only `pencil_loose`, `graphite_academic`, and `graphite_tonal`;
-- use one base plus explicit overrides or explicit structured custom guidance, never an
-  inheritance tree or silent natural-language parser; and
-- a mid-session style change records provenance but cannot rewrite existing marks.
+- reuse `part`, `role`, observation/correction provenance, action ids, stroke ids, fill
+  ids, and existing supersession records as the responsibility vocabulary;
+- queries and summaries are derived read models, never a second source of truth;
+- local helpers append ordinary replayable mutations through the same transaction path;
+- stroke and value-region revisions need consistent current/superseded lookup semantics;
+  and
+- prefer one authored action per artistic decision rather than persisted microstrokes.
 
-B15 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
+B16 closure may use deterministic/synthetic fixtures and preserved prior evidence. It
 must not claim general visual quality, unseen-subject robustness, or cross-agent proof;
 those claims belong to D01–D06 after B18.
 
@@ -87,6 +86,7 @@ those claims belong to D01–D06 after B18.
 | B12 | CLOSED | explicit lazy `legacy.r23` boundary, R23 v1–v3 resume/migration, canonical root exports |
 | B13 | CLOSED | immutable observed/imaginative/hybrid authority, subjectless drawing-only inspection, shared correction/output |
 | B14 | CLOSED | five distinct portable mode guides, authored tonal value, free-draw across all authorities, one shared core |
+| B15 | CLOSED | three style presets, one-base overrides, structured custom guidance, explicit conflict/provenance semantics |
 
 Authoritative closed detail remains in `capsules/`, slice closure records, and committed
 evidence. This status file is a current control plane, not a replacement for those records.
@@ -146,8 +146,8 @@ B11  Canonical RenderProfile + replay/GIF parity         CLOSED
 B12  Legacy runtime / persistence isolation              CLOSED
 B13  Reference authority + subjectless runtime           CLOSED
 B14  Drawing-mode capability completion                  CLOSED
-B15  Style authoring completion                          ACTIVE
-B16  Agent authoring / editing ergonomics                SKELETON
+B15  Style authoring completion                          CLOSED
+B16  Agent authoring / editing ergonomics                ACTIVE
 B17  Package / public API / release-candidate truth      SKELETON
 B18  Dogfood-ready system freeze                         SKELETON
 ```
@@ -195,3 +195,6 @@ Dogfood defects always route back to the responsible implementation slice. Examp
   contract; subjectless evidence is drawing-only and never fabricates a reference.
 - Croquis, figure drawing, tonal study, line study, and free-draw resolve to distinct
   immutable guidance while sharing one session/history/inspection/correction/output core.
+- Three retained style presets, single-base overrides, and complete structured custom
+  guidance affect authored policy only; style selection never mutates geometry or the
+  canonical RenderProfile.

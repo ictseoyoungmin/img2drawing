@@ -33,7 +33,7 @@ The allowed values are:
 - `reference_mode`: `observed`, `imaginative`, `hybrid`
 - `drawing_mode`: `croquis`, `figure_drawing`, `tonal_study`, `line_study`, `free_draw`
 - `finish_intent`: `pose`, `subject`, `form_light`, `expressive`
-- `style_profile`: `pencil_loose`, `graphite_academic`, or an explicit
+- `style_profile`: `pencil_loose`, `graphite_academic`, `graphite_tonal`, or an explicit
   `custom:<identifier>` for prose that the Agent structures itself
 
 `session.set_intent(next_intent, reason="...")` appends an `IntentChangeRecord` containing
@@ -67,11 +67,19 @@ composition, focal, gesture, and shape-language goals under any reference author
 ## StyleGuide
 
 `resolve_style_guide(style_profile, overrides=None)` returns direct authoring advice for
-line behavior, construction visibility, detail, value, edges, and notes. The two B08
-bases are `pencil_loose` and `graphite_academic`. Overrides replace explicit fields on
-one base only; unknown fields, a second base, inheritance, and plugin registries are
-rejected. The advice must be enacted in authored strokes. It is not a renderer selector
-or a post-filter for an already rendered PNG.
+line behavior, construction visibility, detail, value, edges, and notes. The three
+retained bases are `pencil_loose`, `graphite_academic`, and `graphite_tonal`. Overrides
+replace explicit fields on one base only; unknown fields, a second base, inheritance, and
+plugin registries are rejected. A `custom:<identifier>` requires one complete
+Agent-structured `StyleGuide`; the runtime does not parse prose or combine it with a base.
+Ambiguous terms raise `StyleClarificationRequired`, and explicitly identified conflicts
+with task/reference/geometry truth raise `StyleConflictError`.
+
+The advice must be enacted in explicit drawing actions. Changing `style_profile` through
+`session.set_intent()` appends intent provenance but does not mutate existing marks or the
+`RenderProfile`; actual visual changes use ordinary keep/retire/replace/add operations.
+See [`styles/authoring-styles.md`](styles/authoring-styles.md) for the canonical preset,
+custom, precedence, and mid-session-edit contract.
 
 ## FinishGuide
 

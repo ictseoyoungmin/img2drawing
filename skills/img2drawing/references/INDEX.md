@@ -22,6 +22,8 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 - `output/render-profile-and-replay.md`: canonical PNG, cursor replay, GIF, parity, migration
 - `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
 - `pencil/graphite.md`: canvas-bound pencil material and selective accent
+- `styles/authoring-styles.md`: preset, single-base override, structured custom style,
+  precedence, and explicit mid-session edits
 - `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and
   compatibility lookup
 - `reference-authority.md`: observed, imaginative, and hybrid comparison authority;
@@ -38,9 +40,9 @@ knowledge taxonomy to consult as needed, not a runtime lifecycle.
 Each mode provides only a purpose, observation priorities, suggested grammar,
 omissions, and completion questions. It does not create `phase_start`, `advance`,
 `close`, or `reopen` state. `DrawingIntent`,
-`ModeGuide` and `StyleGuide` are B08 plain-data schemas; `FinishGuide` is the B09
-plain-data authoring target. `RenderProfile` is the B11 output/replay contract; style
-guidance never acts as a renderer filter.
+`ModeGuide` and `StyleGuide` began as B08 plain-data schemas and are completed by B14 and
+B15 respectively; `FinishGuide` is the B09 plain-data authoring target. `RenderProfile`
+is the B11 output/replay contract; style guidance never acts as a renderer filter.
 
 ## Legacy R23 compatibility
 

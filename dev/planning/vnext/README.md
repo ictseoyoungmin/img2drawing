@@ -7,10 +7,10 @@ a general drawing framework, and implementation always follows **Production WIP 
 ## Current summary
 
 ```text
-B00–B14 plus B01-R1/B07-R1 hardening are CLOSED.
-B15–B18 complete the remaining product surface.
+B00–B15 plus B01-R1/B07-R1 hardening are CLOSED.
+B16–B18 complete the remaining product surface.
 No fresh visual dogfood starts before the B18 freeze.
-B15 style authoring completion is the sole production WIP.
+B16 Agent authoring and editing ergonomics is the sole production WIP.
 ```
 
 Earlier dogfood exposed enough foundation defects to drive B01-R1 subject-boundary

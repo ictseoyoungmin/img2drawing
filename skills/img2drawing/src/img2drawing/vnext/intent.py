@@ -18,7 +18,7 @@ from ..core.session import sha256_obj
 REFERENCE_MODES = ("observed", "imaginative", "hybrid")
 DRAWING_MODES = ("croquis", "figure_drawing", "tonal_study", "line_study", "free_draw")
 FINISH_INTENTS = ("pose", "subject", "form_light", "expressive")
-STYLE_PROFILES = ("pencil_loose", "graphite_academic")
+STYLE_PROFILES = ("pencil_loose", "graphite_academic", "graphite_tonal")
 COMPATIBILITY_INTENTS = ("full_body_croquis",)
 INTENT_SCHEMA = "img2drawing.vnext.drawing_intent.v1"
 MODE_GUIDE_SCHEMA = "img2drawing.vnext.mode_guide.v1"
@@ -75,6 +75,14 @@ _FINISH_GUIDE_FIELDS = {
 }
 
 
+class StyleClarificationRequired(ValueError):
+    """Custom prose has unresolved terms and must be clarified before selection."""
+
+
+class StyleConflictError(ValueError):
+    """Style advice conflicts with higher-priority task/reference/geometry truth."""
+
+
 def _text(value: Any, field: str) -> str:
     result = str(value).strip()
     if not result:
@@ -108,6 +116,24 @@ def _strings(values: Any, field: str) -> tuple[str, ...]:
     if not result:
         raise ValueError(f"{field} must contain at least one item")
     return result
+
+
+def _validate_style_resolution(
+    *,
+    unresolved_terms: Sequence[str] = (),
+    conflicts: Sequence[str] = (),
+) -> None:
+    unresolved = tuple(_text(item, "unresolved style term") for item in unresolved_terms)
+    if unresolved:
+        raise StyleClarificationRequired(
+            "style clarification required for: " + "; ".join(unresolved)
+        )
+    blocked = tuple(_text(item, "style conflict") for item in conflicts)
+    if blocked:
+        raise StyleConflictError(
+            "style cannot override higher-priority task/reference/geometry constraints: "
+            + "; ".join(blocked)
+        )
 
 
 @dataclass(frozen=True)
@@ -448,8 +474,6 @@ class StyleGuide:
 
     def __post_init__(self) -> None:
         profile = _style(self.style_profile)
-        if profile not in STYLE_PROFILES:
-            raise ValueError("StyleGuide requires a built-in style_profile")
         object.__setattr__(self, "style_profile", profile)
         for field in (
             "line_behavior",
@@ -461,9 +485,47 @@ class StyleGuide:
         ):
             object.__setattr__(self, field, _strings(getattr(self, field), field))
 
-    def with_overrides(self, overrides: Mapping[str, Any]) -> "StyleGuide":
+    @classmethod
+    def custom(
+        cls,
+        style_profile: str,
+        *,
+        line_behavior: Sequence[str],
+        construction_visibility: Sequence[str],
+        detail_policy: Sequence[str],
+        value_policy: Sequence[str],
+        edge_policy: Sequence[str],
+        authoring_notes: Sequence[str],
+        unresolved_terms: Sequence[str] = (),
+        conflicts: Sequence[str] = (),
+    ) -> "StyleGuide":
+        """Create explicit structured custom guidance; this does not parse prose."""
+
+        profile = _style(style_profile)
+        if profile in STYLE_PROFILES:
+            raise ValueError("custom style guide requires a custom:<identifier> profile")
+        _validate_style_resolution(unresolved_terms=unresolved_terms, conflicts=conflicts)
+        return cls(
+            style_profile=profile,
+            line_behavior=tuple(line_behavior),
+            construction_visibility=tuple(construction_visibility),
+            detail_policy=tuple(detail_policy),
+            value_policy=tuple(value_policy),
+            edge_policy=tuple(edge_policy),
+            authoring_notes=tuple(authoring_notes),
+        )
+
+    def with_overrides(
+        self,
+        overrides: Mapping[str, Any],
+        *,
+        conflicts: Sequence[str] = (),
+    ) -> "StyleGuide":
         if not isinstance(overrides, Mapping):
             raise TypeError("style overrides must be a mapping")
+        if self.style_profile not in STYLE_PROFILES:
+            raise ValueError("custom style guides are complete records and do not accept base overrides")
+        _validate_style_resolution(conflicts=conflicts)
         unknown = set(overrides).difference(_STYLE_FIELDS)
         if unknown:
             raise ValueError(f"style overrides contain unsupported fields: {sorted(unknown)}")
@@ -674,6 +736,34 @@ _STYLE_GUIDES = {
         ("group values before accents", "use a measured dark-light hierarchy"),
         ("sharpen edges selectively", "soften edges where form turns away"),
         ("Author value and edge decisions in the drawing; this is not a post-filter.",),
+    ),
+    "graphite_tonal": StyleGuide(
+        "graphite_tonal",
+        (
+            "use form-directed strokes at region boundaries",
+            "reserve the darkest line accents for structural turns and contact",
+        ),
+        (
+            "keep only construction that explains the value-bearing form",
+            "retire duplicate scaffolding after the large geometry reads",
+        ),
+        (
+            "group detail into value-bearing masses",
+            "omit texture that fragments the light and shadow families",
+        ),
+        (
+            "author large calibrated value regions before local accents",
+            "preserve observed lights inside established forms",
+            "revise a disproved region instead of stacking darkness",
+        ),
+        (
+            "use hard, soft, and lost edges according to form, light, and material",
+            "concentrate the sharpest value transition at selected focal relations",
+        ),
+        (
+            "Style changes mark-authoring policy only; RenderProfile remains unchanged.",
+            "Never use value or a raster filter to hide incorrect geometry.",
+        ),
     ),
 }
 
@@ -943,13 +1033,31 @@ def resolve_finish_guide(finish_intent: str) -> FinishGuide:
     return _FINISH_GUIDES[intent]
 
 
-def resolve_style_guide(style_profile: str, overrides: Mapping[str, Any] | None = None) -> StyleGuide:
+def resolve_style_guide(
+    style_profile: str,
+    overrides: Mapping[str, Any] | None = None,
+    *,
+    custom: StyleGuide | Mapping[str, Any] | None = None,
+    unresolved_terms: Sequence[str] = (),
+    conflicts: Sequence[str] = (),
+) -> StyleGuide:
+    """Resolve one preset base or one complete Agent-structured custom guide."""
+
     profile = _style(style_profile)
-    try:
+    _validate_style_resolution(unresolved_terms=unresolved_terms, conflicts=conflicts)
+    if profile in STYLE_PROFILES:
+        if custom is not None:
+            raise ValueError("built-in style resolution cannot accept a custom guide")
         guide = _STYLE_GUIDES[profile]
-    except KeyError as exc:
-        raise ValueError("custom style profiles require explicit Agent-authored prose") from exc
-    return guide if overrides is None else guide.with_overrides(overrides)
+        return guide if overrides is None else guide.with_overrides(overrides)
+    if custom is None:
+        raise ValueError("custom style profiles require a complete Agent-structured StyleGuide")
+    if overrides is not None:
+        raise ValueError("custom style resolution cannot combine a base override")
+    guide = custom if isinstance(custom, StyleGuide) else StyleGuide.from_dict(custom)
+    if guide.style_profile != profile:
+        raise ValueError("custom style profile does not match the requested identifier")
+    return guide
 
 
 def compatibility_intent(alias: str) -> DrawingIntent:
@@ -984,6 +1092,8 @@ __all__ = [
     "REFERENCE_MODES",
     "STYLE_PROFILES",
     "STYLE_GUIDE_SCHEMA",
+    "StyleClarificationRequired",
+    "StyleConflictError",
     "MODE_GUIDE_SCHEMA",
     "StyleGuide",
     "compatibility_intent",

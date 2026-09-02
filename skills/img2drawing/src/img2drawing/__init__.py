@@ -55,6 +55,8 @@ from .vnext import (
     IntentChangeRecord,
     IntentProvenance,
     ModeGuide,
+    StyleClarificationRequired,
+    StyleConflictError,
     StyleGuide,
     InitialConstruct,
     InitialConstructResult,
@@ -98,6 +100,6 @@ __all__ = [
     "ConstructionMark", "CorrectionRecord", "InitialConstruct", "InitialConstructResult", "PoseObservation",
     "ResidualRecord", "EvidencePolicy", "EvidenceReadRecord", "EvidenceTelemetry", "author_initial_construct", "inspect_initial_construct", "observe_pose", "replace_fill_region",
     "COMPATIBILITY_INTENTS", "DRAWING_MODES", "FINISH_INTENTS", "FINISH_GUIDE_SCHEMA", "FINISH_RELATION_SCHEMA", "FINISH_RECORD_SCHEMA", "RENDER_PROFILE_SCHEMA", "RENDER_ARTIFACT_SCHEMA", "REPLAY_EXPORT_SCHEMA", "REFERENCE_MODES", "REFERENCE_AUTHORITY_SCHEMA", "REFERENCE_CONSTRAINT_SCHEMA", "STYLE_PROFILES",
-    "DrawingIntent", "FinishGuide", "FinishRelation", "FinishRecord", "RenderProfile", "ReferenceAuthority", "ReferenceConstraint", "ReferenceUnavailableError", "RenderArtifact", "ReplayExport", "IntentChangeRecord", "IntentProvenance", "ModeGuide", "StyleGuide",
+    "DrawingIntent", "FinishGuide", "FinishRelation", "FinishRecord", "RenderProfile", "ReferenceAuthority", "ReferenceConstraint", "ReferenceUnavailableError", "RenderArtifact", "ReplayExport", "IntentChangeRecord", "IntentProvenance", "ModeGuide", "StyleClarificationRequired", "StyleConflictError", "StyleGuide",
     "compatibility_intent", "resolve_finish_guide", "resolve_mode_guide", "resolve_style_guide",
 ]
