@@ -87,10 +87,11 @@ The agent then records a short `PoseObservation`, authors explicit ordered
 `inspect_initial_construct(session, construct)`. The Agent reads `finish` to select
 relational mark/value/edge decisions; the guide does not mutate or close the session. See
 [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for the complete
-autonomous loop and operating spec. See
-[`skills/img2drawing/SUPPORT.md`](skills/img2drawing/SUPPORT.md) for the public API matrix
-and [`skills/img2drawing/MIGRATION.md`](skills/img2drawing/MIGRATION.md) only when handling
-an old checkpoint.
+autonomous loop and operating spec. Old R23 checkpoints use the explicit compatibility
+route documented in
+[`skills/img2drawing/references/legacy-r23.md`](skills/img2drawing/references/legacy-r23.md).
+Maintainer-only release/support/freeze records live under
+[`dev/release/vnext/`](dev/release/vnext/README.md), outside the deployable skill.
 
 ## How it's organized
 
@@ -105,8 +106,9 @@ an old checkpoint.
 │   ├── dogfood/        # persistent reproducible runs and continuation records
 │   ├── tests/          # pytest suite for skills/img2drawing's runtime
 │   ├── schemas/        # JSON schemas used by the test suite (not runtime-loaded)
-│   ├── tools/           # dev-side audit scripts (fresh-worker evidence audit, etc.)
-│   ├── benchmarks/      # regression/smoke fixtures for the drawing pipeline
+│   ├── tools/          # dev-side audit scripts (fresh-worker evidence audit, etc.)
+│   ├── release/vnext/  # maintainer-only release/support/freeze control-plane records
+│   ├── benchmarks/     # regression/smoke fixtures for the drawing pipeline
 │   └── ...             # release artifacts, audits, and the changelog
 └── temp/               # ignored scratch space for unpromoted runs
 ```
