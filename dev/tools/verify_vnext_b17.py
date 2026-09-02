@@ -32,15 +32,20 @@ FORBIDDEN_ARCHIVE_PARTS = {
 
 
 def _run(command: list[str], *, cwd: Path, env: dict[str, str] | None = None) -> str:
-    completed = subprocess.run(
-        command,
-        cwd=cwd,
-        env=env,
-        check=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=cwd,
+            env=env,
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+    except subprocess.CalledProcessError as exc:
+        if exc.stdout:
+            print(exc.stdout, file=sys.stderr, end="" if exc.stdout.endswith("\n") else "\n")
+        raise
     return completed.stdout
 
 
@@ -116,8 +121,10 @@ def _scan_text(name: str, payload: bytes) -> None:
 
 def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
     dist = work / "dist"
+    # Exercise the declared PEP 517 build contract in its own isolated build environment.
+    # Do not rely on the editable development environment already containing setuptools/wheel.
     _run(
-        [sys.executable, "-m", "build", "--no-isolation", "--outdir", str(dist)],
+        [sys.executable, "-m", "build", "--outdir", str(dist)],
         cwd=PACKAGE,
     )
     wheel = next(dist.glob("*.whl"))
@@ -174,23 +181,32 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
 
 def check_clean_install(work: Path, wheel: Path, extracted: Path) -> None:
     environment = work / "venv"
-    # Debian's minimal Python may omit ensurepip. Build an isolated interpreter and
-    # install the wheel into its own purelib with the invoking interpreter's pip.
-    venv.EnvBuilder(with_pip=False, system_site_packages=True).create(environment)
+    # This must be a genuinely isolated install: no host/system site-packages are visible,
+    # and the wheel resolves its declared runtime dependencies inside the fresh venv.
+    venv.EnvBuilder(with_pip=True, system_site_packages=False).create(environment)
     python = environment / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     clean_env = os.environ.copy()
     clean_env.pop("PYTHONPATH", None)
-    purelib = _run(
-        [str(python), "-c", "import sysconfig; print(sysconfig.get_paths()['purelib'])"],
-        cwd=work,
-        env=clean_env,
-    ).strip()
     _run(
-        [sys.executable, "-m", "pip", "install", "--no-deps", "--target", purelib, str(wheel)],
+        [str(python), "-m", "pip", "install", "--no-input", str(wheel)],
         cwd=work,
         env=clean_env,
     )
-    _run([str(python), "-c", "import numpy, PIL"], cwd=work, env=clean_env)
+    dependency_locations = json.loads(
+        _run(
+            [
+                str(python),
+                "-c",
+                "import json,numpy,PIL; print(json.dumps({'numpy':numpy.__file__,'PIL':PIL.__file__}))",
+            ],
+            cwd=work,
+            env=clean_env,
+        ).strip()
+    )
+    for name, location in dependency_locations.items():
+        assert Path(str(location)).resolve().is_relative_to(environment.resolve()), (
+            f"clean install leaked host dependency {name}: {location}"
+        )
 
     source_env = os.environ.copy()
     source_env["PYTHONPATH"] = str(PACKAGE / "src")
