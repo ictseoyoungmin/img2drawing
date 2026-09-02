@@ -9,8 +9,7 @@ from img2drawing.legacy.r23 import DrawingRun, ModularGrammarCard, ObservationCo
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT.parent / "skills" / "img2drawing"
-SUBJECT = SKILL_ROOT / "examples" / "full_body_croquis" / "subject.png"
+SUBJECT = ROOT / "fixtures" / "r23" / "full_body_croquis" / "subject.png"
 
 CARDS = tuple(
     ModularGrammarCard(
