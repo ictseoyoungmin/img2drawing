@@ -8,7 +8,7 @@ Start with `SKILL.md` for Agent operation and `references/INDEX.md` for the cano
 knowledge route. `examples/` contains deterministic integration mechanics only; they make
 no claim about general drawing quality.
 
-This directory is the deployable skill/runtime surface. Release-candidate notes, API
-freeze snapshots, migration/support matrices, dogfood control-plane records, and historical
-stage/playbook material belong under `dev/` and are intentionally excluded from the skill
-attention surface.
+This directory is the deployable skill/runtime surface. Maintainer-only release notes,
+API freeze snapshots, migration/support matrices, dogfood control-plane records, and
+historical stage/playbook material are intentionally excluded from the skill attention
+surface.
