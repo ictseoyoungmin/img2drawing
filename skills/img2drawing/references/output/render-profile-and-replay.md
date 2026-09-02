@@ -45,10 +45,11 @@ encoded, so its final decoded frame uses the documented manifest tolerance: maxi
 channel error 24 and mean channel error 2.0. The measured errors and result are recorded.
 Renderer output never mutates geometry or action history.
 
-## Old checkpoints and drift
+## Older checkpoints and drift
 
-A pre-B11 vNext checkpoint may resume without a profile for continued editing, but all
-canonical output methods reject it. Call `session.migrate_render_profile()` explicitly to
-attach the canonical profile and rewrite the renderer header. Unknown renderer versions,
-canvas mismatch, profile/header mismatch, unsupported seed/compositing/encoding policy,
-and custom material paths are rejected rather than silently defaulted.
+A vNext checkpoint created before `RenderProfile` was persisted may resume without a
+profile for continued editing, but all canonical output methods reject it. Call
+`session.migrate_render_profile()` explicitly to attach the canonical profile and rewrite
+the renderer header. Unknown renderer versions, canvas mismatch, profile/header mismatch,
+unsupported seed/compositing/encoding policy, and custom material paths are rejected
+rather than silently defaulted.
