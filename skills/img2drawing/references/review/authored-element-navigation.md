@@ -1,6 +1,6 @@
 # Authored element navigation and editing
 
-Long correction loops use the action history as their only source of truth. The B16
+Long correction loops use the action history as their only source of truth. The
 navigation API rebuilds immutable `AuthoredElement` records from that history whenever it
 is called; it does not persist an ownership index, edit cursor, or summary cache.
 
