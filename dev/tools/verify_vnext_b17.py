@@ -24,7 +24,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
 RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
-VERSION = "0.6.0rc1"
+VERSION = "0.6.0rc2"
 PUBLIC_API = "DrawingSession/0.6.0-vnext"
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
