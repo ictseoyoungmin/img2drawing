@@ -7,10 +7,10 @@ SYSTEM:          vNext product/API/schema/package contract frozen through B18 + 
 PACKAGE:         0.6.0rc2 · DrawingSession/0.6.0-vnext
 SKILL SURFACE:   stage-free instruction graph; deployable examples removed
 ACTIVE ON MAIN:  none
-NEXT ENGINEERING: runtime physical-isolation audit
+NEXT ENGINEERING: instruction routing-edge hardening
 NEXT VALIDATION: D01 difficult observed croquis, after the pre-D01 alignment pass
 DOGFOOD:         D01–D06 not started
-CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment
+CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation audit
 ```
 
 ## Current decision
@@ -20,14 +20,21 @@ the package-root discoverability contract without changing the `DrawingSession` 
 persisted schemas, intent axes, renderer contract, or R23 checkpoint support. The aligned
 candidate is `0.6.0rc2`.
 
+A3 then audited physical runtime ownership. The canonical vNext route does not import the
+historical `run/stages/exemplar/review/registration` cluster. Current registration and bounded
+measurement live under `img2drawing.inspection`; the generic historical modules remain only as
+R23 compatibility implementation. Renaming/deleting that cluster before dogfood would add
+migration risk without improving the current drawing path, so the bounded retirement decision
+remains R03 work.
+
 This is a **pre-D01 alignment pass**, not a second architecture and not a return to Pn/R23
 development:
 
 ```text
-A1 repository truth reconciliation  CLOSED
-→ A2 public root API alignment      CLOSED
-→ A3 runtime physical-isolation audit   NEXT
-→ A4 instruction routing-edge hardening
+A1 repository truth reconciliation      CLOSED
+→ A2 public root API alignment          CLOSED
+→ A3 runtime physical-isolation audit   CLOSED
+→ A4 instruction routing-edge hardening NEXT
 → A5 high-value drawing-leaf gaps
 → D01 → D02 → D03 → D04 → D05 → D06
 → R01 → R02 → R03 → R04
@@ -40,6 +47,12 @@ A1 repository truth reconciliation  CLOSED
   declarative intent/reference/render inputs, and the small observed-construction facade.
 - Specialized inspection/observation/vNext/core capability remains importable from explicit
   owning namespaces; pre-rc2 root names survive only as deprecated lazy compatibility shims.
+- Canonical root import and `DrawingSession` resolution do not activate `img2drawing.run`,
+  `stages`, `exemplar`, the historical `review` package, or the historical `registration`
+  package.
+- `img2drawing.inspection` owns current stage-free inspection, measurement, and registration.
+- The Python package `img2drawing.review` is R23 stage-review compatibility machinery; it is
+  not the same thing as the current instruction-graph `references/review/` concept.
 - `skills/img2drawing/SKILL.md` is the deployable instruction router.
 - `skills/img2drawing/references/INDEX.md` is a progressive-disclosure routing graph, not a lifecycle.
 - Croquis economizes marks, not observed geometry; construction abstractions are hypotheses,
@@ -48,7 +61,7 @@ A1 repository truth reconciliation  CLOSED
   good enough to teach from.
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
 - R23 remains explicit compatibility/history material. Physical retirement is deferred to the
-  release-hardening path unless an evidence-backed audit safely narrows the boundary sooner.
+  release-hardening path unless D-case evidence requires a narrower earlier fix.
 - Mechanical CI proves package/API/persistence/integration contracts, not artistic quality or
   unseen-subject generalization.
 
@@ -96,13 +109,18 @@ public namespaces and through deprecated pre-rc2 root shims for compatibility, b
 advertised in `__all__` or normal `dir(img2drawing)` discovery. See
 `A2_PUBLIC_ROOT_API_AUDIT.md` and `dev/release/vnext/SUPPORT.md`.
 
-### A3. Runtime physical-isolation audit — NEXT
+### A3. Runtime physical-isolation audit — CLOSED
 
-Goal: classify remaining stage-era/current-path modules as shared core, explicit compatibility,
-current implementation, or retirement candidate. Logical stage-free behavior is already the
-product contract; this audit asks whether the source/package layout communicates the same model.
+The canonical vNext import path is mechanically isolated from the historical R23 orchestration
+cluster. `run.py`, `stages/`, `exemplar/`, the old runtime `review/`, and the old runtime
+`registration/` are compatibility implementation; current registration is owned by
+`inspection`. See `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and
+`dev/tests/test_runtime_physical_isolation.py`.
 
-### A4. Instruction routing-edge hardening
+Physical retirement is intentionally deferred to R03 because those paths still back explicit
+R23 compatibility. A3 closes ownership ambiguity, not the compatibility window.
+
+### A4. Instruction routing-edge hardening — NEXT
 
 Goal: make common residual escalation explicit, e.g. local foot mismatch → leg chain/ground
 premise when needed, rather than treating the reference tree as a flat taxonomy.
@@ -126,6 +144,7 @@ readiness before that evidence exists.
 - deployable drawing behavior: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
 - current project state: this file
 - sequence: `ROADMAP.md`
+- A3 ownership evidence: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
 - D01–D06 / release contracts: `VALIDATION_RELEASE.md`
 - current program gates: `/GATES.md`
 - frozen vNext release-candidate contract: `dev/release/vnext/`

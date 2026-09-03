@@ -1,3 +1,11 @@
+"""R23 compatibility implementation for historical stage-review machinery.
+
+This Python package is not the same concept as the current instruction-graph `review`
+leaf. vNext review means current-render inspection plus Agent-owned residual correction
+through `img2drawing.inspection` and `img2drawing.vnext`; the classes below remain for
+explicit R23 compatibility only.
+"""
+
 from .record import StageReviewRecord, record_from_artifacts, normalize_findings
 from .reference_review import ReferenceReviewArtifacts, build_reference_review
 from .correction import StaleReviewError, assert_local_review_current

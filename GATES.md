@@ -32,10 +32,14 @@ Evidence: `dev/planning/vnext/A2_PUBLIC_ROOT_API_AUDIT.md`, `dev/tests/test_vnex
 
 ## G3 — Runtime physical isolation matches the stage-free product model
 
-- [ ] inventory stage-era/current-path packages (`stages`, exemplar/review-era modules, compatibility shims, and related exports).
-- [ ] classify each as shared capability, explicit compatibility, current implementation, or retire/archive candidate.
-- [ ] ensure normal canonical imports do not depend on stage lifecycle machinery.
-- [ ] do not delete compatibility merely for cosmetic cleanliness; migration/support evidence governs removal.
+- [x] inventory/classification covers the historical `run`, `stages`, `exemplar`, `review`, and `registration` cluster plus current `vnext/core/inspection/render` ownership.
+- [x] canonical `DrawingSession` import/resolution does not activate the historical R23 orchestration cluster.
+- [x] `img2drawing.inspection` owns current stage-free registration/measurement; historical `img2drawing.registration` is compatibility implementation.
+- [x] instruction-graph `review` is explicitly distinguished from the historical Python `img2drawing.review` stage-review package.
+- [x] `img2drawing.legacy.r23` remains lazy until a caller explicitly requests historical orchestration.
+- [x] physical rename/deletion is deferred to R03 because it is a compatibility-window decision, not a prerequisite for D01.
+
+Evidence: `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and `dev/tests/test_runtime_physical_isolation.py`.
 
 ## G4 — Instruction routing is operational, not only taxonomic
 

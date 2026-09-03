@@ -7,12 +7,15 @@ Runtime/package version: `0.6.0rc2` (`DrawingSession/0.6.0-vnext`).
 Current truth:
 
 - B00–B18 are CLOSED.
-- A1 repository-truth reconciliation and A2 public-root API alignment are CLOSED.
+- A1 repository-truth reconciliation, A2 public-root API alignment, and A3 runtime physical-isolation audit are CLOSED.
 - PR #5 replaced the deployable documentation surface with the stage-free instruction graph and removed `skills/img2drawing/examples/`.
 - The deployable skill starts at `skills/img2drawing/SKILL.md`; `references/INDEX.md` is the routing table.
 - The package root is intentionally narrow around `DrawingSession`; specialized capability lives in explicit owning namespaces and pre-rc2 root names are compatibility shims only.
+- Canonical `DrawingSession` imports do not depend on `img2drawing.run`, `stages`, `exemplar`, the historical `review` runtime, or the historical `registration` runtime.
+- `img2drawing.inspection` owns current stage-free inspection/measurement/registration capability.
+- `img2drawing.run`, `stages`, `exemplar`, `review`, and `registration` are classified as R23 compatibility implementation. Their names do **not** define the current instruction graph or a second normal workflow.
+- Physical deletion/renaming of that R23 cluster is deferred to R03, where the compatibility window can be decided after D01–D06 evidence.
 - `dev/release/vnext/CONTRACT_FREEZE.json` is the current machine-readable contract. It is not part of the deployable skill root.
-- R23 remains explicit compatibility/history material; physical retirement is still deferred until the post-dogfood retirement step unless the next audit safely narrows that boundary.
 - No new D01–D06 fresh visual validation claim has been made yet.
 
 Read first:
@@ -29,14 +32,13 @@ Before D01, continue the small post-freeze alignment pass exposed by the instruc
 
 1. repository-truth reconciliation — CLOSED;
 2. public root API alignment around `DrawingSession` — CLOSED;
-3. **physical runtime-isolation audit for stage-era/current-path modules — NEXT**;
-4. explicit residual → leaf → upstream escalation routing edges;
+3. runtime physical-isolation audit — CLOSED;
+4. **explicit residual → leaf → upstream escalation routing edges — NEXT**;
 5. remaining high-value drawing leaves such as hands/grip and foreshortening.
 
-A3 should classify code before moving or deleting it. The goal is not cosmetic folder cleanup;
-it is to determine whether each remaining stage-era/current-path module is shared capability,
-current implementation, explicit compatibility, or a real retirement candidate. Preserve working
-migration/runtime behavior until evidence supports a move.
+A4 must improve the instruction graph without recreating a Pn lifecycle. Route a visible residual to
+the smallest responsible guide, but escalate to the parent structural/observation premise whenever
+the local part is only a symptom.
 
 These are cleanup/hardening tasks, not a second runtime workflow. Do not reactivate Pn/R23
 development and do not create a parallel session architecture.
@@ -48,6 +50,7 @@ automatically while the user is stepping through these cleanup bottlenecks.
 
 - `dev/planning/vnext/STATUS.md` — current project state.
 - `dev/planning/vnext/ROADMAP.md` — current sequence and durable phase boundaries.
+- `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` — source/package ownership classification.
 - `dev/planning/vnext/VALIDATION_RELEASE.md` — D01–D06 and release validation contracts.
 - `dev/release/vnext/` — current release-candidate control-plane records.
 - `dev/release/r23/` and Git history — historical compatibility/release evidence.
