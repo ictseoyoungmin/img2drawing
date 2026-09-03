@@ -22,7 +22,7 @@ from img2drawing._version import (
 )
 
 
-if RELEASE_REVISION != "B17" or img2drawing.__version__ != "0.6.0rc1":
+if RELEASE_REVISION != "B17" or img2drawing.__version__ != "0.6.0rc2":
     raise SystemExit(f"release identity drift: {img2drawing.__version__} {RELEASE_REVISION}")
 if RELEASE_SLICE != "B17_package_public_api_release_candidate":
     raise SystemExit("current release slice drift")
