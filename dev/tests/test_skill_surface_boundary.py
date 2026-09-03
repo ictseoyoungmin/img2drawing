@@ -51,6 +51,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "authored-element-navigation.md",
         "completion.md",
         "residual-correction.md",
+        "residual-routing.md",
         "stroke-retirement.md",
     }
 
@@ -67,6 +68,37 @@ def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
     assert "uniform tube" in lower
     assert "circle" in head
     assert "zigzags" in folds
+
+
+def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    correction = (SKILL / "references" / "review" / "residual-correction.md").read_text(
+        encoding="utf-8"
+    )
+    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert "review/residual-routing.md" in skill
+    assert "route by the relationship that must change" in index.lower()
+    assert "Do not route by the noun that looks wrong" in correction
+    assert "Route by **cause**, not by the noun that looks wrong" in routing
+
+    for path in (
+        "construction/balance-and-limbs.md",
+        "environment/ground-and-context.md",
+        "figure/legs-feet.md",
+        "description/contour-and-overlap.md",
+        "figure/head-face-hair.md",
+        "figure/torso-arms-hands.md",
+        "props/attached-objects.md",
+        "observation/visual-observation.md",
+    ):
+        assert path in routing
+
+    assert "Escalation is not a stage reset" in routing
+    assert "Do not read every branch below" in routing
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:

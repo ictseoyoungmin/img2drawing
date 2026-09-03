@@ -34,8 +34,8 @@ The instruction-graph audit exposed a small set of product-surface mismatches th
 | A1 | CLOSED | repository truth reconciliation across handoff/gates/status/package/changelog |
 | A2 | CLOSED | narrow the normal public root API around `DrawingSession` while preserving compatibility shims |
 | A3 | CLOSED | prove current runtime ownership/isolation and classify stage-era modules without cosmetic moves |
-| A4 | NEXT | make residual → leaf → upstream escalation edges explicit in the instruction graph |
-| A5 | OPEN | harden only high-value missing drawing leaves such as hands/grip and foreshortening |
+| A4 | CLOSED | make residual → leaf → upstream escalation edges explicit in the instruction graph |
+| A5 | NEXT | harden only high-value missing drawing leaves such as hands/grip and foreshortening |
 
 A1–A5 follow the same bottleneck rule: solve the highest-impact mismatch without creating a parallel workflow. If an audit proves a closed B-slice premise wrong, reopen that premise narrowly instead of inventing an A-specific runtime feature.
 
@@ -82,23 +82,39 @@ risk without changing the current path, so final deletion/consolidation stays in
 Evidence: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and
 `dev/tests/test_runtime_physical_isolation.py`.
 
-### A4 — instruction routing edges — NEXT
+### A4 — instruction routing edges — CLOSED
 
-The current reference tree has good nodes but many escalation edges are implicit. Make common decisions explicit, for example:
+The instruction graph now routes visible residuals by responsible cause rather than by the noun
+that appears wrong. `references/review/residual-routing.md` provides compact conditional routes
+for foot/shoe, head/face, hand/grip, props, silhouette/overlap, clothing/folds, grounding, and
+value/tonal residuals.
+
+Representative route:
 
 ```text
 foot looks wrong
 ├─ parent leg axis/stance wrong → construction/balance-and-limbs
 ├─ ground relation wrong       → environment/ground-and-context
-└─ local shoe geometry wrong   → figure/legs-feet
+├─ local shoe geometry wrong   → figure/legs-feet
+└─ contact ownership wrong     → description/contour-and-overlap
 ```
 
-Keep progressive disclosure; do not turn `INDEX.md` into a giant diagnostic manual. These are
-conditional routing edges, not sequential drawing stages.
+Repeated local failure, coherent neighboring failures, endpoint conflict, impossible contact,
+invented connecting geometry, or concealment by tone/texture are explicit upstream-escalation
+signals. These are conditional routing edges inside the existing loop, not sequential drawing
+stages. `INDEX.md` remains compact and sends workers to the dedicated routing leaf only when the
+cause is uncertain.
 
-### A5 — remaining drawing leaves
+Evidence: `A4_RESIDUAL_ROUTING_HARDENING.md` and
+`dev/tests/test_skill_surface_boundary.py`.
+
+### A5 — remaining drawing leaves — NEXT
 
 Add guidance only when a recurring visual failure cannot be expressed cleanly by an existing leaf. Hands/grip and foreshortening are current candidates because they combine structure, contact, overlap, and identity. Avoid encyclopedic anatomy content.
+
+A5 should first determine whether each candidate truly needs a separate leaf or whether a focused
+hardening of the existing `torso-arms-hands`, `balance-and-limbs`, `contour-and-overlap`, and
+`attached-objects` guides is sufficient. Prefer the smaller change that improves worker behavior.
 
 ## Phase C — integrated fresh validation
 
@@ -148,5 +164,6 @@ Release must directly prove:
 - current program gates: `/GATES.md`
 - architecture/release-candidate invariants: existing B-slice capsules and `dev/release/vnext/`
 - A3 runtime ownership audit: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
+- A4 routing-edge evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - post-alignment dogfood/release: `VALIDATION_RELEASE.md`
 - deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
