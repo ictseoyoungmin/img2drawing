@@ -18,6 +18,21 @@ The current release is tracked in `src/img2drawing/_version.py`
 reads from dynamically. That module is the single source of truth for "what
 version is this" at build/runtime; release notes may record the version they describe.
 
+## 0.6.0rc2 — Public-root API alignment
+
+Narrowed `img2drawing.__all__` to the normal framework route centered on `DrawingSession`,
+its declarative intent/reference/render inputs, and the small observed-construction facade.
+Low-level history/action types, schemas, inspection primitives, evidence helpers, and
+advanced vNext records remain public through explicit owning namespaces instead of competing
+at the package root.
+
+Pre-rc2 direct root imports remain available through deprecated lazy compatibility shims,
+so this cleanup improves discoverability without abruptly breaking existing callers. Normal
+`dir(img2drawing)` now exposes only the canonical root surface. The B18 contract snapshot was
+realigned in the same change and the package candidate was bumped to `0.6.0rc2`; session
+methods, persisted schemas, renderer contract, intent axes, and R23 checkpoint support are
+unchanged.
+
 ## 2026-09-03 — Instruction graph + repository truth reconciliation
 
 Replaced the deployable skill's accumulated guidance surface with a stage-free instruction
