@@ -1,3 +1,10 @@
+"""R23 compatibility implementation for historical structural registration checks.
+
+Registration is not an instruction-graph lifecycle node. Current stage-free alignment and
+measurement capability is owned by :mod:`img2drawing.inspection`; the subject-specific
+comparison contracts exported here remain for explicit R23 compatibility until retirement.
+"""
+
 from .model import RegistrationLandmark, RegistrationConnection, RegistrationGraph
 from .grid import GridSpec
 from .compare import StructuralComparison, compare_registrations, RegistrationIntegrityError
