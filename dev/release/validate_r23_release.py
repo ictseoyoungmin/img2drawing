@@ -1,8 +1,9 @@
-"""Validate the frozen R23 manifest and its preserved compatibility boundary.
+"""Validate the frozen R23 manifest and its preserved runtime compatibility boundary.
 
 The current package is intentionally vNext. This historical validator checks that the
-frozen R23 release remains internally identified and explicitly reachable; it must never
-require the deployable skill surface itself to carry R23 stage documentation.
+frozen R23 release remains internally identified and explicitly reachable through the
+runtime compatibility namespace. It must not require the deployable skill instruction
+graph to carry R23 stage or migration documentation.
 """
 from __future__ import annotations
 
@@ -27,18 +28,6 @@ if RELEASE_SLICE != "B17_package_public_api_release_candidate":
     raise SystemExit("current release slice drift")
 if LEGACY_R23_PUBLIC_API != "DrawingRun/0.5.2-r23":
     raise SystemExit("legacy R23 public API identity drift")
-
-skill = (ROOT / "skills/img2drawing/SKILL.md").read_text(encoding="utf-8")
-for marker in ("DrawingSession", "references/legacy-r23.md"):
-    if marker not in skill:
-        raise SystemExit(f"canonical SKILL.md compatibility marker missing: {marker}")
-
-gateway = ROOT / "skills/img2drawing/references/legacy-r23.md"
-if not gateway.is_file():
-    raise SystemExit(
-        "missing R23 compatibility gateway: "
-        "skills/img2drawing/references/legacy-r23.md"
-    )
 
 compatibility_root = ROOT / "dev/release/r23/compatibility/stages"
 for filename in (
