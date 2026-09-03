@@ -1,189 +1,136 @@
-# img2drawing vNext full roadmap
+# img2drawing vNext roadmap
 
-Updated: 2026-09-02
+Updated: 2026-09-03
 Workflow: Bottleneck · Production WIP Limit = 1
 
-This roadmap reflects current HEAD and user direction. The governing change is that no
-new fresh visual dogfood is inserted between B09 and B18. Complete and freeze the product
-surface first, then validate it through the integrated D01–D06 campaign.
+This roadmap describes the current sequence. Detailed historical closure remains in slice records and capsules; this file should not become an append-only development log.
 
-## Phase A — foundation
+## Phase A — foundation and product completion
 
-| ID | State | Goal | Authority |
-|---|---|---|---|
-| B00 | CLOSED | R23 baseline and failure dossier | `capsules/B00.md` |
-| B01 | CLOSED | vNext architecture cut | `capsules/B01.md` |
-| B01-R1 | CLOSED | subject observation/boundary hardening | `STATUS.md` + preserved evidence |
-| B02+B03 | CLOSED | inspection and measurement foundation | `capsules/B02-B03.md` |
-| B04 | CLOSED | stage-free `DrawingSession` | `capsules/B04.md` |
-| B05 | CLOSED | construction grammar and canonical Pn de-anchoring | `capsules/B05.md` |
-| B06 | CLOSED | residual-driven correction and provenance | `capsules/B06.md` |
-| B07 | CLOSED | bounded evidence and telemetry | `capsules/B07.md` |
-| B07-R1 | CLOSED | value-region authoring, compaction, form-before-value | `STATUS.md` |
-| B08 | CLOSED | orthogonal intent/mode/style scaffold | `capsules/B08.md` |
+B00–B18 are CLOSED.
 
-The foundation provides one loop:
+Durable result:
 
 ```text
-observe/read subject or declare intent
-→ draw through one authoritative history
-→ inspect bounded evidence
-→ record the highest-impact residual
-→ edit the responsible representation
-→ inspect fresh evidence
+one DrawingSession/history core
+→ observed / imaginative / hybrid authority
+→ stage-free construction and residual correction
+→ bounded inspection/evidence
+→ compact value authoring
+→ intent / mode / style / finish contracts
+→ canonical RenderProfile and replay
+→ explicit legacy compatibility boundary
+→ package / API / schema freeze
 ```
 
-## Phase B — complete the product surface
+B18 closed the implementation/release-candidate contract. It did **not** prove fresh visual quality, unseen-subject robustness, or cross-agent reproducibility.
 
-| ID | State now | Goal | Depends |
-|---|---|---|---|
-| B09 | CLOSED | finish and relational recognition authoring | B08 + hardening |
-| B10 | CLOSED | intent-aware completion | B09 |
-| B11 | CLOSED | canonical `RenderProfile` and replay/GIF parity | B10 |
-| B12 | CLOSED | legacy runtime and persistence isolation | B11 |
-| B13 | CLOSED | reference authority and subjectless runtime | B12 |
-| B14 | CLOSED | drawing-mode capability completion | B13 |
-| B15 | CLOSED | style authoring completion | B14 |
-| B16 | CLOSED | Agent authoring/editing ergonomics | B15 |
-| B17 | CLOSED | package/public API/release-candidate truth | B16 |
-| B18 | CLOSED | dogfood-ready system freeze | B17 |
+## Phase B — post-freeze alignment before D01
+
+The instruction-graph audit exposed a small set of product-surface mismatches that should be closed before fresh dogfood. These are maintenance/hardening tasks, not new runtime architecture slices.
+
+| Order | State | Goal |
+|---|---|---|
+| A1 | CLOSED | repository truth reconciliation across handoff/gates/status/package/changelog |
+| A2 | NEXT | narrow/audit the normal public root API around `DrawingSession` |
+| A3 | OPEN | audit physical source/package isolation of stage-era/current-path modules |
+| A4 | OPEN | make residual → leaf → upstream escalation edges explicit in the instruction graph |
+| A5 | OPEN | harden only high-value missing drawing leaves such as hands/grip and foreshortening |
+
+A1–A5 follow the same bottleneck rule: solve the highest-impact mismatch without creating a parallel workflow. If an audit proves a closed B-slice premise wrong, reopen that premise narrowly instead of inventing an A-specific runtime feature.
+
+### A2 — public API surface
+
+Target mental model:
 
 ```text
-B00…B08 CLOSED
-      ↓
-B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
-      [NO NEW FRESH DOGFOOD BETWEEN THESE SLICES]
+normal worker/user
+    ↓
+DrawingSession + documented high-level public contracts
+    ↓
+advanced/shared capability only when explicitly needed
+    ↓
+legacy compatibility only through explicit legacy boundary
 ```
 
-Each slice closes its technical contract with deterministic fixtures,
-unit/integration regression, preserved evidence, and direct review. It makes no
-fresh-unseen-subject or cross-agent quality claim.
+Audit root `__all__`, low-level history/action exports, schema constants, aliases, and compatibility helpers against real support obligations. Do not break compatibility merely to make `dir(img2drawing)` shorter.
 
-### B09 — finish and relational recognition
+### A3 — physical runtime isolation
 
-Connect `pose | subject | form_light | expressive` to distinct authoring policy.
-Recognition is a relationship-quality target—not P7 or a lifecycle gate. Face, hair,
-hands, feet, clothing, and props are judged through subject-specific spacing, overlap,
-contact, termination, and topology. Form remains legible before value or detail.
-
-### B10 — intent-aware completion
-
-Define done as absence of material residuals against declared intent, not stage/checklist
-completion. `FinishRecord` binds the Agent decision to current state, intent, final
-inspection, history cursor, rationale, and accepted limitations. It is not an automatic
-artistic certificate, and later material mutation makes it stale.
-
-### B11 — canonical rendering and replay
-
-Separate `StyleGuide` from rendering. Bind renderer/version, material, paper,
-supersampling, seed, compositing, and encoding in one versioned `RenderProfile`. One
-history/profile provides action-0-to-latest replay, bounded GIF, and canonical PNG parity.
-
-### B12 — legacy isolation
-
-Make `img2drawing` canonical and place R23 under `img2drawing.legacy.r23`. Canonical
-imports cannot load stage registry, stage review, reopen, or Pn persistence. Resume and
-migration reuse the shared stroke/history/renderer core; no copied `core_v2` exists.
-Physical R23 deletion remains deferred.
-
-### B13 — reference authority and subjectless runtime
-
-Complete runtime support for declarations scaffolded in B08:
+Inventory packages such as stage-era runtime, exemplar/review-era modules, registration helpers, and explicit legacy code. Classify each as:
 
 ```text
-observed    → readable subject is evidence authority
-imaginative → subjectless canvas + declared intent is authority
-hybrid      → preserved reference constraints + explicit transformations are authority
+current shared capability
+current implementation detail
+explicit compatibility
+retirement/archive candidate
 ```
 
-Support subjectless `DrawingSession` and reference-free inspection/correction semantics
-without fake overlays, measurements, or reference authority.
+The goal is for source/package layout to communicate the same stage-free product model as the docs. Physical removal remains evidence-bound.
 
-### B14 — drawing-mode capability
+### A4 — instruction routing edges
 
-Complete `croquis`, `figure_drawing`, `tonal_study`, `line_study`, and `free_draw` on one
-core. `ModeGuide` may describe observations, grammar, omissions, finish emphasis, and
-completion questions, but never stage count, cursor, `advance`, or automatic PASS.
+The current reference tree has good nodes but many escalation edges are implicit. Make common decisions explicit, for example:
 
-### B15 — style authoring
+```text
+foot looks wrong
+├─ parent leg axis/stance wrong → construction/balance-and-limbs
+├─ ground relation wrong       → environment/ground-and-context
+└─ local shoe geometry wrong   → figure/legs-feet
+```
 
-Complete a small evidence-backed surface starting with `pencil_loose`,
-`graphite_academic`, and `graphite_tonal`, using one base plus explicit overrides and
-optional structured custom prose. Style cannot change geometry truth or become a raster
-post-filter.
+Keep progressive disclosure; do not turn `INDEX.md` into a giant diagnostic manual.
 
-### B16 — authoring/editing ergonomics
+### A5 — remaining drawing leaves
 
-Make existing draw/replace/segment/lift/delete/fill operations easy to locate and use in
-long correction loops. Reuse `part`, `role`, provenance, and supersession instead of
-creating a new ownership lifecycle.
+Add guidance only when a recurring visual failure cannot be expressed cleanly by an existing leaf. Hands/grip and foreshortening are current candidates because they combine structure, contact, overlap, and identity. Avoid encyclopedic anatomy content.
 
-### B17 — package and release-candidate truth
+## Phase C — integrated fresh validation
 
-Align wheel/sdist, clean install, examples, public/support matrix, documentation links,
-package content, versioning, migration, and CI with canonical vNext truth. This proves
-integration readiness, not final visual quality.
-
-### B18 — dogfood-ready freeze
-
-Freeze the canonical API, session schema, intent, `RenderProfile`, mode/style surface,
-and legacy-adapter boundary. Close known implementation TODOs. Subsequent dogfood defects
-reopen responsible B-slices instead of adding new feature slices.
-
-## Phase C — integrated dogfood
-
-Starts only after B18. [`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md) owns the detailed
-contracts.
+Starts after A1–A5 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
 
 ```text
 D01 difficult observed croquis
-D02 observed figure and subject recognition
+D02 observed figure / subject recognition
 D03 tonal study
 D04 observed free-draw
-D05 imaginative and hybrid
+D05 imaginative + hybrid
 D06 cross-agent reproducibility
 ```
 
-All runs use unseen/fresh inputs, omit answer images, authored coordinate tables, prior
-sessions/traces, and Pn packets, and evaluate cost together with visual quality. A defect
-reopens its responsible B-slice—for example, facial relation failure reopens B09,
-subjectless persistence reopens B13, replay parity reopens B11, and edit-surface failure
-reopens B16.
+Fresh workers receive only the installed/current skill/package, fresh input when applicable, the user task, declared/inferred intent, and ordinary runtime/output paths. No answer image, authored coordinates, prior sessions, prior residual priorities, or subject-specific solution scripts.
 
-## Phase D — harden and release
+A D-case may reopen the responsible B/A premise. Dogfood is validation, not a second architecture layer.
+
+## Phase D — consolidate and release
 
 Starts only after D01–D06 pass.
 
 ```text
-R01 consolidation      absorb repeated fixes into canonical docs/API
-R02 final regression   modes + checkpoint/resume + PNG/replay/GIF
-R03 physical R23 retirement
+R01 consolidation      absorb repeated evidence-backed fixes
+R02 final regression   modes + resume + correction + PNG/replay/GIF + package
+R03 physical R23 retirement / bounded adapter decision
 R04 release
 ```
 
-Only R03 may delete remaining stage runtime, review manifests, Pn references, stale
-exports, or legacy package data—or retain a deliberately time-bounded adapter. Frozen Git
-baseline and historical evidence remain intact.
-
 ## Global release exit
 
-Release must directly prove all of the following:
+Release must directly prove:
 
-- A new-task worker completes `observe/declare → draw → inspect → correct → finish`
-  without Pn.
-- Observed, imaginative, and hybrid authority use one session/history core.
-- Mode differences appear in authored behavior rather than metadata alone.
-- Style differences appear in line/value/edge/detail decisions rather than post-filters.
-- Major form and overlap remain legible without tone.
-- Canonical session cost does not explode through brute-force authored microstrokes.
-- PNG/replay/GIF share renderer provenance and final-state parity.
-- Package, docs, examples, and CI point to the same canonical route.
-- R23 is not exposed as a normal route outside its explicit compatibility/history boundary.
+- a fresh worker completes `observe/declare → draw → inspect → correct → finish` without Pn;
+- observed, imaginative, and hybrid work share one session/history core;
+- mode/style differences affect authored behavior rather than metadata or post-filters alone;
+- major form, overlap, grounding, identity, and contact survive line/value simplification;
+- session cost does not explode through brute-force microstroke accumulation;
+- PNG/replay/GIF share canonical renderer provenance and final-state parity;
+- public API, package, deployable docs, CI, and support policy tell the same canonical truth;
+- no deployable `examples/` directory is required for release unless representative examples have actually earned that role;
+- R23 is absent from the normal route and any retained compatibility window is explicit and tested.
 
-## Planning authority
+## Authority
 
-- Current state: `STATUS.md`.
-- Architecture invariants: `CONTRACT.md`.
-- Executable work: `slices/B09.md` through `slices/B18.md`.
-- Post-freeze validation/release: `VALIDATION_RELEASE.md`.
-- Historical HTML and temporary plans are inputs, never current status authority.
+- current state: `STATUS.md`
+- current program gates: `/GATES.md`
+- architecture/release-candidate invariants: existing B-slice capsules and `dev/release/vnext/`
+- post-alignment dogfood/release: `VALIDATION_RELEASE.md`
+- deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
