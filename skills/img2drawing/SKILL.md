@@ -52,7 +52,7 @@ SKILL.md
    ├─ figure/       head/face/hair, torso/arms/hands, legs/feet, clothing folds
    ├─ props/        attached-object geometry and body contact
    ├─ environment/  ground and contextual structure
-   ├─ review/       residual correction, retirement, completion
+   ├─ review/       residual correction/routing, retirement, completion
    ├─ output/       canonical render and replay
    └─ api/          public runtime surface only
 ```
@@ -72,7 +72,9 @@ For every new task:
 4. For figures, form one whole-subject construction hypothesis using the construction
    leaves before spending marks on local description.
 5. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
-   owns it.
+   owns its cause. If the visible part may only be a symptom, use
+   `review/residual-routing.md` to choose the local or upstream premise instead of opening
+   every leaf.
 6. After every meaningful mutation, inspect a fresh render and use
    `review/residual-correction.md`.
 7. Finish only from current evidence, then export through the output route.
@@ -88,7 +90,8 @@ requested target is already clear.
 
 A useful correction changes the drawing, not the paperwork. Fix one to three highest-impact
 problems at a time. When a local cleanup would hide a larger structural error, revise the
-structural premise instead.
+structural premise instead. Repeated failure of the same local correction is a routing
+signal to inspect the parent relation, not a reason to add more local strokes.
 
 ## Whole-subject construction
 
