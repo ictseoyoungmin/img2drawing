@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Audit B17 source, artifacts, clean install, and canonical examples.
+"""Audit the release-candidate package, clean install, instruction graph, and supply-chain boundary.
 
-This is a packaging/integration verifier. It deliberately makes no visual-quality claim.
+This verifier checks packaging and integration only. It deliberately makes no visual-quality
+claim and does not require drawing examples in the deployable skill.
 """
 
 from __future__ import annotations
@@ -28,7 +29,7 @@ PUBLIC_API = "DrawingSession/0.6.0-vnext"
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
-    "dogfood", "drawings", "showcase", "temp",
+    "dogfood", "drawings", "showcase", "temp", "examples",
 }
 CONTROL_PLANE_FILES = {
     "CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "NOTICE", "NOTICE.md",
@@ -38,6 +39,25 @@ LEGACY_REVIEW_FILES = {
     "dual-reference-review.md", "fresh-worker-defect-closure.md", "local-review-api.md",
     "reopen-recovery.md", "self-visual-audit.md", "when-to-advance.md",
     "worker-pass-memory.md",
+}
+REQUIRED_GRAPH_FILES = {
+    "SKILL.md",
+    "references/INDEX.md",
+    "references/foundation/line-economy.md",
+    "references/foundation/reference-authority.md",
+    "references/foundation/scope-and-precedence.md",
+    "references/modes/croquis.md",
+    "references/observation/visual-observation.md",
+    "references/construction/gesture-and-masses.md",
+    "references/description/descriptive-geometry.md",
+    "references/figure/head-face-hair.md",
+    "references/figure/legs-feet.md",
+    "references/figure/clothing-folds.md",
+    "references/props/attached-objects.md",
+    "references/environment/ground-and-context.md",
+    "references/review/residual-correction.md",
+    "references/output/render-profile-and-replay.md",
+    "references/api/public-surface.md",
 }
 
 
@@ -70,7 +90,6 @@ def _canonical_docs() -> list[Path]:
     documents = [ROOT / "README.md"]
     documents.extend(PACKAGE.glob("*.md"))
     documents.extend(path for path in (PACKAGE / "references").rglob("*.md"))
-    documents.extend((PACKAGE / "examples" / name / "README.md") for name in ("observed", "subjectless"))
     return sorted(set(documents))
 
 
@@ -87,6 +106,7 @@ def check_source() -> None:
     assert "verify_vnext_b17.py" in workflow
     assert "validate_r23_release.py" not in workflow
 
+    assert not (PACKAGE / "examples").exists(), "uncurated examples leaked into deployable skill"
     for name in CONTROL_PLANE_FILES:
         assert not (PACKAGE / name).exists(), f"control-plane file leaked into skill root: {name}"
     assert not (PACKAGE / "playbooks").exists(), "legacy playbooks leaked into deployable skill"
@@ -95,6 +115,8 @@ def check_source() -> None:
         assert not (PACKAGE / "references" / "review" / name).exists(), f"legacy review doc leaked: {name}"
     for name in ("CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "RELEASE.md", "SUPPORT.md"):
         assert (RELEASE_RECORDS / name).is_file(), f"missing maintainer release record: {name}"
+    for relative in REQUIRED_GRAPH_FILES:
+        assert (PACKAGE / relative).is_file(), f"missing instruction-graph leaf: {relative}"
 
     link_pattern = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
     missing: list[str] = []
@@ -131,12 +153,9 @@ def _scan_text(name: str, payload: bytes) -> None:
     assert not re.search(r"AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}", text), f"secret-like token: {name}"
 
 
-def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
+def check_artifacts(work: Path) -> tuple[Path, Path]:
     dist = work / "dist"
-    _run(
-        [sys.executable, "-m", "build", "--outdir", str(dist)],
-        cwd=PACKAGE,
-    )
+    _run([sys.executable, "-m", "build", "--outdir", str(dist)], cwd=PACKAGE)
     wheel = next(dist.glob("*.whl"))
     sdist = next(dist.glob("*.tar.gz"))
 
@@ -151,14 +170,16 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
         metadata = email.parser.Parser().parsestr(archive.read(metadata_name).decode())
         assert metadata["Version"] == VERSION
         runtime_requires = [
-            value for value in metadata.get_all("Requires-Dist", [])
-            if "extra ==" not in value
+            value for value in metadata.get_all("Requires-Dist", []) if "extra ==" not in value
         ]
         assert any(value.lower().startswith("numpy>=") for value in runtime_requires)
         assert any(value.lower().startswith("pillow>=") for value in runtime_requires)
         assert len(runtime_requires) == 2
         assert any(name.endswith(".dist-info/licenses/LICENSE") for name in wheel_names)
-        assert not any(name.endswith(".dist-info/licenses/NOTICE") or name.endswith(".dist-info/licenses/NOTICE.md") for name in wheel_names)
+        assert not any(
+            name.endswith(".dist-info/licenses/NOTICE") or name.endswith(".dist-info/licenses/NOTICE.md")
+            for name in wheel_names
+        )
 
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
@@ -170,7 +191,6 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
             assert not FORBIDDEN_ARCHIVE_PARTS.intersection(relative), member.name
             assert relative[:1] != ("playbooks",), member.name
             assert relative[:2] != ("references", "stages"), member.name
-            assert "full_body_croquis" not in relative and "p1_target.png" not in relative
             if relative and relative[-1] in CONTROL_PLANE_FILES:
                 raise AssertionError(f"control-plane file shipped in sdist: {member.name}")
             if len(relative) >= 3 and relative[:2] == ("references", "review") and relative[-1] in LEGACY_REVIEW_FILES:
@@ -179,34 +199,23 @@ def check_artifacts(work: Path) -> tuple[Path, Path, Path]:
                 stream = archive.extractfile(member)
                 assert stream is not None
                 _scan_text(member.name, stream.read())
-        required = {
-            "SKILL.md", "references/INDEX.md", "references/reference-authority.md",
-            "references/legacy-r23.md", "examples/mechanical_workflows.py",
-            "examples/observed/run.py", "examples/subjectless/run.py",
-        }
         relative_names = {"/".join(PurePosixPath(name).parts[1:]) for name in names}
-        assert required.issubset(relative_names), sorted(required - relative_names)
-        archive.extractall(work / "sdist")
-    extracted = next((work / "sdist").iterdir())
-    return wheel, sdist, extracted
+        assert REQUIRED_GRAPH_FILES.issubset(relative_names), sorted(REQUIRED_GRAPH_FILES - relative_names)
+        assert not any(name.startswith("examples/") for name in relative_names)
+    return wheel, sdist
 
 
-def check_clean_install(work: Path, wheel: Path, extracted: Path) -> None:
+def check_clean_install(work: Path, wheel: Path) -> None:
     environment = work / "venv"
     venv.EnvBuilder(with_pip=True, system_site_packages=False).create(environment)
     python = environment / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     clean_env = os.environ.copy()
     clean_env.pop("PYTHONPATH", None)
-    _run(
-        [str(python), "-m", "pip", "install", "--no-input", str(wheel)],
-        cwd=work,
-        env=clean_env,
-    )
+    _run([str(python), "-m", "pip", "install", "--no-input", str(wheel)], cwd=work, env=clean_env)
     dependency_locations = json.loads(
         _run(
             [
-                str(python),
-                "-c",
+                str(python), "-c",
                 "import json,numpy,PIL; print(json.dumps({'numpy':numpy.__file__,'PIL':PIL.__file__}))",
             ],
             cwd=work,
@@ -228,19 +237,6 @@ def check_clean_install(work: Path, wheel: Path, extracted: Path) -> None:
     assert str(installed["file"]).startswith(str(environment)), installed["file"]
     assert "DrawingSession" in installed["exports"] and "DrawingRun" not in installed["exports"]
 
-    for example in ("observed", "subjectless"):
-        output = work / f"{example}-output"
-        result = _run(
-            [str(python), str(extracted / "examples" / example / "run.py"), "--output", str(output)],
-            cwd=work,
-            env=clean_env,
-        )
-        payload = json.loads(result)
-        assert payload["version"] == VERSION
-        assert payload["finish_current_after_resume"] is True
-        assert (output / "canonical_final.png").is_file()
-        assert (output / "replay" / "timelapse.gif").is_file()
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -252,9 +248,9 @@ def main() -> None:
         return
     with tempfile.TemporaryDirectory(prefix="img2drawing-b17-") as temporary:
         work = Path(temporary)
-        wheel, _sdist, extracted = check_artifacts(work)
-        check_clean_install(work, wheel, extracted)
-    print("B17 package/API/clean-install/examples/supply-chain audit: PASS")
+        wheel, _sdist = check_artifacts(work)
+        check_clean_install(work, wheel)
+    print("B17 package/API/clean-install/instruction-graph/supply-chain audit: PASS")
 
 
 if __name__ == "__main__":

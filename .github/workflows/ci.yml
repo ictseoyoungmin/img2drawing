@@ -32,7 +32,7 @@ jobs:
           python dev/tools/verify_bottleneck_completion.py --check s10
           python dev/tools/verify_bottleneck_completion.py --check s11-s12
           python dev/tools/verify_bottleneck_completion.py --check s14
-      - name: Verify B17 package, installed API, examples, and supply-chain boundary
+      - name: Verify B17 package, installed API, instruction graph, and supply-chain boundary
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python dev/tools/verify_vnext_b17.py

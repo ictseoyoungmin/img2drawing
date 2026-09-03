@@ -1,294 +1,187 @@
 ---
 name: img2drawing
-description: Creates inspectable hand-drawn images through one stage-free, residual-driven stroke workflow using observed, imaginative, or hybrid reference authority. Supports subject-backed and subjectless sessions without fabricating reference evidence.
+description: Draws inspectable images with explicit strokes through observation, construction, descriptive geometry, residual correction, and replayable output. Croquis reduces mark count without simplifying observed geometry.
 ---
 
 # img2drawing
 
 ## Mission
-Draw from references with explicit strokes. The worker/Agent is the semantic authority. CV/evidence tools may help the worker see, but may not decide pose, anatomy, or artistic correctness.
 
-## Fresh-worker guarantee
-A competent worker who receives this skill, an available reference for observed work,
-and the requested drawing mode/style must be able to act without pass-by-pass coaching.
+Draw with explicit, inspectable marks instead of generating a finished image. The Agent is
+the semantic and artistic authority. Rendering, measurement, overlays, crops, and other
+evidence tools may help the Agent see the current state; they may not decide pose,
+anatomy, identity, topology, or artistic correctness.
 
-Observed work supplies a readable subject. Imaginative work supplies an explicit canvas,
-an imaginative `DrawingIntent`, and `ReferenceAuthority.imaginative()` with concrete
-composition/shape goals. Hybrid work supplies a subject plus distinct preserved and
-transformed `ReferenceConstraint` records. Never create a blank placeholder subject or
-claim overlay/registration evidence when no reference exists. Read
-[`references/reference-authority.md`](references/reference-authority.md).
+For observed work, the subject is the geometry truth. For imaginative work, declared
+intent is the truth. For hybrid work, preserve and transform only the explicitly declared
+constraints. Read [`references/foundation/reference-authority.md`](references/foundation/reference-authority.md).
 
-Observe or declare intent, draw explicit strokes, inspect the current snapshot, repair the
-highest-impact residual, and repeat until the declared finish intent is materially met.
-Do not stop after a routine pass to ask “continue?” or “is this okay?”. Ask only when the
-source is missing/unreadable, the target is genuinely ambiguous, or requirements conflict.
+## Non-negotiable drawing principles
 
-## Authority model
-For new work, `DrawingSession` is the only orchestration authority. `DrawingRun`, stage
-review, and stage-oriented orchestration are legacy R23 compatibility only. Enter them
-explicitly through `img2drawing.legacy.r23` and read
-[`references/legacy-r23.md`](references/legacy-r23.md). Root legacy attributes are
-deprecated, non-advertised compatibility shims—not a normal import route.
+1. **Croquis economizes marks, not observed geometry.** Fewer lines mean fewer redundant
+   decisions, not a simpler head, flatter face, straighter leg, boxier foot, or invented
+   fold pattern.
+2. **Preserve shape while reducing line count.** Keep the observed curvature, width
+   changes, overlap, negative space, contact, fold origin, and identity-bearing asymmetry.
+3. **There is no generic “detail stage.”** Descriptive lines are added when a specific
+   relationship requires them. A face, shoe, cuff, rifle, or fold can become the next
+   highest-impact problem at any time.
+4. **Construction is a hypothesis, not a license to symbolize.** Gesture and masses must
+   explain the subject; they must not replace it with tubes, circles, beans, boxes, or
+   generic anatomy.
+5. **Do not invent hidden endings.** Occluded hands, feet, hair tips, garment edges, and
+   object contacts end where the evidence ends.
+6. **Macro residuals outrank micro polish.** Pose, mass, balance, silhouette, overlap,
+   grounding, and major object relations are repaired before small accents.
+7. **Line accumulation is not fidelity.** When many simple strokes pile up around one
+   feature, replace them with fewer lines that describe the correct boundary or form.
 
-- `core/`: strokes, actions, history, session.
-- `observation/`: agent-authored semantic observations, material palette, read-only evidence.
-- `construction/`: stage-free pose, mass, balance, and joint guidance.
-- `modes/`: declarative drawing goals; never lifecycle state.
-- `review/`: current-state inspection and residual correction.
-- `canvas/`: inspect and edit the current drawing.
-- `render/`: canonical pencil-contact material and the cached tone scale.
-- `provenance/`: replay and timelapse.
+## Instruction graph
 
-## Plain-data drawing intent
+`SKILL.md` is the router. Read `references/INDEX.md`, then load only the smallest relevant
+leaves:
 
-Use `DrawingIntent` when the request names a reference relationship, drawing mode,
-finish emphasis, or style profile. Its four fields are orthogonal data selections:
-`reference_mode` (`observed`, `imaginative`, `hybrid`), `drawing_mode` (`croquis`,
-`figure_drawing`, `tonal_study`, `line_study`, `free_draw`), `finish_intent` (`pose`, `subject`,
-`form_light`, `expressive`), and `style_profile` (the built-ins `pencil_loose`,
-`graphite_academic`, `graphite_tonal`, or an explicit `custom:<identifier>`). No field is
-a stage, cursor, pipeline, or completion gate. `DrawingSession.create(intent=...)` records the initial
-selection; `session.set_intent(..., reason=...)` records a later selection as provenance
-without changing geometry or forking the action history. A session's reference authority
-mode is immutable: an intent change may adjust drawing/finish/style axes but cannot
-silently redefine what counts as comparison truth.
+```text
+SKILL.md
+└─ references/
+   ├─ foundation/   truth, precedence, line economy
+   ├─ modes/        croquis, figure, line, tonal, free draw
+   ├─ observation/  whole/part reading and measurement boundaries
+   ├─ construction/ gesture, masses, balance, limbs
+   ├─ description/  contour, descriptive geometry, value/edge/material
+   ├─ figure/       head/face/hair, torso/arms/hands, legs/feet, clothing folds
+   ├─ props/        attached-object geometry and body contact
+   ├─ environment/  ground and contextual structure
+   ├─ review/       residual correction, retirement, completion
+   ├─ output/       canonical render and replay
+   └─ api/          public runtime surface only
+```
 
-Resolve the matching `ModeGuide` for observations and construction vocabulary,
-`FinishGuide` for the relationships and omissions required by the stopping target, and
-`StyleGuide` for the material behavior of the selected marks. Reference/geometry truth
-outranks finish advice, which outranks a conflicting style preference. These guides are
-immutable plain data: they do not advance, close, judge, select a renderer, or apply a
-raster post-filter. Read [`references/finish/identity-and-value.md`](references/finish/identity-and-value.md)
-before subject, form-light, or expressive refinement. A guide may be read again when an
-inspection changes the Agent's hypothesis. The explicit compatibility lookup
-`full_body_croquis` returns an ordinary `observed`/`croquis` intent and is not a lifecycle
-state. See [`references/intent.md`](references/intent.md).
+This taxonomy is not a lifecycle. Move backward whenever observation disproves the current
+premise, and skip leaves that do not own the current problem.
 
-For style requests, read
-[`references/styles/authoring-styles.md`](references/styles/authoring-styles.md). Resolve
-one preset base with explicit field overrides, or structure every field of a custom guide.
-Surface unresolved language or conflicts with task/reference/geometry truth explicitly.
-Changing style records intent provenance only; keep, retire, replace, or add marks through
-the ordinary history-safe edit API.
+## Start route
+
+For every new task:
+
+1. Establish reference authority and requested drawing mode.
+2. Read `foundation/line-economy.md` and the chosen mode guide.
+3. For observed work, read `observation/visual-observation.md`. Use
+   `observation/measuring-boundaries.md` only when measurements or ambiguous boundaries are
+   actually needed.
+4. For figures, form one whole-subject construction hypothesis using the construction
+   leaves before spending marks on local description.
+5. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
+   owns it.
+6. After every meaningful mutation, inspect a fresh render and use
+   `review/residual-correction.md`.
+7. Finish only from current evidence, then export through the output route.
+8. Read `api/public-surface.md` only when code must call the runtime.
 
 ## Canonical drawing loop
 
-New observed figure tasks use `img2drawing.DrawingSession` and the compact helpers
-`PoseObservation`, `InitialConstruct`, `ConstructionMark`, `author_initial_construct()`,
-and `inspect_initial_construct()`. Other drawing modes use the same session/history and
-choose their own declarative guidance from [`references/INDEX.md`](references/INDEX.md).
+`observe → construct → render → inspect → select residual → correct → render again`
 
-For a figure, the first pass is one conceptual whole-figure hypothesis:
+Continue the same loop while description and finish marks are added. Do not stop merely
+because a routine pass completed, and do not ask for permission after each pass when the
+requested target is already clear.
 
-`read pose → line of action → head/ribcage/pelvis mass → balance/plumb → joints/limbs`
+A useful correction changes the drawing, not the paperwork. Fix one to three highest-impact
+problems at a time. When a local cleanup would hide a larger structural error, revise the
+structural premise instead.
 
-Before drawing, write a short `PoseObservation` covering support side, dominant flow,
-head/ribcage/pelvis relationship, shoulder/pelvis opposition, silhouette keys, negative
-spaces, ground, prop axis, occlusion, and uncertainty. Then author explicit subject-space
-`ConstructionMark`s that express the observed relationships. This is drawing vocabulary,
-not a runtime phase order; authored marks may be interleaved or revisited.
-Use `author_initial_construct()` so the observation is recorded first and the marks are
-sent through the existing atomic `draw_many()` path.
+## Whole-subject construction
 
-Use `inspect_initial_construct()` immediately after the first construct. It reuses the
-existing `InspectionSheet` and can show the whole view, focused ROIs, contrast overlay,
-`PlumbLine`, and `GroundGuide`. If the whole figure does not read as this subject's pose,
-correct the construction premise before contour or detail. The worker remains free to
-move backward when observation disproves a mark.
+For an observed figure, establish one coherent hypothesis covering:
 
-The coordinates in this example are intentionally agent-authored from the current subject;
-never copy coordinates from a grammar exemplar.
+- dominant flow / line of action;
+- head, ribcage, and pelvis placement and orientation;
+- shoulder and pelvis relationship;
+- support side, plumb, ground, and balance;
+- major limb chains and negative spaces;
+- prop axis, body contact, and occlusion when a prop is present.
 
-```python
-from img2drawing import (
-    ConstructionMark, DrawingSession, InitialConstruct, PoseObservation,
-    author_initial_construct, inspect_initial_construct,
-)
+Construction marks may be sparse, but the represented relationships may not be vague. A
+short line can encode an exact joint direction; a mass can preserve a specific tilt and
+width change. Do not spend the quality budget on facial accents or wrinkle noise while the
+whole pose still reads incorrectly.
 
-session = DrawingSession.create(subject="subject.png", output_dir="out")
+## Descriptive geometry, not symbolic detail
 
-observation = PoseObservation(
-    support_side="image-left with a wider counterbalance stance",
-    flow="head-left → torso-right → pelvis-left reversal",
-    head_ribcage_pelvis="head turns back over a three-quarter ribcage above a twisted pelvis",
-    shoulder_pelvis="shoulders slope against the pelvis tilt",
-    silhouette_keys=("light head mass", "long diagonal prop", "split boot stance"),
-    negative_spaces=("arm-to-torso opening", "space between legs"),
-    ground_relation="both feet land on the same ground plane",
-    major_prop_axis="diagonal from image-left shoulder toward lower center",
-    occluded_limb_evidence=("far arm continues behind the prop into the hand",),
-)
-construct = InitialConstruct(
-    observation=observation,
-    marks=(
-        ConstructionMark("loa", "line_of_action", "gesture", "body_flow", ((120, 180), (126, 240), (142, 310))),
-        ConstructionMark("head", "mass_blocking", "mass", "head", ((108, 110), (138, 96), (170, 118))),
-        # Add ribcage/pelvis, joints/limbs, feet, and the prop axis.
-    ),
-)
-author_initial_construct(session, construct)
-inspect_initial_construct(session, construct)
-```
+Descriptive drawing means selecting lines that explain real observed form. A good sparse
+line set usually prioritizes:
 
-Until the initial whole figure reads as this subject's pose, do not spend the quality
-budget on metadata or detail coverage. The shared residual correction loop applies after
-every mutation.
+- silhouette turns and width changes;
+- overlap boundaries and contact handoffs;
+- form turns or plane breaks that clarify volume;
+- identity-bearing feature placement;
+- garment seams and folds that arise from visible tension, compression, or contact;
+- foot/ground and object/body contact.
 
-For each repair, anchor the Agent's selected mismatch with `DrawingSession.record_residual()`
-against the latest inspection and observation. Choose `scope="global"` when a premise or
-mass must be reconstructed, or `scope="local"` for a bounded contour/segment concern.
-Apply an explicit `replace_stroke`, `replace_segment`, `soft_lift`, `delete_stroke`, or
-`draw` action, inspect the new snapshot, and bind the action plus fresh inspection with
-`resolve_residual()` (or `record_correction(decision="revise")` when the attempt is not
-accepted). A mutation makes prior evidence stale; the Agent chooses priority and keeps
-or revises the residual. Read [`references/review/residual-correction.md`](references/review/residual-correction.md)
-for the compact record fields and provenance contract.
+Do not substitute generic symbols for these relationships. In particular:
 
-In a long history, call `session.authored_elements(part=..., role=..., action_id=...,
-observation_id=...)` to find current authored strokes or fills. Resolve an earlier whole-
-stroke identity with `session.resolve_authored_element()`, and use
-`session.authoring_summary(limit=...)` for bounded cursor/state-bound context. These are
-fresh derived views, not persisted ownership state. Read
-[`references/review/authored-element-navigation.md`](references/review/authored-element-navigation.md).
+- a head is not a circle with facial ticks;
+- hair is not a stack of parallel strands;
+- a leg is not a pair of rails;
+- a foot or shoe is not a rectangular block;
+- clothing is not a field of decorative zigzags;
+- extra strokes around an uncertain form do not make the form more accurate.
 
-### Evidence budget
+Read the matching `description/` and `figure/` leaves when one of these becomes limiting.
 
-`DrawingSession.inspect()` defaults to one tiled whole-view sheet (`mode="quick"`).
-Quick accepts no ROI, guide, grid, or measurement extras. The Agent may choose
-`mode="focused"` with one to three prioritized ROIs (and no guides, grid, or
-measurements), or opt into `mode="deep"` with up to three ROIs and guides/grid/measurements
-when uncertainty warrants it. Deep escalation must include a short human-readable
-`escalation_reason`;
-these are inspection presentation/read budgets, not lifecycle stages or acceptance
-gates. Observable reads can be recorded with
-`session.record_evidence_read(inspection_id, artifact="sheet")`. Telemetry counts
-artifacts, reads, review turns, and elapsed work only; it never selects a residual,
-changes geometry, or emits an artistic PASS/FAIL. Earlier immutable sheets remain
-available and are marked stale when their drawing-state digest no longer matches.
+## Head and face policy
 
-## Three questions before a mark, and again before a correction
+When the head is visible enough to matter, preserve its cranial-to-jaw silhouette, face
+orientation, feature spacing, hair mass, and the few internal turns that make the subject
+recognizable. Spend lines on informative boundaries, not repeated search marks. A few
+accurate exterior and interior lines are preferred over many simplified ones. See
+`figure/head-face-hair.md`.
 
-These are cheap to ask and they are where completed drawings actually go wrong. A
-correction is a new premise and inherits none of them, so ask them again on every repair.
+## Legs and feet policy
 
-1. **What does this line separate?** Name both sides. Same name on both sides means the
-   stroke duplicates an existing contour instead of articulating anything; an inner limb
-   edge that separates sleeve from sleeve is in the wrong place. Put the relation in
-   `part`.
-2. **Could my measurement see this boundary?** A luminance profile answers only a
-   luminance question. On a subject in dark clothing, bare skin and a mid-grey background
-   sit together far from the garment, so a darkness scan reports skin as absent body and
-   cuts a false notch where a hand emerges. Build a `SubjectPalette`, read
-   `ambiguous_pairs()`, and ask `boundary_kind()` before trusting an edge.
-3. **Did I observe this ending, or assume it?** Hands, feet, features and hair tips are
-   where invention is cheapest. Two arms do not imply two visible hands; a gloved hand in
-   a pocket has no visible knuckles; a jaw does not continue under hair. Occluded means
-   draw no ending - the limb's contour runs into whatever hides it.
+Preserve thigh/calf width changes, knee transition, ankle direction, foot orientation,
+heel/toe/sole relationships, footwear structure, stance spacing, and ground contact. Do
+not hide an incorrect lower body behind a generic tapered tube or box foot. See
+`figure/legs-feet.md`.
 
-Establish a chain before refining what it ends in: shoulder to elbow to wrist, then the
-hand. A third correction in a row to one terminal means its parent limb was never drawn.
+## Clothing-fold policy
 
-Read [`references/observation/measuring-boundaries.md`](references/observation/measuring-boundaries.md)
-before the first measurement of a new subject.
-
-## Value and tone
-
-A value region is one authored decision. Use `DrawingSession.fill_region()` with
-the mean `value` you read off the subject (0 black - 255 paper); the material
-that reaches it comes from a cached deposition calibration. Lights inside a
-dark mass are `reserved` by the fill, not erased back out afterwards.
-
-Do not manually generate individual value strokes, sample straight lines into
-polylines, or probe renderer opacity/pressure inside a drawing session. Use the cached
-calibration supplied by the runtime instead. Read
-[`references/value/tone-and-fill.md`](references/value/tone-and-fill.md)
-before any value work.
-Revise a value region through the canonical `session.replace_fill_region()` method; the
-historical root function is only a compatibility delegate.
-
-## Renderer policy
-
-All normal drawing, review, replay, final export and timelapse paths use
-`img2drawing.render.pillow_pencil_contact`. This is the sole default renderer because it
-preserves pencil grade, pressure, contact, grain, paper interaction and eraser behavior.
-
-Final PNG, cursor replay, and GIF export use the session's immutable `RenderProfile`.
-Call `session.render_final()`, `session.render_at()`, and `session.export_timelapse()`;
-do not call a different renderer or change supersampling/material kwargs per output.
-Replay always includes cursor 0 and latest. A value region is one authored replay action,
-not one frame per generated contact. Read
-[`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md)
-before exporting. A checkpoint created before `RenderProfile` was persisted must call
-`migrate_render_profile()` explicitly before canonical output.
-
-Legacy uniform-pressure Pillow renderers are not shipped. A ballpoint request is a separate
-material feature, not a reason to revive or silently emulate the removed renderer.
-
-## Explicit stroke edits and retirement
-
-Retirement is about the current representation, not whether an earlier line was “wrong”.
-When a new axis, mass, or contour carries the information, choose whether the old cue
-should remain faint or leave the visible branch.
-
-- Use `soft_lift` (or `soft_lift_segment`) when the cue still explains weight, rhythm, or
-  an occluded handoff.
-- Use the public `delete_stroke` action when the complete stroke must be absent from the
-  current drawing. The earlier stroke and deletion event remain in history.
-- `hard_delete` is the history-layer method behind `delete_stroke`, recorded as
-  `stroke.delete`; it is not a valid action kind by itself.
-
-Do not raster-edit files or mutate history to clean the image. Supply the target stroke,
-observation and reason, then render and inspect the mutated canvas afresh. Read
-`references/review/stroke-retirement.md` for the API details.
-
-## Required reading route
-
-1. Read this file and [`references/INDEX.md`](references/INDEX.md).
-2. Select the smallest relevant mode guide: croquis, figure drawing, tonal study, line
-   study, or free-draw; select a style guide only when the request calls for one.
-3. Read `references/reference-authority.md`, then
-   `references/observation/visual-observation.md` for observed
-   subjects, and
-   `references/observation/measuring-boundaries.md` before profiling anything, then the relevant
-   construction/figure/finish guide for the relationships present.
-4. Create the first drawing through `DrawingSession`; inspect the whole result before
-   adding detail, then use `references/review/residual-correction.md` for every repair loop.
-5. Read `references/review/completion.md` and bind the Agent's decision to the latest current
-   inspection; continue the same correction loop if that record becomes stale.
-6. Use `references/output/render-profile-and-replay.md` for final PNG or process export.
-7. Use `references/legacy-r23.md` and `img2drawing.legacy.r23` only when explicitly continuing or
-   migrating a `DrawingRun` checkpoint.
+Folds must originate at observed anchors, tension, compression, drape, or contact. Keep
+their exact location and direction even when only a few are drawn. Remove decorative fold
+noise that does not explain form. See `figure/clothing-folds.md`.
 
 ## Evidence boundary
 
-`InspectionSheet`, registration, ROI, measurement, and renderer provenance make the
-current state inspectable. They do not choose geometry, select the highest-impact issue,
-or emit an artistic PASS/FAIL. Subjectless sessions produce an honest drawing-only sheet;
-subject overlay, registration, subject-space ROI, and subject measurements fail explicitly.
-The Agent compares the subject or declared authority with the current drawing, then
-records explicit edits.
+Whole views, focused crops, overlays, grids, plumb lines, material samples, and profiles are
+observation aids. They answer bounded visual questions; they do not select the drawing
+solution. A luminance edge is not automatically an anatomical edge, and a measurement
+cannot infer an occluded terminal.
 
-The default sequence is whole → relation → part → relation again. Macro pose, mass,
-balance, silhouette, and composition residuals outrank micro detail. A mutation makes
-prior visual evidence stale; render and inspect a fresh snapshot.
+After any mutation, old visual evidence may no longer describe the current drawing. Render
+and inspect again before accepting the correction.
 
-## Completion provenance
+## Stroke retirement
 
-Finish only after a fresh inspection under the current `DrawingIntent` and after every
-recorded material residual is resolved. Call `session.finish(final_inspection_id=...,
-rationale=..., accepted_limitations=..., unresolved_nonmaterial_notes=...)`; do not write
-arbitrary finish metadata. `FinishRecord` binds the Agent decision to the exact intent
-digest, drawing-state hash, history cursor, and inspection. It is not an artistic PASS or
-a lock. A later mark, intent change, or newly recorded material residual makes
-`session.finish_is_current` false, after which the ordinary correction loop continues.
-Read [`references/review/completion.md`](references/review/completion.md) before recording
-completion.
+When a stronger contour, overlap, or descriptive line takes over a construction cue,
+reduce or remove the obsolete cue instead of stacking another line on top. Preserve a faint
+construction line only when it still contributes rhythm, weight, or an intentional
+handoff. All edits remain history-safe. See `review/stroke-retirement.md`.
 
-## Legacy R23 continuation
+## Runtime boundary
 
-Only when explicitly continuing an existing `DrawingRun` / R23 checkpoint, read
-[`references/legacy-r23.md`](references/legacy-r23.md).
+`DrawingSession` is the canonical public orchestration surface for new work. Drawing
+knowledge belongs in this instruction graph; runtime implementation belongs in `src/`.
+Do not read implementation details to decide what the subject should look like, and do not
+copy implementation code into drawing guides. Skill-facing API guidance names only the
+supported public surface; see `api/public-surface.md`.
 
-Import compatibility operations from `img2drawing.legacy.r23`; do not use deprecated
-root shims in new code. Do not use R23 P1–P6 lifecycle guidance for new work.
+## Completion
+
+Finish only after a fresh current-state inspection and after every material residual is
+either resolved or explicitly accepted as a limitation. The final drawing must satisfy the
+requested mode and finish intent without relying on hidden construction notes or a checklist
+to excuse visible errors. See `review/completion.md`.
+
+Final PNG, replay, and timelapse must use the same persisted render profile. Replay must be
+end-to-end from the initial state through the latest action. See
+`output/render-profile-and-replay.md`.

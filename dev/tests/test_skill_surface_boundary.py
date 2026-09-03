@@ -14,52 +14,64 @@ def test_deployable_skill_root_is_attention_clean() -> None:
         "MANIFEST.in",
         "README.md",
         "SKILL.md",
-        "examples",
         "pyproject.toml",
         "references",
         "src",
     }
+    assert not (SKILL / "examples").exists()
 
 
-def test_skill_examples_are_only_portable_mechanical_examples() -> None:
-    assert {path.name for path in (SKILL / "examples").iterdir()} == {
-        "mechanical_workflows.py",
-        "observed",
-        "subjectless",
-    }
-
-
-def test_reference_surface_has_no_legacy_stage_or_hidden_worker_tree() -> None:
+def test_reference_surface_is_the_instruction_graph() -> None:
     assert {path.name for path in (SKILL / "references").iterdir()} == {
         "INDEX.md",
+        "api",
         "construction",
+        "description",
+        "environment",
         "figure",
-        "finish",
-        "intent.md",
-        "legacy-r23.md",
+        "foundation",
         "modes",
         "observation",
         "output",
-        "pencil",
-        "reference-authority.md",
-        "resolution",
+        "props",
         "review",
-        "styles",
-        "value",
+    }
+    assert {path.name for path in (SKILL / "references" / "foundation").iterdir()} == {
+        "line-economy.md",
+        "reference-authority.md",
+        "scope-and-precedence.md",
+    }
+    assert {path.name for path in (SKILL / "references" / "figure").iterdir()} == {
+        "clothing-folds.md",
+        "head-face-hair.md",
+        "legs-feet.md",
+        "torso-arms-hands.md",
     }
     assert {path.name for path in (SKILL / "references" / "review").iterdir()} == {
         "authored-element-navigation.md",
         "completion.md",
-        "correction-loop.md",
         "residual-correction.md",
         "stroke-retirement.md",
     }
 
 
-def test_skill_facing_docs_do_not_leak_internal_slice_or_release_control_plane() -> None:
+def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    croquis = (SKILL / "references" / "modes" / "croquis.md").read_text(encoding="utf-8")
+    lower = (SKILL / "references" / "figure" / "legs-feet.md").read_text(encoding="utf-8")
+    head = (SKILL / "references" / "figure" / "head-face-hair.md").read_text(encoding="utf-8")
+    folds = (SKILL / "references" / "figure" / "clothing-folds.md").read_text(encoding="utf-8")
+
+    assert "Croquis economizes marks, not observed geometry" in skill
+    assert "Economize marks, not geometry" in croquis
+    assert "uniform tube" in lower
+    assert "circle" in head
+    assert "zigzags" in folds
+
+
+def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:
     documents = [SKILL / "SKILL.md", SKILL / "README.md"]
     documents.extend((SKILL / "references").rglob("*.md"))
-    documents.extend((SKILL / "examples").rglob("*.md"))
 
     slice_label = re.compile(r"\bB(?:0[0-9]|1[0-8])(?:-R\d+)?\b")
     forbidden_filenames = (
@@ -70,6 +82,7 @@ def test_skill_facing_docs_do_not_leak_internal_slice_or_release_control_plane()
         "RELEASE.md",
         "SUPPORT.md",
     )
+    forbidden_internal = ("_internal", "CanvasAction", "__vnext_compat__")
 
     for path in documents:
         text = path.read_text(encoding="utf-8")
@@ -77,6 +90,8 @@ def test_skill_facing_docs_do_not_leak_internal_slice_or_release_control_plane()
         assert "`dev/" not in text, f"developer path leaked into {path.relative_to(ROOT)}"
         for name in forbidden_filenames:
             assert name not in text, f"release control-plane reference {name} leaked into {path.relative_to(ROOT)}"
+        for token in forbidden_internal:
+            assert token not in text, f"internal implementation token {token} leaked into {path.relative_to(ROOT)}"
 
 
 def test_notice_is_not_part_of_skill_or_package_metadata() -> None:
