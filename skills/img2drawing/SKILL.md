@@ -47,9 +47,9 @@ SKILL.md
    ├─ foundation/   truth, precedence, line economy
    ├─ modes/        croquis, figure, line, tonal, free draw
    ├─ observation/  whole/part reading and measurement boundaries
-   ├─ construction/ gesture, masses, balance, limbs
+   ├─ construction/ gesture, masses, balance, limbs, foreshortening/depth
    ├─ description/  contour, descriptive geometry, value/edge/material
-   ├─ figure/       head/face/hair, torso/arms/hands, legs/feet, clothing folds
+   ├─ figure/       head/face/hair, torso/arms, hands/grip, legs/feet, clothing folds
    ├─ props/        attached-object geometry and body contact
    ├─ environment/  ground and contextual structure
    ├─ review/       residual correction/routing, retirement, completion
@@ -125,6 +125,7 @@ Do not substitute generic symbols for these relationships. In particular:
 
 - a head is not a circle with facial ticks;
 - hair is not a stack of parallel strands;
+- a hand is not a mitten with finger ticks;
 - a leg is not a pair of rails;
 - a foot or shoe is not a rectangular block;
 - clothing is not a field of decorative zigzags;
@@ -139,6 +140,21 @@ orientation, feature spacing, hair mass, and the few internal turns that make th
 recognizable. Spend lines on informative boundaries, not repeated search marks. A few
 accurate exterior and interior lines are preferred over many simplified ones. See
 `figure/head-face-hair.md`.
+
+## Hands and grip policy
+
+When a visible hand matters, preserve wrist entry, hand orientation, palm/hand envelope,
+thumb opposition, informative finger groups, visible gaps/terminations, and actual contact.
+Do not convert the terminal into a mitten and then add finger ticks, and do not invent hidden
+digits to complete a grip. If the parent arm or prop relation is wrong, route upstream rather
+than deforming the hand to compensate. See `figure/hands-and-grip.md`.
+
+## Foreshortening and depth policy
+
+When a form points toward or away from the viewer, preserve projected joint spacing,
+near/far order, overlap, supported apparent-width change, and terminal orientation. Do not
+unfold a foreshortened limb to the anatomical length you expect, or draw hidden length through
+an occluder. See `construction/foreshortening-and-depth.md`.
 
 ## Legs and feet policy
 

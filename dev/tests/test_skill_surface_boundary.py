@@ -41,8 +41,14 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "reference-authority.md",
         "scope-and-precedence.md",
     }
+    assert {path.name for path in (SKILL / "references" / "construction").iterdir()} == {
+        "balance-and-limbs.md",
+        "foreshortening-and-depth.md",
+        "gesture-and-masses.md",
+    }
     assert {path.name for path in (SKILL / "references" / "figure").iterdir()} == {
         "clothing-folds.md",
+        "hands-and-grip.md",
         "head-face-hair.md",
         "legs-feet.md",
         "torso-arms-hands.md",
@@ -91,7 +97,7 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
         "figure/legs-feet.md",
         "description/contour-and-overlap.md",
         "figure/head-face-hair.md",
-        "figure/torso-arms-hands.md",
+        "figure/hands-and-grip.md",
         "props/attached-objects.md",
         "observation/visual-observation.md",
     ):
@@ -99,6 +105,33 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
 
     assert "Escalation is not a stage reset" in routing
     assert "Do not read every branch below" in routing
+
+
+def test_high_value_hand_and_foreshortening_leaves_are_bounded_and_routable() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    hands = (SKILL / "references" / "figure" / "hands-and-grip.md").read_text(
+        encoding="utf-8"
+    )
+    depth = (
+        SKILL / "references" / "construction" / "foreshortening-and-depth.md"
+    ).read_text(encoding="utf-8")
+    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
+        encoding="utf-8"
+    )
+
+    for path in ("figure/hands-and-grip.md", "construction/foreshortening-and-depth.md"):
+        assert path in skill
+        assert path in index
+        assert path in routing
+
+    assert "A hand is not a mitten" in hands
+    assert "Do not begin by counting fingers" in hands
+    assert "Do not invent knuckles, fingertips, or hidden digits" in hands
+    assert "projected spacing" in depth
+    assert "near and far anchors" in depth
+    assert "unfold a foreshortened limb" in depth
+    assert "Foreshortening or depth compression looks wrong" in routing
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:

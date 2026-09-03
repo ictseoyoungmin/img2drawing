@@ -29,6 +29,8 @@ Do not read every branch below. Use only the branch matching the current residua
 foot/shoe residual
 ├─ hip → knee → ankle axis, stance, or support is wrong
 │  └─ construction/balance-and-limbs.md
+├─ strong depth compression/projected chain is wrong
+│  └─ construction/foreshortening-and-depth.md
 ├─ ground plane, weight-bearing region, or contact is wrong
 │  └─ environment/ground-and-context.md
 ├─ ankle → heel → sole → toe geometry is wrong
@@ -61,10 +63,12 @@ the actual mismatch.
 
 ```text
 hand/grip residual
-├─ shoulder → elbow → wrist chain is wrong
+├─ shoulder → elbow → wrist chain or reach is wrong
 │  └─ construction/balance-and-limbs.md
-├─ visible palm/finger grouping or wrist-to-hand shape is locally wrong
-│  └─ figure/torso-arms-hands.md
+├─ strong projected compression/depth order is wrong
+│  └─ construction/foreshortening-and-depth.md
+├─ visible hand envelope, thumb/finger grouping, or local grip geometry is wrong
+│  └─ figure/hands-and-grip.md
 ├─ prop axis/contact disagrees with the hand or body anchor
 │  └─ props/attached-objects.md
 └─ foreground/background ownership at the contact is wrong
@@ -73,6 +77,30 @@ hand/grip residual
 
 Do not invent hidden fingers to make a grip look plausible. If the contact cannot be
 explained from visible evidence, return to observation rather than completing it from memory.
+Repeated finger marks on the same mitten-like envelope are a signal to replace the terminal
+geometry or escalate upstream.
+
+## Foreshortening or depth compression looks wrong
+
+```text
+foreshortening/depth residual
+├─ near/far anchors, projected joint spacing, or depth order is wrong
+│  └─ construction/foreshortening-and-depth.md
+├─ several anchors/overlaps are still uncertain in the reference
+│  └─ observation/visual-observation.md
+├─ only the local overlap/reappearance edge is wrong after depth is credible
+│  └─ description/contour-and-overlap.md
+├─ hand terminal projection is locally wrong after the parent chain is credible
+│  └─ figure/hands-and-grip.md
+├─ foot terminal projection is locally wrong after the parent chain is credible
+│  └─ figure/legs-feet.md
+└─ prop axis/contact contradicts the figure depth relation
+   └─ props/attached-objects.md
+```
+
+Do not lengthen compressed segments independently merely because they look anatomically
+short. First test whether the projected anchors, overlap, and terminal orientation are
+already faithful to the subject.
 
 ## Prop looks wrong
 
@@ -81,7 +109,7 @@ prop residual
 ├─ dominant axis, thickness, topology, or component break is wrong
 │  └─ props/attached-objects.md
 ├─ hand/body anchors disagree with the prop position
-│  └─ construction/balance-and-limbs.md + figure/torso-arms-hands.md
+│  └─ construction/balance-and-limbs.md + figure/hands-and-grip.md
 ├─ piercing, floating, or occlusion order is wrong
 │  └─ description/contour-and-overlap.md
 └─ the object's visible boundary is uncertain

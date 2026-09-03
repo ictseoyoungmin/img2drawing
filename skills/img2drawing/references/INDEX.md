@@ -28,7 +28,8 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 ## 4. Construction
 
 - `construction/gesture-and-masses.md` — flow and occupied masses
-- `construction/balance-and-limbs.md` — support, joint chains, feet, negative space
+- `construction/balance-and-limbs.md` — support, joint chains, terminals, negative space
+- `construction/foreshortening-and-depth.md` — projected length, near/far order, overlap, terminal orientation
 
 ## 5. Description
 
@@ -41,6 +42,7 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 Figure:
 - `figure/head-face-hair.md`
 - `figure/torso-arms-hands.md`
+- `figure/hands-and-grip.md`
 - `figure/legs-feet.md`
 - `figure/clothing-folds.md`
 
