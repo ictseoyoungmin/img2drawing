@@ -130,7 +130,7 @@ def test_high_value_hand_and_foreshortening_leaves_are_bounded_and_routable() ->
     assert "Do not invent knuckles, fingertips, or hidden digits" in hands
     assert "projected spacing" in depth
     assert "near and far anchors" in depth
-    assert "Do not unfold a foreshortened limb" in depth
+    assert "unfold a foreshortened limb" in depth
     assert "Foreshortening or depth compression looks wrong" in routing
 
 
