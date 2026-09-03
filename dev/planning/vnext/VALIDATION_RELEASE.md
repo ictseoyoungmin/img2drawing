@@ -24,7 +24,7 @@ Dogfood is validation, not a new architecture layer. A D-run never owns permanen
 
 The frozen machine-readable vNext baseline is `dev/release/vnext/CONTRACT_FREEZE.json`.
 
-Start each case from the current dogfood template/contracts under `dev/dogfood/` and `dev/schemas/`, bind the final input digest before dispatch, and do not edit a sealed input to accommodate a worker.
+Start each case from `dev/dogfood/vnext-template/` and the current schemas under `dev/schemas/`, bind the final input digest before dispatch, and do not edit a sealed input to accommodate a worker.
 
 Fresh workers may receive only:
 
