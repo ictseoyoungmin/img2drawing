@@ -1,34 +1,50 @@
 # Public API and support matrix
 
-Version: **0.6.0rc1** · public contract: **DrawingSession/0.6.0-vnext**
+Version: **0.6.0rc2** · public contract: **DrawingSession/0.6.0-vnext**
 
-The complete dogfood baseline is frozen in `CONTRACT_FREEZE.json`; change its public or
-persisted entries only with a version/schema update and responsible-slice review.
+The dogfood baseline is frozen in `CONTRACT_FREEZE.json`; change its public or persisted
+entries only with a version/schema update and responsible-slice/alignment review.
 
-## Canonical vNext
+## Canonical package root
 
-New work imports `DrawingSession` and related plain-data records from `img2drawing`.
-The supported mechanical surface is one session/history across:
+New work should begin at the package root with one orchestration model:
 
-| Capability | Public entry point |
+| Capability | Canonical root entry point |
 |---|---|
 | create and resume | `DrawingSession.create()`, `DrawingSession.resume()` |
 | intent and authority | `DrawingIntent`, `ReferenceAuthority`, `ReferenceConstraint` |
-| observe and author | `session.observe()`, `session.draw()`, `session.fill_region()` |
-| inspect and correct | `session.inspect()`, residual/correction methods, replacement methods |
-| navigate authorship | authored-element and summary methods on `DrawingSession` |
-| finish provenance | `session.finish()` and `FinishRecord` |
-| output and replay | `session.render_final()`, `session.render_at()`, `session.export_timelapse()` |
+| canonical output configuration | `RenderProfile` |
+| observed construction facade | `PoseObservation`, `InitialConstruct`, `ConstructionMark`, construction helpers |
 
-`img2drawing.__all__` is the authoritative root export list. A mode/style/finish guide is
-authoring guidance, not a second renderer or lifecycle. Completion is an Agent decision
-bound to current evidence, not an automatic quality score.
+`img2drawing.__all__` is the authoritative **normal-user root** export list. It is intentionally
+small; public capability does not imply package-root placement.
 
-## Legacy compatibility
+## Specialized public namespaces
+
+Normal session methods own drawing, inspection lifecycle, correction, authoring lookup,
+finish, render, and replay. When explicit helper objects are required, import them from the
+namespace that owns them:
+
+- `img2drawing.inspection` — ROI/guides/measurement and inspection primitives;
+- `img2drawing.observation` — optional observation/material evidence helpers;
+- `img2drawing.vnext` — advanced vNext records, guide objects, schemas, and derived authoring records;
+- `img2drawing.core` — low-level stroke/history capability for framework/compatibility work.
+
+These namespaces are capability libraries, not alternative orchestration surfaces.
+
+## Pre-rc2 root compatibility
+
+Names advertised at the package root before `0.6.0rc2` continue to resolve through deprecated
+lazy shims so existing callers do not break abruptly. They are absent from `img2drawing.__all__`
+and from normal root discovery. New code must import the owning namespace instead.
+
+This compatibility window is separate from R23 compatibility and may be retired only through
+a later explicit support decision.
+
+## Legacy R23 compatibility
 
 R23 checkpoint inspection, v1-v3 resume, and one-way migration remain supported only via
-`img2drawing.legacy.r23`. Deprecated root attribute shims exist for old direct callers but
-are intentionally absent from `img2drawing.__all__`. See `MIGRATION.md`.
+`img2drawing.legacy.r23`. Historical R23 root attribute shims are likewise absent from
+`img2drawing.__all__`. See `MIGRATION.md`.
 
-Unknown checkpoint schemas are refused. Physical R23 removal is not part of this release
-candidate.
+Unknown checkpoint schemas are refused. Physical R23 removal is not part of this alignment.

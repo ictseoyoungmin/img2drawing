@@ -1,17 +1,19 @@
-# 0.6.0rc1 release-candidate notes
+# 0.6.0rc2 release-candidate notes
 
-This candidate aligns the vNext source, package metadata, installed public API, examples,
-migration boundary, and CI before visual dogfood begins.
+This candidate keeps the B17/B18 `DrawingSession/0.6.0-vnext` runtime and persisted schema
+contracts while aligning package-root discoverability with the stage-free framework model.
 
-- `DrawingSession/0.6.0-vnext` is the canonical public contract.
-- observed, imaginative, and hybrid authority share one correction/output core;
-- five drawing modes and three style presets remain plain-data authoring guidance;
-- current authoring lookup is derived from the single append-only history;
-- R23 is explicit compatibility only.
+- `DrawingSession` is the canonical orchestration surface for normal users and Agents.
+- the root exposes only session/declarative inputs plus the small observed-construction facade;
+- specialized inspection, observation, record, schema, and low-level history capability lives
+  in explicit owning namespaces rather than competing at the root;
+- pre-rc2 direct root imports remain available through deprecated lazy compatibility shims;
+- observed, imaginative, and hybrid authority still share one correction/output core;
+- R23 remains explicit compatibility only.
 
 The RC proves packaging and deterministic mechanical integration. It does not certify
 unseen-subject, cross-agent, or artistic quality.
 
-B18 freezes this candidate's public exports, session methods, persisted schemas, intent
-axes, canonical render profile, and compatibility boundary in `CONTRACT_FREEZE.json`
-before D01-D06. That freeze adds no artistic-quality claim.
+The A2-aligned B18 snapshot in `CONTRACT_FREEZE.json` pins the narrowed root exports,
+supported session methods, persisted schemas, intent axes, canonical render profile, and
+compatibility boundary before D01-D06.

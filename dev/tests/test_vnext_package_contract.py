@@ -2,21 +2,57 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 import img2drawing
 from img2drawing._version import PUBLIC_API, RELEASE_REVISION, RELEASE_SLICE
 
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
+CANONICAL_ROOT_EXPORTS = {
+    "__version__",
+    "ConstructionMark",
+    "DrawingIntent",
+    "DrawingSession",
+    "InitialConstruct",
+    "PoseObservation",
+    "ReferenceAuthority",
+    "ReferenceConstraint",
+    "ReferenceUnavailableError",
+    "RenderProfile",
+    "author_initial_construct",
+    "inspect_initial_construct",
+    "observe_pose",
+}
 
 
 def test_release_candidate_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "0.6.0rc1"
+    assert img2drawing.__version__ == "0.6.0rc2"
     assert PUBLIC_API == "DrawingSession/0.6.0-vnext"
     assert RELEASE_REVISION == "B17"
     assert RELEASE_SLICE == "B17_package_public_api_release_candidate"
-    assert "DrawingSession" in img2drawing.__all__
+    assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
+    assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
+    assert "CanvasHistory" not in img2drawing.__all__
+    assert "AUTHORED_ELEMENT_SCHEMA" not in img2drawing.__all__
+
+
+def test_pre_rc2_root_aliases_remain_compatible_but_not_discoverable():
+    from img2drawing.core import CanvasHistory
+    from img2drawing.inspection import ROI
+
+    with pytest.warns(DeprecationWarning, match="root-compat shim"):
+        assert img2drawing.CanvasHistory is CanvasHistory
+    with pytest.warns(DeprecationWarning, match="root-compat shim"):
+        assert img2drawing.ROI is ROI
+    with pytest.warns(DeprecationWarning, match="root-compat shim"):
+        assert img2drawing.VNextDrawingSession is img2drawing.DrawingSession
+
+    assert "CanvasHistory" not in dir(img2drawing)
+    assert "ROI" not in dir(img2drawing)
+    assert "VNextDrawingSession" not in dir(img2drawing)
 
 
 def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examples():

@@ -3,28 +3,32 @@
 Updated: 2026-09-03
 
 ```text
-SYSTEM:          vNext product/API/schema/package contract frozen through B18
-PACKAGE:         0.6.0rc1 · DrawingSession/0.6.0-vnext
+SYSTEM:          vNext product/API/schema/package contract frozen through B18 + A2 root alignment
+PACKAGE:         0.6.0rc2 · DrawingSession/0.6.0-vnext
 SKILL SURFACE:   stage-free instruction graph; deployable examples removed
 ACTIVE ON MAIN:  none
-NEXT ENGINEERING: public root API surface audit/narrowing
+NEXT ENGINEERING: runtime physical-isolation audit
 NEXT VALIDATION: D01 difficult observed croquis, after the pre-D01 alignment pass
 DOGFOOD:         D01–D06 not started
-CLOSED:          B00–B18 + instruction-graph refactor + repository-truth reconciliation
+CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment
 ```
 
 ## Current decision
 
-B18 remains the frozen implementation/release-candidate boundary. The post-B18 instruction-graph audit exposed repository and product-surface cleanup that should be completed before asking a fresh worker to validate visual quality.
+B18 remains the frozen implementation/release-candidate boundary. A2 intentionally realigned
+the package-root discoverability contract without changing the `DrawingSession` methods,
+persisted schemas, intent axes, renderer contract, or R23 checkpoint support. The aligned
+candidate is `0.6.0rc2`.
 
-This is a **pre-D01 alignment pass**, not a second architecture and not a return to Pn/R23 development:
+This is a **pre-D01 alignment pass**, not a second architecture and not a return to Pn/R23
+development:
 
 ```text
-repository truth reconciliation      CLOSED by current alignment change
-→ public root API audit              NEXT
-→ runtime physical-isolation audit
-→ instruction routing-edge hardening
-→ high-value drawing-leaf gaps
+A1 repository truth reconciliation  CLOSED
+→ A2 public root API alignment      CLOSED
+→ A3 runtime physical-isolation audit   NEXT
+→ A4 instruction routing-edge hardening
+→ A5 high-value drawing-leaf gaps
 → D01 → D02 → D03 → D04 → D05 → D06
 → R01 → R02 → R03 → R04
 ```
@@ -32,13 +36,21 @@ repository truth reconciliation      CLOSED by current alignment change
 ## Current canonical truths
 
 - New work uses one stage-free `DrawingSession` orchestration route.
+- `img2drawing.__all__` is intentionally narrow: normal root discovery exposes session,
+  declarative intent/reference/render inputs, and the small observed-construction facade.
+- Specialized inspection/observation/vNext/core capability remains importable from explicit
+  owning namespaces; pre-rc2 root names survive only as deprecated lazy compatibility shims.
 - `skills/img2drawing/SKILL.md` is the deployable instruction router.
 - `skills/img2drawing/references/INDEX.md` is a progressive-disclosure routing graph, not a lifecycle.
-- Croquis economizes marks, not observed geometry; construction abstractions are hypotheses, not final forms.
-- `skills/img2drawing/examples/` is intentionally absent until a representative example is good enough to teach from.
+- Croquis economizes marks, not observed geometry; construction abstractions are hypotheses,
+  not final forms.
+- `skills/img2drawing/examples/` is intentionally absent until a representative example is
+  good enough to teach from.
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
-- R23 remains explicit compatibility/history material. Physical retirement is deferred to the release-hardening path unless an evidence-backed audit safely narrows the boundary sooner.
-- Mechanical CI proves package/API/persistence/integration contracts, not artistic quality or unseen-subject generalization.
+- R23 remains explicit compatibility/history material. Physical retirement is deferred to the
+  release-hardening path unless an evidence-backed audit safely narrows the boundary sooner.
+- Mechanical CI proves package/API/persistence/integration contracts, not artistic quality or
+  unseen-subject generalization.
 
 ## Closed implementation truth — B00 through B18
 
@@ -65,35 +77,49 @@ repository truth reconciliation      CLOSED by current alignment change
 | B17 | CLOSED | package/public API/release-candidate integration |
 | B18 | CLOSED | dogfood-ready machine-readable contract freeze |
 
-Detailed closure evidence remains in `capsules/`, slice records, tests, `dev/evidence/`, and `dev/release/`. This status file is the current control-plane summary, not a duplicate archive.
+Detailed closure evidence remains in `capsules/`, slice records, tests, `dev/evidence/`, and
+`dev/release/`. This status file is the current control-plane summary, not a duplicate archive.
 
 ## Pre-D01 alignment ownership
 
-### 1. Repository truth reconciliation — CLOSED
+### A1. Repository truth reconciliation — CLOSED
 
-Root handoff/gates, this status, roadmap, validation plan, package notes, and changelog are aligned to the current main-line product model. Stale R21 package-root records are historical and do not own current package truth.
+Root handoff/gates, this status, roadmap, validation plan, package notes, and changelog are
+aligned to the current main-line product model. Stale R21 package-root records are historical
+and do not own current package truth.
 
-### 2. Public root API surface audit — NEXT
+### A2. Public root API surface — CLOSED
 
-Goal: normal users and Agents should naturally discover `DrawingSession`, not multiple competing low-level/history/compatibility orchestration surfaces. Audit root exports and support promises before changing them.
+Normal users and Agents now discover one package-root mental model centered on
+`DrawingSession`. Low-level/history/schema/inspection names remain available in explicit
+public namespaces and through deprecated pre-rc2 root shims for compatibility, but are not
+advertised in `__all__` or normal `dir(img2drawing)` discovery. See
+`A2_PUBLIC_ROOT_API_AUDIT.md` and `dev/release/vnext/SUPPORT.md`.
 
-### 3. Runtime physical-isolation audit
+### A3. Runtime physical-isolation audit — NEXT
 
-Goal: classify remaining stage-era/current-path modules as shared core, explicit compatibility, current implementation, or retirement candidate. Logical stage-free behavior is already the product contract; this audit asks whether the source/package layout communicates the same model.
+Goal: classify remaining stage-era/current-path modules as shared core, explicit compatibility,
+current implementation, or retirement candidate. Logical stage-free behavior is already the
+product contract; this audit asks whether the source/package layout communicates the same model.
 
-### 4. Instruction routing-edge hardening
+### A4. Instruction routing-edge hardening
 
-Goal: make common residual escalation explicit, e.g. local foot mismatch → leg chain/ground premise when needed, rather than treating the reference tree as a flat taxonomy.
+Goal: make common residual escalation explicit, e.g. local foot mismatch → leg chain/ground
+premise when needed, rather than treating the reference tree as a flat taxonomy.
 
-### 5. Drawing-leaf gaps
+### A5. Drawing-leaf gaps
 
-Goal: add only evidence-backed leaves that materially improve worker behavior, with hands/grip and foreshortening currently the clearest candidates. Do not grow a comprehensive anatomy textbook.
+Goal: add only evidence-backed leaves that materially improve worker behavior, with hands/grip
+and foreshortening currently the clearest candidates. Do not grow a comprehensive anatomy textbook.
 
 ## Post-alignment validation
 
-`VALIDATION_RELEASE.md` owns D01–D06. D01 is the first fresh visual validation after the alignment pass. It must start from a newly sealed input and may reopen the responsible implementation/guidance premise when it exposes a real defect.
+`VALIDATION_RELEASE.md` owns D01–D06. D01 is the first fresh visual validation after the
+alignment pass. It must start from a newly sealed input and may reopen the responsible
+implementation/guidance premise when it exposes a real defect.
 
-No current document should claim D01–D06 quality, cross-agent reproducibility, or final release readiness before that evidence exists.
+No current document should claim D01–D06 quality, cross-agent reproducibility, or final release
+readiness before that evidence exists.
 
 ## Authority map
 

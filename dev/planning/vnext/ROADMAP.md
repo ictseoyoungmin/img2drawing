@@ -32,30 +32,30 @@ The instruction-graph audit exposed a small set of product-surface mismatches th
 | Order | State | Goal |
 |---|---|---|
 | A1 | CLOSED | repository truth reconciliation across handoff/gates/status/package/changelog |
-| A2 | NEXT | narrow/audit the normal public root API around `DrawingSession` |
-| A3 | OPEN | audit physical source/package isolation of stage-era/current-path modules |
+| A2 | CLOSED | narrow the normal public root API around `DrawingSession` while preserving compatibility shims |
+| A3 | NEXT | audit physical source/package isolation of stage-era/current-path modules |
 | A4 | OPEN | make residual → leaf → upstream escalation edges explicit in the instruction graph |
 | A5 | OPEN | harden only high-value missing drawing leaves such as hands/grip and foreshortening |
 
 A1–A5 follow the same bottleneck rule: solve the highest-impact mismatch without creating a parallel workflow. If an audit proves a closed B-slice premise wrong, reopen that premise narrowly instead of inventing an A-specific runtime feature.
 
-### A2 — public API surface
+### A2 — public API surface — CLOSED
 
-Target mental model:
+The accepted mental model is:
 
 ```text
 normal worker/user
     ↓
-DrawingSession + documented high-level public contracts
+DrawingSession + declarative root contracts
     ↓
-advanced/shared capability only when explicitly needed
+explicit specialized namespaces only when needed
     ↓
 legacy compatibility only through explicit legacy boundary
 ```
 
-Audit root `__all__`, low-level history/action exports, schema constants, aliases, and compatibility helpers against real support obligations. Do not break compatibility merely to make `dir(img2drawing)` shorter.
+`img2drawing.__all__` now contains only the canonical root route plus the small observed-construction facade. Inspection/observation/vNext/core capability remains available from its owning namespace, and pre-rc2 root names resolve through deprecated lazy shims rather than disappearing. The aligned candidate is `0.6.0rc2`; the `DrawingSession` method/schema contracts remain unchanged.
 
-### A3 — physical runtime isolation
+### A3 — physical runtime isolation — NEXT
 
 Inventory packages such as stage-era runtime, exemplar/review-era modules, registration helpers, and explicit legacy code. Classify each as:
 
@@ -66,7 +66,7 @@ explicit compatibility
 retirement/archive candidate
 ```
 
-The goal is for source/package layout to communicate the same stage-free product model as the docs. Physical removal remains evidence-bound.
+The goal is for source/package layout to communicate the same stage-free product model as the docs. Physical removal remains evidence-bound. First prove import/runtime ownership and dependency direction; do not move files merely to make the tree look cleaner.
 
 ### A4 — instruction routing edges
 

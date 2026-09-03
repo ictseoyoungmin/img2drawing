@@ -1,4 +1,4 @@
-__version__ = "0.6.0rc1"
+__version__ = "0.6.0rc2"
 RELEASE_REVISION = "B17"
 RELEASE_SLICE = "B17_package_public_api_release_candidate"
 
