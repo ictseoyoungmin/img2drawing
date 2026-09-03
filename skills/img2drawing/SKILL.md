@@ -169,10 +169,11 @@ handoff. All edits remain history-safe. See `review/stroke-retirement.md`.
 
 ## Runtime boundary
 
-Drawing knowledge belongs in this instruction graph. Runtime implementation belongs in
-`src/`. Do not read implementation details to decide what the subject should look like,
-and do not copy implementation code into drawing guides. Skill-facing API guidance names
-only the supported public surface; see `api/public-surface.md`.
+`DrawingSession` is the canonical public orchestration surface for new work. Drawing
+knowledge belongs in this instruction graph; runtime implementation belongs in `src/`.
+Do not read implementation details to decide what the subject should look like, and do not
+copy implementation code into drawing guides. Skill-facing API guidance names only the
+supported public surface; see `api/public-surface.md`.
 
 ## Completion
 
