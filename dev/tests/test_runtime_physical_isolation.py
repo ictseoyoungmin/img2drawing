@@ -72,7 +72,7 @@ print(json.dumps({
     assert payload["historical_registration_loaded"] is False
 
 
-def test_r23_boundary_is_lazy_until_historical_orchestration_is_requested() -> None:
+def test_r23_boundary_activates_only_requested_historical_capability() -> None:
     payload = _fresh_python(
         """
 import json, sys
@@ -85,21 +85,28 @@ def loaded(root):
     return any(name == root or name.startswith(root + '.') for name in sys.modules)
 before = {root: loaded(root) for root in roots}
 DrawingRun = r23.DrawingRun
-after = {root: loaded(root) for root in roots}
+after_run = {root: loaded(root) for root in roots}
+EnvelopeStation = r23.EnvelopeStation
+after_registration = {root: loaded(root) for root in roots}
 print(json.dumps({
     'before': before,
-    'after': after,
+    'after_run': after_run,
+    'after_registration': after_registration,
     'drawing_run_module': DrawingRun.__module__,
+    'envelope_station_module': EnvelopeStation.__module__,
 }))
 """
     )
     assert not any(payload["before"].values())
     assert payload["drawing_run_module"] == "img2drawing.run"
-    assert payload["after"]["img2drawing.run"] is True
-    assert payload["after"]["img2drawing.stages"] is True
-    assert payload["after"]["img2drawing.exemplar"] is True
-    assert payload["after"]["img2drawing.review"] is True
-    assert payload["after"]["img2drawing.registration"] is True
+    assert payload["after_run"]["img2drawing.run"] is True
+    assert payload["after_run"]["img2drawing.stages"] is True
+    assert payload["after_run"]["img2drawing.exemplar"] is True
+    assert payload["after_run"]["img2drawing.review"] is True
+    # Historical registration remains demand-loaded even after DrawingRun is resolved.
+    assert payload["after_run"]["img2drawing.registration"] is False
+    assert str(payload["envelope_station_module"]).startswith("img2drawing.registration")
+    assert payload["after_registration"]["img2drawing.registration"] is True
 
 
 def test_canonical_session_source_has_no_direct_legacy_cluster_imports() -> None:
