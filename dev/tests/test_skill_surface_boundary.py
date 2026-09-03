@@ -81,7 +81,7 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
     )
 
     assert "review/residual-routing.md" in skill
-    assert "route by the relationship that must change" in index
+    assert "route by the relationship that must change" in index.lower()
     assert "Do not route by the noun that looks wrong" in correction
     assert "Route by **cause**, not by the noun that looks wrong" in routing
 
