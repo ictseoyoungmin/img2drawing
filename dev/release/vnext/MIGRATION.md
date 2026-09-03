@@ -17,5 +17,9 @@ session = migrate_checkpoint(
 
 The migration preserves shared action/history truth and provenance while leaving stage
 lifecycle facts historical. Inspect the migrated current drawing, declare current intent,
-and establish fresh completion evidence. Agent-facing compatibility guidance remains in
-`skills/img2drawing/references/legacy-r23.md`.
+and establish fresh completion evidence.
+
+R23 migration/support guidance intentionally lives in this maintainer release boundary and
+`dev/release/r23/`; it is not part of the deployable Agent instruction graph. New drawing
+workers should never read legacy migration material unless the task is explicitly about an
+old checkpoint.
