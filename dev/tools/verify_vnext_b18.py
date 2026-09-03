@@ -169,9 +169,12 @@ def check_planning_and_completeness() -> None:
         if "State: **ACTIVE**" in card.read_text(encoding="utf-8"):
             active.append(card.name)
     assert active == [], active
+
+    # B18 owns the frozen implementation boundary, not the mutable next-task label.
+    # Current planning may insert post-freeze cleanup before D01 without invalidating B18.
     status = (ROOT / "dev" / "planning" / "vnext" / "STATUS.md").read_text(encoding="utf-8")
-    assert "ACTIVE:   none" in status
-    assert "NEXT:     D01 difficult observed croquis" in status
+    assert "frozen through B18" in status
+    assert "D01–D06 not started" in status
 
     inventory = ROOT / "dev" / "planning" / "vnext" / "B18_IMPLEMENTATION_INVENTORY.md"
     inventory_text = inventory.read_text(encoding="utf-8")
