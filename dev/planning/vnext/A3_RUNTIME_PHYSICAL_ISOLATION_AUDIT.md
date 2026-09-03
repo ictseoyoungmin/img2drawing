@@ -34,9 +34,12 @@ names to `img2drawing.run`, `img2drawing.stages`, `img2drawing.exemplar`,
 `img2drawing.review`, and `img2drawing.registration` only when a caller explicitly asks for
 a historical capability.
 
-`img2drawing.run.DrawingRun` is the historical orchestration owner and directly imports the
-stage registry, exemplar ablation, stage review, and old registration machinery. This is
-the dependency cluster that keeps those generic top-level module paths alive.
+Resolving `img2drawing.legacy.r23.DrawingRun` activates the historical `run` orchestration
+and its stage/exemplar/review dependencies. Historical registration remains even more
+narrowly demand-loaded: it is not activated by resolving `DrawingRun` alone and appears only
+when a caller explicitly requests an R23 registration capability such as `EnvelopeStation`.
+This confirms that the generic historical paths are compatibility-owned rather than eager
+parts of the current runtime.
 
 The regression test `dev/tests/test_runtime_physical_isolation.py` freezes these dependency
 facts in a fresh interpreter rather than relying on documentation alone.
@@ -74,7 +77,7 @@ A3 instead hardens **ownership and reachability** now:
 2. canonical vNext imports cannot depend on the R23 orchestration cluster;
 3. current registration is owned by `inspection`, not the historical registration package;
 4. the old cluster is documented as compatibility implementation, not an alternate workflow;
-5. R23 lazy import behavior remains tested.
+5. R23 lazy import behavior remains tested at capability granularity.
 
 ## Important naming distinction
 
@@ -99,7 +102,8 @@ A3 is CLOSED when all of the following hold:
 - resolving `DrawingSession` does not import those modules;
 - importing `img2drawing.inspection` does not activate the historical registration package;
 - importing `img2drawing.legacy.r23` alone remains lazy;
-- explicit access to an R23 orchestration name still activates the compatibility cluster;
+- explicit access to R23 orchestration activates only the historical dependencies it needs;
+- explicit access to R23 registration activates the historical registration package on demand;
 - current planning docs classify physical retirement as R03 work rather than D01-prep work.
 
 No visual-quality claim is added by A3.
