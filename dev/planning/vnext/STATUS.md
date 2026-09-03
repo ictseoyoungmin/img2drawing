@@ -1,204 +1,106 @@
 # img2drawing vNext status
 
-Updated: 2026-09-02
+Updated: 2026-09-03
 
 ```text
-SYSTEM:   vNext product/API/schema/package contract frozen through B18
-ACTIVE:   none — awaiting explicit D01 start
-NEXT:     D01 difficult observed croquis
-SKELETON: D01–D06 validation contracts only
-DOGFOOD:  not started; sealed D01 input must be prepared first
-CLOSED:   B00, B01, B01-R1, B02+B03, B04, B05, B06, B07, B07-R1, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17, B18
+SYSTEM:          vNext product/API/schema/package contract frozen through B18
+PACKAGE:         0.6.0rc1 · DrawingSession/0.6.0-vnext
+SKILL SURFACE:   stage-free instruction graph; deployable examples removed
+ACTIVE ON MAIN:  none
+NEXT ENGINEERING: public root API surface audit/narrowing
+NEXT VALIDATION: D01 difficult observed croquis, after the pre-D01 alignment pass
+DOGFOOD:         D01–D06 not started
+CLOSED:          B00–B18 + instruction-graph refactor + repository-truth reconciliation
 ```
 
-## Current planning decision — implementation first, dogfood after freeze
+## Current decision
 
-The previous status said "third dogfood on an unseen subject, then activate B09". That is
-superseded.
+B18 remains the frozen implementation/release-candidate boundary. The post-B18 instruction-graph audit exposed repository and product-surface cleanup that should be completed before asking a fresh worker to validate visual quality.
 
-The project has already used multiple dogfood runs to expose foundation defects:
-
-- B07-R1: a 313,391-line session revealed that value was being authored as 1,398 machine
-  hatch strokes; `fill_region()`, calibrated deposition, compact history, and
-  `form before value` closed the root cause.
-- B01-R1: a line-only re-draw exposed repeated boundary/termination mistakes;
-  `SubjectPalette`, boundary-method guidance, "a line separates two named things",
-  "do not draw a termination you did not observe", and "the chain before its end"
-  closed the recurring method failures.
-
-Those dogfoods remain valid historical evidence, but **no new fresh/unseen-subject or
-cross-agent dogfood is scheduled between B09 and B18**. Repeated subject-specific feedback
-should no longer continuously reshape the architecture while product capabilities are
-still incomplete.
-
-The new sequence is:
+This is a **pre-D01 alignment pass**, not a second architecture and not a return to Pn/R23 development:
 
 ```text
-B09 → B10 → B11 → B12 → B13 → B14 → B15 → B16 → B17 → B18
-                         no new fresh visual dogfood
-                                      ↓
-                         D01 → D02 → D03 → D04 → D05 → D06
-                                      ↓
-                         R01 → R02 → R03 → R04
+repository truth reconciliation      CLOSED by current alignment change
+→ public root API audit              NEXT
+→ runtime physical-isolation audit
+→ instruction routing-edge hardening
+→ high-value drawing-leaf gaps
+→ D01 → D02 → D03 → D04 → D05 → D06
+→ R01 → R02 → R03 → R04
 ```
 
-See [`ROADMAP.md`](ROADMAP.md) and
-[`VALIDATION_RELEASE.md`](VALIDATION_RELEASE.md).
+## Current canonical truths
 
-## B18 freeze closure and next work
+- New work uses one stage-free `DrawingSession` orchestration route.
+- `skills/img2drawing/SKILL.md` is the deployable instruction router.
+- `skills/img2drawing/references/INDEX.md` is a progressive-disclosure routing graph, not a lifecycle.
+- Croquis economizes marks, not observed geometry; construction abstractions are hypotheses, not final forms.
+- `skills/img2drawing/examples/` is intentionally absent until a representative example is good enough to teach from.
+- The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
+- R23 remains explicit compatibility/history material. Physical retirement is deferred to the release-hardening path unless an evidence-backed audit safely narrows the boundary sooner.
+- Mechanical CI proves package/API/persistence/integration contracts, not artistic quality or unseen-subject generalization.
 
-B18 is closed and there is no active production WIP. D01 is next but has not started.
-
-The completed implementation contract is pinned by
-`skills/img2drawing/CONTRACT_FREEZE.json`. The B09–B17 inventory, package/install
-regression, TODO/duplicate-path review, and leak-resistant dogfood input/evaluator
-templates are complete.
-
-The post-freeze validation inherits these constraints:
-
-- normal docs/imports/examples lead to canonical vNext `DrawingSession`, never R23/Pn;
-- B17 wheel/sdist contain only justified runtime modules/data/docs/examples;
-- clean-install smoke covers observed and subjectless mechanical workflows through
-  create/resume/inspect/correct/finish/replay/output;
-- public API, package version, built metadata, support/migration docs, and CI agree; and
-- B12 legacy compatibility remains explicit and isolated rather than physically removed.
-
-D01 must begin from a newly prepared and digest-sealed input. B18 made no general visual
-quality, unseen-subject robustness, or cross-agent claim; those claims belong to D01–D06.
-
-## Closed foundation truth
+## Closed implementation truth — B00 through B18
 
 | Slice | State | Durable result |
 |---|---|---|
 | B00 | CLOSED | frozen R23 baseline and failure dossier |
 | B01 | CLOSED | vNext architecture cut; preserve capabilities, remove ceremony |
-| B01-R1 | CLOSED | subject material/boundary observation method hardening |
-| B02+B03 | CLOSED | immutable `InspectionSheet` + read-only measurement tools |
-| B04 | CLOSED | stage-free `DrawingSession`, atomic checkpoint/resume |
-| B05 | CLOSED | ordered construction grammar without runtime phase gate; Pn reading de-anchored |
+| B01-R1 | CLOSED | subject observation/boundary hardening |
+| B02+B03 | CLOSED | immutable inspection + bounded measurement foundation |
+| B04 | CLOSED | stage-free `DrawingSession`, checkpoint/resume |
+| B05 | CLOSED | construction grammar without runtime stage gate |
 | B06 | CLOSED | Agent-owned residual/correction loop with provenance |
-| B07 | CLOSED | quick/focused/deep evidence read budget + telemetry |
-| B07-R1 | CLOSED | value-region authoring, session compaction, fill revision, form-before-value |
-| B08 | CLOSED | orthogonal `DrawingIntent`, `ModeGuide`, `StyleGuide`, intent provenance |
-| B09 | CLOSED | stage-free `FinishGuide`, relational recognition, form-before-value and preserved-constraint policy |
-| B10 | CLOSED | intent/state/inspection-bound `FinishRecord` with stale-state and tamper validation |
-| B11 | CLOSED | canonical `RenderProfile`, cursor replay, exact PNG parity, bounded GIF export |
-| B12 | CLOSED | explicit lazy `legacy.r23` boundary, R23 v1–v3 resume/migration, canonical root exports |
-| B13 | CLOSED | immutable observed/imaginative/hybrid authority, subjectless drawing-only inspection, shared correction/output |
-| B14 | CLOSED | five distinct portable mode guides, authored tonal value, free-draw across all authorities, one shared core |
-| B15 | CLOSED | three style presets, one-base overrides, structured custom guidance, explicit conflict/provenance semantics |
-| B16 | CLOSED | derived authored-element lookup, replacement resolution, bounded summaries, orphan-safe unified edit surface |
-| B17 | CLOSED | lean wheel/sdist policy, `0.6.0rc1` API/support truth, clean-installed observed/subjectless examples, package/link/license/security CI audit |
-| B18 | CLOSED | versioned API/schema/profile freeze, B09–B17 completeness audit, sealed dogfood/evaluator/evidence templates, clean integrated regression |
+| B07 | CLOSED | bounded evidence budget + telemetry |
+| B07-R1 | CLOSED | value-region authoring, compaction, form-before-value |
+| B08 | CLOSED | orthogonal intent/mode/style scaffold |
+| B09 | CLOSED | finish / relational recognition authoring |
+| B10 | CLOSED | intent/state/inspection-bound completion |
+| B11 | CLOSED | canonical `RenderProfile`, replay, PNG/GIF parity contract |
+| B12 | CLOSED | explicit legacy compatibility boundary |
+| B13 | CLOSED | observed/imaginative/hybrid reference authority |
+| B14 | CLOSED | drawing-mode capability completion |
+| B15 | CLOSED | style authoring completion |
+| B16 | CLOSED | authored-element lookup/edit ergonomics |
+| B17 | CLOSED | package/public API/release-candidate integration |
+| B18 | CLOSED | dogfood-ready machine-readable contract freeze |
 
-Authoritative closed detail remains in `capsules/`, slice closure records, and committed
-evidence. This status file is a current control plane, not a replacement for those records.
+Detailed closure evidence remains in `capsules/`, slice records, tests, `dev/evidence/`, and `dev/release/`. This status file is the current control-plane summary, not a duplicate archive.
 
-## B01-R1 durable observation contract
+## Pre-D01 alignment ownership
 
-The latest local hardening is accepted as foundation, not a new workflow.
+### 1. Repository truth reconciliation — CLOSED
 
-- `SubjectPalette` only classifies among material patches already identified by the Agent;
-  it does not infer semantic correspondence by itself.
-- `ambiguous_pairs()` tells the Agent which subject materials are too close for a simple
-  measurement assumption.
-- `boundary_kind()` names both sides and whether a luminance-only method can see the
-  distinction.
-- a correction is a new premise and must re-ask the same observation questions.
-- repeated marks inherit structural variation; regular sawtooth/ruler repetition is not
-  a substitute for observed termination.
+Root handoff/gates, this status, roadmap, validation plan, package notes, and changelog are aligned to the current main-line product model. Stale R21 package-root records are historical and do not own current package truth.
 
-This improves observation method without reviving review ceremony or computer-vision
-geometry authority.
+### 2. Public root API surface audit — NEXT
 
-## B07-R1 durable representation/cost contract
+Goal: normal users and Agents should naturally discover `DrawingSession`, not multiple competing low-level/history/compatibility orchestration surfaces. Audit root exports and support promises before changing them.
 
-- broad tone/value is one authored `fill_region()` decision, not hundreds of hand/machine
-  actions persisted as artistic decisions;
-- a disproved value premise is revised through append-only
-  `DrawingSession.replace_fill_region()` and can
-  bind directly to B06 correction provenance;
-- renderer deposition calibration happens outside the drawing session;
-- `ReservedLight` may preserve observed light inside a correct form but may not invent
-  missing arm/body separation or volume;
-- session size is an operational quality signal, but shrinking the file cannot justify a
-  visually weak representation.
+### 3. Runtime physical-isolation audit
 
-## Closed implementation-phase guard — B09 through B18
+Goal: classify remaining stage-era/current-path modules as shared core, explicit compatibility, current implementation, or retirement candidate. Logical stage-free behavior is already the product contract; this audit asks whether the source/package layout communicates the same model.
 
-B09–B18 closure was governed by:
+### 4. Instruction routing-edge hardening
 
-- Production WIP Limit = 1.
-- Do not start a new fresh/unseen-subject dogfood run.
-- Do not run cross-agent quality campaigns.
-- Do not use subject-specific coordinates/answer images to "prove" a new slice.
-- Do not create `CroquisSession`, `TonalSession`, `FreeDrawSession`, `ModeStage`,
-  `StyleStage`, `FinishStage`, lifecycle cursors, or automatic artistic PASS.
-- Use synthetic/deterministic fixtures, compatibility fixtures, existing preserved
-  evidence, and direct contract review to close implementation mechanics.
-- If a closed foundation premise is disproved by implementation evidence, REOPEN the
-  responsible slice narrowly rather than adding a workaround to the active slice.
-- Do not physically remove R23 during B09–B18. B12 isolates it; physical retirement is
-  post-dogfood R03.
+Goal: make common residual escalation explicit, e.g. local foot mismatch → leg chain/ground premise when needed, rather than treating the reference tree as a flat taxonomy.
 
-## Remaining implementation queue
+### 5. Drawing-leaf gaps
 
-```text
-B09  Finish / recognition authoring                     CLOSED
-B10  Intent-aware completion                            CLOSED
-B11  Canonical RenderProfile + replay/GIF parity         CLOSED
-B12  Legacy runtime / persistence isolation              CLOSED
-B13  Reference authority + subjectless runtime           CLOSED
-B14  Drawing-mode capability completion                  CLOSED
-B15  Style authoring completion                          CLOSED
-B16  Agent authoring / editing ergonomics                CLOSED
-B17  Package / public API / release-candidate truth      CLOSED
-B18  Dogfood-ready system freeze                         CLOSED
-```
+Goal: add only evidence-backed leaves that materially improve worker behavior, with hands/grip and foreshortening currently the clearest candidates. Do not grow a comprehensive anatomy textbook.
 
-Each slice has its execution contract in `slices/B09.md` … `slices/B18.md`.
+## Post-alignment validation
 
-## Post-freeze validation and release
+`VALIDATION_RELEASE.md` owns D01–D06. D01 is the first fresh visual validation after the alignment pass. It must start from a newly sealed input and may reopen the responsible implementation/guidance premise when it exposes a real defect.
 
-```text
-D01 difficult observed croquis
-D02 observed figure / subject recognition
-D03 tonal study
-D04 observed free-draw
-D05 imaginative + hybrid
-D06 cross-agent reproducibility
+No current document should claim D01–D06 quality, cross-agent reproducibility, or final release readiness before that evidence exists.
 
-R01 consolidate repeated dogfood fixes
-R02 final regression
-R03 physical R23 retirement
-R04 release
-```
+## Authority map
 
-Dogfood defects always route back to the responsible implementation slice. Examples:
-
-- face/hair recognition relation failure → B09 REOPEN
-- premature finish semantics → B10 REOPEN
-- replay/GIF mismatch → B11 REOPEN
-- subjectless/hybrid authority failure → B13 REOPEN
-- mode contract failure → B14 REOPEN
-- style conflict → B15 REOPEN
-- edit ergonomics/provenance failure → B16 REOPEN
-
-## Current repository truth
-
-- Frozen R23 baseline: `25ec4544e86fe37fc28d64575df145a1b711d63a`
-- Planning pivot base includes latest observation hardening commit
-  `731a04db37ecda14d8f5de28d946a97adaa8dde6`.
-- Canonical vNext remains one `DrawingSession` / history / renderer / inspection /
-  correction core.
-- Legacy stage runtime is isolated under `img2drawing.legacy.r23` and remains
-  compatibility/history material until post-dogfood R03 retirement.
-- Observed, imaginative, and hybrid work share one immutable `ReferenceAuthority`
-  contract; subjectless evidence is drawing-only and never fabricates a reference.
-- Croquis, figure drawing, tonal study, line study, and free-draw resolve to distinct
-  immutable guidance while sharing one session/history/inspection/correction/output core.
-- Three retained style presets, single-base overrides, and complete structured custom
-  guidance affect authored policy only; style selection never mutates geometry or the
-  canonical RenderProfile.
-- Current/superseded/deleted stroke and fill responsibility is derived from authoritative
-  history on demand; bounded summaries are cursor/state-bound and never checkpointed.
+- deployable drawing behavior: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
+- current project state: this file
+- sequence: `ROADMAP.md`
+- D01–D06 / release contracts: `VALIDATION_RELEASE.md`
+- current program gates: `/GATES.md`
+- frozen vNext release-candidate contract: `dev/release/vnext/`
+- historical release/compatibility evidence: `dev/release/r23/`, older release records, and Git history

@@ -18,6 +18,25 @@ The current release is tracked in `src/img2drawing/_version.py`
 reads from dynamically. That module is the single source of truth for "what
 version is this" at build/runtime; release notes may record the version they describe.
 
+## 2026-09-03 — Instruction graph + repository truth reconciliation
+
+Replaced the deployable skill's accumulated guidance surface with a stage-free instruction
+graph rooted at `SKILL.md`. The new graph separates foundation, drawing mode, observation,
+construction, descriptive geometry, figure/prop/environment leaves, residual review,
+output, and the documented public runtime surface. The core drawing rule is now explicit:
+**croquis economizes marks, not observed geometry**. Head/face/hair, legs/feet, and clothing
+fold guidance rejects symbolic simplification and redundant line accumulation.
+
+Removed `skills/img2drawing/examples/` because the repository does not yet contain examples
+strong enough to serve as canonical teaching material. The package manifest and CI now
+validate an example-free deployable skill. Runtime implementation and version remain
+`0.6.0rc1`; this change does not claim a new visual-quality release.
+
+Reconciled the root handoff/gates, vNext status/roadmap/validation plan, and package notes so
+they no longer disagree about R21/R23/B18 state, the location of the vNext freeze, or whether
+examples are part of the normal package route. D01 remains the first fresh visual validation
+after the small post-freeze alignment pass.
+
 ## B18 — Dogfood-ready vNext contract freeze
 
 Pinned the `0.6.0rc1` public exports, `DrawingSession` members, persisted schemas, intent
@@ -28,12 +47,12 @@ D01–D06. No fresh dogfood or visual-quality certification occurred in B18.
 
 ## 0.6.0rc1 — vNext package and public API candidate
 
-Aligned the stage-free source, wheel/sdist inventory, installed API, support and migration
-documents, canonical observed/subjectless mechanical examples, and CI. The wheel ships
-only runtime/data/license material; the sdist adds selected current Agent guidance and
-examples. Removed an unused answer target and a duplicate stage-era authority document.
-R23 remains an explicit, frozen compatibility boundary rather than the current package
-identity. This candidate proves integration mechanics, not visual quality.
+Aligned the stage-free source, wheel/sdist inventory, installed API, support/migration
+contracts, and CI. The wheel ships runtime/data/license material; the sdist adds selected
+current Agent guidance. The deployable package intentionally contains no `examples/` tree
+until representative examples exist. R23 remains an explicit, frozen compatibility
+boundary rather than the current package identity. This candidate proves integration
+mechanics, not visual quality.
 
 ## R23 — Material-integrated visual quality
 
