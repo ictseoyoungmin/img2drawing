@@ -33,8 +33,8 @@ The instruction-graph audit exposed a small set of product-surface mismatches th
 |---|---|---|
 | A1 | CLOSED | repository truth reconciliation across handoff/gates/status/package/changelog |
 | A2 | CLOSED | narrow the normal public root API around `DrawingSession` while preserving compatibility shims |
-| A3 | NEXT | audit physical source/package isolation of stage-era/current-path modules |
-| A4 | OPEN | make residual → leaf → upstream escalation edges explicit in the instruction graph |
+| A3 | CLOSED | prove current runtime ownership/isolation and classify stage-era modules without cosmetic moves |
+| A4 | NEXT | make residual → leaf → upstream escalation edges explicit in the instruction graph |
 | A5 | OPEN | harden only high-value missing drawing leaves such as hands/grip and foreshortening |
 
 A1–A5 follow the same bottleneck rule: solve the highest-impact mismatch without creating a parallel workflow. If an audit proves a closed B-slice premise wrong, reopen that premise narrowly instead of inventing an A-specific runtime feature.
@@ -55,20 +55,34 @@ legacy compatibility only through explicit legacy boundary
 
 `img2drawing.__all__` now contains only the canonical root route plus the small observed-construction facade. Inspection/observation/vNext/core capability remains available from its owning namespace, and pre-rc2 root names resolve through deprecated lazy shims rather than disappearing. The aligned candidate is `0.6.0rc2`; the `DrawingSession` method/schema contracts remain unchanged.
 
-### A3 — physical runtime isolation — NEXT
+### A3 — physical runtime isolation — CLOSED
 
-Inventory packages such as stage-era runtime, exemplar/review-era modules, registration helpers, and explicit legacy code. Classify each as:
+A3 separates instruction vocabulary from runtime package ownership. The source tree does not
+need a one-to-one folder match with the instruction graph.
+
+The canonical route is mechanically isolated from the historical R23 orchestration cluster:
 
 ```text
-current shared capability
-current implementation detail
-explicit compatibility
-retirement/archive candidate
+current
+DrawingSession → core + inspection + render + vnext
+
+R23 compatibility
+legacy.r23 → run → stages + exemplar + review + registration + other historical helpers
 ```
 
-The goal is for source/package layout to communicate the same stage-free product model as the docs. Physical removal remains evidence-bound. First prove import/runtime ownership and dependency direction; do not move files merely to make the tree look cleaner.
+`img2drawing.inspection` owns current registration/measurement capability. The generic
+`img2drawing.registration` package is historical R23 comparison machinery. Likewise, the
+instruction-graph `review` concept is current, while the Python `img2drawing.review` package is
+historical stage-review/pass-memory/resolved-form implementation.
 
-### A4 — instruction routing edges
+`run.py`, `stages/`, `exemplar/`, `review/`, and `registration/` remain physically present only
+because they back explicit compatibility. Moving them before dogfood would create migration-only
+risk without changing the current path, so final deletion/consolidation stays in R03.
+
+Evidence: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and
+`dev/tests/test_runtime_physical_isolation.py`.
+
+### A4 — instruction routing edges — NEXT
 
 The current reference tree has good nodes but many escalation edges are implicit. Make common decisions explicit, for example:
 
@@ -79,7 +93,8 @@ foot looks wrong
 └─ local shoe geometry wrong   → figure/legs-feet
 ```
 
-Keep progressive disclosure; do not turn `INDEX.md` into a giant diagnostic manual.
+Keep progressive disclosure; do not turn `INDEX.md` into a giant diagnostic manual. These are
+conditional routing edges, not sequential drawing stages.
 
 ### A5 — remaining drawing leaves
 
@@ -132,5 +147,6 @@ Release must directly prove:
 - current state: `STATUS.md`
 - current program gates: `/GATES.md`
 - architecture/release-candidate invariants: existing B-slice capsules and `dev/release/vnext/`
+- A3 runtime ownership audit: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
 - post-alignment dogfood/release: `VALIDATION_RELEASE.md`
 - deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
