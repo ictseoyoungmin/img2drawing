@@ -1,14 +1,14 @@
 # img2drawing runtime and Agent Skill
 
-img2drawing is an observation-first, stage-free drawing runtime. Its canonical public
-surface is `DrawingSession`; an Agent authors explicit strokes, records bounded visual
-evidence, corrects a selected residual, and produces replayable output from one history.
+img2drawing is an observation-first, stage-free drawing skill and runtime. The Agent
+observes or declares its reference authority, authors explicit strokes, inspects the
+current render, corrects the highest-impact residual, and exports replayable output from
+one history.
 
-Start with `SKILL.md` for Agent operation and `references/INDEX.md` for the canonical
-knowledge route. `examples/` contains deterministic integration mechanics only; they make
-no claim about general drawing quality.
+Start with `SKILL.md`. It is a router, not a textbook: use `references/INDEX.md` to load
+only the smallest guidance leaf needed for the current task or residual.
 
-This directory is the deployable skill/runtime surface. Maintainer-only release notes,
-API freeze snapshots, migration/support matrices, dogfood control-plane records, and
-historical stage/playbook material are intentionally excluded from the skill attention
-surface.
+This deployable surface intentionally contains no `examples/` directory until curated
+examples are strong enough to serve as drawing guidance rather than accidental style or
+geometry templates. Drawing knowledge and public API contracts live under `references/`;
+implementation details stay in `src/` and are not part of the Agent instruction route.

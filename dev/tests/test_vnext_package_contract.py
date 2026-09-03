@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 from pathlib import Path
 
 import img2drawing
@@ -9,15 +8,6 @@ from img2drawing._version import PUBLIC_API, RELEASE_REVISION, RELEASE_SLICE
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
-
-
-def _workflows_module():
-    path = PACKAGE / "examples" / "mechanical_workflows.py"
-    spec = importlib.util.spec_from_file_location("b17_mechanical_workflows", path)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def test_release_candidate_version_and_root_api_are_canonical():
@@ -29,16 +19,13 @@ def test_release_candidate_version_and_root_api_are_canonical():
     assert "DrawingRun" not in img2drawing.__all__
 
 
-def test_manifest_selects_current_skill_surface_and_excludes_control_plane():
+def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examples():
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
     for required in (
         "LICENSE",
         "README.md",
         "SKILL.md",
-        "references/INDEX.md",
-        "references/reference-authority.md",
-        "examples/observed",
-        "examples/subjectless",
+        "recursive-include references *.md",
     ):
         assert required in manifest
 
@@ -53,10 +40,11 @@ def test_manifest_selects_current_skill_surface_and_excludes_control_plane():
         "CONTRACT_FREEZE.json",
         "references/stages",
         "playbooks",
-        "full_body_croquis",
+        "examples/",
     ):
         assert forbidden not in manifest
 
+    assert not (PACKAGE / "examples").exists()
     for removed in (
         "NOTICE",
         "NOTICE.md",
@@ -67,21 +55,29 @@ def test_manifest_selects_current_skill_surface_and_excludes_control_plane():
         "CONTRACT_FREEZE.json",
         "playbooks",
         "references/stages",
-        "examples/full_body_croquis",
+        "references/legacy-r23.md",
+        "references/intent.md",
+        "references/reference-authority.md",
     ):
         assert not (PACKAGE / removed).exists()
 
-    assert not (PACKAGE / "references" / "review" / "reference-authority.md").exists()
 
-
-def test_selected_examples_complete_observed_and_subjectless_mechanics(tmp_path: Path):
-    workflows = _workflows_module()
-    observed = workflows.run_observed(tmp_path / "observed")
-    subjectless = workflows.run_subjectless(tmp_path / "subjectless")
-    assert observed["authority"] == "observed"
-    assert subjectless["authority"] == "imaginative"
-    for name, result in (("observed", observed), ("subjectless", subjectless)):
-        assert result["version"] == img2drawing.__version__
-        assert result["finish_current_after_resume"] is True
-        assert (tmp_path / name / "canonical_final.png").is_file()
-        assert (tmp_path / name / "replay" / "timelapse.gif").is_file()
+def test_instruction_graph_contains_public_api_and_visual_leaves():
+    refs = PACKAGE / "references"
+    for required in (
+        "foundation/line-economy.md",
+        "foundation/reference-authority.md",
+        "modes/croquis.md",
+        "observation/visual-observation.md",
+        "construction/gesture-and-masses.md",
+        "description/descriptive-geometry.md",
+        "figure/head-face-hair.md",
+        "figure/legs-feet.md",
+        "figure/clothing-folds.md",
+        "props/attached-objects.md",
+        "environment/ground-and-context.md",
+        "review/residual-correction.md",
+        "output/render-profile-and-replay.md",
+        "api/public-surface.md",
+    ):
+        assert (refs / required).is_file(), required

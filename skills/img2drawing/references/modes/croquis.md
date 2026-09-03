@@ -1,24 +1,20 @@
-# Croquis mode
+# Croquis
 
-## Purpose
+Croquis is fast, selective description of the observed subject.
 
-Read gesture direction and reversal, support-side balance, head/ribcage/pelvis mass
-relation, stance, overlap, major negative space, and line economy. Retain face, value,
-and surface detail only when the request or a material residual requires them.
+**Economize marks, not geometry.** Keep the subject's exact flow, silhouette turns, mass
+relations, overlaps, negative spaces, contacts, and identity-bearing shape changes while
+using as few marks as practical.
 
-## Suggested grammar
+Prioritize:
+- dominant action and balance;
+- head/ribcage/pelvis relationship;
+- limb direction and width transitions;
+- decisive silhouette and overlap;
+- feet/ground and prop/body contact;
+- a few exact facial, hair, garment, or footwear lines when they materially identify the
+  subject.
 
-```text
-whole-silhouette read → line of action → head/ribcage/pelvis masses
-→ weight-bearing limb chain → overlap/negative space → selective contour
-```
-
-This is not a runtime stage. If a later inspection disproves an earlier hypothesis,
-redraw the earlier mass or limb. Include feet and large props early when they
-explain the pose.
-
-## Completion questions
-
-Does gesture and weight-bearing stance read at a glance? Do the largest masses, overlap,
-negative spaces, ground contact, and prop/body relation agree? Can any line be removed
-without weakening the pose?
+Omit redundant search lines, repeated texture, and low-impact shading. Do not replace a
+visible head with a circle, limbs with tubes, feet with boxes, or folds with symbols merely
+because the drawing is quick.

@@ -1,25 +1,11 @@
-# Line study mode
+# Line study
 
-## Purpose
+A line study investigates how contour, overlap, form turns, seams, folds, and accents can
+communicate the subject without relying on broad tonal fill.
 
-Explain shape, rhythm, overlap, and directional structure primarily through selected
-lines. Every retained line needs a relational job: it separates named things, connects a
-structural chain, hands one form behind another, or carries deliberate emphasis.
+Use line weight, pressure, continuity, and interruption intentionally. Thickening every
+important region is not hierarchy; repeated lines are not precision. Prefer a small number
+of lines whose placement, curvature, and termination explain the real boundary or form.
 
-## Suggested grammar
-
-```text
-shape envelope → directional structure → overlap and negative space
-→ selective contour → economical accents → inspect line responsibility
-```
-
-Use value only when it is necessary to clarify a line relationship; broad tonal
-construction belongs to tonal study. Vary line weight according to structure rather than
-tracing every visible boundary uniformly. Do not invent a hand, foot, hair tip, or other
-termination that the authority does not support.
-
-## Completion questions
-
-Does each retained line separate or connect named things? Do the shapes, overlap,
-negative spaces, and directional rhythm remain clear without broad value? Can a line be
-retired without weakening the intended relation?
+Read `description/descriptive-geometry.md` and `description/contour-and-overlap.md` before
+adding secondary lines.

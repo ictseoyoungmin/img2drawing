@@ -1,55 +1,65 @@
-# Reference index
+# Instruction graph index
 
-Start new work on the stage-free route below. The order in this document is a
-knowledge taxonomy to consult as needed, not a runtime lifecycle.
+This directory is a routing graph, not a sequential course and not a runtime lifecycle.
+Start at `SKILL.md`, then read only the smallest leaves that own the current drawing problem.
 
-## Canonical references
+## 1. Foundation
 
-- `observation/visual-observation.md`: whole → region → part → relation observation
-  and the evidence boundary
-- `observation/measuring-boundaries.md`: what a line separates, the material palette,
-  and avoiding unobserved terminals
-- `construction/gesture-and-masses.md`: pose, flow, head/ribcage/pelvis mass
-- `construction/balance-and-limbs.md`: balance, joints, limbs, feet, occlusion
-- `figure/limbs-joints.md`: body chains and garment-landmark traps
-- `figure/attached-objects.md`: prop axis, volume, topology, body contact
-- `resolution/contour-and-overlap.md`: contour ownership and explicit stroke retirement
-- `finish/identity-and-value.md`: identity relation, value family, edge, accent
-- `value/tone-and-fill.md`: region fill, calibrated tone scale, reserved lights
-- `review/correction-loop.md`: the one-line residual loop
-- `review/residual-correction.md`: inspect → prioritize → correct → re-inspect
-- `review/completion.md`: bind the Agent's finish decision to current intent/state/evidence
-- `output/render-profile-and-replay.md`: canonical PNG, cursor replay, GIF, parity, migration
-- `review/stroke-retirement.md`: history-preserving soft-lift/delete semantics
-- `review/authored-element-navigation.md`: derived current/superseded stroke/fill lookup,
-  bounded context, and one canonical edit surface
-- `pencil/graphite.md`: canvas-bound pencil material and selective accent
-- `styles/authoring-styles.md`: preset, single-base override, structured custom style,
-  precedence, and explicit mid-session edits
-- `intent.md`: portable `DrawingIntent`, `ModeGuide`, `FinishGuide`, `StyleGuide`, provenance, and
-  compatibility lookup
-- `reference-authority.md`: observed, imaginative, and hybrid comparison authority;
-  subjectless creation, drawing-only inspection, and explicit unavailable operations
+- `foundation/line-economy.md` — preserve geometry while reducing redundant marks
+- `foundation/reference-authority.md` — observed, imaginative, and hybrid truth
+- `foundation/scope-and-precedence.md` — geometry/structure/finish/style precedence and
+  macro-before-micro correction
 
-## Drawing modes (guidance, not stages)
+## 2. Drawing mode
+
+Choose one primary mode guide. Modes change emphasis, not geometry truth.
 
 - `modes/croquis.md`
 - `modes/figure-drawing.md`
-- `modes/tonal-study.md`
 - `modes/line-study.md`
+- `modes/tonal-study.md`
 - `modes/free-draw.md`
 
-Each mode provides only a purpose, observation priorities, suggested grammar,
-omissions, and completion questions. It does not create `phase_start`, `advance`,
-`close`, or `reopen` state. `DrawingIntent`, `ModeGuide`, `FinishGuide`, and `StyleGuide`
-remain plain-data authoring guidance. `RenderProfile` is the output/replay contract;
-style guidance never acts as a renderer filter.
+## 3. Observation
 
-## Legacy R23 compatibility
+- `observation/visual-observation.md` — whole → relation → part → relation again
+- `observation/measuring-boundaries.md` — bounded measurements and ambiguous edges
 
-Existing R23 runs only: [`legacy-r23.md`](legacy-r23.md).
+## 4. Construction
 
-The gateway documents the compatibility boundary only. Historical stage, playbook, and
-stage-review documents are intentionally absent from the deployable skill; use Git history
-or repository development records when maintaining that legacy implementation. New work
-must not use its Pn lifecycle as a mode or finish contract.
+- `construction/gesture-and-masses.md` — flow and occupied masses
+- `construction/balance-and-limbs.md` — support, joint chains, feet, negative space
+
+## 5. Description
+
+- `description/descriptive-geometry.md` — exact form with economical lines
+- `description/contour-and-overlap.md` — contour ownership, occlusion, contact
+- `description/value-edge-and-graphite.md` — value family, edge behavior, pencil material
+
+## 6. Subject-specific leaves
+
+Figure:
+- `figure/head-face-hair.md`
+- `figure/torso-arms-hands.md`
+- `figure/legs-feet.md`
+- `figure/clothing-folds.md`
+
+Other relationships:
+- `props/attached-objects.md`
+- `environment/ground-and-context.md`
+
+## 7. Review and output
+
+- `review/residual-correction.md` — inspect, prioritize, correct, re-inspect
+- `review/stroke-retirement.md` — remove or soften obsolete marks
+- `review/authored-element-navigation.md` — find current authored elements before editing
+- `review/completion.md` — current-evidence finish decision
+- `output/render-profile-and-replay.md` — final PNG and end-to-end replay
+
+## 8. Public runtime API
+
+- `api/public-surface.md` — supported public contracts and common operations only
+
+Do not use API or implementation documentation as drawing knowledge. If a contour, head,
+foot, fold, prop, or grounding problem remains, route to the visual leaf that owns that
+problem rather than adding more generic strokes.
