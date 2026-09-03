@@ -5,12 +5,12 @@ Updated: 2026-09-03
 ```text
 SYSTEM:          vNext product/API/schema/package contract frozen through B18 + A2 root alignment
 PACKAGE:         0.6.0rc2 · DrawingSession/0.6.0-vnext
-SKILL SURFACE:   stage-free instruction graph; deployable examples removed
+SKILL SURFACE:   stage-free instruction graph with cause-based residual routing; deployable examples removed
 ACTIVE ON MAIN:  none
-NEXT ENGINEERING: instruction routing-edge hardening
+NEXT ENGINEERING: high-value drawing-leaf gaps
 NEXT VALIDATION: D01 difficult observed croquis, after the pre-D01 alignment pass
 DOGFOOD:         D01–D06 not started
-CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation audit
+CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation audit + A4 residual routing
 ```
 
 ## Current decision
@@ -27,6 +27,12 @@ R23 compatibility implementation. Renaming/deleting that cluster before dogfood 
 migration risk without improving the current drawing path, so the bounded retirement decision
 remains R03 work.
 
+A4 made the deployable instruction graph operational rather than merely taxonomic. A worker
+now routes a visible residual by the relationship that must change, distinguishes genuinely
+local geometry from parent structure/contact/ground/observation causes, and escalates upstream
+when the local part is only a symptom. This is scope correction inside the same stage-free loop,
+not a new lifecycle.
+
 This is a **pre-D01 alignment pass**, not a second architecture and not a return to Pn/R23
 development:
 
@@ -34,8 +40,8 @@ development:
 A1 repository truth reconciliation      CLOSED
 → A2 public root API alignment          CLOSED
 → A3 runtime physical-isolation audit   CLOSED
-→ A4 instruction routing-edge hardening NEXT
-→ A5 high-value drawing-leaf gaps
+→ A4 instruction routing-edge hardening CLOSED
+→ A5 high-value drawing-leaf gaps       NEXT
 → D01 → D02 → D03 → D04 → D05 → D06
 → R01 → R02 → R03 → R04
 ```
@@ -55,6 +61,9 @@ A1 repository truth reconciliation      CLOSED
   not the same thing as the current instruction-graph `references/review/` concept.
 - `skills/img2drawing/SKILL.md` is the deployable instruction router.
 - `skills/img2drawing/references/INDEX.md` is a progressive-disclosure routing graph, not a lifecycle.
+- `references/review/residual-routing.md` routes symptoms by cause and names explicit upstream
+  escalation edges for common foot, head, hand/grip, prop, overlap, clothing, ground, and tonal
+  residual families.
 - Croquis economizes marks, not observed geometry; construction abstractions are hypotheses,
   not final forms.
 - `skills/img2drawing/examples/` is intentionally absent until a representative example is
@@ -62,8 +71,8 @@ A1 repository truth reconciliation      CLOSED
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
 - R23 remains explicit compatibility/history material. Physical retirement is deferred to the
   release-hardening path unless D-case evidence requires a narrower earlier fix.
-- Mechanical CI proves package/API/persistence/integration contracts, not artistic quality or
-  unseen-subject generalization.
+- Mechanical CI proves package/API/persistence/integration/instruction-surface contracts, not
+  artistic quality or unseen-subject generalization.
 
 ## Closed implementation truth — B00 through B18
 
@@ -120,12 +129,16 @@ cluster. `run.py`, `stages/`, `exemplar/`, the old runtime `review/`, and the ol
 Physical retirement is intentionally deferred to R03 because those paths still back explicit
 R23 compatibility. A3 closes ownership ambiguity, not the compatibility window.
 
-### A4. Instruction routing-edge hardening — NEXT
+### A4. Instruction routing-edge hardening — CLOSED
 
-Goal: make common residual escalation explicit, e.g. local foot mismatch → leg chain/ground
-premise when needed, rather than treating the reference tree as a flat taxonomy.
+The deployable graph now has an explicit `review/residual-routing.md` leaf. It routes common
+visible symptoms to the smallest responsible local guide or to an upstream construction,
+observation, contact/overlap, or environment premise when the local part is symptomatic.
+Repeated local failure, coherent neighboring failures, endpoint conflict, impossible contact,
+invented connecting geometry, and concealment-by-tone/texture are explicit escalation signals.
+See `A4_RESIDUAL_ROUTING_HARDENING.md` and `dev/tests/test_skill_surface_boundary.py`.
 
-### A5. Drawing-leaf gaps
+### A5. Drawing-leaf gaps — NEXT
 
 Goal: add only evidence-backed leaves that materially improve worker behavior, with hands/grip
 and foreshortening currently the clearest candidates. Do not grow a comprehensive anatomy textbook.
@@ -145,6 +158,7 @@ readiness before that evidence exists.
 - current project state: this file
 - sequence: `ROADMAP.md`
 - A3 ownership evidence: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
+- A4 routing evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - D01–D06 / release contracts: `VALIDATION_RELEASE.md`
 - current program gates: `/GATES.md`
 - frozen vNext release-candidate contract: `dev/release/vnext/`
