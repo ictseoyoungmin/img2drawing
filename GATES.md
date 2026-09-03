@@ -43,9 +43,11 @@ Evidence: `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and `dev/t
 
 ## G4 — Instruction routing is operational, not only taxonomic
 
-- [ ] make residual → responsible leaf → upstream escalation edges explicit for common failure classes.
+- [x] common residuals route explicitly to the smallest responsible leaf and to upstream construction/observation/contact/environment premises when the local part is only a symptom.
 - [ ] harden remaining high-value drawing gaps such as hands/grip and foreshortening when evidence supports a separate leaf.
-- [ ] keep the graph progressive-disclosure: workers should not need to read the entire reference tree.
+- [x] the graph remains progressive-disclosure: `INDEX.md` stays compact and delegates conditional diagnostics to `review/residual-routing.md`.
+
+Evidence for the routing closure: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md` and `dev/tests/test_skill_surface_boundary.py`.
 
 ## G5 — Fresh integrated validation
 
