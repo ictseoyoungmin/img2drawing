@@ -51,10 +51,17 @@ Other relationships:
 ## 7. Review and output
 
 - `review/residual-correction.md` — inspect, prioritize, correct, re-inspect
+- `review/residual-routing.md` — route a visible symptom to the responsible local or upstream premise
 - `review/stroke-retirement.md` — remove or soften obsolete marks
 - `review/authored-element-navigation.md` — find current authored elements before editing
 - `review/completion.md` — current-evidence finish decision
 - `output/render-profile-and-replay.md` — final PNG and end-to-end replay
+
+When a local part looks wrong but its cause is uncertain, read `review/residual-routing.md`
+instead of opening every subject leaf. Route by the relationship that must change, not by the
+name of the visible part. A wrong shoe may belong to `figure/legs-feet.md`,
+`construction/balance-and-limbs.md`, `environment/ground-and-context.md`, or
+`description/contour-and-overlap.md` depending on the responsible cause.
 
 ## 8. Public runtime API
 
@@ -62,4 +69,5 @@ Other relationships:
 
 Do not use API or implementation documentation as drawing knowledge. If a contour, head,
 foot, fold, prop, or grounding problem remains, route to the visual leaf that owns that
-problem rather than adding more generic strokes.
+problem rather than adding more generic strokes. If a local correction keeps failing,
+escalate to the parent structural or observation premise rather than polishing the symptom.
