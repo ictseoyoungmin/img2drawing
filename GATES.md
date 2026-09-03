@@ -22,9 +22,13 @@ Mechanical verification is owned by `dev/tests/test_skill_surface_boundary.py` a
 
 ## G2 — Public API mental model is narrow
 
-- [ ] audit root exports against the intended normal-user route centered on `DrawingSession`.
-- [ ] decide which low-level/history/schema/compatibility names remain public, move to explicit advanced/legacy namespaces, or become internal.
-- [ ] keep compatibility promises explicit while preventing normal workers from discovering multiple competing orchestration surfaces.
+- [x] root exports are audited against the intended normal-user route centered on `DrawingSession`.
+- [x] package-root discovery now exposes only high-level session/declarative/construction facade names.
+- [x] low-level history/action, schema, inspection, evidence, and advanced record capability remains in explicit owning namespaces.
+- [x] pre-rc2 direct root imports remain available through deprecated lazy shims instead of becoming abrupt breakage.
+- [x] `0.6.0rc2` + the A2-aligned contract snapshot mechanically freeze the narrowed root.
+
+Evidence: `dev/planning/vnext/A2_PUBLIC_ROOT_API_AUDIT.md`, `dev/tests/test_vnext_package_contract.py`, and `dev/release/vnext/SUPPORT.md`.
 
 ## G3 — Runtime physical isolation matches the stage-free product model
 
