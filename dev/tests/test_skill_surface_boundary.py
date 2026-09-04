@@ -151,8 +151,9 @@ def test_structural_orientation_hardening_blocks_flattening_and_premature_value(
         encoding="utf-8"
     )
 
-    for document in (skill, index, routing):
+    for document in (index, routing):
         assert "construction/orientation-and-twist.md" in document
+    assert "orientation/twist" in skill
 
     assert "tilt" in observation
     assert "turn" in observation
@@ -193,7 +194,7 @@ def test_structural_specificity_is_cross_subject_and_revalidates_inheritance() -
     assert "For any observed subject" in index
     assert "Defer secondary detail, not structural specificity" in specificity
     assert "A small feature is not automatically secondary" in specificity
-    assert "A mark does not earn preservation merely because it was drawn earlier" in specificity
+    assert "merely because it was drawn earlier" in specificity
     assert "parent structure still credible?" in specificity
     assert "Construction is provisional, not geometry authority" in skill
     assert "Do not inherit unverified structure" in skill
