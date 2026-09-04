@@ -23,20 +23,31 @@ constraints. Read [`references/foundation/reference-authority.md`](references/fo
    fold pattern.
 2. **Preserve shape while reducing line count.** Keep the observed curvature, width
    changes, overlap, negative space, contact, fold origin, and identity-bearing asymmetry.
-3. **There is no generic “detail stage.”** Descriptive lines are added when a specific
-   relationship requires them. A face, shoe, cuff, rifle, or fold can become the next
-   highest-impact problem at any time.
-4. **Construction is a hypothesis, not a license to symbolize.** Gesture and masses must
-   explain the subject; they must not replace it with tubes, circles, beans, boxes, or
-   generic anatomy.
-5. **Do not invent hidden endings.** Occluded hands, feet, hair tips, garment edges, and
-   object contacts end where the evidence ends.
-6. **Macro residuals outrank micro polish.** Pose, mass, orientation, balance, silhouette,
+3. **Defer secondary detail, not structural specificity.** Early work may omit texture,
+   decoration, repeated small features, or other low-impact local information, but it must
+   already preserve the subject's specific placement, orientation, proportion, envelope,
+   width/depth changes, major overlap/contact/negative space, and connected-part relations.
+4. **Construction is provisional, not geometry authority.** Gesture, masses, axes, boxes,
+   circles, or other primitives are reasoning aids. A mark does not earn preservation merely
+   because it was drawn earlier or because later marks depend on it.
+5. **Do not inherit unverified structure.** Before a new descriptive pass builds on existing
+   construction, compare the whole drawing against its authority again. If the parent relation
+   is wrong, replace the responsible geometry instead of refining around it.
+6. **There is no generic “detail stage.”** Descriptive lines are added when a specific
+   relationship requires them. A face, shoe, cuff, rifle, fold, joint, seam, or component can
+   become the next highest-impact problem at any time.
+7. **Do not invent hidden endings.** Occluded hands, feet, hair tips, garment edges, object
+   contacts, or concealed component terminations end where the evidence ends.
+8. **Macro residuals outrank micro polish.** Pose, mass, orientation, balance, silhouette,
    overlap, grounding, and major object relations are repaired before small accents.
-7. **Line accumulation is not fidelity.** When many simple strokes pile up around one
+9. **Line accumulation is not fidelity.** When many simple strokes pile up around one
    feature, replace them with fewer lines that describe the correct boundary or form.
-8. **Do not finish a flat pose with tone.** Broad value, dense hatch, texture, or detail may
-   reinforce structure only after the major spatial relations already read without them.
+10. **Do not finish weak structure with tone.** Broad value, dense hatch, texture, or detail
+    may reinforce structure only after the major spatial relations already read without them.
+
+Read [`references/foundation/structural-specificity.md`](references/foundation/structural-specificity.md)
+for the cross-subject rule that separates secondary detail from structural information and
+requires revalidation before inherited construction is refined.
 
 ## Instruction graph
 
@@ -46,7 +57,7 @@ leaves:
 ```text
 SKILL.md
 └─ references/
-   ├─ foundation/   truth, precedence, line economy
+   ├─ foundation/   truth, precedence, line economy, structural specificity
    ├─ modes/        croquis, figure, line, tonal, free draw
    ├─ observation/  whole/part reading and measurement boundaries
    ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
@@ -67,15 +78,19 @@ premise, and skip leaves that do not own the current problem.
 For every new task:
 
 1. Establish reference authority and requested drawing mode.
-2. Read `foundation/line-economy.md` and the chosen mode guide.
+2. Read `foundation/line-economy.md`, `foundation/structural-specificity.md`, and the chosen
+   mode guide.
 3. For observed work, read `observation/visual-observation.md`. Use
    `observation/measuring-boundaries.md` only when measurements or ambiguous boundaries are
    actually needed.
-4. For figures, form one whole-subject spatial hypothesis using the construction leaves. Read
-   `construction/orientation-and-twist.md` whenever turn, near/far relation, or counter-rotation
-   materially defines the pose.
-5. Before local description, confirm that the structural read is credible without relying on
-   tone. If not, stay in observation/construction rather than polishing local contours.
+4. Form one whole-subject structural hypothesis before spending marks on local description.
+   Preserve the specific placement, orientation, proportion, envelope, width/depth changes,
+   overlaps, contacts, negative spaces, and connected-part or anchor relations that materially
+   define the subject. Load specialized construction leaves only when those relationships need
+   them.
+5. Before local description, re-read the whole drawing against its authority. Existing
+   construction may be retained only when the parent structure is still credible without
+   relying on detail or tone. If not, replace the responsible geometry first.
 6. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
    owns its cause. If the visible part may only be a symptom, use
    `review/residual-routing.md` to choose the local or upstream premise instead of opening
@@ -98,42 +113,67 @@ problems at a time. When a local cleanup would hide a larger structural error, r
 structural premise instead. Repeated failure of the same local correction is a routing
 signal to inspect the parent relation, not a reason to add more local strokes.
 
-## Whole-subject construction
+## Whole-subject structural hypothesis
 
-For an observed figure, establish one coherent hypothesis covering:
+For observed work, establish one coherent hypothesis covering the high-impact relationships that
+make this subject specific rather than generic:
 
-- dominant flow / line of action;
-- head, ribcage, and pelvis placement, orientation, and relative turn;
-- shoulder and pelvis relationship, including near/far side and counter-rotation;
-- support side, plumb, ground, and balance;
-- major limb chains and negative spaces;
-- prop axis, body contact, and occlusion when a prop is present.
+- placement and occupied extent of the major forms or parts;
+- dominant flow, principal direction, or organizing axes when present;
+- major orientation, turn, and relative spatial relation;
+- proportion, spacing, characteristic envelope, and width/depth changes;
+- support, balance, grounding, or load path when they materially define the subject;
+- connected-part or anchor relations;
+- large negative spaces, overlaps, contacts, and occlusion order;
+- attached-object relations when present.
 
-Construction marks may be sparse, but the represented relationships may not be vague. A
-short line can encode an exact joint direction; a mass can preserve a specific tilt and
-width change. Do not spend the quality budget on facial accents or wrinkle noise while the
-whole pose still reads incorrectly.
+Construction marks may be sparse, but the represented relationships may not be vague. A short
+line can encode an exact direction; a simple mass can preserve a specific orientation and width
+change. Do not replace observed structure with a generic primitive merely because local detail is
+being deferred.
+
+For figures, the same rule includes head/ribcage/pelvis placement and turn, shoulder/pelvis
+relation, support, limb chains, stance, and prop/body overlap. For articulated objects or
+mechanisms, the same rule applies to major axes, joint or part envelopes, relative widths,
+connections, and overlaps. These are examples of the same invariant, not separate workflows.
 
 ## Structural read before description
 
-For observed figures, a rough silhouette is not enough to justify contour refinement or value.
-Before spending marks on local identity, clothing detail, or broad tone, inspect whether the
-current drawing already communicates:
+A rough silhouette or simple construction is not enough to justify contour refinement, local
+identity, or value. Before spending marks downstream, inspect whether the current drawing already
+communicates the structural relations that materially define the subject:
 
-- head / ribcage / pelvis orientation and relative twist;
-- shoulder / pelvis relation;
-- support and weight tendency;
-- major shoulder → elbow → wrist and hip → knee → ankle anchor chains;
-- stance and large negative spaces;
-- major prop axis and body overlap when present.
+- placement, occupied extent, and relative proportion;
+- major orientation / turn / principal axes;
+- characteristic envelope and width/depth changes;
+- major connected-part or anchor relations;
+- overlap, contact, negative space, and occlusion order;
+- support or grounding when applicable.
 
 This is **not** a stage gate. It is a reversible drawing decision. Any later observation may
 invalidate one of these relations, in which case retire or replace the responsible marks and
 reconstruct before continuing downstream.
 
-A warning sign is a drawing whose local parts look clean while the whole becomes more frontal,
-parallel, or symmetric than the subject. Route that failure to
-`construction/orientation-and-twist.md` and `review/residual-routing.md` rather than polishing it.
+A warning sign is a drawing whose local parts become cleaner or more detailed while the whole
+subject becomes more generic, flatter, more symmetric, more parallel, or otherwise less faithful
+to its authority. Route that failure upstream rather than polishing it.
+
+## Revalidate before inheriting construction
+
+Earlier construction is not a source of truth. Before each meaningful descriptive pass, compare
+the whole drawing against the reference authority or declared intent again.
+
+```text
+previous construction
+→ fresh whole-subject comparison
+→ parent structure still credible?
+   ├─ yes → retain and describe further
+   └─ no  → replace responsible geometry first
+```
+
+Do not preserve a wrong primitive because later strokes were placed relative to it. The cost of
+replacing an upstream premise is lower than carrying its error through every downstream contour,
+detail, value region, or accent.
 
 ## Descriptive geometry, not symbolic detail
 
@@ -144,8 +184,8 @@ line set usually prioritizes:
 - overlap boundaries and contact handoffs;
 - form turns or plane breaks that clarify volume;
 - identity-bearing feature placement;
-- garment seams and folds that arise from visible tension, compression, or contact;
-- foot/ground and object/body contact.
+- seams, folds, joints, or component boundaries that explain construction or force;
+- ground/contact and object/body or part/part relations.
 
 Do not substitute generic symbols for these relationships. In particular:
 
@@ -155,9 +195,10 @@ Do not substitute generic symbols for these relationships. In particular:
 - a leg is not a pair of rails;
 - a foot or shoe is not a rectangular block;
 - clothing is not a field of decorative zigzags;
+- a joint, housing, or connected part is not automatically a generic circle or box;
 - extra strokes around an uncertain form do not make the form more accurate.
 
-Read the matching `description/` and `figure/` leaves when one of these becomes limiting.
+Read the matching `description/` and subject leaves when one of these becomes limiting.
 
 ## Head and face policy
 
