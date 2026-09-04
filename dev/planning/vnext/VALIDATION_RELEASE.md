@@ -1,6 +1,6 @@
 # img2drawing vNext post-alignment validation and release
 
-Updated: 2026-09-03
+Updated: 2026-09-04
 Starts only after: **B18 CLOSED + post-freeze alignment A1–A5 accepted**
 
 This document owns the first fresh visual validation after implementation freeze and product-surface alignment. Earlier dogfoods remain historical evidence; they do not substitute for D01–D06.
@@ -209,6 +209,10 @@ Cover observed croquis, figure/subject, tonal, free-draw, imaginative, hybrid, c
 
 ## R03 — Physical R23 retirement
 
+Start from `R03_RUNTIME_OWNERSHIP_INVENTORY.md`, which records the pre-D01 module-level
+`canonical / shared / mixed / legacy-only / adapter` baseline and the compatibility seams that
+must be split before deletion.
+
 Inventory remaining stage/runtime/review/Pn-era surfaces as:
 
 ```text
@@ -217,6 +221,11 @@ retain as shared capability
 retain as explicit time-bounded compatibility adapter
 historical Git only
 ```
+
+Before deleting the old runtime, explicitly choose whether R23 support remains **full resume**,
+becomes **migration-only**, or ends. The current migration implementation first resumes a
+`DrawingRun`, so migration-only retirement requires a direct checkpoint-to-vNext adapter before
+`run/stages/review/exemplar` can be removed.
 
 Do not remove compatibility before support/migration evidence justifies it. After retirement, normal imports/package/docs must remain stage-free and supported legacy inputs must either migrate correctly or fail with actionable errors.
 
