@@ -7,11 +7,12 @@ Runtime/package version: `0.6.0rc2` (`DrawingSession/0.6.0-vnext`).
 Current truth:
 
 - B00–B18 are CLOSED.
-- A1 repository truth, A2 public-root alignment, A3 runtime isolation, A4 residual routing, A5 high-value drawing-leaf hardening, and A6 structural-orientation hardening are CLOSED.
+- A1 repository truth, A2 public-root alignment, A3 runtime isolation, A4 residual routing, A5 high-value drawing-leaf hardening, A6 structural-orientation hardening, and A7 structural-specificity/inheritance hardening are CLOSED.
 - The deployable skill starts at `skills/img2drawing/SKILL.md`; `references/INDEX.md` is the progressive-disclosure routing table.
+- `references/foundation/structural-specificity.md` owns the cross-subject rule: defer secondary detail, not structural specificity; construction primitives are provisional; downstream description revalidates its parent structure before inheriting it.
 - `references/review/residual-routing.md` routes visible symptoms by responsible relationship and escalates upstream when the local part is only a symptom.
 - `references/construction/orientation-and-twist.md` owns head/ribcage/pelvis turn, near/far planes, relative twist, and whole-pose flattening/symmetry drift without becoming a runtime stage.
-- Croquis keeps broad value/dense regular hatch off by default until orientation, support, limb chains, negative spaces, and prop/body depth already read structurally without tone.
+- Croquis keeps broad value/dense regular hatch off by default until the structural read already works without tone.
 - `references/figure/hands-and-grip.md` owns local visible hand/grip geometry only after the parent arm chain is credible. It rejects mitten-style completion and invented hidden digits.
 - `references/construction/foreshortening-and-depth.md` owns projected length, near/far order, overlap, hidden length, and terminal orientation. It rejects unfolding compressed forms to expected anatomical length.
 - The package root remains intentionally narrow around `DrawingSession`; specialized capability lives in explicit owning namespaces and pre-rc2 root names are compatibility shims only.
@@ -38,14 +39,15 @@ The pre-D01 alignment pass is complete:
 3. runtime physical-isolation audit — CLOSED;
 4. explicit residual → leaf → upstream escalation routing edges — CLOSED;
 5. bounded hands/grip and foreshortening/depth drawing leaves — CLOSED;
-6. structural orientation/twist hardening and structure-before-value routing — CLOSED.
+6. structural orientation/twist hardening and structure-before-value routing — CLOSED;
+7. cross-subject structural specificity and construction-inheritance hardening — CLOSED.
 
 **D01 difficult observed croquis is NEXT.** It is the first fresh visual validation case and
 must follow `VALIDATION_RELEASE.md`: fresh sealed input, current installed skill/package, no
 answer image or prior subject-specific solution coordinates, and actual render/inspection/
-correction evidence. D01 should judge head/ribcage/pelvis orientation, relative twist, support,
-limb anchors, negative spaces, and prop/body depth before local polish or broad value. A real
-failure may reopen the responsible A/B premise.
+correction evidence. D01 should judge whether early sparse construction remains structurally
+specific and whether later description replaces disproven parent geometry instead of refining
+around it. A real failure may reopen the responsible A/B premise.
 
 Do not reactivate Pn/R23 development, create a parallel session architecture, or treat
 mechanical CI as artistic-quality proof.
@@ -58,6 +60,7 @@ mechanical CI as artistic-quality proof.
 - `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md` — operational residual-routing closure.
 - `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md` — hand/grip and foreshortening/depth guidance closure.
 - `dev/planning/vnext/A6_STRUCTURAL_ORIENTATION_HARDENING.md` — orientation/twist and structure-before-value guidance closure.
+- `dev/planning/vnext/A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md` — cross-subject structural-specificity and construction-inheritance closure.
 - `dev/planning/vnext/VALIDATION_RELEASE.md` — D01–D06 and release validation contracts.
 - `dev/release/vnext/` — current release-candidate control-plane records.
 - `dev/release/r23/` and Git history — historical compatibility/release evidence.
