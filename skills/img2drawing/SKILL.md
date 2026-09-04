@@ -36,8 +36,11 @@ constraints. Read [`references/foundation/reference-authority.md`](references/fo
 6. **There is no generic “detail stage.”** Descriptive lines are added when a specific
    relationship requires them. A face, shoe, cuff, rifle, fold, joint, seam, or component can
    become the next highest-impact problem at any time.
-7. **Do not invent hidden endings.** Occluded hands, feet, hair tips, garment edges, object
-   contacts, or concealed component terminations end where the evidence ends.
+7. **Infer hidden structure when continuity requires it; do not fabricate hidden appearance.**
+   Occlusion does not erase the need to reason about a connected chain, mass, topology, contact,
+   or depth relation. Build the minimum provisional continuation needed to keep visible anchors
+   coherent, but do not render an unobserved contour, terminal, fold, seam, finger, fastener, or
+   surface detail as if it were visible.
 8. **Macro residuals outrank micro polish.** Pose, mass, orientation, balance, silhouette,
    overlap, grounding, and major object relations are repaired before small accents.
 9. **Line accumulation is not fidelity.** When many simple strokes pile up around one
@@ -47,7 +50,10 @@ constraints. Read [`references/foundation/reference-authority.md`](references/fo
 
 Read [`references/foundation/structural-specificity.md`](references/foundation/structural-specificity.md)
 for the cross-subject rule that separates secondary detail from structural information and
-requires revalidation before inherited construction is refined.
+requires revalidation before inherited construction is refined. Read
+[`references/foundation/occlusion-inference.md`](references/foundation/occlusion-inference.md)
+when a visible relation crosses behind another form or an occluded continuation materially affects
+pose, topology, contact, depth, or a downstream anchor.
 
 ## Instruction graph
 
@@ -57,7 +63,7 @@ leaves:
 ```text
 SKILL.md
 └─ references/
-   ├─ foundation/   truth, precedence, line economy, structural specificity
+   ├─ foundation/   truth, precedence, line economy, structural specificity, occlusion inference
    ├─ modes/        croquis, figure, line, tonal, free draw
    ├─ observation/  whole/part reading and measurement boundaries
    ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
@@ -80,17 +86,20 @@ For every new task:
 1. Establish reference authority and requested drawing mode.
 2. Read `foundation/line-economy.md`, `foundation/structural-specificity.md`, and the chosen
    mode guide.
-3. For observed work, read `observation/visual-observation.md`. Use
-   `observation/measuring-boundaries.md` only when measurements or ambiguous boundaries are
-   actually needed.
+3. For observed work, read `observation/visual-observation.md`. If a material relation disappears
+   behind another form, read `foundation/occlusion-inference.md` before deciding that the hidden
+   structure simply ends. Use `observation/measuring-boundaries.md` only when measurements or
+   ambiguous boundaries are actually needed.
 4. Form one whole-subject structural hypothesis before spending marks on local description.
    Preserve the specific placement, orientation, proportion, envelope, width/depth changes,
    overlaps, contacts, negative spaces, and connected-part or anchor relations that materially
-   define the subject. Load specialized construction leaves only when those relationships need
-   them.
+   define the subject. When continuity passes behind an occluder, infer only the hidden relation
+   needed to keep the visible anchors coherent. Load specialized construction leaves only when
+   those relationships need them.
 5. Before local description, re-read the whole drawing against its authority. Existing
-   construction may be retained only when the parent structure is still credible without
-   relying on detail or tone. If not, replace the responsible geometry first.
+   construction, including hidden-continuation hypotheses, may be retained only when the parent
+   structure is still credible without relying on detail or tone. If not, replace the responsible
+   geometry first.
 6. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
    owns its cause. If the visible part may only be a symptom, use
    `review/residual-routing.md` to choose the local or upstream premise instead of opening
@@ -123,7 +132,8 @@ make this subject specific rather than generic:
 - major orientation, turn, and relative spatial relation;
 - proportion, spacing, characteristic envelope, and width/depth changes;
 - support, balance, grounding, or load path when they materially define the subject;
-- connected-part or anchor relations;
+- connected-part or anchor relations, including hidden continuity when an occlusion separates
+  visible fragments of the same structure;
 - large negative spaces, overlaps, contacts, and occlusion order;
 - attached-object relations when present.
 
@@ -146,7 +156,8 @@ communicates the structural relations that materially define the subject:
 - placement, occupied extent, and relative proportion;
 - major orientation / turn / principal axes;
 - characteristic envelope and width/depth changes;
-- major connected-part or anchor relations;
+- major connected-part or anchor relations, including plausible continuity through important
+  occlusions when the visible arrangement depends on it;
 - overlap, contact, negative space, and occlusion order;
 - support or grounding when applicable.
 
@@ -156,7 +167,9 @@ reconstruct before continuing downstream.
 
 A warning sign is a drawing whose local parts become cleaner or more detailed while the whole
 subject becomes more generic, flatter, more symmetric, more parallel, or otherwise less faithful
-to its authority. Route that failure upstream rather than polishing it.
+to its authority. Another warning sign is a connected form that is treated as if it terminates at
+an occluder even though its visible downstream anchor requires continuity. Route those failures
+upstream rather than polishing them.
 
 ## Revalidate before inheriting construction
 
@@ -174,6 +187,35 @@ previous construction
 Do not preserve a wrong primitive because later strokes were placed relative to it. The cost of
 replacing an upstream premise is lower than carrying its error through every downstream contour,
 detail, value region, or accent.
+
+## Occlusion inference boundary
+
+Do not use “not visible” as a synonym for “structurally irrelevant.” When a connected form,
+articulated chain, garment mass, hair mass, attached object, or contact relation passes behind an
+occluder, separate three questions:
+
+1. **What is visible?** Locate the last visible anchor before disappearance, the first visible
+   reappearance when one exists, local direction/tangent, width/taper, foreground ownership, and
+   any visible contact or alignment cues.
+2. **What hidden relation is needed?** Infer the minimum centerline, connected-part path, mass
+   continuation, topology, relative depth, or attachment/contact relation needed to make those
+   visible anchors coherent. This is provisional construction, not observed appearance.
+3. **What should be rendered?** Final descriptive linework normally stops at the foreground
+   occluder and resumes only where the background form is actually visible again. The inferred
+   hidden path may constrain placement without appearing as a visible contour.
+
+If both sides are visible, use them together: a hidden continuation that cannot connect the entry
+and reappearance anchors without an unsupported bend is evidence that the parent premise needs
+revision. If only one side is visible, reduce certainty: infer only enough continuation to support
+the visible parent relation and leave the exact hidden terminal unspecified.
+
+A temporary construction line may pass through an occluder when it materially helps reasoning,
+but it must remain recognizably provisional and should be retired or softened before it reads as a
+claimed visible edge. Never promote category knowledge into exact hidden appearance: anatomy,
+mechanics, garment construction, or object familiarity may constrain plausibility but cannot reveal
+an unseen fingertip, fold path, seam, fastener, hair tip, surface corner, or terminal.
+
+Read `foundation/occlusion-inference.md` for the full decision procedure and failure signals.
 
 ## Descriptive geometry, not symbolic detail
 
@@ -212,16 +254,20 @@ accurate exterior and interior lines are preferred over many simplified ones. Se
 
 When a visible hand matters, preserve wrist entry, hand orientation, palm/hand envelope,
 thumb opposition, informative finger groups, visible gaps/terminations, and actual contact.
-Do not convert the terminal into a mitten and then add finger ticks, and do not invent hidden
-digits to complete a grip. If the parent arm or prop relation is wrong, route upstream rather
-than deforming the hand to compensate. See `figure/hands-and-grip.md`.
+Do not convert the terminal into a mitten and then add finger ticks. When digits or part of the
+hand are occluded, infer only the hidden hand/contact relation needed to make the visible grip
+coherent; do not invent exact hidden digits or render them as observed. If the parent arm or prop
+relation is wrong, route upstream rather than deforming the hand to compensate. See
+`figure/hands-and-grip.md`.
 
 ## Foreshortening and depth policy
 
 When a form points toward or away from the viewer, preserve projected joint spacing,
 near/far order, overlap, supported apparent-width change, and terminal orientation. Do not
-unfold a foreshortened limb to the anatomical length you expect, or draw hidden length through
-an occluder. See `construction/foreshortening-and-depth.md`.
+unfold a foreshortened limb to the anatomical length you expect. If part of the chain is occluded,
+infer the minimum hidden continuity needed to connect visible anchors, but do not draw the hidden
+contour through the occluder as if it were visible. See
+`construction/foreshortening-and-depth.md`.
 
 ## Legs and feet policy
 
@@ -248,8 +294,10 @@ turn, overlap, or mass.
 
 Whole views, focused crops, overlays, grids, plumb lines, material samples, and profiles are
 observation aids. They answer bounded visual questions; they do not select the drawing
-solution. A luminance edge is not automatically an anatomical edge, and a measurement
-cannot infer an occluded terminal.
+solution. A luminance edge is not automatically an anatomical edge. A measurement cannot pass
+through an occluder or prove an exact hidden terminal; the Agent may still infer a provisional
+hidden relation from visible anchors when continuity, topology, contact, pose, or depth requires
+it. Keep that inference distinct from measured evidence and from rendered visible appearance.
 
 After any mutation, old visual evidence may no longer describe the current drawing. Render
 and inspect again before accepting the correction.
