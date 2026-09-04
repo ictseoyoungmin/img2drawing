@@ -22,14 +22,21 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 
 ## 3. Observation
 
-- `observation/visual-observation.md` — whole → relation → part → relation again
+- `observation/visual-observation.md` — whole → relation → part → relation again, including turn/near-far reads
 - `observation/measuring-boundaries.md` — bounded measurements and ambiguous edges
 
 ## 4. Construction
 
 - `construction/gesture-and-masses.md` — flow and occupied masses
+- `construction/orientation-and-twist.md` — major-mass turn, near/far planes, counter-rotation, anti-flattening
 - `construction/balance-and-limbs.md` — support, joint chains, terminals, negative space
 - `construction/foreshortening-and-depth.md` — projected length, near/far order, overlap, terminal orientation
+
+For observed figures, local description should not become the default next step merely because a
+rough silhouette exists. First ask whether head/ribcage/pelvis orientation, shoulder/pelvis
+relation, support, major limb anchors, large negative spaces, and prop/body depth are already
+credible. This is a drawing prerequisite, not a runtime stage; later evidence may reopen it at any
+time.
 
 ## 5. Description
 
@@ -63,7 +70,9 @@ When a local part looks wrong but its cause is uncertain, read `review/residual-
 instead of opening every subject leaf. Route by the relationship that must change, not by the
 name of the visible part. A wrong shoe may belong to `figure/legs-feet.md`,
 `construction/balance-and-limbs.md`, `environment/ground-and-context.md`, or
-`description/contour-and-overlap.md` depending on the responsible cause.
+`description/contour-and-overlap.md` depending on the responsible cause. A whole figure that has
+become flatter, more frontal, or more symmetric than the subject belongs upstream in
+`construction/orientation-and-twist.md` even when the individual local contours look clean.
 
 ## 8. Public runtime API
 

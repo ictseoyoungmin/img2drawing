@@ -31,10 +31,12 @@ constraints. Read [`references/foundation/reference-authority.md`](references/fo
    generic anatomy.
 5. **Do not invent hidden endings.** Occluded hands, feet, hair tips, garment edges, and
    object contacts end where the evidence ends.
-6. **Macro residuals outrank micro polish.** Pose, mass, balance, silhouette, overlap,
-   grounding, and major object relations are repaired before small accents.
+6. **Macro residuals outrank micro polish.** Pose, mass, orientation, balance, silhouette,
+   overlap, grounding, and major object relations are repaired before small accents.
 7. **Line accumulation is not fidelity.** When many simple strokes pile up around one
    feature, replace them with fewer lines that describe the correct boundary or form.
+8. **Do not finish a flat pose with tone.** Broad value, dense hatch, texture, or detail may
+   reinforce structure only after the major spatial relations already read without them.
 
 ## Instruction graph
 
@@ -47,7 +49,7 @@ SKILL.md
    ├─ foundation/   truth, precedence, line economy
    ├─ modes/        croquis, figure, line, tonal, free draw
    ├─ observation/  whole/part reading and measurement boundaries
-   ├─ construction/ gesture, masses, balance, limbs, foreshortening/depth
+   ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
    ├─ description/  contour, descriptive geometry, value/edge/material
    ├─ figure/       head/face/hair, torso/arms, hands/grip, legs/feet, clothing folds
    ├─ props/        attached-object geometry and body contact
@@ -69,16 +71,19 @@ For every new task:
 3. For observed work, read `observation/visual-observation.md`. Use
    `observation/measuring-boundaries.md` only when measurements or ambiguous boundaries are
    actually needed.
-4. For figures, form one whole-subject construction hypothesis using the construction
-   leaves before spending marks on local description.
-5. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
+4. For figures, form one whole-subject spatial hypothesis using the construction leaves. Read
+   `construction/orientation-and-twist.md` whenever turn, near/far relation, or counter-rotation
+   materially defines the pose.
+5. Before local description, confirm that the structural read is credible without relying on
+   tone. If not, stay in observation/construction rather than polishing local contours.
+6. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
    owns its cause. If the visible part may only be a symptom, use
    `review/residual-routing.md` to choose the local or upstream premise instead of opening
    every leaf.
-6. After every meaningful mutation, inspect a fresh render and use
+7. After every meaningful mutation, inspect a fresh render and use
    `review/residual-correction.md`.
-7. Finish only from current evidence, then export through the output route.
-8. Read `api/public-surface.md` only when code must call the runtime.
+8. Finish only from current evidence, then export through the output route.
+9. Read `api/public-surface.md` only when code must call the runtime.
 
 ## Canonical drawing loop
 
@@ -98,8 +103,8 @@ signal to inspect the parent relation, not a reason to add more local strokes.
 For an observed figure, establish one coherent hypothesis covering:
 
 - dominant flow / line of action;
-- head, ribcage, and pelvis placement and orientation;
-- shoulder and pelvis relationship;
+- head, ribcage, and pelvis placement, orientation, and relative turn;
+- shoulder and pelvis relationship, including near/far side and counter-rotation;
 - support side, plumb, ground, and balance;
 - major limb chains and negative spaces;
 - prop axis, body contact, and occlusion when a prop is present.
@@ -108,6 +113,27 @@ Construction marks may be sparse, but the represented relationships may not be v
 short line can encode an exact joint direction; a mass can preserve a specific tilt and
 width change. Do not spend the quality budget on facial accents or wrinkle noise while the
 whole pose still reads incorrectly.
+
+## Structural read before description
+
+For observed figures, a rough silhouette is not enough to justify contour refinement or value.
+Before spending marks on local identity, clothing detail, or broad tone, inspect whether the
+current drawing already communicates:
+
+- head / ribcage / pelvis orientation and relative twist;
+- shoulder / pelvis relation;
+- support and weight tendency;
+- major shoulder → elbow → wrist and hip → knee → ankle anchor chains;
+- stance and large negative spaces;
+- major prop axis and body overlap when present.
+
+This is **not** a stage gate. It is a reversible drawing decision. Any later observation may
+invalidate one of these relations, in which case retire or replace the responsible marks and
+reconstruct before continuing downstream.
+
+A warning sign is a drawing whose local parts look clean while the whole becomes more frontal,
+parallel, or symmetric than the subject. Route that failure to
+`construction/orientation-and-twist.md` and `review/residual-routing.md` rather than polishing it.
 
 ## Descriptive geometry, not symbolic detail
 
@@ -168,6 +194,14 @@ not hide an incorrect lower body behind a generic tapered tube or box foot. See
 Folds must originate at observed anchors, tension, compression, drape, or contact. Keep
 their exact location and direction even when only a few are drawn. Remove decorative fold
 noise that does not explain form. See `figure/clothing-folds.md`.
+
+## Croquis value boundary
+
+In croquis, broad value regions and dense regular hatch fields are off by default. Use them
+only when the request explicitly calls for shaded/tonal croquis or the declared intent materially
+depends on form/light, and only after the structural read above remains credible without tone.
+A small local value accent may clarify an observed relation; value must not manufacture missing
+turn, overlap, or mass.
 
 ## Evidence boundary
 

@@ -16,6 +16,7 @@ the current control plane.
 - [x] `SKILL.md` is an instruction router, not a development log.
 - [x] references use the stage-free graph: foundation → modes → observation → construction → description → subject leaves → review/output/API.
 - [x] croquis guidance preserves observed geometry while economizing marks.
+- [x] observed-figure guidance distinguishes mass placement from spatial orientation/turn and requires structure to read before broad value.
 - [x] drawing guidance does not require private/internal runtime implementation knowledge.
 
 Mechanical verification is owned by `dev/tests/test_skill_surface_boundary.py` and the B17/B18 verifiers.
@@ -46,9 +47,11 @@ Evidence: `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and `dev/t
 - [x] common residuals route explicitly to the smallest responsible leaf and upstream construction/observation/contact/environment premises when the local part is only a symptom.
 - [x] local hands/grip have focused guidance that preserves hand envelope, thumb/finger grouping, visible terminations, and real contact without mitten completion or invented hidden digits.
 - [x] foreshortening/depth has a construction owner for projected spacing, near/far order, overlap, hidden length, and terminal orientation without anatomical unfolding.
+- [x] major-mass orientation/twist has explicit ownership for tilt-vs-turn, near/far planes, head/ribcage/pelvis counter-rotation, and whole-pose flattening/symmetry drift.
+- [x] croquis broad value/dense hatch is off by default until orientation, support, limb chains, negative spaces, and prop/body depth already read structurally.
 - [x] the graph remains progressive-disclosure: `INDEX.md` stays compact and delegates conditional diagnostics to `review/residual-routing.md`.
 
-Evidence: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md`, `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md`, and `dev/tests/test_skill_surface_boundary.py`.
+Evidence: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md`, `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md`, `dev/planning/vnext/A6_STRUCTURAL_ORIENTATION_HARDENING.md`, and `dev/tests/test_skill_surface_boundary.py`.
 
 ## G5 — Fresh integrated validation — NEXT
 

@@ -1,16 +1,16 @@
 # img2drawing vNext status
 
-Updated: 2026-09-04
+Updated: 2026-09-05
 
 ```text
-SYSTEM:          vNext product/API/schema/package contract frozen through B18 + A2 root alignment
+SYSTEM:          vNext product/API/schema/package contract frozen through B18 + post-freeze alignment through A6
 PACKAGE:         0.6.0rc2 · DrawingSession/0.6.0-vnext
-SKILL SURFACE:   stage-free instruction graph with cause-based residual routing and bounded high-value leaves
+SKILL SURFACE:   stage-free instruction graph with cause-based residual routing and structural-orientation hardening
 ACTIVE ON MAIN:  none
 NEXT ENGINEERING: none before fresh validation
 NEXT VALIDATION: D01 difficult observed croquis
 DOGFOOD:         D01–D06 not started
-CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation + A4 residual routing + A5 drawing-leaf gaps
+CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation + A4 residual routing + A5 drawing-leaf gaps + A6 structural orientation
 ```
 
 ## Current decision
@@ -31,11 +31,14 @@ A4 made the deployable instruction graph operational rather than merely taxonomi
 residuals route by the relationship that must change and escalate upstream when a local part is
 only a symptom.
 
-A5 closed the two remaining pre-D01 guidance gaps that justified distinct ownership. Local
-hand/grip geometry now has `figure/hands-and-grip.md`; projected-length/depth compression has
-`construction/foreshortening-and-depth.md`. The first does not replace arm-chain, prop, or
-contact ownership; the second owns projection rather than anatomy and explicitly rejects
-unfolding foreshortened forms to expected anatomical length.
+A5 closed two high-value guidance gaps with focused leaves for local hands/grip and
+foreshortening/depth compression.
+
+A6 responds to repeated exploratory visual evidence that clean local contours can coexist with a
+flattened whole pose. The instruction graph now separates tilt from turn, owns head/ribcage/pelvis
+orientation and relative twist explicitly, requires a reversible structural read before local
+description, and keeps broad croquis value off by default until structure survives without tone.
+No runtime/API/schema contract changed.
 
 The pre-D01 alignment pass is now complete:
 
@@ -45,6 +48,7 @@ A1 repository truth reconciliation      CLOSED
 → A3 runtime physical-isolation audit   CLOSED
 → A4 instruction routing-edge hardening CLOSED
 → A5 high-value drawing-leaf gaps       CLOSED
+→ A6 structural orientation hardening   CLOSED
 → D01 NEXT → D02 → D03 → D04 → D05 → D06
 → R01 → R02 → R03 → R04
 ```
@@ -63,12 +67,14 @@ A1 repository truth reconciliation      CLOSED
 - `skills/img2drawing/SKILL.md` is the deployable instruction router and
   `skills/img2drawing/references/INDEX.md` is the progressive-disclosure graph index.
 - `references/review/residual-routing.md` routes symptoms by cause and upstream responsibility.
+- `references/construction/orientation-and-twist.md` owns major-mass turn, near/far planes,
+  counter-rotation, and whole-pose flattening/symmetry drift without becoming a runtime stage.
 - `references/figure/hands-and-grip.md` owns local visible hand/grip geometry only after the
   parent arm relation is credible.
 - `references/construction/foreshortening-and-depth.md` owns projected spacing, depth order,
   overlap, and terminal orientation without inventing hidden length.
-- Croquis economizes marks, not observed geometry; construction abstractions are hypotheses,
-  not final forms.
+- Croquis economizes marks, not observed geometry, and broad value/dense hatch is off by default
+  until the structural read remains credible without tone.
 - `skills/img2drawing/examples/` remains intentionally absent until a representative example
   earns instructional authority.
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
@@ -129,9 +135,15 @@ Residuals route by cause, with explicit upstream escalation signals. See
 
 ### A5. Drawing-leaf gaps — CLOSED
 
-Only two separate leaves were justified: local hands/grip and cross-cutting foreshortening/depth.
-They are linked into `SKILL.md`, `INDEX.md`, A4 residual routing, and mechanical skill-surface
-checks without adding runtime or stage concepts. See `A5_DRAWING_LEAF_GAP_HARDENING.md`.
+Two focused leaves remain: local hands/grip and cross-cutting foreshortening/depth. See
+`A5_DRAWING_LEAF_GAP_HARDENING.md`.
+
+### A6. Structural orientation hardening — CLOSED
+
+Exploratory visual evidence showed repeated whole-pose flattening despite locally plausible
+contours. The graph now owns turn/near-far/counter-rotation explicitly, requires a reversible
+structural read before description, and prevents broad croquis value from hiding unresolved
+structure. See `A6_STRUCTURAL_ORIENTATION_HARDENING.md`.
 
 ## Post-alignment validation
 
@@ -151,6 +163,7 @@ readiness before that evidence exists.
 - R03 module ownership baseline: `R03_RUNTIME_OWNERSHIP_INVENTORY.md`
 - A4 routing evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - A5 guidance evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
+- A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
 - D01–D06 / release contracts: `VALIDATION_RELEASE.md`
 - current program gates: `/GATES.md`
 - frozen vNext release-candidate contract: `dev/release/vnext/`

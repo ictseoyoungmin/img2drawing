@@ -23,6 +23,29 @@ Then choose the leaf that owns that relationship.
 
 Do not read every branch below. Use only the branch matching the current residual.
 
+## Whole pose feels flatter, more frontal, or more symmetric
+
+Use this branch when several local contours are individually plausible but the subject's turn,
+twist, asymmetry, or depth relation has been normalized away.
+
+```text
+whole-pose flattening residual
+├─ head / ribcage / pelvis turns or relative twist disagree coherently
+│  └─ construction/orientation-and-twist.md
+├─ shoulder / pelvis relation, support, or several limb anchors drift together
+│  └─ construction/gesture-and-masses.md + construction/balance-and-limbs.md
+├─ near/far side or plane exposure is still uncertain in the reference
+│  └─ observation/visual-observation.md
+├─ several negative spaces became generic or symmetric
+│  └─ construction/balance-and-limbs.md
+└─ prop reads pasted onto the body instead of crossing believable depth
+   └─ construction/orientation-and-twist.md + props/attached-objects.md
+```
+
+Do **not** polish local contours, folds, eyes, or value until the whole spatial relation is
+credible. Clean local geometry is not progress if the drawing has become a more frontal or
+symmetrical pose than the subject.
+
 ## Foot or shoe looks wrong
 
 ```text
@@ -46,8 +69,10 @@ terminal is not the responsible scope.
 
 ```text
 head/face residual
-├─ head placement, tilt, or relation to torso is wrong
+├─ head placement or relation to torso is wrong
 │  └─ construction/gesture-and-masses.md
+├─ head turn, near/far side, or relation to ribcage turn is wrong
+│  └─ construction/orientation-and-twist.md
 ├─ visible cranial/jaw shape, feature spacing, or hair mass is locally wrong
 │  └─ figure/head-face-hair.md
 ├─ jaw/hair/neck ownership or reappearance is wrong
@@ -86,6 +111,8 @@ geometry or escalate upstream.
 foreshortening/depth residual
 ├─ near/far anchors, projected joint spacing, or depth order is wrong
 │  └─ construction/foreshortening-and-depth.md
+├─ parent mass turn or near/far plane is wrong
+│  └─ construction/orientation-and-twist.md
 ├─ several anchors/overlaps are still uncertain in the reference
 │  └─ observation/visual-observation.md
 ├─ only the local overlap/reappearance edge is wrong after depth is credible
@@ -99,8 +126,8 @@ foreshortening/depth residual
 ```
 
 Do not lengthen compressed segments independently merely because they look anatomically
-short. First test whether the projected anchors, overlap, and terminal orientation are
-already faithful to the subject.
+short. First test whether the projected anchors, parent orientation, overlap, and terminal
+orientation are already faithful to the subject.
 
 ## Prop looks wrong
 
@@ -108,6 +135,8 @@ already faithful to the subject.
 prop residual
 ├─ dominant axis, thickness, topology, or component break is wrong
 │  └─ props/attached-objects.md
+├─ body plane / near-far relation makes the prop depth read wrong
+│  └─ construction/orientation-and-twist.md
 ├─ hand/body anchors disagree with the prop position
 │  └─ construction/balance-and-limbs.md + figure/hands-and-grip.md
 ├─ piercing, floating, or occlusion order is wrong
@@ -125,8 +154,10 @@ nudging one endpoint repeatedly.
 silhouette/overlap residual
 ├─ one local boundary or reappearance point is wrong
 │  └─ description/contour-and-overlap.md
-├─ several neighboring boundaries disagree coherently
+├─ several neighboring boundaries disagree coherently because a mass is misplaced
 │  └─ construction/gesture-and-masses.md
+├─ several neighboring boundaries become too frontal/symmetric because turn is wrong
+│  └─ construction/orientation-and-twist.md
 ├─ a limb/body negative space is wrong
 │  └─ construction/balance-and-limbs.md
 └─ ownership cannot be read confidently from the reference
@@ -144,13 +175,15 @@ clothing residual
 │  └─ figure/clothing-folds.md
 ├─ the body mass or limb beneath the garment is wrong
 │  └─ construction/gesture-and-masses.md or construction/balance-and-limbs.md
+├─ garment symmetry/plane exposure is wrong because the torso turn is wrong
+│  └─ construction/orientation-and-twist.md
 ├─ garment/body/prop overlap ownership is wrong
 │  └─ description/contour-and-overlap.md
 └─ the issue is value/edge separation rather than geometry
    └─ description/value-edge-and-graphite.md
 ```
 
-Do not add more folds to hide a wrong torso, arm, or leg premise.
+Do not add more folds to hide a wrong torso, arm, leg, or turn premise.
 
 ## Grounding or environment looks wrong
 
@@ -174,13 +207,16 @@ Background detail is never the repair for an unresolved support or contact probl
 value/tonal residual
 ├─ form boundary or overlap is actually wrong
 │  └─ description/descriptive-geometry.md or description/contour-and-overlap.md
+├─ major mass turn / twist is too weak to support the tone
+│  └─ construction/orientation-and-twist.md
 ├─ value family, edge behavior, or graphite handling is wrong
 │  └─ description/value-edge-and-graphite.md
 └─ the value problem comes from a wrong major mass or pose
    └─ construction/gesture-and-masses.md
 ```
 
-Do not use darker tone to conceal uncertain geometry.
+Do not use darker tone to conceal uncertain geometry. In croquis, broad value is not the
+repair for unresolved orientation, balance, limb-chain, negative-space, or prop-depth errors.
 
 ## Escalation signals
 
@@ -188,6 +224,7 @@ Escalate upstream when any of these occur:
 
 - the same local residual survives a deliberate local correction;
 - two or more neighboring parts fail in a coherent direction;
+- local parts become cleaner while the whole pose becomes more frontal, parallel, or symmetric;
 - fixing one endpoint breaks the other endpoint of the same relation;
 - contact cannot be made credible without moving its parent chain or mass;
 - a local contour requires invented geometry to connect cleanly;

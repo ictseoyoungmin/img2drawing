@@ -1,9 +1,9 @@
 # img2drawing vNext post-alignment validation and release
 
-Updated: 2026-09-04
-Starts only after: **B18 CLOSED + post-freeze alignment A1–A5 accepted**
+Updated: 2026-09-05
+Starts only after: **B18 CLOSED + post-freeze alignment A1–A6 accepted**
 
-This document owns the first fresh visual validation after implementation freeze and product-surface alignment. Earlier dogfoods remain historical evidence; they do not substitute for D01–D06.
+This document owns the first fresh visual validation after implementation freeze and product-surface alignment. Earlier dogfoods remain historical or exploratory evidence; they do not substitute for D01–D06.
 
 ## Governing rule
 
@@ -58,23 +58,31 @@ Primary proof:
 
 - gesture / line of action;
 - balance/support/stance;
-- head/ribcage/pelvis mass and turn;
-- limb chain and foot orientation;
-- silhouette / overlap / prop contact;
+- head/ribcage/pelvis placement, orientation, and relative twist;
+- shoulder/pelvis counter-relation and near/far side read;
+- major limb anchor chains and foot orientation;
+- large negative spaces;
+- silhouette / overlap / prop-body depth and contact;
 - geometry-preserving line economy.
 
-Reject a result that uses fewer lines by reducing the subject to symbolic head/limb/foot/fold shapes. Cost and fidelity are both first-class:
+D01 should be judged first from a line-dominant structural read. Broad value or dense regular
+hatch must not be needed to make the pose convincing. If tone is used at all, mentally remove it
+and verify that major mass turn, support, limb chains, negative spaces, and prop/body overlap still
+read correctly.
+
+Reject a result that uses fewer lines by reducing the subject to symbolic head/limb/foot/fold shapes, or that cleans local contours while making the whole pose more frontal, parallel, or symmetric than the reference. Cost and fidelity are both first-class:
 
 1. **record cost** — the session must not regress to brute-force microstroke explosion;
-2. **representation quality** — major form, overlap, contact, and characteristic curvature must remain readable with sparse marks.
+2. **representation quality** — major form, orientation/twist, overlap, contact, and characteristic curvature must remain readable with sparse marks.
 
 Likely reopen mapping:
 
-- observation/boundary failure → B01-R1/B02+B03 or A4 guidance routing;
+- observation/boundary failure → B01-R1/B02+B03 or A4/A6 guidance routing;
+- whole-pose flattening / turn-twist failure → A6 first; B05 only if runtime construction capability is actually limiting;
 - construction/form failure → B05;
 - correction/provenance failure → B06;
 - evidence budget failure → B07;
-- value/representation-cost failure → B07-R1/B16;
+- value/representation-cost failure → B07-R1/B16, after confirming A6's structure-first policy was followed;
 - finish policy failure → B09;
 - public-surface friction → A2/B16.
 
@@ -95,9 +103,9 @@ Requires D01 macro quality plus identity-bearing relationships:
 - distinctive clothing mass/openings/seams/folds at observed locations;
 - prop topology/contact/terminal mass.
 
-Do not pass because “eyes”, “hair”, “fingers”, or “folds” exist. Recognition must survive whole-image review and remain subordinate to correct macro form.
+Do not pass because “eyes”, “hair”, “fingers”, or “folds” exist. Recognition must survive whole-image review and remain subordinate to correct macro form and spatial orientation.
 
-Likely reopen: B09/B10, upstream B05/B01-R1, or A4/A5 when the issue is guidance coverage/routing rather than runtime mechanics.
+Likely reopen: B09/B10, upstream B05/B01-R1, or A4/A5/A6 when the issue is guidance coverage/routing rather than runtime mechanics.
 
 ## D03 — Tonal study
 
@@ -117,7 +125,7 @@ Primary proof:
 
 Reject arbitrary dark bands, dense authored hatch micro-actions for one value premise, tone that manufactures missing form, or a line drawing plus renderer/post-filter presented as tonal study.
 
-Likely reopen: B07-R1, B09, B11, B14, B15.
+Likely reopen: B07-R1, B09, B11, B14, B15; A6 if value is compensating for weak orientation rather than describing a credible form.
 
 ## D04 — Observed free-draw
 
@@ -152,6 +160,7 @@ Use at least two independent fresh workers on the same sealed input contract. Id
 Compare:
 
 - observation quality;
+- whole-pose orientation/twist read;
 - highest-impact residual prioritization;
 - escalation to the correct instruction leaf/premise;
 - edit strategy;

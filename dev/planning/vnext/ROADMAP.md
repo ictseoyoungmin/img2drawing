@@ -1,6 +1,6 @@
 # img2drawing vNext roadmap
 
-Updated: 2026-09-03
+Updated: 2026-09-05
 Workflow: Bottleneck · Production WIP Limit = 1
 
 This roadmap describes the current sequence. Detailed historical closure remains in slice records and capsules; this file should not become an append-only development log.
@@ -27,7 +27,7 @@ B18 closed the implementation/release-candidate contract. It did **not** prove f
 
 ## Phase B — post-freeze alignment before D01 — CLOSED
 
-The instruction-graph audit exposed a small product-surface alignment pass. A1–A5 are now closed; none introduced a second runtime architecture.
+The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A6 are now closed; none introduced a second runtime architecture.
 
 | Order | State | Goal |
 |---|---|---|
@@ -36,6 +36,7 @@ The instruction-graph audit exposed a small product-surface alignment pass. A1�
 | A3 | CLOSED | prove current runtime ownership/isolation and classify stage-era modules without cosmetic moves |
 | A4 | CLOSED | make residual → leaf → upstream escalation edges explicit in the instruction graph |
 | A5 | CLOSED | add only justified high-value guidance leaves for hands/grip and foreshortening/depth |
+| A6 | CLOSED | harden major-mass orientation/twist and prevent premature local description/value from masking flat poses |
 
 ### A2 — public API surface — CLOSED
 
@@ -68,28 +69,40 @@ upstream premise inspection rather than more local strokes.
 
 ### A5 — high-value drawing leaves — CLOSED
 
-The audit justified exactly two separate leaves:
-
-```text
-figure/hands-and-grip.md
-    local visible hand envelope / thumb opposition / finger grouping / grip contact
-    after the arm chain is credible
-
-construction/foreshortening-and-depth.md
-    projected spacing / near-far order / overlap / hidden length / terminal orientation
-    without restoring expected anatomical length
-```
-
-Existing guides still own parent arm/leg chains, prop topology/contact, contour ownership,
-observation, and feet. A5 therefore adds focused knowledge without turning the skill into an
-anatomy textbook or introducing stages/runtime machinery.
+The audit justified focused ownership for local hands/grip and foreshortening/depth while keeping
+parent chains, prop topology/contact, contour ownership, observation, and feet in their existing
+owners.
 
 Evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md` and
 `dev/tests/test_skill_surface_boundary.py`.
 
+### A6 — structural orientation hardening — CLOSED
+
+Exploratory current-version dogfood repeatedly produced locally plausible contours with weaker
+whole-pose turn, counter-rotation, asymmetry, and prop/body depth. A6 closes that guidance gap by:
+
+```text
+visual observation
+  → distinguish tilt from turn / near from far
+construction/orientation-and-twist.md
+  → own head/ribcage/pelvis turn + counter-rotation
+SKILL router
+  → require a reversible structural read before local description
+croquis
+  → broad value / dense hatch off by default
+residual routing
+  → whole-pose flattening routes upstream
+```
+
+A6 changes deployable drawing guidance only. It does not change the frozen runtime/API/schema
+contract and does not claim formal D01 success.
+
+Evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md` and
+`dev/tests/test_skill_surface_boundary.py`.
+
 ## Phase C — integrated fresh validation — NEXT
 
-Starts now that A1–A5 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
+Starts now that A1–A6 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
 
 ```text
 D01 difficult observed croquis    NEXT
@@ -125,7 +138,7 @@ Release must directly prove:
 - a fresh worker completes `observe/declare → draw → inspect → correct → finish` without Pn;
 - observed, imaginative, and hybrid work share one session/history core;
 - mode/style differences affect authored behavior rather than metadata or post-filters alone;
-- major form, overlap, grounding, identity, hand/foot/contact, and foreshortened depth survive line/value simplification;
+- major form, orientation/twist, overlap, grounding, identity, hand/foot/contact, and foreshortened depth survive line/value simplification;
 - session cost does not explode through brute-force microstroke accumulation;
 - PNG/replay/GIF share canonical renderer provenance and final-state parity;
 - public API, package, deployable docs, CI, and support policy tell the same canonical truth;
@@ -140,5 +153,6 @@ Release must directly prove:
 - A3 runtime ownership audit: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
 - A4 routing-edge evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - A5 drawing-leaf evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
+- A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
 - post-alignment dogfood/release: `VALIDATION_RELEASE.md`
 - deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
