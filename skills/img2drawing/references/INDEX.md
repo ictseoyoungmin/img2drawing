@@ -6,6 +6,7 @@ Start at `SKILL.md`, then read only the smallest leaves that own the current dra
 ## 1. Foundation
 
 - `foundation/line-economy.md` — preserve geometry while reducing redundant marks
+- `foundation/structural-specificity.md` — defer secondary detail without genericizing structure; revalidate inherited construction
 - `foundation/reference-authority.md` — observed, imaginative, and hybrid truth
 - `foundation/scope-and-precedence.md` — geometry/structure/finish/style precedence and
   macro-before-micro correction
@@ -32,11 +33,16 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 - `construction/balance-and-limbs.md` — support, joint chains, terminals, negative space
 - `construction/foreshortening-and-depth.md` — projected length, near/far order, overlap, terminal orientation
 
-For observed figures, local description should not become the default next step merely because a
-rough silhouette exists. First ask whether head/ribcage/pelvis orientation, shoulder/pelvis
-relation, support, major limb anchors, large negative spaces, and prop/body depth are already
-credible. This is a drawing prerequisite, not a runtime stage; later evidence may reopen it at any
-time.
+For any observed subject, local description should not become the default next step merely because
+a rough silhouette or simple construction exists. First ask whether the parent structure already
+preserves the subject's placement, orientation, proportion, characteristic envelope/width change,
+major overlap/contact/negative space, and connected-part or anchor relations. Defer secondary
+detail, not structural specificity.
+
+Earlier construction is provisional. Before a descriptive pass inherits it, compare the whole
+drawing against its authority again. If the parent relation is wrong, replace the responsible
+geometry instead of refining around it. This is a drawing prerequisite, not a runtime stage; later
+evidence may invalidate it at any time.
 
 ## 5. Description
 
