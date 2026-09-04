@@ -38,6 +38,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
     }
     assert {path.name for path in (SKILL / "references" / "foundation").iterdir()} == {
         "line-economy.md",
+        "occlusion-inference.md",
         "reference-authority.md",
         "scope-and-precedence.md",
         "structural-specificity.md",
@@ -202,6 +203,49 @@ def test_structural_specificity_is_cross_subject_and_revalidates_inheritance() -
     assert "Detail is not classified by size" in economy
     assert "Earlier construction is provisional" in correction
     assert "must not promote a provisional construction primitive" in descriptive
+
+
+def test_occlusion_inference_separates_hidden_structure_from_visible_appearance() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    occlusion = (
+        SKILL / "references" / "foundation" / "occlusion-inference.md"
+    ).read_text(encoding="utf-8")
+    observation = (SKILL / "references" / "observation" / "visual-observation.md").read_text(
+        encoding="utf-8"
+    )
+    measuring = (SKILL / "references" / "observation" / "measuring-boundaries.md").read_text(
+        encoding="utf-8"
+    )
+    contour = (SKILL / "references" / "description" / "contour-and-overlap.md").read_text(
+        encoding="utf-8"
+    )
+    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert "foundation/occlusion-inference.md" in skill
+    assert "foundation/occlusion-inference.md" in index
+    assert "Infer hidden structure when continuity requires it" in skill
+    assert "do not fabricate hidden appearance" in skill
+
+    assert "Keep three layers separate" in occlusion
+    assert "Visible evidence" in occlusion
+    assert "Provisional hidden structure" in occlusion
+    assert "Rendered visible description" in occlusion
+    assert "When hidden inference is required" in occlusion
+    assert "How to infer without overclaiming" in occlusion
+    assert "Partial and one-sided occlusion" in occlusion
+    assert "Measurement tools stop at occlusion" in occlusion
+
+    assert "entry direction before an occluder" in observation
+    assert "first visible reappearance" in observation
+    assert "hard boundary for **measurement**, not for all structural reasoning" in measuring
+    assert "hidden-continuity hypothesis" in measuring
+    assert "Occlusion is not structural termination" in contour
+    assert "provisional hidden continuation" in contour
+    assert "Occluded relation looks disconnected or ends at the occluder" in routing
+    assert "do not infer anything" in routing
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:
