@@ -45,6 +45,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "balance-and-limbs.md",
         "foreshortening-and-depth.md",
         "gesture-and-masses.md",
+        "orientation-and-twist.md",
     }
     assert {path.name for path in (SKILL / "references" / "figure").iterdir()} == {
         "clothing-folds.md",
@@ -93,6 +94,7 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
 
     for path in (
         "construction/balance-and-limbs.md",
+        "construction/orientation-and-twist.md",
         "environment/ground-and-context.md",
         "figure/legs-feet.md",
         "description/contour-and-overlap.md",
@@ -132,6 +134,41 @@ def test_high_value_hand_and_foreshortening_leaves_are_bounded_and_routable() ->
     assert "near and far anchors" in depth
     assert "unfold a foreshortened limb" in depth
     assert "Foreshortening or depth compression looks wrong" in routing
+
+
+def test_structural_orientation_hardening_blocks_flattening_and_premature_value() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    observation = (SKILL / "references" / "observation" / "visual-observation.md").read_text(
+        encoding="utf-8"
+    )
+    orientation = (
+        SKILL / "references" / "construction" / "orientation-and-twist.md"
+    ).read_text(encoding="utf-8")
+    croquis = (SKILL / "references" / "modes" / "croquis.md").read_text(encoding="utf-8")
+    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
+        encoding="utf-8"
+    )
+
+    for document in (skill, index, routing):
+        assert "construction/orientation-and-twist.md" in document
+
+    assert "tilt" in observation
+    assert "turn" in observation
+    assert "near/far" in observation
+    assert "projected centerline" in observation
+
+    assert "head / ribcage / pelvis orientation" in orientation
+    assert "shoulder / pelvis counter-relation" in orientation
+    assert "local contours look clean while the whole pose has lost" in orientation
+    assert "not a runtime stage" in orientation.lower()
+
+    assert "Broad value regions and dense regular hatch fields are **off by default**" in croquis
+    assert "pose must remain readable" in croquis
+    assert "Whole pose feels flatter, more frontal, or more symmetric" in routing
+    assert "local parts become cleaner while the whole pose becomes more frontal" in routing
+    assert "Do not finish a flat pose with tone" in skill
+    assert "Structural read before description" in skill
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:
