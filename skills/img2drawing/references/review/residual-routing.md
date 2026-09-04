@@ -46,6 +46,36 @@ Do **not** polish local contours, folds, eyes, or value until the whole spatial 
 credible. Clean local geometry is not progress if the drawing has become a more frontal or
 symmetrical pose than the subject.
 
+## Occluded relation looks disconnected or ends at the occluder
+
+Use this branch when a form disappears behind another form and the drawing either treats it as if
+it structurally terminates there or invents a full hidden contour to force continuity.
+
+```text
+occlusion residual
+├─ visible entry/reappearance anchors or local directions were read incorrectly
+│  └─ observation/visual-observation.md
+├─ the hidden interval materially affects pose, topology, contact, depth, or a downstream anchor
+│  └─ foundation/occlusion-inference.md
+├─ the parent chain/mass/connected-part relation is wrong even before the overlap
+│  └─ relevant construction leaf
+├─ the structural continuation is plausible but the visible stop/reappearance edge is wrong
+│  └─ description/contour-and-overlap.md
+├─ a measurement/profile is being treated as if it proves the hidden interval
+│  └─ observation/measuring-boundaries.md
+└─ hidden appearance is being completed from category knowledge
+   └─ foundation/occlusion-inference.md + relevant subject leaf
+```
+
+Do not choose between “draw the whole hidden part” and “do not infer anything.” First determine
+whether hidden continuity matters structurally. If it does, infer the minimum provisional relation
+needed to keep visible anchors coherent, then render only what is actually visible. If only one
+side of the occlusion is visible, reduce certainty and leave the exact hidden terminal unspecified.
+
+A hidden hypothesis that requires moving a correct visible anchor, introduces an unsupported sharp
+bend, or conflicts with another visible relation is evidence that the parent premise is wrong. Do
+not protect the inference by distorting visible geometry.
+
 ## Foot or shoe looks wrong
 
 ```text
@@ -92,6 +122,8 @@ hand/grip residual
 │  └─ construction/balance-and-limbs.md
 ├─ strong projected compression/depth order is wrong
 │  └─ construction/foreshortening-and-depth.md
+├─ the grip depends on an occluded hand/prop continuation that was ignored or over-invented
+│  └─ foundation/occlusion-inference.md
 ├─ visible hand envelope, thumb/finger grouping, or local grip geometry is wrong
 │  └─ figure/hands-and-grip.md
 ├─ prop axis/contact disagrees with the hand or body anchor
@@ -100,10 +132,12 @@ hand/grip residual
    └─ description/contour-and-overlap.md
 ```
 
-Do not invent hidden fingers to make a grip look plausible. If the contact cannot be
-explained from visible evidence, return to observation rather than completing it from memory.
-Repeated finger marks on the same mitten-like envelope are a signal to replace the terminal
-geometry or escalate upstream.
+Do not invent exact hidden fingers to make a grip look plausible. When the visible grip depends on
+an occluded hand/contact relation, infer only enough hidden structure to keep the visible wrist,
+palm/prop relation, and contact coherent. If the contact cannot be explained even with a plausible
+minimal continuation, return to the parent arm/prop relation rather than completing it from
+memory. Repeated finger marks on the same mitten-like envelope are a signal to replace the
+terminal geometry or escalate upstream.
 
 ## Foreshortening or depth compression looks wrong
 
@@ -113,6 +147,8 @@ foreshortening/depth residual
 │  └─ construction/foreshortening-and-depth.md
 ├─ parent mass turn or near/far plane is wrong
 │  └─ construction/orientation-and-twist.md
+├─ an occluded interval is needed to connect visible depth anchors coherently
+│  └─ foundation/occlusion-inference.md
 ├─ several anchors/overlaps are still uncertain in the reference
 │  └─ observation/visual-observation.md
 ├─ only the local overlap/reappearance edge is wrong after depth is credible
@@ -127,7 +163,9 @@ foreshortening/depth residual
 
 Do not lengthen compressed segments independently merely because they look anatomically
 short. First test whether the projected anchors, parent orientation, overlap, and terminal
-orientation are already faithful to the subject.
+orientation are already faithful to the subject. If a segment is occluded, reason through the
+minimum hidden continuity needed for those visible anchors; do not render that hidden length as a
+visible contour.
 
 ## Prop looks wrong
 
@@ -139,6 +177,8 @@ prop residual
 │  └─ construction/orientation-and-twist.md
 ├─ hand/body anchors disagree with the prop position
 │  └─ construction/balance-and-limbs.md + figure/hands-and-grip.md
+├─ an attachment or connected segment is occluded and the hidden relation matters
+│  └─ foundation/occlusion-inference.md
 ├─ piercing, floating, or occlusion order is wrong
 │  └─ description/contour-and-overlap.md
 └─ the object's visible boundary is uncertain
@@ -154,6 +194,8 @@ nudging one endpoint repeatedly.
 silhouette/overlap residual
 ├─ one local boundary or reappearance point is wrong
 │  └─ description/contour-and-overlap.md
+├─ the visible fragments require a hidden continuation that was ignored or over-specified
+│  └─ foundation/occlusion-inference.md
 ├─ several neighboring boundaries disagree coherently because a mass is misplaced
 │  └─ construction/gesture-and-masses.md
 ├─ several neighboring boundaries become too frontal/symmetric because turn is wrong
@@ -165,7 +207,8 @@ silhouette/overlap residual
 ```
 
 Multiple local contour failures around the same mass usually indicate that the mass premise
-is wrong, not that every contour needs independent cleanup.
+is wrong, not that every contour needs independent cleanup. An overlap failure may also belong to
+hidden continuity rather than the visible edge itself; separate the two before editing.
 
 ## Clothing or folds look wrong
 
@@ -175,6 +218,8 @@ clothing residual
 │  └─ figure/clothing-folds.md
 ├─ the body mass or limb beneath the garment is wrong
 │  └─ construction/gesture-and-masses.md or construction/balance-and-limbs.md
+├─ an occluded garment/body continuation is needed to explain visible drape/contact
+│  └─ foundation/occlusion-inference.md
 ├─ garment symmetry/plane exposure is wrong because the torso turn is wrong
 │  └─ construction/orientation-and-twist.md
 ├─ garment/body/prop overlap ownership is wrong
@@ -183,7 +228,7 @@ clothing residual
    └─ description/value-edge-and-graphite.md
 ```
 
-Do not add more folds to hide a wrong torso, arm, leg, or turn premise.
+Do not add more folds to hide a wrong torso, arm, leg, turn, or hidden parent relation.
 
 ## Grounding or environment looks wrong
 
@@ -227,7 +272,10 @@ Escalate upstream when any of these occur:
 - local parts become cleaner while the whole pose becomes more frontal, parallel, or symmetric;
 - fixing one endpoint breaks the other endpoint of the same relation;
 - contact cannot be made credible without moving its parent chain or mass;
-- a local contour requires invented geometry to connect cleanly;
+- a visible downstream anchor drifts because the hidden interval was treated as structural termination;
+- a hidden continuation can only be made plausible by moving correct visible anchors or adding an unsupported bend;
+- a temporary hidden construction line is being promoted into visible contour without evidence;
+- a local contour requires invented visible geometry to connect cleanly;
 - the correction would merely cover the mismatch with texture, tone, or extra strokes.
 
 Escalation is not a stage reset. It is a change of responsible scope inside the same
