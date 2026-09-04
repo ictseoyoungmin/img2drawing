@@ -18,6 +18,8 @@ the current control plane.
 - [x] croquis guidance preserves observed geometry while economizing marks.
 - [x] structural specificity is cross-subject: early passes may defer secondary detail but may not genericize placement, orientation, proportion, envelope, width/depth, overlap/contact/negative-space, or anchor relations.
 - [x] construction primitives are provisional reasoning aids rather than geometry authority, and downstream description revalidates the parent structure before inheriting it.
+- [x] occlusion guidance separates visible evidence, provisional hidden structure, and rendered visible description instead of treating visibility loss as structural termination.
+- [x] measurement stops at an occluder; Agent inference may continue only as a provisional relation constrained by visible anchors and structural context.
 - [x] observed-figure guidance additionally distinguishes mass placement from spatial orientation/turn and requires structure to read before broad value.
 - [x] drawing guidance does not require private/internal runtime implementation knowledge.
 
@@ -47,14 +49,16 @@ Evidence: `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and `dev/t
 ## G4 — Instruction routing and high-value guidance are operational
 
 - [x] common residuals route explicitly to the smallest responsible leaf and upstream construction/observation/contact/environment premises when the local part is only a symptom.
-- [x] local hands/grip have focused guidance that preserves hand envelope, thumb/finger grouping, visible terminations, and real contact without mitten completion or invented hidden digits.
-- [x] foreshortening/depth has a construction owner for projected spacing, near/far order, overlap, hidden length, and terminal orientation without anatomical unfolding.
+- [x] local hands/grip have focused guidance that preserves hand envelope, thumb/finger grouping, visible terminations, and real contact without mitten completion or fabricated hidden digits.
+- [x] foreshortening/depth has a construction owner for projected spacing, near/far order, overlap, hidden continuity, and terminal orientation without anatomical unfolding.
 - [x] major-mass orientation/twist has explicit ownership for tilt-vs-turn, near/far planes, head/ribcage/pelvis counter-rotation, and whole-pose flattening/symmetry drift.
 - [x] croquis broad value/dense hatch is off by default until orientation, support, limb chains, negative spaces, and prop/body depth already read structurally.
 - [x] `foundation/structural-specificity.md` prevents “detail later” from becoming “generic structure now,” classifies detail by structural role rather than size, and requires parent-construction revalidation before downstream inheritance.
+- [x] `foundation/occlusion-inference.md` requires only the minimum hidden continuation needed for continuity/pose/topology/contact/depth and forbids promoting unsupported hidden appearance into visible contour/detail.
+- [x] `description/contour-and-overlap.md` keeps final visible contour ownership separate from provisional hidden construction and treats reappearance points as depth evidence.
 - [x] the graph remains progressive-disclosure: `INDEX.md` stays compact and delegates conditional diagnostics to `review/residual-routing.md`.
 
-Evidence: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md`, `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md`, `dev/planning/vnext/A6_STRUCTURAL_ORIENTATION_HARDENING.md`, `dev/planning/vnext/A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`, and `dev/tests/test_skill_surface_boundary.py`.
+Evidence: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md`, `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md`, `dev/planning/vnext/A6_STRUCTURAL_ORIENTATION_HARDENING.md`, `dev/planning/vnext/A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`, `dev/planning/vnext/A8_OCCLUSION_INFERENCE_BOUNDARY.md`, and `dev/tests/test_skill_surface_boundary.py`.
 
 ## G5 — Fresh integrated validation — NEXT
 
