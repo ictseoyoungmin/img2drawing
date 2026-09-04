@@ -1,7 +1,7 @@
 # img2drawing vNext post-alignment validation and release
 
 Updated: 2026-09-05
-Starts only after: **B18 CLOSED + post-freeze alignment A1–A6 accepted**
+Starts only after: **B18 CLOSED + post-freeze alignment A1–A7 accepted**
 
 This document owns the first fresh visual validation after implementation freeze and product-surface alignment. Earlier dogfoods remain historical or exploratory evidence; they do not substitute for D01–D06.
 
@@ -19,6 +19,12 @@ implementation freeze
 ```
 
 Dogfood is validation, not a new architecture layer. A D-run never owns permanent runtime code or a second workflow.
+
+Across all observed/hybrid D-cases, apply the A7 inheritance rule: early construction may defer
+secondary detail but may not genericize the structural relations that define the subject. Before a
+later descriptive pass inherits existing construction, compare the whole drawing against its
+authority again. If the parent relation is wrong, replace the responsible geometry before adding
+local contour, detail, value, or accents.
 
 ## Sealed input contract
 
@@ -63,26 +69,29 @@ Primary proof:
 - major limb anchor chains and foot orientation;
 - large negative spaces;
 - silhouette / overlap / prop-body depth and contact;
-- geometry-preserving line economy.
+- geometry-preserving line economy;
+- early sparse construction remains structurally specific rather than symbolic;
+- later description replaces disproven parent geometry instead of polishing around it.
 
 D01 should be judged first from a line-dominant structural read. Broad value or dense regular
 hatch must not be needed to make the pose convincing. If tone is used at all, mentally remove it
 and verify that major mass turn, support, limb chains, negative spaces, and prop/body overlap still
 read correctly.
 
-Reject a result that uses fewer lines by reducing the subject to symbolic head/limb/foot/fold shapes, or that cleans local contours while making the whole pose more frontal, parallel, or symmetric than the reference. Cost and fidelity are both first-class:
+Reject a result that uses fewer lines by reducing the subject to symbolic head/limb/foot/fold shapes, or that cleans local contours while making the whole pose more frontal, parallel, symmetric, or otherwise more generic than the reference. Cost and fidelity are both first-class:
 
 1. **record cost** — the session must not regress to brute-force microstroke explosion;
-2. **representation quality** — major form, orientation/twist, overlap, contact, and characteristic curvature must remain readable with sparse marks.
+2. **representation quality** — major form, orientation/twist, overlap, contact, characteristic curvature, and structural specificity must remain readable with sparse marks.
 
 Likely reopen mapping:
 
 - observation/boundary failure → B01-R1/B02+B03 or A4/A6 guidance routing;
 - whole-pose flattening / turn-twist failure → A6 first; B05 only if runtime construction capability is actually limiting;
+- early generic-symbol construction or downstream inheritance of a disproven parent premise → A7 first;
 - construction/form failure → B05;
 - correction/provenance failure → B06;
 - evidence budget failure → B07;
-- value/representation-cost failure → B07-R1/B16, after confirming A6's structure-first policy was followed;
+- value/representation-cost failure → B07-R1/B16, after confirming A6/A7 structure-first policy was followed;
 - finish policy failure → B09;
 - public-surface friction → A2/B16.
 
@@ -103,9 +112,9 @@ Requires D01 macro quality plus identity-bearing relationships:
 - distinctive clothing mass/openings/seams/folds at observed locations;
 - prop topology/contact/terminal mass.
 
-Do not pass because “eyes”, “hair”, “fingers”, or “folds” exist. Recognition must survive whole-image review and remain subordinate to correct macro form and spatial orientation.
+Do not pass because “eyes”, “hair”, “fingers”, or “folds” exist. Recognition must survive whole-image review and remain subordinate to correct macro form and spatial orientation. Identity-bearing local detail may not become an excuse to preserve a wrong parent construction.
 
-Likely reopen: B09/B10, upstream B05/B01-R1, or A4/A5/A6 when the issue is guidance coverage/routing rather than runtime mechanics.
+Likely reopen: B09/B10, upstream B05/B01-R1, or A4/A5/A6/A7 when the issue is guidance coverage/routing rather than runtime mechanics.
 
 ## D03 — Tonal study
 
@@ -123,9 +132,9 @@ Primary proof:
 - focal value control;
 - compact value revision.
 
-Reject arbitrary dark bands, dense authored hatch micro-actions for one value premise, tone that manufactures missing form, or a line drawing plus renderer/post-filter presented as tonal study.
+Reject arbitrary dark bands, dense authored hatch micro-actions for one value premise, tone that manufactures missing form, or a line drawing plus renderer/post-filter presented as tonal study. A value pass must revalidate the parent structural premise before inheriting it.
 
-Likely reopen: B07-R1, B09, B11, B14, B15; A6 if value is compensating for weak orientation rather than describing a credible form.
+Likely reopen: B07-R1, B09, B11, B14, B15; A6 if value is compensating for weak orientation rather than describing a credible form; A7 if value is preserving an earlier generic or disproven construction.
 
 ## D04 — Observed free-draw
 
@@ -135,9 +144,9 @@ Intent example:
 observed · free_draw · expressive · custom/preset
 ```
 
-Prove that reference truth can coexist with intentional composition, simplification, rhythm, focal hierarchy, and style without forcing figure/croquis grammar. Preserved reference constraints must remain explicit and the correction loop must remain meaningful under looser grammar.
+Prove that reference truth can coexist with intentional composition, simplification, rhythm, focal hierarchy, and style without forcing figure/croquis grammar. Preserved reference constraints must remain explicit and the correction loop must remain meaningful under looser grammar. Simplification may reduce marks but may not silently replace structurally specific relationships with generic symbols.
 
-Likely reopen: B13–B16.
+Likely reopen: B13–B16 or A7 when simplification/inheritance policy is the actual failure.
 
 ## D05 — Imaginative + hybrid
 
@@ -145,13 +154,13 @@ Run separately.
 
 ### D05-A imaginative
 
-No external subject. Authority is declared subject/composition/gesture/rhythm/focal/shape-language intent. Prove subjectless create/inspect/correct/finish/replay without fake reference or overlay authority.
+No external subject. Authority is declared subject/composition/gesture/rhythm/focal/shape-language intent. Prove subjectless create/inspect/correct/finish/replay without fake reference or overlay authority. Construction remains provisional against declared intent just as observed construction remains provisional against a reference.
 
 ### D05-B hybrid
 
-Use a reference plus explicit transformation intent. Provenance must distinguish preserved from transformed constraints; style may not silently sacrifice preserved geometry.
+Use a reference plus explicit transformation intent. Provenance must distinguish preserved from transformed constraints; style may not silently sacrifice preserved geometry. Downstream description must revalidate both preserved reference constraints and transformed authored constraints before inheriting a parent premise.
 
-Likely reopen: B13–B16 and B10.
+Likely reopen: B13–B16, B10, or A7 when the failure is construction inheritance rather than runtime authority mechanics.
 
 ## D06 — Cross-agent reproducibility
 
@@ -161,6 +170,8 @@ Compare:
 
 - observation quality;
 - whole-pose orientation/twist read;
+- structural specificity of early sparse construction;
+- whether downstream passes revalidate or blindly inherit parent geometry;
 - highest-impact residual prioritization;
 - escalation to the correct instruction leaf/premise;
 - edit strategy;
@@ -182,6 +193,7 @@ Preserve enough to reproduce and review the run, not every local workbench file:
 - initial whole drawing;
 - prioritized major residual sequence;
 - representative before/after inspections;
+- at least one explicit parent-structure revalidation point before downstream description when applicable;
 - final PNG;
 - end-to-end replay/GIF;
 - concise decision log;
@@ -214,7 +226,7 @@ Starts after D01–D06 are accepted.
 
 ## R02 — Final regression
 
-Cover observed croquis, figure/subject, tonal, free-draw, imaginative, hybrid, checkpoint/resume, intent/style change, value revision, PNG/replay/GIF parity, and clean package installation. Regression supports direct review; it does not replace it.
+Cover observed croquis, figure/subject, tonal, free-draw, imaginative, hybrid, checkpoint/resume, intent/style change, value revision, PNG/replay/GIF parity, clean package installation, structural-specificity preservation, and parent-construction revalidation. Regression supports direct review; it does not replace it.
 
 ## R03 — Physical R23 retirement
 

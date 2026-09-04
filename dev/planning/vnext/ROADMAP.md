@@ -27,7 +27,7 @@ B18 closed the implementation/release-candidate contract. It did **not** prove f
 
 ## Phase B — post-freeze alignment before D01 — CLOSED
 
-The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A6 are now closed; none introduced a second runtime architecture.
+The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A7 are now closed; none introduced a second runtime architecture.
 
 | Order | State | Goal |
 |---|---|---|
@@ -37,6 +37,7 @@ The instruction-graph audit and exploratory visual evidence exposed a bounded pr
 | A4 | CLOSED | make residual → leaf → upstream escalation edges explicit in the instruction graph |
 | A5 | CLOSED | add only justified high-value guidance leaves for hands/grip and foreshortening/depth |
 | A6 | CLOSED | harden major-mass orientation/twist and prevent premature local description/value from masking flat poses |
+| A7 | CLOSED | generalize “defer detail” into cross-subject structural specificity and revalidate parent construction before downstream inheritance |
 
 ### A2 — public API surface — CLOSED
 
@@ -100,9 +101,34 @@ contract and does not claim formal D01 success.
 Evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md` and
 `dev/tests/test_skill_surface_boundary.py`.
 
+### A7 — structural specificity and construction inheritance — CLOSED
+
+Exploratory work exposed a more general failure than pose flattening: “detail later” can be read as
+permission to simplify the first construction into generic symbols, after which later passes refine
+around the symbols instead of re-observing the parent structure. A7 closes this across subject
+classes:
+
+```text
+foundation/structural-specificity.md
+  → defer secondary detail, not structural specificity
+  → classify detail by structural role, not physical size
+construction
+  → primitives remain provisional reasoning aids
+later description
+  → revalidate parent structure before inheriting it
+wrong parent premise
+  → replace upstream geometry instead of refining around it
+```
+
+A7 changes deployable drawing guidance only. It adds no runtime stage, automatic score, subject
+specific template, or new persistence/API contract.
+
+Evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md` and
+`dev/tests/test_skill_surface_boundary.py`.
+
 ## Phase C — integrated fresh validation — NEXT
 
-Starts now that A1–A6 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
+Starts now that A1–A7 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
 
 ```text
 D01 difficult observed croquis    NEXT
@@ -138,6 +164,8 @@ Release must directly prove:
 - a fresh worker completes `observe/declare → draw → inspect → correct → finish` without Pn;
 - observed, imaginative, and hybrid work share one session/history core;
 - mode/style differences affect authored behavior rather than metadata or post-filters alone;
+- early mark economy never substitutes generic primitives for structurally specific placement, orientation, proportion, envelope, width/depth, overlap/contact, negative-space, or anchor relations;
+- downstream description does not inherit disproven parent construction merely because it was drawn earlier;
 - major form, orientation/twist, overlap, grounding, identity, hand/foot/contact, and foreshortened depth survive line/value simplification;
 - session cost does not explode through brute-force microstroke accumulation;
 - PNG/replay/GIF share canonical renderer provenance and final-state parity;
@@ -154,5 +182,6 @@ Release must directly prove:
 - A4 routing-edge evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - A5 drawing-leaf evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
 - A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
+- A7 structural-specificity evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`
 - post-alignment dogfood/release: `VALIDATION_RELEASE.md`
 - deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`

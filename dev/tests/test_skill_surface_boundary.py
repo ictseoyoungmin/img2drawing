@@ -40,6 +40,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "line-economy.md",
         "reference-authority.md",
         "scope-and-precedence.md",
+        "structural-specificity.md",
     }
     assert {path.name for path in (SKILL / "references" / "construction").iterdir()} == {
         "balance-and-limbs.md",
@@ -150,8 +151,9 @@ def test_structural_orientation_hardening_blocks_flattening_and_premature_value(
         encoding="utf-8"
     )
 
-    for document in (skill, index, routing):
+    for document in (index, routing):
         assert "construction/orientation-and-twist.md" in document
+    assert "orientation/twist" in skill
 
     assert "tilt" in observation
     assert "turn" in observation
@@ -167,8 +169,39 @@ def test_structural_orientation_hardening_blocks_flattening_and_premature_value(
     assert "pose must remain readable" in croquis
     assert "Whole pose feels flatter, more frontal, or more symmetric" in routing
     assert "local parts become cleaner while the whole pose becomes more frontal" in routing
-    assert "Do not finish a flat pose with tone" in skill
+    assert "Do not finish weak structure with tone" in skill
     assert "Structural read before description" in skill
+
+
+def test_structural_specificity_is_cross_subject_and_revalidates_inheritance() -> None:
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    specificity = (
+        SKILL / "references" / "foundation" / "structural-specificity.md"
+    ).read_text(encoding="utf-8")
+    economy = (SKILL / "references" / "foundation" / "line-economy.md").read_text(
+        encoding="utf-8"
+    )
+    correction = (SKILL / "references" / "review" / "residual-correction.md").read_text(
+        encoding="utf-8"
+    )
+    descriptive = (
+        SKILL / "references" / "description" / "descriptive-geometry.md"
+    ).read_text(encoding="utf-8")
+
+    assert "foundation/structural-specificity.md" in skill
+    assert "foundation/structural-specificity.md" in index
+    assert "For any observed subject" in index
+    assert "Defer secondary detail, not structural specificity" in specificity
+    assert "A small feature is not automatically secondary" in specificity
+    assert "merely because it was drawn earlier" in specificity
+    assert "parent structure still credible?" in specificity
+    assert "Construction is provisional, not geometry authority" in skill
+    assert "Do not inherit unverified structure" in skill
+    assert "Revalidate before inheriting construction" in skill
+    assert "Detail is not classified by size" in economy
+    assert "Earlier construction is provisional" in correction
+    assert "must not promote a provisional construction primitive" in descriptive
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:
