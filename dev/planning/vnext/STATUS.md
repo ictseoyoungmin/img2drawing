@@ -1,6 +1,6 @@
 # img2drawing vNext status
 
-Updated: 2026-09-03
+Updated: 2026-09-04
 
 ```text
 SYSTEM:          vNext product/API/schema/package contract frozen through B18 + A2 root alignment
@@ -23,7 +23,9 @@ candidate is `0.6.0rc2`.
 A3 audited physical runtime ownership. The canonical vNext route does not import the historical
 `run/stages/exemplar/review/registration` cluster. Current registration and bounded measurement
 live under `img2drawing.inspection`; historical modules remain R23 compatibility implementation
-until the bounded R03 retirement decision.
+until the bounded R03 retirement decision. A detailed module-level R03 baseline is now frozen in
+`R03_RUNTIME_OWNERSHIP_INVENTORY.md`; it is planning evidence only and does not reopen runtime
+engineering before D01.
 
 A4 made the deployable instruction graph operational rather than merely taxonomic: visible
 residuals route by the relationship that must change and escalate upstream when a local part is
@@ -70,7 +72,8 @@ A1 repository truth reconciliation      CLOSED
 - `skills/img2drawing/examples/` remains intentionally absent until a representative example
   earns instructional authority.
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
-- R23 physical retirement remains R03 work.
+- R23 physical retirement remains R03 work; its pre-D01 module ownership baseline is
+  `R03_RUNTIME_OWNERSHIP_INVENTORY.md`.
 - Mechanical CI proves package/API/persistence/integration/instruction-surface contracts, not
   artistic quality or unseen-subject generalization.
 
@@ -116,7 +119,8 @@ pre-rc2 root imports are compatibility shims. See `A2_PUBLIC_ROOT_API_AUDIT.md`.
 ### A3. Runtime physical-isolation audit — CLOSED
 
 Current runtime ownership is isolated from the historical R23 orchestration cluster without
-cosmetic file moves. See `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`.
+cosmetic file moves. See `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`. The detailed retirement
+inventory is `R03_RUNTIME_OWNERSHIP_INVENTORY.md` and remains dormant until post-D01–D06/R02.
 
 ### A4. Instruction routing-edge hardening — CLOSED
 
@@ -144,6 +148,7 @@ readiness before that evidence exists.
 - current project state: this file
 - sequence: `ROADMAP.md`
 - A3 ownership evidence: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
+- R03 module ownership baseline: `R03_RUNTIME_OWNERSHIP_INVENTORY.md`
 - A4 routing evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - A5 guidance evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
 - D01–D06 / release contracts: `VALIDATION_RELEASE.md`

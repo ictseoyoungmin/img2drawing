@@ -1,6 +1,6 @@
 # A3 — Runtime physical-isolation audit
 
-Updated: 2026-09-03
+Updated: 2026-09-04
 Status: **CLOSED**
 
 ## Question
@@ -93,6 +93,22 @@ Likewise, `registration` is not a workflow node in the instruction graph. Alignm
 measurement are bounded inspection capabilities. The current high-level registration type
 is therefore correctly discoverable from `img2drawing.inspection`.
 
+## Detailed R03 ownership baseline
+
+A3 answers whether legacy implementation is isolated **now**. The later physical-retirement
+question needs a more granular map because shared and mixed code cannot be removed by directory
+name alone. `R03_RUNTIME_OWNERSHIP_INVENTORY.md` records that module-level baseline, including:
+
+- shared `core` stage-field compatibility residue;
+- the duplicate older `core.session.DrawingSession` facade;
+- current-vs-historical splits inside `observation` and `provenance`;
+- legacy-only `canvas`, `reference`, `registration`, `review`, `stages`, `exemplar`, and `run`;
+- the fact that current R23 migration still constructs `DrawingRun`, making the full old runtime
+  a real support dependency until R03 chooses full-resume, migration-only, or end-of-support.
+
+The inventory is deliberately documentary. It does not reopen A3 and does not change D01's
+frozen runtime.
+
 ## Closure contract
 
 A3 is CLOSED when all of the following hold:
@@ -112,3 +128,5 @@ No visual-quality claim is added by A3.
 
 A4 makes the instruction graph operational by adding explicit
 `residual → responsible leaf → upstream premise` routing edges without reintroducing stages.
+The pre-D01 alignment sequence is now complete; the detailed R03 inventory is held for the
+post-D01–D06/R02 retirement decision rather than becoming new pre-dogfood engineering.
