@@ -27,7 +27,7 @@ B18 closed the implementation/release-candidate contract. It did **not** prove f
 
 ## Phase B — post-freeze alignment before D01 — CLOSED
 
-The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A7 are now closed; none introduced a second runtime architecture.
+The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A8 are now closed; none introduced a second runtime architecture.
 
 | Order | State | Goal |
 |---|---|---|
@@ -38,6 +38,7 @@ The instruction-graph audit and exploratory visual evidence exposed a bounded pr
 | A5 | CLOSED | add only justified high-value guidance leaves for hands/grip and foreshortening/depth |
 | A6 | CLOSED | harden major-mass orientation/twist and prevent premature local description/value from masking flat poses |
 | A7 | CLOSED | generalize “defer detail” into cross-subject structural specificity and revalidate parent construction before downstream inheritance |
+| A8 | CLOSED | separate provisional hidden-structure inference from visible evidence/rendered appearance at occlusions |
 
 ### A2 — public API surface — CLOSED
 
@@ -126,9 +127,31 @@ specific template, or new persistence/API contract.
 Evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md` and
 `dev/tests/test_skill_surface_boundary.py`.
 
+### A8 — occlusion inference boundary — CLOSED
+
+Exploratory work exposed the opposite risk of a rule against invented hidden endings: a worker can
+stop reasoning where visibility stops and thereby break a connected chain, mass, topology, contact,
+depth relation, or downstream anchor. A8 separates three layers explicitly:
+
+```text
+visible evidence
+  → entry/reappearance anchors, local direction/width, overlap/contact cues
+provisional hidden structure
+  → minimum continuation needed for continuity, pose, topology, contact, depth, anchors
+rendered visible description
+  → visible boundaries only; inferred hidden appearance is not promoted to observed contour
+```
+
+Measurement remains bounded by the occluder. Agent structural inference may continue when justified
+by visible relationships, but uncertainty must increase when the hidden interval is weakly
+constrained. A8 adds no hidden-geometry runtime, automatic solver, stage, or schema/API change.
+
+Evidence: `A8_OCCLUSION_INFERENCE_BOUNDARY.md` and
+`dev/tests/test_skill_surface_boundary.py`.
+
 ## Phase C — integrated fresh validation — NEXT
 
-Starts now that A1–A7 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
+Starts now that A1–A8 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
 
 ```text
 D01 difficult observed croquis    NEXT
@@ -166,6 +189,8 @@ Release must directly prove:
 - mode/style differences affect authored behavior rather than metadata or post-filters alone;
 - early mark economy never substitutes generic primitives for structurally specific placement, orientation, proportion, envelope, width/depth, overlap/contact, negative-space, or anchor relations;
 - downstream description does not inherit disproven parent construction merely because it was drawn earlier;
+- important occluded continuity is reasoned about when it constrains visible structure, while exact hidden appearance is not fabricated or rendered as observed;
+- measurement stops at occlusion even when Agent structural inference continues provisionally from visible anchors;
 - major form, orientation/twist, overlap, grounding, identity, hand/foot/contact, and foreshortened depth survive line/value simplification;
 - session cost does not explode through brute-force microstroke accumulation;
 - PNG/replay/GIF share canonical renderer provenance and final-state parity;
@@ -183,5 +208,6 @@ Release must directly prove:
 - A5 drawing-leaf evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
 - A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
 - A7 structural-specificity evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`
+- A8 occlusion-inference evidence: `A8_OCCLUSION_INFERENCE_BOUNDARY.md`
 - post-alignment dogfood/release: `VALIDATION_RELEASE.md`
 - deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`

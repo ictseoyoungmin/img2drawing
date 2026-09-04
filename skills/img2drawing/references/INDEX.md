@@ -7,9 +7,14 @@ Start at `SKILL.md`, then read only the smallest leaves that own the current dra
 
 - `foundation/line-economy.md` — preserve geometry while reducing redundant marks
 - `foundation/structural-specificity.md` — defer secondary detail without genericizing structure; revalidate inherited construction
+- `foundation/occlusion-inference.md` — infer hidden continuity when needed while keeping inferred structure separate from visible appearance
 - `foundation/reference-authority.md` — observed, imaginative, and hybrid truth
 - `foundation/scope-and-precedence.md` — geometry/structure/finish/style precedence and
   macro-before-micro correction
+
+Use `foundation/occlusion-inference.md` when a visible structural relation disappears behind
+another form and the hidden continuation materially affects pose, topology, contact, depth, or a
+visible downstream anchor. Do not use it merely because some part of the subject is hidden.
 
 ## 2. Drawing mode
 
@@ -23,8 +28,8 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 
 ## 3. Observation
 
-- `observation/visual-observation.md` — whole → relation → part → relation again, including turn/near-far reads
-- `observation/measuring-boundaries.md` — bounded measurements and ambiguous edges
+- `observation/visual-observation.md` — whole → relation → part → relation again, including turn/near-far and occlusion-anchor reads
+- `observation/measuring-boundaries.md` — bounded measurements and ambiguous edges; measurement stops at occlusion even when Agent inference continues relationally
 
 ## 4. Construction
 
@@ -36,18 +41,20 @@ Choose one primary mode guide. Modes change emphasis, not geometry truth.
 For any observed subject, local description should not become the default next step merely because
 a rough silhouette or simple construction exists. First ask whether the parent structure already
 preserves the subject's placement, orientation, proportion, characteristic envelope/width change,
-major overlap/contact/negative space, and connected-part or anchor relations. Defer secondary
-detail, not structural specificity.
+major overlap/contact/negative space, connected-part or anchor relations, and any hidden continuity
+that materially constrains the visible arrangement. Defer secondary detail, not structural
+specificity.
 
 Earlier construction is provisional. Before a descriptive pass inherits it, compare the whole
-drawing against its authority again. If the parent relation is wrong, replace the responsible
-geometry instead of refining around it. This is a drawing prerequisite, not a runtime stage; later
-evidence may invalidate it at any time.
+drawing against its authority again. The same applies to hidden-continuation hypotheses: if the
+visible entry/reappearance anchors no longer support the inference, revise it instead of bending
+visible geometry around it. This is a drawing prerequisite, not a runtime stage; later evidence
+may invalidate it at any time.
 
 ## 5. Description
 
 - `description/descriptive-geometry.md` — exact form with economical lines
-- `description/contour-and-overlap.md` — contour ownership, occlusion, contact
+- `description/contour-and-overlap.md` — visible contour ownership, occlusion/reappearance, contact, and separation from hidden construction
 - `description/value-edge-and-graphite.md` — value family, edge behavior, pencil material
 
 ## 6. Subject-specific leaves
@@ -78,7 +85,9 @@ name of the visible part. A wrong shoe may belong to `figure/legs-feet.md`,
 `construction/balance-and-limbs.md`, `environment/ground-and-context.md`, or
 `description/contour-and-overlap.md` depending on the responsible cause. A whole figure that has
 become flatter, more frontal, or more symmetric than the subject belongs upstream in
-`construction/orientation-and-twist.md` even when the individual local contours look clean.
+`construction/orientation-and-twist.md` even when the individual local contours look clean. A
+visible fragment that incorrectly behaves as though it terminates at an occluder belongs first to
+`foundation/occlusion-inference.md` when continuity is structurally necessary.
 
 ## 8. Public runtime API
 
