@@ -136,8 +136,12 @@ def save_gif(
     for im in images:
         bg=Image.new("RGBA", im.size, (255,255,255,255))
         bg.alpha_composite(im)
+        # MAXCOVERAGE keeps sparse graphite-on-paper tones represented in the
+        # local frame palette.  MEDIANCUT can leave a few anti-aliased pixels
+        # tens of channels away from the canonical PNG on large canvases,
+        # making a valid replay fail the vNext final-frame tolerance check.
         flattened.append(
-            bg.convert("RGB").quantize(colors=int(colors), method=Image.Quantize.MEDIANCUT)
+            bg.convert("RGB").quantize(colors=int(colors), method=Image.Quantize.MAXCOVERAGE)
         )
     flattened[0].save(
         out_path,
