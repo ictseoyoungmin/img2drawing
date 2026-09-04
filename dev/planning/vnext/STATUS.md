@@ -3,14 +3,14 @@
 Updated: 2026-09-05
 
 ```text
-SYSTEM:          vNext product/API/schema/package contract frozen through B18 + post-freeze alignment through A6
+SYSTEM:          vNext product/API/schema/package contract frozen through B18 + post-freeze alignment through A7
 PACKAGE:         0.6.0rc2 · DrawingSession/0.6.0-vnext
-SKILL SURFACE:   stage-free instruction graph with cause-based residual routing and structural-orientation hardening
+SKILL SURFACE:   stage-free instruction graph with cause-based routing, structural orientation, and cross-subject specificity/inheritance hardening
 ACTIVE ON MAIN:  none
 NEXT ENGINEERING: none before fresh validation
 NEXT VALIDATION: D01 difficult observed croquis
 DOGFOOD:         D01–D06 not started
-CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation + A4 residual routing + A5 drawing-leaf gaps + A6 structural orientation
+CLOSED:          B00–B18 + A1 repository truth + A2 public-root alignment + A3 runtime isolation + A4 residual routing + A5 drawing-leaf gaps + A6 structural orientation + A7 structural specificity/inheritance
 ```
 
 ## Current decision
@@ -38,7 +38,11 @@ A6 responds to repeated exploratory visual evidence that clean local contours ca
 flattened whole pose. The instruction graph now separates tilt from turn, owns head/ribcage/pelvis
 orientation and relative twist explicitly, requires a reversible structural read before local
 description, and keeps broad croquis value off by default until structure survives without tone.
-No runtime/API/schema contract changed.
+
+A7 generalizes the next failure class beyond figures: “defer detail” may not mean “defer structural
+specificity,” construction primitives remain provisional rather than geometry authority, and each
+descriptive pass must revalidate the parent structure before inheriting it. Detail is classified by
+structural role rather than physical size. No runtime/API/schema contract changed.
 
 The pre-D01 alignment pass is now complete:
 
@@ -49,6 +53,7 @@ A1 repository truth reconciliation      CLOSED
 → A4 instruction routing-edge hardening CLOSED
 → A5 high-value drawing-leaf gaps       CLOSED
 → A6 structural orientation hardening   CLOSED
+→ A7 structural specificity/inheritance CLOSED
 → D01 NEXT → D02 → D03 → D04 → D05 → D06
 → R01 → R02 → R03 → R04
 ```
@@ -66,6 +71,9 @@ A1 repository truth reconciliation      CLOSED
   current instruction-graph `references/review/` concept.
 - `skills/img2drawing/SKILL.md` is the deployable instruction router and
   `skills/img2drawing/references/INDEX.md` is the progressive-disclosure graph index.
+- `references/foundation/structural-specificity.md` owns the cross-subject rule: defer secondary
+  detail, not structural specificity; earlier construction is provisional and must be revalidated
+  before downstream description inherits it.
 - `references/review/residual-routing.md` routes symptoms by cause and upstream responsibility.
 - `references/construction/orientation-and-twist.md` owns major-mass turn, near/far planes,
   counter-rotation, and whole-pose flattening/symmetry drift without becoming a runtime stage.
@@ -75,6 +83,8 @@ A1 repository truth reconciliation      CLOSED
   overlap, and terminal orientation without inventing hidden length.
 - Croquis economizes marks, not observed geometry, and broad value/dense hatch is off by default
   until the structural read remains credible without tone.
+- A small feature may be structurally necessary when it decides orientation, contact, scale,
+  identity, topology, or another high-impact relation; detail is not classified by size alone.
 - `skills/img2drawing/examples/` remains intentionally absent until a representative example
   earns instructional authority.
 - The frozen vNext control-plane contract lives at `dev/release/vnext/CONTRACT_FREEZE.json`.
@@ -145,6 +155,13 @@ contours. The graph now owns turn/near-far/counter-rotation explicitly, requires
 structural read before description, and prevents broad croquis value from hiding unresolved
 structure. See `A6_STRUCTURAL_ORIENTATION_HARDENING.md`.
 
+### A7. Structural specificity and construction inheritance — CLOSED
+
+The graph now generalizes structure-before-detail across subject classes. Secondary detail may be
+deferred; placement/orientation/proportion/envelope/width-depth/overlap/contact/negative-space and
+connected-part relations may not be genericized. Earlier construction remains provisional and is
+revalidated before later description inherits it. See `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`.
+
 ## Post-alignment validation
 
 `VALIDATION_RELEASE.md` owns D01–D06. D01 is now the next bottleneck. It must start from a
@@ -164,6 +181,7 @@ readiness before that evidence exists.
 - A4 routing evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
 - A5 guidance evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
 - A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
+- A7 structural-specificity evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`
 - D01–D06 / release contracts: `VALIDATION_RELEASE.md`
 - current program gates: `/GATES.md`
 - frozen vNext release-candidate contract: `dev/release/vnext/`
