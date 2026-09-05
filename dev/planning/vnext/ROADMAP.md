@@ -1,160 +1,72 @@
-# img2drawing vNext roadmap
+# img2drawing roadmap
 
 Updated: 2026-09-05
 Workflow: Bottleneck · Production WIP Limit = 1
 
-This roadmap describes the current sequence. Detailed historical closure remains in slice records and capsules; this file should not become an append-only development log.
+## Phase A — product foundation — CLOSED
 
-## Phase A — foundation and product completion
+B00–B18 established one stage-free `DrawingSession`/history core with observed/imaginative/hybrid
+authority, residual correction, bounded evidence, value-region authoring, intent/mode/style/finish
+contracts, canonical render/replay, package/API/schema freeze, and explicit R23 compatibility.
 
-B00–B18 are CLOSED.
+## Phase B — post-freeze drawing alignment — CLOSED
 
-Durable result:
+A1–A8 aligned repository truth, public-root discoverability, runtime isolation, residual routing,
+high-value figure/depth guidance, structural orientation, cross-subject structural specificity,
+and occlusion inference. No second runtime architecture was introduced.
 
 ```text
-one DrawingSession/history core
-→ observed / imaginative / hybrid authority
-→ stage-free construction and residual correction
-→ bounded inspection/evidence
-→ compact value authoring
-→ intent / mode / style / finish contracts
-→ canonical RenderProfile and replay
-→ explicit legacy compatibility boundary
-→ package / API / schema freeze
+A1 repository truth
+→ A2 public root alignment
+→ A3 runtime ownership/isolation
+→ A4 cause-based residual routing
+→ A5 hands/grip + foreshortening/depth leaves
+→ A6 orientation/twist hardening
+→ A7 structural specificity + construction revalidation
+→ A8 occlusion inference boundary
 ```
 
-B18 closed the implementation/release-candidate contract. It did **not** prove fresh visual quality, unseen-subject robustness, or cross-agent reproducibility.
+## Phase C — v1.0.0 stable baseline — CURRENT RELEASE
 
-## Phase B — post-freeze alignment before D01 — CLOSED
+v1.0.0 promotes the A8-aligned system without adding new drawing/runtime behavior after the
+successful GPT-6 Astra demonstration.
 
-The instruction-graph audit and exploratory visual evidence exposed a bounded product-surface alignment pass. A1–A8 are now closed; none introduced a second runtime architecture.
+Release evidence includes:
 
-| Order | State | Goal |
-|---|---|---|
-| A1 | CLOSED | repository truth reconciliation across handoff/gates/status/package/changelog |
-| A2 | CLOSED | narrow normal public root discovery around `DrawingSession` while preserving compatibility shims |
-| A3 | CLOSED | prove current runtime ownership/isolation and classify stage-era modules without cosmetic moves |
-| A4 | CLOSED | make residual → leaf → upstream escalation edges explicit in the instruction graph |
-| A5 | CLOSED | add only justified high-value guidance leaves for hands/grip and foreshortening/depth |
-| A6 | CLOSED | harden major-mass orientation/twist and prevent premature local description/value from masking flat poses |
-| A7 | CLOSED | generalize “defer detail” into cross-subject structural specificity and revalidate parent construction before downstream inheritance |
-| A8 | CLOSED | separate provisional hidden-structure inference from visible evidence/rendered appearance at occlusions |
+- curated reference-versus-drawing comparison;
+- end-to-end timelapse;
+- 490-action explicit-stroke session summary;
+- zero fill actions;
+- exact canonical PNG/replay final parity;
+- bounded claims that do not substitute one successful worker for D01-D06 generalization.
 
-### A2 — public API surface — CLOSED
+The subject-specific authoring scripts, coordinates, and control-point notes from the Astra run
+remain evidence only and are not shipped as skill examples.
 
-Normal users and workers discover `DrawingSession` plus a small declarative facade. Specialized
-capability remains in explicit namespaces; pre-rc2 root names are deprecated compatibility
-shims. The candidate remains `0.6.0rc2` and no `DrawingSession` method/schema contract changed.
+## Phase D — v1.0.1 Astra-derived absorption — NEXT
 
-### A3 — physical runtime isolation — CLOSED
-
-The canonical route is mechanically isolated from the historical R23 orchestration cluster:
+Absorb only reusable product lessons exposed by the successful run. Current candidates:
 
 ```text
-current
-DrawingSession → core + inspection + render + vnext
-
-R23 compatibility
-legacy.r23 → run → stages + exemplar + review + registration + historical helpers
+geometry-preserving stroke retune
+shared curve sampling utility
+continuous-edge pencil handling
+semantic authored-element grouping / correction ergonomics
+fresh-render replace/delete discipline where an API affordance is actually missing
 ```
 
-`img2drawing.inspection` owns current registration/measurement. Physical R23 retirement remains
-R03 because moving compatibility implementation before dogfood would add migration risk without
-improving the current drawing path.
+Do not copy subject-specific solution geometry. Do not add a new lifecycle, automatic artistic
+score, model-specific code path, or answer-template example.
 
-### A4 — instruction routing edges — CLOSED
+Every candidate must either remove a demonstrated runtime/authoring friction or be dropped.
 
-`references/review/residual-routing.md` routes visible symptoms by responsible cause rather than
-by part name. Repeated local failure, coherent neighboring failures, endpoint conflict,
-impossible contact, invented connecting geometry, or concealment by tone/texture trigger
-upstream premise inspection rather than more local strokes.
+## Phase E — fresh integrated validation
 
-### A5 — high-value drawing leaves — CLOSED
-
-The audit justified focused ownership for local hands/grip and foreshortening/depth while keeping
-parent chains, prop topology/contact, contour ownership, observation, and feet in their existing
-owners.
-
-Evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md` and
-`dev/tests/test_skill_surface_boundary.py`.
-
-### A6 — structural orientation hardening — CLOSED
-
-Exploratory current-version dogfood repeatedly produced locally plausible contours with weaker
-whole-pose turn, counter-rotation, asymmetry, and prop/body depth. A6 closes that guidance gap by:
+After the bounded 1.0.1 absorption pass, run the formal sealed campaign owned by
+`VALIDATION_RELEASE.md`:
 
 ```text
-visual observation
-  → distinguish tilt from turn / near from far
-construction/orientation-and-twist.md
-  → own head/ribcage/pelvis turn + counter-rotation
-SKILL router
-  → require a reversible structural read before local description
-croquis
-  → broad value / dense hatch off by default
-residual routing
-  → whole-pose flattening routes upstream
-```
-
-A6 changes deployable drawing guidance only. It does not change the frozen runtime/API/schema
-contract and does not claim formal D01 success.
-
-Evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md` and
-`dev/tests/test_skill_surface_boundary.py`.
-
-### A7 — structural specificity and construction inheritance — CLOSED
-
-Exploratory work exposed a more general failure than pose flattening: “detail later” can be read as
-permission to simplify the first construction into generic symbols, after which later passes refine
-around the symbols instead of re-observing the parent structure. A7 closes this across subject
-classes:
-
-```text
-foundation/structural-specificity.md
-  → defer secondary detail, not structural specificity
-  → classify detail by structural role, not physical size
-construction
-  → primitives remain provisional reasoning aids
-later description
-  → revalidate parent structure before inheriting it
-wrong parent premise
-  → replace upstream geometry instead of refining around it
-```
-
-A7 changes deployable drawing guidance only. It adds no runtime stage, automatic score, subject
-specific template, or new persistence/API contract.
-
-Evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md` and
-`dev/tests/test_skill_surface_boundary.py`.
-
-### A8 — occlusion inference boundary — CLOSED
-
-Exploratory work exposed the opposite risk of a rule against invented hidden endings: a worker can
-stop reasoning where visibility stops and thereby break a connected chain, mass, topology, contact,
-depth relation, or downstream anchor. A8 separates three layers explicitly:
-
-```text
-visible evidence
-  → entry/reappearance anchors, local direction/width, overlap/contact cues
-provisional hidden structure
-  → minimum continuation needed for continuity, pose, topology, contact, depth, anchors
-rendered visible description
-  → visible boundaries only; inferred hidden appearance is not promoted to observed contour
-```
-
-Measurement remains bounded by the occluder. Agent structural inference may continue when justified
-by visible relationships, but uncertainty must increase when the hidden interval is weakly
-constrained. A8 adds no hidden-geometry runtime, automatic solver, stage, or schema/API change.
-
-Evidence: `A8_OCCLUSION_INFERENCE_BOUNDARY.md` and
-`dev/tests/test_skill_surface_boundary.py`.
-
-## Phase C — integrated fresh validation — NEXT
-
-Starts now that A1–A8 are accepted. `VALIDATION_RELEASE.md` owns detailed contracts.
-
-```text
-D01 difficult observed croquis    NEXT
+D01 difficult observed croquis
 D02 observed figure / subject recognition
 D03 tonal study
 D04 observed free-draw
@@ -162,52 +74,35 @@ D05 imaginative + hybrid
 D06 cross-agent reproducibility
 ```
 
-Fresh workers receive only the installed/current skill/package, fresh input when applicable,
-the user task, declared/inferred intent, and ordinary runtime/output paths. No answer image,
-authored coordinates, prior sessions, prior residual priorities, or subject-specific solution
-scripts.
+Fresh workers receive the installed/current skill/package, fresh input when applicable, the user
+request, declared/inferred intent, and documented runtime/output paths. They do not receive the
+Astra answer image, coordinates, scripts, prior session, or evaluator rationale.
 
-A D-case may reopen the responsible B/A premise. Dogfood is validation, not a second architecture layer.
+## Phase F — consolidation / compatibility / later releases
 
-## Phase D — consolidate and release
-
-Starts only after D01–D06 pass.
+After evidence justifies it:
 
 ```text
-R01 consolidation      absorb repeated evidence-backed fixes
-R02 final regression   modes + resume + correction + PNG/replay/GIF + package
-R03 physical R23 retirement / bounded adapter decision
-R04 release
+R01 consolidate repeated evidence-backed fixes
+R02 representative regression
+R03 physical R23 retirement or bounded migration-only adapter decision
+future release claims limited to demonstrated evidence
 ```
 
-## Global release exit
+## Release principles
 
-Release must directly prove:
-
-- a fresh worker completes `observe/declare → draw → inspect → correct → finish` without Pn;
-- observed, imaginative, and hybrid work share one session/history core;
-- mode/style differences affect authored behavior rather than metadata or post-filters alone;
-- early mark economy never substitutes generic primitives for structurally specific placement, orientation, proportion, envelope, width/depth, overlap/contact, negative-space, or anchor relations;
-- downstream description does not inherit disproven parent construction merely because it was drawn earlier;
-- important occluded continuity is reasoned about when it constrains visible structure, while exact hidden appearance is not fabricated or rendered as observed;
-- measurement stops at occlusion even when Agent structural inference continues provisionally from visible anchors;
-- major form, orientation/twist, overlap, grounding, identity, hand/foot/contact, and foreshortened depth survive line/value simplification;
-- session cost does not explode through brute-force microstroke accumulation;
-- PNG/replay/GIF share canonical renderer provenance and final-state parity;
-- public API, package, deployable docs, CI, and support policy tell the same canonical truth;
-- no deployable `examples/` directory is required unless representative examples earn that role;
-- R23 is absent from the normal route and any retained compatibility window is explicit and tested.
+- a stable version may publish a bounded, explicitly scoped demonstrated capability;
+- broader cross-agent/cross-subject claims require the corresponding fresh evidence;
+- drawing quality remains Agent-owned rather than mechanically certified;
+- package/API/persistence/replay truth must remain deterministic and testable;
+- showcase material is evidence for humans, never hidden worker answer geometry;
+- one shared runtime and correction model remains the architectural constraint.
 
 ## Authority
 
 - current state: `STATUS.md`
-- current program gates: `/GATES.md`
-- architecture/release-candidate invariants: B-slice capsules and `dev/release/vnext/`
-- A3 runtime ownership audit: `A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md`
-- A4 routing-edge evidence: `A4_RESIDUAL_ROUTING_HARDENING.md`
-- A5 drawing-leaf evidence: `A5_DRAWING_LEAF_GAP_HARDENING.md`
-- A6 structural-orientation evidence: `A6_STRUCTURAL_ORIENTATION_HARDENING.md`
-- A7 structural-specificity evidence: `A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`
-- A8 occlusion-inference evidence: `A8_OCCLUSION_INFERENCE_BOUNDARY.md`
-- post-alignment dogfood/release: `VALIDATION_RELEASE.md`
-- deployable drawing guidance: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
+- stable v1.0.0 notes: `../../../docs/releases/v1.0.0.md`
+- curated Astra demo: `../../../showcase/entries/croquis-sniper-girl-astra-v1/`
+- formal D01–D06 contracts: `VALIDATION_RELEASE.md`
+- stable contract snapshot: `../../release/vnext/CONTRACT_FREEZE.json`
+- deployable drawing guidance: `../../../skills/img2drawing/SKILL.md` + references
