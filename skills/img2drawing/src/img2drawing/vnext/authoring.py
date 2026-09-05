@@ -87,7 +87,11 @@ def retune_stroke(
         part=current.part,
         confidence=current.confidence,
         layer=current.layer,
-        pressure=(list(current.pressure) if current.pressure_authored and current.pressure is not None else None),
+        pressure=(
+            list(current.pressure)
+            if current.pressure_authored and current.pressure is not None
+            else None
+        ),
         tool=preset,
         grade=selected_grade,
         tool_overrides=inherited_overrides,
@@ -100,6 +104,56 @@ def retune_stroke(
     if list(revised.points) != list(current.points):
         raise RuntimeError("retune_stroke changed geometry; this violates the helper contract")
     return str(action_id)
+
+
+def retune_strokes(
+    session: Any,
+    stroke_ids: Sequence[str],
+    *,
+    reason: str,
+    tool_overrides: Mapping[str, float] | None = None,
+    grade: str | None = None,
+    observation_id: str | None = None,
+    source_observation: str | None = None,
+    metadata: Mapping[str, Any] | None = None,
+) -> tuple[str, ...]:
+    """Retune one coherent stroke group while preserving explicit per-stroke history.
+
+    All requested identifiers are resolved before the first mutation. If two supplied identifiers
+    resolve to the same current replacement descendant, the call fails instead of retuning that
+    stroke twice. Each successful member still records its own existing ``stroke.replace`` action,
+    so replay/provenance remain explicit rather than collapsing the group into a new batch action.
+    """
+
+    requested = tuple(str(stroke_id).strip() for stroke_id in stroke_ids)
+    if not requested or any(not stroke_id for stroke_id in requested):
+        raise ValueError("retune_strokes requires one or more non-empty stroke ids")
+
+    resolved: list[str] = []
+    seen: set[str] = set()
+    for stroke_id in requested:
+        current = session.current_stroke(stroke_id)
+        current_id = str(current.stroke_id or stroke_id)
+        if current_id in seen:
+            raise ValueError(f"duplicate current stroke in retune group: {current_id}")
+        if not str((current.tool_state or {}).get("tool", "")).strip():
+            raise ValueError(f"current stroke has no recoverable tool preset: {current_id}")
+        seen.add(current_id)
+        resolved.append(current_id)
+
+    return tuple(
+        retune_stroke(
+            session,
+            stroke_id,
+            reason=reason,
+            tool_overrides=tool_overrides,
+            grade=grade,
+            observation_id=observation_id,
+            source_observation=source_observation,
+            metadata=metadata,
+        )
+        for stroke_id in resolved
+    )
 
 
 def sample_catmull_rom(
