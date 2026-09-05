@@ -1,0 +1,8 @@
+{
+  "schema": "img2drawing.release.publish.v1",
+  "tag": "v1.0.1",
+  "title": "img2drawing v1.0.1",
+  "notes_file": "docs/releases/v1.0.1.md",
+  "package_dir": "skills/img2drawing",
+  "assets": []
+}
