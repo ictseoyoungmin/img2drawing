@@ -3,6 +3,7 @@ from __future__ import annotations
 from math import hypot
 
 from PIL import Image
+import pytest
 
 import img2drawing
 from img2drawing import DrawingIntent, DrawingSession
