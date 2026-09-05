@@ -17,7 +17,7 @@ def _session(tmp_path):
         reference_mode="observed",
         drawing_mode="line_study",
         finish_intent="subject",
-        style="pencil_loose",
+        style_profile="pencil_loose",
     )
     return DrawingSession.create(subject=subject, output_dir=tmp_path, intent=intent)
 
