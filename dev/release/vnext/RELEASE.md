@@ -17,8 +17,8 @@ The demonstrated run used no `fill_region` actions and finished with 490 actions
 through action 490 every four actions; the replay final PNG matches the canonical final PNG and
 the decoded GIF final-frame maximum channel error is 1.
 
-See `../../showcase/entries/croquis-sniper-girl-astra-v1/README.md` and
-`../../docs/releases/v1.0.0.md`.
+See `../../../showcase/entries/croquis-sniper-girl-astra-v1/README.md` and
+`../../../docs/releases/v1.0.0.md`.
 
 ## What 1.0.0 does not claim
 
