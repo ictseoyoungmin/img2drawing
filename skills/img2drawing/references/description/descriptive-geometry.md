@@ -23,6 +23,20 @@ Do not flatten a compound curve into a generic arc because the drawing is sparse
 turn an irregular shoe into a box, a face into icons, or a connected object into generic circles
 and rails. Simplify the number of marks while keeping the geometry those marks encode.
 
+## Smoothness must follow observed topology
+
+A smooth spline is not automatically a better line. Use a continuous curve only where the
+observed boundary is itself continuous through the interval. Split the authoring interval when the
+subject contains a real cusp, corner, tangency break, insertion, component join, folded edge, or
+other topology change.
+
+Do not let a curve helper round away a sharp hair terminal, garment break, shoe corner, housing
+edge, or equivalent observed event. Conversely, do not approximate a genuinely smooth contour by
+a chain of short straight segments merely because those segments are easier to author.
+
+Control points and curve samplers are reasoning/authoring aids. The sampled points that enter the
+drawing history are the authored geometry; the helper does not become reference authority.
+
 ## Inherit only credible construction
 
 A descriptive pass must not promote a provisional construction primitive into accepted geometry
@@ -32,6 +46,16 @@ anchor, compare the parent relation against the current authority again.
 If the parent structure is wrong, replace it first. Adding a cleaner contour, texture, seam,
 value region, or local accent around an incorrect premise makes the error harder to see; it does
 not make the premise more accurate.
+
+## Separate geometry correction from material correction
+
+When the path, overlap, and ownership are correct but the rendered line reads broken because of
+endpoint taper, width, opacity, pressure, or graphite behavior, preserve the geometry and retune
+the stroke material. When the path itself is wrong, replace or locally edit the geometry instead.
+
+Do not resample, simplify, or redraw an already-correct curve merely to change its appearance.
+That can silently turn a correct smooth path into a polyline or otherwise introduce a new geometry
+error while claiming to make only a rendering correction.
 
 ## Stop before noise
 

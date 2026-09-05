@@ -56,6 +56,27 @@ def form_pencil() -> ToolState:
     )
 
 
+def continuous_pencil() -> ToolState:
+    """Pencil for boundaries whose authored endpoints must read as continuous.
+
+    This keeps the form-pencil material family while avoiding the strong endpoint taper that can
+    make a correct connected edge look prematurely cut. It is a rendering/authoring aid, not a
+    geometry rule and not a mechanical-subject preset.
+    """
+
+    return ToolState(
+        tool="continuous_pencil",
+        width=3.2,
+        pressure=0.58,
+        opacity=0.70,
+        hardness=0.66,
+        grain=0.36,
+        taper_in=0.02,
+        taper_out=0.03,
+        jitter=0.035,
+    )
+
+
 def accent_pencil() -> ToolState:
     return ToolState(
         tool="accent_pencil",
@@ -105,6 +126,7 @@ def hard_eraser() -> ToolState:
 TOOL_PRESETS = {
     "construction_pencil": construction_pencil,
     "form_pencil": form_pencil,
+    "continuous_pencil": continuous_pencil,
     "accent_pencil": accent_pencil,
     "soft_eraser": soft_eraser,
     "hard_eraser": hard_eraser,

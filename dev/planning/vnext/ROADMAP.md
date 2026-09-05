@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-09-05
+Updated: 2026-09-06
 Workflow: Bottleneck · Production WIP Limit = 1
 
 ## Phase A — product foundation — CLOSED
@@ -26,44 +26,49 @@ A1 repository truth
 → A8 occlusion inference boundary
 ```
 
-## Phase C — v1.0.0 stable baseline — CURRENT RELEASE
+## Phase C — v1.0.0 stable baseline — CLOSED
 
-v1.0.0 promotes the A8-aligned system without adding new drawing/runtime behavior after the
-successful GPT-6 Astra demonstration.
+v1.0.0 promoted the A8-aligned system without adding drawing/runtime behavior after the successful
+GPT-6 Astra demonstration. It established a stable evidence boundary rather than claiming formal
+cross-agent/cross-subject validation.
 
-Release evidence includes:
-
-- curated reference-versus-drawing comparison;
-- end-to-end timelapse;
-- 490-action explicit-stroke session summary;
-- zero fill actions;
-- exact canonical PNG/replay final parity;
-- bounded claims that do not substitute one successful worker for D01-D06 generalization.
+Release evidence includes the real reference-versus-drawing comparison, the canonical 124-frame
+end-to-end timelapse, a 490-action explicit-stroke session summary, zero fill actions, and exact
+canonical PNG/replay final parity.
 
 The subject-specific authoring scripts, coordinates, and control-point notes from the Astra run
 remain evidence only and are not shipped as skill examples.
 
-## Phase D — v1.0.1 Astra-derived absorption — NEXT
+## Phase D — v1.0.1 Astra-derived absorption — CLOSED
 
-Absorb only reusable product lessons exposed by the successful run. Current candidates:
+A9 absorbs only reusable product lessons exposed by the successful run:
 
 ```text
-geometry-preserving stroke retune
-shared curve sampling utility
-continuous-edge pencil handling
-semantic authored-element grouping / correction ergonomics
-fresh-render replace/delete discipline where an API affordance is actually missing
+A9
+├─ geometry-preserving stroke material retune
+│  └─ img2drawing.vnext.retune_stroke()
+├─ deterministic shared smooth-curve sampling
+│  └─ img2drawing.vnext.sample_catmull_rom()
+├─ continuous-edge pencil handling
+│  └─ continuous_pencil preset; form_pencil unchanged
+├─ semantic authored/correction grouping
+│  └─ guidance only; no stage/lifecycle state
+└─ geometry-residual vs material-residual discipline
+   └─ preserve correct points for material-only corrections
 ```
 
-Do not copy subject-specific solution geometry. Do not add a new lifecycle, automatic artistic
-score, model-specific code path, or answer-template example.
+The patch uses the existing `replace_stroke` history action for retuning and adds no persisted
+action kind or schema. Curve helpers remain authoring aids rather than geometry authority, and
+smoothness must stop at real cusps, corners, tangency breaks, component joins, or equivalent
+topology changes.
 
-Every candidate must either remove a demonstrated runtime/authoring friction or be dropped.
+A9 deliberately does **not** copy subject-specific solution geometry, add model-specific code,
+automatic artistic scoring, answer-template examples, or a new lifecycle. See
+`A9_ASTRA_AUTHORING_ABSORPTION.md`.
 
-## Phase E — fresh integrated validation
+## Phase E — fresh integrated validation — NEXT
 
-After the bounded 1.0.1 absorption pass, run the formal sealed campaign owned by
-`VALIDATION_RELEASE.md`:
+Run the formal sealed campaign owned by `VALIDATION_RELEASE.md`:
 
 ```text
 D01 difficult observed croquis
@@ -77,6 +82,10 @@ D06 cross-agent reproducibility
 Fresh workers receive the installed/current skill/package, fresh input when applicable, the user
 request, declared/inferred intent, and documented runtime/output paths. They do not receive the
 Astra answer image, coordinates, scripts, prior session, or evaluator rationale.
+
+A lower-quality worker result does not automatically imply another instruction patch. First
+separate product/runtime friction from worker visual-reasoning capability. Reopen the earliest
+responsible A/B premise only when fresh evidence identifies a reusable product defect.
 
 ## Phase F — consolidation / compatibility / later releases
 
@@ -96,12 +105,14 @@ future release claims limited to demonstrated evidence
 - drawing quality remains Agent-owned rather than mechanically certified;
 - package/API/persistence/replay truth must remain deterministic and testable;
 - showcase material is evidence for humans, never hidden worker answer geometry;
-- one shared runtime and correction model remains the architectural constraint.
+- one shared runtime and correction model remains the architectural constraint;
+- successful-worker mechanics may be absorbed only when they generalize beyond the demonstrated subject.
 
 ## Authority
 
 - current state: `STATUS.md`
-- stable v1.0.0 notes: `../../../docs/releases/v1.0.0.md`
+- stable v1.0.1 notes: `../../../docs/releases/v1.0.1.md`
+- A9 absorption record: `A9_ASTRA_AUTHORING_ABSORPTION.md`
 - curated Astra demo: `../../../showcase/entries/croquis-sniper-girl-astra-v1/`
 - formal D01–D06 contracts: `VALIDATION_RELEASE.md`
 - stable contract snapshot: `../../release/vnext/CONTRACT_FREEZE.json`

@@ -28,10 +28,10 @@ CANONICAL_ROOT_EXPORTS = {
 
 
 def test_stable_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "1.0.0"
-    assert PUBLIC_API == "DrawingSession/1.0.0-vnext"
-    assert RELEASE_REVISION == "A8"
-    assert RELEASE_SLICE == "v1.0.0_stable_demo_baseline"
+    assert img2drawing.__version__ == "1.0.1"
+    assert PUBLIC_API == "DrawingSession/1.0.1-vnext"
+    assert RELEASE_REVISION == "A9"
+    assert RELEASE_SLICE == "v1.0.1_astra_authoring_absorption"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
@@ -121,3 +121,23 @@ def test_instruction_graph_contains_public_api_and_visual_leaves():
         "api/public-surface.md",
     ):
         assert (refs / required).is_file(), required
+
+    skill = (PACKAGE / "SKILL.md").read_text(encoding="utf-8")
+    index = (refs / "INDEX.md").read_text(encoding="utf-8")
+    assert "references/INDEX.md" in skill
+    assert "api/public-surface.md" in index
+    assert "foundation/occlusion-inference.md" in index
+
+
+def test_root_compatibility_names_stay_out_of_normal_discovery():
+    for name in (
+        "CanvasHistory",
+        "DrawingRun",
+        "FinishRecord",
+        "Stroke",
+        "StrokeIR",
+        "SubjectPalette",
+        "VNextDrawingSession",
+        "replace_fill_region",
+    ):
+        assert name not in dir(img2drawing)

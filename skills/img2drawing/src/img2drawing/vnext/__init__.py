@@ -36,6 +36,7 @@ from .editing import (
     AuthoredElement,
     AuthoringSummary,
 )
+from .authoring import retune_stroke, retune_strokes, sample_catmull_rom
 from .intent import (
     COMPATIBILITY_INTENTS,
     DRAWING_MODES,
@@ -117,4 +118,7 @@ __all__ = [
     "inspect_initial_construct",
     "observe_pose",
     "replace_fill_region",
+    "retune_stroke",
+    "retune_strokes",
+    "sample_catmull_rom",
 ]

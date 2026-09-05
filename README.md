@@ -1,6 +1,6 @@
 # img2drawing
 
-**Current stable: v1.0.0**
+**Current stable: v1.0.1**
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -15,12 +15,30 @@ The action history keeps every revision inspectable, resumable, and replayable. 
 human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
 an `examples/` tree until there are genuinely representative instructional examples.
 
-**Featured v1.0.0 demonstration** — GPT-6 Astra completed a detailed observed croquis using
-explicit authored strokes only; the release baseline adds no subject-specific answer geometry from
-that run. The session contains 490 actions: 358 stroke additions, 120 replacements, 12 deletions,
-and **0 fill actions**, with a canonical replay final frame that exactly matches the final PNG.
-This is a curated capability result, not a claim that formal cross-agent/cross-subject validation
-is complete.
+## v1.0.1 — Astra-derived authoring ergonomics
+
+v1.0.1 absorbs reusable mechanics exposed by the successful Astra run without copying its
+subject-specific coordinates, scripts, control-point tables, or answer geometry:
+
+- `img2drawing.vnext.retune_stroke()` changes stroke material while preserving authored geometry;
+- `img2drawing.vnext.sample_catmull_rom()` provides deterministic shared smooth-curve sampling;
+- `continuous_pencil` provides a low-taper option for boundaries whose endpoints should read as
+  continuous, while `form_pencil` remains unchanged;
+- guidance now separates geometry residuals from material residuals and groups related edits by
+  coherent visible/structural problems rather than arbitrary stroke counts;
+- curve smoothness follows observed topology: real cusps, corners, joins, and tangency breaks are
+  authored explicitly rather than rounded away.
+
+The patch adds no persisted action kind or schema, does not widen the canonical package-root API,
+and does not introduce a new drawing lifecycle. [Read the v1.0.1 release notes](docs/releases/v1.0.1.md).
+
+## Featured v1.0.0 demonstration
+
+GPT-6 Astra completed a detailed observed croquis using explicit authored strokes only; the release
+baseline adds no subject-specific answer geometry from that run. The session contains 490 actions:
+358 stroke additions, 120 replacements, 12 deletions, and **0 fill actions**, with a canonical
+replay final frame that exactly matches the final PNG. This is a curated capability result, not a
+claim that formal cross-agent/cross-subject validation is complete.
 
 <a href="showcase/entries/croquis-sniper-girl-astra-v1/README.md"><img src="showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif" alt="End-to-end timelapse" width="320"></a>
 
