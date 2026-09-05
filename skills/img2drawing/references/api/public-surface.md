@@ -35,7 +35,7 @@ namespace that owns them:
 ```python
 from img2drawing.inspection import GroundGuide, PlumbLine, ROI, angle, distance
 from img2drawing.observation import SubjectPalette
-from img2drawing.vnext import retune_stroke, sample_catmull_rom
+from img2drawing.vnext import retune_stroke, retune_strokes, sample_catmull_rom
 ```
 
 Advanced vNext records, guide objects, schemas, derived authoring records, and authoring helpers
@@ -75,6 +75,25 @@ retune_stroke(
 stroke identity, and explicitly authored pressure. Derived pressure is regenerated so a taper or
 pressure retune can actually change the rendered material. It does not create a new persistence
 schema.
+
+When several strokes share one coherent material residual, use `retune_strokes()` rather than
+repeating manual geometry submissions:
+
+```python
+from img2drawing.vnext import retune_strokes
+
+retune_strokes(
+    session,
+    connected_edge_ids,
+    reason="one continuous boundary is broken by premature endpoint taper",
+    tool_overrides={"taper_in": 0.01, "taper_out": 0.02},
+    metadata={"semantic_group": "continuous-boundary"},
+)
+```
+
+The helper resolves all requested current descendants before the first edit, rejects duplicate
+current strokes, and then records one ordinary explicit replacement action per stroke. The group
+is convenience and provenance context, not a new batch action, runtime stage, or lifecycle state.
 
 For a smooth observed interval, a worker may use the deterministic shared sampler instead of
 reimplementing spline math per run:
