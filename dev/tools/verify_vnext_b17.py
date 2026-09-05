@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the release-candidate package, clean install, instruction graph, and supply-chain boundary.
+"""Audit the stable package, clean install, instruction graph, and supply-chain boundary.
 
 This verifier checks packaging and integration only. It deliberately makes no visual-quality
 claim and does not require drawing examples in the deployable skill.
@@ -24,8 +24,8 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
 RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
-VERSION = "0.6.0rc2"
-PUBLIC_API = "DrawingSession/0.6.0-vnext"
+VERSION = "1.0.0"
+PUBLIC_API = "DrawingSession/1.0.0-vnext"
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
@@ -99,7 +99,7 @@ def _canonical_docs() -> list[Path]:
 def check_source() -> None:
     version_text = (PACKAGE / "src" / "img2drawing" / "_version.py").read_text()
     assert f'__version__ = "{VERSION}"' in version_text
-    assert 'RELEASE_REVISION = "B17"' in version_text
+    assert 'RELEASE_REVISION = "A8"' in version_text
     assert (ROOT / "LICENSE").read_bytes() == (PACKAGE / "LICENSE").read_bytes()
     pyproject = (PACKAGE / "pyproject.toml").read_text()
     assert '"numpy>=1.24"' in pyproject and '"Pillow>=10"' in pyproject
