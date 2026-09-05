@@ -1,6 +1,6 @@
-__version__ = "0.6.0rc2"
-RELEASE_REVISION = "B17"
-RELEASE_SLICE = "B17_package_public_api_release_candidate"
+__version__ = "1.0.0"
+RELEASE_REVISION = "A8"
+RELEASE_SLICE = "v1.0.0_stable_demo_baseline"
 
 _BASE_VERSION = __version__.split("rc")[0]
 PUBLIC_API = f"DrawingSession/{_BASE_VERSION}-vnext"
