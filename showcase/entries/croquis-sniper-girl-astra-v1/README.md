@@ -7,11 +7,12 @@ img2drawing system to the first stable release baseline.
 
 ## End-to-end process
 
-![End-to-end timelapse](timelapse.gif)
+![End-to-end timelapse preview](timelapse.gif)
 
-The showcase GIF keeps all 124 sampled frames and the original timing while resizing the
-canonical 1024 × 1536 replay to 512 × 768 for repository browsing. The original run sampled
-action 0 through action 490 every four actions, with the final action included.
+The original canonical run contains 124 sampled replay frames from action 0 through action 490
+with `every_n=4`, including the final action. The repository GIF above is deliberately a compact
+8-frame full-span preview for fast GitHub browsing; it includes the beginning and final drawing
+state but does not replace the canonical replay evidence recorded below.
 
 ## Execution provenance
 
@@ -39,8 +40,9 @@ subject-specific drawing knowledge into the runtime.
 | Stroke replacements | 120 |
 | Stroke deletions | 12 |
 | Fill actions | 0 |
-| Timelapse frames | 124 |
-| Timelapse sampling | every 4 actions, action 0 → 490 |
+| Canonical timelapse frames | 124 |
+| Canonical timelapse sampling | every 4 actions, action 0 → 490 |
+| Repository preview | 8 full-span frames, action 0 → final |
 | Canonical PNG vs replay final | exact pixel match |
 | Decoded canonical GIF final max-channel error | 1 |
 
