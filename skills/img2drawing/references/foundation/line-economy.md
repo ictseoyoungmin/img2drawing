@@ -33,6 +33,21 @@ use few marks while still preserving its real axes, widths, joints, and overlaps
 Prefer one confident line that carries multiple correct relationships over many simple
 lines that average the form into a symbol.
 
+## Author related geometry as a semantic group
+
+Do not organize a pass by an arbitrary number of strokes. Group together marks that answer the
+same structural question: one contour interval, one connected component relation, one hair mass,
+one grip/contact, one clothing tension family, one prop subassembly, or another coherent visible
+problem.
+
+Within that group, keep enough neighboring context to preserve continuity and ownership. Then
+render and inspect the group in the whole drawing before moving on. This reduces two opposite
+failures: isolated micro-edits that never repair the parent relation, and giant passes whose
+residual cause becomes impossible to locate.
+
+A semantic group is an authoring convenience, not a runtime stage. Its size follows the observed
+relationship and can be revised whenever fresh evidence shows that the chosen scope was wrong.
+
 ## Detail is not classified by size
 
 A small feature is not automatically secondary. If it determines orientation, contact, scale,
@@ -47,3 +62,7 @@ Defer secondary detail, not structural specificity. See `structural-specificity.
 If adding lines makes a region busier but not more specific, stop. Re-observe the boundary or
 parent relation, retire redundant marks, and replace the pile with the smallest line set that
 states the correct geometry.
+
+If a semantic group is already geometrically correct but still reads broken because of endpoint
+weight, taper, opacity, or another material setting, do not redraw its points merely to change the
+rendering behavior. Retune the stroke material and preserve the authored geometry.
