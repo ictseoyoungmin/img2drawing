@@ -5,7 +5,7 @@ Start at `SKILL.md`, then read only the smallest leaves that own the current dra
 
 ## 1. Foundation
 
-- `foundation/line-economy.md` — preserve geometry while reducing redundant marks
+- `foundation/line-economy.md` — preserve geometry while reducing redundant marks; group related marks by one coherent relation
 - `foundation/structural-specificity.md` — defer secondary detail without genericizing structure; revalidate inherited construction
 - `foundation/occlusion-inference.md` — infer hidden continuity when needed while keeping inferred structure separate from visible appearance
 - `foundation/reference-authority.md` — observed, imaginative, and hybrid truth
@@ -53,7 +53,7 @@ may invalidate it at any time.
 
 ## 5. Description
 
-- `description/descriptive-geometry.md` — exact form with economical lines
+- `description/descriptive-geometry.md` — exact form with economical lines; topology-aware curve choice and geometry-vs-material correction
 - `description/contour-and-overlap.md` — visible contour ownership, occlusion/reappearance, contact, and separation from hidden construction
 - `description/value-edge-and-graphite.md` — value family, edge behavior, pencil material
 
@@ -72,7 +72,7 @@ Other relationships:
 
 ## 7. Review and output
 
-- `review/residual-correction.md` — inspect, prioritize, correct, re-inspect
+- `review/residual-correction.md` — inspect, prioritize, distinguish geometry/material residuals, correct coherent groups, re-inspect
 - `review/residual-routing.md` — route a visible symptom to the responsible local or upstream premise
 - `review/stroke-retirement.md` — remove or soften obsolete marks
 - `review/authored-element-navigation.md` — find current authored elements before editing
@@ -88,6 +88,10 @@ become flatter, more frontal, or more symmetric than the subject belongs upstrea
 `construction/orientation-and-twist.md` even when the individual local contours look clean. A
 visible fragment that incorrectly behaves as though it terminates at an occluder belongs first to
 `foundation/occlusion-inference.md` when continuity is structurally necessary.
+
+If geometry is already correct but a line reads broken because of taper, weight, opacity, pressure,
+or graphite behavior, route to `review/residual-correction.md` and preserve the authored points
+while retuning the material. Do not turn a material residual into an accidental geometry edit.
 
 ## 8. Public runtime API
 
