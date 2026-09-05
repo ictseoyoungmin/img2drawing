@@ -24,8 +24,10 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
 RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
-VERSION = "1.0.0"
-PUBLIC_API = "DrawingSession/1.0.0-vnext"
+CONTRACT = json.loads((RELEASE_RECORDS / "CONTRACT_FREEZE.json").read_text(encoding="utf-8"))
+VERSION = str(CONTRACT["package_version"])
+PUBLIC_API = str(CONTRACT["public_api"])
+RELEASE_REVISION = str(CONTRACT["release_revision"])
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
@@ -99,7 +101,7 @@ def _canonical_docs() -> list[Path]:
 def check_source() -> None:
     version_text = (PACKAGE / "src" / "img2drawing" / "_version.py").read_text()
     assert f'__version__ = "{VERSION}"' in version_text
-    assert 'RELEASE_REVISION = "A8"' in version_text
+    assert f'RELEASE_REVISION = "{RELEASE_REVISION}"' in version_text
     assert (ROOT / "LICENSE").read_bytes() == (PACKAGE / "LICENSE").read_bytes()
     pyproject = (PACKAGE / "pyproject.toml").read_text()
     assert '"numpy>=1.24"' in pyproject and '"Pillow>=10"' in pyproject
@@ -197,7 +199,7 @@ def check_artifacts(work: Path) -> tuple[Path, Path]:
             if relative and relative[-1] in CONTROL_PLANE_FILES:
                 raise AssertionError(f"control-plane file shipped in sdist: {member.name}")
             if len(relative) >= 3 and relative[:2] == ("references", "review") and relative[-1] in LEGACY_REVIEW_FILES:
-                raise AssertionError(f"legacy review file shipped in sdist: {member.name}")
+                raise AssertionError(f"legacy review file shipped: {member.name}")
             if member.isfile():
                 stream = archive.extractfile(member)
                 assert stream is not None
@@ -237,6 +239,7 @@ def check_clean_install(work: Path, wheel: Path) -> None:
     for field in ("version", "api", "revision", "exports"):
         assert source[field] == installed[field], f"source/install {field} mismatch"
     assert installed["version"] == VERSION and installed["api"] == PUBLIC_API
+    assert installed["revision"] == RELEASE_REVISION
     assert str(installed["file"]).startswith(str(environment)), installed["file"]
     assert "DrawingSession" in installed["exports"] and "DrawingRun" not in installed["exports"]
 
