@@ -7,7 +7,7 @@ from PIL import Image
 import img2drawing
 from img2drawing import DrawingIntent, DrawingSession
 from img2drawing.core.tools import get_tool
-from img2drawing.vnext import retune_stroke, sample_catmull_rom
+from img2drawing.vnext import retune_stroke, retune_strokes, sample_catmull_rom
 
 
 def _session(tmp_path):
@@ -98,6 +98,54 @@ def test_retune_preserves_explicit_pressure(tmp_path) -> None:
     assert revised.tool_state["opacity"] == 0.82
 
 
+def test_batch_retune_preserves_each_geometry_and_explicit_history(tmp_path) -> None:
+    session = _session(tmp_path)
+    ids = [
+        session.draw(
+            [(10, 18), (30, 16), (50, 17)],
+            stroke_id="edge-a",
+            role="contour",
+            part="joined-boundary",
+            tool="form_pencil",
+        ),
+        session.draw(
+            [(50, 17), (68, 20), (86, 18)],
+            stroke_id="edge-b",
+            role="contour",
+            part="joined-boundary",
+            tool="form_pencil",
+        ),
+    ]
+    before = {stroke_id: list(session.current_stroke(stroke_id).points) for stroke_id in ids}
+    cursor = session.history_cursor
+
+    action_ids = retune_strokes(
+        session,
+        ids,
+        reason="one connected boundary has premature endpoint taper",
+        tool_overrides={"taper_in": 0.01, "taper_out": 0.02},
+        metadata={"semantic_group": "joined-boundary"},
+    )
+
+    assert len(action_ids) == 2
+    assert session.history_cursor == cursor + 2
+    for stroke_id in ids:
+        current = session.current_stroke(stroke_id)
+        assert current.points == before[stroke_id]
+        assert current.part == "joined-boundary"
+        assert current.tool_state["taper_in"] == 0.01
+        assert current.tool_state["taper_out"] == 0.02
+        assert current.tool_state["provenance"]["metadata"]["semantic_group"] == "joined-boundary"
+
+    with pytest.raises(ValueError, match="duplicate current stroke"):
+        retune_strokes(
+            session,
+            [ids[0], ids[0]],
+            reason="duplicate must not retune twice",
+            tool_overrides={"opacity": 0.8},
+        )
+
+
 def test_continuous_pencil_changes_endpoint_behavior_without_global_form_change() -> None:
     form = get_tool("form_pencil")
     continuous = get_tool("continuous_pencil")
@@ -129,4 +177,5 @@ def test_catmull_rom_sampling_is_deterministic_arc_length_bounded_and_specialize
     assert straight[-1] == (10.0, 0.0)
 
     assert "retune_stroke" not in img2drawing.__all__
+    assert "retune_strokes" not in img2drawing.__all__
     assert "sample_catmull_rom" not in img2drawing.__all__
