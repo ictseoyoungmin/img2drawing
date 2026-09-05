@@ -1,0 +1,11 @@
+{
+  "schema": "img2drawing.release.publish.v1",
+  "tag": "v1.0.0",
+  "title": "img2drawing v1.0.0",
+  "notes_file": "docs/releases/v1.0.0.md",
+  "package_dir": "skills/img2drawing",
+  "assets": [
+    "showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.png",
+    "showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif"
+  ]
+}
