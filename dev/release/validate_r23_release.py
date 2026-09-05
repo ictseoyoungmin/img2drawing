@@ -2,8 +2,9 @@
 
 The current package is intentionally vNext. This historical validator checks that the
 frozen R23 release remains internally identified and explicitly reachable through the
-runtime compatibility namespace. It must not require the deployable skill instruction
-graph to carry R23 stage or migration documentation.
+runtime compatibility namespace. It must not pin the current vNext package version or
+release label: stable and patch releases may advance while R23 compatibility remains
+unchanged.
 """
 from __future__ import annotations
 
@@ -15,19 +16,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "skills/img2drawing/src"))
 
 import img2drawing
-from img2drawing._version import (
-    LEGACY_R23_PUBLIC_API,
-    RELEASE_REVISION,
-    RELEASE_SLICE,
-)
+from img2drawing._version import LEGACY_R23_PUBLIC_API
 
 
-if RELEASE_REVISION != "B17" or img2drawing.__version__ != "0.6.0rc2":
-    raise SystemExit(f"release identity drift: {img2drawing.__version__} {RELEASE_REVISION}")
-if RELEASE_SLICE != "B17_package_public_api_release_candidate":
-    raise SystemExit("current release slice drift")
 if LEGACY_R23_PUBLIC_API != "DrawingRun/0.5.2-r23":
     raise SystemExit("legacy R23 public API identity drift")
+if not hasattr(img2drawing, "DrawingSession"):
+    raise SystemExit("current package no longer exposes the canonical DrawingSession")
 
 compatibility_root = ROOT / "dev/release/r23/compatibility/stages"
 for filename in (

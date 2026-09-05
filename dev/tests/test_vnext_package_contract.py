@@ -27,11 +27,11 @@ CANONICAL_ROOT_EXPORTS = {
 }
 
 
-def test_release_candidate_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "0.6.0rc2"
-    assert PUBLIC_API == "DrawingSession/0.6.0-vnext"
-    assert RELEASE_REVISION == "B17"
-    assert RELEASE_SLICE == "B17_package_public_api_release_candidate"
+def test_stable_version_and_root_api_are_canonical():
+    assert img2drawing.__version__ == "1.0.0"
+    assert PUBLIC_API == "DrawingSession/1.0.0-vnext"
+    assert RELEASE_REVISION == "A8"
+    assert RELEASE_SLICE == "v1.0.0_stable_demo_baseline"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
@@ -103,6 +103,7 @@ def test_instruction_graph_contains_public_api_and_visual_leaves():
     for required in (
         "foundation/line-economy.md",
         "foundation/reference-authority.md",
+        "foundation/occlusion-inference.md",
         "modes/croquis.md",
         "observation/visual-observation.md",
         "construction/gesture-and-masses.md",

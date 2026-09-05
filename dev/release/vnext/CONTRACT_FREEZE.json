@@ -1,10 +1,10 @@
 {
   "schema": "img2drawing.vnext.contract_freeze.v1",
-  "freeze_id": "B18+A2-public-root-2026-09-03",
-  "package_version": "0.6.0rc2",
-  "public_api": "DrawingSession/0.6.0-vnext",
-  "release_revision": "B17",
-  "release_slice": "B17_package_public_api_release_candidate",
+  "freeze_id": "v1.0.0-A8-2026-09-05",
+  "package_version": "1.0.0",
+  "public_api": "DrawingSession/1.0.0-vnext",
+  "release_revision": "A8",
+  "release_slice": "v1.0.0_stable_demo_baseline",
   "ownership": {
     "session": "img2drawing.vnext.session.DrawingSession",
     "history": "img2drawing.core.history.CanvasHistory",

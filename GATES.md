@@ -1,83 +1,74 @@
 # Gates: img2drawing current program
 
-This file tracks **current** project gates only. Historical R21/R23 gate evidence remains in
-`dev/release/`, `dev/evidence/`, `dev/planning/`, and Git history; it must not be mistaken for
-the current control plane.
+This file tracks the current program only. Historical R21/R23/B/A evidence remains in
+`dev/release/`, `dev/evidence/`, `dev/planning/`, and Git history.
 
-## G0 — Repository truth is singular
+## G0 — Stable repository truth — CLOSED
 
-- [x] `HANDOFF.md`, `STATUS.md`, `ROADMAP.md`, `VALIDATION_RELEASE.md`, package notes, and the changelog describe the same current route.
-- [x] deployable skill guidance starts at `skills/img2drawing/SKILL.md`.
-- [x] `skills/img2drawing/examples/` is absent until a genuinely representative example exists.
-- [x] frozen vNext contract is referenced at `dev/release/vnext/CONTRACT_FREEZE.json`, not from the deployable skill root.
+- [x] package identity is `1.0.0` / `DrawingSession/1.0.0-vnext`;
+- [x] `README.md`, handoff, status, roadmap, support matrix, and release notes describe the same
+  bounded stable claim;
+- [x] the deployable skill remains separate from release/control-plane/showcase material;
+- [x] `CONTRACT_FREEZE.json` pins the stable package/API/schema/render boundary.
 
-## G1 — Deployable instruction surface is clean
+## G1 — Drawing instruction graph — CLOSED through A8
 
-- [x] `SKILL.md` is an instruction router, not a development log.
-- [x] references use the stage-free graph: foundation → modes → observation → construction → description → subject leaves → review/output/API.
-- [x] croquis guidance preserves observed geometry while economizing marks.
-- [x] structural specificity is cross-subject: early passes may defer secondary detail but may not genericize placement, orientation, proportion, envelope, width/depth, overlap/contact/negative-space, or anchor relations.
-- [x] construction primitives are provisional reasoning aids rather than geometry authority, and downstream description revalidates the parent structure before inheriting it.
-- [x] occlusion guidance separates visible evidence, provisional hidden structure, and rendered visible description instead of treating visibility loss as structural termination.
-- [x] measurement stops at an occluder; Agent inference may continue only as a provisional relation constrained by visible anchors and structural context.
-- [x] observed-figure guidance additionally distinguishes mass placement from spatial orientation/turn and requires structure to read before broad value.
-- [x] drawing guidance does not require private/internal runtime implementation knowledge.
+- [x] stage-free progressive-disclosure routing;
+- [x] geometry-preserving line economy;
+- [x] structural orientation/twist and anti-flattening;
+- [x] structural specificity before secondary detail;
+- [x] parent construction revalidation before downstream inheritance;
+- [x] visible evidence / provisional hidden structure / rendered visible description separated at
+  occlusion;
+- [x] broad croquis value/dense hatch off by default until structure reads without tone.
 
-Mechanical verification is owned by `dev/tests/test_skill_surface_boundary.py` and the B17/B18 verifiers.
+## G2 — Runtime/package/replay contract — CLOSED
 
-## G2 — Public API mental model is narrow
+- [x] one canonical `DrawingSession` route;
+- [x] narrow root discovery with explicit specialized namespaces;
+- [x] stage-era orchestration isolated from the canonical route;
+- [x] clean wheel/sdist installation and deterministic mechanical verification;
+- [x] canonical PNG/replay/GIF provenance contract;
+- [x] R23 retained only behind explicit compatibility ownership.
 
-- [x] root exports are audited against the intended normal-user route centered on `DrawingSession`.
-- [x] package-root discovery exposes only high-level session/declarative/construction facade names.
-- [x] low-level history/action, schema, inspection, evidence, and advanced record capability remains in explicit owning namespaces.
-- [x] pre-rc2 direct root imports remain available through deprecated lazy shims instead of abrupt breakage.
-- [x] `0.6.0rc2` + the A2-aligned contract snapshot freeze the narrowed root.
+## G3 — v1.0.0 demonstrated capability — CLOSED
 
-Evidence: `dev/planning/vnext/A2_PUBLIC_ROOT_API_AUDIT.md`, `dev/tests/test_vnext_package_contract.py`, and `dev/release/vnext/SUPPORT.md`.
+- [x] curated GPT-6 Astra reference-versus-drawing comparison;
+- [x] end-to-end timelapse from action 0 through 490;
+- [x] 358 additions / 120 replacements / 12 deletions / 0 fill actions recorded;
+- [x] canonical final PNG equals replay final PNG;
+- [x] stable release claim explicitly avoids treating one run as cross-agent/cross-subject proof;
+- [x] subject-specific scripts, coordinates, and control points are excluded from the showcase and
+  deployable skill.
 
-## G3 — Runtime physical isolation matches the stage-free product model
+## G4 — v1.0.1 Astra-derived authoring absorption — NEXT
 
-- [x] inventory/classification covers historical `run`, `stages`, `exemplar`, `review`, and `registration` plus current `vnext/core/inspection/render` ownership.
-- [x] canonical `DrawingSession` import/resolution does not activate the historical R23 orchestration cluster.
-- [x] `img2drawing.inspection` owns current stage-free registration/measurement; historical `img2drawing.registration` is compatibility implementation.
-- [x] instruction-graph `review` is distinguished from the historical Python `img2drawing.review` package.
-- [x] `img2drawing.legacy.r23` remains lazy until a caller explicitly requests historical orchestration.
-- [x] physical rename/deletion is deferred to R03 as a compatibility-window decision.
+- [ ] geometry-preserving stroke retune ergonomics;
+- [ ] shared curve sampling where repeated external helper code demonstrates need;
+- [ ] continuous-edge pencil handling without globally weakening expressive taper;
+- [ ] semantic grouping/edit ergonomics only where they generalize;
+- [ ] fresh regression proving the absorbed affordances do not encode the demo subject.
 
-Evidence: `dev/planning/vnext/A3_RUNTIME_PHYSICAL_ISOLATION_AUDIT.md` and `dev/tests/test_runtime_physical_isolation.py`.
+## G5 — Formal fresh integrated validation — PENDING
 
-## G4 — Instruction routing and high-value guidance are operational
-
-- [x] common residuals route explicitly to the smallest responsible leaf and upstream construction/observation/contact/environment premises when the local part is only a symptom.
-- [x] local hands/grip have focused guidance that preserves hand envelope, thumb/finger grouping, visible terminations, and real contact without mitten completion or fabricated hidden digits.
-- [x] foreshortening/depth has a construction owner for projected spacing, near/far order, overlap, hidden continuity, and terminal orientation without anatomical unfolding.
-- [x] major-mass orientation/twist has explicit ownership for tilt-vs-turn, near/far planes, head/ribcage/pelvis counter-rotation, and whole-pose flattening/symmetry drift.
-- [x] croquis broad value/dense hatch is off by default until orientation, support, limb chains, negative spaces, and prop/body depth already read structurally.
-- [x] `foundation/structural-specificity.md` prevents “detail later” from becoming “generic structure now,” classifies detail by structural role rather than size, and requires parent-construction revalidation before downstream inheritance.
-- [x] `foundation/occlusion-inference.md` requires only the minimum hidden continuation needed for continuity/pose/topology/contact/depth and forbids promoting unsupported hidden appearance into visible contour/detail.
-- [x] `description/contour-and-overlap.md` keeps final visible contour ownership separate from provisional hidden construction and treats reappearance points as depth evidence.
-- [x] the graph remains progressive-disclosure: `INDEX.md` stays compact and delegates conditional diagnostics to `review/residual-routing.md`.
-
-Evidence: `dev/planning/vnext/A4_RESIDUAL_ROUTING_HARDENING.md`, `dev/planning/vnext/A5_DRAWING_LEAF_GAP_HARDENING.md`, `dev/planning/vnext/A6_STRUCTURAL_ORIENTATION_HARDENING.md`, `dev/planning/vnext/A7_STRUCTURAL_SPECIFICITY_INHERITANCE.md`, `dev/planning/vnext/A8_OCCLUSION_INFERENCE_BOUNDARY.md`, and `dev/tests/test_skill_surface_boundary.py`.
-
-## G5 — Fresh integrated validation — NEXT
-
-- [ ] D01 difficult observed croquis.
-- [ ] D02 observed figure / subject recognition.
-- [ ] D03 tonal study.
-- [ ] D04 observed free-draw.
-- [ ] D05 imaginative + hybrid.
+- [ ] D01 difficult observed croquis;
+- [ ] D02 observed figure / subject recognition;
+- [ ] D03 tonal study;
+- [ ] D04 observed free-draw;
+- [ ] D05 imaginative + hybrid;
 - [ ] D06 cross-agent reproducibility.
 
-`dev/planning/vnext/VALIDATION_RELEASE.md` owns these contracts. No D-case is considered passed by mechanical CI alone.
+`dev/planning/vnext/VALIDATION_RELEASE.md` owns these contracts. The Astra showcase is quality
+reference evidence for humans, never sealed worker input.
 
-## G6 — Release hardening
+## G6 — Later consolidation / legacy retirement
 
-- [ ] R01 consolidate repeated evidence-backed fixes.
-- [ ] R02 final representative regression.
-- [ ] R03 physical R23 retirement / bounded compatibility decision.
-- [ ] R04 release with claims limited to demonstrated evidence.
+- [ ] consolidate repeated evidence-backed fixes after fresh validation;
+- [ ] representative regression;
+- [ ] physical R23 retirement or explicit bounded migration-only adapter decision;
+- [ ] future release claims remain limited to demonstrated evidence.
 
 ## Current stopping rule
 
-Work on the highest-impact open gate in order unless new evidence disproves an earlier closed premise. Reopen the responsible gate narrowly instead of adding a workaround or a second workflow.
+Work on G4 first. Reopen an earlier gate only when new evidence disproves its premise. Do not add a
+parallel workflow, model-specific code path, or subject-specific answer template.

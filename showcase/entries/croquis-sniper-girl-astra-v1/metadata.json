@@ -1,0 +1,42 @@
+{
+  "schema": "img2drawing.showcase.entry.v1",
+  "title": "Observed Croquis — GPT-6 Astra",
+  "worker": "GPT-6 Astra",
+  "executed_package_version": "0.6.0rc2",
+  "stable_release_baseline": "1.0.0",
+  "instruction_revision": "A8",
+  "intent": {
+    "reference_mode": "observed",
+    "drawing_mode": "croquis",
+    "finish_intent": "subject",
+    "style": "pencil_loose"
+  },
+  "canvas": [1024, 1536],
+  "actions": {
+    "total": 490,
+    "stroke_add": 358,
+    "stroke_replace": 120,
+    "stroke_delete": 12,
+    "fill": 0
+  },
+  "replay": {
+    "canonical_frame_count": 124,
+    "every_n": 4,
+    "first_cursor": 0,
+    "last_cursor": 490,
+    "final_png_pixel_match": true,
+    "canonical_gif_final_max_channel_error": 1,
+    "showcase_gif": "compact 8-frame full-span preview for GitHub browsing; canonical replay remains 124 frames"
+  },
+  "artifacts": {
+    "ref-vs-drawing.jpg": {
+      "purpose": "human-facing reference versus final drawing comparison"
+    },
+    "timelapse.gif": {
+      "purpose": "compact end-to-end preview",
+      "sha256": "fcdb57f192a4bfcf1adcbe0252b9150d82ddacc2a1bdd1356b77c25629f15fd2"
+    }
+  },
+  "claim_boundary": "Curated capability evidence only; formal D01-D06 validation is not complete.",
+  "answer_template_policy": "Subject-specific scripts, coordinates, and control-point tables are intentionally excluded from the showcase and deployable skill."
+}
