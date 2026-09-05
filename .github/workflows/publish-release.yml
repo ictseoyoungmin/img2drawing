@@ -54,13 +54,7 @@ jobs:
             fi
 
             version_file="$package_dir/src/img2drawing/_version.py"
-            version="$(python - "$version_file" <<'PY'
-          import runpy
-          import sys
-
-          print(runpy.run_path(sys.argv[1])["__version__"])
-          PY
-            )"
+            version="$(python -c 'import runpy, sys; print(runpy.run_path(sys.argv[1])["__version__"])' "$version_file")"
             if [ "$tag" != "v$version" ]; then
               echo "Manifest tag $tag does not match package version $version" >&2
               exit 1
