@@ -31,3 +31,10 @@ def test_v1_featured_demo_links_resolve_to_committed_artifacts() -> None:
         assert "ref-vs-drawing.png" not in document
         assert "ref-vs-drawing.jpg" in document
         assert "timelapse.gif" in document
+
+
+def test_release_publisher_reads_version_without_importing_runtime() -> None:
+    workflow = (ROOT / ".github" / "workflows" / "publish-release.yml").read_text(encoding="utf-8")
+    assert "runpy.run_path" in workflow
+    assert "_version.py" in workflow
+    assert "import img2drawing" not in workflow
