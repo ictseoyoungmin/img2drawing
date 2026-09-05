@@ -15,20 +15,18 @@ The action history keeps every revision inspectable, resumable, and replayable. 
 human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
 an `examples/` tree until there are genuinely representative instructional examples.
 
-## Featured v1.0.0 demonstration
+**Featured v1.0.0 demonstration** — GPT-6 Astra completed a detailed observed croquis using
+explicit authored strokes only; the release baseline adds no subject-specific answer geometry from
+that run. The session contains 490 actions: 358 stroke additions, 120 replacements, 12 deletions,
+and **0 fill actions**, with a canonical replay final frame that exactly matches the final PNG.
+This is a curated capability result, not a claim that formal cross-agent/cross-subject validation
+is complete.
 
-GPT-6 Astra completed a detailed observed croquis using explicit authored strokes only. The
-release baseline adds no subject-specific answer geometry from that run.
+<a href="showcase/entries/croquis-sniper-girl-astra-v1/README.md"><img src="showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif" alt="End-to-end timelapse" width="320"></a>
 
 [![Reference versus Astra drawing](showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.jpg)](showcase/entries/croquis-sniper-girl-astra-v1/README.md)
 
-[View the end-to-end timelapse](showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif) ·
 [Read the v1.0.0 release notes](docs/releases/v1.0.0.md)
-
-The demonstrated session contains 490 actions: 358 stroke additions, 120 replacements, 12
-deletions, and **0 fill actions**. Its canonical replay final frame exactly matches the final PNG.
-This is a curated capability result, not a claim that formal cross-agent/cross-subject validation is
-complete.
 
 ## Why this exists
 

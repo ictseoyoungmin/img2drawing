@@ -26,15 +26,15 @@
     "last_cursor": 490,
     "final_png_pixel_match": true,
     "canonical_gif_final_max_channel_error": 1,
-    "showcase_gif": "compact 8-frame full-span preview for GitHub browsing; canonical replay remains 124 frames"
+    "showcase_gif": "raw canonical 124-frame replay, unmodified"
   },
   "artifacts": {
     "ref-vs-drawing.jpg": {
       "purpose": "human-facing reference versus final drawing comparison"
     },
     "timelapse.gif": {
-      "purpose": "compact end-to-end preview",
-      "sha256": "fcdb57f192a4bfcf1adcbe0252b9150d82ddacc2a1bdd1356b77c25629f15fd2"
+      "purpose": "canonical end-to-end replay (raw, all 124 frames)",
+      "sha256": "251842bf5240d2a357f8d290aba0815464ba86d7d9e4028958375a68e1c720ab"
     }
   },
   "claim_boundary": "Curated capability evidence only; formal D01-D06 validation is not complete.",
