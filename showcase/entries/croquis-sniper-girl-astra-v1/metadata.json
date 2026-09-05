@@ -26,14 +26,14 @@
     "last_cursor": 490,
     "final_png_pixel_match": true,
     "canonical_gif_final_max_channel_error": 1,
-    "showcase_gif": "all 124 sampled frames preserved; resized to 512x768 for browsing"
+    "showcase_gif": "all 124 sampled frames and source timing preserved; resized to 512x768 for browsing"
   },
   "artifacts": {
-    "ref-vs-drawing.png": {
-      "sha256": "0a100454c23f92b4f71549bb9780718f014000fc2e57bcd122b214ff8fc647a9"
+    "ref-vs-drawing.jpg": {
+      "sha256": "78d4324e5f98e504ab572ee6b39273b79d2729bb0a31d7c0e83bb309ccf5a80a"
     },
     "timelapse.gif": {
-      "sha256": "26dcb86f80070db0d395a59fd62d81664e0becc219bc35be42e29921201f426c"
+      "sha256": "a039f44400f20ed47b7a1baec56283183314313fea8abdb513bc6ef13c5c005b"
     }
   },
   "claim_boundary": "Curated capability evidence only; formal D01-D06 validation is not complete.",
