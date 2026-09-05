@@ -1,1 +1,0 @@
-The repository timelapse asset is generated from the canonical end-to-end replay and linked by the showcase entry.
