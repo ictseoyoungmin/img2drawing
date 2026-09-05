@@ -20,7 +20,7 @@ an `examples/` tree until there are genuinely representative instructional examp
 GPT-6 Astra completed a detailed observed croquis using explicit authored strokes only. The
 release baseline adds no subject-specific answer geometry from that run.
 
-[![Reference versus Astra drawing](showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.png)](showcase/entries/croquis-sniper-girl-astra-v1/README.md)
+[![Reference versus Astra drawing](showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.jpg)](showcase/entries/croquis-sniper-girl-astra-v1/README.md)
 
 [View the end-to-end timelapse](showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif) ·
 [Read the v1.0.0 release notes](docs/releases/v1.0.0.md)
