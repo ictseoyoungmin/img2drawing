@@ -1,6 +1,6 @@
-__version__ = "1.0.0"
-RELEASE_REVISION = "A8"
-RELEASE_SLICE = "v1.0.0_stable_demo_baseline"
+__version__ = "1.0.1"
+RELEASE_REVISION = "A9"
+RELEASE_SLICE = "v1.0.1_astra_authoring_absorption"
 
 _BASE_VERSION = __version__.split("rc")[0]
 PUBLIC_API = f"DrawingSession/{_BASE_VERSION}-vnext"
