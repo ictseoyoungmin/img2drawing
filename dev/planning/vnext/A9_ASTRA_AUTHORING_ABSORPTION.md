@@ -43,6 +43,11 @@ Derived pressure is regenerated when the tool is retuned so changes to taper/pre
 effect. Existing action metadata, including authored control-point/interpolation notes when
 present, is carried forward. No new persistence action or schema is introduced.
 
+`img2drawing.vnext.retune_strokes()` applies the same contract to one coherent group. It resolves
+all current descendants before the first edit, rejects duplicate current strokes, and still emits
+one ordinary explicit replacement action per member. This absorbs the repeated 111-stroke material
+correction pattern without inventing a persisted batch action or semantic-group lifecycle.
+
 ### Shared Catmull-Rom sampling
 
 `img2drawing.vnext.sample_catmull_rom()` provides deterministic curve sampling with approximate
@@ -75,7 +80,7 @@ Curve smoothness follows observed topology rather than a preference for splines.
 - automatic likeness, quality, or completion scoring;
 - model-name checks or an Astra-specific runtime path;
 - semantic-group lifecycle state or stage gates;
-- a new persisted action kind for retuning.
+- a new persisted action kind for retuning or grouping.
 
 ## Contract effect
 
@@ -87,17 +92,18 @@ Curve smoothness follows observed topology rather than a preference for splines.
 - persisted schemas: unchanged
 - canonical `RenderProfile`: unchanged
 - R23 checkpoint compatibility: unchanged
-- specialized `img2drawing.vnext` surface: adds `retune_stroke` and `sample_catmull_rom`
+- specialized `img2drawing.vnext` surface: adds `retune_stroke`, `retune_strokes`, and `sample_catmull_rom`
 - tool preset registry: adds `continuous_pencil`
 
 ## Validation
 
 Mechanical regression covers:
 
-- exact point preservation through `retune_stroke()`;
+- exact point preservation through individual and grouped retuning;
 - stable stroke identity, role, part, confidence, layer, and metadata;
 - explicit-pressure preservation and derived-pressure regeneration;
 - checkpoint/resume parity after a retune;
+- explicit per-stroke action history for a grouped retune;
 - unchanged `form_pencil` behavior alongside the low-taper preset;
 - deterministic shared curve sampling;
 - no widening of the canonical package-root API.
