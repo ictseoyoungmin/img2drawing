@@ -3,7 +3,7 @@
 This entry records the high-capability demonstration used to promote the A8-aligned
 img2drawing system to the first stable release baseline.
 
-![Reference versus drawing](ref-vs-drawing.png)
+![Reference versus drawing](ref-vs-drawing.jpg)
 
 ## End-to-end process
 
