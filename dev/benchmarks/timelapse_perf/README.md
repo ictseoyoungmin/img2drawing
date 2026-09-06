@@ -65,3 +65,37 @@ PYTHONPATH=src pytest -q dev/benchmarks/timelapse_perf/test_duplicate_work.py
 The expensive ss4 wall-time benchmark should remain a manual/performance job rather than a normal per-commit CI requirement.
 
 S02 must not begin unless S00 parity is green and S01 confirms material duplicate work.
+
+## S02 stroke-raster cache prototype
+
+S02 keeps the production renderer untouched and prototypes deterministic reuse of the expensive
+per-stroke `pillow-pencil-contact-v9` material result:
+
+```bash
+PYTHONPATH=src python dev/benchmarks/timelapse_perf/run_s02_cache.py \
+  --out /tmp/img2drawing-s02 \
+  --supersample 4 --every-n 4 --gif
+```
+
+For an exact compact A/B including every frame and the current independent-final render contract:
+
+```bash
+PYTHONPATH=src python dev/benchmarks/timelapse_perf/run_s02_cache.py \
+  --out /tmp/img2drawing-s02-ss2 \
+  --supersample 2 --every-n 4 --baseline --gif
+```
+
+The cache stores the final **8-bit paper/grain/contact alpha mask** for each distinct stroke content
+and renderer/profile state, not a four-channel RGBA tile. Graphite RGB is reattached during
+composition. This cut the representative ss4 cache footprint from about 57 MB for the naive RGBA
+prototype to about 14 MB while preserving exact pixels.
+
+S02 still rebuilds the high-resolution canvas for every sampled frame. That is deliberate: canvas
+state reuse / dirty-region composition is S04+. The prototype therefore isolates the value of
+avoiding repeated materialization from later compositor work.
+
+Fast regression:
+
+```bash
+PYTHONPATH=src pytest -q dev/benchmarks/timelapse_perf/test_s02_cache.py
+```
