@@ -1,0 +1,1 @@
+Frame-I/O measurements use 41 real 941×1672 Lucy prefix-160 PNG frames produced by the exact S03 path. The benchmark intentionally measures byte hashing, pixel hashing, PNG compression, tiny per-frame JSON writes, and GIF encoding separately. The result is evidence for bottleneck selection only; no frame encoder/runtime code changes are part of S05.
