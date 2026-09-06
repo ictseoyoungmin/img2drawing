@@ -1,0 +1,38 @@
+{
+  "schema": "img2drawing.timelapse_s07_memory_compaction.v1",
+  "lucy": {
+    "resolution": [941, 1672],
+    "supersample": 4,
+    "actions": 546,
+    "frames": 138,
+    "every_n": 4,
+    "all_frame_pixel_parity_with_s06": true,
+    "final_pixel_sha256": "ef1baa6e78ceb0adf0ec44fbcde2fd96788e1ab05de56128fd2c14ab8fe54dd0",
+    "wall_s_s06_recheck": 24.1,
+    "wall_s_s07_time_v": 23.32,
+    "compute_wall_s_s06_reference": 21.44559651200052,
+    "compute_wall_s_s07": 22.010303043999556,
+    "max_rss_kb_s06": 493032,
+    "max_rss_kb_s07": 408052,
+    "max_rss_reduction_pct": 17.236203735254506,
+    "s06_persistent_raster_estimate_bytes": 185965657,
+    "s07_live_raster_estimate_bytes": 77196442,
+    "persistent_raster_reduction_pct": 58.48887195338438,
+    "s06_rgba_hi_canvas_bytes": 100694528,
+    "s07_alpha_hi_canvas_bytes": 25173632,
+    "hi_canvas_reduction_pct": 75.0,
+    "s06_historical_mask_cache_bytes": 78977721,
+    "s07_active_material_bytes_final": 45729402,
+    "s07_peak_active_material_bytes": 45729402,
+    "released_historical_masks": 149,
+    "materializations": 541,
+    "materialize_s": 19.087172747003024
+  },
+  "tile_occupancy_final_bounds": {
+    "128": {"touched": 866, "total": 1590, "coverage": 0.5446540880503145, "allocated_bytes_if_dense_tiles": 14188544},
+    "256": {"touched": 231, "total": 405, "coverage": 0.5703703703703704, "allocated_bytes_if_dense_tiles": 15138816},
+    "512": {"touched": 68, "total": 112, "coverage": 0.6071428571428571, "allocated_bytes_if_dense_tiles": 17825792},
+    "1024": {"touched": 22, "total": 28, "coverage": 0.7857142857142857, "allocated_bytes_if_dense_tiles": 23068672}
+  },
+  "decision": "Accept alpha-only persistent canvas plus active-only material ownership. Defer sparse tile backing: it saves only about 7-11 MB on Lucy while adding region assembly complexity, and peak RSS is now dominated by transient materialization arrays rather than the persistent canvas."
+}
