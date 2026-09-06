@@ -1,0 +1,39 @@
+{
+  "schema": "img2drawing.timelapse_s06_summary.v1",
+  "lucy": {
+    "resolution": [941, 1672],
+    "supersample": 4,
+    "actions": 546,
+    "every_n": 4,
+    "frames": 138,
+    "action_mix": {"stroke.add": 397, "stroke.replace": 144, "stroke.delete": 5},
+    "wall_s": 21.44559651200052,
+    "traversal_s": 0.14885305299867468,
+    "advance_s": 18.982032351997077,
+    "snapshot_update_s": 1.585796167000808,
+    "materialize_s": 18.380400398995334,
+    "material_cache_entries": 541,
+    "material_cache_bytes": 78977721,
+    "persistent_canvas_bytes": 100694528,
+    "dirty_output_pixels": 4713996,
+    "rebuilt_regions": 71,
+    "recomposited_strokes": 1652,
+    "final_pixel_sha256": "ef1baa6e78ceb0adf0ec44fbcde2fd96788e1ab05de56128fd2c14ab8fe54dd0",
+    "canonical_final_pixel_parity": true
+  },
+  "selected_edit_frame_parity": {
+    "cursors": [392, 396, 400, 448, 540, 544, 546],
+    "all_full_recomposition_pixel_parity": true,
+    "cursor_396_production_renderer_pixel_parity": true,
+    "cursor_546_known_canonical_final_pixel_parity": true
+  },
+  "streaming_proof": {
+    "sampled_frames": 138,
+    "encoded_frames_with_final_hold": 145,
+    "resolution": [941, 1672],
+    "wall_s": 22.086387540000032,
+    "final_pixel_parity": true,
+    "note": "Local evidence encoder only; not the canonical exporter implementation."
+  },
+  "decision": "Accept edit-aware dirty-region recomposition as S06 dev evidence; production integration remains deferred until memory, eraser/segment semantics, and canonical frame delivery are closed."
+}
