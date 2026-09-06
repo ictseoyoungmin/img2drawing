@@ -1,0 +1,44 @@
+{
+  "schema": "img2drawing.timelapse_s04_summary.v1",
+  "representative": {
+    "resolution": [1024, 1536],
+    "supersample": 4,
+    "actions": 48,
+    "every_n": 4,
+    "frames": 13,
+    "s02_full_recompose_wall_s": 14.497049262001383,
+    "s04_incremental_dirty_wall_including_gif_s": 8.016281808000713,
+    "gif_encode_s": 1.1392209099994943,
+    "advance_s": 5.604675167000096,
+    "dirty_snapshot_s": 0.8934100120004587,
+    "speedup_vs_s02_render_path": 2.1080297931075287,
+    "speedup_vs_s00_canonical_wall": 7.168173646621243,
+    "dirty_output_pixels": 965084,
+    "full_output_pixels_if_every_frame": 20447232,
+    "dirty_fraction": 0.04719876020382612,
+    "all_frames_pixel_identical_to_s02": true,
+    "final_pixel_identical": true,
+    "persistent_canvas_bytes": 100663296,
+    "maxrss_kb": 420808
+  },
+  "lucy_add_only_prefix": {
+    "first_non_add_action": 394,
+    "prefix80": {
+      "frames": 21,
+      "wall_s": 17.761474786999315,
+      "materialize_s": 14.254814785006602,
+      "snapshot_s": 2.5600657159975526,
+      "dirty_fraction": 0.1061311863370144
+    },
+    "prefix160": {
+      "frames": 41,
+      "wall_s": 21.574301059999925,
+      "materialize_s": 15.11894730998938,
+      "snapshot_s": 4.143905504999566,
+      "dirty_fraction": 0.07028221182328262,
+      "parity": {"0": true, "80": true, "160": true}
+    },
+    "bounded_prefix393_attempt": "exceeded 120 s at cursor 304/393; no closure claim from this run"
+  },
+  "decision": "S04 dirty-resample premise passes; full-frame resampling was a real post-S02 bottleneck. Production integration remains deferred because persistent ss4 canvas memory is high and Lucy now exposes unique-stroke materialization as the next major cost. Re-open S03 paper/material caching before edit invalidation."
+}
