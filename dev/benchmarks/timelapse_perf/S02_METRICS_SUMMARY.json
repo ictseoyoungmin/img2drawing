@@ -1,0 +1,38 @@
+{
+  "schema": "img2drawing.timelapse_s02_summary.v1",
+  "representative": {
+    "resolution": [1024, 1536],
+    "supersample": 4,
+    "actions": 48,
+    "every_n": 4,
+    "sampled_frames": 13,
+    "full_render_calls_current_shape": 14,
+    "material_passes_requested": 360,
+    "cache_entries": 48,
+    "cache_hits": 312,
+    "cache_misses": 48,
+    "cache_hit_rate": 0.8666666666666667,
+    "mask_cache_bytes": 14293878,
+    "cached_sampled_frame_render_s": 13.705149967998295,
+    "cached_independent_final_render_s": 0.6462587930000154,
+    "cached_gif_encode_s": 1.216020034000394,
+    "cached_wall_s": 15.934496948999367,
+    "frozen_s00_canonical_wall_mean_s": 57.4621,
+    "speedup_vs_frozen_s00_wall": 3.606096168609,
+    "final_png_sha256": "22a6b132a193f1b2b69f16488003e609024f70d68bf07af5520006f0d633def4",
+    "final_rgba_pixel_sha256": "63f8cdee6023b0eeae5cff2ccfbb108cd41ae12cd61f29a1ac3a0bcbafb80c0f"
+  },
+  "lucy_546_projection": {
+    "resolution": [941, 1672],
+    "supersample": 4,
+    "actions": 546,
+    "sampled_frames": 138,
+    "passes_including_independent_final": 35116,
+    "distinct_cacheable_stroke_versions": 541,
+    "cache_hits": 34575,
+    "cache_hit_rate": 0.9845939173026541,
+    "mask_cache_bytes_if_all_variants": 78977721,
+    "naive_rgba_cache_bytes_if_all_variants": 315910884
+  },
+  "decision": "S02 premise passes; proceed to incremental compositor before production integration."
+}
