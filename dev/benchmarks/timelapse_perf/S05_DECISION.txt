@@ -1,0 +1,1 @@
+Decision: carry forward exact forward-only history traversal and zero-copy sampled IR views. Treat PNG compression, GIF encode, and pixel hashing as the next artifact-side costs. Per-frame JSON writes are not a speed bottleneck. Production runtime remains unchanged in S05.
