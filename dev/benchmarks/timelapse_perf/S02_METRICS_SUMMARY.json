@@ -18,7 +18,7 @@
     "cached_gif_encode_s": 1.216020034000394,
     "cached_wall_s": 15.934496948999367,
     "frozen_s00_canonical_wall_mean_s": 57.4621,
-    "speedup_vs_frozen_s00_wall": 3.606096168609,
+    "speedup_vs_frozen_s00_wall": 3.6061445920706285,
     "final_png_sha256": "22a6b132a193f1b2b69f16488003e609024f70d68bf07af5520006f0d633def4",
     "final_rgba_pixel_sha256": "63f8cdee6023b0eeae5cff2ccfbb108cd41ae12cd61f29a1ac3a0bcbafb80c0f"
   },
