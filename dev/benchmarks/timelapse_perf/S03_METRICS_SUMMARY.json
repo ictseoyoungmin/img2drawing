@@ -1,0 +1,47 @@
+{
+  "schema": "img2drawing.timelapse_s03_summary.v1",
+  "profile": {
+    "lucy_resolution": [941, 1672],
+    "supersample": 4,
+    "active_strokes_at_cursor_546": 392,
+    "profiled_material_s": 17.366692385998817,
+    "grain_mod_s": 5.618273489999808,
+    "paper_mod_s": 10.073364403999449,
+    "grain_plus_paper_share": 0.903547868830221,
+    "paper_field_s": 9.757197890999237,
+    "paper_field_share_of_paper_mod": 0.9686136130571545
+  },
+  "representative": {
+    "resolution": [1024, 1536],
+    "supersample": 4,
+    "actions": 48,
+    "every_n": 4,
+    "frames": 13,
+    "s04_wall_s": 7.442683078000073,
+    "s03_kernel_wall_s": 5.3480886080001255,
+    "s04_materialize_s": 5.012238299999126,
+    "s03_kernel_materialize_s": 2.8430045359989435,
+    "wall_speedup": 1.3916529106991,
+    "materialize_speedup": 1.7630074931406963,
+    "all_frame_pixel_parity": true,
+    "mask_cache_bytes": 14293878
+  },
+  "lucy_prefix_160": {
+    "frames": 41,
+    "s04_wall_s": 21.574301059999925,
+    "s03_kernel_wall_s": 15.007344052999997,
+    "s04_materialize_s": 15.11894730998938,
+    "s03_kernel_materialize_s": 7.769986007999819,
+    "wall_speedup": 1.4375828916701074,
+    "materialize_speedup": 1.9458139685738456,
+    "all_41_frame_pixel_parity": true
+  },
+  "lucy_final_active_material": {
+    "active_strokes": 392,
+    "baseline_s": 17.205846528999928,
+    "kernel_s": 10.125743768999996,
+    "speedup": 1.6992180447697771,
+    "all_mask_pixel_parity": true
+  },
+  "decision": "Accept exact separable field kernels as S03 dev evidence; reject large page-tile cache as default; keep production integration deferred."
+}

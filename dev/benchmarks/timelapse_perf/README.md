@@ -128,3 +128,31 @@ runtime. The representative result is 8.0163 s including GIF encode versus 14.49
 full recomposition and 57.4621 s for the frozen S00 canonical baseline, with all 13 frame pixel
 hashes identical. See `S04_INCREMENTAL_DIRTY_COMPOSITOR.md` for the real Lucy-prefix evidence and
 remaining memory/materialization bottlenecks.
+
+## S03 exact material-field kernel prototype
+
+After S04, first-time grain/paper materialization became the largest measured add-only cost. S03
+profiles that cost and narrows the original paper-tile-cache idea: a large persistent page-field
+cache is workload-sensitive and memory-heavy, so the accepted prototype instead computes the same
+deterministic value-noise fields from separable 1-D coordinate bases plus broadcasting.
+
+Representative ss4 A/B:
+
+```bash
+PYTHONPATH=src python dev/benchmarks/timelapse_perf/run_s03_material_kernel.py \
+  --out /tmp/img2drawing-s03 \
+  --supersample 4 --every-n 4 --gif
+```
+
+Fast exact regression:
+
+```bash
+PYTHONPATH=src pytest -q dev/benchmarks/timelapse_perf/test_s03_material_kernel.py
+```
+
+The accepted S03 kernel adds no persistent page-field cache, preserves exact grain/paper equations,
+and leaves all representative and Lucy-prefix pixels unchanged. On a fresh representative run it
+reduced first-time materialization from 5.0122 s to 2.8430 s and total replay+GIF wall time from
+7.4427 s to 5.3481 s. Lucy prefix 160 materialization dropped from 15.1189 s to 7.7700 s with all
+41 frames pixel-identical to S04. See `S03_MATERIAL_FIELD_KERNEL.md` for the cache-hypothesis reopen,
+final-active Lucy evidence, and the next bottleneck boundary.
