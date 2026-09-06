@@ -1,0 +1,32 @@
+{
+  "schema": "img2drawing.s08.edit_semantics.v1",
+  "semantic_frames": {
+    "count": 6,
+    "exact": 6,
+    "rows": [
+      {"index": 0, "operation": "initial", "exact": true, "fast_hash": "f6cd54d72390bd6012e6f7d51fc75a847f8ce9fde34dc0c3c414e2ee131d8db5", "production_hash": "f6cd54d72390bd6012e6f7d51fc75a847f8ce9fde34dc0c3c414e2ee131d8db5", "delta": {"added": 3, "changed": 0, "removed": 0, "regions": 1}},
+      {"index": 1, "operation": "replace_segment", "exact": true, "fast_hash": "a5f71ffd446fa984bfae8443e88700b2e63f9f0a651655fb915aa2421fc3658f", "production_hash": "a5f71ffd446fa984bfae8443e88700b2e63f9f0a651655fb915aa2421fc3658f", "delta": {"added": 0, "changed": 1, "removed": 0, "regions": 1}},
+      {"index": 2, "operation": "soft_lift_segment(core)", "exact": true, "fast_hash": "c75e3ad00bb6645d01d3e7f6bc3bc6b77cc4404b6d427676d4dba81fb70fe39c", "production_hash": "c75e3ad00bb6645d01d3e7f6bc3bc6b77cc4404b6d427676d4dba81fb70fe39c", "delta": {"added": 0, "changed": 1, "removed": 0, "regions": 1}},
+      {"index": 3, "operation": "soft_lift", "exact": true, "fast_hash": "e414836af24bd77d78bf3e6138600626f3135dc772eec4b4f439bd3af99fa465", "production_hash": "e414836af24bd77d78bf3e6138600626f3135dc772eec4b4f439bd3af99fa465", "delta": {"added": 0, "changed": 1, "removed": 0, "regions": 1}},
+      {"index": 4, "operation": "retune_stroke->stroke.replace", "exact": true, "fast_hash": "2c513cdb48d5d2da6b51088a27c8e56cd33027692f4195fb113d068a07dc3e5d", "production_hash": "2c513cdb48d5d2da6b51088a27c8e56cd33027692f4195fb113d068a07dc3e5d", "delta": {"added": 0, "changed": 1, "removed": 0, "regions": 1}},
+      {"index": 5, "operation": "delete_stroke", "exact": true, "fast_hash": "dc5e6d26c4ec2579f0e54c352c022a1b1534ccf6be7012f3c4ebc807133f22eb", "production_hash": "dc5e6d26c4ec2579f0e54c352c022a1b1534ccf6be7012f3c4ebc807133f22eb", "delta": {"added": 0, "changed": 0, "removed": 1, "regions": 1}}
+    ]
+  },
+  "retune_geometry_preserved": true,
+  "history_tail": ["stroke.segment_replace", "stroke.segment_soft_lift", "stroke.soft_lift", "stroke.replace", "stroke.delete"],
+  "vnext_has_soft_lift_segment_helper": false,
+  "raw_spatial_eraser": {
+    "recognized_by_product_renderer": true,
+    "changes_pixels": true,
+    "fast_path_rejected": true,
+    "public_vnext_draw_rejected": true
+  },
+  "decision": {
+    "replace_segment": "incremental same-id content mutation",
+    "soft_lift_segment": "incremental same-id pressure mutation; core/history supported",
+    "soft_lift": "incremental same-id opacity mutation",
+    "retune_stroke": "incremental existing stroke.replace path",
+    "delete_stroke": "incremental removal",
+    "raw_spatial_eraser": "compatibility fallback to canonical full renderer"
+  }
+}
