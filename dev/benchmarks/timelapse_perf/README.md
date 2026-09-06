@@ -99,3 +99,32 @@ Fast regression:
 ```bash
 PYTHONPATH=src pytest -q dev/benchmarks/timelapse_perf/test_s02_cache.py
 ```
+
+## S04 incremental dirty-region compositor prototype
+
+S04 keeps S02's exact 8-bit material cache and adds a persistent supersampled graphite canvas. The
+first version only reused that high-resolution canvas and still performed a full 4x→1x resize for
+every frame; it showed essentially no speedup over S02. The reopened S04 therefore updates only the
+native-resolution rectangle influenced by newly added high-resolution marks, with aligned Lanczos
+halos to preserve exact pixels.
+
+Representative ss4 A/B:
+
+```bash
+PYTHONPATH=src python dev/benchmarks/timelapse_perf/run_s04_incremental.py \
+  --out /tmp/img2drawing-s04 \
+  --supersample 4 --every-n 4 --s02-baseline --gif
+```
+
+Fast exact regression:
+
+```bash
+PYTHONPATH=src pytest -q dev/benchmarks/timelapse_perf/test_s04_incremental.py
+```
+
+S04 is add-only and fails closed when the requested IR is not an append-only extension. It does not
+implement replace/delete/soft-lift invalidation and remains a dev prototype rather than production
+runtime. The representative result is 8.0163 s including GIF encode versus 14.4970 s for S02 cached
+full recomposition and 57.4621 s for the frozen S00 canonical baseline, with all 13 frame pixel
+hashes identical. See `S04_INCREMENTAL_DIRTY_COMPOSITOR.md` for the real Lucy-prefix evidence and
+remaining memory/materialization bottlenecks.
