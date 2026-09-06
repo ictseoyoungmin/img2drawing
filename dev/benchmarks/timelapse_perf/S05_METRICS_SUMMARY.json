@@ -1,0 +1,26 @@
+{
+  "schema": "img2drawing.timelapse_s05_summary.v1",
+  "lucy_replay_traversal": {
+    "actions": 546,
+    "frames": 138,
+    "every_n": 4,
+    "state_at_every_frame_s": 12.377565752999999,
+    "forward_zero_copy_s": 0.12757812300014848,
+    "speedup": 97.01950038084189,
+    "sampled_state_parity_frames": 138,
+    "all_sampled_state_parity": true
+  },
+  "lucy_prefix160_frame_io": {
+    "resolution": [941, 1672],
+    "frames": 41,
+    "png_bytes_total": 9408776,
+    "byte_hash_s": 0.007053202999941277,
+    "pixel_hash_s": 1.1105864340001972,
+    "png_save_s": 2.398886253998171,
+    "per_frame_json_write_s": 0.0018470590002834797,
+    "gif_encode_s": 3.825669856999866,
+    "measured_artifact_work_s": 7.344042806998459,
+    "gif_bytes": 3529050
+  },
+  "decision": "Accept forward history traversal as the next exact replay primitive; frame PNG compression/GIF encode/pixel hashing are the next non-render artifact costs; per-frame JSON writes are not a speed bottleneck."
+}
