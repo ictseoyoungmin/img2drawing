@@ -1,0 +1,26 @@
+{
+  "schema": "img2drawing.timelapse_s09_resume.v1",
+  "local_regression": {
+    "tests": 2,
+    "passed": 2,
+    "sampling": "every_n=2",
+    "forced_interrupt_after_frames": 3,
+    "corrupt_tail_injected": true,
+    "resume_truncation_passed": true,
+    "resumed_vs_uninterrupted_decoded_frames_equal": true,
+    "resumed_vs_uninterrupted_gif_bytes_equal": true,
+    "final_native_frame_parity": true,
+    "final_rename_recovery_passed": true,
+    "sampling_mismatch_rejected": true
+  },
+  "writer_contract": {
+    "per_frame_png_spool": false,
+    "one_staging_png": true,
+    "gif_fsync_per_committed_frame": true,
+    "journal_fsync_per_committed_frame": true,
+    "atomic_checkpoint": true,
+    "delta_bbox_supported": true,
+    "global_palette": true
+  },
+  "scope": "Writer/checkpoint production integration. S02-S08 exact incremental renderer remains the next renderer-side integration behind this stable writer contract."
+}
