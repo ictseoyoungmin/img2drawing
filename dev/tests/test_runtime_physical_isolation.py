@@ -72,41 +72,27 @@ print(json.dumps({
     assert payload["historical_registration_loaded"] is False
 
 
-def test_r23_boundary_activates_only_requested_historical_capability() -> None:
+def test_retired_legacy_namespace_is_not_installable_or_root_reachable() -> None:
     payload = _fresh_python(
         """
-import json, sys
-import img2drawing.legacy.r23 as r23
-roots = (
-    'img2drawing.run', 'img2drawing.stages', 'img2drawing.exemplar',
-    'img2drawing.review', 'img2drawing.registration',
-)
-def loaded(root):
-    return any(name == root or name.startswith(root + '.') for name in sys.modules)
-before = {root: loaded(root) for root in roots}
-DrawingRun = r23.DrawingRun
-after_run = {root: loaded(root) for root in roots}
-EnvelopeStation = r23.EnvelopeStation
-after_registration = {root: loaded(root) for root in roots}
+import json, importlib.util, img2drawing, sys
+legacy_spec = importlib.util.find_spec('img2drawing.legacy')
+try:
+    img2drawing.DrawingRun
+except AttributeError:
+    drawing_run = 'absent'
+else:
+    drawing_run = 'present'
 print(json.dumps({
-    'before': before,
-    'after_run': after_run,
-    'after_registration': after_registration,
-    'drawing_run_module': DrawingRun.__module__,
-    'envelope_station_module': EnvelopeStation.__module__,
+    'legacy_spec': None if legacy_spec is None else legacy_spec.name,
+    'drawing_run': drawing_run,
+    'legacy_loaded': any(name == 'img2drawing.legacy' or name.startswith('img2drawing.legacy.') for name in sys.modules),
 }))
 """
     )
-    assert not any(payload["before"].values())
-    assert payload["drawing_run_module"] == "img2drawing.run"
-    assert payload["after_run"]["img2drawing.run"] is True
-    assert payload["after_run"]["img2drawing.stages"] is True
-    assert payload["after_run"]["img2drawing.exemplar"] is True
-    assert payload["after_run"]["img2drawing.review"] is True
-    # Historical registration remains demand-loaded even after DrawingRun is resolved.
-    assert payload["after_run"]["img2drawing.registration"] is False
-    assert str(payload["envelope_station_module"]).startswith("img2drawing.registration")
-    assert payload["after_registration"]["img2drawing.registration"] is True
+    assert payload["legacy_spec"] is None
+    assert payload["drawing_run"] == "absent"
+    assert payload["legacy_loaded"] is False
 
 
 def test_canonical_session_source_has_no_direct_legacy_cluster_imports() -> None:
