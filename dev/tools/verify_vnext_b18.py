@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Verify the B18 dogfood-ready contract freeze without running visual dogfood."""
+"""Verify the B18 dogfood-ready contract freeze without running visual dogfood.
+
+The v1.0.2 freeze is immutable historical evidence. Post-release source cleanup may retire
+compatibility-only modules that the freeze records, but it must not rewrite what shipped.
+"""
 
 from __future__ import annotations
 
@@ -91,6 +95,9 @@ def check_contract_snapshot() -> None:
     assert frozen["drawing_session_members"] == _public_members(DrawingSession)
     assert img2drawing.DrawingSession is DrawingSession
     assert img2drawing.VNextDrawingSession is DrawingSession
+
+    # Historical v1.0.2 ownership remains frozen exactly as shipped. The legacy namespace
+    # recorded here is not required to remain in the mutable post-release source tree.
     assert frozen["ownership"] == {
         "session": f"{DrawingSession.__module__}.{DrawingSession.__name__}",
         "history": f"{CanvasHistory.__module__}.{CanvasHistory.__name__}",
@@ -153,10 +160,19 @@ def check_contract_snapshot() -> None:
     profile.pop("canvas_height")
     assert frozen["canonical_render_profile"] == profile
 
-    from img2drawing.legacy.r23 import LEGACY_CHECKPOINT_SCHEMAS, LEGACY_EXPORTS
-
-    assert frozen["legacy_checkpoint_schemas"] == list(LEGACY_CHECKPOINT_SCHEMAS)
-    assert not set(img2drawing.__all__).intersection(LEGACY_EXPORTS)
+    assert frozen["legacy_checkpoint_schemas"] == [
+        "img2drawing.run_checkpoint.v1",
+        "img2drawing.run_checkpoint.v2",
+        "img2drawing.run_checkpoint.v3",
+    ]
+    assert not (SOURCE / "legacy").exists()
+    for retired_name in ("DrawingRun", "StageContract", "RegistrationGraph"):
+        try:
+            getattr(img2drawing, retired_name)
+        except AttributeError:
+            pass
+        else:
+            raise AssertionError(f"retired R23 root name still resolves: {retired_name}")
 
 
 def check_planning_and_completeness() -> None:
@@ -308,6 +324,7 @@ def check_package_boundary() -> None:
         assert not (PACKAGE / forbidden).exists(), forbidden
     assert not (PACKAGE / "playbooks").exists()
     assert not (PACKAGE / "references" / "stages").exists()
+    assert not (SOURCE / "legacy").exists()
     assert FREEZE.is_file()
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     assert "verify_vnext_b18.py" in workflow
