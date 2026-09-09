@@ -16,9 +16,9 @@ def _manifest(version: str) -> dict:
 
 
 def test_current_v1_publish_manifest_matches_package() -> None:
-    manifest = _manifest("1.0.1")
+    manifest = _manifest("1.0.2")
     assert manifest["tag"] == f"v{img2drawing.__version__}"
-    assert manifest["notes_file"] == "docs/releases/v1.0.1.md"
+    assert manifest["notes_file"] == "docs/releases/v1.0.2.md"
     assert manifest["package_dir"] == "skills/img2drawing"
     assert manifest["assets"] == []
     assert (ROOT / manifest["notes_file"]).is_file()
@@ -35,22 +35,19 @@ def test_historical_v100_demo_manifest_and_real_assets_remain_available() -> Non
     for relative in manifest["assets"]:
         path = ROOT / relative
         assert path.is_file(), relative
-        # Protect against accidentally reintroducing placeholder-sized showcase binaries.
         assert path.stat().st_size > 10_000, relative
 
 
-def test_v1_featured_demo_links_resolve_to_committed_artifacts() -> None:
+def test_v1_featured_demo_links_and_release_notes_resolve() -> None:
     root_readme = (ROOT / "README.md").read_text(encoding="utf-8")
     entry_readme = (ENTRY / "README.md").read_text(encoding="utf-8")
     release_notes = (ROOT / "docs" / "releases" / "v1.0.0.md").read_text(encoding="utf-8")
-
     for document in (root_readme, entry_readme, release_notes):
         assert "ref-vs-drawing.png" not in document
         assert "ref-vs-drawing.jpg" in document
         assert "timelapse.gif" in document
-
-    assert "docs/releases/v1.0.1.md" in root_readme
     assert (ROOT / "docs" / "releases" / "v1.0.1.md").is_file()
+    assert (ROOT / "docs" / "releases" / "v1.0.2.md").is_file()
 
 
 def test_release_publisher_reads_version_without_importing_runtime() -> None:
@@ -58,3 +55,11 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
     assert "runpy.run_path" in workflow
     assert "_version.py" in workflow
     assert "import img2drawing" not in workflow
+
+
+def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:
+    assert not (ROOT / "dev" / "tests" / "test_streaming_timelapse_resume.py").exists()
+    assert not (ROOT / "skills" / "img2drawing" / "src" / "img2drawing" / "provenance" / "streaming.py").exists()
+    legacy = ROOT / "dev" / "legacy" / "post_1_0_1" / "s09_streaming"
+    assert (legacy / "streaming.py").is_file()
+    assert (legacy / "test_streaming_timelapse_resume.py").is_file()

@@ -1,20 +1,28 @@
 # Render profile and replay
 
-Final output and process replay must depict the same authored drawing with the same
-persisted rendering contract.
+Final output and process replay must depict the same authored drawing with the same persisted
+rendering contract.
 
-Use the public session output operations for:
-- final PNG rendering;
-- rendering at an earlier history cursor;
-- timelapse export.
+Use the public session output operations for final PNG rendering, cursor rendering, and timelapse
+export. Do not switch pressure behavior, supersampling, paper/material parameters, or renderer
+identity merely to make one artifact look better.
 
-Do not switch renderers, pressure behavior, supersampling, or material parameters between
-the final PNG and replay merely to make one artifact look better.
+## v1.0.2 replay execution
 
-Replay must be end-to-end: include the initial state and the latest authored action. Frame
-sampling may be reduced for file size, but it must not cut away the beginning or final
-state. Value/fill actions should replay as authored actions rather than exploding into
-synthetic micro-steps.
+`DrawingSession.export_timelapse()` uses the local-first exact incremental backend by default for
+supported stroke histories. The fast engine must consume the bound `RenderProfile`, including
+paper tooth/scale/seed, and its lossless final frame must match an independently rendered canonical
+final RGB exactly.
 
-A migrated or resumed session should retain the same render profile before canonical
-output is produced.
+Unsupported action semantics, raw ordered spatial erasers, or an unavailable fast encoder must
+fail closed to the preserved canonical exporter for the whole replay. Do not combine canonical and
+fast frame semantics inside one export.
+
+The fast backend stores changing RGB rectangles in an atomic delta-frame pack and does not need to
+materialize one PNG per frame. Frame PNG materialization is explicit/optional. Persistent patch and
+palette caches are disposable acceleration state, never drawing authority.
+
+Replay remains end-to-end: sampling must include cursor 0 and the latest authored cursor. Reducing
+frame sampling is allowed, but must not remove the beginning or final state. Region/fill actions
+that are not part of the fast semantic surface replay through the canonical fallback as authored
+actions rather than being approximated.
