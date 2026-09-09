@@ -5,9 +5,9 @@ its small declarative input types. Specialized inspection, evidence, record, and
 history utilities remain available from their explicit modules.
 
 Names that were advertised at the package root before 0.6.0rc2 remain available through
-deprecated lazy shims so existing callers do not break abruptly. They are intentionally
-absent from ``__all__`` and ``dir(img2drawing)``. Historical R23 compatibility belongs
-under ``img2drawing.legacy.r23``.
+deprecated lazy shims only when their owning capability is still part of the current runtime.
+They are intentionally absent from ``__all__`` and ``dir(img2drawing)``. The historical R23
+compatibility namespace is retired from the installable package; release history remains in Git.
 """
 
 from importlib import import_module
@@ -148,27 +148,17 @@ __all__ = [
 
 def __getattr__(name: str):
     target = _ROOT_COMPAT_TARGETS.get(name)
-    if target is not None:
-        module_name, attribute_name = target
-        warnings.warn(
-            f"img2drawing.{name} is a pre-0.6.0rc2 root-compat shim; import "
-            f"{attribute_name} from {module_name} instead. The name is no longer part of "
-            "the canonical package-root API.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return getattr(import_module(module_name), attribute_name)
-
-    legacy = import_module("img2drawing.legacy.r23")
-    if name not in legacy.LEGACY_EXPORTS:
+    if target is None:
         raise AttributeError(name)
+    module_name, attribute_name = target
     warnings.warn(
-        f"img2drawing.{name} is an R23 compatibility shim; import it from "
-        "img2drawing.legacy.r23 instead",
+        f"img2drawing.{name} is a pre-0.6.0rc2 root-compat shim; import "
+        f"{attribute_name} from {module_name} instead. The name is no longer part of "
+        "the canonical package-root API.",
         DeprecationWarning,
         stacklevel=2,
     )
-    return getattr(legacy, name)
+    return getattr(import_module(module_name), attribute_name)
 
 
 def __dir__() -> list[str]:
