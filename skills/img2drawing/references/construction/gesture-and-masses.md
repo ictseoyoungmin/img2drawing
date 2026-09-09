@@ -8,6 +8,13 @@ Use the dominant action to connect head, torso, pelvis, support, and major limb 
 The line of action is a directional summary, not a centerline that every body part must
 follow.
 
+This construction leaf is a capability, not by itself a user-facing finish definition. When the
+requested final mode is gesture drawing, read `../modes/gesture-drawing.md`: pure gesture and
+constructive gesture have explicit whole-pose completion criteria. A few torso masses, cross-axes,
+or a line of action do not authorize completion while major visible limb/support relations are
+missing. When gesture is only the first pass of a larger drawing request, continue into that larger
+mode after the structural hypothesis is credible.
+
 ## Masses
 
 Place head, ribcage, and pelvis as occupied forms with the observed tilt, width, depth,
