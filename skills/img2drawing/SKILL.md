@@ -317,12 +317,24 @@ Do not read implementation details to decide what the subject should look like, 
 copy implementation code into drawing guides. Skill-facing API guidance names only the
 supported public surface; see `api/public-surface.md`.
 
+When this skill is invoked to produce a drawing programmatically, every authored mark MUST
+enter through `DrawingSession` (`draw`, `fill_region`, and the other public mutation surface).
+Do not substitute a hand-rolled PIL/Pillow drawing script, raw SVG/canvas code, a custom
+`StrokeCanvas`, or any other bespoke rasterizer, even if it satisfies individual principles
+above (line economy, structural specificity, etc.). Those principles describe what a mark
+should preserve; they do not license drawing through a different runtime. A drawing produced
+outside `DrawingSession` has no history, no inspection record, and no finish provenance, and
+does not satisfy this skill regardless of how it looks.
+
 ## Completion
 
-Finish only after a fresh current-state inspection and after every material residual is
-either resolved or explicitly accepted as a limitation. The final drawing must satisfy the
-requested mode and finish intent without relying on hidden construction notes or a checklist
-to excuse visible errors. See `review/completion.md`.
+Finish only after the Agent has actually looked at a fresh current-state inspection (not
+merely generated one) and after every material residual is either resolved or explicitly
+accepted as a limitation. The final drawing must satisfy the requested mode and finish intent
+without relying on hidden construction notes or a checklist to excuse visible errors. The
+runtime mechanically rejects finishing a blank canvas and finishing on an inspection the Agent
+never read, but passing those checks is not itself a completion judgment; the Agent's read of
+the actual pixels is. See `review/completion.md`.
 
 Final PNG, replay, and timelapse must use the same persisted render profile. Replay must be
 end-to-end from the initial state through the latest action. See

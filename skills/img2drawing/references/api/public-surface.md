@@ -120,10 +120,21 @@ is actually continuous; it is not a subject-specific or mechanical-object preset
 For value regions, use the session's fill/replace-fill surface rather than manually generating
 a cloud of synthetic value strokes.
 
+## Evidence and completion
+
+`session.inspect()` only produces an inspection artifact; it does not by itself mean the Agent
+has seen it. Call `session.record_evidence_read(inspection_id)` after actually viewing the
+returned artifact, and only then call `session.finish(...)`. `finish()` rejects a blank canvas
+(zero authored actions) and rejects finishing on an inspection that was never confirmed read
+through `record_evidence_read()`, in addition to the staleness and open-residual checks. See
+`review/completion.md`.
+
 ## Output
 
 Use the session's public final render, cursor render, and timelapse export operations so all
-outputs share the persisted render profile and history.
+outputs share the persisted render profile and history. `inspect()` renders through the same
+persisted `RenderProfile` (paper, background, graphite) as the final export; only its output
+scale is pinned to 1x canvas space for registration/ROI/measurement geometry.
 
 ## Boundary
 

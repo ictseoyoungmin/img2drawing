@@ -191,6 +191,7 @@ def test_subjectless_inspect_correct_finish_replay_and_resume_share_one_core(tmp
     )
     session.inspect()
     after = session.inspection_history[-1]
+    session.record_evidence_read(after["inspection_id"])
     session.resolve_residual(
         residual_id,
         action_ids=(replacement,),

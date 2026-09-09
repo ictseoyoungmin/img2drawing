@@ -115,6 +115,56 @@ def test_cursor_png_replay_gif_and_final_render_share_history_and_profile(tmp_pa
         assert gif.n_frames >= 3
 
 
+def test_inspect_renders_through_the_same_persisted_profile_as_final(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import img2drawing.vnext.output as output_module
+    import img2drawing.vnext.session as session_module
+
+    custom = RenderProfile.from_dict({
+        **RenderProfile.canonical(48, 48).to_dict(),
+        "paper_tooth": 0.9,
+        "paper_seed": 12345,
+        "background_rgba": [230, 200, 180, 255],
+        "graphite_rgb": [10, 10, 10],
+        "output_scale": 2,
+    })
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="form_light"),
+        render_profile=custom,
+    )
+    session.draw(((6, 8), (18, 22), (25, 40)), part="gesture")
+
+    calls: list[tuple[dict, dict]] = []
+
+    def _spy(real_render):
+        def wrapper(ir, path, *args, **kwargs):
+            calls.append(({"metadata": dict(ir.metadata)}, dict(kwargs)))
+            return real_render(ir, path, *args, **kwargs)
+
+        return wrapper
+
+    monkeypatch.setattr(session_module, "render", _spy(session_module.render))
+    monkeypatch.setattr(output_module, "render", _spy(output_module.render))
+
+    session.inspect(supersample=custom.supersample)
+    session.render_final(tmp_path / "final.png")
+
+    assert len(calls) == 2
+    inspect_call, final_call = calls
+    assert inspect_call[0]["metadata"]["paper"] == final_call[0]["metadata"]["paper"]
+    assert tuple(inspect_call[1]["background"]) == custom.background_rgba
+    assert tuple(inspect_call[1]["graphite"]) == custom.graphite_rgb
+    assert tuple(final_call[1]["background"]) == custom.background_rgba
+    assert tuple(final_call[1]["graphite"]) == custom.graphite_rgb
+    # The inspection sheet always renders at 1x canvas space (registration/ROI/measurement
+    # geometry assumes it); only the final export honors the profile's output_scale.
+    assert inspect_call[1]["scale"] == 1
+    assert final_call[1]["scale"] == custom.output_scale == 2
+
+
 def test_replay_is_deterministic_and_every_n_keeps_endpoints(tmp_path: Path) -> None:
     session = _session(tmp_path)
     first = session.export_timelapse(tmp_path / "first", mode="every_n", every_n=2)

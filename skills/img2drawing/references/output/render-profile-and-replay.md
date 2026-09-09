@@ -7,6 +7,16 @@ Use the public session output operations for final PNG rendering, cursor renderi
 export. Do not switch pressure behavior, supersampling, paper/material parameters, or renderer
 identity merely to make one artifact look better.
 
+## Inspection shares the persisted profile
+
+`inspect()` must render through the same persisted `RenderProfile` as `render_final()`: paper
+tooth/scale/seed, background, and graphite come from the bound profile, not renderer defaults. The
+inspection sheet always renders at 1x canvas space, because registration, ROI, and measurement
+geometry are defined in canvas pixels; only final/replay export honors the profile's
+`output_scale`. A custom profile (non-default paper, background, or graphite) must look the same in
+an inspection sheet as it will in the final render — do not judge a drawing against one paper/light
+setting and export it under another.
+
 ## v1.0.2 replay execution
 
 `DrawingSession.export_timelapse()` uses the local-first exact incremental backend by default for

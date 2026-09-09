@@ -29,7 +29,9 @@ def _ready_session(tmp_path: Path) -> tuple[DrawingSession, str]:
     )
     session.draw(((8, 8), (28, 30), (40, 54)), part="whole_pose/weight_path")
     session.inspect()
-    return session, session.inspection_history[-1]["inspection_id"]
+    inspection_id = session.inspection_history[-1]["inspection_id"]
+    session.record_evidence_read(inspection_id)
+    return session, inspection_id
 
 
 def _finish(session: DrawingSession, inspection_id: str) -> FinishRecord:
@@ -98,6 +100,7 @@ def test_intent_change_requires_a_new_inspection_before_refinish(tmp_path: Path)
         )
 
     session.inspect()
+    session.record_evidence_read("000002")
     next_record = session.finish(
         final_inspection_id="000002",
         rationale="Agent reviewed the same drawing against the changed subject intent",
@@ -130,6 +133,35 @@ def test_finish_rejects_missing_old_or_uninspected_truth(tmp_path: Path) -> None
         session.finish({"agent_decision": "unbound legacy claim"})
 
 
+def test_finish_rejects_a_blank_canvas(tmp_path: Path) -> None:
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="pose"),
+    )
+    session.inspect()
+    inspection_id = session.inspection_history[-1]["inspection_id"]
+    session.record_evidence_read(inspection_id)
+    with pytest.raises(ValueError, match="canvas is blank"):
+        session.finish(final_inspection_id=inspection_id, rationale="nothing was ever drawn")
+
+
+def test_finish_rejects_an_inspection_the_agent_never_read(tmp_path: Path) -> None:
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="pose"),
+    )
+    session.draw(((8, 8), (28, 30), (40, 54)), part="whole_pose/weight_path")
+    session.inspect()
+    inspection_id = session.inspection_history[-1]["inspection_id"]
+    with pytest.raises(ValueError, match="record_evidence_read"):
+        session.finish(final_inspection_id=inspection_id, rationale="never actually looked at the render")
+
+    session.record_evidence_read(inspection_id)
+    _finish(session, inspection_id)  # now succeeds once the Agent has actually read the evidence
+
+
 def test_open_residual_cannot_be_hidden_as_an_accepted_limitation(tmp_path: Path) -> None:
     session = DrawingSession.create(
         subject=_subject(tmp_path),
@@ -143,6 +175,7 @@ def test_open_residual_cannot_be_hidden_as_an_accepted_limitation(tmp_path: Path
         observation_id=observation_id,
     )
     session.inspect()
+    session.record_evidence_read("000001")
     session.record_residual(
         observation_id=observation_id,
         observation="forearm-to-pocket contact is not resolved",

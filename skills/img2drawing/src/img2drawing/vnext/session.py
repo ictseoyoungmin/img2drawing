@@ -1856,7 +1856,17 @@ class DrawingSession:
                     raise ValueError("registration is required when subject and canvas sizes differ")
                 registration = Registration.identity((self.width, self.height))
             try:
-                render(snapshot, raw_path, supersample=int(supersample))
+                profile = self._render_profile
+                if profile is None:
+                    render(snapshot, raw_path, supersample=int(supersample))
+                else:
+                    renderer_kwargs = profile.renderer_kwargs()
+                    renderer_kwargs["supersample"] = int(supersample)
+                    # Registration/ROI/measurement geometry is defined in canvas-pixel
+                    # space; the inspection sheet always renders at 1x regardless of the
+                    # profile's final output_scale.
+                    renderer_kwargs["scale"] = 1
+                    render(profile.prepared_ir(snapshot), raw_path, **renderer_kwargs)
                 sheet = InspectionSheet.create(
                     subject=self.subject,
                     drawing=raw_path,
@@ -2045,6 +2055,16 @@ class DrawingSession:
             intent_digest = self._intent.digest()
             if inspection.get("intent_digest") != intent_digest:
                 raise ValueError("final inspection predates the current intent")
+            if self.history_cursor == 0:
+                raise ValueError("finish requires at least one authored drawing action; the canvas is blank")
+            if not any(
+                event.inspection_id == inspection["inspection_id"] and not event.stale
+                for event in self._evidence_telemetry.read_events
+            ):
+                raise ValueError(
+                    "finish requires record_evidence_read() for the final inspection; "
+                    "generating an inspection is not the same as the Agent having read it"
+                )
             open_residual_ids = tuple(
                 record.residual_id
                 for record in (ResidualRecord.from_dict(raw) for raw in self._residuals)

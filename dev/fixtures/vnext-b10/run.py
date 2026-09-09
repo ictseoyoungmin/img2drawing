@@ -53,6 +53,7 @@ def run_fixture(output_dir: str | Path) -> dict:
     )
     session.draw(((8, 8), (28, 30), (40, 54)), part="whole_pose/weight_path")
     session.inspect()
+    session.record_evidence_read("000001")
     first = session.finish(
         final_inspection_id="000001",
         rationale="Agent finds no material pose residual in the synthetic inspection",
@@ -73,6 +74,7 @@ def run_fixture(output_dir: str | Path) -> dict:
     ).finish_is_current
 
     session.inspect()
+    session.record_evidence_read("000002")
     second = session.finish(
         final_inspection_id="000002",
         rationale="Agent reviewed the corrected state with fresh inspection",
