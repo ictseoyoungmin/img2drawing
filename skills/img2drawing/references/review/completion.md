@@ -10,11 +10,13 @@ Before finishing, inspect the current drawing and ask:
 - Are identity-bearing head/face/hair, hands/feet, garment, or prop features sufficiently
   resolved for the requested finish?
 - Have redundant construction/search lines been retired where they damage clarity?
-- Are all material residuals resolved or explicitly accepted as limitations?
+- Are all open residual records resolved? Are any remaining non-blocking weaknesses stated
+  honestly in `accepted_limitations` rather than hidden by the finish rationale?
 
 For `finish_intent="subject"` in particular, do not finish without explicitly accounting for
 each of face, hair, hands/feet, clothing, and prop (the relations `resolve_finish_guide("subject")`
-names): either the relation is resolved, or its absence is named in `accepted_limitations`. A
+names): either the relation is resolved, or a remaining non-blocking limitation is named in
+`accepted_limitations`. `accepted_limitations` is not a bypass for an open residual record. A
 `rationale` that only discusses pose while the drawing also claims a resolved subject is not a
 completion decision, it is an unexamined one.
 
@@ -26,13 +28,18 @@ ordinary correction loop resumes.
 
 `DrawingSession.finish()` binds the decision to the latest inspection and rejects the call
 outright when:
-- the canvas has zero authored actions (there is nothing to have judged);
+- the current rendered drawing has no authored strokes, including a session whose earlier marks
+  were all erased again;
 - the Agent never called `record_evidence_read()` against the final inspection — generating
-  an inspection is not the same as having looked at it, and `finish()` will not accept the
-  difference;
+  an inspection is not the same as having looked at it;
 - the inspection is stale, superseded, or predates the current intent;
-- any residual is still open.
+- any residual record is still open.
 
 Call `session.record_evidence_read(inspection_id)` after actually viewing the inspection
 artifact, not as a formality immediately after `inspect()`. None of this proves the drawing is
 finished — it only proves the Agent inspected something current and read it before deciding.
+
+Use `accepted_limitations` for weaknesses the Agent has consciously judged non-blocking for the
+requested finish. If a weakness was recorded as a residual, resolve or re-record that finding
+through the residual/correction provenance chain before finishing; merely repeating it in
+`accepted_limitations` does not close the residual.

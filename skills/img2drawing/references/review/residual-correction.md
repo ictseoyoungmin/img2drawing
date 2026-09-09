@@ -76,24 +76,54 @@ but must not emit an artistic verdict on the Agent's behalf.
 
 ## Recording the correction
 
-The runtime binds a correction to the observation that found the problem. Author the corrective
-edits under the **same `observation_id` you passed to `record_residual()`**, then resolve:
+The current public mutation surface binds a correction to the observation that found the problem.
+Author the corrective edit under the **same `observation_id` passed to `record_residual()`**, then
+inspect the edited state and resolve the residual:
 
 ```python
-observation = session.observe({...})
-residual = session.record_residual(observation_id=observation, ..., before_inspection_id=before)
-fix = session.replace_stroke(stroke_id, points, observation_id=observation, reason=...)
+observation_id = session.observe({"jaw": "contour sits too low at the cheek handoff"})
+before_inspection_id = session.inspection_history[-1]["inspection_id"]
+
+residual_id = session.record_residual(
+    observation_id=observation_id,
+    observation="jaw contour sits too low at the cheek handoff",
+    scope="head/jaw",
+    severity="material",
+    impact_rationale="the face shape reads heavier than the reference",
+    responsible_premise="jaw contour placement",
+    responsible_stroke_ids=(jaw_stroke_id,),
+    planned_edit="raise the jaw contour while preserving the cheek anchor",
+    before_inspection_id=before_inspection_id,
+)
+
+fix_action_id = session.replace_stroke(
+    jaw_stroke_id,
+    corrected_jaw_points,
+    observation_id=observation_id,
+    reason="raise the jaw contour to the observed cheek-to-chin relation",
+)
 session.inspect()
-session.resolve_residual(residual, action_ids=(fix,),
-                         after_inspection_id=session.inspection_history[-1]["inspection_id"],
-                         rationale=...)
+after_inspection_id = session.inspection_history[-1]["inspection_id"]
+
+session.resolve_residual(
+    residual_id,
+    action_ids=(fix_action_id,),
+    after_inspection_id=after_inspection_id,
+    rationale="the fresh inspection now matches the observed jaw handoff",
+)
 ```
 
-An edit authored under a *later* observation is rejected with
-`correction action observation mismatch`, because the provenance chain from observation to
-residual to edit would be broken. If a residual is only repaired several passes later, either
-carry its original `observation_id` on the repairing edit or record the finding again as a new
-residual under the observation that actually owns the fix.
+If a later `session.observe(...)` call has happened, do **not** rely on the mutation methods'
+default-to-latest observation behavior for an older residual. Pass that residual's original
+`observation_id` explicitly on the repairing edit. An edit authored under a different later
+observation is rejected with `correction action observation mismatch`.
+
+If the finding itself has materially changed by the time it is repaired, record it again as a new
+residual under the new observation instead of pretending the old provenance still owns the fix.
+Persisted historical actions may contain legacy/unobserved provenance tolerated for compatibility;
+that tolerance is not the authoring contract for new corrections.
 
 `resolve_residual()` also requires an after-inspection whose drawing state differs from the
-before-inspection and matches the current drawing, so inspect *after* the edit, not before.
+before-inspection and matches the current drawing, so inspect *after* the edit, not before. The
+runtime's freshness checks are mechanical provenance checks; the Agent must still actually look at
+the fresh artifact before deciding that the visible mismatch is resolved.

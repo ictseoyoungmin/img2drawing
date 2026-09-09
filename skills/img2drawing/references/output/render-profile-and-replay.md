@@ -1,6 +1,6 @@
 # Render profile and replay
 
-Final output and process replay must depict the same authored drawing with the same persisted
+Final output and process replay must depict the same authored drawing under one persisted
 rendering contract.
 
 Use the public session output operations for final PNG rendering, cursor rendering, and timelapse
@@ -13,9 +13,15 @@ identity merely to make one artifact look better.
 tooth/scale/seed, background, and graphite come from the bound profile, not renderer defaults. The
 inspection sheet always renders at 1x canvas space, because registration, ROI, and measurement
 geometry are defined in canvas pixels; only final/replay export honors the profile's
-`output_scale`. A custom profile (non-default paper, background, or graphite) must look the same in
-an inspection sheet as it will in the final render — do not judge a drawing against one paper/light
-setting and export it under another.
+`output_scale`.
+
+This is a **render-profile contract**, not currently a pixel-identity claim. Post-v1.0.2 `main`
+has a known compatibility-seed gap: current-state inspection strips the inert historical
+`Stroke.stage` field while history replay still carries the compatibility tag, and that field
+currently participates in deterministic hand-dynamics seeding. As a result, inspection and final
+render can differ by a few pixel levels even though they use the same paper/material profile. A
+strict repository regression records this until the render/replay paths are normalized together.
+Do not compensate by changing the profile between inspection and export.
 
 ## v1.0.2 replay execution
 

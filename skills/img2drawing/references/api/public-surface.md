@@ -123,18 +123,23 @@ a cloud of synthetic value strokes.
 ## Residual provenance
 
 `record_residual()`, the corrective edits, and `resolve_residual()` form one provenance chain.
-The corrective action must carry the residual's own `observation_id`, and the after-inspection
-must be taken after the edit; otherwise the runtime rejects the correction. See
-`review/residual-correction.md`.
+For new corrections, the repairing mutation must carry the residual's own `observation_id`; do
+not let a later observation become the mutation's implicit provenance. The after-inspection must
+be taken after the edit and must match the current drawing. See `review/residual-correction.md`
+for a complete executable pattern and the compatibility note for older persisted actions.
 
 ## Evidence and completion
 
 `session.inspect()` only produces an inspection artifact; it does not by itself mean the Agent
 has seen it. Call `session.record_evidence_read(inspection_id)` after actually viewing the
-returned artifact, and only then call `session.finish(...)`. `finish()` rejects a blank canvas
-(zero authored actions) and rejects finishing on an inspection that was never confirmed read
-through `record_evidence_read()`, in addition to the staleness and open-residual checks. See
-`review/completion.md`.
+returned artifact, and only then call `session.finish(...)`. `finish()` rejects a canvas with no
+current authored strokes, including a canvas whose earlier marks were all erased again. It also
+rejects finishing on an inspection that was never confirmed read, a stale inspection, or any
+session with an open residual.
+
+`accepted_limitations` records acknowledged non-blocking limitations in the Agent's finish
+decision. It does **not** bypass an open residual: close or reclassify the finding through the
+correction workflow before finishing. See `review/completion.md`.
 
 ## Output
 
