@@ -13,6 +13,13 @@ Before finishing, inspect the current drawing and ask:
 - Are all open residual records resolved? Are any remaining non-blocking weaknesses stated
   honestly in `accepted_limitations` rather than hidden by the finish rationale?
 
+When the requested drawing mode is gesture drawing, use the level-specific completion test in
+`../modes/gesture-drawing.md`. Do not finish merely because a line of action, head/ribcage/pelvis
+masses, or cross-axes exist. Pure gesture must still communicate the whole action, major visible
+limb chains, support, and decisive spatial relations. Constructive gesture must additionally read
+as specific occupied masses and connected joint chains rather than generic blobs, tubes, or axes.
+An unqualified “gesture drawing” request defaults to constructive gesture.
+
 For `finish_intent="subject"` in particular, do not finish without explicitly accounting for
 each of face, hair, hands/feet, clothing, and prop (the relations `resolve_finish_guide("subject")`
 names): either the relation is resolved, or a remaining non-blocking limitation is named in
