@@ -1,4 +1,4 @@
-name: img2drawing-vnext-rc
+name: img2drawing-ci
 
 on:
   push:
@@ -19,22 +19,29 @@ jobs:
           python-version: "3.10"
       - name: Install runtime and test dependencies
         run: python -m pip install -e 'skills/img2drawing[dev]'
-      - name: Verify vNext control-plane invariants
+      - name: Verify repository and package invariants
         run: |
           python dev/planning/vnext/verify_baseline.py
           python dev/tools/verify_repository_paths.py --json --python
-      - name: Run tests without ambient plugin influence
+      - name: Verify current runtime surface
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: |
+          python -m pytest -q \
+            dev/tests/test_runtime_physical_isolation.py \
+            dev/tests/test_fast_timelapse_release_contract.py
+      - name: Run active test suite without ambient plugin influence
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python -m pytest -q dev/tests
-      - name: Verify preserved foundation evidence
+      - name: Verify frozen historical evidence
         run: |
           python dev/tools/verify_bottleneck_completion.py --check s10
           python dev/tools/verify_bottleneck_completion.py --check s11-s12
           python dev/tools/verify_bottleneck_completion.py --check s14
-      - name: Verify B17 package, installed API, instruction graph, and supply-chain boundary
+      - name: Verify package, installed API, instruction graph, and supply-chain boundary
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python dev/tools/verify_vnext_b17.py
-      - name: Verify B18 dogfood-ready contract freeze
+      - name: Verify frozen v1.0.2 release history
         run: python dev/tools/verify_vnext_b18.py
