@@ -11,7 +11,7 @@ import img2drawing
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_r23_release_validator_checks_frozen_manifest_under_current_vnext() -> None:
+def test_r23_release_validator_checks_frozen_history_under_current_vnext() -> None:
     env = dict(os.environ)
     env["PYTHONPATH"] = str(ROOT / "skills/img2drawing/src")
     result = subprocess.run(
@@ -23,6 +23,7 @@ def test_r23_release_validator_checks_frozen_manifest_under_current_vnext() -> N
     )
     assert result.returncode == 0, result.stderr
     assert (
-        f"R23_COMPATIBILITY_VALIDATION_PASS 0.5.2.dev23 under {img2drawing.__version__}"
+        f"R23_HISTORICAL_RELEASE_VALIDATION_PASS 0.5.2.dev23 under {img2drawing.__version__}"
         in result.stdout
     )
+    assert "e8f4ce234bddc5e5481c41fefe4c356c478fd1cb" in result.stdout
