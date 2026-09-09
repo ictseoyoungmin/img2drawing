@@ -73,11 +73,19 @@ Other relationships:
 ## 7. Review and output
 
 - `review/residual-correction.md` — inspect, prioritize, distinguish geometry/material residuals, correct coherent groups, re-inspect
-- `review/residual-routing.md` — route a visible symptom to the responsible local or upstream premise
+- `review/residual-routing.md` — fast decision kernel for routing a visible symptom to one responsible local or upstream premise
 - `review/stroke-retirement.md` — remove or soften obsolete marks
 - `review/authored-element-navigation.md` — find current authored elements before editing
 - `review/completion.md` — current-evidence finish decision
 - `output/render-profile-and-replay.md` — final PNG and end-to-end replay
+
+When the cause is not already obvious, enter `review/residual-routing.md` through its fast routing
+kernel before opening a subject-specific leaf. First decide whether the evidence itself is uncertain,
+the residual is global/multi-part, hidden-continuity, local geometry/contact, or material-only. Then
+choose one primary owner, state what relationship must change, and define what fresh visual evidence
+would prove the correction worked. A deliberate local correction that leaves the same residual
+materially unchanged is evidence to escalate to the parent premise rather than repeat the same local
+edit.
 
 When a local part looks wrong but its cause is uncertain, read `review/residual-routing.md`
 instead of opening every subject leaf. Route by the relationship that must change, not by the
