@@ -73,7 +73,7 @@ class PatchCacheRenderer:
 
     def _build_patch(self, stroke):
         if is_eraser(stroke):
-            raise NotImplementedError("ordered spatial eraser is not supported by fast patch cache")
+            raise RuntimeError("ordered spatial eraser reached the fast patch cache after eligibility gating")
         grain, hardness = _material(stroke)
         bounds = _contact_bounds(stroke, self.factor, hardness, self.hi_size, self.profile)
         mask = _continuous_contact_mask(stroke, self.factor, hardness, bounds, self.profile)
