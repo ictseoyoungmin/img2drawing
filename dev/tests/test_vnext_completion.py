@@ -146,6 +146,26 @@ def test_finish_rejects_a_blank_canvas(tmp_path: Path) -> None:
         session.finish(final_inspection_id=inspection_id, rationale="nothing was ever drawn")
 
 
+def test_finish_rejects_a_drawing_whose_marks_were_all_erased(tmp_path: Path) -> None:
+    """A blank canvas is a rendered-state fact, not an action-count fact."""
+
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="pose"),
+    )
+    stroke_id = session.draw(((8, 8), (28, 30), (40, 54)), part="whole_pose/weight_path")
+    session.delete_stroke(stroke_id)
+    session.inspect()
+    inspection_id = session.inspection_history[-1]["inspection_id"]
+    session.record_evidence_read(inspection_id)
+
+    assert session.history_cursor > 0
+    assert not session.current_ir().strokes
+    with pytest.raises(ValueError, match="canvas is blank"):
+        session.finish(final_inspection_id=inspection_id, rationale="every mark was erased again")
+
+
 def test_finish_rejects_an_inspection_the_agent_never_read(tmp_path: Path) -> None:
     session = DrawingSession.create(
         subject=_subject(tmp_path),

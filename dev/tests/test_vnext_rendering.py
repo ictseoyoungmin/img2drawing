@@ -165,6 +165,38 @@ def test_inspect_renders_through_the_same_persisted_profile_as_final(
     assert final_call[1]["scale"] == custom.output_scale == 2
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "known divergence: _snapshot() nulls Stroke.stage for current-state reads while "
+        "history.state_at() keeps the '__vnext_compat__' compat tag, and stage is hashed into "
+        "pillow_hand_dynamics._stable_seed(). Identical geometry therefore renders with "
+        "different hand-motion jitter through inspect() vs render_final(). Removing stage from "
+        "the seed changes pixels for every existing history and needs a RENDERER_VERSION bump, "
+        "so it is deliberately deferred to its own slice."
+    ),
+)
+def test_inspect_and_final_render_are_pixel_identical(tmp_path: Path) -> None:
+    """Records the residual half of the inspect/final parity gap.
+
+    When this XPASSes, the seed leak has been fixed and the xfail marker should go.
+    """
+
+    from img2drawing.provenance.timelapse import pixel_sha256
+
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="pose"),
+    )
+    session.draw(((8, 8), (30, 40), (44, 44)), part="pose/line")
+
+    sheet = session.inspect(supersample=session.render_profile.supersample)
+    final = session.render_final(tmp_path / "final.png")
+
+    assert pixel_sha256(sheet.drawing) == final.pixel_sha256
+
+
 def test_replay_is_deterministic_and_every_n_keeps_endpoints(tmp_path: Path) -> None:
     session = _session(tmp_path)
     first = session.export_timelapse(tmp_path / "first", mode="every_n", every_n=2)

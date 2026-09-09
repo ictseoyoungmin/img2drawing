@@ -2047,7 +2047,8 @@ class DrawingSession:
             inspection = self._inspection_record(final_inspection_id)
             if inspection["inspection_id"] != self._inspection_history[-1]["inspection_id"]:
                 raise ValueError("finish requires the latest inspection")
-            current_hash = self.drawing_state_hash()
+            snapshot = self._snapshot()
+            current_hash = drawing_state_hash(snapshot)
             if inspection["drawing_state_hash"] != current_hash:
                 raise ValueError("final inspection is stale; inspect the current drawing first")
             if inspection.get("history_cursor") != self.history_cursor:
@@ -2055,8 +2056,10 @@ class DrawingSession:
             intent_digest = self._intent.digest()
             if inspection.get("intent_digest") != intent_digest:
                 raise ValueError("final inspection predates the current intent")
-            if self.history_cursor == 0:
-                raise ValueError("finish requires at least one authored drawing action; the canvas is blank")
+            # Rendered state, not the action counter: a drawing whose marks were all erased
+            # has a non-zero history cursor and an empty canvas.
+            if not snapshot.strokes:
+                raise ValueError("finish requires authored marks on the canvas; the canvas is blank")
             if not any(
                 event.inspection_id == inspection["inspection_id"] and not event.stale
                 for event in self._evidence_telemetry.read_events

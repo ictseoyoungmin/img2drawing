@@ -4,6 +4,19 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 
 ## Unreleased
 
+### Changed
+
+- `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`:
+  - the canvas must carry authored marks — a session whose strokes were never drawn, or were all erased again, can no longer be finished;
+  - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
+- `DrawingSession.inspect()` now renders through the session's persisted `RenderProfile` (paper tooth/scale/seed, background, graphite) instead of renderer defaults, so a customized profile is inspected under the same material it will export under. The inspection sheet stays pinned to 1x canvas space because registration/ROI/measurement geometry is defined in canvas pixels; only final and replay export honor `output_scale`.
+
+This is a compatibility-breaking change for existing `finish()` callers, which must now call `record_evidence_read(final_inspection_id)` first. Default-profile sessions render unchanged. No new release/version is declared by this branch; the immutable v1.0.2 release keeps the previous `finish()` behavior.
+
+### Known issues
+
+- `inspect()` and `render_final()` still differ by a few luminance levels on identical geometry: `_snapshot()` nulls `Stroke.stage` for current-state reads while `history.state_at()` keeps the `__vnext_compat__` tag, and `stage` is hashed into the hand-dynamics jitter seed. Removing it changes pixels for every existing history and needs a `RENDERER_VERSION` bump, so it is deferred to its own slice; `dev/tests/test_vnext_rendering.py::test_inspect_and_final_render_are_pixel_identical` records it as a strict xfail.
+
 ### Removed
 
 - Retired the installable `img2drawing.legacy.r23` compatibility namespace from post-v1.0.2 `main` and removed the hidden root fallback for R23-only names such as `DrawingRun` and `StageContract`.
