@@ -28,10 +28,10 @@ CANONICAL_ROOT_EXPORTS = {
 
 
 def test_stable_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "1.0.1"
-    assert PUBLIC_API == "DrawingSession/1.0.1-vnext"
-    assert RELEASE_REVISION == "A9"
-    assert RELEASE_SLICE == "v1.0.1_astra_authoring_absorption"
+    assert img2drawing.__version__ == "1.0.2"
+    assert PUBLIC_API == "DrawingSession/1.0.2-vnext"
+    assert RELEASE_REVISION == "A10"
+    assert RELEASE_SLICE == "v1.0.2_local_first_exact_timelapse"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
