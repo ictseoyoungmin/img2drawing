@@ -4,8 +4,6 @@ import json
 import re
 from pathlib import Path
 
-from img2drawing.run import _resolve_checkpoint_paths
-
 
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_RUN = ROOT / "dev" / "p1_reference_run"
@@ -25,29 +23,9 @@ def test_public_reference_run_contains_no_machine_absolute_paths():
     assert leaks == []
 
 
-def test_relative_checkpoint_paths_resolve_from_checkpoint_directory(tmp_path):
-    checkpoint_dir = tmp_path / "run" / "session"
-    checkpoint_dir.mkdir(parents=True)
-    payload = {
-        "init": {
-            "reference_path": "../../subject.png",
-            "output_dir": "..",
-            "task_stage_targets": {"P1_gesture": "../../target.png"},
-        },
-        "local_reviews": {
-            "one": {"comparisons": {"overview": "../reviews/overview.png"}},
-        },
-    }
+def test_frozen_public_checkpoint_init_remains_portable_evidence():
+    """Historical public evidence stays portable without importing its retired runtime."""
 
-    resolved = _resolve_checkpoint_paths(payload, base=checkpoint_dir)
-
-    assert Path(resolved["init"]["reference_path"]).is_absolute()
-    assert Path(resolved["init"]["output_dir"]) == checkpoint_dir.parent.resolve()
-    assert Path(resolved["init"]["task_stage_targets"]["P1_gesture"]).is_absolute()
-    assert Path(resolved["local_reviews"]["one"]["comparisons"]["overview"]).is_absolute()
-
-
-def test_checkpoint_init_is_portable_after_public_build():
     checkpoint = PUBLIC_RUN / "run" / "session" / "checkpoint.json"
     data = json.loads(checkpoint.read_text(encoding="utf-8"))
     init = data["init"]
