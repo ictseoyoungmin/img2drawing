@@ -7,28 +7,33 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 ### Changed
 
 - `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`:
-  - the canvas must carry authored marks — a session whose strokes were never drawn, or were all erased again, can no longer be finished;
+  - the current drawing must contain authored strokes — a session that was never drawn on, or whose marks were all erased again, can no longer be finished;
   - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
 - `DrawingSession.inspect()` now renders through the session's persisted `RenderProfile` (paper tooth/scale/seed, background, graphite) instead of renderer defaults, so a customized profile is inspected under the same material it will export under. The inspection sheet stays pinned to 1x canvas space because registration/ROI/measurement geometry is defined in canvas pixels; only final and replay export honor `output_scale`.
+- Residual/correction guidance now documents the `observation_id` provenance contract explicitly: a repairing mutation for a current residual should carry the residual's observation id, followed by a fresh after-inspection before `resolve_residual()`.
+- Completion guidance now makes clear that `accepted_limitations` records acknowledged non-blocking weaknesses; it does not bypass an open residual record.
 
-This is a compatibility-breaking change for existing `finish()` callers, which must now call `record_evidence_read(final_inspection_id)` first. Default-profile sessions render unchanged. No new release/version is declared by this branch; the immutable v1.0.2 release keeps the previous `finish()` behavior.
+The `finish()` preconditions are compatibility-breaking for existing callers, which must now call `record_evidence_read(final_inspection_id)` after actually viewing the final inspection. No new release/version is declared on post-v1.0.2 `main`; the immutable v1.0.2 release keeps the previous `finish()` behavior.
 
 ### Known issues
 
-- `inspect()` and `render_final()` still differ by a few luminance levels on identical geometry: `_snapshot()` nulls `Stroke.stage` for current-state reads while `history.state_at()` keeps the `__vnext_compat__` tag, and `stage` is hashed into the hand-dynamics jitter seed. Removing it changes pixels for every existing history and needs a `RENDERER_VERSION` bump, so it is deferred to its own slice; `dev/tests/test_vnext_rendering.py::test_inspect_and_final_render_are_pixel_identical` records it as a strict xfail.
+- `inspect()` and `render_final()` still differ by a few luminance levels on identical geometry: `_snapshot()` nulls `Stroke.stage` for current-state reads while `history.state_at()` keeps the `__vnext_compat__` tag, and `stage` is hashed into the hand-dynamics jitter seed. Canonical replay and the fast timelapse path also reconstruct from history, so fixing this requires one coordinated render/replay parity slice rather than changing only `inspect()` or only the renderer seed. `dev/tests/test_vnext_rendering.py::test_inspect_and_final_render_are_pixel_identical` records the issue as a strict xfail.
 
 ### Removed
 
-- Retired the installable `img2drawing.legacy.r23` compatibility namespace from post-v1.0.2 `main` and removed the hidden root fallback for R23-only names such as `DrawingRun` and `StageContract`.
-- The immutable v1.0.2 release/freeze remains historical truth and still records the legacy namespace that shipped in that release. Exact retired source remains recoverable from Git history; `dev/legacy/r23_compat/README.md` records the release commit and blob identities.
+- Retired the installable `img2drawing.legacy.r23` compatibility namespace and removed the hidden root fallback for R23-only names such as `DrawingRun` and `StageContract`.
+- Retired the remaining R23 orchestration/runtime cluster from current `src`: `run.py`, `stages/`, `exemplar/`, `review/`, and the historical `registration/` package.
+- Removed layers and data that became orphaned with that cluster: `canvas/`, the historical `reference/` package, non-palette R23 observation contract/lock/evidence modules, and `data/registration_profile.json`.
+- The immutable v1.0.2 release/freeze remains historical truth. Exact retired source remains recoverable from Git history and the pointers under `dev/legacy/`.
 
-### Internal cleanup audit
+### Internal cleanup
 
-- `run.py`, `stages/`, `exemplar/`, `review/`, and `registration/` are confirmed compatibility-only R23 runtime roots and are candidates for a separate coordinated removal slice.
-- `canvas/` and `reference/` are likely historical but require one more consumer audit; `observation/` is mixed because `SubjectPalette` remains a documented current specialized capability.
+- Current installable top-level source is narrowed to `core/`, `data/`, `inspection/`, `observation/` (palette only), `provenance/`, `render/`, and `vnext/`, plus package metadata files.
+- Added `dev/tools/build_skill_zip.py` and release-zip contract tests so local bytecode/cache/build residue cannot silently leak into the distributable skill archive.
+- Historical closure checks use frozen Git/release evidence instead of requiring retired runtime files to remain in mutable `src`.
 - See [`dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`](dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md).
 
-This is a compatibility-breaking change for callers that explicitly imported the historical R23 namespace. No new release/version is declared by this cleanup branch.
+These post-v1.0.2 removals are compatibility-breaking for callers that imported the retired R23 implementation namespaces. A future release must assign an appropriate version before publishing this mutable `main` state.
 
 ## v1.0.2 — Local-first exact timelapse backend
 
