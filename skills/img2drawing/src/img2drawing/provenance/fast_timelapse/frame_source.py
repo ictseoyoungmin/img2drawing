@@ -8,8 +8,7 @@ from typing import Iterable
 from PIL import Image
 
 from ...core.history import _stroke_from_dict
-from ...render import pillow_eraser_material as p7
-from ...render import pillow_paper_interaction as p5
+from ...render.pillow_eraser_material import is_eraser
 from ...render.pillow_pencil_contact import render as canonical_render
 
 from .dirty_regions import apply_additions, clip_box, merge_regions, patch_box, recomposite_regions, union_box
@@ -65,7 +64,7 @@ def inspect_fast_path_eligibility(history) -> FrameSourceEligibility:
         except Exception as exc:
             reasons.append(f"cannot decode stroke action seq={item.seq}: {exc}")
             continue
-        if p7.is_eraser(stroke):
+        if is_eraser(stroke):
             raw_eraser = True
             reasons.append(f"raw spatial eraser stroke at seq={item.seq}")
             break
