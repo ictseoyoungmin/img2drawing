@@ -329,12 +329,13 @@ does not satisfy this skill regardless of how it looks.
 ## Completion
 
 Finish only after the Agent has actually looked at a fresh current-state inspection (not
-merely generated one) and after every material residual is either resolved or explicitly
-accepted as a limitation. The final drawing must satisfy the requested mode and finish intent
-without relying on hidden construction notes or a checklist to excuse visible errors. The
-runtime mechanically rejects finishing a blank canvas and finishing on an inspection the Agent
-never read, but passing those checks is not itself a completion judgment; the Agent's read of
-the actual pixels is. See `review/completion.md`.
+merely generated one), after every open residual record has been resolved, and after any remaining
+non-blocking weakness has been stated honestly in `accepted_limitations`. `accepted_limitations`
+is finish provenance, not a way to leave an open residual unresolved. The final drawing must
+satisfy the requested mode and finish intent without relying on hidden construction notes or a
+checklist to excuse visible errors. The runtime mechanically rejects finishing a blank current
+canvas and finishing on an inspection the Agent never read, but passing those checks is not itself
+a completion judgment; the Agent's read of the actual pixels is. See `review/completion.md`.
 
 Final PNG, replay, and timelapse must use the same persisted render profile. Replay must be
 end-to-end from the initial state through the latest action. See
