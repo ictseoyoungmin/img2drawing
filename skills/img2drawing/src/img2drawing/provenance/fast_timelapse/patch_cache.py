@@ -9,8 +9,8 @@ from typing import Any
 
 from PIL import Image, ImageChops
 
-from ...render import pillow_graphite_grain as p3
-from ...render import pillow_eraser_material as p7
+from ...render.pillow_graphite_grain import _graphite_layer, _material, _stroke_seed
+from ...render.pillow_eraser_material import is_eraser
 from ...render.pillow_pencil_contact import (
     _contact_bounds,
     _continuous_contact_mask,
@@ -72,15 +72,15 @@ class PatchCacheRenderer:
         return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
     def _build_patch(self, stroke):
-        if p7.is_eraser(stroke):
+        if is_eraser(stroke):
             raise NotImplementedError("ordered spatial eraser is not supported by fast patch cache")
-        grain, hardness = p3._material(stroke)
+        grain, hardness = _material(stroke)
         bounds = _contact_bounds(stroke, self.factor, hardness, self.hi_size, self.profile)
         mask = _continuous_contact_mask(stroke, self.factor, hardness, bounds, self.profile)
         continuity = _continuity_floor_mask(stroke, self.factor, hardness, bounds, self.profile)
         mask = _smooth_grain_modulate(
             mask, stroke=stroke, grain=grain, hardness=hardness, factor=self.factor,
-            global_origin=(bounds[0], bounds[1]), seed=p3._stroke_seed(stroke), profile=self.profile,
+            global_origin=(bounds[0], bounds[1]), seed=_stroke_seed(stroke), profile=self.profile,
         )
         mask = _smooth_paper_modulate(
             mask, stroke=stroke, tooth=self.tooth, paper_scale=self.paper_scale,
@@ -88,7 +88,7 @@ class PatchCacheRenderer:
             hardness=hardness, profile=self.profile,
         )
         mask = ImageChops.lighter(mask, continuity)
-        layer = p3._graphite_layer(mask.size, mask, graphite=self.graphite)
+        layer = _graphite_layer(mask.size, mask, graphite=self.graphite)
         mask.close()
         continuity.close()
         return (bounds[0], bounds[1]), layer, False
