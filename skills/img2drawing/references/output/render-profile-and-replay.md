@@ -17,11 +17,11 @@ geometry are defined in canvas pixels; only final/replay export honors the profi
 
 This is a **render-profile contract**, not currently a pixel-identity claim. Post-v1.0.2 `main`
 has a known compatibility-seed gap: current-state inspection strips the inert historical
-`Stroke.stage` field while history replay still carries the `__vnext_compat__` tag, and that field
+`Stroke.stage` field while history replay still carries the compatibility tag, and that field
 currently participates in deterministic hand-dynamics seeding. As a result, inspection and final
-render can differ by a few pixel levels even though they use the same paper/material profile. The
-strict xfail in `dev/tests/test_vnext_rendering.py` records this until the render/replay paths are
-normalized together. Do not compensate by changing the profile between inspection and export.
+render can differ by a few pixel levels even though they use the same paper/material profile. A
+strict repository regression records this until the render/replay paths are normalized together.
+Do not compensate by changing the profile between inspection and export.
 
 ## v1.0.2 replay execution
 
