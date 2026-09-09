@@ -12,6 +12,115 @@ Use this question:
 
 Then choose the leaf that owns that relationship.
 
+## Fast routing kernel
+
+Use this before opening a subject-specific leaf. It is a decision aid inside the existing drawing
+loop, not a new stage or runtime state.
+
+```text
+fresh inspection + reference / declared intent
+                │
+                ▼
+1. Can the mismatch be read confidently?
+   ├─ no  → observation/visual-observation.md
+   │        (+ measuring-boundaries.md only for a bounded measurement question)
+   └─ yes
+        │
+        ▼
+2. Is the visible part only one symptom of a wider relation?
+   ├─ several parts drift together / whole turn or balance is wrong
+   │      → construction owner
+   ├─ hidden continuity materially controls visible anchors
+   │      → foundation/occlusion-inference.md
+   ├─ contact / grounding / attached-object relation is wrong
+   │      → environment, props, or contour/contact owner
+   ├─ geometry is credible and only line/value/material behavior is wrong
+   │      → description/value-edge-and-graphite.md or residual-correction.md
+   └─ one local visible form is wrong while its parents remain credible
+          → smallest local description / subject leaf
+                │
+                ▼
+3. State one responsible relationship before editing.
+                │
+                ▼
+4. Make one coherent correction that can actually falsify that hypothesis.
+                │
+                ▼
+5. Render and inspect fresh evidence.
+   ├─ residual materially improved → keep scope; continue only if still highest-impact
+   ├─ residual unchanged           → parent premise is suspect; escalate upstream
+   ├─ neighboring relations worsen → scope was too local or wrong; revert/re-route
+   └─ residual changed class       → route the new residual from the top again
+```
+
+Do not descend through every node. The purpose of the kernel is to identify **one responsible
+scope** quickly enough that a fresh worker does not polish the visible symptom while the causal
+relationship remains wrong.
+
+## Five-way cause test
+
+Classify the residual by its **causal spread**, not its screen location.
+
+| Causal pattern | Primary owner | Typical signal | Do not default to |
+| --- | --- | --- | --- |
+| Evidence uncertain | `observation/` | you cannot confidently state the visible relation, ownership, turn, or anchor | guessing a geometry fix |
+| Global / multi-part | `construction/` | several contours, anchors, negative spaces, or terminals drift coherently | editing each local part independently |
+| Hidden-continuity | `foundation/occlusion-inference.md` | a visible downstream anchor depends on a form that disappears behind another | drawing a complete hidden contour or pretending the chain terminates |
+| Local geometry / contact | `description/`, `figure/`, `props/`, `environment/` | parents remain credible and one bounded visible relation is wrong | reopening the whole pose without evidence |
+| Material only | `description/value-edge-and-graphite.md` + `review/residual-correction.md` | authored points are correct but taper, opacity, weight, tone, or graphite behavior reads wrong | moving correct geometry |
+
+A small-looking residual can still be global. A shoe that is misplaced because the support leg
+axis is wrong belongs to construction even if the visible mismatch occupies only a few pixels.
+Likewise, a whole drawing can contain a genuinely local residual when all parent relations remain
+credible and one overlap edge or feature placement is the only mismatch.
+
+## Parent-credibility test
+
+Before a local correction, test the shortest parent chain that constrains it. Ask:
+
+- If this local part disappeared, would the remaining anchors still imply the correct placement,
+  turn, support, depth, and connection?
+- Are both endpoints of the relation already credible, or would fixing one require moving the
+  other?
+- Do neighboring negative spaces and overlaps agree with the same parent premise?
+- Can the local correction be made without inventing hidden geometry or distorting a correct
+  visible anchor?
+
+If the answer is no, the local leaf is not the owner. Route to the earliest parent relation that
+must change. Do not preserve an upstream premise merely because it already has downstream detail.
+
+## One-owner rule
+
+Choose one primary owner for the next mutation. A second leaf may support the diagnosis, but do not
+open a cluster of unrelated guides and average their advice.
+
+Before editing, be able to say all three of these in plain language:
+
+1. **Residual:** what visible relationship is wrong?
+2. **Owner:** which leaf owns the relationship that must change?
+3. **Proof:** what fresh visual evidence would show that this correction worked?
+
+This is not paperwork and does not need a new runtime record. It is a guard against aimless local
+polish. If you cannot state the proof condition, the residual is probably not routed precisely
+enough yet.
+
+## Retry and escalation rule
+
+A deliberate local correction gets one chance to test its causal hypothesis. After fresh
+inspection:
+
+- if the same residual is materially unchanged, **do not repeat the same kind of local edit**;
+  escalate to its parent relation;
+- make a second correction at the same scope only when fresh evidence supports a genuinely
+  different local hypothesis;
+- if two neighboring residuals move together, treat them as one coupled upstream problem rather
+  than two local tasks;
+- if a correction improves the local feature while worsening the whole pose, balance, depth,
+  contact, or silhouette, reject the local win and reopen the parent premise.
+
+Repeated search strokes are not additional hypotheses. More marks at the same wrong scope are a
+routing failure.
+
 ## Routing rule
 
 1. Name the visible mismatch as a relationship.
