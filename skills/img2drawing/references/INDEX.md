@@ -20,11 +20,18 @@ visible downstream anchor. Do not use it merely because some part of the subject
 
 Choose one primary mode guide. Modes change emphasis, not geometry truth.
 
+- `modes/gesture-drawing.md` — pure gesture vs constructive gesture; unqualified gesture requests default to constructive gesture
 - `modes/croquis.md`
 - `modes/figure-drawing.md`
 - `modes/line-study.md`
 - `modes/tonal-study.md`
 - `modes/free-draw.md`
+
+A user request for **gesture drawing** is a mode request, not merely permission to stop after the
+construction gesture pass. Read `modes/gesture-drawing.md` first. Use pure gesture only when the
+request explicitly asks for a quick/pure/line-of-action study; otherwise use constructive gesture.
+If the user asks to *start* with gesture and then continue to a fuller drawing, gesture remains an
+intermediate construction pass and the larger requested mode still owns completion.
 
 ## 3. Observation
 
