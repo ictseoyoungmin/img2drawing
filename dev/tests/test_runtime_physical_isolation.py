@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -9,7 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE_SRC = ROOT / "skills" / "img2drawing" / "src"
-LEGACY_RUNTIME_ROOTS = (
+PACKAGE = PACKAGE_SRC / "img2drawing"
+RETIRED_RUNTIME_ROOTS = (
     "img2drawing.run",
     "img2drawing.stages",
     "img2drawing.exemplar",
@@ -32,7 +34,26 @@ def _fresh_python(code: str) -> dict[str, object]:
     return json.loads(result.stdout)
 
 
-def test_canonical_root_and_drawing_session_do_not_activate_r23_cluster() -> None:
+def test_r23_runtime_roots_are_physically_absent_from_source() -> None:
+    for relative in ("run.py", "stages", "exemplar", "review", "registration"):
+        assert not (PACKAGE / relative).exists(), relative
+
+
+def test_r23_runtime_roots_are_not_installable() -> None:
+    payload = _fresh_python(
+        """
+import importlib.util, json
+roots = (
+    'img2drawing.run', 'img2drawing.stages', 'img2drawing.exemplar',
+    'img2drawing.review', 'img2drawing.registration',
+)
+print(json.dumps({root: importlib.util.find_spec(root) is not None for root in roots}))
+"""
+    )
+    assert not any(payload.values())
+
+
+def test_canonical_root_and_drawing_session_do_not_activate_retired_cluster() -> None:
     payload = _fresh_python(
         """
 import json, sys
@@ -46,15 +67,15 @@ def loaded(root):
     return any(name == root or name.startswith(root + '.') for name in sys.modules)
 print(json.dumps({
     'drawing_session_module': DrawingSession.__module__,
-    'legacy_loaded': {root: loaded(root) for root in roots},
+    'retired_loaded': {root: loaded(root) for root in roots},
 }))
 """
     )
     assert payload["drawing_session_module"] == "img2drawing.vnext.session"
-    assert not any(payload["legacy_loaded"].values())
+    assert not any(payload["retired_loaded"].values())
 
 
-def test_current_inspection_owns_registration_without_loading_historical_package() -> None:
+def test_current_inspection_owns_registration_without_historical_package() -> None:
     payload = _fresh_python(
         """
 import json, sys
@@ -95,10 +116,8 @@ print(json.dumps({
     assert payload["legacy_loaded"] is False
 
 
-def test_canonical_session_source_has_no_direct_legacy_cluster_imports() -> None:
-    source = (
-        PACKAGE_SRC / "img2drawing" / "vnext" / "session.py"
-    ).read_text(encoding="utf-8")
+def test_canonical_session_source_has_no_retired_cluster_imports() -> None:
+    source = (PACKAGE / "vnext" / "session.py").read_text(encoding="utf-8")
     for forbidden in (
         "from ..stages",
         "from ..exemplar",
@@ -114,7 +133,7 @@ def test_canonical_session_source_has_no_direct_legacy_cluster_imports() -> None
         assert forbidden not in source
 
 
-def test_a3_legacy_runtime_paths_are_not_canonical_root_exports() -> None:
+def test_retired_runtime_names_are_not_canonical_root_exports() -> None:
     import img2drawing
 
     assert "DrawingSession" in img2drawing.__all__
