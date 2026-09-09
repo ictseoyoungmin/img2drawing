@@ -1,9 +1,9 @@
-"""Validate the frozen R23 release after current-source compatibility retirement.
+"""Validate the frozen R23 release after current-source runtime retirement.
 
 R23 is historical evidence, not a current runtime promise. This validator checks the frozen
-manifest/assets and verifies that the exact retired compatibility module remains recoverable from
-the immutable v1.0.2 Git tag. It intentionally does not import ``img2drawing.legacy.r23`` from the
-mutable post-release source tree.
+manifest/assets and verifies that the exact retired compatibility source remains recoverable from
+the immutable v1.0.2 Git tag. Mutable post-release ``src`` must not ship any R23 orchestration
+namespace.
 """
 from __future__ import annotations
 
@@ -17,15 +17,21 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "skills/img2drawing/src"))
 
 import img2drawing
-from img2drawing._version import LEGACY_R23_PUBLIC_API
 
 
-if LEGACY_R23_PUBLIC_API != "DrawingRun/0.5.2-r23":
-    raise SystemExit("legacy R23 public API identity drift")
 if not hasattr(img2drawing, "DrawingSession"):
     raise SystemExit("current package no longer exposes the canonical DrawingSession")
-if importlib.util.find_spec("img2drawing.legacy") is not None:
-    raise SystemExit("retired img2drawing.legacy namespace unexpectedly remains installable")
+
+for module_name in (
+    "img2drawing.legacy",
+    "img2drawing.run",
+    "img2drawing.stages",
+    "img2drawing.exemplar",
+    "img2drawing.review",
+    "img2drawing.registration",
+):
+    if importlib.util.find_spec(module_name) is not None:
+        raise SystemExit(f"retired R23 runtime unexpectedly remains installable: {module_name}")
 
 compatibility_root = ROOT / "dev/release/r23/compatibility/stages"
 for filename in (
