@@ -1,6 +1,6 @@
 # img2drawing
 
-**Current stable: v1.0.1**
+**Current stable: v1.0.2**
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -14,6 +14,29 @@ Both routes render and inspect the current drawing before correction.
 The action history keeps every revision inspectable, resumable, and replayable. Curated
 human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
 an `examples/` tree until there are genuinely representative instructional examples.
+
+## v1.0.2 — Local-first exact timelapse export
+
+v1.0.2 promotes the validated local-first incremental timelapse engine to the normal
+`DrawingSession.export_timelapse()` path for eligible stroke histories while preserving the v1.0.1
+canonical exporter as a whole-export fail-closed fallback.
+
+- persistent content-addressed stroke-patch reuse;
+- edit-aware dirty-region recomposition and resampling;
+- atomic lossless delta-frame staging instead of mandatory full PNG spooling;
+- persistent GIF palette reuse;
+- RenderProfile-owned paper/material parameters remain authoritative;
+- unsupported semantics or unavailable FFmpeg fall back to the canonical exporter for the whole run;
+- public session method signature and persisted schemas remain unchanged from v1.0.1.
+
+Post-release validation on the repository exemplar `dev/exemplar-sources/p2_axes_v2.json` produced
+canonical/fast RGB pixel-exact final frames. Warm internal pipeline time measured **0.231–0.246 s**
+across `every_n=4/2/1` on the GitHub-hosted benchmark runner; the larger 1,272-action window-study
+remains the real-session scale reference. Performance is environment-sensitive and is evidence,
+not an API guarantee.
+
+[Read the v1.0.2 release notes](docs/releases/v1.0.2.md) · [Changelog](CHANGELOG.md) ·
+[Post-release benchmark](dev/benchmarks/timelapse_perf/V1_0_2_POST_RELEASE_EXEMPLAR.md)
 
 ## v1.0.1 — Astra-derived authoring ergonomics
 
@@ -69,6 +92,8 @@ guidance needed for the current residual.
 - Python 3.10+
 - `numpy`, `Pillow` (installed automatically); `pytest`, `jsonschema`, `build` for the development
   test suite
+- FFmpeg for the v1.0.2 fast GIF path; when unavailable, normal session export fails closed to the
+  canonical exporter rather than partially mixing backends
 - A coding agent that supports Agent Skills
 
 ## Install
@@ -103,11 +128,12 @@ for the instruction graph.
 
 ```text
 .
+├── CHANGELOG.md       # public release history
 ├── showcase/          # curated, human-facing results and comparison pages
-├── docs/releases/     # human-facing release notes
+├── docs/releases/     # detailed human-facing release notes
 ├── skills/
 │   └── img2drawing/   # deployable skill, runtime, and canonical instruction graph
-├── dev/               # tests, dogfood runs, planning, tooling, and release records
+├── dev/               # tests, benchmarks, dogfood runs, planning, tooling, and release records
 └── temp/              # ignored scratch space for unpromoted runs
 ```
 
