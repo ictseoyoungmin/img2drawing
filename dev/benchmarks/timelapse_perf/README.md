@@ -156,3 +156,22 @@ reduced first-time materialization from 5.0122 s to 2.8430 s and total replay+GI
 7.4427 s to 5.3481 s. Lucy prefix 160 materialization dropped from 15.1189 s to 7.7700 s with all
 41 frames pixel-identical to S04. See `S03_MATERIAL_FIELD_KERNEL.md` for the cache-hypothesis reopen,
 final-active Lucy evidence, and the next bottleneck boundary.
+
+## v1.0.2 production and post-release evidence
+
+S00–S05 above are historical development prototypes. The production v1.0.2 implementation was
+integrated independently through the local-first R8 path and is not defined by importing those
+prototype modules.
+
+The durable post-release measurement record is:
+
+- [`V1_0_2_POST_RELEASE_EXEMPLAR.md`](V1_0_2_POST_RELEASE_EXEMPLAR.md) — repository exemplar,
+  cold/warm `every_n=4/2/1`, render/pack vs GIF encode split, exactness hash, GitHub Actions
+  provenance, FFmpeg prerequisite, and compatibility notes.
+
+The large-session scale reference remains the 1,272-action `window-study`: 637 frames, warm
+render+pack 4.168 s, GIF encode 2.163 s, internal pipeline 6.331 s, and an RGB pixel-exact final
+against the bound RenderProfile.
+
+Performance numbers in this directory are evidence tied to their recorded environment and workload;
+they are not API latency guarantees.
