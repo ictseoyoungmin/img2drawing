@@ -120,6 +120,13 @@ is actually continuous; it is not a subject-specific or mechanical-object preset
 For value regions, use the session's fill/replace-fill surface rather than manually generating
 a cloud of synthetic value strokes.
 
+## Residual provenance
+
+`record_residual()`, the corrective edits, and `resolve_residual()` form one provenance chain.
+The corrective action must carry the residual's own `observation_id`, and the after-inspection
+must be taken after the edit; otherwise the runtime rejects the correction. See
+`review/residual-correction.md`.
+
 ## Evidence and completion
 
 `session.inspect()` only produces an inspection artifact; it does not by itself mean the Agent

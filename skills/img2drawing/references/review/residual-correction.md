@@ -73,3 +73,27 @@ a request for more local strokes. Re-observe the parent relation and route upstr
 
 The Agent decides whether the mismatch is resolved. Tooling may record evidence and edits
 but must not emit an artistic verdict on the Agent's behalf.
+
+## Recording the correction
+
+The runtime binds a correction to the observation that found the problem. Author the corrective
+edits under the **same `observation_id` you passed to `record_residual()`**, then resolve:
+
+```python
+observation = session.observe({...})
+residual = session.record_residual(observation_id=observation, ..., before_inspection_id=before)
+fix = session.replace_stroke(stroke_id, points, observation_id=observation, reason=...)
+session.inspect()
+session.resolve_residual(residual, action_ids=(fix,),
+                         after_inspection_id=session.inspection_history[-1]["inspection_id"],
+                         rationale=...)
+```
+
+An edit authored under a *later* observation is rejected with
+`correction action observation mismatch`, because the provenance chain from observation to
+residual to edit would be broken. If a residual is only repaired several passes later, either
+carry its original `observation_id` on the repairing edit or record the finding again as a new
+residual under the observation that actually owns the fix.
+
+`resolve_residual()` also requires an after-inspection whose drawing state differs from the
+before-inspection and matches the current drawing, so inspect *after* the edit, not before.
