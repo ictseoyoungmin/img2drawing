@@ -43,9 +43,14 @@ remain available from `img2drawing.vnext` when a framework/debugging task actual
 Low-level stroke/history types live under `img2drawing.core`. These are not alternative
 orchestration routes and ordinary drawing workers should not start there.
 
-Pre-0.6.0rc2 direct root imports for those specialized names resolve through deprecated
+Pre-0.6.0rc2 direct root imports for those still-owned specialized names resolve through deprecated
 compatibility shims for existing callers, but they are intentionally absent from
 `img2drawing.__all__` and normal discovery.
+
+Historical R23 orchestration is different: the post-v1.0.2 source tree no longer ships
+`img2drawing.legacy.r23`, and R23-only root names such as `DrawingRun` and `StageContract` no longer
+resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
+that retired compatibility namespace.
 
 ## Current-state operations
 
