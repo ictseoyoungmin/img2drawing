@@ -41,7 +41,8 @@ def test_canonical_renderer_and_exporter_authority_are_byte_preserved():
     for rel, digest in BASELINE.items():
         assert sha(pkg / rel) == digest, rel
 
-def test_required_runtime_json_is_present():
+def test_required_current_runtime_json_is_present():
     pkg = Path(img2drawing.__file__).resolve().parent
-    for name in ('pencil_presets.json','pencil_contact_profile.json','registration_profile.json','tone_scale.json'):
+    for name in ('pencil_presets.json','pencil_contact_profile.json','tone_scale.json'):
         assert (pkg/'data'/name).is_file(), name
+    assert not (pkg/'data'/'registration_profile.json').exists()
