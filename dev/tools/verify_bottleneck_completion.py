@@ -16,6 +16,7 @@ from verify_repository_paths import find_machine_path_leaks
 
 
 ROOT = Path(__file__).resolve().parents[2]
+R23_PRE_RETIREMENT_COMMIT = "4074a2080ad739acdf179bb0784869a8831c5ef0"
 
 
 def _load(path: Path):
@@ -30,6 +31,20 @@ def _sha(path: Path) -> str:
         for block in iter(lambda: fh.read(1024 * 1024), b""):
             h.update(block)
     return h.hexdigest()
+
+
+def _git_blob(ref: str, path: str) -> str:
+    result = subprocess.run(
+        ["git", "rev-parse", f"{ref}:{path}"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise AssertionError(
+            f"cannot resolve frozen Git evidence {ref}:{path}: {result.stderr.strip()}"
+        )
+    return result.stdout.strip()
 
 
 def _nonblank(path: Path) -> None:
@@ -70,21 +85,32 @@ def check_s10() -> None:
 
 
 def check_s11_s12() -> None:
-    source = ROOT / "skills/img2drawing/src/img2drawing"
-    for rel in ("review/resolved_form.py", "review/adaptive_evidence.py", "review/preview.py", "stages/identity_finish.py"):
-        if not (source / rel).is_file():
-            raise AssertionError(f"missing S11/S12 implementation: {rel}")
+    """Verify closed S11/S12 evidence without requiring retired R23 code in current src."""
+
+    frozen_blobs = {
+        "skills/img2drawing/src/img2drawing/review/resolved_form.py": "491eeb6d59b9a8848becba5ace9a441f030bf34f",
+        "skills/img2drawing/src/img2drawing/review/adaptive_evidence.py": "ad4765d8a2e241f2a5d79b9fa6bc9cf358599cce",
+        "skills/img2drawing/src/img2drawing/review/preview.py": "88175bb780d551499506eadbd5da469b5be3b0f7",
+        "skills/img2drawing/src/img2drawing/stages/identity_finish.py": "83dc34071cef136b55929a07e79a570543b0d962",
+        "dev/tests/test_resolved_form.py": "bcbb87d59f04478900c867b02309f7599ba4c5a6",
+    }
+    for path, expected_blob in frozen_blobs.items():
+        actual_blob = _git_blob(R23_PRE_RETIREMENT_COMMIT, path)
+        if actual_blob != expected_blob:
+            raise AssertionError(
+                f"S11/S12 frozen implementation/test blob drift: {path}: {actual_blob} != {expected_blob}"
+            )
+
+    # These schemas and the closed evidence remain repository-level historical records.
     for rel in ("resolved_form.schema.json", "identity_finish.schema.json", "adaptive_evidence.schema.json"):
         _load(ROOT / "dev/schemas" / rel)
-    env = dict(os.environ)
-    env["PYTHONPATH"] = str(ROOT / "skills/img2drawing/src")
-    env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
-    result = subprocess.run(
-        [sys.executable, "-m", "pytest", "-q", "dev/tests/test_resolved_form.py"],
-        cwd=ROOT, env=env, text=True, capture_output=True,
-    )
-    if result.returncode != 0 or "passed" not in result.stdout:
-        raise AssertionError(f"S11/S12 tests failed:\n{result.stdout}\n{result.stderr}")
+
+    # Current mutable source must not re-grow the retired implementations merely to satisfy
+    # a historical completion gate.
+    source = ROOT / "skills/img2drawing/src/img2drawing"
+    for rel in ("review", "stages"):
+        if (source / rel).exists():
+            raise AssertionError(f"retired S11/S12 runtime unexpectedly returned to current src: {rel}")
 
 
 def check_s14() -> None:
