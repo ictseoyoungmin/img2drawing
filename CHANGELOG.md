@@ -2,6 +2,21 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## Unreleased
+
+### Removed
+
+- Retired the installable `img2drawing.legacy.r23` compatibility namespace from post-v1.0.2 `main` and removed the hidden root fallback for R23-only names such as `DrawingRun` and `StageContract`.
+- The immutable v1.0.2 release/freeze remains historical truth and still records the legacy namespace that shipped in that release. Exact retired source remains recoverable from Git history; `dev/legacy/r23_compat/README.md` records the release commit and blob identities.
+
+### Internal cleanup audit
+
+- `run.py`, `stages/`, `exemplar/`, `review/`, and `registration/` are confirmed compatibility-only R23 runtime roots and are candidates for a separate coordinated removal slice.
+- `canvas/` and `reference/` are likely historical but require one more consumer audit; `observation/` is mixed because `SubjectPalette` remains a documented current specialized capability.
+- See [`dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`](dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md).
+
+This is a compatibility-breaking change for callers that explicitly imported the historical R23 namespace. No new release/version is declared by this cleanup branch.
+
 ## v1.0.2 — Local-first exact timelapse backend
 
 Released 2026-09-09.
