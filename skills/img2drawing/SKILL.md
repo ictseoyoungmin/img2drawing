@@ -64,7 +64,7 @@ leaves:
 SKILL.md
 └─ references/
    ├─ foundation/   truth, precedence, line economy, structural specificity, occlusion inference
-   ├─ modes/        croquis, figure, line, tonal, free draw
+   ├─ modes/        gesture (pure/constructive), croquis, figure, line, tonal, free draw
    ├─ observation/  whole/part reading and measurement boundaries
    ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
    ├─ description/  contour, descriptive geometry, value/edge/material
@@ -85,7 +85,11 @@ For every new task:
 
 1. Establish reference authority and requested drawing mode.
 2. Read `foundation/line-economy.md`, `foundation/structural-specificity.md`, and the chosen
-   mode guide.
+   mode guide. If the user asks for **gesture drawing**, choose `modes/gesture-drawing.md` rather
+   than treating construction gesture as a finish target: an unqualified gesture request defaults
+   to constructive gesture, while explicit quick/pure/line-of-action requests use pure gesture.
+   If the request says to *start* with gesture and continue to a fuller drawing, gesture remains an
+   intermediate pass and does not end the larger task.
 3. For observed work, read `observation/visual-observation.md`. If a material relation disappears
    behind another form, read `foundation/occlusion-inference.md` before deciding that the hidden
    structure simply ends. Use `observation/measuring-boundaries.md` only when measurements or
