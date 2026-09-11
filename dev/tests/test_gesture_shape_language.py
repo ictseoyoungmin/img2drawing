@@ -8,7 +8,7 @@ REFS = ROOT / "skills" / "img2drawing" / "references"
 
 
 def _text(path: str) -> str:
-    return (REFS / path).read_text(encoding="utf-8")
+    return " ".join((REFS / path).read_text(encoding="utf-8").split())
 
 
 def test_gesture_final_marks_do_not_collapse_to_generic_primitives() -> None:
