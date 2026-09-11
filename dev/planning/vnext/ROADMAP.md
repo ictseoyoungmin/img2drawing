@@ -1,119 +1,74 @@
 # img2drawing roadmap
 
-Updated: 2026-09-06
-Workflow: Bottleneck · Production WIP Limit = 1
+Updated: 2026-09-11
+Workflow: Bottleneck · one highest-impact open problem at a time
 
-## Phase A — product foundation — CLOSED
+This roadmap describes the **current unreleased main state after v1.0.2**. Older A/B/D/R plans remain historical evidence; they do not override this sequence.
 
-B00–B18 established one stage-free `DrawingSession`/history core with observed/imaginative/hybrid
-authority, residual correction, bounded evidence, value-region authoring, intent/mode/style/finish
-contracts, canonical render/replay, package/API/schema freeze, and explicit R23 compatibility.
+## Closed foundation
 
-## Phase B — post-freeze drawing alignment — CLOSED
+- v1.0.0 established the first stable stage-free Agent Skill/runtime surface.
+- v1.0.1 absorbed general authoring ergonomics from successful explicit-stroke dogfood.
+- v1.0.2 promoted the exact local-first timelapse backend.
+- Post-v1.0.2 source cleanup physically retired the R23 runtime/legacy cluster from current `src`.
+- Post-v1.0.2 instruction hardening added cause-based residual routing, dynamic instruction-graph reachability, explicit observation-id correction provenance, and pure/constructive gesture modes.
+- CI now separates current runtime checks from frozen historical evidence and no longer runs publish preparation for ordinary main commits.
 
-A1–A8 aligned repository truth, public-root discoverability, runtime isolation, residual routing,
-high-value figure/depth guidance, structural orientation, cross-subject structural specificity,
-and occlusion inference. No second runtime architecture was introduced.
-
-```text
-A1 repository truth
-→ A2 public root alignment
-→ A3 runtime ownership/isolation
-→ A4 cause-based residual routing
-→ A5 hands/grip + foreshortening/depth leaves
-→ A6 orientation/twist hardening
-→ A7 structural specificity + construction revalidation
-→ A8 occlusion inference boundary
-```
-
-## Phase C — v1.0.0 stable baseline — CLOSED
-
-v1.0.0 promoted the A8-aligned system without adding drawing/runtime behavior after the successful
-GPT-6 Astra demonstration. It established a stable evidence boundary rather than claiming formal
-cross-agent/cross-subject validation.
-
-Release evidence includes the real reference-versus-drawing comparison, the canonical 124-frame
-end-to-end timelapse, a 490-action explicit-stroke session summary, zero fill actions, and exact
-canonical PNG/replay final parity.
-
-The subject-specific authoring scripts, coordinates, and control-point notes from the Astra run
-remain evidence only and are not shipped as skill examples.
-
-## Phase D — v1.0.1 Astra-derived absorption — CLOSED
-
-A9 absorbs only reusable product lessons exposed by the successful run:
+## Current sequence
 
 ```text
-A9
-├─ geometry-preserving stroke material retune
-│  └─ img2drawing.vnext.retune_stroke()
-├─ deterministic shared smooth-curve sampling
-│  └─ img2drawing.vnext.sample_catmull_rom()
-├─ continuous-edge pencil handling
-│  └─ continuous_pencil preset; form_pencil unchanged
-├─ semantic authored/correction grouping
-│  └─ guidance only; no stage/lifecycle state
-└─ geometry-residual vs material-residual discipline
-   └─ preserve correct points for material-only corrections
+G01 fresh-worker gesture dogfood
+  ↓
+G02 inspect/final/replay render-input parity
+  ↓
+G03 post-v1.0.2 compatibility and version review
+  ↓
+G04 new freeze / release candidate / clean-install regression
+  ↓
+G05 publish only if all current contracts and release notes agree
 ```
 
-The patch uses the existing `replace_stroke` history action for retuning and adds no persisted
-action kind or schema. Curve helpers remain authoring aids rather than geometry authority, and
-smoothness must stop at real cusps, corners, tangency breaks, component joins, or equivalent
-topology changes.
+### G01 — gesture behavior validation
 
-A9 deliberately does **not** copy subject-specific solution geometry, add model-specific code,
-automatic artistic scoring, answer-template examples, or a new lifecycle. See
-`A9_ASTRA_AUTHORING_ABSORPTION.md`.
+Run two fresh-worker cases against the current installed skill:
 
-## Phase E — fresh integrated validation — NEXT
+1. explicit quick/pure gesture;
+2. unqualified `gesture drawing`, which must default to constructive gesture.
 
-Run the formal sealed campaign owned by `VALIDATION_RELEASE.md`:
+Reject a result that stops at isolated head/ribcage/pelvis construction, omits major visible limb chains/support, or treats a construction scaffold as the requested finished gesture drawing.
 
-```text
-D01 difficult observed croquis
-D02 observed figure / subject recognition
-D03 tonal study
-D04 observed free-draw
-D05 imaginative + hybrid
-D06 cross-agent reproducibility
-```
+### G02 — renderer parity
 
-Fresh workers receive the installed/current skill/package, fresh input when applicable, the user
-request, declared/inferred intent, and documented runtime/output paths. They do not receive the
-Astra answer image, coordinates, scripts, prior session, or evaluator rationale.
+Close the strict xfail for `inspect()` versus final/replay rendering. The fix must normalize the render input across inspection, canonical replay, and fast replay rather than changing only one path or silently changing the frozen v1.0.2 renderer contract.
 
-A lower-quality worker result does not automatically imply another instruction patch. First
-separate product/runtime friction from worker visual-reasoning capability. Reopen the earliest
-responsible A/B premise only when fresh evidence identifies a reusable product defect.
+### G03 — compatibility/version review
 
-## Phase F — consolidation / compatibility / later releases
+Current main contains compatibility-breaking post-v1.0.2 changes, including stricter `finish()` preconditions and physical retirement of R23 implementation namespaces. Determine the next release version from documented support policy and actual public compatibility; do not reuse `1.0.2` for new artifacts.
 
-After evidence justifies it:
+Deprecated pre-0.6.0rc2 root shims are intentionally separate from the R23 retirement and should be removed only if that release explicitly chooses to break them.
 
-```text
-R01 consolidate repeated evidence-backed fixes
-R02 representative regression
-R03 physical R23 retirement or bounded migration-only adapter decision
-future release claims limited to demonstrated evidence
-```
+### G04 — release hardening
 
-## Release principles
+For the selected next version:
 
-- a stable version may publish a bounded, explicitly scoped demonstrated capability;
-- broader cross-agent/cross-subject claims require the corresponding fresh evidence;
-- drawing quality remains Agent-owned rather than mechanically certified;
-- package/API/persistence/replay truth must remain deterministic and testable;
-- showcase material is evidence for humans, never hidden worker answer geometry;
-- one shared runtime and correction model remains the architectural constraint;
-- successful-worker mechanics may be absorbed only when they generalize beyond the demonstrated subject.
+- create a new contract freeze rather than editing `v1.0.2-A10`;
+- run full active tests, current-runtime isolation, dynamic instruction-graph reachability, package/sdist/wheel audit, clean install, replay/timelapse parity, and frozen-history verification;
+- ensure docs, package metadata, release notes, support policy, and CI all describe the same state.
+
+### G05 — publish
+
+Publish only from an explicit new release manifest. The immutable v1.0.2 tag, release notes, and historical freeze remain unchanged.
+
+## Later / optional
+
+- remove deprecated root compatibility shims in a separately versioned compatibility cleanup;
+- add representative teaching examples only when they are good enough not to become accidental answer templates;
+- expand fresh cross-agent/cross-subject validation when needed for broader product claims.
 
 ## Authority
 
-- current state: `STATUS.md`
-- stable v1.0.1 notes: `../../../docs/releases/v1.0.1.md`
-- A9 absorption record: `A9_ASTRA_AUTHORING_ABSORPTION.md`
-- curated Astra demo: `../../../showcase/entries/croquis-sniper-girl-astra-v1/`
-- formal D01–D06 contracts: `VALIDATION_RELEASE.md`
-- stable contract snapshot: `../../release/vnext/CONTRACT_FREEZE.json`
-- deployable drawing guidance: `../../../skills/img2drawing/SKILL.md` + references
+- current state: `STATUS.md`;
+- unreleased changes and known issues: `../../../CHANGELOG.md`;
+- deployable behavior: `../../../skills/img2drawing/SKILL.md` + references;
+- latest released notes: `../../../docs/releases/v1.0.2.md`;
+- immutable released contract: `../../release/vnext/CONTRACT_FREEZE.json`.
