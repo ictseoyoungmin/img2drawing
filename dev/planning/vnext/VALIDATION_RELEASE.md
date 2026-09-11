@@ -22,6 +22,13 @@ fresh evidence
 Dogfood validates the existing product; it must not create subject-specific runtime branches,
 worker-specific answer paths, or a second drawing workflow.
 
+## Sealed-input assets
+
+When a reproducible sealed run is useful, reuse `dev/dogfood/vnext-template/` and the current
+schemas rather than inventing a task-local protocol. `dev/release/vnext/CONTRACT_FREEZE.json`
+remains the immutable v1.0.2 release snapshot for historical comparison; current validation must
+also account for unreleased main differences documented in `CHANGELOG.md` and `STATUS.md`.
+
 ## V01 — Gesture mode behavior
 
 Run two fresh-worker cases with the current installed skill:
