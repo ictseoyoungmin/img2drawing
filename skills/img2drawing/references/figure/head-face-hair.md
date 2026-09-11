@@ -8,12 +8,21 @@ Read crown, forehead, brow/temple turn, cheek, jaw, chin, ear region, and neck h
 one connected silhouette. Preserve the observed asymmetry, tilt, foreshortening, and
 cranial-to-jaw proportion.
 
+In sparse gesture work, facial features may be omitted, but head direction may not disappear with
+them. Preserve at least enough crown/face/jaw relation, side-plane indication, or face-axis evidence
+to keep the head from reading as an orientationless circle. A cranial search sphere is temporary
+reasoning; if it remains visible in the final gesture, reshape or retire it unless the subject truly
+supports that circular silhouette.
+
 ## Face
 
 Place features by relation: eye line/orientation, brow, nose direction and length, mouth
 placement, chin distance, and visible side-plane width. Draw only the feature lines that
 are visible and informative, but place those lines precisely. A few accurate marks are
 better than many generic eye/nose/mouth ticks.
+
+A face cross-axis is an orientation aid, not a substitute for head volume. It should agree with the
+crown, jaw/chin direction, and visible side-plane width rather than floating inside a generic circle.
 
 ## Hair
 
