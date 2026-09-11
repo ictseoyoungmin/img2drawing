@@ -1,239 +1,132 @@
-# img2drawing vNext architecture contract
+# img2drawing architecture contract
 
-Status: **FROZEN FOR D01–D06**
-Updated: 2026-09-02
+Status: **CURRENT MAIN INVARIANTS**
+Updated: 2026-09-11
 
-This document owns architecture invariants shared by the closed B00–B18 implementation
-(including B01-R1/B07-R1). `CONTRACT_FREEZE.json` pins the machine-readable public and
-persisted surface. `ROADMAP.md` owns sequencing; fresh visual dogfood begins only with an
-explicitly started D01.
+This document describes durable architecture invariants for current `main`. It is not a release
+freeze. The immutable released v1.0.2/A10 snapshot remains in
+`dev/release/vnext/CONTRACT_FREEZE.json` and may intentionally differ from current main.
 
-## 1. One canonical core
+## 1. One canonical orchestration core
 
-One `DrawingSession` is the canonical orchestration authority:
-
-```text
-DrawingSession
-  ├─ observe
-  ├─ draw / draw_many
-  ├─ replace / replace_segment / soft_lift / delete
-  ├─ fill_region / replace_fill_region
-  ├─ inspect
-  ├─ record_residual / record_correction
-  ├─ intent / intent_history / set_intent
-  ├─ checkpoint / resume
-  ├─ render / replay / export
-  └─ finish
-
-PoseObservation + ConstructionMark* → InitialConstruct
-InitialConstruct → author_initial_construct → inspect_initial_construct
-```
+`DrawingSession` is the canonical orchestration authority for new work:
 
 ```text
-Agent observation / authored intent
-              ↓
-DrawingSession → one authoritative action history → StrokeIR snapshot
-                                                     ├─ renderer
-                                                     ├─ inspection
-                                                     └─ replay/output
+observe / declare intent
+→ author explicit marks
+→ render + inspect
+→ choose residual
+→ correct responsible authored representation
+→ inspect again
+→ finish
+→ replay/export
 ```
 
-- `DrawingSession` and shared history are the only session/action truth.
-- Renderer and inspection consume the same read-only authored snapshot.
-- B02+B03 `InspectionSheet` is the only vNext inspection implementation.
-- Geometry and value changes are explicit authored history actions.
-- The Agent owns visual acceptance and highest-impact residual selection.
+One authoritative action history feeds current-state reconstruction, rendering, inspection,
+provenance, replay, and timelapse. Do not create a second session/history/renderer/inspection tree
+for a mode, style, subject, worker, or validation case.
 
-## 2. Stage-free lifecycle
+## 2. Stage-free product model
+
+Pn stages, stage cursors, advance/close/reopen runtime state, and stage review objects are not part
+of the canonical runtime. Ordered drawing guidance lives in the instruction graph and remains
+reversible when evidence disproves an earlier premise.
+
+Current installable source has no R23 orchestration/runtime/legacy namespace. Historical R23 source
+and closure evidence live in Git history plus `dev/legacy/` and `dev/release/r23/`; they are not a
+supported current orchestration path.
+
+## 3. Agent visual authority
+
+The Agent owns visual interpretation and artistic acceptance. Observation tools, crops, grids,
+measurements, overlays, palette samples, renderers, and tests provide evidence; they do not decide
+pose, identity, anatomy, topology, correspondence, or final artistic quality.
+
+For observed work, the subject/reference is geometry authority. For imaginative work, declared
+intent is authority. Hybrid work explicitly separates preserved reference constraints from authored
+transformations.
+
+## 4. Structural truth before polish
+
+- construction marks are provisional reasoning aids, not geometry authority;
+- macro pose/form/orientation/balance/overlap/contact outrank local polish;
+- inherited construction must be revalidated before downstream description;
+- hidden continuity may be inferred only as far as needed to keep visible anchors coherent;
+- unsupported hidden appearance must not be rendered as observed;
+- line economy reduces redundant marks, not observed structural specificity;
+- broad tone may reinforce credible form but may not manufacture missing structure.
+
+## 5. Correction provenance
+
+Residuals and corrections are provenance records, not scores or lifecycle state.
+
+A correction must mutate the actual drawing and then be evaluated from fresh evidence. For a
+residual bound to an observation, repairing mutation actions must carry the residual's
+`observation_id` when resolving that residual. A later unrelated observation must not silently
+replace that provenance link.
+
+Repeated failure of one local correction is a routing signal: re-check the parent premise instead
+of accumulating more local strokes.
+
+## 6. Completion
+
+`finish()` records an Agent completion decision; it does not certify artistic quality.
+
+Current main requires:
+
+- a non-blank current drawing state;
+- a final inspection bound to the current state;
+- an explicit evidence-read record showing that the Agent actually inspected that final evidence;
+- no open residual records;
+- honest `accepted_limitations` only for non-blocking weaknesses.
+
+`accepted_limitations` cannot bypass an open material residual.
+
+## 7. Render / replay contract
+
+Final PNG, canonical replay, and timelapse use one persisted `RenderProfile` family. Replay remains
+end-to-end from action 0 through the latest action with a declared sampling policy.
+
+Known current defect: inspection and final/replay can differ by a few luminance levels because
+compatibility-stage metadata participates in hand-dynamics seeding on history reconstruction. The
+fix must normalize render input coherently across inspection, canonical replay, and fast replay;
+do not patch only one output path.
+
+## 8. Instruction graph contract
+
+`skills/img2drawing/SKILL.md` is the root router. It loads
+`skills/img2drawing/references/INDEX.md` and then only the smallest relevant leaves.
+
+Path convention:
+
+- in `SKILL.md`, routed Markdown paths are skill-root-relative and start with `references/`;
+- in `references/INDEX.md`, leaf paths are references-root-relative;
+- `dev/tools/verify_instruction_graph.py` derives the leaf set from the actual
+  `references/**/*.md` tree, rejects broken/bare routed paths, and rejects orphan leaves.
+
+Gesture drawing has two explicit finish modes: pure gesture and constructive gesture. An
+unqualified gesture request defaults to constructive gesture. A gesture construction pass inside a
+larger requested drawing is not permission to end that larger task.
+
+## 9. Compatibility and release boundary
+
+The latest released stable package is v1.0.2. Current main contains unreleased
+compatibility-breaking changes and still reports package version 1.0.2 until a new release version is
+chosen. Do not publish a new artifact as v1.0.2 and do not rewrite the immutable v1.0.2 freeze.
+
+Deprecated pre-0.6.0rc2 root aliases remain a separate compatibility surface. Their future removal
+requires an explicit versioned compatibility decision.
+
+## 10. Review triggers
+
+Stop and re-check this contract if a change introduces any of the following:
 
 ```text
-create → observe/declare → draw → inspect → choose residual
-       → correct → inspect → repeat → finish
+second session/history/renderer/inspection implementation
+runtime drawing stages or automatic artistic PASS/FAIL
+raster-only geometry mutation outside authoritative history
+subject- or model-specific answer geometry in the skill
+style/output logic that silently overrides reference geometry
+legacy orchestration returning to the normal route
+release documents that describe mutable main as an immutable past release
 ```
-
-The canonical lifecycle has no P1–P6, `stage_start`, `advance`, `close_stage`,
-`reopen_stage`, or downstream invalidation. Ordered drawing grammar is authoring guidance,
-not a runtime cursor or gate.
-
-## 3. Durable invariants
-
-- Every reference/mode/finish/style intent shares one session, history, renderer,
-  inspection, and correction core.
-- Public vNext code does not branch on Pn or a stage registry.
-- Inspection binds exact evidence and state digests; stale evidence cannot represent
-  current truth.
-- Checkpoints are portable and atomic and preserve history/evidence/intent/correction
-  continuity after resume.
-- A correction action is not proof of improvement; it requires fresh render/inspection.
-- `ResidualRecord` binds an Agent-selected mismatch to evidence and responsible context.
-  `CorrectionRecord` binds explicit actions to fresh after-evidence. Neither is a score or
-  lifecycle state.
-- Macro pose, form, and composition residuals outrank detail/style polish.
-- **Form before value:** major limb, torso, clothing volume, overlap, and prop contact
-  remain legible without tone. A value primitive cannot replace missing structure.
-- Broad value is one authored region decision such as `fill_region()`, not hundreds of
-  persisted generated microstrokes.
-- A disproved value premise is revised append-only through
-  `DrawingSession.replace_fill_region()` and
-  correction provenance.
-
-## 4. Observation and measurement authority
-
-Observation tools assist Agent judgment; they do not decide correspondence or geometry.
-
-- Crop, grid, plumb, angle, distance, and profile answer bounded read-only questions.
-- A luminance profile sees luminance difference, not an invisible material boundary.
-- `SubjectPalette` compares Agent-identified material patches and ambiguous pairs; it is
-  not a semantic detector.
-- Name the two forms or materials a proposed boundary separates before drawing it.
-- Never invent an unseen termination from an anatomy default.
-- A correction is a new premise and repeats the relevant observation question.
-
-The first subject read must explicitly record body view, torso turn, near/far side,
-visibility, occlusion, overlap order, and uncertainty. In a turned figure, exposed
-shoulder/upper-arm/forearm/elbow volume and a partly pocket-occluded hand are macro
-relationships; do not collapse a visibly thick arm into a narrow contour because the hand
-is hidden.
-
-## 5. Evidence budget
-
-`EvidencePolicy` quick/focused/deep values are presentation/read budgets, not stages:
-
-```text
-quick   → whole sheet only; no extra ROI/guide/grid/measurement
-focused → exactly 1–3 prioritized ROI; no extra guide/grid/measurement
-deep    → up to 3 ROI + guide/grid/measurement; escalation_reason required
-```
-
-`EvidenceTelemetry` records inspection/read/artifact/review-turn/elapsed work. It never
-chooses geometry, residual priority, or artistic PASS.
-
-## 6. Intent and reference authority
-
-`DrawingIntent`, `ModeGuide`, `FinishGuide`, and `StyleGuide` are portable plain data:
-
-```text
-DrawingIntent
-  ├─ reference_mode: observed | imaginative | hybrid
-  ├─ drawing_mode: croquis | figure_drawing | tonal_study | line_study | free_draw
-  ├─ finish_intent: pose | subject | form_light | expressive
-  ├─ style_profile: preset/custom identifier
-  └─ provenance
-```
-
-The axes are independent; none is lifecycle state. `IntentChangeRecord` preserves each
-intent snapshot, reason, and history cursor append-only. Changing intent never rewrites
-geometry automatically.
-
-B13 completes these authority meanings through one correction core:
-
-- **observed:** material mismatch between readable subject and drawing;
-- **imaginative:** mismatch between declared intent/composition/shape goal and drawing;
-- **hybrid:** mismatch against a preserved reference constraint or explicit transformation.
-
-Imaginative/hybrid work cannot invent subject overlays or fake measurement authority.
-
-## 7. Mode, finish, and style
-
-`ModeGuide` may declare primary observations, recommended grammar, omissions, finish
-emphasis, and completion questions. It cannot own phase count, cursor, `advance`,
-`close`, or PASS. The deliberately small B14 target is:
-
-```text
-croquis
-figure_drawing
-tonal_study
-line_study
-free_draw
-```
-
-B09 connects `pose | subject | form_light | expressive` to distinct authoring guidance
-without a `FinishStage` or P7. Recognition is relational.
-
-```text
-StyleGuide    = how the Agent authors marks
-RenderProfile = how the renderer materializes authored marks
-```
-
-Style is not a post-filter and cannot override subject geometry. B15 retains one base
-plus explicit overrides; it does not create an inheritance graph or general DSL.
-
-## 8. Completion
-
-B10 `FinishRecord` contains:
-
-```text
-intent_digest
-drawing_state_hash
-final_inspection_id
-history_cursor
-accepted_limitations
-rationale
-```
-
-It is Agent decision provenance, not an automatic artistic certificate. Later material
-mutation, intent change, stale inspection, or a new material residual invalidates its
-current status.
-
-## 9. Replay and output parity
-
-One canonical history and versioned `RenderProfile` must reproduce final PNG, latest
-replay state, and the final GIF frame as the same output family. The profile binds at
-least renderer ID/version, canvas, material/pencil, paper/grain, supersampling, seed
-domain, compositing, and encoding. Timelapse uses action 0 through latest with a declared
-sampling policy such as `every_n`.
-
-## 10. Persistence and legacy boundary
-
-- R23 baseline `25ec4544e86fe37fc28d64575df145a1b711d63a` is read-only history.
-- `img2drawing` is canonical; R23 is explicit at `img2drawing.legacy.r23`.
-- Canonical imports and wildcard exports do not load or advertise stage/review/reopen/Pn
-  persistence.
-- R23 checkpoint v1–v3 resume/migration reuses the existing R23 validator and shared
-  action/history implementation.
-- Unsupported schemas fail with versioned, actionable guidance.
-- Migration preserves subject/action/source-state lineage. It records absent historical
-  renderer identity honestly and binds an explicit target `RenderProfile`.
-- Stage progress, stage reviews, reopens, and legacy finish claims remain historical and
-  never become vNext authority.
-- No `core_v2`, alternate history, or copied renderer/tool tree is allowed.
-- B12 performs no physical deletion.
-- Physical R23 retirement occurs only at R03 after D01–D06 and R02 regression—not B18.
-
-## 11. Implementation/dogfood boundary
-
-B09–B18 may close with deterministic or synthetic fixtures, migration/compatibility
-fixtures, unit/integration/checkpoint/replay/packaging regression, preserved historical
-evidence, and direct contract/code review.
-
-They may not use new unseen-subject dogfood as a closure gate, run a cross-agent quality
-campaign, present an answer image or subject-specific coordinate table as generic proof,
-or add a parallel workflow to fit one dogfood result. Full fresh validation starts at
-D01 after B18; defects reopen the responsible slice.
-
-## 12. Architecture review triggers
-
-Stop and re-check this contract if any of the following appears:
-
-```text
-ModeStage / StyleStage / FinishStage
-advance_mode / close_mode / mode_complete / style_complete
-automatic likeness/style/artistic PASS
-per-mode session/history/renderer/inspection copies
-legacy Pn returning to the normal route
-raster-only geometry mutation outside history
-style renderer/post-filter overriding geometry truth
-imaginative mode inventing reference authority
-```
-
-## 13. Frozen implementation surface
-
-```text
-B09–B17  CLOSED product and package capabilities
-B18      CLOSED dogfood-ready contract freeze
-D01–D06 NEXT validation; defects REOPEN the responsible B-slice
-```
-
-Private helpers remain changeable, but a frozen public/schema/profile/ownership change
-requires an explicit responsible-slice reopen and version/schema update. D01–D06 own full
-visual robustness claims.

@@ -1,25 +1,22 @@
-# Migration from R23
+# R23 migration boundary
 
-New sessions should use `DrawingSession`. Do not translate Pn progress, reviews, reopen
-state, or historical PASS claims into vNext authority.
+## Current main
 
-Inspect or migrate an old checkpoint through the explicit boundary:
+Current post-v1.0.2 `main` no longer installs `img2drawing.legacy.r23` or the old R23
+run/stage/review orchestration. Do **not** direct current users to import or call
+`inspect_checkpoint()` / `migrate_checkpoint()` from that namespace; those instructions are no
+longer valid on current main.
 
-```python
-from img2drawing.legacy.r23 import inspect_checkpoint, migrate_checkpoint
+Historical R23 source remains recoverable from Git history. Preserved release evidence lives under
+`dev/release/r23/`, and the retired runtime-cluster pointer is documented under `dev/legacy/`.
 
-info = inspect_checkpoint("old-run/session/checkpoint.json")
-session = migrate_checkpoint(
-    "old-run/session/checkpoint.json",
-    output_dir="migrated-vnext-run",
-)
-```
+## v1.0.2 historical compatibility
 
-The migration preserves shared action/history truth and provenance while leaving stage
-lifecycle facts historical. Inspect the migrated current drawing, declare current intent,
-and establish fresh completion evidence.
+The immutable v1.0.2 release still contained explicit R23 checkpoint inspection/resume/migration
+support, and `CONTRACT_FREEZE.json` records that release-time contract. If an old workflow requires
+that compatibility path, use the immutable v1.0.2 tag/release rather than assuming current main
+still supports it.
 
-R23 migration/support guidance intentionally lives in this maintainer release boundary and
-`dev/release/r23/`; it is not part of the deployable Agent instruction graph. New drawing
-workers should never read legacy migration material unless the task is explicitly about an
-old checkpoint.
+A future release of current main must describe R23 support as retired unless a new, explicitly
+versioned migration adapter is deliberately introduced. Historical stage progress, reviews,
+reopens, or PASS claims never become current `DrawingSession` authority automatically.

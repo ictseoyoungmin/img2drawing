@@ -2,6 +2,8 @@
 
 **Current stable: v1.0.2**
 
+> Development note: `main` contains unreleased post-v1.0.2 hardening, including compatibility-breaking cleanup. The immutable v1.0.2 tag/release remains the stable release; do not treat mutable `main` as a republished v1.0.2 artifact. See [CHANGELOG.md](CHANGELOG.md) for current-main differences.
+
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
 image.

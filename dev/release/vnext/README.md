@@ -1,10 +1,13 @@
-# vNext release/control-plane records
+# v1.0.2 release/control-plane records
 
-This directory contains release, support, migration, and freeze records for maintainers and CI.
-They are deliberately outside `skills/img2drawing/`: a deployed Agent Skill should expose only
-the operating specification, canonical drawing references, runtime source, package metadata, and
-optional curated examples if such examples have actually earned a teaching role.
+This directory contains the immutable **v1.0.2 / A10** release freeze plus maintainer-facing
+support/migration notes around that release. `CONTRACT_FREEZE.json` is the machine-readable
+released snapshot and must not be rewritten to describe later `main` changes.
 
-Files here may describe package versions, public API snapshots, compatibility windows, or
-validation freezes. They are repository control-plane records, not drawing guidance and not part
-of the distributable skill attention surface.
+Current `main` is post-v1.0.2 and intentionally differs from this freeze: the R23 runtime/legacy
+namespace has since been physically retired, finish/evidence contracts have hardened, and the
+instruction graph has continued to evolve. Current repository truth lives in
+`dev/planning/vnext/STATUS.md` and `CHANGELOG.md` until a new version/freeze is created.
+
+Files here are control-plane/history records, not deployable drawing guidance and not part of the
+Agent Skill attention surface.

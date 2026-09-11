@@ -1,24 +1,27 @@
-# v1.0.1 stable contract freeze
+# v1.0.2 stable contract freeze
 
-Freeze ID: **v1.0.1-A9-2026-09-06**
+Freeze ID: **v1.0.2-A10-2026-09-09**
 
-`CONTRACT_FREEZE.json` is the machine-readable stable snapshot. The implementation boundary was
-established through B18, the public-root alignment was hardened through A2, the deployable
-instruction graph through A8, and A9 absorbs only generalized authoring mechanics demonstrated by
-the Astra capability run.
+`CONTRACT_FREEZE.json` is the immutable machine-readable release snapshot for v1.0.2. It records
+package version `1.0.2`, public contract `DrawingSession/1.0.2-vnext`, release revision `A10`, and
+the renderer/API/schema surface that was released on 2026-09-09.
 
-The v1.0.1 patch adds specialized authoring utilities and one low-taper pencil preset without
-changing persisted schemas, canonical `DrawingSession` ownership, the narrow package-root export
-surface, `RenderProfile`, or R23 checkpoint compatibility. The new helpers emit existing drawing
-history actions rather than introducing a second edit model.
+v1.0.2 promoted the validated local-first exact timelapse backend while preserving whole-export
+canonical fallback for unsupported histories. Persisted drawing/session schemas and the public
+`export_timelapse()` method signature remained compatible with v1.0.1.
 
-The stable package identity is `1.0.1` and the public contract identifier is
-`DrawingSession/1.0.1-vnext`.
+At the time of this freeze, R23 compatibility still existed and therefore appears in the frozen
+snapshot. The similarly named `img2drawing.core.session.DrawingSession` was a preserved low-level
+record and was **not root-exported**; the released canonical orchestration owner remained
+`img2drawing.vnext.session.DrawingSession`. R23 compatibility was separately recorded under
+`img2drawing.legacy.r23`.
 
-The freeze protects public interfaces and persisted meanings; it does not turn mechanical CI into
-an artistic-quality score. The curated Astra demo remains positive capability evidence, while
-formal D01-D06 cross-subject/cross-agent validation remains incomplete.
+That is **historical release truth**, not current-main support truth. Post-release main has
+physically retired the R23 runtime/legacy namespace and must not mutate this freeze to pretend those
+later removals were part of v1.0.2.
 
-There remains one canonical session/history/inspection/render/output core. The similarly named
-`img2drawing.core.session.DrawingSession` is a preserved low-level legacy replay record and is not root-exported; R23 orchestration stays behind `img2drawing.legacy.r23` until a later bounded
-retirement decision.
+Likewise, later finish/evidence and instruction-graph hardening belong to unreleased post-v1.0.2
+main. A future release must create a new freeze/version rather than editing this record.
+
+This freeze protects released public/persisted meanings and deterministic render/replay evidence; it
+does not certify artistic quality.

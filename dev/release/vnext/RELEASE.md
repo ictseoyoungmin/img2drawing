@@ -1,54 +1,39 @@
-# 1.0.1 stable release notes
+# img2drawing v1.0.2 maintainer release record
 
-img2drawing 1.0.1 publishes the A9 authoring-ergonomics patch over the v1.0.0 Astra-success
-baseline. The release absorbs only generalized mechanics demonstrated by that run; it copies no
-subject-specific answer geometry.
+Released: 2026-09-09
+Freeze: `v1.0.2-A10-2026-09-09`
+Public contract: `DrawingSession/1.0.2-vnext`
 
-## What changed from 1.0.0
+v1.0.2 promotes the validated local-first incremental timelapse backend to the normal
+`DrawingSession.export_timelapse()` path for eligible stroke histories while preserving whole-export
+canonical fallback for unsupported semantics or unavailable prerequisites.
 
-- `img2drawing.vnext.retune_stroke()` preserves authored geometry while changing material/tool
-  behavior through the existing replacement history action;
-- `img2drawing.vnext.sample_catmull_rom()` provides deterministic shared smooth-curve sampling;
-- `continuous_pencil` provides low endpoint taper for genuinely continuous observed boundaries;
-- instruction guidance distinguishes geometry residuals from material residuals, groups related
-  marks by coherent semantic problems, and makes curve smoothness subordinate to observed topology.
+## Released changes
 
-The package-root API, `DrawingSession` method set, persisted schema identifiers, canonical
-`RenderProfile`, and R23 checkpoint compatibility remain unchanged in structure. The stable public
-contract identifier advances to `DrawingSession/1.0.1-vnext` with the package version.
+- persistent content-addressed stroke-patch reuse;
+- edit-aware dirty-region recomposition and resampling;
+- atomic lossless delta-frame staging instead of mandatory full PNG frame materialization;
+- persistent GIF palette reuse;
+- persisted `RenderProfile` paper/material parameters remain authoritative;
+- canonical fallback remains whole-export and fail-closed;
+- public `export_timelapse()` signature and persisted drawing/session schemas remain compatible with
+  v1.0.1.
 
-## Astra evidence used
+## Validation
 
-The v1.0.0 curated GPT-6 Astra observed-croquis run remains the source evidence: 490 actions,
-358 stroke additions, 120 replacements, 12 deletions, 0 fill actions, 124 canonical replay frames,
-and exact canonical PNG/replay final parity.
+Release CI completed with 253 passed / 3 skipped. The preserved real `window-study` and the
+post-release repository exemplar demonstrated canonical/fast final-frame pixel exactness; detailed
+numbers live in `docs/releases/v1.0.2.md` and the timelapse benchmark records.
 
-A9 specifically uses implementation-level signals from that run: 111 material-only replacements,
-accidental geometry changes possible when a correct smooth path was manually resubmitted, repeated
-low-taper continuity corrections, a task-local Catmull-Rom helper, and effective semantic-group
-correction behavior.
+## Compatibility boundary at release time
 
-See `../../../showcase/entries/croquis-sniper-girl-astra-v1/README.md`,
-`../../../docs/releases/v1.0.1.md`, and
-`../../planning/vnext/A9_ASTRA_AUTHORING_ABSORPTION.md`.
+The v1.0.2 freeze still contained explicit R23 compatibility. `CONTRACT_FREEZE.json` records that
+released state exactly and remains immutable.
 
-## What 1.0.1 does not claim
+Current main has since physically retired R23 implementation namespaces and hardened finish,
+evidence, residual-provenance, CI, and instruction-graph behavior. Those changes are **not** part of
+v1.0.2 and require a future version before publication.
 
-- D01-D06 formal sealed validation is not complete;
-- cross-agent or cross-subject statistical generality is not claimed;
-- Astra subject-specific coordinates/control-point scripts are not shipped as worker examples;
-- visual quality remains Agent capability plus instruction/runtime affordance, not an automatic
-  runtime PASS score;
-- semantic groups are not stages or persisted lifecycle state.
+## Human-facing release notes
 
-## Stable contracts
-
-- `DrawingSession` remains the canonical orchestration surface;
-- observed, imaginative, and hybrid authority share one session/history/correction/output core;
-- `DrawingSession/1.0.1-vnext` is the stable package public-contract identifier;
-- persisted schema identifiers remain unchanged from v1.0.0;
-- package-root exports remain unchanged from v1.0.0;
-- R23 remains explicit compatibility only;
-- `CONTRACT_FREEZE.json` pins the stable package/API/schema/render boundary.
-
-The next integrated step is fresh sealed D01 validation.
+See `../../../docs/releases/v1.0.2.md` and `../../../CHANGELOG.md`.

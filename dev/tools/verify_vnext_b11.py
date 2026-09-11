@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verification gates for B11 canonical render/replay/GIF parity."""
+"""Verification gates for historical B11 canonical render/replay/GIF parity."""
 
 from __future__ import annotations
 
@@ -55,10 +55,8 @@ def closure() -> None:
     assert all(path.is_file() for path in required)
     b11 = required[3].read_text(encoding="utf-8")
     b12 = required[4].read_text(encoding="utf-8")
-    status = (ROOT / "dev/planning/vnext/STATUS.md").read_text(encoding="utf-8")
     assert "State: **CLOSED**" in b11 and "- [ ]" not in b11
-    assert "State: **ACTIVE**" in b12
-    assert "ACTIVE:   B12" in status and "B11" in status
+    assert b12.startswith("# B12")
     print("B11_CLOSURE_VERIFICATION_PASS")
 
 
