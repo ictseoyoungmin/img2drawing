@@ -42,7 +42,7 @@ def main() -> None:
     assert "## Unreleased" in changelog
     assert "RELEASED STABLE:  v1.0.2" in status
     assert "R23 runtime/legacy namespace physically retired" in status
-    assert "post-v1.0.2 unreleased hardening" in roadmap
+    assert "current unreleased main state after v1.0.2" in roadmap
     assert "G01 fresh-worker gesture dogfood" in roadmap
     assert "CURRENT MAIN INVARIANTS" in contract
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
