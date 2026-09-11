@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verification gates for the B10 intent-aware completion slice."""
+"""Verification gates for the historical B10 intent-aware completion slice."""
 
 from __future__ import annotations
 
@@ -50,6 +50,8 @@ def full() -> None:
 
 
 def closure() -> None:
+    """Verify B10's frozen planning evidence without asserting a historical current-status state."""
+
     required = (
         ROOT / "skills/img2drawing/references/review/completion.md",
         ROOT / "dev/fixtures/vnext-b10/run.py",
@@ -60,10 +62,8 @@ def closure() -> None:
     assert all(path.is_file() for path in required)
     b10 = required[3].read_text(encoding="utf-8")
     b11 = required[4].read_text(encoding="utf-8")
-    status = (ROOT / "dev/planning/vnext/STATUS.md").read_text(encoding="utf-8")
     assert "State: **CLOSED**" in b10 and "- [ ]" not in b10
-    assert "State: **ACTIVE**" in b11
-    assert "ACTIVE:   B11" in status and "B10" in status
+    assert b11.startswith("# B11")
     print("B10_CLOSURE_VERIFICATION_PASS")
 
 
