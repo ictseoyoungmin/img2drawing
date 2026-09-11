@@ -21,6 +21,29 @@ When observation supports them, preserve:
 These relations may be stated with sparse marks, but they may not be replaced by generic circles,
 boxes, rails, tubes, or other convenience symbols that change the observed structure.
 
+## Reasoning primitives are disposable
+
+A construction primitive is allowed only as temporary reasoning. It does not become valid visible
+geometry by default.
+
+If a circle, ellipse, bean, box, wedge, polygon, or other shorthand remains in the drawing after its
+reasoning job is done, ask whether its visible shape still preserves the subject's actual direction,
+volume, asymmetry, and transitions. If not, retire or reshape it.
+
+For organic figure construction in particular:
+
+- head direction must not collapse into an orientationless circle when crown/face/jaw information
+  is readable;
+- ribcage turn should normally read through a rounded occupied volume, flowing centerline or
+  cross-direction, overlap, and width change rather than arbitrary hard facets;
+- pelvis should normally read as a bowl/soft wedge with tilt, depth, and leg-attachment direction
+  rather than a flat triangle, polygon, or plate;
+- hard corners and plane breaks belong only where the observed subject or declared design actually
+  supports them.
+
+Sparse drawing remains specific when each retained mark carries real structural information.
+Geometric simplification that changes the subject into diagram symbols is not line economy.
+
 ## What may be deferred
 
 Secondary detail may be postponed when it does not decide the structural read, including:
