@@ -58,7 +58,8 @@ pose, topology, contact, depth, or a downstream anchor.
 ## Instruction graph
 
 `SKILL.md` is the router. Read `references/INDEX.md`, then load only the smallest relevant
-leaves:
+leaves. Paths written in this file are relative to the skill root, so reference leaves always
+start with `references/`:
 
 ```text
 SKILL.md
@@ -71,7 +72,7 @@ SKILL.md
    ├─ figure/       head/face/hair, torso/arms, hands/grip, legs/feet, clothing folds
    ├─ props/        attached-object geometry and body contact
    ├─ environment/  ground and contextual structure
-   ├─ review/       residual correction/routing, retirement, completion
+   ├─ review/       residual correction/routing, authored-element navigation, retirement, completion
    ├─ output/       canonical render and replay
    └─ api/          public runtime surface only
 ```
@@ -84,15 +85,15 @@ premise, and skip leaves that do not own the current problem.
 For every new task:
 
 1. Establish reference authority and requested drawing mode.
-2. Read `foundation/line-economy.md`, `foundation/structural-specificity.md`, and the chosen
-   mode guide. If the user asks for **gesture drawing**, choose `modes/gesture-drawing.md` rather
+2. Read `references/foundation/line-economy.md`, `references/foundation/structural-specificity.md`, and the chosen
+   mode guide. If the user asks for **gesture drawing**, choose `references/modes/gesture-drawing.md` rather
    than treating construction gesture as a finish target: an unqualified gesture request defaults
    to constructive gesture, while explicit quick/pure/line-of-action requests use pure gesture.
    If the request says to *start* with gesture and continue to a fuller drawing, gesture remains an
    intermediate pass and does not end the larger task.
-3. For observed work, read `observation/visual-observation.md`. If a material relation disappears
-   behind another form, read `foundation/occlusion-inference.md` before deciding that the hidden
-   structure simply ends. Use `observation/measuring-boundaries.md` only when measurements or
+3. For observed work, read `references/observation/visual-observation.md`. If a material relation disappears
+   behind another form, read `references/foundation/occlusion-inference.md` before deciding that the hidden
+   structure simply ends. Use `references/observation/measuring-boundaries.md` only when measurements or
    ambiguous boundaries are actually needed.
 4. Form one whole-subject structural hypothesis before spending marks on local description.
    Preserve the specific placement, orientation, proportion, envelope, width/depth changes,
@@ -106,12 +107,12 @@ For every new task:
    geometry first.
 6. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
    owns its cause. If the visible part may only be a symptom, use
-   `review/residual-routing.md` to choose the local or upstream premise instead of opening
+   `references/review/residual-routing.md` to choose the local or upstream premise instead of opening
    every leaf.
 7. After every meaningful mutation, inspect a fresh render and use
-   `review/residual-correction.md`.
+   `references/review/residual-correction.md`.
 8. Finish only from current evidence, then export through the output route.
-9. Read `api/public-surface.md` only when code must call the runtime.
+9. Read `references/api/public-surface.md` only when code must call the runtime.
 
 ## Canonical drawing loop
 
@@ -219,7 +220,7 @@ claimed visible edge. Never promote category knowledge into exact hidden appeara
 mechanics, garment construction, or object familiarity may constrain plausibility but cannot reveal
 an unseen fingertip, fold path, seam, fastener, hair tip, surface corner, or terminal.
 
-Read `foundation/occlusion-inference.md` for the full decision procedure and failure signals.
+Read `references/foundation/occlusion-inference.md` for the full decision procedure and failure signals.
 
 ## Descriptive geometry, not symbolic detail
 
@@ -244,7 +245,7 @@ Do not substitute generic symbols for these relationships. In particular:
 - a joint, housing, or connected part is not automatically a generic circle or box;
 - extra strokes around an uncertain form do not make the form more accurate.
 
-Read the matching `description/` and subject leaves when one of these becomes limiting.
+Read the matching `references/description/` and subject leaves when one of these becomes limiting.
 
 ## Head and face policy
 
@@ -252,7 +253,7 @@ When the head is visible enough to matter, preserve its cranial-to-jaw silhouett
 orientation, feature spacing, hair mass, and the few internal turns that make the subject
 recognizable. Spend lines on informative boundaries, not repeated search marks. A few
 accurate exterior and interior lines are preferred over many simplified ones. See
-`figure/head-face-hair.md`.
+`references/figure/head-face-hair.md`.
 
 ## Hands and grip policy
 
@@ -262,7 +263,7 @@ Do not convert the terminal into a mitten and then add finger ticks. When digits
 hand are occluded, infer only the hidden hand/contact relation needed to make the visible grip
 coherent; do not invent exact hidden digits or render them as observed. If the parent arm or prop
 relation is wrong, route upstream rather than deforming the hand to compensate. See
-`figure/hands-and-grip.md`.
+`references/figure/hands-and-grip.md`.
 
 ## Foreshortening and depth policy
 
@@ -271,20 +272,20 @@ near/far order, overlap, supported apparent-width change, and terminal orientati
 unfold a foreshortened limb to the anatomical length you expect. If part of the chain is occluded,
 infer the minimum hidden continuity needed to connect visible anchors, but do not draw the hidden
 contour through the occluder as if it were visible. See
-`construction/foreshortening-and-depth.md`.
+`references/construction/foreshortening-and-depth.md`.
 
 ## Legs and feet policy
 
 Preserve thigh/calf width changes, knee transition, ankle direction, foot orientation,
 heel/toe/sole relationships, footwear structure, stance spacing, and ground contact. Do
 not hide an incorrect lower body behind a generic tapered tube or box foot. See
-`figure/legs-feet.md`.
+`references/figure/legs-feet.md`.
 
 ## Clothing-fold policy
 
 Folds must originate at observed anchors, tension, compression, drape, or contact. Keep
 their exact location and direction even when only a few are drawn. Remove decorative fold
-noise that does not explain form. See `figure/clothing-folds.md`.
+noise that does not explain form. See `references/figure/clothing-folds.md`.
 
 ## Croquis value boundary
 
@@ -311,7 +312,7 @@ and inspect again before accepting the correction.
 When a stronger contour, overlap, or descriptive line takes over a construction cue,
 reduce or remove the obsolete cue instead of stacking another line on top. Preserve a faint
 construction line only when it still contributes rhythm, weight, or an intentional
-handoff. All edits remain history-safe. See `review/stroke-retirement.md`.
+handoff. All edits remain history-safe. See `references/review/stroke-retirement.md`.
 
 ## Runtime boundary
 
@@ -319,7 +320,7 @@ handoff. All edits remain history-safe. See `review/stroke-retirement.md`.
 knowledge belongs in this instruction graph; runtime implementation belongs in `src/`.
 Do not read implementation details to decide what the subject should look like, and do not
 copy implementation code into drawing guides. Skill-facing API guidance names only the
-supported public surface; see `api/public-surface.md`.
+supported public surface; see `references/api/public-surface.md`.
 
 When this skill is invoked to produce a drawing programmatically, every authored mark MUST
 enter through `DrawingSession` (`draw`, `fill_region`, and the other public mutation surface).
@@ -339,8 +340,8 @@ is finish provenance, not a way to leave an open residual unresolved. The final 
 satisfy the requested mode and finish intent without relying on hidden construction notes or a
 checklist to excuse visible errors. The runtime mechanically rejects finishing a blank current
 canvas and finishing on an inspection the Agent never read, but passing those checks is not itself
-a completion judgment; the Agent's read of the actual pixels is. See `review/completion.md`.
+a completion judgment; the Agent's read of the actual pixels is. See `references/review/completion.md`.
 
 Final PNG, replay, and timelapse must use the same persisted render profile. Replay must be
 end-to-end from the initial state through the latest action. See
-`output/render-profile-and-replay.md`.
+`references/output/render-profile-and-replay.md`.
