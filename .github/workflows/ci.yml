@@ -23,6 +23,8 @@ jobs:
         run: |
           python dev/planning/vnext/verify_baseline.py
           python dev/tools/verify_repository_paths.py --json --python
+      - name: Verify current documentation consistency
+        run: python dev/tools/verify_current_documentation.py
       - name: Verify current runtime surface
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
