@@ -11,7 +11,12 @@ canonical fallback for unsupported histories. Persisted drawing/session schemas 
 `export_timelapse()` method signature remained compatible with v1.0.1.
 
 At the time of this freeze, R23 compatibility still existed and therefore appears in the frozen
-snapshot. That is **historical release truth**, not current-main support truth. Post-release main has
+snapshot. The similarly named `img2drawing.core.session.DrawingSession` was a preserved low-level
+record and was **not root-exported**; the released canonical orchestration owner remained
+`img2drawing.vnext.session.DrawingSession`. R23 compatibility was separately recorded under
+`img2drawing.legacy.r23`.
+
+That is **historical release truth**, not current-main support truth. Post-release main has
 physically retired the R23 runtime/legacy namespace and must not mutate this freeze to pretend those
 later removals were part of v1.0.2.
 
