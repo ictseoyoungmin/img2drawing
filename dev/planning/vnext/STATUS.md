@@ -1,92 +1,73 @@
 # img2drawing current status
 
-Updated: 2026-09-06
+Updated: 2026-09-11
 
 ```text
-SYSTEM:           product/API/schema/package foundation frozen through B18; drawing guidance aligned through A9
-PACKAGE:          1.0.1 · DrawingSession/1.0.1-vnext
-STABLE BASELINE:  v1.0.1
-DEMO EVIDENCE:    GPT-6 Astra observed croquis · 490 actions · 0 fill actions · exact PNG/replay final parity
-ACTIVE ON MAIN:   none after v1.0.1 release merge
-NEXT ENGINEERING: fresh sealed D01 validation
-FORMAL DOGFOOD:   D01–D06 not started
+RELEASED STABLE:  v1.0.2 · DrawingSession/1.0.2-vnext · A10
+MAIN:             post-v1.0.2 unreleased hardening; package version intentionally still 1.0.2
+RUNTIME:          stage-free DrawingSession; R23 runtime/legacy namespace physically retired
+INSTRUCTION GRAPH: path-consistent, dynamically reachability-verified, gesture mode split into pure/constructive
+KNOWN OPEN DEFECT: inspect() ↔ final/replay pixel parity strict xfail
+NEXT VALIDATION:  fresh-worker gesture dogfood, then render-input parity closure
+NEXT RELEASE:     assign a new version only after post-v1.0.2 breaking changes are reviewed
 ```
 
-## Current decision
+## Current truth
 
-v1.0.1 is a bounded absorption patch over the v1.0.0 Astra-success baseline. It copies no
-subject-specific solution geometry. A9 converts demonstrated authoring friction into reusable
-mechanics: geometry-preserving stroke retuning, deterministic shared Catmull-Rom sampling, a
-low-taper continuous-boundary pencil preset, semantic authoring scope, and an explicit distinction
-between geometry and material residuals.
-
-The Astra result remains positive capability evidence rather than a worker answer template. It
-demonstrates that a capable worker can preserve whole-subject orientation, counter-turn,
-asymmetry, occlusion/depth, identity-bearing detail, stroke retirement, and deterministic replay
-without broad fill. It does **not** retroactively mark D01-D06 as passed.
-
-## Stable truths
-
+- `v1.0.2` is the latest published immutable release.
+- Current `main` contains unreleased changes after v1.0.2. Do not republish or mutate the v1.0.2 tag/freeze.
+- The installable R23 compatibility namespace and the remaining R23 orchestration/runtime cluster have been removed from current `src`.
+- Historical R23 evidence remains recoverable from Git history and the records under `dev/legacy/` and `dev/release/r23/`.
 - New work uses one stage-free `DrawingSession` orchestration route.
-- The normal package root stays narrow; specialized capability remains in explicit namespaces.
-- The deployable skill is `skills/img2drawing/SKILL.md` plus its progressive-disclosure references.
-- A6 owns orientation/twist and anti-flattening guidance.
-- A7 owns structural specificity and revalidation of inherited construction.
-- A8 separates visible evidence, provisional hidden structure, and rendered visible description.
-- A9 separates geometry correction from material retuning, makes curve smoothness topology-aware,
-  and absorbs semantic authoring/correction grouping without adding lifecycle state.
-- `retune_stroke()` emits the existing replacement history action; no persistence schema was added.
-- `sample_catmull_rom()` is an authoring utility, not reference authority.
-- `continuous_pencil` is a general low-taper continuity aid; `form_pencil` defaults are unchanged.
-- Croquis keeps broad value/dense regular hatch off by default until structure reads without tone.
-- R23 remains explicit compatibility only; physical retirement is still a later bounded decision.
-- Mechanical CI proves package/API/persistence/replay contracts, not artistic quality.
-- The curated Astra showcase is human-facing evidence, not a worker answer template.
+- The deployable drawing authority is `skills/img2drawing/SKILL.md` plus `skills/img2drawing/references/`.
+- `SKILL.md` routes with skill-root-relative `references/...` paths; `references/INDEX.md` routes with references-root-relative paths.
+- `dev/tools/verify_instruction_graph.py` derives the graph from the actual `references/**/*.md` tree and rejects broken, orphaned, or bare routed Markdown paths.
+- Gesture drawing has two explicit finish modes: pure gesture and constructive gesture. An unqualified gesture request defaults to constructive gesture.
+- `finish()` requires a non-blank current drawing and a fresh inspection that the Agent explicitly recorded as read; accepted limitations cannot bypass an open residual.
+- Residual correction provenance requires the repairing mutation to carry the residual observation id when the residual is resolved against that observation.
+- Mechanical CI verifies repository/runtime/package/provenance contracts. It does not issue an artistic-quality verdict.
 
-## Astra evidence boundary
+## Current source surface
 
-The stable demonstration remains:
+The installable top-level implementation is intentionally narrow:
 
 ```text
-worker:          GPT-6 Astra
-reference mode:  observed
-drawing mode:    croquis
-finish intent:   subject
-actions:         490
-stroke adds:     358
-replacements:    120
-deletions:       12
-fill actions:    0
-replay frames:   124, every_n=4, cursor 0→490
-final parity:    canonical PNG == replay final PNG
-gif final error: max channel error 1
+img2drawing/
+├── core/
+├── data/
+├── inspection/
+├── observation/      # palette only
+├── provenance/
+├── render/
+├── vnext/
+├── __init__.py
+└── _version.py
 ```
 
-A9 uses only generalized evidence from that run. The task-local scripts, authored coordinates,
-control-point tables, and answer image remain excluded from worker-facing product knowledge.
+Retired from current `src`: `legacy/`, `run.py`, `stages/`, `exemplar/`, `review/`, historical `registration/`, `canvas/`, historical `reference/`, and non-palette R23 observation modules.
 
-## Next: D01
+## Open work
 
-Resume the fresh sealed validation campaign under `VALIDATION_RELEASE.md`. D01 receives the
-current installed skill/package and a fresh difficult observed subject, without the Astra answer
-image, coordinates, scripts, prior session, or evaluator rationale.
+1. **Fresh-worker gesture dogfood** — verify that `gesture drawing` now reaches constructive gesture completion rather than stopping at a construction scaffold; separately verify explicit pure gesture.
+2. **Render-input parity** — close the strict xfail where `inspect()` and final/replay differ by a few luminance levels because stage compatibility metadata affects hand-dynamics seeding.
+3. **Release/version closure** — after the two items above, decide the next version for the compatibility-breaking post-v1.0.2 main state and create a new freeze instead of editing the v1.0.2 freeze.
+4. **Root compatibility shims** — deprecated pre-0.6.0rc2 root aliases remain intentionally supported for now; remove them only in a separately versioned compatibility cleanup.
 
-A real fresh-run failure may reopen the earliest responsible A/B premise. Do not add more guidance
-merely because a weaker worker differs from Astra; first distinguish a product defect from worker
-visual-reasoning capability.
+## Historical boundaries
 
-## Closed foundation
+The following are history/evidence, not current planning authority:
 
-B00–B18 and A1–A9 remain CLOSED. Their detailed evidence stays in slice records, audits,
-`dev/evidence/`, and `dev/release/` rather than being duplicated here.
+- `docs/releases/v1.0.0.md`, `v1.0.1.md`, `v1.0.2.md`;
+- closed A/B slice, capsule, baseline, and audit documents under this planning tree;
+- benchmark reports tied to earlier versions;
+- `dev/release/vnext/CONTRACT_FREEZE.json`, which is the immutable v1.0.2/A10 release snapshot even though current main has moved on.
 
 ## Authority map
 
-- deployable drawing behavior: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`
-- stable release notes: `docs/releases/v1.0.1.md`
-- A9 absorption record: `A9_ASTRA_AUTHORING_ABSORPTION.md`
-- curated demo: `showcase/entries/croquis-sniper-girl-astra-v1/`
-- stable package/API/schema/render snapshot: `dev/release/vnext/CONTRACT_FREEZE.json`
-- sequence: `ROADMAP.md`
-- formal D01–D06 contracts: `VALIDATION_RELEASE.md`
-- R03 ownership baseline: `R03_RUNTIME_OWNERSHIP_INVENTORY.md`
+- current repository truth: actual `main` + this file;
+- deployable drawing behavior: `skills/img2drawing/SKILL.md` + `skills/img2drawing/references/`;
+- released stable notes: `docs/releases/v1.0.2.md`;
+- unreleased public changes and known issues: `CHANGELOG.md`;
+- current near-term sequence: `ROADMAP.md`;
+- immutable v1.0.2 contract snapshot: `dev/release/vnext/CONTRACT_FREEZE.json`;
+- R23 retirement audit: `dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`.
