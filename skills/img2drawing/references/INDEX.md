@@ -3,6 +3,11 @@
 This directory is a routing graph, not a sequential course and not a runtime lifecycle.
 Start at `SKILL.md`, then read only the smallest leaves that own the current drawing problem.
 
+Path convention is intentionally different at the two routing levels. `SKILL.md` is at the skill
+root, so it names leaves as `references/...`. This file is already inside `references/`, so paths
+below are relative to the references root, such as `foundation/line-economy.md`. Do not copy the
+INDEX-relative spelling back into `SKILL.md` without the `references/` prefix.
+
 ## 1. Foundation
 
 - `foundation/line-economy.md` — preserve geometry while reducing redundant marks; group related marks by one coherent relation

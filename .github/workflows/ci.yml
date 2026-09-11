@@ -30,12 +30,15 @@ jobs:
           python -m pytest -q \
             dev/tests/test_runtime_physical_isolation.py \
             dev/tests/test_fast_timelapse_release_contract.py
+      - name: Verify skill instruction graph reachability
+        run: python dev/tools/verify_instruction_graph.py
       - name: Run active test suite without ambient plugin influence
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: python -m pytest -q dev/tests
       - name: Verify frozen historical evidence
         run: |
+          python dev/tools/verify_vnext_b09.py closure
           python dev/tools/verify_bottleneck_completion.py --check s10
           python dev/tools/verify_bottleneck_completion.py --check s11-s12
           python dev/tools/verify_bottleneck_completion.py --check s14

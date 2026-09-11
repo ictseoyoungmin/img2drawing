@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verification gates for the B09 finish/recognition slice."""
+"""Verification gates for the historical B09 finish/recognition slice."""
 
 from __future__ import annotations
 
@@ -36,20 +36,25 @@ def full() -> None:
 
 
 def closure() -> None:
+    """Verify frozen B09 planning evidence without depending on the mutable current skill tree."""
+
     required = (
-        ROOT / "skills/img2drawing/references/finish/identity-and-value.md",
-        ROOT / "skills/img2drawing/references/intent.md",
         ROOT / "dev/planning/vnext/capsules/B09.md",
         ROOT / "dev/planning/vnext/slices/B09.md",
         ROOT / "dev/planning/vnext/slices/B10.md",
     )
     assert all(path.is_file() for path in required)
-    b09 = required[3].read_text(encoding="utf-8")
-    b10 = required[4].read_text(encoding="utf-8")
-    status = (ROOT / "dev/planning/vnext/STATUS.md").read_text(encoding="utf-8")
+
+    b09 = required[1].read_text(encoding="utf-8")
+    b10 = required[2].read_text(encoding="utf-8")
     assert "State: **CLOSED**" in b09 and "- [ ]" not in b09
-    assert "State: **ACTIVE**" in b10
-    assert "ACTIVE:   B10" in status and "B09" in status
+    assert "B10 becomes the next sole WIP" in b09
+    assert b10.startswith("# B10 — Intent-aware completion")
+
+    # B09 originally referenced finish/identity-and-value.md and intent.md while those
+    # documents were part of the then-current guidance surface. Historical slice closure must
+    # not require those mutable paths to remain installed forever. Current instruction-graph
+    # reachability is owned by verify_instruction_graph.py instead.
     print("B09_CLOSURE_VERIFICATION_PASS")
 
 
