@@ -89,5 +89,4 @@ B00–B18 and A1–A9 remain CLOSED. Their detailed evidence stays in slice reco
 - stable package/API/schema/render snapshot: `dev/release/vnext/CONTRACT_FREEZE.json`
 - sequence: `ROADMAP.md`
 - formal D01–D06 contracts: `VALIDATION_RELEASE.md`
-- current gates: `/GATES.md`
 - R03 ownership baseline: `R03_RUNTIME_OWNERSHIP_INVENTORY.md`
