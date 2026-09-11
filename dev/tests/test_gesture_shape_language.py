@@ -8,7 +8,7 @@ REFS = ROOT / "skills" / "img2drawing" / "references"
 
 
 def _text(path: str) -> str:
-    return " ".join((REFS / path).read_text(encoding="utf-8").split())
+    return " ".join((REFS / path).read_text(encoding="utf-8").split()).lower()
 
 
 def test_gesture_final_marks_do_not_collapse_to_generic_primitives() -> None:
@@ -18,20 +18,20 @@ def test_gesture_final_marks_do_not_collapse_to_generic_primitives() -> None:
     head = _text("figure/head-face-hair.md")
     completion = _text("review/completion.md")
 
-    assert "reasoning primitive" in mode.lower()
+    assert "reasoning primitive" in mode
     assert "generic circle" in mode
     assert "flat box, sharp polygon, or faceted shield" in mode
     assert "pelvic bowl or soft wedge" in mode
-    assert "Do not invent corners or plane breaks" in mode
+    assert "do not invent corners or plane breaks" in mode
     assert "temporary search primitives" in mode
 
-    assert "Construction shorthand is disposable reasoning" in construction
+    assert "construction shorthand is disposable reasoning" in construction
     assert "head search sphere must become a directional cranial volume" in construction
     assert "ribcage should read as a rounded occupied volume" in construction
     assert "pelvis should read as a bowl or soft wedge" in construction
-    assert "Do not invent hard corners" in construction
+    assert "do not invent hard corners" in construction
 
-    assert "Reasoning primitives are disposable" in specificity
+    assert "reasoning primitives are disposable" in specificity
     assert "orientationless circle" in specificity
     assert "arbitrary hard facets" in specificity
     assert "flat triangle, polygon, or plate" in specificity
