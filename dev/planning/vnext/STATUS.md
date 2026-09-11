@@ -53,6 +53,13 @@ Retired from current `src`: `legacy/`, `run.py`, `stages/`, `exemplar/`, `review
 3. **Release/version closure** — after the two items above, decide the next version for the compatibility-breaking post-v1.0.2 main state and create a new freeze instead of editing the v1.0.2 freeze.
 4. **Root compatibility shims** — deprecated pre-0.6.0rc2 root aliases remain intentionally supported for now; remove them only in a separately versioned compatibility cleanup.
 
+## Historical B18 boundary
+
+At the B18 implementation freeze, the product foundation was **frozen through B18** and the formal
+**D01–D06 not started** campaign was still future work. Those phrases are retained only so frozen
+B18 evidence remains understandable and verifiable. They do not describe current sequencing:
+post-v1.0.2 main has already retired R23 and now follows the open-work list above.
+
 ## Historical boundaries
 
 The following are history/evidence, not current planning authority:
