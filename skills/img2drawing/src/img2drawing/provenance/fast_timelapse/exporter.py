@@ -12,7 +12,7 @@ from typing import Any
 from PIL import Image
 
 from ..._version import __version__
-from ...render.pillow_pencil_contact import render as canonical_render
+from ...render.renderer_registry import resolve_renderer
 from ...vnext.session import DrawingSession
 from .delta_pack import DeltaPackWriter, read_info
 from .frame_source import (
@@ -68,7 +68,7 @@ def _canonical_final_hash(session: DrawingSession, supersample: int) -> tuple[st
         path = Path(tmp) / "final.png"
         ir = session._agent.history.state_at(session.history_cursor)
         prepared = profile.prepared_ir(ir)
-        canonical_render(
+        resolve_renderer(profile.renderer_id, profile.renderer_version).render(
             prepared,
             path,
             background=tuple(profile.background_rgba),

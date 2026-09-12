@@ -10,14 +10,11 @@ All notable public changes to `img2drawing` are documented here. Internal develo
   - the current drawing must contain authored strokes — a session that was never drawn on, or whose marks were all erased again, can no longer be finished;
   - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
 - `DrawingSession.inspect()` now renders through the session's persisted `RenderProfile` (paper tooth/scale/seed, background, graphite) instead of renderer defaults, so a customized profile is inspected under the same material it will export under. The inspection sheet stays pinned to 1x canvas space because registration/ROI/measurement geometry is defined in canvas pixels; only final and replay export honor `output_scale`.
+- The v10 renderer now normalizes the private compatibility `Stroke.stage` field out of render seed identity. `inspect()`, canonical replay/final rendering, and the fast timelapse path therefore see the same v10 hand/material seed for identical authored geometry. Historical v9 seed semantics remain frozen for saved v1.0.2 replay, and profile-less legacy timelapse calls continue to select v9 explicitly.
 - Residual/correction guidance now documents the `observation_id` provenance contract explicitly: a repairing mutation for a current residual should carry the residual's observation id, followed by a fresh after-inspection before `resolve_residual()`.
 - Completion guidance now makes clear that `accepted_limitations` records acknowledged non-blocking weaknesses; it does not bypass an open residual record.
 
 The `finish()` preconditions are compatibility-breaking for existing callers, which must now call `record_evidence_read(final_inspection_id)` after actually viewing the final inspection. No new release/version is declared on post-v1.0.2 `main`; the immutable v1.0.2 release keeps the previous `finish()` behavior.
-
-### Known issues
-
-- `inspect()` and `render_final()` still differ by a few luminance levels on identical geometry: `_snapshot()` nulls `Stroke.stage` for current-state reads while `history.state_at()` keeps the `__vnext_compat__` tag, and `stage` is hashed into the hand-dynamics jitter seed. Canonical replay and the fast timelapse path also reconstruct from history, so fixing this requires one coordinated render/replay parity slice rather than changing only `inspect()` or only the renderer seed. `dev/tests/test_vnext_rendering.py::test_inspect_and_final_render_are_pixel_identical` records the issue as a strict xfail.
 
 ### Removed
 

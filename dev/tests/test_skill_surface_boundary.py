@@ -30,6 +30,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "environment",
         "figure",
         "foundation",
+        "markmaking",
         "modes",
         "observation",
         "output",
@@ -59,6 +60,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
     assert {path.name for path in (SKILL / "references" / "review").iterdir()} == {
         "authored-element-navigation.md",
         "completion.md",
+        "markmaking-residuals.md",
         "residual-correction.md",
         "residual-routing.md",
         "stroke-retirement.md",

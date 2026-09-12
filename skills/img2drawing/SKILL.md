@@ -16,6 +16,28 @@ For observed work, the subject is the geometry truth. For imaginative work, decl
 intent is the truth. For hybrid work, preserve and transform only the explicitly declared
 constraints. Read [`references/foundation/reference-authority.md`](references/foundation/reference-authority.md).
 
+## Runtime awareness
+
+The ordinary drawing worker is **runtime-aware and implementation-blind**.
+
+When this skill is used to produce a drawing programmatically, know from the beginning that
+`img2drawing` already provides the supported drawing runtime. Final authored marks must enter
+through `DrawingSession` and documented public helpers so history, inspection, replay,
+render-profile authority, and finish provenance stay intact. Read
+[`references/api/public-surface.md`](references/api/public-surface.md) before authoring the first
+programmatic mark.
+
+Do not replace the runtime with a hand-written PIL/Pillow drawing script, raw OpenCV raster edits,
+SVG/canvas drawing, a custom `StrokeCanvas`, or another bespoke rasterizer. Pillow, NumPy, OpenCV,
+crops, overlays, and similar tools may still support bounded observation/evidence work when
+appropriate; they are not alternative final-authoring runtimes.
+
+At the same time, ordinary drawing does **not** require reading the renderer implementation or the
+whole `src/` tree. Private renderer classes, cache internals, history storage, and implementation
+algorithms are framework concerns. Read implementation only for an explicit framework/debugging
+task or when a demonstrated runtime defect must be investigated. If the public surface cannot
+express a required mark, record a runtime capability gap rather than silently bypassing it.
+
 ## Non-negotiable drawing principles
 
 1. **Croquis economizes marks, not observed geometry.** Fewer lines mean fewer redundant
@@ -69,10 +91,11 @@ SKILL.md
    ├─ observation/  whole/part reading and measurement boundaries
    ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
    ├─ description/  contour, descriptive geometry, value/edge/material
+   ├─ markmaking/   style policy, semantic stroke roles, tool presets, dynamics, terminals, custom tools
    ├─ figure/       head/face/hair, torso/arms, hands/grip, legs/feet, clothing folds
    ├─ props/        attached-object geometry and body contact
    ├─ environment/  ground and contextual structure
-   ├─ review/       residual correction/routing, authored-element navigation, retirement, completion
+   ├─ review/       residual correction/routing, markmaking residuals, navigation, retirement, completion
    ├─ output/       canonical render and replay
    └─ api/          public runtime surface only
 ```
@@ -80,43 +103,55 @@ SKILL.md
 This taxonomy is not a lifecycle. Move backward whenever observation disproves the current
 premise, and skip leaves that do not own the current problem.
 
+Geometry answers **what relation should be drawn**. Markmaking answers **what kind of mark should
+express that relation**. The two routes may be opened together, but markmaking may not hide an
+incorrect path, overlap, proportion, or contact. Read
+[`references/markmaking/stroke-role-vocabulary.md`](references/markmaking/stroke-role-vocabulary.md)
+and the smallest additional markmaking leaf only when line language matters.
+
 ## Start route
 
 For every new task:
 
-1. Establish reference authority and requested drawing mode.
-2. Read `references/foundation/line-economy.md`, `references/foundation/structural-specificity.md`, and the chosen
+1. Establish reference authority, requested drawing mode, and any explicit style intent. If style
+   is unspecified, default to `canonical-pencil`; do not invent a decorative style.
+2. If the task will author marks programmatically, read `references/api/public-surface.md` before
+   the first mutation. Use the documented public runtime; do not inspect the whole implementation
+   as a prerequisite and do not replace it with a bespoke Pillow/OpenCV/SVG/canvas rasterizer.
+3. Read `references/foundation/line-economy.md`, `references/foundation/structural-specificity.md`, and the chosen
    mode guide. If the user asks for **gesture drawing**, choose `references/modes/gesture-drawing.md` rather
    than treating construction gesture as a finish target: an unqualified gesture request defaults
    to constructive gesture, while explicit quick/pure/line-of-action requests use pure gesture.
    If the request says to *start* with gesture and continue to a fuller drawing, gesture remains an
    intermediate pass and does not end the larger task.
-3. For observed work, read `references/observation/visual-observation.md`. If a material relation disappears
+4. For observed work, read `references/observation/visual-observation.md`. If a material relation disappears
    behind another form, read `references/foundation/occlusion-inference.md` before deciding that the hidden
    structure simply ends. Use `references/observation/measuring-boundaries.md` only when measurements or
    ambiguous boundaries are actually needed.
-4. Form one whole-subject structural hypothesis before spending marks on local description.
+5. Form one whole-subject structural hypothesis before spending marks on local description.
    Preserve the specific placement, orientation, proportion, envelope, width/depth changes,
    overlaps, contacts, negative spaces, and connected-part or anchor relations that materially
    define the subject. When continuity passes behind an occluder, infer only the hidden relation
    needed to keep the visible anchors coherent. Load specialized construction leaves only when
    those relationships need them.
-5. Before local description, re-read the whole drawing against its authority. Existing
+6. Before local description, re-read the whole drawing against its authority. Existing
    construction, including hidden-continuation hypotheses, may be retained only when the parent
    structure is still credible without relying on detail or tone. If not, replace the responsible
    geometry first.
-6. Route each remaining mismatch to the smallest descriptive or subject-specific leaf that
-   owns its cause. If the visible part may only be a symptom, use
-   `references/review/residual-routing.md` to choose the local or upstream premise instead of opening
-   every leaf.
-7. After every meaningful mutation, inspect a fresh render and use
+7. For each mark whose geometry is justified, choose its semantic role and the smallest suitable
+   markmaking/tool behavior. Do not collapse an entire drawing into one tool merely for convenience.
+   Use `references/markmaking/` only as needed; explicit reference/style intent remains the authority.
+8. Route each remaining mismatch to the smallest descriptive, subject-specific, or markmaking leaf
+   that owns its cause. If the visible part may only be a symptom, use
+   `references/review/residual-routing.md`; if the path is correct but the line language/material is
+   wrong, use `references/review/markmaking-residuals.md`.
+9. After every meaningful mutation, inspect a fresh render and use
    `references/review/residual-correction.md`.
-8. Finish only from current evidence, then export through the output route.
-9. Read `references/api/public-surface.md` only when code must call the runtime.
+10. Finish only from current evidence, then export through the output route.
 
 ## Canonical drawing loop
 
-`observe → construct → render → inspect → select residual → correct → render again`
+`observe → construct → choose mark language → render → inspect → select residual → correct → render again`
 
 Continue the same loop while description and finish marks are added. Do not stop merely
 because a routine pass completed, and do not ask for permission after each pass when the
@@ -330,6 +365,10 @@ above (line economy, structural specificity, etc.). Those principles describe wh
 should preserve; they do not license drawing through a different runtime. A drawing produced
 outside `DrawingSession` has no history, no inspection record, and no finish provenance, and
 does not satisfy this skill regardless of how it looks.
+
+The public runtime is the worker-facing boundary. If a required line behavior is unavailable there,
+report or implement a runtime capability extension through framework work; do not make ordinary
+drawing workers discover private renderer internals as an undocumented second API.
 
 ## Completion
 

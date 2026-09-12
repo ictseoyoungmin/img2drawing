@@ -59,6 +59,21 @@ from .intent import (
     resolve_finish_guide,
     resolve_style_guide,
 )
+from .markmaking import (
+    MARKMAKING_SCHEMA,
+    MATERIAL_POLICIES,
+    MATERIAL_POLICY_REVISION,
+    SEMANTIC_STROKE_ROLES,
+    TERMINAL_MODES,
+    TOOL_PRESETS,
+    TOOL_PRESET_REVISION,
+    MaterialPolicy,
+    ResolvedMark,
+    ToolPreset,
+    material_policy_for_style,
+    resolve_mark_for_intent,
+    resolve_markmaking,
+)
 from .session import DrawingSession
 from .value import replace_fill_region
 
@@ -107,9 +122,22 @@ __all__ = [
     "StyleConflictError",
     "StyleGuide",
     "compatibility_intent",
-    "resolve_mode_guide",
     "resolve_finish_guide",
+    "resolve_mode_guide",
     "resolve_style_guide",
+    "MARKMAKING_SCHEMA",
+    "MATERIAL_POLICIES",
+    "MATERIAL_POLICY_REVISION",
+    "SEMANTIC_STROKE_ROLES",
+    "TERMINAL_MODES",
+    "TOOL_PRESETS",
+    "TOOL_PRESET_REVISION",
+    "MaterialPolicy",
+    "ResolvedMark",
+    "ToolPreset",
+    "material_policy_for_style",
+    "resolve_mark_for_intent",
+    "resolve_markmaking",
     "InitialConstruct",
     "InitialConstructResult",
     "PoseObservation",
@@ -122,3 +150,11 @@ __all__ = [
     "retune_strokes",
     "sample_catmull_rom",
 ]
+
+# Bind the stable vNext public session/output hooks to the renderer registry only after
+# the ordinary public modules above have finished importing. This keeps the worker-facing
+# API source-opaque while making RenderProfile renderer identity authoritative at runtime.
+from .renderer_binding import bind_vnext_renderer_runtime as _bind_vnext_renderer_runtime
+
+_bind_vnext_renderer_runtime()
+del _bind_vnext_renderer_runtime

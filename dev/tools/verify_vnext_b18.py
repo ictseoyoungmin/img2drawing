@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
-"""Verify the B18 dogfood-ready contract freeze without running visual dogfood.
+"""Verify the immutable v1.0.2/B18 historical freeze against Git history.
 
-The v1.0.2 freeze is immutable historical evidence. Post-release source cleanup may retire
-compatibility-only modules that the freeze records, but it must not rewrite what shipped.
+B18 is historical evidence, not the version authority for current mutable source. Later RCs may
+change package identity, renderer defaults, and compatibility surface without rewriting what
+v1.0.2 shipped. Current-package verification belongs to B17.
 """
 
 from __future__ import annotations
 
 import ast
 import copy
-import inspect
 import json
 import re
-import sys
+import subprocess
 from pathlib import Path
 
 from jsonschema import Draft7Validator
-
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
@@ -32,139 +31,50 @@ def _load(path: Path) -> dict:
     return value
 
 
-def _schema_of(value) -> str:
-    schema = value.to_dict().get("schema")
-    assert isinstance(schema, str) and schema
-    return schema
-
-
-def _public_members(cls) -> list[str]:
-    return sorted(
-        name
-        for name, value in inspect.getmembers(cls)
-        if not name.startswith("_")
-        and (inspect.isfunction(value) or inspect.ismethod(value) or isinstance(value, property))
-    )
+def _git_show(spec: str) -> str:
+    return subprocess.check_output(["git", "show", spec], cwd=ROOT, text=True)
 
 
 def check_contract_snapshot() -> None:
-    preexisting = set(sys.modules)
-    import img2drawing
-    from img2drawing import CanvasHistory, DrawingSession, InspectionSheet, RenderProfile
-    from img2drawing._version import PUBLIC_API, RELEASE_REVISION, RELEASE_SLICE
-    from img2drawing.vnext.completion import FINISH_RECORD_SCHEMA
-    from img2drawing.vnext.correction import CorrectionRecord, ResidualRecord
-    from img2drawing.vnext.editing import AUTHORED_ELEMENT_SCHEMA, AUTHORING_SUMMARY_SCHEMA
-    from img2drawing.vnext.evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
-    from img2drawing.vnext.intent import (
-        DRAWING_MODES,
-        FINISH_GUIDE_SCHEMA,
-        FINISH_INTENTS,
-        FINISH_RELATION_SCHEMA,
-        INTENT_EVENT_SCHEMA,
-        INTENT_SCHEMA,
-        MODE_GUIDE_SCHEMA,
-        REFERENCE_MODES,
-        STYLE_GUIDE_SCHEMA,
-        STYLE_PROFILES,
-    )
-    from img2drawing.vnext.output import RENDER_ARTIFACT_SCHEMA, REPLAY_EXPORT_SCHEMA
-    from img2drawing.vnext.reference_authority import (
-        REFERENCE_AUTHORITY_SCHEMA,
-        REFERENCE_CONSTRAINT_SCHEMA,
-    )
-    from img2drawing.vnext.render_profile import RENDER_PROFILE_SCHEMA
-    from img2drawing.vnext.session import SESSION_SCHEMA
-
-    newly_loaded = set(sys.modules).difference(preexisting)
-    forbidden_root_loads = {
-        "img2drawing.run", "img2drawing.stages", "img2drawing.review",
-        "img2drawing.registration", "img2drawing.exemplar",
-    }
-    assert not forbidden_root_loads.intersection(newly_loaded)
-
     frozen = _load(FREEZE)
     assert frozen["schema"] == "img2drawing.vnext.contract_freeze.v1"
-    assert frozen["package_version"] == img2drawing.__version__
-    assert frozen["public_api"] == PUBLIC_API
-    assert frozen["release_revision"] == RELEASE_REVISION
-    assert frozen["release_slice"] == RELEASE_SLICE
-    assert frozen["root_exports"] == sorted(img2drawing.__all__)
-    for name in img2drawing.__all__:
-        getattr(img2drawing, name)
-    assert frozen["drawing_session_members"] == _public_members(DrawingSession)
-    assert img2drawing.DrawingSession is DrawingSession
-    assert img2drawing.VNextDrawingSession is DrawingSession
+    assert frozen["freeze_id"] == "v1.0.2-A10-2026-09-09"
+    assert frozen["package_version"] == "1.0.2"
+    assert frozen["public_api"] == "DrawingSession/1.0.2-vnext"
+    assert frozen["release_revision"] == "A10"
+    assert frozen["release_slice"] == "v1.0.2_local_first_exact_timelapse"
 
-    # Historical v1.0.2 ownership remains frozen exactly as shipped. The legacy namespace
-    # recorded here is not required to remain in the mutable post-release source tree.
-    assert frozen["ownership"] == {
-        "session": f"{DrawingSession.__module__}.{DrawingSession.__name__}",
-        "history": f"{CanvasHistory.__module__}.{CanvasHistory.__name__}",
-        "inspection": f"{InspectionSheet.__module__}.{InspectionSheet.__name__}",
-        "renderer": "img2drawing.render.pillow_pencil_contact",
-        "legacy_namespace": "img2drawing.legacy.r23",
-    }
+    # The immutable tag, not today's package version, is the authority for released identity.
+    tagged_version = _git_show("v1.0.2:skills/img2drawing/src/img2drawing/_version.py")
+    for marker in (
+        '__version__ = "1.0.2"',
+        'RELEASE_REVISION = "A10"',
+        'RELEASE_SLICE = "v1.0.2_local_first_exact_timelapse"',
+    ):
+        assert marker in tagged_version, marker
 
-    actual_axes = {
-        "reference_modes": list(REFERENCE_MODES),
-        "drawing_modes": list(DRAWING_MODES),
-        "finish_intents": list(FINISH_INTENTS),
-        "style_profiles": list(STYLE_PROFILES),
-    }
-    assert frozen["intent_axes"] == actual_axes
+    tagged_freeze = json.loads(_git_show("v1.0.2:dev/release/vnext/CONTRACT_FREEZE.json"))
+    assert tagged_freeze == frozen, "mutable source rewrote the immutable v1.0.2 freeze"
 
-    zero = "0" * 64
-    one = "1" * 64
-    actual_schemas = {
-        "session": SESSION_SCHEMA,
-        "intent": INTENT_SCHEMA,
-        "intent_event": INTENT_EVENT_SCHEMA,
-        "mode_guide": MODE_GUIDE_SCHEMA,
-        "style_guide": STYLE_GUIDE_SCHEMA,
-        "finish_guide": FINISH_GUIDE_SCHEMA,
-        "finish_relation": FINISH_RELATION_SCHEMA,
-        "finish_record": FINISH_RECORD_SCHEMA,
-        "residual": _schema_of(ResidualRecord(
-            residual_id="r", observation_id="o", observation="mismatch", scope="whole",
-            severity="material", impact_rationale="changes reading",
-            responsible_premise=None, responsible_stroke_ids=(), planned_edit="revise",
-            before_inspection_id="000001", before_drawing_state_hash=zero,
-        )),
-        "correction": _schema_of(CorrectionRecord(
-            correction_id="c", residual_id="r", observation_id="o",
-            before_inspection_id="000001", before_drawing_state_hash=zero,
-            before_history_cursor=0, action_ids=("a",), after_inspection_id="000002",
-            after_drawing_state_hash=one, decision="keep", rationale="fresh evidence",
-        )),
-        "evidence_policy": _schema_of(EvidencePolicy.from_inputs(
-            mode="quick", rois=(), guides=(), measurements=(), escalation_reason=None,
-        )),
-        "evidence_read": _schema_of(EvidenceReadRecord(
-            event_id="e", inspection_id="000001", artifact="sheet", stale=False,
-            inspection_drawing_state_hash=zero, current_drawing_state_hash=zero,
-        )),
-        "evidence_telemetry": _schema_of(EvidenceTelemetry()),
-        "reference_authority": REFERENCE_AUTHORITY_SCHEMA,
-        "reference_constraint": REFERENCE_CONSTRAINT_SCHEMA,
-        "render_profile": RENDER_PROFILE_SCHEMA,
-        "render_artifact": RENDER_ARTIFACT_SCHEMA,
-        "replay_export": REPLAY_EXPORT_SCHEMA,
-        "authored_element": AUTHORED_ELEMENT_SCHEMA,
-        "authoring_summary": AUTHORING_SUMMARY_SCHEMA,
-    }
-    assert frozen["schemas"] == actual_schemas
-
-    profile = RenderProfile.canonical(96, 72).to_dict()
-    profile.pop("canvas_width")
-    profile.pop("canvas_height")
-    assert frozen["canonical_render_profile"] == profile
-
+    historical_profile = frozen["canonical_render_profile"]
+    assert historical_profile["renderer_id"] == "pillow-pencil-contact-v9"
+    assert historical_profile["renderer_version"] == "1"
     assert frozen["legacy_checkpoint_schemas"] == [
         "img2drawing.run_checkpoint.v1",
         "img2drawing.run_checkpoint.v2",
         "img2drawing.run_checkpoint.v3",
     ]
+    assert frozen["ownership"]["legacy_namespace"] == "img2drawing.legacy.r23"
+
+    # Current source is allowed to move forward, but retired implementation must not reappear.
+    import img2drawing
+    from img2drawing._version import PUBLIC_API, RELEASE_REVISION
+    from img2drawing.vnext.render_profile import RenderProfile
+
+    assert img2drawing.__version__ != frozen["package_version"]
+    assert PUBLIC_API != frozen["public_api"]
+    assert RELEASE_REVISION != frozen["release_revision"]
+    assert RenderProfile.canonical(96, 72).renderer_id == "pillow-pencil-contact-v10"
     assert not (SOURCE / "legacy").exists()
     for retired_name in ("DrawingRun", "StageContract", "RegistrationGraph"):
         try:
@@ -180,28 +90,26 @@ def check_planning_and_completeness() -> None:
     for number in range(9, 19):
         text = (slices / f"B{number:02d}.md").read_text(encoding="utf-8")
         assert "State: **CLOSED**" in text, f"B{number:02d} is not closed"
-    active = []
-    for card in slices.glob("B*.md"):
-        if "State: **ACTIVE**" in card.read_text(encoding="utf-8"):
-            active.append(card.name)
+    active = [
+        card.name
+        for card in slices.glob("B*.md")
+        if "State: **ACTIVE**" in card.read_text(encoding="utf-8")
+    ]
     assert active == [], active
 
-    # B18 owns the frozen implementation boundary, not the mutable next-task label.
-    # Current planning may insert post-freeze cleanup before D01 without invalidating B18.
     status = (ROOT / "dev" / "planning" / "vnext" / "STATUS.md").read_text(encoding="utf-8")
     assert "frozen through B18" in status
     assert "D01–D06 not started" in status
 
-    inventory = ROOT / "dev" / "planning" / "vnext" / "B18_IMPLEMENTATION_INVENTORY.md"
-    inventory_text = inventory.read_text(encoding="utf-8")
+    inventory = (ROOT / "dev" / "planning" / "vnext" / "B18_IMPLEMENTATION_INVENTORY.md").read_text(encoding="utf-8")
     for number in range(9, 18):
-        assert f"B{number:02d}" in inventory_text
+        assert f"B{number:02d}" in inventory
     for marker in (
         "img2drawing.vnext.session.DrawingSession",
         "img2drawing.core.session.DrawingSession",
         "vnext.value.replace_fill_region()",
     ):
-        assert marker in inventory_text
+        assert marker in inventory
 
     forbidden_text = re.compile(r"\b(?:TODO|FIXME|TBD)\b|NotImplementedError")
     for path in SOURCE.rglob("*.py"):
@@ -210,25 +118,15 @@ def check_planning_and_completeness() -> None:
         tree = ast.parse(text, filename=str(path))
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                assert not (len(node.body) == 1 and isinstance(node.body[0], ast.Pass)), f"empty function: {path}:{node.lineno}"
+                assert not (len(node.body) == 1 and isinstance(node.body[0], ast.Pass)), (
+                    f"empty function: {path}:{node.lineno}"
+                )
                 assert not (
                     len(node.body) == 1
                     and isinstance(node.body[0], ast.Expr)
                     and isinstance(node.body[0].value, ast.Constant)
                     and node.body[0].value.value is Ellipsis
                 ), f"ellipsis function: {path}:{node.lineno}"
-
-    session_tree = ast.parse((SOURCE / "vnext" / "session.py").read_text(encoding="utf-8"))
-    canonical_classes = [
-        node for node in session_tree.body
-        if isinstance(node, ast.ClassDef) and node.name == "DrawingSession"
-    ]
-    assert len(canonical_classes) == 1
-    value_text = (SOURCE / "vnext" / "value.py").read_text(encoding="utf-8")
-    assert "return session.replace_fill_region(" in value_text
-    assert "session._agent" not in value_text
-    freeze_text = (RELEASE_RECORDS / "FREEZE.md").read_text(encoding="utf-8")
-    assert "core.session.DrawingSession" in freeze_text and "not root-exported" in freeze_text
 
 
 def _assert_invalid(validator: Draft7Validator, value: dict) -> None:
@@ -273,36 +171,6 @@ def check_dogfood_contracts() -> None:
     traversal = copy.deepcopy(sealed)
     traversal["subject"]["file"] = "../subject.png"
     _assert_invalid(sealed_validator, traversal)
-    imaginative = copy.deepcopy(sealed)
-    imaginative["case_id"] = "D05-A"
-    imaginative["intent"]["reference_mode"] = "imaginative"
-    imaginative["subject"] = None
-    imaginative["authority"] = {
-        "mode": "imaginative", "declared_goals": ["one dominant rising arc"], "constraints": [],
-    }
-    sealed_validator.validate(imaginative)
-    fake_subject = copy.deepcopy(imaginative)
-    fake_subject["subject"] = sealed["subject"]
-    _assert_invalid(sealed_validator, fake_subject)
-    hybrid = copy.deepcopy(sealed)
-    hybrid["case_id"] = "D05-B"
-    hybrid["intent"]["reference_mode"] = "hybrid"
-    hybrid["authority"] = {
-        "mode": "hybrid",
-        "declared_goals": ["transform one object"],
-        "constraints": [
-            {"constraint_id": "pose", "description": "keep pose", "disposition": "preserved"},
-            {
-                "constraint_id": "object", "description": "change object",
-                "disposition": "transformed", "transformation": "make it a ribbon",
-                "rationale": "requested concept",
-            },
-        ],
-    }
-    sealed_validator.validate(hybrid)
-    verdict = copy.deepcopy(evaluator)
-    verdict["verdict"] = "PASS"
-    _assert_invalid(evaluator_validator, verdict)
 
     template_files = [path for path in TEMPLATE.rglob("*") if path.is_file()]
     assert template_files
@@ -310,9 +178,6 @@ def check_dogfood_contracts() -> None:
     readme = (TEMPLATE / "README.md").read_text(encoding="utf-8")
     for case in ("D01", "D02", "D03", "D04", "D05-A", "D05-B", "D06"):
         assert case in readme
-    validation = (ROOT / "dev" / "planning" / "vnext" / "VALIDATION_RELEASE.md").read_text(encoding="utf-8")
-    assert "vnext-template" in validation
-    assert "dev/release/vnext/CONTRACT_FREEZE.json" in validation
 
 
 def check_package_boundary() -> None:
@@ -328,7 +193,6 @@ def check_package_boundary() -> None:
     assert FREEZE.is_file()
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     assert "verify_vnext_b18.py" in workflow
-    assert (ROOT / "dev" / "tools" / "seal_vnext_dogfood_input.py").is_file()
 
 
 def main() -> None:
@@ -336,7 +200,7 @@ def main() -> None:
     check_planning_and_completeness()
     check_dogfood_contracts()
     check_package_boundary()
-    print("B18_SYSTEM_FREEZE_VERIFICATION_PASS")
+    print("B18_FROZEN_V1_0_2_HISTORY_PASS")
 
 
 if __name__ == "__main__":

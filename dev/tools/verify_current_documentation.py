@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify current-facing documentation agrees with post-v1.0.2 repository truth."""
+"""Verify current-facing documentation agrees with stable + active-RC repository truth."""
 
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ def main() -> None:
 
     root_readme = _text(ROOT / "README.md")
     changelog = _text(ROOT / "CHANGELOG.md")
+    version = _text(ROOT / "skills" / "img2drawing" / "src" / "img2drawing" / "_version.py")
     planning_readme = _text(PLANNING / "README.md")
     status = _text(PLANNING / "STATUS.md")
     roadmap = _text(PLANNING / "ROADMAP.md")
@@ -36,12 +37,16 @@ def main() -> None:
     migration = _text(RELEASE / "MIGRATION.md")
     frozen = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
 
-    # Root/current planning truth.
+    # Published stable and active release-candidate truth are separate authorities.
     assert "**Current stable: v1.0.2**" in root_readme
     assert "unreleased post-v1.0.2 hardening" in root_readme
     assert "## Unreleased" in changelog
-    assert "RELEASED STABLE:  v1.0.2" in status
-    assert "R23 runtime/legacy namespace physically retired" in status
+    assert '__version__ = "1.0.3rc1"' in version
+    assert 'RELEASE_REVISION = "A11"' in version
+    assert "RELEASED STABLE:" in status and "v1.0.2" in status
+    assert "RC CANDIDATE:" in status and "v1.0.3rc1" in status
+    assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
+    assert "R23" in status and "physically retired" in status
     assert "current unreleased main state after v1.0.2" in roadmap
     assert "G01 fresh-worker gesture dogfood" in roadmap
     assert "CURRENT MAIN INVARIANTS" in contract
@@ -88,8 +93,7 @@ def main() -> None:
                 f"stale current-state marker in {path.relative_to(ROOT)}: {marker!r}"
             )
 
-    # Frozen release records must consistently describe v1.0.2, while explicitly separating
-    # later main changes from release-time truth.
+    # Frozen release records remain v1.0.2 authority while explicitly separating later RC changes.
     assert frozen["freeze_id"] == "v1.0.2-A10-2026-09-09"
     assert frozen["package_version"] == "1.0.2"
     assert frozen["public_api"] == "DrawingSession/1.0.2-vnext"
