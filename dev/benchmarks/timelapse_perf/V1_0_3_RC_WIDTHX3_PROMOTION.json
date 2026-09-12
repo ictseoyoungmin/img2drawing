@@ -1,0 +1,50 @@
+{
+  "schema": "img2drawing.v1.0.3rc1.widthx3-promotion.v1",
+  "rc_head_measured": "0b6432f1774015dc35cb62a2fc94ca58d8ebb6ef",
+  "wheel_artifact_digest": "sha256:bf1284698e5ffd712c584bb290b01487d5db86be94bfeabd98881946499a7eba",
+  "fixture": {
+    "actions": 1272,
+    "sampled_frames_every2": 637,
+    "authored_width_scale": 3.0,
+    "median_width_px": 3.15,
+    "max_width_px": 8.4,
+    "broad_strokes_gt_4_5px": 255,
+    "action_log_sha256": "76a3cbcd3126f7e7b65d4c07252ae99677ecaeb6f794724c476caee18fb97a37",
+    "drawing_state_sha256": "da12f05fd39f6d2428b633c89305e23b0d6ad81e7d2211e798d987280afb24e0"
+  },
+  "method": "FastFrameSource direct sweep; warm resets replay/canvas while preserving in-memory patch cache and clearing object cache; v9 and v10 measured sequentially under the same environment; no GIF encoding or disk-cache timing",
+  "environment": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.41"
+  },
+  "v9": {
+    "trials": [
+      {"trial": 1, "cold_sec": 20.013338397000098, "warm_sec": 3.133604021999872, "final_rgb_sha256": "3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true},
+      {"trial": 2, "cold_sec": 19.479709205000063, "warm_sec": 2.870549344999972, "final_rgb_sha256": "3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true},
+      {"trial": 3, "cold_sec": 19.205783917999952, "warm_sec": 2.7371566809999877, "final_rgb_sha256": "3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true}
+    ],
+    "median_cold_sec": 19.479709205000063,
+    "median_warm_sec": 2.870549344999972,
+    "all_cold_warm_exact": true
+  },
+  "v10": {
+    "trials": [
+      {"trial": 1, "cold_sec": 21.684929178999937, "warm_sec": 2.9653270310000153, "final_rgb_sha256": "72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true},
+      {"trial": 2, "cold_sec": 22.080209017000016, "warm_sec": 2.933847578000041, "final_rgb_sha256": "72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true},
+      {"trial": 3, "cold_sec": 21.92740903899994, "warm_sec": 2.9976372480000464, "final_rgb_sha256": "72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205", "cold_misses": 1227, "warm_hits": 1227, "cold_warm_exact": true}
+    ],
+    "median_cold_sec": 21.92740903899994,
+    "median_warm_sec": 2.9653270310000153,
+    "all_cold_warm_exact": true
+  },
+  "delta": {
+    "cold_pct": 12.565381794157382,
+    "warm_pct": 3.301726415716577,
+    "cold_ratio": 1.1256538179415738,
+    "warm_ratio": 1.0330172641571658
+  },
+  "decision": {
+    "performance_gate": "PASS",
+    "reason": "v10 broad-stroke cold overhead remains bounded while warm replay is near parity; cold/warm output is deterministic within each renderer across all three trials."
+  }
+}
