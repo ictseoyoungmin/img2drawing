@@ -150,3 +150,11 @@ __all__ = [
     "retune_strokes",
     "sample_catmull_rom",
 ]
+
+# Bind the stable vNext public session/output hooks to the renderer registry only after
+# the ordinary public modules above have finished importing. This keeps the worker-facing
+# API source-opaque while making RenderProfile renderer identity authoritative at runtime.
+from .renderer_binding import bind_vnext_renderer_runtime as _bind_vnext_renderer_runtime
+
+_bind_vnext_renderer_runtime()
+del _bind_vnext_renderer_runtime
