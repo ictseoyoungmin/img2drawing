@@ -46,8 +46,11 @@ def verify_skill_router() -> None:
     missing = sorted(token for token in tokens if not (SKILL_ROOT / token).is_file())
     assert not missing, "SKILL.md routes to missing Markdown files:\n" + "\n".join(missing)
 
-    assert "authored-element navigation" in text.lower(), (
-        "SKILL.md review summary must expose authored-element navigation for discoverability"
+    # SKILL is the coarse router; exact review leaves live in INDEX. Keep the top-level
+    # review family discoverable here without coupling the verifier to one prose spelling.
+    lowered = text.lower()
+    assert "review/" in lowered and "navigation" in lowered, (
+        "SKILL.md review summary must expose the navigation family for discoverability"
     )
 
 
@@ -55,6 +58,12 @@ def verify_index_reachability() -> None:
     text = INDEX.read_text(encoding="utf-8")
     leaves = _all_reference_leaves()
     mentioned = _inline_routing_paths(text)
+
+    # Authored-element navigation remains an explicit reachable leaf even if SKILL uses
+    # a compact family label in its overview tree.
+    assert "review/authored-element-navigation.md" in mentioned, (
+        "references/INDEX.md must explicitly route authored-element navigation"
+    )
 
     missing = sorted(leaves - mentioned)
     assert not missing, (
