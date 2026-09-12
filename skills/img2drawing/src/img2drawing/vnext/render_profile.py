@@ -12,11 +12,10 @@ from ..render.pillow_paper_interaction import (
     DEFAULT_PAPER_SEED,
     DEFAULT_PAPER_TOOTH,
 )
-from ..render.pillow_pencil_contact import (
-    DEFAULT_SUPERSAMPLE,
-    RENDERER_ID,
-    RENDERER_VERSION,
-)
+from ..render.renderer_registry import current_renderer, resolve_renderer
+
+_CURRENT_RENDERER = current_renderer()
+DEFAULT_SUPERSAMPLE = _CURRENT_RENDERER.default_supersample
 
 
 RENDER_PROFILE_SCHEMA = "img2drawing.vnext.render_profile.v1"
@@ -94,10 +93,7 @@ class RenderProfile:
         object.__setattr__(self, "profile_id", _text(self.profile_id, "profile_id"))
         renderer_id = _text(self.renderer_id, "renderer_id")
         renderer_version = _text(self.renderer_version, "renderer_version")
-        if renderer_id != RENDERER_ID or renderer_version != RENDERER_VERSION:
-            raise ValueError(
-                "unsupported renderer identity/version; explicit migration is required"
-            )
+        resolve_renderer(renderer_id, renderer_version)
         object.__setattr__(self, "renderer_id", renderer_id)
         object.__setattr__(self, "renderer_version", renderer_version)
         width, height = int(self.canvas_width), int(self.canvas_height)
@@ -154,8 +150,8 @@ class RenderProfile:
     def canonical(cls, width: int, height: int) -> "RenderProfile":
         return cls(
             profile_id="pencil-contact-canonical-v1",
-            renderer_id=RENDERER_ID,
-            renderer_version=RENDERER_VERSION,
+            renderer_id=_CURRENT_RENDERER.renderer_id,
+            renderer_version=_CURRENT_RENDERER.renderer_version,
             canvas_width=int(width),
             canvas_height=int(height),
         )
