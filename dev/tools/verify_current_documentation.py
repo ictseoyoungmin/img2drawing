@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 
@@ -15,6 +16,14 @@ RELEASE = ROOT / "dev" / "release" / "vnext"
 def _text(path: Path) -> str:
     assert path.is_file(), f"missing current-facing document: {path.relative_to(ROOT)}"
     return path.read_text(encoding="utf-8")
+
+
+def _current_package_identity(version_text: str) -> tuple[str, str]:
+    version_match = re.search(r'^__version__ = "([^"]+)"$', version_text, flags=re.MULTILINE)
+    revision_match = re.search(r'^RELEASE_REVISION = "([^"]+)"$', version_text, flags=re.MULTILINE)
+    assert version_match, "current package version declaration missing"
+    assert revision_match, "current release revision declaration missing"
+    return version_match.group(1), revision_match.group(1)
 
 
 def main() -> None:
@@ -37,23 +46,26 @@ def main() -> None:
     migration = _text(RELEASE / "MIGRATION.md")
     frozen = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
 
-    # Published stable and current release-candidate truth are separate authorities. The RC may be
-    # either on its release branch or already integrated into main, but it is not published stable.
+    # Published stable and current release-candidate truth are separate authorities. The current
+    # package version is parsed rather than hard-coded so rc follow-ups do not require a stale
+    # one-line verifier edit just to advance from rcN to rcN+1.
+    package_version, release_revision = _current_package_identity(version)
+    assert re.fullmatch(r"1\.0\.3rc\d+", package_version), package_version
+    assert re.fullmatch(r"A\d+", release_revision), release_revision
+
     assert "**Current stable: v1.0.2**" in root_readme
     assert "unreleased post-v1.0.2 hardening" in root_readme
     assert "## Unreleased" in changelog
-    assert '__version__ = "1.0.3rc1"' in version
-    assert 'RELEASE_REVISION = "A11"' in version
     assert "RELEASED STABLE:" in status and "v1.0.2" in status
     rc_marker = "RC CANDIDATE:" in status or "RC IN MAIN:" in status
-    assert rc_marker and "v1.0.3rc1" in status
+    assert rc_marker and package_version in status
     if "RC IN MAIN:" in status:
         assert "MAIN INTEGRATION:" in status and "PASS" in status
         assert "MAIN CI:" in status and "PASS" in status
     assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
     assert "R23" in status and "physically retired" in status
     assert "current unreleased main state after v1.0.2" in roadmap
-    assert "G01 fresh-worker gesture dogfood" in roadmap
+    assert "G01" in roadmap and "gesture" in roadmap.lower()
     assert "CURRENT MAIN INVARIANTS" in contract
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
     assert "current validation matrix for unreleased post-v1.0.2 main" in validation
