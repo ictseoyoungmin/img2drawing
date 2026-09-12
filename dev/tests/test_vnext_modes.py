@@ -19,6 +19,7 @@ from img2drawing import (
 
 
 EXPECTED_MODES = (
+    "gesture",
     "croquis",
     "figure_drawing",
     "tonal_study",
@@ -81,12 +82,15 @@ def test_mode_guides_have_no_lifecycle_or_runtime_ownership_surface() -> None:
 
 
 def test_retained_modes_express_their_distinct_authoring_contracts() -> None:
+    gesture = _guide_text(resolve_mode_guide("gesture"))
     croquis = _guide_text(resolve_mode_guide("croquis"))
     figure = _guide_text(resolve_mode_guide("figure_drawing"))
     tonal = _guide_text(resolve_mode_guide("tonal_study"))
     line = _guide_text(resolve_mode_guide("line_study"))
     free = _guide_text(resolve_mode_guide("free_draw"))
 
+    assert all(term in gesture for term in ("head facing", "major limb chains", "support"))
+    assert "rounded blobs" in gesture
     assert all(term in croquis for term in ("gesture", "balance", "line economy"))
     assert all(term in figure for term in ("anatomy", "garment", "hands", "feet", "contact"))
     assert all(term in tonal for term in ("fill_region", "form before value", "edge hierarchy"))
