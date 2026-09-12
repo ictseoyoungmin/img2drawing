@@ -28,10 +28,10 @@ CANONICAL_ROOT_EXPORTS = {
 
 
 def test_rc_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "1.0.3rc1"
+    assert img2drawing.__version__ == "1.0.3rc2"
     assert PUBLIC_API == "DrawingSession/1.0.3-vnext"
-    assert RELEASE_REVISION == "A11"
-    assert RELEASE_SLICE == "v1.0.3rc1_renderer_v10_markmaking_rc"
+    assert RELEASE_REVISION == "A12"
+    assert RELEASE_SLICE == "v1.0.3rc2_gesture_runtime_alignment"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
@@ -104,6 +104,7 @@ def test_instruction_graph_contains_public_api_and_visual_leaves():
         "foundation/line-economy.md",
         "foundation/reference-authority.md",
         "foundation/occlusion-inference.md",
+        "modes/gesture-drawing.md",
         "modes/croquis.md",
         "observation/visual-observation.md",
         "construction/gesture-and-masses.md",
