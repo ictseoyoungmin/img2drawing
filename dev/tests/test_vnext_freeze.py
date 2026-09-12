@@ -14,7 +14,7 @@ from jsonschema import Draft7Validator
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_b18_freeze_verifier_accepts_current_contract_and_templates():
+def test_b18_verifier_accepts_frozen_v102_history():
     env = dict(os.environ)
     env["PYTHONPATH"] = str(ROOT / "skills" / "img2drawing" / "src")
     result = subprocess.run(
@@ -25,7 +25,7 @@ def test_b18_freeze_verifier_accepts_current_contract_and_templates():
         text=True,
     )
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "B18_SYSTEM_FREEZE_VERIFICATION_PASS" in result.stdout
+    assert "B18_FROZEN_V1_0_2_HISTORY_PASS" in result.stdout
 
 
 def test_sealed_input_schema_rejects_solution_leakage_and_fake_subject():
