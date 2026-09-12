@@ -73,7 +73,12 @@ namespace that owns them:
 from img2drawing.inspection import GroundGuide, PlumbLine, ROI, angle, distance
 from img2drawing.observation import SubjectPalette
 from img2drawing.runtime import runtime_capabilities
-from img2drawing.vnext import retune_stroke, retune_strokes, sample_catmull_rom
+from img2drawing.vnext import (
+    resolve_mark_for_intent,
+    retune_stroke,
+    retune_strokes,
+    sample_catmull_rom,
+)
 ```
 
 Advanced vNext records, guide objects, schemas, derived authoring records, and authoring helpers
@@ -158,16 +163,39 @@ is actually continuous; it is not a subject-specific or mechanical-object preset
 For value regions, use the session's fill/replace-fill surface rather than manually generating
 a cloud of synthetic value strokes.
 
-## Markmaking and future public presets
+## Markmaking presets and the draw adapter
 
-The instruction graph may describe semantic line roles and intended style/tool preset families
-before every 1.0.3 runtime name is implemented. Treat those documents as drawing intent, not as
-permission to import private renderer helpers or invent unsupported keyword arguments.
+The 1.0.3 runtime exposes semantic markmaking roles/presets through the public vNext resolver. Names
+such as `gesture-flow`, `contour-weighted`, and `broad-graphite` describe semantic mark behavior;
+they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
-When a public style/tool API lands, discover and use it through this documented surface. Until then,
-express supported local variation with the existing public stroke/tool arguments and retune helpers.
-If the runtime cannot express the requested line language, record that as a capability gap for
-framework work.
+Resolve semantic intent first, then pass the returned public draw kwargs to the session:
+
+```python
+from img2drawing.vnext import resolve_mark_for_intent
+
+mark = resolve_mark_for_intent(
+    session.intent,
+    "gesture",
+    tool_preset="gesture-flow",
+)
+
+session.draw(
+    points,
+    part="dominant-action",
+    **mark.draw_kwargs(),
+)
+```
+
+`ResolvedMark.draw_kwargs()` maps the semantic preset onto the supported runtime tool/grade/
+overrides and records markmaking provenance. Do not guess that `tool="gesture-flow"` or
+`tool="broad-graphite"` is valid merely because that semantic preset appears in the instruction
+graph. Direct `tool=` values such as `continuous_pencil` are valid only when this public surface or
+the runtime explicitly documents them as direct draw tools.
+
+If the runtime cannot express the requested line language through the public resolver, supported
+stroke/tool arguments, or retune helpers, record that as a capability gap for framework work rather
+than importing a private renderer helper or inventing unsupported keyword arguments.
 
 ## Residual provenance
 
