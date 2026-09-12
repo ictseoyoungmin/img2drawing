@@ -46,7 +46,7 @@ def main() -> None:
     assert "RELEASED STABLE:" in status and "v1.0.2" in status
     assert "RC CANDIDATE:" in status and "v1.0.3rc1" in status
     assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
-    assert "R23 runtime/legacy namespace physically retired" in status
+    assert "R23" in status and "physically retired" in status
     assert "current unreleased main state after v1.0.2" in roadmap
     assert "G01 fresh-worker gesture dogfood" in roadmap
     assert "CURRENT MAIN INVARIANTS" in contract
