@@ -19,21 +19,22 @@ mode after the structural hypothesis is credible.
 
 Construction shorthand is disposable reasoning, not the target drawing language.
 
-A sphere, ellipse, bean, box, wedge, or polygon may be used briefly to test placement or orientation,
-but do not preserve it as a visible final gesture mark merely because it was convenient to author.
-Before a mark survives into a gesture result, it should carry the observed direction, asymmetry,
-volume, and transition of the form it represents.
+A sphere, ellipse, bean, box, wedge, capsule, or polygon may be used briefly to test placement or
+orientation, but do not preserve it as a visible final gesture mark merely because it was convenient
+to author. Before a mark survives into a gesture result, it should carry the observed direction,
+asymmetry, volume, attachment, and transition of the form it represents.
 
 In practice:
 
 - a head search sphere must become a directional cranial volume when the subject provides readable
-  crown, face direction, jaw/chin direction, or side-plane information;
-- a ribcage should read as a rounded occupied volume with turn, not a flat shield or sharply faceted
-  box unless an actual observed/design plane break supports that shape;
-- a pelvis should read as a bowl or soft wedge with tilt, depth, and leg-attachment direction, not a
-  flat triangle, hexagon, or plate;
+  crown, face direction, profile break, jaw/chin direction, nape, or side-plane information;
+- a ribcage should preserve the observed shoulder/back/side asymmetry, taper, cross-direction, and
+  near/far exposure. Avoid both a flat faceted shield and a smooth generic bean/capsule;
+- a pelvis should preserve the observed hip shelf, near/far exposure, width transition, and
+  leg-attachment spacing/directions. Avoid both a flat triangle/hexagon/plate and a smooth oval or
+  capsule that erases those relations;
 - plane indication should clarify an observed turn. Do not invent hard corners merely to make a
-  mass look three-dimensional.
+  mass look three-dimensional, and do not smooth away real asymmetry merely to make it look organic.
 
 If a temporary primitive is still visually dominant after the pose is understood, retire or reshape
 it before treating the construction as resolved.
@@ -41,16 +42,22 @@ it before treating the construction as resolved.
 ## Masses
 
 Place head, ribcage, and pelvis as occupied forms with the observed tilt, width, depth,
-and overlap. Their shape should remain specific to the subject rather than converging on a stock
-circle, bean, box, or polygon.
+asymmetry, attachment, and overlap. Their shape should remain specific to the subject rather than
+converging on a stock circle, bean, capsule, box, or polygon.
+
+`Rounded` is not a sufficient quality criterion. If a mass could be swapped onto many unrelated
+subjects without changing the drawing much, it is still too generic. Preserve the few landmarks
+that make the current subject's volume specific: profile/jaw/nape for the head when visible,
+shoulder/back/side transitions for the ribcage, and hip shelf plus leg-attachment relation for the
+pelvis.
 
 Do not stop at placement. A mass also has orientation: turn relative to the viewer, near/far
-side, projected centerline or cross-axis, visible surface exposure, and a relation to the next
+side, projected centerline or cross-axis, visible surface exposure, taper, and a relation to the next
 mass. Surface exposure does not require faceting: prefer flowing centerlines, cross-directions,
 overlap, taper, and contour transition unless a genuine sharp plane break is observed.
 
-When placement looks plausible but the pose still feels flat, frontal, or symmetric,
-read `orientation-and-twist.md` before refining contour.
+When placement looks plausible but the pose still feels flat, frontal, symmetric, mannequin-like,
+or overly smooth, read `orientation-and-twist.md` before refining contour.
 
 Keep masses connected by the actual pose. Do not infer a complete hidden torso or limb
 through an occluder merely to make construction feel anatomically complete.
