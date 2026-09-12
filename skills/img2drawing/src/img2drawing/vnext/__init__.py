@@ -158,3 +158,10 @@ from .renderer_binding import bind_vnext_renderer_runtime as _bind_vnext_rendere
 
 _bind_vnext_renderer_runtime()
 del _bind_vnext_renderer_runtime
+
+# Gesture is a user-facing drawing mode, not a workflow stage. Bind it after the base intent
+# module is loaded, then refresh the exported mode tuple so public discovery stays consistent.
+from .gesture_binding import bind_gesture_intent_runtime as _bind_gesture_intent_runtime
+
+DRAWING_MODES = _bind_gesture_intent_runtime()
+del _bind_gesture_intent_runtime
