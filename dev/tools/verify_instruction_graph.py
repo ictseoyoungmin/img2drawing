@@ -91,24 +91,16 @@ def verify_skill_router() -> None:
     missing = sorted(token for token in tokens if not (SKILL_ROOT / token).is_file())
     assert not missing, "SKILL.md routes to missing Markdown files:\n" + "\n".join(missing)
 
-    # Keep only the semantic discoverability invariant here. Exact leaf ownership is
-    # verified transitively below, so adding a new category does not require verifier edits.
     assert "navigation" in text.lower(), (
         "SKILL.md must keep authored-element navigation discoverable"
     )
 
 
 def verify_index_reachability() -> None:
+    """Generic invariant: every leaf in this graph is reachable from INDEX transitively."""
+
     leaves = _all_reference_leaves()
     reachable = _reachable_reference_leaves()
-
-    assert "review/authored-element-navigation.md" in reachable, (
-        "instruction graph must route authored-element navigation"
-    )
-    assert "api/runtime-discovery.md" in reachable, (
-        "instruction graph must route runtime discovery through the public API boundary"
-    )
-
     missing = sorted(leaves - reachable)
     assert not missing, (
         "reference leaves are not reachable from references/INDEX.md or nested routes:\n"
@@ -116,9 +108,22 @@ def verify_index_reachability() -> None:
     )
 
 
+def verify_product_required_routes() -> None:
+    """Current img2drawing-specific leaves that must remain reachable."""
+
+    reachable = _reachable_reference_leaves()
+    assert "review/authored-element-navigation.md" in reachable, (
+        "instruction graph must route authored-element navigation"
+    )
+    assert "api/runtime-discovery.md" in reachable, (
+        "instruction graph must route runtime discovery through the public API boundary"
+    )
+
+
 def main() -> None:
     verify_skill_router()
     verify_index_reachability()
+    verify_product_required_routes()
     print("INSTRUCTION_GRAPH_REACHABILITY_PASS")
 
 
