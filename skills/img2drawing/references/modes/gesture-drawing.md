@@ -33,6 +33,12 @@ In particular:
   not erase real asymmetry merely to make a mass look smoothly organic. Show the subject-specific
   turn with the fewest marks that preserve its actual structure.
 
+Reference-supported roundness is valid. A rounded bob haircut, soft ribcage envelope, shorts/hip
+silhouette, or other genuinely curved form should stay rounded when the reference supports it. Do
+**not** introduce arbitrary corners merely to prove that a form is not a primitive. The failure is
+not roundness itself; the failure is an informationally empty stock circle/bean/oval/capsule that
+loses facing, asymmetry, overlap, taper, or attachment evidence that the reference actually shows.
+
 Economy comes from choosing fewer informative curves and axes, not from replacing organic forms
 with geometric icons or stock rounded blobs.
 
