@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify current-facing documentation agrees with stable + active-RC repository truth."""
+"""Verify current-facing documentation agrees with stable + current-RC repository truth."""
 
 from __future__ import annotations
 
@@ -37,14 +37,19 @@ def main() -> None:
     migration = _text(RELEASE / "MIGRATION.md")
     frozen = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
 
-    # Published stable and active release-candidate truth are separate authorities.
+    # Published stable and current release-candidate truth are separate authorities. The RC may be
+    # either on its release branch or already integrated into main, but it is not published stable.
     assert "**Current stable: v1.0.2**" in root_readme
     assert "unreleased post-v1.0.2 hardening" in root_readme
     assert "## Unreleased" in changelog
     assert '__version__ = "1.0.3rc1"' in version
     assert 'RELEASE_REVISION = "A11"' in version
     assert "RELEASED STABLE:" in status and "v1.0.2" in status
-    assert "RC CANDIDATE:" in status and "v1.0.3rc1" in status
+    rc_marker = "RC CANDIDATE:" in status or "RC IN MAIN:" in status
+    assert rc_marker and "v1.0.3rc1" in status
+    if "RC IN MAIN:" in status:
+        assert "MAIN INTEGRATION:" in status and "PASS" in status
+        assert "MAIN CI:" in status and "PASS" in status
     assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
     assert "R23" in status and "physically retired" in status
     assert "current unreleased main state after v1.0.2" in roadmap
