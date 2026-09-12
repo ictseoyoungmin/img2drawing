@@ -36,6 +36,7 @@ def main() -> None:
     assert not missing, f"missing 1.0.3 instruction leaves: {missing}"
     assert RUNTIME_SOURCE.is_file(), "missing public runtime capability manifest"
 
+    skill_entry = (SKILL / "SKILL.md").read_text(encoding="utf-8")
     index = (REFS / "INDEX.md").read_text(encoding="utf-8")
     public = (REFS / "api" / "public-surface.md").read_text(encoding="utf-8")
     discovery = (REFS / "api" / "runtime-discovery.md").read_text(encoding="utf-8")
@@ -43,6 +44,15 @@ def main() -> None:
     custom = (REFS / "markmaking" / "custom-tools.md").read_text(encoding="utf-8")
     residual = (REFS / "review" / "markmaking-residuals.md").read_text(encoding="utf-8")
 
+    require(
+        skill_entry,
+        "runtime-aware and implementation-blind",
+        "img2drawing` already provides the supported drawing runtime",
+        "references/api/public-surface.md",
+        "Do not replace the runtime with a hand-written PIL/Pillow drawing script",
+        "does **not** require reading the renderer implementation or the whole `src/` tree",
+        "runtime capability gap",
+    )
     require(
         index,
         "runtime-aware and implementation-blind",
@@ -94,6 +104,7 @@ def main() -> None:
     )
 
     # Shipped canonical guidance remains English-only.
+    assert not any("\uac00" <= ch <= "\ud7a3" for ch in skill_entry), "SKILL.md"
     for relative in REQUIRED:
         text = (REFS / relative).read_text(encoding="utf-8")
         assert not any("\uac00" <= ch <= "\ud7a3" for ch in text), relative
