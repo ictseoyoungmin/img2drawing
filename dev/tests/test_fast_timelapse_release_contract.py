@@ -8,7 +8,7 @@ from img2drawing.provenance.fast_timelapse import FastTimelapseExport
 
 # These historical implementation files are the v1.0.2 rendering/export authority whose bytes
 # remain fixed while the current package advances. New renderer generations are additive and bind
-# through RenderProfile/renderer registry; frozen v9/replay authority is not rewritten for rc1.
+# through RenderProfile/renderer registry; frozen v9/replay authority is not rewritten for rc2.
 BASELINE = {
     'provenance/timelapse.py': '893d3eadadebe980b6132167f1d9a676528d46677e97ed8698a04f94f9b50b61',
     'render/pillow_pencil_contact.py': 'c4b56582a25bbefbd38de7ea896b0dfd62d044bd168a64c346f9bdc2b2d9edd0',
@@ -19,12 +19,12 @@ def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 def test_current_rc_version_and_public_identity():
-    assert img2drawing.__version__ == '1.0.3rc1'
+    assert img2drawing.__version__ == '1.0.3rc2'
     from img2drawing._version import PUBLIC_API, DEFAULT_SESSION_ID, RELEASE_REVISION, RELEASE_SLICE
     assert PUBLIC_API == 'DrawingSession/1.0.3-vnext'
     assert DEFAULT_SESSION_ID == 'img2drawing-103-vnext'
-    assert RELEASE_REVISION == 'A11'
-    assert RELEASE_SLICE == 'v1.0.3rc1_renderer_v10_markmaking_rc'
+    assert RELEASE_REVISION == 'A12'
+    assert RELEASE_SLICE == 'v1.0.3rc2_gesture_runtime_alignment'
 
 def test_root_surface_stays_narrow_and_fast_path_is_specialized():
     assert callable(export_timelapse)

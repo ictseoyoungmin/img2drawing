@@ -22,7 +22,7 @@ def test_latest_published_v1_manifest_remains_v102() -> None:
     assert manifest["package_dir"] == "skills/img2drawing"
     assert manifest["assets"] == []
     assert (ROOT / manifest["notes_file"]).is_file()
-    assert img2drawing.__version__ == "1.0.3rc1"
+    assert img2drawing.__version__ == "1.0.3rc2"
 
 
 def test_historical_v100_demo_manifest_and_real_assets_remain_available() -> None:
@@ -50,6 +50,7 @@ def test_v1_featured_demo_links_and_release_notes_resolve() -> None:
     assert (ROOT / "docs" / "releases" / "v1.0.1.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.2.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.3rc1.md").is_file()
+    assert (ROOT / "docs" / "releases" / "v1.0.3rc2.md").is_file()
 
 
 def test_release_publisher_reads_version_without_importing_runtime() -> None:
@@ -60,8 +61,8 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
 
 
 def test_rc_identity_has_no_publish_manifest_until_explicit_promotion() -> None:
-    assert img2drawing.__version__ == "1.0.3rc1"
-    assert not (PUBLISH / "v1.0.3rc1.json").exists()
+    assert img2drawing.__version__ == "1.0.3rc2"
+    assert not (PUBLISH / "v1.0.3rc2.json").exists()
 
 
 def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:

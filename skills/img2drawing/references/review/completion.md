@@ -21,12 +21,14 @@ as specific occupied masses and connected joint chains rather than generic blobs
 An unqualified “gesture drawing” request defaults to constructive gesture.
 
 For gesture completion specifically, treat surviving search primitives as a visual defect when they
-dominate the read. Do not accept an orientationless circle-head, a flat/sharply faceted ribcage, or
-a triangle/hexagon/plate pelvis as finished shorthand when the observed subject provides enough
-evidence for directional organic volume. Facial features may be omitted in sparse gesture, but head
-facing and cranial-to-jaw direction may not disappear with them. Likewise, torso turn should be
-carried by rounded/soft volume, centerline or cross-direction, overlap, taper, and near/far relation
-unless an actual sharp plane break is observed.
+dominate the read. Do not accept an orientationless circle-head, a flat/sharply faceted ribcage, a
+triangle/hexagon/plate pelvis, **or the opposite failure of a smooth generic bean/oval/capsule** as
+finished shorthand when the observed subject provides enough evidence for more specific structure.
+Facial features may be omitted in sparse gesture, but head facing plus an observable
+profile/jaw/nape relation may not disappear with them. Torso and pelvis turn should preserve the
+few subject-specific asymmetries that explain shoulder/back/side transitions, taper, hip shelf,
+near/far exposure, and leg-attachment spacing/direction. `Rounded` alone is not a completion
+criterion: a smoothly organic mass that could fit many unrelated subjects is still unresolved.
 
 For `finish_intent="subject"` in particular, do not finish without explicitly accounting for
 each of face, hair, hands/feet, clothing, and prop (the relations `resolve_finish_guide("subject")`

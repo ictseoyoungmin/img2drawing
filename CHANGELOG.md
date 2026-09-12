@@ -6,6 +6,8 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 
 ### Changed
 
+- `1.0.3rc2 / A12` aligns the user-facing gesture mode with the public runtime: `DrawingIntent(drawing_mode="gesture")` and `resolve_mode_guide("gesture")` are now supported selections while pure-vs-constructive remains an instruction-graph finish-level decision rather than a workflow stage.
+- Gesture guidance now rejects the opposite failure of smooth generic beans/ovals/capsules as well as hard geometric construction icons. Sparse masses must preserve observed profile/jaw/nape, shoulder/back/side asymmetry, taper, hip shelf, near/far exposure, and leg-attachment relations where visible; `rounded` alone is not a completion criterion.
 - `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`:
   - the current drawing must contain authored strokes — a session that was never drawn on, or whose marks were all erased again, can no longer be finished;
   - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
@@ -14,7 +16,7 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 - Residual/correction guidance now documents the `observation_id` provenance contract explicitly: a repairing mutation for a current residual should carry the residual's observation id, followed by a fresh after-inspection before `resolve_residual()`.
 - Completion guidance now makes clear that `accepted_limitations` records acknowledged non-blocking weaknesses; it does not bypass an open residual record.
 
-The `finish()` preconditions are compatibility-breaking for existing callers, which must now call `record_evidence_read(final_inspection_id)` after actually viewing the final inspection. No new release/version is declared on post-v1.0.2 `main`; the immutable v1.0.2 release keeps the previous `finish()` behavior.
+The `finish()` preconditions and retired R23 namespaces are compatibility changes from v1.0.2. The current package is an unpublished 1.0.3 release candidate; v1.0.2 remains the latest published stable release until an explicit stable manifest is created.
 
 ### Removed
 
@@ -29,8 +31,6 @@ The `finish()` preconditions are compatibility-breaking for existing callers, wh
 - Added `dev/tools/build_skill_zip.py` and release-zip contract tests so local bytecode/cache/build residue cannot silently leak into the distributable skill archive.
 - Historical closure checks use frozen Git/release evidence instead of requiring retired runtime files to remain in mutable `src`.
 - See [`dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`](dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md).
-
-These post-v1.0.2 removals are compatibility-breaking for callers that imported the retired R23 implementation namespaces. A future release must assign an appropriate version before publishing this mutable `main` state.
 
 ## v1.0.2 — Local-first exact timelapse backend
 
