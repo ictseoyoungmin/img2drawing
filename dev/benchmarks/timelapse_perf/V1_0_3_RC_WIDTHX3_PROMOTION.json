@@ -1,5 +1,7 @@
 {
-  "schema": "img2drawing.v1.0.3rc1.widthx3-promotion.v1",
+  "schema": "img2drawing.v1.0.3rc1.widthx3-secondary-crosscheck.v1",
+  "role": "SECONDARY_CROSS_CHECK",
+  "authoritative_promotion_record": "dev/release/vnext/V1_0_3_RC1_PROMOTION.json",
   "rc_head_measured": "0b6432f1774015dc35cb62a2fc94ca58d8ebb6ef",
   "wheel_artifact_digest": "sha256:bf1284698e5ffd712c584bb290b01487d5db86be94bfeabd98881946499a7eba",
   "fixture": {
@@ -12,7 +14,7 @@
     "action_log_sha256": "76a3cbcd3126f7e7b65d4c07252ae99677ecaeb6f794724c476caee18fb97a37",
     "drawing_state_sha256": "da12f05fd39f6d2428b633c89305e23b0d6ad81e7d2211e798d987280afb24e0"
   },
-  "method": "FastFrameSource direct sweep; warm resets replay/canvas while preserving in-memory patch cache and clearing object cache; v9 and v10 measured sequentially under the same environment; no GIF encoding or disk-cache timing",
+  "method": "FastFrameSource direct sweep; warm resets replay/canvas while preserving in-memory patch cache and clearing object cache; v9 and v10 measured sequentially under the same environment; no GIF encoding, delta-pack, canonical-final, or disk-cache timing",
   "environment": {
     "python": "3.13.5",
     "platform": "Linux-6.18.35-x86_64-with-glibc2.41"
@@ -44,7 +46,7 @@
     "warm_ratio": 1.0330172641571658
   },
   "decision": {
-    "performance_gate": "PASS",
-    "reason": "v10 broad-stroke cold overhead remains bounded while warm replay is near parity; cold/warm output is deterministic within each renderer across all three trials."
+    "performance_gate": "SUPPORTING_PASS",
+    "reason": "Independent direct frame-source remeasurement supports the authoritative RC promotion evidence; it does not replace render+pack/canonical exactness authority."
   }
 }
