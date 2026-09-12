@@ -14,11 +14,28 @@ def test_deployable_skill_root_is_attention_clean() -> None:
         "MANIFEST.in",
         "README.md",
         "SKILL.md",
+        "optional-reference",
         "pyproject.toml",
         "references",
         "src",
     }
     assert not (SKILL / "examples").exists()
+
+
+def test_optional_reference_surface_is_bounded_and_noncanonical() -> None:
+    optional = SKILL / "optional-reference"
+    assert {path.name for path in optional.iterdir()} == {"astra-spatial-study.md"}
+
+    note = (optional / "astra-spatial-study.md").read_text(encoding="utf-8")
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+
+    assert "OPTIONAL / NON-CANONICAL / EDIT FREELY" in note
+    assert "not part of the canonical img2drawing instruction graph" in note
+    assert "optional-reference" not in skill
+    assert "astra-spatial-study.md" not in skill
+    assert "optional-reference" not in index
+    assert "astra-spatial-study.md" not in index
 
 
 def test_reference_surface_is_the_instruction_graph() -> None:
