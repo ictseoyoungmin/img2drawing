@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from img2drawing import DrawingIntent, DrawingSession
-from img2drawing.vnext import DRAWING_MODES, resolve_mode_guide
+from img2drawing.vnext import DRAWING_MODES, ReferenceAuthority, resolve_mode_guide
 
 
 def test_gesture_is_a_public_drawing_intent_mode() -> None:
@@ -33,8 +33,18 @@ def test_gesture_is_a_public_drawing_intent_mode() -> None:
 
 def test_drawing_session_checkpoint_preserves_gesture_intent(tmp_path) -> None:
     out = tmp_path / "gesture"
-    intent = DrawingIntent(drawing_mode="gesture", finish_intent="pose")
-    session = DrawingSession.create(canvas=(64, 96), output_dir=out, intent=intent)
+    intent = DrawingIntent(
+        reference_mode="imaginative",
+        drawing_mode="gesture",
+        finish_intent="pose",
+    )
+    authority = ReferenceAuthority.imaginative(("gesture runtime checkpoint contract",))
+    session = DrawingSession.create(
+        canvas=(64, 96),
+        output_dir=out,
+        intent=intent,
+        reference_authority=authority,
+    )
     assert session.intent.drawing_mode == "gesture"
 
     resumed = DrawingSession.resume(session.checkpoint_path, output_dir=tmp_path / "resume")
