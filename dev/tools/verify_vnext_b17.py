@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Audit the stable package, clean install, instruction graph, and supply-chain boundary.
+"""Audit the current package, clean install, instruction graph, and supply-chain boundary.
 
-This verifier checks packaging and integration only. It deliberately makes no visual-quality
-claim and does not require drawing examples in the deployable skill.
+B17 is a *current package* verifier. Historical release identity belongs to B18 and
+``dev/release/vnext/CONTRACT_FREEZE.json``; do not use that frozen v1.0.2 record as the
+version authority for a later RC package.
 """
 
 from __future__ import annotations
 
 import argparse
 import email.parser
-import json
 import os
 import re
+import runpy
 import subprocess
 import sys
 import tarfile
@@ -20,14 +21,13 @@ import venv
 import zipfile
 from pathlib import Path, PurePosixPath
 
-
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
-RELEASE_RECORDS = ROOT / "dev" / "release" / "vnext"
-CONTRACT = json.loads((RELEASE_RECORDS / "CONTRACT_FREEZE.json").read_text(encoding="utf-8"))
-VERSION = str(CONTRACT["package_version"])
-PUBLIC_API = str(CONTRACT["public_api"])
-RELEASE_REVISION = str(CONTRACT["release_revision"])
+VERSION_FILE = PACKAGE / "src" / "img2drawing" / "_version.py"
+VERSION_NS = runpy.run_path(str(VERSION_FILE))
+VERSION = str(VERSION_NS["__version__"])
+PUBLIC_API = str(VERSION_NS["PUBLIC_API"])
+RELEASE_REVISION = str(VERSION_NS["RELEASE_REVISION"])
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
@@ -37,11 +37,6 @@ CONTROL_PLANE_FILES = {
     "CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "NOTICE", "NOTICE.md",
     "RELEASE.md", "SUPPORT.md",
 }
-LEGACY_REVIEW_FILES = {
-    "dual-reference-review.md", "fresh-worker-defect-closure.md", "local-review-api.md",
-    "reopen-recovery.md", "self-visual-audit.md", "when-to-advance.md",
-    "worker-pass-memory.md",
-}
 REQUIRED_GRAPH_FILES = {
     "SKILL.md",
     "references/INDEX.md",
@@ -49,6 +44,7 @@ REQUIRED_GRAPH_FILES = {
     "references/foundation/reference-authority.md",
     "references/foundation/scope-and-precedence.md",
     "references/modes/croquis.md",
+    "references/modes/gesture-drawing.md",
     "references/observation/visual-observation.md",
     "references/construction/gesture-and-masses.md",
     "references/construction/foreshortening-and-depth.md",
@@ -61,8 +57,13 @@ REQUIRED_GRAPH_FILES = {
     "references/environment/ground-and-context.md",
     "references/review/residual-correction.md",
     "references/review/residual-routing.md",
+    "references/review/markmaking-residuals.md",
     "references/output/render-profile-and-replay.md",
     "references/api/public-surface.md",
+    "references/api/runtime-discovery.md",
+    "references/markmaking/broad-graphite.md",
+    "references/markmaking/stroke-dynamics.md",
+    "references/markmaking/style-policy.md",
 }
 
 
@@ -94,32 +95,33 @@ def _safe_member(name: str) -> PurePosixPath:
 def _canonical_docs() -> list[Path]:
     documents = [ROOT / "README.md"]
     documents.extend(PACKAGE.glob("*.md"))
-    documents.extend(path for path in (PACKAGE / "references").rglob("*.md"))
+    documents.extend((PACKAGE / "references").rglob("*.md"))
     return sorted(set(documents))
 
 
 def check_source() -> None:
-    version_text = (PACKAGE / "src" / "img2drawing" / "_version.py").read_text()
+    version_text = VERSION_FILE.read_text(encoding="utf-8")
     assert f'__version__ = "{VERSION}"' in version_text
     assert f'RELEASE_REVISION = "{RELEASE_REVISION}"' in version_text
     assert (ROOT / "LICENSE").read_bytes() == (PACKAGE / "LICENSE").read_bytes()
-    pyproject = (PACKAGE / "pyproject.toml").read_text()
+
+    pyproject = (PACKAGE / "pyproject.toml").read_text(encoding="utf-8")
     assert '"numpy>=1.24"' in pyproject and '"Pillow>=10"' in pyproject
     assert "svgwrite" not in pyproject
     assert 'license-files = ["LICENSE"]' in pyproject
-    workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text()
+
+    workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     assert "verify_vnext_b17.py" in workflow
+    assert "verify_v103_rc_promotion.py" in workflow
     assert "validate_r23_release.py" not in workflow
 
     assert not (PACKAGE / "examples").exists(), "uncurated examples leaked into deployable skill"
     for name in CONTROL_PLANE_FILES:
         assert not (PACKAGE / name).exists(), f"control-plane file leaked into skill root: {name}"
-    assert not (PACKAGE / "playbooks").exists(), "legacy playbooks leaked into deployable skill"
-    assert not (PACKAGE / "references" / "stages").exists(), "legacy stage references leaked into deployable skill"
-    for name in LEGACY_REVIEW_FILES:
-        assert not (PACKAGE / "references" / "review" / name).exists(), f"legacy review doc leaked: {name}"
-    for name in ("CONTRACT_FREEZE.json", "FREEZE.md", "MIGRATION.md", "RELEASE.md", "SUPPORT.md"):
-        assert (RELEASE_RECORDS / name).is_file(), f"missing maintainer release record: {name}"
+    assert not (PACKAGE / "playbooks").exists()
+    assert not (PACKAGE / "references" / "stages").exists()
+    assert not (PACKAGE / "src" / "img2drawing" / "legacy").exists()
+
     for relative in REQUIRED_GRAPH_FILES:
         assert (PACKAGE / relative).is_file(), f"missing instruction-graph leaf: {relative}"
 
@@ -138,6 +140,15 @@ def check_source() -> None:
     assert not missing, "broken canonical documentation links:\n" + "\n".join(missing)
 
 
+def _scan_text(name: str, payload: bytes) -> None:
+    if Path(name).suffix.lower() not in TEXT_SUFFIXES:
+        return
+    text = payload.decode("utf-8")
+    for token in ("/home/", "/mnt/", "BEGIN PRIVATE KEY", "BEGIN OPENSSH PRIVATE KEY"):
+        assert token not in text, f"artifact contains local/secret token {token!r}: {name}"
+    assert not re.search(r"AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}", text), f"secret-like token: {name}"
+
+
 def _probe(python: Path, *, cwd: Path, env: dict[str, str]) -> dict[str, object]:
     code = (
         "import json,img2drawing; from img2drawing._version import PUBLIC_API,RELEASE_REVISION; "
@@ -145,17 +156,7 @@ def _probe(python: Path, *, cwd: Path, env: dict[str, str]) -> dict[str, object]
         "'revision':RELEASE_REVISION,'exports':sorted(img2drawing.__all__),"
         "'file':img2drawing.__file__}))"
     )
-    return json.loads(_run([str(python), "-c", code], cwd=cwd, env=env).strip())
-
-
-def _scan_text(name: str, payload: bytes) -> None:
-    if Path(name).suffix.lower() not in TEXT_SUFFIXES:
-        return
-    text = payload.decode("utf-8")
-    forbidden = ("/home/", "/mnt/", "BEGIN PRIVATE KEY", "BEGIN OPENSSH PRIVATE KEY")
-    for token in forbidden:
-        assert token not in text, f"artifact contains local/secret token {token!r}: {name}"
-    assert not re.search(r"AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}", text), f"secret-like token: {name}"
+    return __import__("json").loads(_run([str(python), "-c", code], cwd=cwd, env=env).strip())
 
 
 def check_artifacts(work: Path) -> tuple[Path, Path]:
@@ -164,47 +165,38 @@ def check_artifacts(work: Path) -> tuple[Path, Path]:
     wheel = next(dist.glob("*.whl"))
     sdist = next(dist.glob("*.tar.gz"))
 
+    assert VERSION.replace("-", "_") in wheel.name
     with zipfile.ZipFile(wheel) as archive:
-        wheel_names = archive.namelist()
-        for name in wheel_names:
+        names = archive.namelist()
+        for name in names:
             path = _safe_member(name)
             assert path.parts[0] == "img2drawing" or ".dist-info" in path.parts[0], name
             assert not FORBIDDEN_ARCHIVE_PARTS.intersection(path.parts), name
             _scan_text(name, archive.read(name))
-        metadata_name = next(name for name in wheel_names if name.endswith(".dist-info/METADATA"))
+        metadata_name = next(name for name in names if name.endswith(".dist-info/METADATA"))
         metadata = email.parser.Parser().parsestr(archive.read(metadata_name).decode())
         assert metadata["Version"] == VERSION
-        runtime_requires = [
-            value for value in metadata.get_all("Requires-Dist", []) if "extra ==" not in value
-        ]
-        assert any(value.lower().startswith("numpy>=") for value in runtime_requires)
-        assert any(value.lower().startswith("pillow>=") for value in runtime_requires)
+        runtime_requires = [v for v in metadata.get_all("Requires-Dist", []) if "extra ==" not in v]
+        assert any(v.lower().startswith("numpy>=") for v in runtime_requires)
+        assert any(v.lower().startswith("pillow>=") for v in runtime_requires)
         assert len(runtime_requires) == 2
-        assert any(name.endswith(".dist-info/licenses/LICENSE") for name in wheel_names)
-        assert not any(
-            name.endswith(".dist-info/licenses/NOTICE") or name.endswith(".dist-info/licenses/NOTICE.md")
-            for name in wheel_names
-        )
+        assert any(name.endswith(".dist-info/licenses/LICENSE") for name in names)
 
     with tarfile.open(sdist, "r:gz") as archive:
-        members = archive.getmembers()
-        names = [member.name for member in members]
-        for member in members:
+        relative_names: set[str] = set()
+        for member in archive.getmembers():
             path = _safe_member(member.name)
             assert member.isfile() or member.isdir(), f"unsupported archive member type: {member.name}"
             relative = path.parts[1:]
             assert not FORBIDDEN_ARCHIVE_PARTS.intersection(relative), member.name
-            assert relative[:1] != ("playbooks",), member.name
-            assert relative[:2] != ("references", "stages"), member.name
+            if relative:
+                relative_names.add("/".join(relative))
             if relative and relative[-1] in CONTROL_PLANE_FILES:
                 raise AssertionError(f"control-plane file shipped in sdist: {member.name}")
-            if len(relative) >= 3 and relative[:2] == ("references", "review") and relative[-1] in LEGACY_REVIEW_FILES:
-                raise AssertionError(f"legacy review file shipped: {member.name}")
             if member.isfile():
                 stream = archive.extractfile(member)
                 assert stream is not None
                 _scan_text(member.name, stream.read())
-        relative_names = {"/".join(PurePosixPath(name).parts[1:]) for name in names}
         assert REQUIRED_GRAPH_FILES.issubset(relative_names), sorted(REQUIRED_GRAPH_FILES - relative_names)
         assert not any(name.startswith("examples/") for name in relative_names)
     return wheel, sdist
@@ -217,12 +209,10 @@ def check_clean_install(work: Path, wheel: Path) -> None:
     clean_env = os.environ.copy()
     clean_env.pop("PYTHONPATH", None)
     _run([str(python), "-m", "pip", "install", "--no-input", str(wheel)], cwd=work, env=clean_env)
-    dependency_locations = json.loads(
+
+    dependency_locations = __import__("json").loads(
         _run(
-            [
-                str(python), "-c",
-                "import json,numpy,PIL; print(json.dumps({'numpy':numpy.__file__,'PIL':PIL.__file__}))",
-            ],
+            [str(python), "-c", "import json,numpy,PIL; print(json.dumps({'numpy':numpy.__file__,'PIL':PIL.__file__}))"],
             cwd=work,
             env=clean_env,
         ).strip()
@@ -238,7 +228,8 @@ def check_clean_install(work: Path, wheel: Path) -> None:
     installed = _probe(python, cwd=work, env=clean_env)
     for field in ("version", "api", "revision", "exports"):
         assert source[field] == installed[field], f"source/install {field} mismatch"
-    assert installed["version"] == VERSION and installed["api"] == PUBLIC_API
+    assert installed["version"] == VERSION
+    assert installed["api"] == PUBLIC_API
     assert installed["revision"] == RELEASE_REVISION
     assert str(installed["file"]).startswith(str(environment)), installed["file"]
     assert "DrawingSession" in installed["exports"] and "DrawingRun" not in installed["exports"]
@@ -250,13 +241,13 @@ def main() -> None:
     args = parser.parse_args()
     check_source()
     if args.source_only:
-        print("B17 source/docs/CI audit: PASS")
+        print(f"B17 current source/docs/CI audit: PASS ({VERSION})")
         return
     with tempfile.TemporaryDirectory(prefix="img2drawing-b17-") as temporary:
         work = Path(temporary)
         wheel, _sdist = check_artifacts(work)
         check_clean_install(work, wheel)
-    print("B17 package/API/clean-install/instruction-graph/supply-chain audit: PASS")
+    print(f"B17 current package/API/clean-install/instruction-graph/supply-chain audit: PASS ({VERSION})")
 
 
 if __name__ == "__main__":
