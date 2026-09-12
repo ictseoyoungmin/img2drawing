@@ -6,9 +6,9 @@ import img2drawing
 from img2drawing.provenance import export_timelapse, export_fast_timelapse
 from img2drawing.provenance.fast_timelapse import FastTimelapseExport
 
-# These implementation files are the v1.0.2 rendering/export authority whose bytes must remain
-# fixed while post-release packaging/API cleanup proceeds. The mutable package root is not renderer
-# authority and may retire compatibility shims after the release tag has frozen the shipped copy.
+# These historical implementation files are the v1.0.2 rendering/export authority whose bytes
+# remain fixed while the current package advances. New renderer generations are additive and bind
+# through RenderProfile/renderer registry; frozen v9/replay authority is not rewritten for rc1.
 BASELINE = {
     'provenance/timelapse.py': '893d3eadadebe980b6132167f1d9a676528d46677e97ed8698a04f94f9b50b61',
     'render/pillow_pencil_contact.py': 'c4b56582a25bbefbd38de7ea896b0dfd62d044bd168a64c346f9bdc2b2d9edd0',
@@ -18,13 +18,13 @@ BASELINE = {
 def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
-def test_v102_version_and_public_identity():
-    assert img2drawing.__version__ == '1.0.2'
+def test_current_rc_version_and_public_identity():
+    assert img2drawing.__version__ == '1.0.3rc1'
     from img2drawing._version import PUBLIC_API, DEFAULT_SESSION_ID, RELEASE_REVISION, RELEASE_SLICE
-    assert PUBLIC_API == 'DrawingSession/1.0.2-vnext'
-    assert DEFAULT_SESSION_ID == 'img2drawing-102-vnext'
-    assert RELEASE_REVISION == 'A10'
-    assert RELEASE_SLICE == 'v1.0.2_local_first_exact_timelapse'
+    assert PUBLIC_API == 'DrawingSession/1.0.3-vnext'
+    assert DEFAULT_SESSION_ID == 'img2drawing-103-vnext'
+    assert RELEASE_REVISION == 'A11'
+    assert RELEASE_SLICE == 'v1.0.3rc1_renderer_v10_markmaking_rc'
 
 def test_root_surface_stays_narrow_and_fast_path_is_specialized():
     assert callable(export_timelapse)
@@ -36,7 +36,7 @@ def test_root_surface_stays_narrow_and_fast_path_is_specialized():
     assert not hasattr(provenance, 'export_timelapse_streaming')
     assert importlib.util.find_spec('img2drawing.provenance.streaming') is None
 
-def test_canonical_renderer_and_exporter_authority_are_byte_preserved():
+def test_frozen_v102_renderer_and_exporter_authority_are_byte_preserved():
     pkg = Path(img2drawing.__file__).resolve().parent
     for rel, digest in BASELINE.items():
         assert sha(pkg / rel) == digest, rel
