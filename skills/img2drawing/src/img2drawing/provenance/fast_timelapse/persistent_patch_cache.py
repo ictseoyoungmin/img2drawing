@@ -8,7 +8,6 @@ import zlib
 from pathlib import Path
 
 from PIL import Image
-from ...render.pillow_pencil_contact import _prepare_grade, _smooth_hand_dynamics
 from .patch_cache import PatchCacheRenderer
 
 MAGIC=b"IPC1"
@@ -65,7 +64,7 @@ class PersistentPatchCacheRenderer(PatchCacheRenderer):
             self.persistent["write_sec"]+=time.perf_counter()-t0
 
     def patch_for(self,stroke):
-        prepared=_smooth_hand_dynamics(_prepare_grade(stroke,self.grade),self.profile)
+        prepared=self.backend.prepare_stroke(stroke,self.grade,self.profile)
         key=self._fingerprint(prepared)
         hit=self.patch_cache.get(key)
         if hit is not None:
