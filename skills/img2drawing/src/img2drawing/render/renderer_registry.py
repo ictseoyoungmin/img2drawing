@@ -11,6 +11,11 @@ from . import pillow_pencil_contact as v9
 from . import pillow_pencil_contact_v10 as v10
 from .pillow_graphite_grain import _graphite_layer, _material, _stroke_seed
 from .renderer_contracts import RendererContract, V9_CONTRACT, V10_CONTRACT
+from .v10_value_authority import install_v10_value_authority_core
+
+# v10 is still an RC-only candidate, so registry binding owns its complete semantic
+# package. Historical v9 remains byte-frozen and is never decorated here.
+install_v10_value_authority_core(v10)
 
 
 def _v9_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, paper_seed, graphite, profile):
