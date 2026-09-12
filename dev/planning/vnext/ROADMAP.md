@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-09-11
+Updated: 2026-09-13
 Workflow: Bottleneck · one highest-impact open problem at a time
 
 This roadmap describes the **current unreleased main state after v1.0.2**. Older A/B/D/R plans remain historical evidence; they do not override this sequence.
@@ -12,52 +12,54 @@ This roadmap describes the **current unreleased main state after v1.0.2**. Older
 - v1.0.2 promoted the exact local-first timelapse backend.
 - Post-v1.0.2 source cleanup physically retired the R23 runtime/legacy cluster from current `src`.
 - Post-v1.0.2 instruction hardening added cause-based residual routing, dynamic instruction-graph reachability, explicit observation-id correction provenance, and pure/constructive gesture modes.
-- CI now separates current runtime checks from frozen historical evidence and no longer runs publish preparation for ordinary main commits.
+- Renderer parity work closed inspect/current-state ↔ final/replay divergence for v10 while preserving frozen v9 replay behavior.
+- Renderer v10, markmaking runtime discovery, broad-graphite value authority, and renderer-aware fast timelapse were promoted into the `1.0.3rc1 / A11` candidate.
+- RC promotion evidence passed same-environment width×3 v9/v10 comparison plus canonical/fast pixel exactness.
+- PR #40 integrated `1.0.3rc1` into `main`; merge commit `dc36a86b45aaeed453505330a8bb423fc78405a2` and post-merge main CI run `34705776246` are green.
+- No `1.0.3rc1` publish manifest exists, so v1.0.2 remains the latest published stable release.
 
 ## Current sequence
 
 ```text
 G01 fresh-worker gesture dogfood
   ↓
-G02 inspect/final/replay render-input parity
+G02 stable-promotion decision: v1.0.3 vs another RC
   ↓
-G03 post-v1.0.2 compatibility and version review
+G03 explicit stable freeze + publish manifest
   ↓
-G04 new freeze / release candidate / clean-install regression
-  ↓
-G05 publish only if all current contracts and release notes agree
+G04 publish only if all current contracts and release notes agree
 ```
 
 ### G01 — gesture behavior validation
 
-Run two fresh-worker cases against the current installed skill:
+Run two fresh-worker cases against the current installed `1.0.3rc1` skill:
 
 1. explicit quick/pure gesture;
 2. unqualified `gesture drawing`, which must default to constructive gesture.
 
-Reject a result that stops at isolated head/ribcage/pelvis construction, omits major visible limb chains/support, or treats a construction scaffold as the requested finished gesture drawing.
+Reject a result that stops at isolated head/ribcage/pelvis construction, omits major visible limb chains/support, or treats a construction scaffold as the requested finished gesture drawing. Review the result as artistic-behavior evidence; do not reopen renderer/package identity unless the observed defect is actually reusable runtime or instruction-graph friction.
 
-### G02 — renderer parity
+### G02 — stable-promotion decision
 
-Close the strict xfail for `inspect()` versus final/replay rendering. The fix must normalize the render input across inspection, canonical replay, and fast replay rather than changing only one path or silently changing the frozen v1.0.2 renderer contract.
+Use the fresh dogfood plus the already closed mechanical RC evidence to decide whether the next artifact is stable `1.0.3` or another release candidate.
 
-### G03 — compatibility/version review
+Do not repeat already-closed renderer parity, compatibility review, or RC integration work unless new evidence invalidates one of those premises. If dogfood exposes an artistic-quality weakness that belongs only to worker visual reasoning, record it as such rather than changing runtime contracts.
 
-Current main contains compatibility-breaking post-v1.0.2 changes, including stricter `finish()` preconditions and physical retirement of R23 implementation namespaces. Determine the next release version from documented support policy and actual public compatibility; do not reuse `1.0.2` for new artifacts.
+Deprecated pre-0.6.0rc2 root shims remain intentionally separate from the R23 retirement. Their removal requires an explicit compatibility decision and must not be bundled silently into stable promotion.
 
-Deprecated pre-0.6.0rc2 root shims are intentionally separate from the R23 retirement and should be removed only if that release explicitly chooses to break them.
+### G03 — stable freeze and publish preparation
 
-### G04 — release hardening
+Only after choosing stable promotion:
 
-For the selected next version:
+- create a new immutable v1.0.3 contract freeze rather than editing `v1.0.2-A10`;
+- create an explicit stable publish manifest;
+- update stable release notes/support metadata to the chosen stable identity;
+- rerun full active tests, current-runtime isolation, dynamic instruction-graph reachability, package/sdist/wheel audit, clean install, replay/timelapse parity, promotion-evidence verification, and frozen-history verification;
+- verify built wheel metadata and hashes before publication.
 
-- create a new contract freeze rather than editing `v1.0.2-A10`;
-- run full active tests, current-runtime isolation, dynamic instruction-graph reachability, package/sdist/wheel audit, clean install, replay/timelapse parity, and frozen-history verification;
-- ensure docs, package metadata, release notes, support policy, and CI all describe the same state.
+### G04 — publish
 
-### G05 — publish
-
-Publish only from an explicit new release manifest. The immutable v1.0.2 tag, release notes, and historical freeze remain unchanged.
+Publish only from the explicit stable manifest after every current-facing document, package identity, release note, and mechanical gate agrees. The immutable v1.0.2 tag, release notes, publish manifest, and historical freeze remain unchanged.
 
 ## Later / optional
 
@@ -68,7 +70,9 @@ Publish only from an explicit new release manifest. The immutable v1.0.2 tag, re
 ## Authority
 
 - current state: `STATUS.md`;
+- integrated RC notes: `../../../docs/releases/v1.0.3rc1.md`;
+- RC promotion evidence: `../../release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`;
 - unreleased changes and known issues: `../../../CHANGELOG.md`;
 - deployable behavior: `../../../skills/img2drawing/SKILL.md` + references;
-- latest released notes: `../../../docs/releases/v1.0.2.md`;
+- latest published stable notes: `../../../docs/releases/v1.0.2.md`;
 - immutable released contract: `../../release/vnext/CONTRACT_FREEZE.json`.
