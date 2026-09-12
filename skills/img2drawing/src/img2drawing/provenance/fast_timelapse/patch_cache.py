@@ -11,16 +11,8 @@ from PIL import Image, ImageChops
 
 from ...render.pillow_graphite_grain import _graphite_layer, _material, _stroke_seed
 from ...render.pillow_eraser_material import is_eraser
-from ...render.pillow_pencil_contact import (
-    _contact_bounds,
-    _continuous_contact_mask,
-    _continuity_floor_mask,
-    _prepare_grade,
-    _smooth_grain_modulate,
-    _smooth_hand_dynamics,
-    _smooth_paper_modulate,
-    load_pencil_contact_profile,
-)
+from ...render.renderer_registry import current_renderer
+
 
 CACHE_SCHEMA = "img2drawing.local.patch-cache.v2"
 
@@ -31,7 +23,7 @@ class PatchCacheRenderer:
     def __init__(self, *, width: int, height: int, background, scale: int, supersample: int,
                  graphite, grade: str | None, tooth: float, paper_scale: float,
                  paper_seed: int, contact_profile: str | Path | None = None,
-                 cache_contract: dict[str, Any] | None = None):
+                 cache_contract: dict[str, Any] | None = None, renderer_backend=None):
         self.width = int(width)
         self.height = int(height)
         self.background = tuple(int(x) for x in background)
@@ -45,7 +37,8 @@ class PatchCacheRenderer:
         self.tooth = float(tooth)
         self.paper_scale = float(paper_scale)
         self.paper_seed = int(paper_seed)
-        self.profile = load_pencil_contact_profile(contact_profile)
+        self.backend = renderer_backend or current_renderer()
+        self.profile = self.backend.helper("load_pencil_contact_profile")(contact_profile)
         self.cache_contract = dict(cache_contract or {})
         self.profile_contract = asdict(self.profile)
         self.patch_cache: dict[str, tuple[tuple[int, int], Image.Image, bool]] = {}
@@ -65,7 +58,10 @@ class PatchCacheRenderer:
             "paper_scale": self.paper_scale,
             "paper_seed": self.paper_seed,
             "contact_profile": self.profile_contract,
-            "renderer_contract": self.cache_contract,
+            "renderer_identity": list(self.backend.identity),
+            "renderer_contract_digest": self.backend.contract_digest,
+            "renderer_contract": self.backend.contract_payload,
+            "session_contract": self.cache_contract,
         }
         blob = json.dumps({"stroke": payload, "meta": meta}, ensure_ascii=False,
                           sort_keys=True, separators=(",", ":"))
@@ -74,27 +70,15 @@ class PatchCacheRenderer:
     def _build_patch(self, stroke):
         if is_eraser(stroke):
             raise RuntimeError("ordered spatial eraser reached the fast patch cache after eligibility gating")
-        grain, hardness = _material(stroke)
-        bounds = _contact_bounds(stroke, self.factor, hardness, self.hi_size, self.profile)
-        mask = _continuous_contact_mask(stroke, self.factor, hardness, bounds, self.profile)
-        continuity = _continuity_floor_mask(stroke, self.factor, hardness, bounds, self.profile)
-        mask = _smooth_grain_modulate(
-            mask, stroke=stroke, grain=grain, hardness=hardness, factor=self.factor,
-            global_origin=(bounds[0], bounds[1]), seed=_stroke_seed(stroke), profile=self.profile,
+        bounds, layer = self.backend.build_patch(
+            stroke=stroke, factor=self.factor, hi_size=self.hi_size,
+            tooth=self.tooth, paper_scale=self.paper_scale, paper_seed=self.paper_seed,
+            graphite=self.graphite, profile=self.profile,
         )
-        mask = _smooth_paper_modulate(
-            mask, stroke=stroke, tooth=self.tooth, paper_scale=self.paper_scale,
-            paper_seed=self.paper_seed, factor=self.factor, global_origin=(bounds[0], bounds[1]),
-            hardness=hardness, profile=self.profile,
-        )
-        mask = ImageChops.lighter(mask, continuity)
-        layer = _graphite_layer(mask.size, mask, graphite=self.graphite)
-        mask.close()
-        continuity.close()
         return (bounds[0], bounds[1]), layer, False
 
     def patch_for(self, stroke):
-        prepared = _smooth_hand_dynamics(_prepare_grade(stroke, self.grade), self.profile)
+        prepared = self.backend.prepare_stroke(stroke, self.grade, self.profile)
         key = self._fingerprint(prepared)
         hit = self.patch_cache.get(key)
         if hit is not None:
