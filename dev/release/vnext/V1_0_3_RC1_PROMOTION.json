@@ -1,0 +1,80 @@
+{
+  "schema": "img2drawing.v1_0_3_rc1_promotion.v1",
+  "state": "PROMOTION_EVIDENCE_COMPLETE",
+  "candidate_branch": "release/1.0.3-rc",
+  "measured_commit": "0b6432f1774015dc35cb62a2fc94ca58d8ebb6ef",
+  "measured_tree": "c8a40c5f2b10a74cfbfd5fd076c0f32a8e665221",
+  "measured_at_local_date": "2026-09-13",
+  "artifact": {
+    "workflow_run_id": 34703239190,
+    "artifact_id": 10301271233,
+    "artifact_name": "img2drawing-1.0.3-rc-candidate-0b6432f1774015dc35cb62a2fc94ca58d8ebb6ef",
+    "artifact_zip_sha256": "bf1284698e5ffd712c584bb290b01487d5db86be94bfeabd98881946499a7eba",
+    "wheel_name": "img2drawing-1.0.2-py3-none-any.whl",
+    "wheel_sha256": "d6738164cef64f883fd0c64f648f165e5114cb4416281f338bd57650d87df6c1"
+  },
+  "fixture": {
+    "name": "window-study-widthx3",
+    "source_zip_sha256": "f17a5cd3ebb4ac5a6929d505a6ba7ce75129e86cd509d87553fc4566b750d96b",
+    "actions": 1272,
+    "sampled_frames": 637,
+    "every_n": 2,
+    "canvas": [1536, 864],
+    "width_scale": 3.0,
+    "mutation": "authored draw-stroke width and mirrored resolved tool-state width only; coordinates, pressure, opacity, taper, layers, action order, and deletes preserved",
+    "broad_stress_reference": {
+      "median_width_px": 3.15,
+      "max_width_px": 8.4,
+      "historical_all_draw_strokes_over_4_5_px": 255
+    }
+  },
+  "environment": {
+    "python": "3.13.5",
+    "platform": "Linux 6.18.35 x86_64",
+    "cpu": "Intel Xeon Platinum 8370C @ 2.80GHz",
+    "logical_cpu_count_visible": 5,
+    "pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "persistent_cache_medium": "/dev/shm",
+    "note": "Absolute wall times differ from prior execution slots; promotion uses same-environment v9/v10 relative comparison."
+  },
+  "measurements": {
+    "v9": {
+      "renderer": ["pillow-pencil-contact-v9", "1"],
+      "cold_render_pack_sec": [26.861024842, 27.389219850999893, 27.937490252999964],
+      "warm_render_pack_sec": [10.061525149999966, 10.07607895600006, 9.988754927999935],
+      "cold_patch_build_sec": [16.246741575998612, 16.185653762998072, 16.56510791699918],
+      "cold_median_sec": 27.389219850999893,
+      "warm_median_sec": 10.061525149999966,
+      "patch_build_median_sec": 16.246741575998612,
+      "fast_rgb_sha256": "3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca",
+      "canonical_rgb_sha256": "3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca",
+      "pixel_exact": true
+    },
+    "v10": {
+      "renderer": ["pillow-pencil-contact-v10", "1"],
+      "cold_render_pack_sec": [28.727490869999997, 28.233648551999977, 29.65892149199999],
+      "warm_render_pack_sec": [10.14657084700002, 10.198899856000025, 10.243045535999954],
+      "cold_patch_build_sec": [18.20570278800028, 17.900788603000024, 19.034457568999414],
+      "cold_median_sec": 28.727490869999997,
+      "warm_median_sec": 10.198899856000025,
+      "patch_build_median_sec": 18.20570278800028,
+      "fast_rgb_sha256": "72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205",
+      "canonical_rgb_sha256": "72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205",
+      "pixel_exact": true
+    },
+    "v10_vs_v9_delta_pct": {
+      "cold_render_pack": 4.886123176492174,
+      "warm_render_pack": 1.3653467436799183,
+      "cold_patch_build": 12.057563683388995
+    }
+  },
+  "promotion": {
+    "historical_v9_preserved": true,
+    "v9_fast_canonical_exact": true,
+    "v10_fast_canonical_exact": true,
+    "broad_cold_delta_interpretation": "accepted material-cost increase; substantially below the earlier +15.06% widthx3 research observation in its own environment",
+    "warm_delta_interpretation": "effectively same operational range",
+    "verdict": "PASS_FOR_1.0.3rc1_VERSION_DECLARATION"
+  }
+}
