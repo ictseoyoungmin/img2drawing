@@ -9,7 +9,7 @@ from PIL import Image
 
 from ...core.history import _stroke_from_dict
 from ...render.pillow_eraser_material import is_eraser
-from ...render.renderer_registry import current_renderer, resolve_renderer
+from ...render.renderer_registry import resolve_renderer
 
 from .dirty_regions import apply_additions, clip_box, merge_regions, patch_box, recomposite_regions, union_box
 from .dirty_resample import finalize_full, update_output_regions
@@ -21,6 +21,7 @@ SUPPORTED_ACTIONS = {
     "stroke.segment_soft_lift", "stroke.delete", "snapshot",
 }
 MUTATING_ACTIONS = SUPPORTED_ACTIONS - {"snapshot"}
+_HISTORICAL_RENDERER = ("pillow-pencil-contact-v9", "1")
 
 
 class FastPathIneligible(RuntimeError):
@@ -41,6 +42,14 @@ class FrameRenderConfig:
     paper_seed: int = 170817
     renderer_id: str | None = None
     renderer_version: str | None = None
+
+
+def _backend_for_config(config: FrameRenderConfig):
+    """Resolve explicit profiles, but keep profile-less legacy replay on published v9."""
+
+    if config.renderer_id is not None and config.renderer_version is not None:
+        return resolve_renderer(config.renderer_id, config.renderer_version)
+    return resolve_renderer(*_HISTORICAL_RENDERER)
 
 
 @dataclass(frozen=True)
@@ -85,11 +94,7 @@ class FastFrameSource:
         self.eligibility = inspect_fast_path_eligibility(history)
         if not self.eligibility.eligible:
             raise FastPathIneligible("; ".join(self.eligibility.reasons))
-        self.backend = (
-            resolve_renderer(config.renderer_id, config.renderer_version)
-            if config.renderer_id is not None and config.renderer_version is not None
-            else current_renderer()
-        )
+        self.backend = _backend_for_config(config)
         extra = dict(renderer_kwargs or {})
         extra.setdefault("renderer_backend", self.backend)
         self.renderer = renderer_cls(
@@ -243,11 +248,7 @@ class CanonicalFrameSource:
     def __init__(self, history, config: FrameRenderConfig, *, reasons: tuple[str, ...] = ()):
         self.history = history
         self.config = config
-        self.backend = (
-            resolve_renderer(config.renderer_id, config.renderer_version)
-            if config.renderer_id is not None and config.renderer_version is not None
-            else current_renderer()
-        )
+        self.backend = _backend_for_config(config)
         self.cursor = 0
         self.reasons = tuple(reasons)
         self._tmp = TemporaryDirectory(prefix="img2drawing-canonical-fallback-")
