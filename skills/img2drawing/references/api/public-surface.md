@@ -1,7 +1,27 @@
 # Public runtime surface
 
-Read this file only when code must operate the runtime. Drawing knowledge belongs in the
-visual instruction leaves, not in implementation details.
+Read this file before authoring the first programmatic drawing mark. Drawing knowledge belongs in
+the visual and markmaking instruction leaves; this file only tells the Agent how to operate the
+supported runtime without reading its implementation.
+
+## Worker discovery contract
+
+The ordinary drawing worker is **runtime-aware and implementation-blind**.
+
+The worker must know that `img2drawing` already provides the drawing runtime. Final authored marks
+must enter through `DrawingSession` and documented public helpers so history, inspection, replay,
+render-profile authority, and finish provenance remain intact.
+
+Do **not** replace the runtime with a hand-written Pillow/ImageDraw script, raw OpenCV raster edits,
+SVG/canvas drawing, a custom `StrokeCanvas`, or another bespoke rasterizer. Pillow, NumPy, OpenCV,
+crops, overlays, and similar tools may support bounded observation/evidence work where allowed, but
+they are not alternative final-authoring runtimes.
+
+The ordinary worker also does **not** need to inspect the full `src/` tree, private renderer classes,
+cache internals, or persistence implementation before drawing. Read implementation only when the
+user explicitly asks for framework work, or when a demonstrated runtime defect requires debugging.
+If the public surface cannot express a required mark, record a runtime capability gap instead of
+silently bypassing it.
 
 ## Canonical package root
 
@@ -120,6 +140,17 @@ is actually continuous; it is not a subject-specific or mechanical-object preset
 For value regions, use the session's fill/replace-fill surface rather than manually generating
 a cloud of synthetic value strokes.
 
+## Markmaking and future public presets
+
+The instruction graph may describe semantic line roles and intended style/tool preset families
+before every 1.0.3 runtime name is implemented. Treat those documents as drawing intent, not as
+permission to import private renderer helpers or invent unsupported keyword arguments.
+
+When a public style/tool API lands, discover and use it through this documented surface. Until then,
+express supported local variation with the existing public stroke/tool arguments and retune helpers.
+If the runtime cannot express the requested line language, record that as a capability gap for
+framework work.
+
 ## Residual provenance
 
 `record_residual()`, the corrective edits, and `resolve_residual()` form one provenance chain.
@@ -153,3 +184,21 @@ scale is pinned to 1x canvas space for registration/ROI/measurement geometry.
 Do not depend on private modules, compatibility shims, hidden attributes, or implementation
 class names in skill-facing instructions. The package root is the normal orchestration surface;
 specialized documented namespaces are capability libraries, not competing session frameworks.
+
+The intended operational sequence is therefore:
+
+```text
+visual / artistic decision
+  -> instruction-graph routing
+  -> documented public runtime operation
+  -> render / inspect
+  -> residual correction
+```
+
+not:
+
+```text
+read renderer internals
+  -> imitate implementation details
+  -> draw through a bespoke raster script
+```
