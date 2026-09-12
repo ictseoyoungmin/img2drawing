@@ -12,6 +12,7 @@ from ..render.pillow_paper_interaction import (
     DEFAULT_PAPER_SEED,
     DEFAULT_PAPER_TOOTH,
 )
+from ..render.renderer_dispatch import RENDER_AUTHORITY_METADATA_KEY
 from ..render.renderer_registry import current_renderer, resolve_renderer
 
 _CURRENT_RENDERER = current_renderer()
@@ -197,7 +198,7 @@ class RenderProfile:
             raise ValueError("render profile canvas does not match session canvas")
 
     def prepared_ir(self, ir):
-        """Return a render-only view with profile-owned paper state; geometry is copied."""
+        """Return a render-only view with profile-owned paper and renderer authority."""
 
         self.validate_canvas(ir.width, ir.height)
         prepared = deepcopy(ir)
@@ -206,6 +207,10 @@ class RenderProfile:
             "tooth": self.paper_tooth,
             "scale": self.paper_scale,
             "seed": self.paper_seed,
+        }
+        metadata[RENDER_AUTHORITY_METADATA_KEY] = {
+            "id": self.renderer_id,
+            "version": self.renderer_version,
         }
         prepared.metadata = metadata
         return prepared
