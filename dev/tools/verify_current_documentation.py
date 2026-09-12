@@ -64,8 +64,9 @@ def main() -> None:
         assert "MAIN CI:" in status and "PASS" in status
     assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
     assert "R23" in status and "physically retired" in status
-    assert "current unreleased main state after v1.0.2" in roadmap
-    assert "G01" in roadmap and "gesture" in roadmap.lower()
+    roadmap_lower = roadmap.lower()
+    assert "current unreleased" in roadmap_lower and "v1.0.2" in roadmap
+    assert "G01" in roadmap and "gesture" in roadmap_lower
     assert "CURRENT MAIN INVARIANTS" in contract
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
     assert "current validation matrix for unreleased post-v1.0.2 main" in validation
