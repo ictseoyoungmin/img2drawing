@@ -91,9 +91,10 @@ def verify_skill_router() -> None:
     missing = sorted(token for token in tokens if not (SKILL_ROOT / token).is_file())
     assert not missing, "SKILL.md routes to missing Markdown files:\n" + "\n".join(missing)
 
-    lowered = text.lower()
-    assert "review/" in lowered and "navigation" in lowered, (
-        "SKILL.md review summary must expose the navigation family for discoverability"
+    # Keep only the semantic discoverability invariant here. Exact leaf ownership is
+    # verified transitively below, so adding a new category does not require verifier edits.
+    assert "navigation" in text.lower(), (
+        "SKILL.md must keep authored-element navigation discoverable"
     )
 
 
