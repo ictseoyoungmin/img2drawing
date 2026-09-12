@@ -31,13 +31,16 @@ class FastPathIneligible(RuntimeError):
 class FrameRenderConfig:
     background_rgba: tuple[int, int, int, int]
     graphite_rgb: tuple[int, int, int]
-    renderer_id: str | None = None
-    renderer_version: str | None = None
+    # Keep the historical positional constructor stable: callers that pass
+    # ``FrameRenderConfig(background, graphite, 1, 2)`` still mean
+    # output_scale=1, supersample=2. Renderer identity is an additive optional tail.
     output_scale: int = 1
     supersample: int = 2
     paper_tooth: float = 0.46
     paper_scale: float = 1.0
     paper_seed: int = 170817
+    renderer_id: str | None = None
+    renderer_version: str | None = None
 
 
 @dataclass(frozen=True)
@@ -131,9 +134,9 @@ class FastFrameSource:
     def _append_order_safe(prev_state: dict, strokes) -> bool:
         """Return True only when direct append preserves canonical stable layer order.
 
-        Canonical rendering is stable-sorted by ``stroke.layer``.  Directly alpha-
+        Canonical rendering is stable-sorted by ``stroke.layer``. Directly alpha-
         compositing new strokes on top is exact only when all new layers come after
-        every existing layer and the new batch itself is non-decreasing.  Otherwise
+        every existing layer and the new batch itself is non-decreasing. Otherwise
         the affected region must be recomposited in canonical layer order.
         """
         if not strokes:
@@ -234,11 +237,10 @@ class FastFrameSource:
         self.renderer.close()
 
 
-
 class CanonicalFrameSource:
-    """Forward-only canonical fallback source using the 1.0.1 P9 renderer."""
+    """Forward-only canonical fallback using the profile-selected renderer backend."""
 
-    def __init__(self, history, config: FrameRenderConfig, *, reasons: tuple[str, ...] = ()): 
+    def __init__(self, history, config: FrameRenderConfig, *, reasons: tuple[str, ...] = ()):
         self.history = history
         self.config = config
         self.backend = (
