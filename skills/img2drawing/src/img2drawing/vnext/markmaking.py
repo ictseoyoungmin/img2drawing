@@ -1,7 +1,7 @@
 """Public markmaking resolution for semantic roles, material policy, and tool vocabulary.
 
 This module is the worker-facing bridge between high-level drawing intent and the existing
-``DrawingSession.draw`` surface.  It deliberately does not expose renderer implementation classes.
+``DrawingSession.draw`` surface. It deliberately does not expose renderer implementation classes.
 Preset names explain intent; the fully resolved state recorded in provenance is replay evidence.
 """
 
@@ -13,7 +13,7 @@ from typing import Any, Mapping
 
 from ..core.session import sha256_obj
 from ..core.tools import ToolState, get_tool
-from ..render.presets import default_grade_name, get_pencil_preset
+from ..render.presets import get_pencil_preset
 
 
 MARKMAKING_SCHEMA = "img2drawing.vnext.markmaking.v1"
@@ -65,145 +65,6 @@ _ALLOWED_MODIFIERS = {
 }
 
 
-@dataclass(frozen=True)
-class MaterialPolicy:
-    """Stable material-policy identity used by the markmaking resolver."""
-
-    policy_id: str
-    revision: int
-    value_authority: str
-    core_preservation: float
-    shoulder_breakup: float
-    grain_exposure: float
-    local_variation: float
-
-    def __post_init__(self) -> None:
-        if self.policy_id not in MATERIAL_POLICIES:
-            raise ValueError(f"unknown material policy: {self.policy_id!r}")
-        if int(self.revision) != self.revision or int(self.revision) < 1:
-            raise ValueError("material policy revision must be a positive integer")
-        if self.value_authority not in {"strict", "balanced", "relaxed"}:
-            raise ValueError("value_authority must be strict, balanced, or relaxed")
-        for name in ("core_preservation", "shoulder_breakup", "grain_exposure", "local_variation"):
-            value = float(getattr(self, name))
-            if not 0.0 <= value <= 1.0:
-                raise ValueError(f"{name} must be in [0,1]")
-            object.__setattr__(self, name, value)
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-_MATERIAL_POLICY_REGISTRY = {
-    "canonical-pencil": MaterialPolicy(
-        "canonical-pencil", MATERIAL_POLICY_REVISION, "strict", 0.92, 0.28, 0.32, 0.24
-    ),
-    "manga-light": MaterialPolicy(
-        "manga-light", MATERIAL_POLICY_REVISION, "relaxed", 0.55, 0.58, 0.48, 0.22
-    ),
-    "dry-graphite-expressive": MaterialPolicy(
-        "dry-graphite-expressive", MATERIAL_POLICY_REVISION, "balanced", 0.72, 0.76, 0.72, 0.32
-    ),
-}
-
-
-@dataclass(frozen=True)
-class ToolPreset:
-    """One semantic public tool preset resolved onto the existing runtime tool surface."""
-
-    preset_id: str
-    revision: int
-    base_tool: str
-    grade: str
-    overrides: Mapping[str, float]
-    terminal_mode: str
-
-    def __post_init__(self) -> None:
-        if self.preset_id not in TOOL_PRESETS:
-            raise ValueError(f"unknown markmaking tool preset: {self.preset_id!r}")
-        if int(self.revision) != self.revision or int(self.revision) < 1:
-            raise ValueError("tool preset revision must be a positive integer")
-        get_tool(self.base_tool)
-        grade = get_pencil_preset(self.grade).name
-        object.__setattr__(self, "grade", grade)
-        if self.terminal_mode not in TERMINAL_MODES:
-            raise ValueError(f"unknown terminal mode: {self.terminal_mode!r}")
-        overrides = _validated_modifiers(self.overrides)
-        object.__setattr__(self, "overrides", overrides)
-
-
-_TOOL_PRESET_REGISTRY = {
-    "construction-light": ToolPreset(
-        "construction-light", TOOL_PRESET_REVISION, "construction_pencil", "HB",
-        {"width": 1.6, "pressure": 0.26, "opacity": 0.26, "taper_in": 0.32, "taper_out": 0.42},
-        "gentle",
-    ),
-    "gesture-flow": ToolPreset(
-        "gesture-flow", TOOL_PRESET_REVISION, "form_pencil", "HB",
-        {"width": 2.6, "pressure": 0.52, "opacity": 0.58, "taper_in": 0.30, "taper_out": 0.48},
-        "gentle",
-    ),
-    "form-pencil": ToolPreset(
-        "form-pencil", TOOL_PRESET_REVISION, "form_pencil", "HB", {}, "gentle"
-    ),
-    "contour-weighted": ToolPreset(
-        "contour-weighted", TOOL_PRESET_REVISION, "form_pencil", "2B",
-        {"width": 3.6, "pressure": 0.68, "opacity": 0.78, "taper_in": 0.16, "taper_out": 0.22},
-        "gentle",
-    ),
-    "accent-dark": ToolPreset(
-        "accent-dark", TOOL_PRESET_REVISION, "accent_pencil", "4B",
-        {"width": 4.4, "pressure": 0.86, "opacity": 0.96, "taper_in": 0.12, "taper_out": 0.18},
-        "contact",
-    ),
-    "hair-flick": ToolPreset(
-        "hair-flick", TOOL_PRESET_REVISION, "form_pencil", "HB",
-        {"width": 2.2, "pressure": 0.56, "opacity": 0.68, "taper_in": 0.10, "taper_out": 0.92, "jitter": 0.025},
-        "flick",
-    ),
-    "broad-graphite": ToolPreset(
-        "broad-graphite", TOOL_PRESET_REVISION, "accent_pencil", "4B",
-        {"width": 8.0, "pressure": 0.72, "opacity": 0.80, "hardness": 0.48, "grain": 0.58, "taper_in": 0.08, "taper_out": 0.18},
-        "residue",
-    ),
-    "hatch-light": ToolPreset(
-        "hatch-light", TOOL_PRESET_REVISION, "construction_pencil", "HB",
-        {"width": 1.5, "pressure": 0.30, "opacity": 0.34, "taper_in": 0.08, "taper_out": 0.10, "jitter": 0.025},
-        "gentle",
-    ),
-    "hatch-heavy": ToolPreset(
-        "hatch-heavy", TOOL_PRESET_REVISION, "form_pencil", "2B",
-        {"width": 2.2, "pressure": 0.58, "opacity": 0.66, "taper_in": 0.06, "taper_out": 0.08, "jitter": 0.02},
-        "gentle",
-    ),
-    "environment-line": ToolPreset(
-        "environment-line", TOOL_PRESET_REVISION, "construction_pencil", "HB",
-        {"width": 1.8, "pressure": 0.34, "opacity": 0.42, "taper_in": 0.16, "taper_out": 0.20},
-        "gentle",
-    ),
-}
-
-_ROLE_DEFAULT_TOOL = {
-    "construction": "construction-light",
-    "gesture": "gesture-flow",
-    "form": "form-pencil",
-    "contour": "contour-weighted",
-    "accent": "accent-dark",
-    "hair": "hair-flick",
-    "hatch": "hatch-light",
-    "broad_mass": "broad-graphite",
-    "environment": "environment-line",
-}
-
-_STYLE_MATERIAL_POLICY = {
-    "pencil_loose": "canonical-pencil",
-    "graphite_academic": "canonical-pencil",
-    "graphite_tonal": "dry-graphite-expressive",
-    # Transitional custom-style spelling until the high-level intent registry gains manga_light.
-    "custom:manga-light": "manga-light",
-}
-
-
 def _validated_modifiers(raw: Mapping[str, Any] | None) -> dict[str, float]:
     values = dict(raw or {})
     unknown = set(values).difference(_ALLOWED_MODIFIERS)
@@ -228,8 +89,176 @@ def _resolved_tool_state(base_tool: str, overrides: Mapping[str, float]) -> Tool
     return tool
 
 
+@dataclass(frozen=True)
+class MaterialPolicy:
+    """Stable material-policy identity used by the markmaking resolver."""
+
+    policy_id: str
+    revision: int
+    value_authority: str
+    core_preservation: float
+    shoulder_breakup: float
+    grain_exposure: float
+    local_variation: float
+
+    def __post_init__(self) -> None:
+        if self.policy_id not in MATERIAL_POLICIES:
+            raise ValueError(f"unknown material policy: {self.policy_id!r}")
+        if int(self.revision) != self.revision or int(self.revision) < 1:
+            raise ValueError("material policy revision must be a positive integer")
+        if self.value_authority not in {"strict", "balanced", "relaxed"}:
+            raise ValueError("value_authority must be strict, balanced, or relaxed")
+        for name in (
+            "core_preservation",
+            "shoulder_breakup",
+            "grain_exposure",
+            "local_variation",
+        ):
+            value = float(getattr(self, name))
+            if not 0.0 <= value <= 1.0:
+                raise ValueError(f"{name} must be in [0,1]")
+            object.__setattr__(self, name, value)
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ToolPreset:
+    """One semantic public tool preset resolved onto the existing runtime tool surface."""
+
+    preset_id: str
+    revision: int
+    base_tool: str
+    grade: str
+    overrides: Mapping[str, float]
+    terminal_mode: str
+
+    def __post_init__(self) -> None:
+        if self.preset_id not in TOOL_PRESETS:
+            raise ValueError(f"unknown markmaking tool preset: {self.preset_id!r}")
+        if int(self.revision) != self.revision or int(self.revision) < 1:
+            raise ValueError("tool preset revision must be a positive integer")
+        get_tool(self.base_tool)
+        object.__setattr__(self, "grade", get_pencil_preset(self.grade).name)
+        if self.terminal_mode not in TERMINAL_MODES:
+            raise ValueError(f"unknown terminal mode: {self.terminal_mode!r}")
+        object.__setattr__(self, "overrides", _validated_modifiers(self.overrides))
+
+
+_MATERIAL_POLICY_REGISTRY = {
+    "canonical-pencil": MaterialPolicy(
+        "canonical-pencil", MATERIAL_POLICY_REVISION, "strict", 0.92, 0.28, 0.32, 0.24
+    ),
+    "manga-light": MaterialPolicy(
+        "manga-light", MATERIAL_POLICY_REVISION, "relaxed", 0.55, 0.58, 0.48, 0.22
+    ),
+    "dry-graphite-expressive": MaterialPolicy(
+        "dry-graphite-expressive", MATERIAL_POLICY_REVISION, "balanced", 0.72, 0.76, 0.72, 0.32
+    ),
+}
+
+_TOOL_PRESET_REGISTRY = {
+    "construction-light": ToolPreset(
+        "construction-light",
+        TOOL_PRESET_REVISION,
+        "construction_pencil",
+        "HB",
+        {"width": 1.6, "pressure": 0.26, "opacity": 0.26, "taper_in": 0.32, "taper_out": 0.42},
+        "gentle",
+    ),
+    "gesture-flow": ToolPreset(
+        "gesture-flow",
+        TOOL_PRESET_REVISION,
+        "form_pencil",
+        "HB",
+        {"width": 2.6, "pressure": 0.52, "opacity": 0.58, "taper_in": 0.30, "taper_out": 0.48},
+        "gentle",
+    ),
+    "form-pencil": ToolPreset(
+        "form-pencil", TOOL_PRESET_REVISION, "form_pencil", "HB", {}, "gentle"
+    ),
+    "contour-weighted": ToolPreset(
+        "contour-weighted",
+        TOOL_PRESET_REVISION,
+        "form_pencil",
+        "2B",
+        {"width": 3.6, "pressure": 0.68, "opacity": 0.78, "taper_in": 0.16, "taper_out": 0.22},
+        "gentle",
+    ),
+    "accent-dark": ToolPreset(
+        "accent-dark",
+        TOOL_PRESET_REVISION,
+        "accent_pencil",
+        "4B",
+        {"width": 4.4, "pressure": 0.86, "opacity": 0.96, "taper_in": 0.12, "taper_out": 0.18},
+        "contact",
+    ),
+    "hair-flick": ToolPreset(
+        "hair-flick",
+        TOOL_PRESET_REVISION,
+        "form_pencil",
+        "HB",
+        {"width": 2.2, "pressure": 0.56, "opacity": 0.68, "taper_in": 0.10, "taper_out": 0.92, "jitter": 0.025},
+        "flick",
+    ),
+    "broad-graphite": ToolPreset(
+        "broad-graphite",
+        TOOL_PRESET_REVISION,
+        "accent_pencil",
+        "4B",
+        {"width": 8.0, "pressure": 0.72, "opacity": 0.80, "hardness": 0.48, "grain": 0.58, "taper_in": 0.08, "taper_out": 0.18},
+        "residue",
+    ),
+    "hatch-light": ToolPreset(
+        "hatch-light",
+        TOOL_PRESET_REVISION,
+        "construction_pencil",
+        "HB",
+        {"width": 1.5, "pressure": 0.30, "opacity": 0.34, "taper_in": 0.08, "taper_out": 0.10, "jitter": 0.025},
+        "gentle",
+    ),
+    "hatch-heavy": ToolPreset(
+        "hatch-heavy",
+        TOOL_PRESET_REVISION,
+        "form_pencil",
+        "2B",
+        {"width": 2.2, "pressure": 0.58, "opacity": 0.66, "taper_in": 0.06, "taper_out": 0.08, "jitter": 0.02},
+        "gentle",
+    ),
+    "environment-line": ToolPreset(
+        "environment-line",
+        TOOL_PRESET_REVISION,
+        "construction_pencil",
+        "HB",
+        {"width": 1.8, "pressure": 0.34, "opacity": 0.42, "taper_in": 0.16, "taper_out": 0.20},
+        "gentle",
+    ),
+}
+
+_ROLE_DEFAULT_TOOL = {
+    "construction": "construction-light",
+    "gesture": "gesture-flow",
+    "form": "form-pencil",
+    "contour": "contour-weighted",
+    "accent": "accent-dark",
+    "hair": "hair-flick",
+    "hatch": "hatch-light",
+    "broad_mass": "broad-graphite",
+    "environment": "environment-line",
+}
+
+_STYLE_MATERIAL_POLICY = {
+    "pencil_loose": "canonical-pencil",
+    "graphite_academic": "canonical-pencil",
+    "graphite_tonal": "dry-graphite-expressive",
+    # Transitional spelling until high-level intent gains a builtin manga_light profile.
+    "custom:manga-light": "manga-light",
+}
+
+
 def material_policy_for_style(style_profile: str, *, explicit: str | None = None) -> MaterialPolicy:
-    """Resolve one high-level style intent to a stable material policy.
+    """Resolve a high-level style intent to a stable material policy.
 
     Unknown/custom styles conservatively use canonical material behavior unless an explicit public
     material policy is supplied. This avoids guessing a decorative renderer policy from arbitrary
@@ -297,11 +326,7 @@ class ResolvedMark:
         return sha256_obj(self.to_dict())
 
     def draw_kwargs(self, *, metadata: Mapping[str, Any] | None = None) -> dict[str, Any]:
-        """Return kwargs suitable for ``DrawingSession.draw``.
-
-        The resolved record is embedded in action provenance so replay/audit can recover the exact
-        markmaking decision even if a future public preset definition changes.
-        """
+        """Return kwargs suitable for ``DrawingSession.draw`` with mark provenance attached."""
 
         outer = deepcopy(dict(metadata or {}))
         outer["markmaking"] = {**self.to_dict(), "digest": self.digest()}
