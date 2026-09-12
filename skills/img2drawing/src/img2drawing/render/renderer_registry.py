@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 from types import ModuleType
 from typing import Callable
@@ -40,6 +41,23 @@ def _v10_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, pap
     )
 
 
+def _stage_free_stroke(stroke):
+    """Return a detached stroke whose compatibility stage cannot perturb v10 pixels."""
+
+    prepared = deepcopy(stroke)
+    prepared.stage = None
+    return prepared
+
+
+def _stage_free_ir(ir):
+    """Normalize only renderer seed identity; authoritative history remains untouched."""
+
+    prepared = deepcopy(ir)
+    for stroke in prepared.strokes:
+        stroke.stage = None
+    return prepared
+
+
 @dataclass(frozen=True)
 class RendererBackend:
     renderer_id: str
@@ -48,6 +66,7 @@ class RendererBackend:
     patch_builder: Callable
     contract: RendererContract
     current: bool = False
+    stage_free_seed_identity: bool = False
 
     @property
     def identity(self) -> tuple[str, str]:
@@ -67,7 +86,13 @@ class RendererBackend:
 
     @property
     def render(self) -> Callable:
-        return self.module.render
+        if not self.stage_free_seed_identity:
+            return self.module.render
+
+        def _render(ir, path, *args, **kwargs):
+            return self.module.render(_stage_free_ir(ir), path, *args, **kwargs)
+
+        return _render
 
     def helper(self, name: str):
         try:
@@ -79,8 +104,9 @@ class RendererBackend:
             ) from exc
 
     def prepare_stroke(self, stroke, grade, profile):
+        source = _stage_free_stroke(stroke) if self.stage_free_seed_identity else stroke
         return self.helper("_smooth_hand_dynamics")(
-            self.helper("_prepare_grade")(stroke, grade), profile
+            self.helper("_prepare_grade")(source, grade), profile
         )
 
     def build_patch(self, *, stroke, factor, hi_size, tooth, paper_scale, paper_seed, graphite, profile):
@@ -96,7 +122,8 @@ _BACKENDS = {
         v9.RENDERER_ID, str(v9.RENDERER_VERSION), v9, _v9_build_patch, V9_CONTRACT, current=False
     ),
     (v10.RENDERER_ID, str(v10.RENDERER_VERSION)): RendererBackend(
-        v10.RENDERER_ID, str(v10.RENDERER_VERSION), v10, _v10_build_patch, V10_CONTRACT, current=True
+        v10.RENDERER_ID, str(v10.RENDERER_VERSION), v10, _v10_build_patch, V10_CONTRACT,
+        current=True, stage_free_seed_identity=True,
     ),
 }
 _CURRENT_IDENTITY = (v10.RENDERER_ID, str(v10.RENDERER_VERSION))
