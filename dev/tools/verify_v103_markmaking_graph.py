@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / "skills" / "img2drawing"
 REFS = SKILL / "references"
+RUNTIME_SOURCE = SKILL / "src" / "img2drawing" / "runtime.py"
 
 REQUIRED = {
     "markmaking/style-policy.md",
@@ -20,6 +21,7 @@ REQUIRED = {
     "markmaking/custom-tools.md",
     "review/markmaking-residuals.md",
     "api/public-surface.md",
+    "api/runtime-discovery.md",
     "INDEX.md",
 }
 
@@ -32,9 +34,12 @@ def require(text: str, *needles: str) -> None:
 def main() -> None:
     missing = sorted(path for path in REQUIRED if not (REFS / path).is_file())
     assert not missing, f"missing 1.0.3 instruction leaves: {missing}"
+    assert RUNTIME_SOURCE.is_file(), "missing public runtime capability manifest"
 
     index = (REFS / "INDEX.md").read_text(encoding="utf-8")
     public = (REFS / "api" / "public-surface.md").read_text(encoding="utf-8")
+    discovery = (REFS / "api" / "runtime-discovery.md").read_text(encoding="utf-8")
+    runtime_source = RUNTIME_SOURCE.read_text(encoding="utf-8")
     custom = (REFS / "markmaking" / "custom-tools.md").read_text(encoding="utf-8")
     residual = (REFS / "review" / "markmaking-residuals.md").read_text(encoding="utf-8")
 
@@ -53,6 +58,26 @@ def main() -> None:
         "Do **not** replace the runtime with a hand-written Pillow/ImageDraw script",
         "does **not** need to inspect the full `src/` tree",
         "runtime capability gap",
+        "runtime-discovery.md",
+        "runtime_capabilities",
+        "report-not-bypass",
+    )
+    require(
+        discovery,
+        "runtime-aware and source-opaque",
+        "runtime_capabilities",
+        "report-not-bypass",
+        "Pillow/ImageDraw",
+        "crawl src/",
+    )
+    require(
+        runtime_source,
+        "RUNTIME_CAPABILITY_SCHEMA",
+        "DrawingSession",
+        "implementation_read_required: bool = False",
+        "bespoke_raster_authoring_supported: bool = False",
+        'capability_gap_policy: str = "report-not-bypass"',
+        "private renderer helper used as an authoring API",
     )
     require(
         custom,
