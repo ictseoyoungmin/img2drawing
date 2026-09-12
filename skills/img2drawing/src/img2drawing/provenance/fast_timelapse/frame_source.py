@@ -9,7 +9,7 @@ from PIL import Image
 
 from ...core.history import _stroke_from_dict
 from ...render.pillow_eraser_material import is_eraser
-from ...render.pillow_pencil_contact import render as canonical_render
+from ...render.renderer_registry import current_renderer, resolve_renderer
 
 from .dirty_regions import apply_additions, clip_box, merge_regions, patch_box, recomposite_regions, union_box
 from .dirty_resample import finalize_full, update_output_regions
@@ -31,6 +31,8 @@ class FastPathIneligible(RuntimeError):
 class FrameRenderConfig:
     background_rgba: tuple[int, int, int, int]
     graphite_rgb: tuple[int, int, int]
+    renderer_id: str | None = None
+    renderer_version: str | None = None
     output_scale: int = 1
     supersample: int = 2
     paper_tooth: float = 0.46
@@ -80,7 +82,13 @@ class FastFrameSource:
         self.eligibility = inspect_fast_path_eligibility(history)
         if not self.eligibility.eligible:
             raise FastPathIneligible("; ".join(self.eligibility.reasons))
+        self.backend = (
+            resolve_renderer(config.renderer_id, config.renderer_version)
+            if config.renderer_id is not None and config.renderer_version is not None
+            else current_renderer()
+        )
         extra = dict(renderer_kwargs or {})
+        extra.setdefault("renderer_backend", self.backend)
         self.renderer = renderer_cls(
             width=history.width, height=history.height, background=config.background_rgba,
             scale=config.output_scale, supersample=config.supersample, graphite=config.graphite_rgb,
@@ -102,6 +110,7 @@ class FastFrameSource:
             raise ValueError("session has no render profile")
         config = FrameRenderConfig(
             background_rgba=tuple(profile.background_rgba), graphite_rgb=tuple(profile.graphite_rgb),
+            renderer_id=profile.renderer_id, renderer_version=profile.renderer_version,
             output_scale=int(profile.output_scale),
             supersample=int(profile.supersample if supersample is None else supersample),
             paper_tooth=float(profile.paper_tooth), paper_scale=float(profile.paper_scale),
@@ -117,6 +126,26 @@ class FastFrameSource:
             "compositing": profile.compositing,
         })
         return cls(session._agent.history, config, renderer_cls=renderer_cls, renderer_kwargs=extra)
+
+    @staticmethod
+    def _append_order_safe(prev_state: dict, strokes) -> bool:
+        """Return True only when direct append preserves canonical stable layer order.
+
+        Canonical rendering is stable-sorted by ``stroke.layer``.  Directly alpha-
+        compositing new strokes on top is exact only when all new layers come after
+        every existing layer and the new batch itself is non-decreasing.  Otherwise
+        the affected region must be recomposited in canonical layer order.
+        """
+        if not strokes:
+            return True
+        new_layers = [stroke.layer for stroke in strokes]
+        if any(b < a for a, b in zip(new_layers, new_layers[1:])):
+            return False
+        if prev_state:
+            max_existing = max(stroke.layer for stroke in prev_state.values())
+            if new_layers[0] < max_existing:
+                return False
+        return True
 
     def _changed_ids(self, delta) -> set[str]:
         changed: set[str] = set()
@@ -163,9 +192,19 @@ class FastFrameSource:
         non_snapshot = [item for item in delta if item.action != "snapshot"]
         if non_snapshot and all(item.action == "stroke.add" for item in non_snapshot):
             strokes = [self.replay.state[str(item.payload["stroke"]["stroke_id"])] for item in non_snapshot]
-            changed_regions = apply_additions(self.renderer, self.hi_canvas, strokes)
-            mode = "append"
-            self.stats["append_advances"] += 1
+            if self._append_order_safe(prev_state, strokes):
+                changed_regions = apply_additions(self.renderer, self.hi_canvas, strokes)
+                mode = "append"
+                self.stats["append_advances"] += 1
+            else:
+                changed_regions = merge_regions([
+                    clip_box(patch_box(self.renderer, stroke), self.renderer.hi_size)
+                    for stroke in strokes
+                ])
+                recomposited = recomposite_regions(self.renderer, self.hi_canvas, snapshot.strokes, changed_regions)
+                self.stats["recomposited_strokes"] += recomposited
+                self.stats["dirty_advances"] += 1
+                mode = "layer-reorder-dirty"
         elif not non_snapshot:
             changed_regions = []
             mode = "metadata-only"
@@ -202,6 +241,11 @@ class CanonicalFrameSource:
     def __init__(self, history, config: FrameRenderConfig, *, reasons: tuple[str, ...] = ()): 
         self.history = history
         self.config = config
+        self.backend = (
+            resolve_renderer(config.renderer_id, config.renderer_version)
+            if config.renderer_id is not None and config.renderer_version is not None
+            else current_renderer()
+        )
         self.cursor = 0
         self.reasons = tuple(reasons)
         self._tmp = TemporaryDirectory(prefix="img2drawing-canonical-fallback-")
@@ -216,6 +260,7 @@ class CanonicalFrameSource:
             raise ValueError("session has no render profile")
         config = FrameRenderConfig(
             background_rgba=tuple(profile.background_rgba), graphite_rgb=tuple(profile.graphite_rgb),
+            renderer_id=profile.renderer_id, renderer_version=profile.renderer_version,
             output_scale=int(profile.output_scale),
             supersample=int(profile.supersample if supersample is None else supersample),
             paper_tooth=float(profile.paper_tooth), paper_scale=float(profile.paper_scale),
@@ -238,7 +283,7 @@ class CanonicalFrameSource:
             "seed": self.config.paper_seed,
         }
         prepared.metadata = metadata
-        canonical_render(
+        self.backend.render(
             prepared, self._path, background=self.config.background_rgba,
             scale=self.config.output_scale, supersample=self.config.supersample,
             graphite=self.config.graphite_rgb,
@@ -281,6 +326,7 @@ def make_frame_source_from_vnext_session(session, *, supersample: int | None = N
         raise ValueError("session has no render profile")
     config = FrameRenderConfig(
         background_rgba=tuple(profile.background_rgba), graphite_rgb=tuple(profile.graphite_rgb),
+        renderer_id=profile.renderer_id, renderer_version=profile.renderer_version,
         output_scale=int(profile.output_scale),
         supersample=int(profile.supersample if supersample is None else supersample),
         paper_tooth=float(profile.paper_tooth), paper_scale=float(profile.paper_scale),
