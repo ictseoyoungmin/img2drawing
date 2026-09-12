@@ -23,6 +23,23 @@ user explicitly asks for framework work, or when a demonstrated runtime defect r
 If the public surface cannot express a required mark, record a runtime capability gap instead of
 silently bypassing it.
 
+For a compact machine-readable confirmation of this boundary, read
+[`runtime-discovery.md`](runtime-discovery.md) or call:
+
+```python
+from img2drawing.runtime import runtime_capabilities
+
+caps = runtime_capabilities()
+assert caps.orchestration == "DrawingSession"
+assert caps.final_authoring_runtime
+assert not caps.implementation_read_required
+assert caps.capability_gap_policy == "report-not-bypass"
+```
+
+This manifest is deliberately source-opaque. It exists to prevent both failure modes: forgetting
+that the runtime exists and crawling private implementation merely to discover ordinary drawing
+capabilities.
+
 ## Canonical package root
 
 Normal Agent/user code should discover one orchestration route. The package root intentionally
@@ -55,6 +72,7 @@ namespace that owns them:
 ```python
 from img2drawing.inspection import GroundGuide, PlumbLine, ROI, angle, distance
 from img2drawing.observation import SubjectPalette
+from img2drawing.runtime import runtime_capabilities
 from img2drawing.vnext import retune_stroke, retune_strokes, sample_catmull_rom
 ```
 
