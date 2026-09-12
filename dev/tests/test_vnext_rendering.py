@@ -8,7 +8,11 @@ import pytest
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession, RenderProfile
-from img2drawing.render.pillow_pencil_contact import RENDERER_ID, RENDERER_VERSION
+from img2drawing.render.pillow_pencil_contact import (
+    RENDERER_ID as HISTORICAL_RENDERER_ID,
+    RENDERER_VERSION as HISTORICAL_RENDERER_VERSION,
+)
+from img2drawing.render.renderer_registry import current_renderer
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -55,8 +59,7 @@ def test_render_profile_roundtrip_and_strict_material_boundary() -> None:
     profile = RenderProfile.canonical(64, 48)
     assert RenderProfile.from_dict(profile.to_dict()) == profile
     assert profile.digest() == RenderProfile.from_dict(profile.to_dict()).digest()
-    assert profile.renderer_id == RENDERER_ID
-    assert profile.renderer_version == RENDERER_VERSION
+    assert (profile.renderer_id, profile.renderer_version) == current_renderer().identity
     assert "style_profile" not in profile.to_dict()
     assert "line_behavior" not in profile.to_dict()
     with pytest.raises(ValueError, match="unsupported renderer"):
@@ -74,8 +77,8 @@ def test_session_persists_one_profile_and_rejects_header_or_canvas_drift(tmp_pat
     payload = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
     assert payload["render_profile"] == session.render_profile.to_dict()
     assert payload["renderer"] == {
-        "id": RENDERER_ID,
-        "version": RENDERER_VERSION,
+        "id": session.render_profile.renderer_id,
+        "version": session.render_profile.renderer_version,
         "seed_domain": session.render_profile.seed_domain,
     }
     assert DrawingSession.resume(session.checkpoint_path, subject=session.subject).render_profile == session.render_profile
@@ -223,7 +226,7 @@ def test_pre_b11_checkpoint_requires_explicit_profile_migration(tmp_path: Path) 
     payload = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
     payload.pop("render_profile")
     payload["renderer"] = {
-        "id": RENDERER_ID,
+        "id": HISTORICAL_RENDERER_ID,
         "version": "vnext-stage-free-1",
         "seed_domain": "vnext-stage-free",
     }
