@@ -18,17 +18,20 @@ def install_v10_value_authority_core(module) -> None:
     original = module._continuity_floor_mask
 
     def _continuity_floor_mask(stroke, factor, hardness, bounds, profile):
+        # Keep ordinary-thin cost on the already-optimized v10 path. Broadness can be
+        # decided from mean contact width without resampling the trajectory; only true
+        # broad strokes pay for the extra authored-core construction below.
+        mean_w = module._mean_contact_width(stroke, hardness, profile)
+        broadness = module._broadness(mean_w)
+        if broadness <= 1e-08:
+            return original(stroke, factor, hardness, bounds, profile)
+
         x0, y0, x1, y1 = bounds
         samples = module._pressure_samples(
             stroke, factor, hardness, profile.trajectory_spacing, profile
         )
         if len(samples) < 2:
             return Image.new("L", (x1 - x0, y1 - y0), 0)
-
-        mean_w = float(np.mean([sample[2] for sample in samples])) / float(factor)
-        broadness = module._broadness(mean_w)
-        if broadness <= 1e-08:
-            return original(stroke, factor, hardness, bounds, profile)
 
         mask = Image.new("L", (x1 - x0, y1 - y0), 0)
         draw = ImageDraw.Draw(mask)
