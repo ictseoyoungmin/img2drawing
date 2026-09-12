@@ -76,6 +76,7 @@ V10_CONTRACT = RendererContract(
         ("material_policy_model", "resolved-markmaking-v1"),
         ("policy_core_floor_model", "authored-core-preservation-v1"),
         ("policy_grain_model", "style-governed-page-tooth-v1"),
+        ("seed_identity_model", "stage-free-render-seed-v1"),
         ("terminal_model", "physical-px-expressive-v1"),
         ("thin_flick_model", "specialized-continuity-v1"),
     ),
