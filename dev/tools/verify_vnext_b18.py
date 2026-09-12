@@ -155,10 +155,19 @@ def check_contract_snapshot() -> None:
     }
     assert frozen["schemas"] == actual_schemas
 
-    profile = RenderProfile.canonical(96, 72).to_dict()
-    profile.pop("canvas_width")
-    profile.pop("canvas_height")
-    assert frozen["canonical_render_profile"] == profile
+    # Verify the immutable v1.0.2 renderer profile as historical evidence. Current
+    # ``RenderProfile.canonical()`` may legitimately move forward (v10 in 1.0.3-rc), so
+    # B18 must not redefine historical truth by comparing the freeze to today's default.
+    historical_profile = RenderProfile.from_dict({
+        **frozen["canonical_render_profile"],
+        "canvas_width": 96,
+        "canvas_height": 72,
+    }).to_dict()
+    historical_profile.pop("canvas_width")
+    historical_profile.pop("canvas_height")
+    assert frozen["canonical_render_profile"] == historical_profile
+    assert historical_profile["renderer_id"] == "pillow-pencil-contact-v9"
+    assert historical_profile["renderer_version"] == "1"
 
     assert frozen["legacy_checkpoint_schemas"] == [
         "img2drawing.run_checkpoint.v1",
