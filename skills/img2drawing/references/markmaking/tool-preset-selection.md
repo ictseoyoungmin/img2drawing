@@ -6,7 +6,7 @@ from the current task.
 
 ## Initial builtin vocabulary
 
-The 1.0.3 runtime should expose equivalents of these roles as stable public presets:
+The 1.0.3 runtime exposes these semantic preset roles through the public markmaking resolver:
 
 - `construction-light` — light provisional construction with low visual authority;
 - `gesture-flow` — pressure swell with a clean release for major motion;
@@ -19,13 +19,16 @@ The 1.0.3 runtime should expose equivalents of these roles as stable public pres
 - `hatch-heavy` — stronger hatch for deeper value while preserving line structure;
 - `environment-line` — lower-priority contextual linework.
 
-The exact runtime names become authoritative only when the public API implements them. Until then,
-this leaf defines semantic intent, not permission to invent private renderer imports.
+These are **semantic markmaking preset IDs**, not necessarily literal values accepted by
+`DrawingSession.draw(tool=...)`. The resolver maps them onto the supported runtime tool plus grade,
+overrides, and provenance. Do not pass `tool="gesture-flow"`, `tool="broad-graphite"`, or another
+semantic preset ID directly to `session.draw()` unless the documented draw surface explicitly names
+that same string as a runtime tool.
 
 ## Selection rule
 
-Prefer the smallest preset that already expresses the intended line language. Then use per-stroke
-modifiers for local variation.
+Prefer the smallest semantic preset that already expresses the intended line language. Then use
+per-stroke modifiers for local variation.
 
 Examples:
 
@@ -36,12 +39,43 @@ small eye/contact accent  -> accent-dark
 fast hair terminal        -> hair-flick
 large graphite shadow     -> broad-graphite
 light construction axis   -> construction-light
+major motion sweep        -> gesture-flow
 repeated light value      -> hatch-light
 background architecture   -> environment-line
 ```
 
 These examples are routing hints, not automatic subject rules. Reference evidence and declared
 intent outrank the example mapping.
+
+## Runtime adapter
+
+Resolve semantic markmaking through the public vNext API, then pass the resolved draw kwargs to the
+session:
+
+```python
+from img2drawing.vnext import resolve_mark_for_intent
+
+mark = resolve_mark_for_intent(
+    session.intent,
+    "gesture",
+    tool_preset="gesture-flow",
+)
+
+session.draw(
+    points,
+    part="dominant-action",
+    **mark.draw_kwargs(),
+)
+```
+
+`ResolvedMark.draw_kwargs()` supplies the supported runtime tool representation and records the
+markmaking digest/provenance. This adapter boundary prevents semantic vocabulary from being confused
+with low-level tool preset names such as `form_pencil`, `construction_pencil`, or
+`continuous_pencil`.
+
+If the path is already observed correctly but a local pressure value must be authored explicitly,
+keep the geometry decision separate and use only supported public modifiers/retune operations rather
+than bypassing the resolver with a private renderer setting.
 
 ## Do not collapse the vocabulary
 
@@ -51,6 +85,6 @@ new preset for every stroke: ordinary local variation belongs in authored dynami
 
 ## Runtime boundary
 
-Use only documented public preset/tool names. If a needed behavior is not available, follow
-`custom-tools.md` rather than importing a private renderer helper or reimplementing the pencil in
-Pillow.
+Use only documented semantic presets and public runtime tool names. If a needed behavior is not
+available, follow `custom-tools.md` rather than importing a private renderer helper or reimplementing
+the pencil in Pillow.
