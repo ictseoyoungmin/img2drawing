@@ -1,8 +1,8 @@
-# v1.0.3 RC width×3 promotion evidence
+# v1.0.3 RC width×3 secondary cross-check
 
-This record closes the broad-stroke performance gate for the `release/1.0.3-rc` candidate after syncing current `main` history.
+This record is an **independent secondary remeasurement** of the broad-stroke renderer comparison for `release/1.0.3-rc`. It does not replace the authoritative promotion record in `dev/release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`, which includes render+pack timings and canonical↔fast exactness.
 
-## Candidate authority
+## Candidate measured
 
 - RC head measured: `0b6432f1774015dc35cb62a2fc94ca58d8ebb6ef`
 - GitHub Actions RC wheel artifact digest: `sha256:bf1284698e5ffd712c584bb290b01487d5db86be94bfeabd98881946499a7eba`
@@ -15,11 +15,11 @@ This record closes the broad-stroke performance gate for the `release/1.0.3-rc` 
 
 ## Measurement method
 
-The promotion comparison remeasures both v9 and v10 in the same current execution environment rather than mixing historical wall times from another machine/session.
+This secondary comparison remeasures both v9 and v10 in the same execution environment rather than mixing historical wall times from another machine/session.
 
-Each trial uses the same `FastFrameSource` traversal and transformed history. Cold starts with an empty in-memory stroke-patch cache. Warm resets replay state and native/high-resolution canvases while preserving only the renderer's in-memory content-addressed patch cache; object-cache state is cleared before warm. GIF encoding, persistent-disk cache I/O, and standalone canonical-final rendering are outside these timings.
+Each trial uses the same `FastFrameSource` traversal and transformed history. Cold starts with an empty in-memory stroke-patch cache. Warm resets replay state and native/high-resolution canvases while preserving only the renderer's in-memory content-addressed patch cache; object-cache state is cleared before warm. GIF encoding, persistent-disk cache I/O, delta-pack writing, and standalone canonical-final rendering are outside these timings.
 
-These values are renderer/frame-source comparison evidence, not an API latency guarantee. Historical width×3 evidence is an independent cross-check and is not mixed statistically into this median.
+Because this method is narrower than the release promotion benchmark, the values are supporting renderer/frame-source evidence rather than package latency or release-gate authority.
 
 ## Three-trial results
 
@@ -44,12 +44,14 @@ Deterministic final RGB SHA-256 across all three trials:
 - v9: `3cbbce01c35cdad0acfb852e5f06bfe67d05a0e7f7e4b8e2eacb7c6d2b0e9aca`
 - v10: `72aa16996a6ce5ec8db672782e7ab1487f5593aae77afbe2769b4396c4842205`
 
-The hashes are intentionally different between renderer generations because v10 changes broad-pencil material/terminal behavior. The correctness claim here is deterministic repeatability and exact cold/warm fast-path output within each renderer; canonical↔fast v10 exactness is covered by the existing RC regression/evidence gates.
+The hashes are intentionally different between renderer generations because v10 changes broad-pencil material/terminal behavior. This secondary check establishes deterministic repeatability and exact cold/warm fast-path output within each renderer. Canonical↔fast exactness is owned by the authoritative RC promotion record and CI verifier.
 
-## Historical cross-check
+## Cross-check against authoritative promotion evidence
 
-The earlier same-workload width×3 study measured v9/v10 at `10.768/12.390 s` cold and `2.723/2.689 s` warm, or `+15.06%` cold and `-1.27%` warm. The present environment is slower in absolute cold wall time, so those old wall times are not combined statistically with this run. Both measurements agree on the material conclusion: v10 pays a bounded first-build cost on broad graphite while warm replay remains close to v9.
+The authoritative release record measures full fast render+pack and reports v10 vs v9 medians of `+4.886%` cold, `+1.365%` warm, and `+12.058%` cold patch-build, with v9 and v10 each pixel-exact against their canonical renderer.
 
-## Promotion decision
+This narrower direct sweep reports `+12.57%` cold and `+3.30%` warm. The methods therefore should not be numerically pooled, but both support the same conclusion: v10 adds bounded broad-material first-build work while the cached replay path remains close to v9.
 
-**PASS.** On a deliberately broad 3× stress history, v10's three-trial median cold overhead is `+12.57%` and warm overhead is `+3.30%`, with deterministic final pixels and complete cache transition (`1227` cold builds → `1227` warm hits) on every trial. This closes the broad-stroke performance evidence gate. The next gate is package-version declaration and final RC CI/wheel verification.
+## Secondary verdict
+
+**SUPPORTING PASS.** The direct frame-source remeasurement independently supports the existing `PASS_FOR_1.0.3rc1_VERSION_DECLARATION` decision. Release authority remains `dev/release/vnext/V1_0_3_RC1_PROMOTION.{md,json}` and `dev/tools/verify_v103_rc_promotion.py`.
