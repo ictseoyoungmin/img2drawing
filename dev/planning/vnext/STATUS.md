@@ -10,25 +10,28 @@ RC2 BRANCH:         fix/g01-gesture-runtime-rc2
 RC RENDERER:        unchanged from rc1 · new sessions → pillow-pencil-contact-v10/1
 HISTORICAL REPLAY:  explicit v9/1 sessions remain v9/1
 RC1 PERF EVIDENCE:  PASS · renderer/timelapse paths unchanged by rc2
-G01 RC1 DOGFOOD:    REOPEN · gesture runtime-mode gap + generic rounded-mass failure
+G01 GESTURE:        PASS/CLOSED · runtime alignment + anti-primitive/anti-blob dogfood
+RC2 CI:             PASS · full current/historical/package verification on branch
 PUBLISH STATE:      no v1.0.3rc2 publish manifest; v1.0.2 remains latest published stable
-NEXT VALIDATION:    rerun pure + unqualified constructive gesture on rc2
+NEXT BOTTLENECK:    broad-pencil graphite feel + blunt/square terminal quality
 ```
 
 ## Current truth
 
 - `v1.0.2` remains the latest published immutable stable release. Its tag, publish manifest, release notes, and `CONTRACT_FREEZE.json` are historical authority and are not rewritten for this RC line.
-- PR #40 integrated `1.0.3rc1 / A11` into `main` at `dc36a86b45aaeed453505330a8bb423fc78405a2`; post-merge main CI run `34705776246` passed.
-- G01 fresh-worker dogfood then found two reusable defects in rc1: `DrawingIntent(drawing_mode="gesture")` was rejected even though gesture is a user-facing skill mode, and anti-faceted mass guidance could still collapse torso/pelvis construction into smooth generic bean/oval/capsule shapes.
+- PR #40 integrated `1.0.3rc1 / A11` into `main` at `dc36a86b45aaeed453505330a8bb423fc78405a2`; post-merge main CI passed.
+- G01 rc1 fresh dogfood found two reusable defects: `DrawingIntent(drawing_mode="gesture")` was rejected despite gesture being a user-facing skill mode, and anti-faceted guidance could still collapse torso/pelvis construction into generic smooth bean/oval/capsule shapes.
 - The corrective candidate is `1.0.3rc2 / A12 / v1.0.3rc2_gesture_runtime_alignment` on `fix/g01-gesture-runtime-rc2`, with the same public contract identity `DrawingSession/1.0.3-vnext`.
 - rc2 adds `gesture` to the public drawing-intent vocabulary and a gesture `ModeGuide`; it does not introduce a workflow stage.
-- rc2 strengthens gesture specificity so `rounded` is not treated as a quality target by itself: head profile/jaw/nape, shoulder/back/side asymmetry, hip shelf, taper, near/far exposure, and leg-attachment relations must survive when observed.
-- Renderer v10 and fast-timelapse implementation measured for rc1 promotion are byte-unchanged by this rc2 slice. The rc1 width×3 performance/parity evidence therefore remains the renderer/timelapse authority rather than being re-measured for an unrelated intent/docs correction.
+- rc2 gesture guidance rejects informationally empty geometric **and rounded** primitives while explicitly preserving roundness that is actually supported by the reference. Head facing/profile, torso asymmetry, hip shelf/near-far relation, and leg-attachment information remain the deciding evidence.
+- G01 also exposed a markmaking discoverability gap: semantic preset IDs such as `gesture-flow` are resolved through `resolve_mark_for_intent()` / `ResolvedMark.draw_kwargs()` rather than being guessed as literal `DrawingSession.draw(tool=...)` names. The public docs and regression tests now lock that adapter boundary.
+- The same-reference pure + constructive fresh-session dogfood reached the requested G01 target without scaffold-only finish, orientationless circle-head, faceted torso/pelvis icons, or attachment-free rounded blobs. Evidence is recorded in `dev/dogfood/g01-gesture-rc2/README.md`.
+- Renderer v10 and fast-timelapse implementation measured for rc1 promotion are byte-unchanged by rc2. The rc1 width×3 performance/parity evidence therefore remains the renderer/timelapse authority rather than being re-measured for an unrelated intent/docs correction.
 - New sessions continue to select `pillow-pencil-contact-v10 / 1`; explicit historical v9 sessions preserve v9 replay semantics across checkpoint/resume.
 - The installable R23 compatibility namespace and remaining R23 orchestration/runtime cluster remain physically retired from current `src`.
 - New work uses one stage-free `DrawingSession` orchestration route.
 - The deployable drawing authority is `skills/img2drawing/SKILL.md` plus `skills/img2drawing/references/`.
-- Mechanical CI verifies repository/runtime/package/provenance contracts. It does not issue an artistic-quality verdict; G01 still requires visual dogfood evidence before stable promotion.
+- Mechanical CI verifies repository/runtime/package/provenance contracts. It does not issue an artistic-quality verdict.
 
 ## RC1 renderer promotion evidence retained
 
@@ -45,19 +48,33 @@ The exact rc1 GitHub Actions candidate wheel was measured against the 1,272-acti
 
 Authority: `dev/release/vnext/V1_0_3_RC1_PROMOTION.md` and `.json`. CI continues to reject changes to the measured renderer/timelapse implementation without renewed evidence.
 
-## G01 reopen evidence
+## G01 closure evidence
 
-The first rc1 fresh-worker pass used the same reference for two requested finish levels:
+The same reference was used for two user-facing finish levels:
 
 1. explicit pure/quick gesture;
-2. unqualified `gesture drawing`, which should route to constructive gesture.
+2. unqualified `gesture drawing`, which routes to constructive gesture.
 
-The run exposed two distinct failures:
+The correction loop deliberately rejected intermediate results that still read as a circle-head,
+faceted/closed construction icon, generic rounded mannequin mass, or coarse polyline. The final
+review distinguished **reference-supported roundness** from a stock primitive: a rounded silhouette
+is valid when facing, asymmetry, overlap, taper, and attachment evidence remain present.
 
-- **runtime alignment:** the public `DrawingIntent` enum did not contain `gesture`, so a worker had to fall back to another drawing mode despite the skill defining gesture as user-facing;
-- **visual specificity:** removing hard polygons was not enough. A constructive pelvis could become a smooth capsule/blob, and a nearly circular head could still satisfy the old wording too easily even when profile/jaw information was visible.
+G01 is therefore **PASS / CLOSED for its target failure class**. This does not claim production
+croquis quality or cross-agent/cross-subject generalization. See
+`dev/dogfood/g01-gesture-rc2/README.md` for the reviewed artifact hashes and bounded verdict.
 
-G01 therefore remains **REOPEN** until rc2 is rerun against the same two cases and the final visible marks pass the whole-pose, head-direction, subject-specific mass, limb/support, and anti-primitive checks.
+## Next bottleneck: broad-pencil material quality
+
+Stable v1.0.3 promotion is still blocked by a separate observed renderer/material defect. Thick
+pencil marks can read as a uniform digital ribbon rather than graphite: paper/tooth interaction is
+too weak at broad widths and stroke terminals can appear blunt or square. This problem was largely
+hidden by earlier thin-line work and should be closed at the renderer/markmaking owner before stable
+promotion.
+
+The next slice should therefore validate and repair broad-pencil terminals, pressure/alpha release,
+graphite density variation, and tooth interaction without regressing thin-line parity or historical
+v9 replay.
 
 ## Current source surface
 
@@ -81,9 +98,9 @@ Retired from current `src`: `legacy/`, `run.py`, `stages/`, `exemplar/`, `review
 
 ## Remaining work
 
-1. **RC2 mechanical verification** — current docs/runtime/instruction graph/full suite/B17/B18 must pass with package metadata exactly `1.0.3rc2`; rc1 renderer promotion evidence must remain valid because its measured implementation paths are unchanged.
-2. **G01 rc2 fresh-worker dogfood** — rerun explicit pure gesture and unqualified constructive gesture on the same reference. Reject circle-head, polygon masses, smooth stock blobs/capsules, missing major limb/support relations, or scaffold-only early finish.
-3. **Stable promotion decision** — only after G01 passes decide whether rc2 is promoted to stable v1.0.3. Stable publishing requires a separate explicit freeze/publish manifest.
+1. **Broad-pencil renderer/material hardening** — reproduce the thick-line weak-graphite and square-terminal failure with a focused deterministic fixture; repair the smallest responsible v10 material/terminal owner while preserving thin-path behavior and historical v9 semantics.
+2. **RC2 integration decision** — after the new gesture adapter/docs tests remain green, merge rc2 to `main` as the current candidate without creating a publish manifest.
+3. **Stable promotion decision** — only after broad-pencil quality passes decide whether the resulting candidate is ready for stable v1.0.3 or requires another RC. Stable publishing requires a separate explicit freeze/publish manifest.
 4. **Root compatibility shims** — deprecated pre-0.6.0rc2 root aliases remain intentionally supported in the 1.0.3 RC line and are a separately versioned compatibility decision.
 
 ## Historical B18 boundary
@@ -103,6 +120,7 @@ The following remain history/evidence, not current package-version authority:
 ## Authority map
 
 - current rc2 candidate state: `fix/g01-gesture-runtime-rc2` + this file;
+- G01 behavioral evidence: `dev/dogfood/g01-gesture-rc2/README.md`;
 - rc1 integrated history: `main`, PR #40, and `docs/releases/v1.0.3rc1.md`;
 - rc1 renderer promotion evidence: `dev/release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`;
 - deployable drawing behavior: `skills/img2drawing/SKILL.md` + references;
