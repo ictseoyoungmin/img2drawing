@@ -50,3 +50,14 @@ jobs:
         run: python dev/tools/verify_vnext_b17.py
       - name: Verify frozen v1.0.2 release history
         run: python dev/tools/verify_vnext_b18.py
+      - name: Build verified RC wheel artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-rc'
+        run: python -m build --wheel --outdir dist skills/img2drawing
+      - name: Upload verified RC wheel artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-rc'
+        uses: actions/upload-artifact@v4
+        with:
+          name: img2drawing-1.0.3-rc-candidate-${{ github.sha }}
+          path: dist/*.whl
+          if-no-files-found: error
+          retention-days: 14
