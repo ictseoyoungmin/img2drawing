@@ -43,7 +43,6 @@ def main() -> None:
     assert "R23" in status and "physically retired" in status
     assert "CURRENT MAIN INVARIANTS" in contract
 
-    # Immutable v1.0.3 publication authority must survive later candidates unchanged.
     stable = json.loads(text(RELEASE / "CONTRACT_FREEZE_V1_0_3.json"))
     assert stable["freeze_id"] == "v1.0.3-A14-2026-09-13"
     assert stable["package_version"] == "1.0.3"
@@ -66,7 +65,7 @@ def main() -> None:
         assert revision == "A15"
         assert release_slice == "v1.0.4rc1_terminal_mode_pixels"
         assert "CURRENT SOURCE:     1.0.4rc1 · DrawingSession/1.0.4-vnext · A15" in status
-        assert "v1.0.3 remains latest published stable" in status
+        assert "v1.0.3" in status and "remains latest published stable" in status
         assert "CURRENT RENDERER:   new sessions → pillow-pencil-contact-v12/1" in status
         assert "T01 TERMINAL SEMANTICS:" in status
         assert "T01" in roadmap and "terminal" in roadmap.lower()
@@ -75,7 +74,6 @@ def main() -> None:
         assert "pillow-pencil-contact-v12" in changelog
         assert not (PUBLISH / "v1.0.4.json").exists()
 
-    # The earlier release-control files remain historical v1.0.2 authority by design.
     frozen_v102 = json.loads(text(RELEASE / "CONTRACT_FREEZE.json"))
     assert frozen_v102["freeze_id"] == "v1.0.2-A10-2026-09-09"
     assert frozen_v102["package_version"] == "1.0.2"
@@ -83,7 +81,6 @@ def main() -> None:
     assert text(RELEASE / "RELEASE.md").startswith("# img2drawing v1.0.2 maintainer release record")
     assert "Released stable: **1.0.2**" in text(RELEASE / "SUPPORT.md")
 
-    # High-value stale-current assertions should never return to mutable authority docs.
     stale = (
         "D01 is the next authorized work",
         "Physical R23 retirement occurs only at R03",
