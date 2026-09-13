@@ -16,6 +16,31 @@ the foreground edge, what disappears, whether it reappears, and whether the visi
 requires continuity through the hidden interval. Do not decide that a chain, mass, or connected
 part simply terminates because its contour is no longer visible.
 
+## Strong perspective: propagate depth through the whole
+
+When the camera/view is strongly foreshortened, identify coarse depth groups before local finish:
+
+```text
+near
+mid
+far
+```
+
+Do not infer exact 3D distance when the reference does not support it. The groups exist to make
+relative projection explicit.
+
+For each important connected chain, compare where visible:
+
+- projected anchor spacing;
+- apparent width changes;
+- overlap order;
+- near/far exposure;
+- terminal orientation;
+- continuity through occlusion.
+
+A large near head or hand is not, by itself, evidence that perspective is solved. If torso,
+pelvis, limbs, feet, or props remain flat/diagrammatic, classify that as an upstream depth residual.
+
 ## Relations
 
 Compare rather than naming isolated parts:
@@ -43,6 +68,10 @@ Only then inspect the part that owns a residual. Read its curvature, width chang
 contact, internal landmarks, and uncertainty. A part is not observed merely because its
 category is known.
 
+Before accepting a local semantic group, identify a small set of neighboring anchors — usually
+2–5 are enough — that constrain its placement, scale, direction, overlap, or contact. A local line
+that cannot be checked against neighboring evidence is still a hypothesis, not a resolved part.
+
 For an occluded part, separate what is visible from what must only be inferred. Record the last
 visible anchor before disappearance, the first visible reappearance when present, local direction
 or tangent, nearby width/taper, foreground ownership, and any visible contact/attachment cue.
@@ -55,6 +84,10 @@ Return to the whole after every local correction. A locally attractive head, han
 shoe is still wrong if it breaks scale, rhythm, balance, orientation, twist, or the subject's
 silhouette.
 
+Ask whether the whole became **more specific or merely busier**. If new lines improve local
+recognition but make the subject more generic, flatter, more parallel, or more symmetric, the
+correction failed at the parent relation.
+
 If several local parts become simultaneously cleaner but the whole pose becomes more frontal,
 parallel, or symmetric than the subject, classify that as an upstream orientation residual rather
 than local progress. Route to `../construction/orientation-and-twist.md`.
@@ -62,6 +95,9 @@ than local progress. Route to `../construction/orientation-and-twist.md`.
 Likewise, if a visible part downstream of an occluder drifts because the hidden interval was
 ignored, do not patch only the visible endpoint. Route to `../foundation/occlusion-inference.md`,
 re-read both sides of the overlap, and revise the parent continuity hypothesis.
+
+Use `../review/visual-quality-gates.md` when a local group is about to be accepted or when the
+whole/local relationship remains ambiguous.
 
 Evidence tools can enlarge or measure what is visible. The Agent remains responsible for
 interpreting the result. Do not invent exact 3D angles when the reference only supports a
