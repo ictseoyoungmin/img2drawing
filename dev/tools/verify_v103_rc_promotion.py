@@ -16,9 +16,11 @@ def _git(*args: str) -> str:
 
 
 def _git_show(commit: str, path: str) -> str:
-    return subprocess.check_output(
-        ["git", "show", f"{commit}:{path}"], cwd=ROOT, text=True
-    )
+    return subprocess.check_output(["git", "show", f"{commit}:{path}"], cwd=ROOT, text=True)
+
+
+def _blob(commit: str, path: str) -> str:
+    return _git("rev-parse", f"{commit}:{path}")
 
 
 def _close(a: float, b: float, tol: float = 1e-9) -> bool:
@@ -26,7 +28,6 @@ def _close(a: float, b: float, tol: float = 1e-9) -> bool:
 
 
 def _assignment_block(text: str, name: str) -> str:
-    """Extract one RendererContract assignment so additive later contracts are allowed."""
     marker = f"{name} = RendererContract("
     start = text.index(marker)
     open_pos = text.index("(", start)
@@ -46,37 +47,34 @@ def main() -> None:
     payload = json.loads(EVIDENCE.read_text(encoding="utf-8"))
     assert payload["schema"] == "img2drawing.v1_0_3_rc1_promotion.v1"
     assert payload["state"] == "PROMOTION_EVIDENCE_COMPLETE"
-
     measured_commit = payload["measured_commit"]
-    measured_tree = payload["measured_tree"]
-    assert _git("show", "-s", "--format=%T", measured_commit) == measured_tree
+    assert _git("show", "-s", "--format=%T", measured_commit) == payload["measured_tree"]
 
-    # RC1 promotion evidence is historical authority for the v9/v10 renderer pair. Later
-    # RCs may add a new renderer/registry binding, but the measured v10 implementation,
-    # fast path, and the V10_CONTRACT payload itself must remain byte-identical.
-    immutable_runtime_paths = [
+    immutable_same_paths = [
         "skills/img2drawing/src/img2drawing/provenance/fast_timelapse",
-        "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_v10.py",
         "skills/img2drawing/src/img2drawing/render/renderer_dispatch.py",
-        "skills/img2drawing/src/img2drawing/render/v10_value_authority.py",
         "skills/img2drawing/src/img2drawing/vnext/render_profile.py",
         "skills/img2drawing/src/img2drawing/vnext/renderer_binding.py",
     ]
     subprocess.run(
-        ["git", "diff", "--quiet", measured_commit, "HEAD", "--", *immutable_runtime_paths],
+        ["git", "diff", "--quiet", measured_commit, "HEAD", "--", *immutable_same_paths],
         cwd=ROOT,
         check=True,
     )
+    renamed_immutable_paths = {
+        "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_v10.py":
+            "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_core.py",
+        "skills/img2drawing/src/img2drawing/render/v10_value_authority.py":
+            "skills/img2drawing/src/img2drawing/render/pencil_value_authority.py",
+    }
+    for historical_path, current_path in renamed_immutable_paths.items():
+        assert _blob(measured_commit, historical_path) == _blob("HEAD", current_path)
 
     historical_contracts = _git_show(measured_commit, CONTRACTS)
     current_contracts = (ROOT / CONTRACTS).read_text(encoding="utf-8")
-    assert _assignment_block(current_contracts, "V10_CONTRACT") == _assignment_block(
-        historical_contracts, "V10_CONTRACT"
-    )
+    assert _assignment_block(current_contracts, "V10_CONTRACT") == _assignment_block(historical_contracts, "V10_CONTRACT")
 
-    # Additive registry evolution must not remove the two identities covered by RC1.
     from img2drawing.render.renderer_registry import registered_renderer_identities
-
     identities = set(registered_renderer_identities())
     assert ("pillow-pencil-contact-v9", "1") in identities
     assert ("pillow-pencil-contact-v10", "1") in identities
@@ -86,7 +84,6 @@ def main() -> None:
     assert fixture["sampled_frames"] == 637
     assert fixture["every_n"] == 2
     assert _close(fixture["width_scale"], 3.0)
-
     measurements = payload["measurements"]
     for key in ("v9", "v10"):
         record = measurements[key]
@@ -98,7 +95,6 @@ def main() -> None:
         assert _close(record["patch_build_median_sec"], statistics.median(record["cold_patch_build_sec"]))
         assert record["pixel_exact"] is True
         assert record["fast_rgb_sha256"] == record["canonical_rgb_sha256"]
-
     v9 = measurements["v9"]
     v10 = measurements["v10"]
     expected = {
@@ -108,18 +104,12 @@ def main() -> None:
     }
     for name, value in expected.items():
         assert _close(measurements["v10_vs_v9_delta_pct"][name], value)
-
     promotion = payload["promotion"]
     assert promotion["historical_v9_preserved"] is True
     assert promotion["v9_fast_canonical_exact"] is True
     assert promotion["v10_fast_canonical_exact"] is True
     assert promotion["verdict"] == "PASS_FOR_1.0.3rc1_VERSION_DECLARATION"
-
-    print(
-        "v1.0.3rc1 historical promotion evidence PASS: "
-        f"cold={expected['cold_render_pack']:.3f}% "
-        f"warm={expected['warm_render_pack']:.3f}%"
-    )
+    print(f"v1.0.3rc1 historical promotion evidence PASS: cold={expected['cold_render_pack']:.3f}% warm={expected['warm_render_pack']:.3f}%")
 
 
 if __name__ == "__main__":
