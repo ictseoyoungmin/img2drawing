@@ -24,13 +24,40 @@ better than many generic eye/nose/mouth ticks.
 A face cross-axis is an orientation aid, not a substitute for head volume. It should agree with the
 crown, jaw/chin direction, and visible side-plane width rather than floating inside a generic circle.
 
+Before accepting facial detail, check that feature placement still agrees with the outer cranial/jaw
+shape and visible side plane. If the face reads as eye/nose/mouth symbols pasted into a generic head,
+reopen head volume/orientation instead of refining the symbols.
+
 ## Hair
 
-Block the hair as a mass that changes the head silhouette. Add only the major parting,
-clump boundaries, overlaps, and selected strand accents that explain direction or identity.
-Do not fill the head with parallel strand lines.
+Hair is solved in three levels:
 
-## Line economy
+```text
+1. head + hair outer mass
+2. major parting and clump boundaries
+3. selected strand accents
+```
+
+Do not enter level 3 until levels 1–2 survive a whole-head inspection.
+
+First block the hair as a mass that changes the head silhouette and establishes ownership at the
+forehead, temple, cheek/jaw, ear, neck, shoulder, and garment handoffs that are actually visible.
+Then add only the major parting and clump boundaries needed to explain overlap/direction/identity.
+Only after that may a small number of strand accents clarify flow or material.
+
+Do not fill the head with parallel strand lines. If removing the strand accents destroys the hair
+read, the mass/clump solution was never closed. Delete or retire the strand field and reopen the
+outer mass/parting/clump relation.
+
+A hair stroke may not continue into an arm, collar, shoulder, or background merely because the
+screen-space tangent aligns. Split at the physical ownership handoff. See
+`../review/visual-quality-gates.md`.
+
+## Line economy and retirement
 
 When the head becomes muddy, remove search lines first. Re-establish one clean outer shape
 and a small set of internal identity lines before adding anything else.
+
+Before final finish, classify surviving cranial spheres, face axes, hair search arcs, and strand
+accents as KEEP / SOFTEN / RETIRE. Construction that has already been replaced by descriptive
+geometry should not remain visible by default.
