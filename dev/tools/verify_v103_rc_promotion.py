@@ -8,14 +8,38 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = ROOT / "dev" / "release" / "vnext" / "V1_0_3_RC1_PROMOTION.json"
+CONTRACTS = "skills/img2drawing/src/img2drawing/render/renderer_contracts.py"
 
 
 def _git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
+def _git_show(commit: str, path: str) -> str:
+    return subprocess.check_output(
+        ["git", "show", f"{commit}:{path}"], cwd=ROOT, text=True
+    )
+
+
 def _close(a: float, b: float, tol: float = 1e-9) -> bool:
     return math.isclose(float(a), float(b), rel_tol=0.0, abs_tol=tol)
+
+
+def _assignment_block(text: str, name: str) -> str:
+    """Extract one RendererContract assignment so additive later contracts are allowed."""
+    marker = f"{name} = RendererContract("
+    start = text.index(marker)
+    open_pos = text.index("(", start)
+    depth = 0
+    for index in range(open_pos, len(text)):
+        char = text[index]
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0:
+                return text[start : index + 1]
+    raise AssertionError(f"unterminated {name} assignment")
 
 
 def main() -> None:
@@ -27,23 +51,35 @@ def main() -> None:
     measured_tree = payload["measured_tree"]
     assert _git("show", "-s", "--format=%T", measured_commit) == measured_tree
 
-    # Promotion evidence may be followed by docs/tests/version-only commits, but the
-    # measured renderer/timelapse implementation must remain byte-identical.
-    runtime_paths = [
+    # RC1 promotion evidence is historical authority for the v9/v10 renderer pair. Later
+    # RCs may add a new renderer/registry binding, but the measured v10 implementation,
+    # fast path, and the V10_CONTRACT payload itself must remain byte-identical.
+    immutable_runtime_paths = [
         "skills/img2drawing/src/img2drawing/provenance/fast_timelapse",
         "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_v10.py",
-        "skills/img2drawing/src/img2drawing/render/renderer_contracts.py",
         "skills/img2drawing/src/img2drawing/render/renderer_dispatch.py",
-        "skills/img2drawing/src/img2drawing/render/renderer_registry.py",
         "skills/img2drawing/src/img2drawing/render/v10_value_authority.py",
         "skills/img2drawing/src/img2drawing/vnext/render_profile.py",
         "skills/img2drawing/src/img2drawing/vnext/renderer_binding.py",
     ]
     subprocess.run(
-        ["git", "diff", "--quiet", measured_commit, "HEAD", "--", *runtime_paths],
+        ["git", "diff", "--quiet", measured_commit, "HEAD", "--", *immutable_runtime_paths],
         cwd=ROOT,
         check=True,
     )
+
+    historical_contracts = _git_show(measured_commit, CONTRACTS)
+    current_contracts = (ROOT / CONTRACTS).read_text(encoding="utf-8")
+    assert _assignment_block(current_contracts, "V10_CONTRACT") == _assignment_block(
+        historical_contracts, "V10_CONTRACT"
+    )
+
+    # Additive registry evolution must not remove the two identities covered by RC1.
+    from img2drawing.render.renderer_registry import registered_renderer_identities
+
+    identities = set(registered_renderer_identities())
+    assert ("pillow-pencil-contact-v9", "1") in identities
+    assert ("pillow-pencil-contact-v10", "1") in identities
 
     fixture = payload["fixture"]
     assert fixture["actions"] == 1272
@@ -80,7 +116,7 @@ def main() -> None:
     assert promotion["verdict"] == "PASS_FOR_1.0.3rc1_VERSION_DECLARATION"
 
     print(
-        "v1.0.3rc1 promotion evidence PASS: "
+        "v1.0.3rc1 historical promotion evidence PASS: "
         f"cold={expected['cold_render_pack']:.3f}% "
         f"warm={expected['warm_render_pack']:.3f}%"
     )
