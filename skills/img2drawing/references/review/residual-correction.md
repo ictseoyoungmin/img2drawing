@@ -7,6 +7,9 @@ Use the loop:
 
 `inspect current render → name mismatch → rank impact → choose responsible premise → edit → inspect fresh render`
 
+For observed finished/substantially-resolved work, close the loop through
+`visual-quality-gates.md` before accepting the edited semantic group.
+
 ## Residual description
 
 Describe what is wrong as a relationship, not a vague quality label. Prefer:
@@ -15,11 +18,16 @@ Describe what is wrong as a relationship, not a vague quality label. Prefer:
 - “shoe toe points forward but reference turns outward” over “foot is simple”;
 - “connected part is too narrow after the joint” over “needs more detail.”
 
+Also name false ownership when present:
+- “hair stroke continues into the sleeve although ownership changes at the shoulder”;
+- “context diagonal has no visible plane/edge owner”;
+- “rifle rail overlaps the torso without a resolved front/behind handoff.”
+
 ## Scope
 
-Use a global correction when pose, mass, balance, scale, orientation, topology, or a large
-silhouette premise is wrong. Use a local correction only when the parent structure is credible and
-the mismatch is genuinely bounded.
+Use a global correction when pose, mass, balance, scale, orientation, topology, depth propagation,
+or a large silhouette premise is wrong. Use a local correction only when the parent structure is
+credible and the mismatch is genuinely bounded.
 
 Do not route by the noun that looks wrong. A foot residual can belong to the local foot,
 the parent leg chain, the ground relation, or contour ownership. A component residual can belong
@@ -42,9 +50,9 @@ spend additional local marks preserving a false premise.
 Before replacing a stroke, ask which fact is actually wrong:
 
 - **geometry residual** — the path, anchor, silhouette, overlap, contact, cusp/corner, width relation,
-  or other spatial fact is wrong;
-- **material residual** — the path is already correct, but width, pressure, taper, opacity, grade,
-  grain, or another rendering property makes the line read incorrectly.
+  ownership, or other spatial fact is wrong;
+- **material residual** — the path and owner are already correct, but width, pressure, taper,
+  opacity, grade, grain, terminal, or another rendering property makes the line read incorrectly.
 
 For a geometry residual, replace or locally edit the responsible points. For a material residual,
 preserve the points and retune the stroke. Do not re-author a correct curve merely to change taper
@@ -62,11 +70,30 @@ component relation, one hair-mass transition, one contact, one clothing tension 
 subassembly, or another coherent relation. This keeps the scope large enough to preserve context
 but small enough that the next render reveals whether the chosen cause was correct.
 
+Before accepting the corrected group, identify its visible authority, neighboring anchors, line
+owners, geometry claim, and the visual evidence that would disprove the fix. Use
+`visual-quality-gates.md` rather than accepting a group because it merely became cleaner.
+
 The group is not a stage and does not earn preservation. If the fresh render shows that its parent
 premise was wrong, replace the responsible geometry rather than continuing to polish the group.
 
 Fix one to three highest-impact residuals at a time. After every mutation, inspect a fresh
 render; do not accept a correction from stale evidence.
+
+## Busier is not better
+
+After the fresh render, ask whether the whole became more specific or merely busier.
+
+Escalate upstream when:
+
+- a region gains lines but not subject-specific geometry;
+- a limb becomes cleaner yet remains rails/tubes;
+- hair gains strands while mass/clump ownership is still unresolved;
+- prop details multiply while thickness/contact remain unclear;
+- context lines accumulate without visible owners;
+- local parts improve while the whole becomes flatter, more parallel, more symmetric, or less
+  convincingly foreshortened;
+- a correction introduces a new tangent/merge/ownership conflict.
 
 A repeated local repair that leaves the same mismatch visible is an escalation signal, not
 a request for more local strokes. Re-observe the parent relation and route upstream.

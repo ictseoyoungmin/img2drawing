@@ -120,13 +120,18 @@ Other relationships:
 
 ## 8. Review and output
 
+- `review/visual-quality-gates.md` — reversible semantic-group evidence gates: anchors, ownership, anti-symbol, perspective propagation, hierarchy, retirement, whole-read return, and ranked finish residuals
 - `review/residual-correction.md` — inspect, prioritize, distinguish geometry/material residuals, correct coherent groups, re-inspect
 - `review/residual-routing.md` — fast decision kernel for routing a visible symptom to one responsible local or upstream premise
 - `review/markmaking-residuals.md` — distinguish wrong geometry from wrong role, dynamics, style policy, or runtime capability
-- `review/stroke-retirement.md` — remove or soften obsolete marks
+- `review/stroke-retirement.md` — explicit KEEP/SOFTEN/RETIRE audit for provisional/search marks
 - `review/authored-element-navigation.md` — find current authored elements before editing
-- `review/completion.md` — current-evidence finish decision
+- `review/completion.md` — current-evidence finish decision with largest-remaining-residual ranking
 - `output/render-profile-and-replay.md` — final PNG and end-to-end replay
+
+For observed work targeting a finished or substantially resolved drawing, `foundation/line-economy.md`
+routes to `review/visual-quality-gates.md` before the first descriptive semantic group is accepted.
+The quality gates are reversible evidence checks rather than a sequential drawing stage.
 
 When the cause is not already obvious, enter `review/residual-routing.md` through its fast routing
 kernel before opening a subject-specific leaf. First decide whether the evidence itself is uncertain,

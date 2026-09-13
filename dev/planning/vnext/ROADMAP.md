@@ -3,122 +3,195 @@
 Updated: 2026-09-13
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-This roadmap records the completed **v1.0.3 release cycle** and the current handoff boundary. Older A/B/D/R plans remain historical evidence and do not override current `STATUS.md` or the published release record.
+The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
 
 ## Closed foundation
 
 - v1.0.0 established the first stable stage-free Agent Skill/runtime surface.
 - v1.0.1 added general authoring ergonomics.
 - v1.0.2 promoted the exact local-first timelapse backend.
-- Post-v1.0.2 cleanup physically retired the R23 runtime/legacy cluster.
-- Renderer v10 closed seed/parity and broad authored-value issues while preserving explicit v9 replay.
-- `1.0.3rc1 / A11` integrated renderer v10 and its promotion evidence into main.
-- G01 fresh gesture dogfood reopened and closed runtime/instruction integration gaps in `1.0.3rc2 / A12`.
-- G02 broad-pencil dogfood reproduced and closed the square-terminal / weak-graphite failure with additive renderer `pillow-pencil-contact-v11 / 1` in `1.0.3rc3 / A13`.
-- PR #43 integrated rc3 into main at `bcc931c79a4c4cf799aec3a5265d21145bfb546b`; post-merge main CI passed.
-- PR #44 removed generation-tagged Python module filenames from current `src` while preserving serialized v9/v10/v11 replay identities.
-- PR #45 promoted the verified v1.0.3/A14 candidate to `main`; release commit `d6151ba8dfef8dc37ef5cddd24c2c6c974d53976` passed main CI and published GitHub Release `v1.0.3`.
-- PR #46 closed README/STATUS publication state; final documentation-only main commit `e4f3c79361ab588ab2e89bc99326c242bee3740b` passed CI without creating a duplicate release.
+- post-v1.0.2 cleanup physically retired the R23 runtime/legacy cluster.
+- renderer v10 closed seed/parity and broad authored-value issues.
+- G01 closed gesture/runtime/instruction integration gaps.
+- G02 closed the broad-pencil square-terminal / weak-graphite failure class with the renderer family now published as `pillow-pencil-contact-v11 / 1`.
+- G03–G06 integrated, froze, verified, and published `v1.0.3 / A14`.
+- S01 closed the v11 quality-control taxonomy, reversible evidence-gate design, and no-v12 renderer-family policy.
+- S02 integrated the instruction execution gates and passed CI run `34761722278` across current and historical verification surfaces.
 
 ## Current sequence
 
 ```text
-G01 gesture behavior validation                    CLOSED
-G02 broad-pencil material/terminal hardening       CLOSED
-G03 integrate validated rc3 into main              CLOSED
-G04 stable-promotion decision                      CLOSED → choose v1.0.3
-G05 stable freeze + wheel verification             CLOSED
-G06 explicit publish manifest + publish            CLOSED
-NEXT PRODUCT BOTTLENECK                            UNSELECTED
+G01 gesture behavior validation                         CLOSED
+G02 broad-pencil material/terminal hardening            CLOSED
+G03 integrate validated rc3 into main                   CLOSED
+G04 stable-promotion decision                           CLOSED → v1.0.3
+G05 stable freeze + wheel verification                  CLOSED
+G06 explicit publish manifest + publish                 CLOSED
+S01 v11 quality-control failure taxonomy + design       CLOSED
+S02 instruction graph execution-gate patch              CLOSED
+S03 fresh-worker visual dogfood                         ACTIVE
+S04 classify remaining geometry vs material residuals   BLOCKED by S03
+S05 contract-digest / replay-boundary migration         BLOCKED by S04 evidence capture; REQUIRED before pixel change
+S06 current-v11 renderer correction if proven           BLOCKED by S04/S05; MAY SKIP
+S07 full visual + mechanical validation                 BLOCKED by S03–S06
+S08 choose next package version / release candidate     BLOCKED by S07
 ```
 
-There is **no active v1.0.3 release gate**. `v1.0.3` is published and CLOSED. Future work starts from the `Unreleased` section of `CHANGELOG.md` after a new highest-impact bottleneck is explicitly selected; this roadmap does not pre-authorize a particular next feature or validation campaign.
+**No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
 
-### G01 — gesture behavior validation — CLOSED
+## S01 — v11 quality-control redesign — CLOSED
 
-Same-reference pure + constructive dogfood found and closed three reusable defects: missing public `gesture` runtime intent, anti-faceted guidance overcorrecting into generic rounded blobs, and semantic markmaking preset IDs being confused with low-level runtime tool names. Bounded evidence is `../../dogfood/g01-gesture-rc2/README.md`.
+Authority: `V11_QUALITY_CONTROL_REDESIGN.md`.
 
-### G02 — broad-pencil material and terminal quality — CLOSED
+The observed failure classes were frozen around one higher-level cause: the skill contained many correct principles but did not require enough evidence before a worker accepted symbolic, generic, cluttered, or weakly retired drawing decisions.
 
-Thick-line dogfood exposed a renderer/material failure hidden by earlier thin-line work. Transitional broad marks could show a rectangular high-alpha continuity core at their ends, and broad interiors could read too much like a flat digital ribbon instead of graphite on paper.
+The accepted decision-closure model is:
 
-The released renderer boundary is:
+```text
+visible authority
+→ neighboring anchors
+→ physical/semantic owner
+→ geometry claim
+→ mark-language choice
+→ fresh render
+→ anti-symbol / hierarchy / retirement audit
+→ whole-subject recheck
+→ accept, revise, or reopen
+```
+
+Renderer-family identity is also separated conceptually from exact historical pixel identity so quality corrections do not require a new renderer number.
+
+## S02 — instruction execution gates — CLOSED
+
+The skill now contains one central `review/visual-quality-gates.md` leaf and concentrated edits to existing owners rather than a new rigid stage pipeline.
+
+Closed behavior includes:
+
+- line ownership continuity;
+- evidence/anchor packets before descriptive acceptance;
+- near/mid/far propagation for strong perspective;
+- hair mass → clump → accent ordering;
+- rejection of rail/tube limb completion;
+- prop/body contact solved as one relation;
+- ownerless context/perspective decoration rejected;
+- explicit KEEP/SOFTEN/RETIRE construction audit;
+- “busier but not more specific” escalation;
+- top remaining residual ranking before finish;
+- terminal/markmaking semantics kept downstream of justified geometry.
+
+CI run `34761722278` passed repository invariants, current documentation, runtime surface, instruction graph reachability, active tests, immutable v1.0.3 evidence, B17, and B18.
+
+## S03 — fresh-worker visual dogfood — ACTIVE
+
+Fresh workers must receive the updated skill, reference, and normal public runtime surface without privileged access to prior solution strokes.
+
+Required visual classes:
+
+1. strong-perspective close figure;
+2. full-body 3/4 figure with attached/held prop;
+3. frontal or near-frontal full body;
+4. head/hair close-up.
+
+Each run must produce reviewable provenance:
+
+- complete canonical `session.json`;
+- final PNG;
+- action-0→latest GIF, normally `every_n=4`;
+- reference/final comparison evidence;
+- top remaining residual ledger;
+- KEEP/SOFTEN/RETIRE summary.
+
+The supplied failure images define the failure classes, not answer templates. One blocking class prevents S03 closure; results are not averaged.
+
+## S04 — residual ownership decision — BLOCKED
+
+After S03, every blocking or repeated residual must be classified before renderer work:
+
+```text
+wrong path / proportion / ownership / overlap / contact
+→ geometry / instruction owner
+
+correct geometry but wrong weight / taper / terminal / grain / deposition
+→ material / runtime candidate
+```
+
+A renderer candidate must have both real-drawing evidence and a minimal controlled reproduction with authored geometry frozen.
+
+## S05 — contract-digest replay boundary — BLOCKED
+
+Before intentional current-v11 pixel divergence, persisted render identity must be able to bind:
+
+```text
+renderer_id              stable family
+renderer_version         protocol/schema compatibility
+renderer_contract_digest exact pixel-behavior identity
+```
+
+Replay policy:
+
+- matching family/version/digest → exact replay eligible;
+- same family/version with digest mismatch → no silent exact replay claim;
+- legacy no-digest history remains loadable under an explicitly non-exact current-source policy;
+- published v1.0.3 wheel/tag/freeze remains exact authority for its original v11 contract;
+- migration to the current contract is recorded as migration, not historical exact replay.
+
+This slice is required before S06 changes current-v11 pixels.
+
+## S06 — current v11 correction — CONDITIONAL
+
+Only defects proven renderer-owned in S04 receive a renderer slice. Each distinct material defect becomes one independent S06.n bottleneck.
+
+Rules:
+
+- keep renderer family `pillow-pencil-contact-v11 / 1`;
+- do not move authored points for material-only fixes;
+- do not reseed unrelated stroke body for a local terminal change;
+- change only the demonstrated material cause;
+- prove locality with controlled reproduction and real dogfood;
+- change the contract digest whenever exact pixel behavior changes.
+
+If S04 finds no renderer-owned blocking defect, S06 is skipped.
+
+## S07 — full validation — BLOCKED
+
+Repeat the S03 visual classes and combine:
+
+- fresh-worker visual evidence;
+- anti-symbol/ownership audit;
+- construction-retirement audit;
+- final-scale line hierarchy review;
+- canonical/fast exactness for the current contract;
+- historical v1.0.3 freeze integrity;
+- package/install/runtime CI;
+- end-to-end timelapse provenance.
+
+A green CI run alone does not close S07.
+
+## S08 — version/release decision — BLOCKED
+
+Do not predeclare `1.0.4rc1`. Choose release semantics only after S07 proves a coherent product state. Any new freeze must be additive and must not mutate v1.0.3 evidence.
+
+## Historical v1.0.3 authority
+
+The released renderer boundary remains historically true for the published package:
 
 ```text
 v1.0.3 stable / A14
-new sessions → pillow-pencil-contact-v11 / 1
-explicit v10/1 → preserved rc1/rc2 replay
-explicit v9/1  → preserved v1.0.2 replay
+new sessions in that package → pillow-pencil-contact-v11 / 1
+explicit v10/1 → rc1/rc2 replay
+explicit v9/1  → v1.0.2 replay
 ```
 
-Closed gates:
-
-- deterministic broad-stroke reproduction;
-- v10 square/butt terminal reproduced;
-- v11 pressure-resolved round broad terminal regression;
-- v11 stronger page-fixed graphite/tooth regression with mean-value tolerance;
-- v10↔v11 2 px thin pixel exactness;
-- v11 canonical-final ↔ fast-final exactness;
-- full current + historical + package CI;
-- drawing-scale and 9–14 px heavy-graphite visual dogfood.
-
-Evidence: `../../dogfood/g02-broad-pencil-v11/README.md`.
-
-### G03 — rc3 integration — CLOSED
-
-PR #43 integrated rc3 to main and post-merge CI passed all mechanical gates. No publish manifest was created as part of rc3 integration.
-
-### G04 — stable-promotion decision — CLOSED
-
-Decision: **promote v1.0.3 stable rather than create another RC**.
-
-The decision was grounded in replay preservation, v11 canonical/fast exactness, thin non-regression, G01 gesture dogfood, G02 broad-pencil visual quality evidence, and full package/history verification.
-
-Deprecated pre-0.6.0rc2 root shims remain a separate compatibility decision and were not bundled into v1.0.3.
-
-### G05 — stable freeze and wheel verification — CLOSED
-
-The selected stable package was frozen as `1.0.3 / A14 / v1.0.3_gesture_renderer_quality`.
-
-Completed evidence:
-
-- immutable v1.0.2 `CONTRACT_FREEZE.json` preserved;
-- independent `CONTRACT_FREEZE_V1_0_3.json` added;
-- exact stable package tree pinned by `V1_0_3_STABLE_PROMOTION.json`;
-- stable branch CI `34749311565` passed;
-- package tree `5758c5efa60d80a0d483bcb3573258e34d609055` verified;
-- candidate wheel `img2drawing-1.0.3-py3-none-any.whl` verified before publication intent.
-
-### G06 — publish — CLOSED
-
-Publication completed through the explicit `dev/release/publish/v1.0.3.json` manifest.
-
-Verified publication evidence:
-
-- PR #45 merged the publication intent to `main`;
-- main release CI `34749869989` passed;
-- publish workflow `34749920471` passed;
-- Git tag / GitHub Release `v1.0.3` targets `d6151ba8dfef8dc37ef5cddd24c2c6c974d53976`;
-- published wheel SHA-256: `89061b74984e1ffbb78b48fa1de81aacd64c9d4bfb2ec6baadc41b703bc240f7`;
-- published sdist SHA-256: `08067b1aec8384a94dc323d6ea511be84ffe006069f5180ff3c44c9d9a1dd4c4`;
-- PR #46 documentation closure triggered a no-op publish workflow, confirming no duplicate release.
-
-## Later / optional candidates
-
-These are **not active or pre-authorized**; select only when one becomes the highest-impact open problem.
-
-- fresh unseen-reference / cross-subject generalization dogfood;
-- remove deprecated root compatibility shims in a separately versioned compatibility cleanup;
-- add representative teaching examples only when they are strong enough not to become accidental answer templates;
-- expand cross-agent validation when broader product claims require it.
+This historical statement does not require future current source to keep incrementing renderer generations.
 
 ## Authority
 
 - current state: `STATUS.md`;
+- execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
+- redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - current published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
 - G02 visual/material evidence: `../../dogfood/g02-broad-pencil-v11/README.md`;
 - v1.0.3 stable freeze: `../../release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
 - exact v1.0.3 stable candidate: `../../release/vnext/V1_0_3_STABLE_PROMOTION.json`;
-- rc1 renderer promotion evidence: `../../release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`;
 - immutable v1.0.2 snapshot: `../../release/vnext/CONTRACT_FREEZE.json`.

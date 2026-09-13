@@ -5,13 +5,39 @@ runtime. The runtime enforces a small set of mechanical preconditions so that de
 least bound to something real; it does not and cannot verify that the drawing is actually good.
 
 Before finishing, inspect the current drawing and ask:
-- Does the whole pose/composition read correctly?
+- Does the whole pose/composition/depth read correctly?
 - Are major masses, balance, silhouette, overlap, grounding, and object relations credible?
 - Are identity-bearing head/face/hair, hands/feet, garment, or prop features sufficiently
   resolved for the requested finish?
-- Have redundant construction/search lines been retired where they damage clarity?
+- Does line hierarchy actually read at final output scale?
+- Have redundant construction/search lines been classified and retired where they damage clarity?
+- Do any final strokes lack a clear physical/semantic owner?
 - Are all open residual records resolved? Are any remaining non-blocking weaknesses stated
   honestly in `accepted_limitations` rather than hidden by the finish rationale?
+
+Use `visual-quality-gates.md` for the ownership, anti-symbol, hierarchy, retirement, whole-read,
+and perspective-propagation checks.
+
+## Rank the largest remaining visible mismatches
+
+Before final finish, name the three largest remaining visible mismatches, or explicitly state that
+fewer than three remain.
+
+For each remaining mismatch record:
+
+```text
+owner
+blocking? yes/no
+why it remains
+why it is acceptable if non-blocking
+```
+
+This is not a requirement to invent flaws. It is a forcing function against the common failure
+where "recognizable" silently becomes "finished" while obvious generic rails, symbolic feet,
+parallel strand fields, ownerless context lines, or dominant construction remain visible.
+
+A blocking mismatch must be repaired or routed/reopened. A non-blocking mismatch may become an
+`accepted_limitation` only after the Agent consciously judges it against the requested finish.
 
 When the requested drawing mode is gesture drawing, use the level-specific completion test in
 `../modes/gesture-drawing.md`. Do not finish merely because a line of action, head/ribcage/pelvis
@@ -30,9 +56,18 @@ few subject-specific asymmetries that explain shoulder/back/side transitions, ta
 near/far exposure, and leg-attachment spacing/direction. `Rounded` alone is not a completion
 criterion: a smoothly organic mass that could fit many unrelated subjects is still unresolved.
 
-For `finish_intent="subject"` in particular, do not finish without explicitly accounting for
-each of face, hair, hands/feet, clothing, and prop (the relations `resolve_finish_guide("subject")`
-names): either the relation is resolved, or a remaining non-blocking limitation is named in
+For `finish_intent="subject"` in particular, do not finish without explicitly accounting for:
+
+- whole pose/composition/depth;
+- face/head/hair;
+- hands/feet;
+- clothing;
+- prop/body relation when present;
+- grounding/context when present;
+- line hierarchy;
+- construction retirement.
+
+For each relation, either it is resolved or a remaining non-blocking limitation is named in
 `accepted_limitations`. `accepted_limitations` is not a bypass for an open residual record. A
 `rationale` that only discusses pose while the drawing also claims a resolved subject is not a
 completion decision, it is an unexamined one.

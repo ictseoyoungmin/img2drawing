@@ -2,6 +2,10 @@
 
 **Croquis economizes marks, not observed geometry.**
 
+For observed work that is expected to become a finished or substantially resolved drawing, read
+`../review/visual-quality-gates.md` before accepting the first descriptive semantic group. The
+gates are reversible evidence checks, not a stage pipeline.
+
 Line economy removes redundant decisions. It does not remove the subject's real bends,
 width changes, overlaps, contact points, asymmetry, folds, component relations, or
 identity-bearing structure.
@@ -33,6 +37,24 @@ use few marks while still preserving its real axes, widths, joints, and overlaps
 Prefer one confident line that carries multiple correct relationships over many simple
 lines that average the form into a symbol.
 
+## One line still needs one physical owner
+
+Line economy does **not** justify connecting unrelated boundaries merely because they align in
+screen space or because one long stroke is convenient to author.
+
+A surviving descriptive stroke may carry several facts only while those facts belong to the same
+continuous physical relation. Split the authoring interval when ownership changes, for example:
+
+- hair → arm or garment;
+- jaw → collar;
+- sleeve → torso seam;
+- prop edge → body contour;
+- foreground contour → background/context edge;
+- one component → another joined component when the join is itself informative.
+
+An accidental continuous stroke across owners creates a false topology even if each local segment
+looks plausible. Use `../review/visual-quality-gates.md` for the ownership audit.
+
 ## Author related geometry as a semantic group
 
 Do not organize a pass by an arbitrary number of strokes. Group together marks that answer the
@@ -40,10 +62,10 @@ same structural question: one contour interval, one connected component relation
 one grip/contact, one clothing tension family, one prop subassembly, or another coherent visible
 problem.
 
-Within that group, keep enough neighboring context to preserve continuity and ownership. Then
-render and inspect the group in the whole drawing before moving on. This reduces two opposite
-failures: isolated micro-edits that never repair the parent relation, and giant passes whose
-residual cause becomes impossible to locate.
+Within that group, keep enough neighboring context to preserve continuity and ownership. Before
+accepting the group, identify the visible authority, neighboring anchors, physical owner, geometry
+claim, and the evidence that would disprove it. Then render and inspect the group in the whole
+drawing before moving on.
 
 A semantic group is an authoring convenience, not a runtime stage. Its size follows the observed
 relationship and can be revised whenever fresh evidence shows that the chosen scope was wrong.
@@ -62,6 +84,10 @@ Defer secondary detail, not structural specificity. See `structural-specificity.
 If adding lines makes a region busier but not more specific, stop. Re-observe the boundary or
 parent relation, retire redundant marks, and replace the pile with the smallest line set that
 states the correct geometry.
+
+If the smallest line set still reduces a limb to rails, hair to parallel strands, a shoe to a box,
+or a prop to generic rails/components, the problem is not solved merely because line count is low.
+Reopen the geometry or ownership premise.
 
 If a semantic group is already geometrically correct but still reads broken because of endpoint
 weight, taper, opacity, or another material setting, do not redraw its points merely to change the
