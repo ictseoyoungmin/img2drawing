@@ -29,7 +29,6 @@ def git_show(ref: str, path: str) -> str:
 
 
 def main() -> None:
-    # Historical release identity is owned by the immutable tag, not by current source.
     tag_commit = git("rev-list", "-n", "1", V103_TAG)
     assert tag_commit == V103_RELEASE_COMMIT
     assert git("rev-parse", f"{V103_TAG}:skills/img2drawing") == V103_PACKAGE_TREE
@@ -40,8 +39,9 @@ def main() -> None:
     assert 'RELEASE_SLICE = "v1.0.3_gesture_renderer_quality"' in tagged_version
 
     tagged_registry = git_show(V103_TAG, "skills/img2drawing/src/img2drawing/render/renderer_registry.py")
-    assert 'pillow-pencil-contact-v11' in tagged_registry
-    assert '_CURRENT_IDENTITY' in tagged_registry
+    assert "from . import pillow_pencil_contact_material as v11" in tagged_registry
+    assert "current=True, stage_free_seed_identity=True" in tagged_registry
+    assert "_CURRENT_IDENTITY = (v11.RENDERER_ID, str(v11.RENDERER_VERSION))" in tagged_registry
 
     old = load(RELEASE / "CONTRACT_FREEZE.json")
     assert old["freeze_id"] == "v1.0.2-A10-2026-09-09"
@@ -82,8 +82,7 @@ def main() -> None:
         "run_id": 34749311565,
         "conclusion": "success",
     }
-    artifact = promotion["artifact"]
-    assert artifact == {
+    assert promotion["artifact"] == {
         "artifact_id": 10315122558,
         "artifact_name": "img2drawing-1.0.3-stable-candidate-0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
         "artifact_zip_sha256": "2c7650e252b2b2f253630724bd35a30c348bd3114eebf034e45ec4f2cbdfe04a",
@@ -106,7 +105,6 @@ def main() -> None:
         "authorized_next_step": "ADD_V1_0_3_PUBLISH_MANIFEST",
     }
 
-    # Historical dogfood and release notes are read from the release tag where possible.
     tagged_g01 = git_show(V103_TAG, "dev/dogfood/g01-gesture-rc2/README.md")
     tagged_g02 = git_show(V103_TAG, "dev/dogfood/g02-broad-pencil-v11/README.md")
     assert "PASS" in tagged_g01 and "CLOSED" in tagged_g01
@@ -119,8 +117,7 @@ def main() -> None:
 
     manifest = PUBLISH / "v1.0.3.json"
     if manifest.exists():
-        payload = load(manifest)
-        assert payload == {
+        assert load(manifest) == {
             "schema": "img2drawing.release.publish.v1",
             "tag": "v1.0.3",
             "title": "img2drawing v1.0.3",
@@ -129,8 +126,6 @@ def main() -> None:
             "assets": [],
         }
 
-    # Deliberately no HEAD package-tree equality assertion here. Post-release development is
-    # expected to change current source/instructions while the tagged package remains immutable.
     print("V1_0_3_STABLE_FREEZE_PASS")
 
 
