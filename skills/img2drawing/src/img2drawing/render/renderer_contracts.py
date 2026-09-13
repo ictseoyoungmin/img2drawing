@@ -80,9 +80,7 @@ V10_CONTRACT = RendererContract(
 )
 
 
-# RC3 corrects a broad-markmaking defect without mutating v10 replay semantics.
-# Thin/flick pixels delegate to v10 exactly. Broad strokes retain the same authored-value
-# shoulder model while using physical round core terminals plus stronger page-fixed tooth.
+# v1.0.3 stable renderer. Immutable explicit replay authority after publication.
 V11_CONTRACT = RendererContract(
     renderer_id="pillow-pencil-contact-v11",
     renderer_version="1",
@@ -101,6 +99,26 @@ V11_CONTRACT = RendererContract(
 )
 
 
+# Post-v1.0.3 candidate. v12 consumes the already-persisted semantic terminal_mode from
+# markmaking provenance. Contact mode remains pixel-identical to v11; the other modes apply
+# bounded physical-span pressure envelopes before v11 material deposition.
+V12_CONTRACT = RendererContract(
+    renderer_id="pillow-pencil-contact-v12",
+    renderer_version="1",
+    parameters=(
+        ("base_renderer", "pillow-pencil-contact-v11/1"),
+        ("contact_authority", "byte-identical-v11"),
+        ("material_model", "v11-surface-v12-semantic-terminals"),
+        ("seed_identity_model", "stage-free-render-seed-v1"),
+        ("semantic_terminal_model", "provenance-terminal-mode-v1"),
+        ("terminal_contact_model", "v11-round-contact"),
+        ("terminal_flick_model", "short-span-rapid-pressure-collapse-v1"),
+        ("terminal_gentle_model", "physical-span-pressure-release-v1"),
+        ("terminal_residue_model", "deterministic-dry-tail-v1"),
+    ),
+)
+
+
 def contract_for(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = (str(renderer_id), str(renderer_version))
     if key == (V9_CONTRACT.renderer_id, V9_CONTRACT.renderer_version):
@@ -109,6 +127,8 @@ def contract_for(renderer_id: str, renderer_version: str | int) -> RendererContr
         return V10_CONTRACT
     if key == (V11_CONTRACT.renderer_id, V11_CONTRACT.renderer_version):
         return V11_CONTRACT
+    if key == (V12_CONTRACT.renderer_id, V12_CONTRACT.renderer_version):
+        return V12_CONTRACT
     raise ValueError(f"no renderer contract registered for {key[0]!r}/{key[1]!r}")
 
 
@@ -118,5 +138,6 @@ __all__ = [
     "V9_CONTRACT",
     "V10_CONTRACT",
     "V11_CONTRACT",
+    "V12_CONTRACT",
     "contract_for",
 ]
