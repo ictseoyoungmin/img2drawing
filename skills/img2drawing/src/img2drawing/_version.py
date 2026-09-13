@@ -1,6 +1,6 @@
-__version__ = "1.0.3"
-RELEASE_REVISION = "A14"
-RELEASE_SLICE = "v1.0.3_gesture_renderer_quality"
+__version__ = "1.0.4rc1"
+RELEASE_REVISION = "A15"
+RELEASE_SLICE = "v1.0.4rc1_terminal_mode_pixels"
 
 _BASE_VERSION = __version__.split("rc")[0]
 PUBLIC_API = f"DrawingSession/{_BASE_VERSION}-vnext"
