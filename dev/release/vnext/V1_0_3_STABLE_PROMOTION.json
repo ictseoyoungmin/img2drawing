@@ -1,0 +1,43 @@
+{
+  "schema": "img2drawing.v1_0_3_stable_promotion.v1",
+  "state": "STABLE_WHEEL_VERIFIED",
+  "version": "1.0.3",
+  "release_revision": "A14",
+  "release_slice": "v1.0.3_gesture_renderer_quality",
+  "verified_branch": "release/1.0.3-stable",
+  "verified_commit": "0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
+  "verified_root_tree": "996836ef4c2188ad39e621550575e0d9780d288f",
+  "package_tree": "5758c5efa60d80a0d483bcb3573258e34d609055",
+  "ci": {
+    "workflow": "img2drawing-ci",
+    "run_id": 34749311565,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "artifact_id": 10315122558,
+    "artifact_name": "img2drawing-1.0.3-stable-candidate-0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
+    "artifact_zip_sha256": "2c7650e252b2b2f253630724bd35a30c348bd3114eebf034e45ec4f2cbdfe04a",
+    "wheel_filename": "img2drawing-1.0.3-py3-none-any.whl",
+    "wheel_sha256": "eaecfeb08100640211d3de73ea6dcfd1557d097c85318c814e217a3eb4265567",
+    "metadata_name": "img2drawing",
+    "metadata_version": "1.0.3"
+  },
+  "renderer": {
+    "current": "pillow-pencil-contact-v11/1",
+    "contract_digest": "e8453d8e1cb9c73998369d10be707c010b49df1e9fb8fb9ee96f7b9b829b39fa",
+    "thin_v10_v11_pixel_exact": true,
+    "current_fast_canonical_pixel_exact": true,
+    "historical_replay": [
+      "pillow-pencil-contact-v9/1",
+      "pillow-pencil-contact-v10/1"
+    ]
+  },
+  "behavioral_gates": {
+    "g01_gesture": "PASS_CLOSED",
+    "g02_broad_pencil": "PASS_CLOSED"
+  },
+  "publication": {
+    "manifest_present_when_measured": false,
+    "authorized_next_step": "ADD_V1_0_3_PUBLISH_MANIFEST"
+  }
+}

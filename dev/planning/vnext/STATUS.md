@@ -3,52 +3,56 @@
 Updated: 2026-09-13
 
 ```text
-RELEASED STABLE:    v1.0.2 · DrawingSession/1.0.2-vnext · A10
+PUBLISHED STABLE:   v1.0.2 · DrawingSession/1.0.2-vnext · A10
 RC1 IN MAIN:        v1.0.3rc1 · A11 · renderer v10 introduction
 RC2 IN MAIN:        v1.0.3rc2 · A12 · G01 gesture runtime alignment
-RC CANDIDATE:       v1.0.3rc3 · DrawingSession/1.0.3-vnext · A13
-RC3 BRANCH:         fix/broad-pencil-material-rc3
+RC3 IN MAIN:        v1.0.3rc3 · A13 · broad-pencil renderer v11
+STABLE CANDIDATE:   v1.0.3 · DrawingSession/1.0.3-vnext · A14
+STABLE BRANCH:      release/1.0.3-stable
 CURRENT RENDERER:   new sessions → pillow-pencil-contact-v11/1
 HISTORICAL REPLAY:  explicit v9/1 and v10/1 sessions remain supported
 G01 GESTURE:        PASS/CLOSED
-G02 BROAD PENCIL:   ACTIVE · round physical terminals + stronger graphite/tooth
-PUBLISH STATE:      no v1.0.3rc3 publish manifest; v1.0.2 remains latest published stable
-NEXT GATE:          full CI + canonical/fast exactness + visual broad-pencil QA
+G02 BROAD PENCIL:   PASS/CLOSED
+STABLE WHEEL:       VERIFIED · CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
+RELEASE INTENT:     v1.0.3
+PUBLISH STATE:      GitHub Release pending
+NEXT GATE:          publish-intent PR → main CI → automatic GitHub Release verification
 ```
 
 ## Current truth
 
-- `v1.0.2` remains the latest published immutable stable release. Its tag, publish manifest, release notes, and `CONTRACT_FREEZE.json` remain historical authority.
-- PR #42 integrated `1.0.3rc2 / A12` into `main` at `5cd5ad9c14875c23aca962bc5bfbbae85c18442a`; post-merge main CI passed.
-- G01 gesture runtime/instruction dogfood is **PASS / CLOSED for its target failure class**. Evidence remains in `dev/dogfood/g01-gesture-rc2/README.md`.
-- The next user-observed blocker is broad-pencil material quality: transitional thick strokes can expose a high-alpha rectangular continuity core, producing blunt/square terminals, while the broad core's graphite/tooth modulation can read too flat.
-- `1.0.3rc3 / A13 / v1.0.3rc3_broad_pencil_material` addresses that defect with a new immutable renderer identity `pillow-pencil-contact-v11 / 1`; it does **not** rewrite v10 semantics.
-- v11 delegates ordinary thin strokes byte-for-byte to v10, preserves the v10 radial material shoulder and authored-value model, adds pressure-resolved round contact at broad core terminals, and strengthens deterministic page-fixed broad graphite/tooth modulation while mean-normalizing material density.
-- Explicit v9 remains the released v1.0.2 replay authority. Explicit v10 remains available for rc1/rc2 replay. New canonical profiles select v11 only after this RC3 branch is used.
+- `v1.0.2` remains the latest **published** immutable stable release until the v1.0.3 publish manifest is merged and the automatic release workflow succeeds.
+- PR #42 integrated gesture/runtime corrective rc2; G01 is **PASS / CLOSED** with evidence in `dev/dogfood/g01-gesture-rc2/README.md`.
+- PR #43 integrated `1.0.3rc3 / A13`; G02 broad-pencil material quality is **PASS / CLOSED for the reported failure class**.
+- PR #44 removed generation-tagged Python module filenames from current `src`, preserved serialized v9/v10/v11 replay identities, and added a CI invariant preventing such filenames from returning.
+- `1.0.3 / A14 / v1.0.3_gesture_renderer_quality` is the selected stable candidate.
+- New v1.0.3 sessions select `pillow-pencil-contact-v11 / 1`. Explicit v9 remains the v1.0.2 replay authority and explicit v10 remains available for rc1/rc2 replay.
 - The installable R23 runtime/legacy namespace remains **physically retired** from current `src`.
 - New work continues through one stage-free `DrawingSession` orchestration route.
 
-## Mechanical G02 gates
+## Stable promotion evidence
 
-The focused deterministic broad-pencil fixture locks three properties before integration:
+The selected stable package was rebuilt from `release/1.0.3-stable` commit `0de885e6d3f2ed6ac857c46e60875cc8c5c9f727` and verified by CI run `34749311565`.
 
-1. **thin non-regression** — ordinary 2px v11 output is pixel-exact with explicit v10;
-2. **terminal morphology** — a no-taper transitional broad stroke deposits graphite behind the authored endpoint instead of exposing a square/butt core cut, without materially changing body mean value;
-3. **graphite/tooth read** — a broad core shows stronger deterministic local material variation while mean density remains within authored-value tolerance.
+- root tree: `996836ef4c2188ad39e621550575e0d9780d288f`
+- package tree: `5758c5efa60d80a0d483bcb3573258e34d609055`
+- workflow artifact: `10315122558`
+- artifact ZIP SHA-256: `2c7650e252b2b2f253630724bd35a30c348bd3114eebf034e45ec4f2cbdfe04a`
+- wheel: `img2drawing-1.0.3-py3-none-any.whl`
+- wheel SHA-256: `eaecfeb08100640211d3de73ea6dcfd1557d097c85318c814e217a3eb4265567`
+- wheel METADATA: `Name: img2drawing`, `Version: 1.0.3`
 
-Current canonical/fast output must also remain pixel-exact because both paths consume the same registered v11 patch builder.
+Stable selection remains supported by G01 gesture closure, G02 broad-pencil closure, thin v10→v11 exactness, current fast/canonical exactness, explicit historical v9/v10 replay, B17 package/install checks, and immutable v1.0.2/B18 history.
 
-## Release boundary
-
-The rc1 width×3 performance evidence remains historical authority for v10 only. Because RC3 changes renderer bytes and selects a new current renderer identity, stable v1.0.3 promotion requires fresh v11 parity/quality evidence. No stable publish manifest is authorized by this corrective slice.
+The stable contract snapshot is `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`. The exact rebuilt artifact authority is `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`. The older `CONTRACT_FREEZE.json` remains the immutable v1.0.2/A10 authority and must not be rewritten.
 
 ## Remaining work
 
-1. Run full branch CI and repair only actual RC3 integration failures.
-2. Produce deterministic v10↔v11 broad visual evidence and confirm the user's square-terminal / weak-graphite failure is visibly reduced.
-3. Verify current v11 canonical/fast exactness and thin v10↔v11 pixel non-regression.
-4. If green, integrate rc3 to `main` through PR; keep v1.0.2 as latest published stable.
-5. Only afterward decide stable v1.0.3 versus another RC.
+1. Add and validate the explicit `dev/release/publish/v1.0.3.json` manifest.
+2. Merge the publish-intent PR to `main` with its head SHA pinned after PR CI is green.
+3. Verify post-merge `main` CI and the automatic `img2drawing-publish-release` workflow.
+4. Verify GitHub Release `v1.0.3`, its tag target, wheel/sdist assets, and release hashes.
+5. Close documentation state from release-intent to **PUBLISHED STABLE v1.0.3** after the release exists.
 
 ## Historical B18 boundary
 
@@ -56,12 +60,13 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 
 ## Authority map
 
-- current rc3 candidate state: `fix/broad-pencil-material-rc3` + this file;
+- publish intent: `release/v1.0.3-publish-intent` + this file;
+- exact stable artifact: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;
 - G01 evidence: `dev/dogfood/g01-gesture-rc2/README.md`;
+- G02 evidence: `dev/dogfood/g02-broad-pencil-v11/README.md`;
 - rc1 renderer promotion evidence: `dev/release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`;
-- latest published stable: `docs/releases/v1.0.2.md`;
-- rc2 history: `docs/releases/v1.0.3rc2.md`;
-- rc3 candidate notes: `docs/releases/v1.0.3rc3.md`;
-- current near-term sequence: `ROADMAP.md`;
+- currently published stable until workflow completion: `docs/releases/v1.0.2.md`;
+- selected v1.0.3 stable notes: `docs/releases/v1.0.3.md`;
 - deployable behavior: `skills/img2drawing/SKILL.md` + references;
-- immutable v1.0.2 snapshot: `dev/release/vnext/CONTRACT_FREEZE.json`.
+- immutable v1.0.2 snapshot: `dev/release/vnext/CONTRACT_FREEZE.json`;
+- immutable v1.0.3 snapshot: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`.

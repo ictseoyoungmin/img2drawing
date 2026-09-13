@@ -7,7 +7,7 @@ from PIL import Image, ImageChops, ImageDraw
 
 from ..core.ir import Stroke, StrokeIR
 from . import pillow_graphite_grain as p3
-from . import pillow_pencil_contact_v10 as v10
+from . import pillow_pencil_contact_core as v10
 from .renderer_contracts import V11_CONTRACT
 
 RENDERER_ID = "pillow-pencil-contact-v11"

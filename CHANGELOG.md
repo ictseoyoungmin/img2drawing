@@ -4,12 +4,18 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 
 ## Unreleased
 
+No public changes have been queued after v1.0.3 yet.
+
+## v1.0.3 — Gesture + renderer quality
+
+Released 2026-09-13.
+
 ### Changed
 
-- `1.0.3rc3 / A13` introduces additive renderer `pillow-pencil-contact-v11 / 1` for new sessions while preserving explicit v9/1 and v10/1 replay. v11 fixes transitional broad-pencil square/butt continuity-core terminals with pressure/taper-resolved round contact and strengthens deterministic page-fixed broad graphite/tooth variation without changing mean authored value authority.
+- `A14` promotes additive renderer `pillow-pencil-contact-v11 / 1` for new sessions while preserving explicit v9/1 and v10/1 replay. v11 fixes transitional broad-pencil square/butt continuity-core terminals with pressure/taper-resolved round contact and strengthens deterministic page-fixed broad graphite/tooth variation without changing mean authored value authority.
 - Ordinary thin v11 strokes delegate byte-for-byte to v10; canonical final and fast timelapse consume the same registered v11 patch builder.
-- `1.0.3rc2 / A12` aligns the user-facing gesture mode with the public runtime: `DrawingIntent(drawing_mode="gesture")` and `resolve_mode_guide("gesture")` are now supported selections while pure-vs-constructive remains an instruction-graph finish-level decision rather than a workflow stage.
-- Gesture guidance now rejects the opposite failure of smooth generic beans/ovals/capsules as well as hard geometric construction icons. Sparse masses must preserve observed profile/jaw/nape, shoulder/back/side asymmetry, taper, hip shelf, near/far exposure, and leg-attachment relations where visible; `rounded` alone is not a completion criterion.
+- `DrawingIntent(drawing_mode="gesture")` and `resolve_mode_guide("gesture")` are public runtime selections while pure-vs-constructive remains an instruction-graph finish-level decision rather than a workflow stage.
+- Gesture guidance rejects smooth generic beans/ovals/capsules as well as hard geometric construction icons. Sparse masses must preserve observed profile/jaw/nape, shoulder/back/side asymmetry, taper, hip shelf, near/far exposure, and leg-attachment relations where visible; `rounded` alone is not a completion criterion.
 - `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`:
   - the current drawing must contain authored strokes — a session that was never drawn on, or whose marks were all erased again, can no longer be finished;
   - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
@@ -17,8 +23,6 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 - The v10 renderer normalized the private compatibility `Stroke.stage` field out of render seed identity. `inspect()`, canonical replay/final rendering, and the fast timelapse path therefore see the same v10 hand/material seed for identical authored geometry. Historical v9 seed semantics remain frozen for saved v1.0.2 replay, and profile-less legacy timelapse calls continue to select v9 explicitly.
 - Residual/correction guidance documents the `observation_id` provenance contract explicitly: a repairing mutation for a current residual should carry the residual's observation id, followed by a fresh after-inspection before `resolve_residual()`.
 - Completion guidance makes clear that `accepted_limitations` records acknowledged non-blocking weaknesses; it does not bypass an open residual record.
-
-The `finish()` preconditions and retired R23 namespaces are compatibility changes from v1.0.2. The current package is an unpublished 1.0.3 release candidate; v1.0.2 remains the latest published stable release until an explicit stable manifest is created.
 
 ### Removed
 
@@ -33,6 +37,15 @@ The `finish()` preconditions and retired R23 namespaces are compatibility change
 - Added `dev/tools/build_skill_zip.py` and release-zip contract tests so local bytecode/cache/build residue cannot silently leak into the distributable skill archive.
 - Historical closure checks use frozen Git/release evidence instead of requiring retired runtime files to remain in mutable `src`.
 - See [`dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`](dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md).
+
+### Validation
+
+- G01 gesture dogfood: **PASS/CLOSED** — `dev/dogfood/g01-gesture-rc2/README.md`.
+- G02 broad-pencil visual/material dogfood: **PASS/CLOSED** — `dev/dogfood/g02-broad-pencil-v11/README.md`.
+- v11 current renderer tests cover thin v10↔v11 exactness, broad terminal morphology, stronger graphite/tooth variation, explicit v9/v10 replay, and canonical↔fast final pixel exactness.
+- v1.0.2 historical rendering/export bytes and release history remain frozen and continue to pass their historical gates.
+
+See [`docs/releases/v1.0.3.md`](docs/releases/v1.0.3.md).
 
 ## v1.0.2 — Local-first exact timelapse backend
 

@@ -15,14 +15,25 @@ def _manifest(version: str) -> dict:
     return json.loads((PUBLISH / f"v{version}.json").read_text(encoding="utf-8"))
 
 
-def test_latest_published_v1_manifest_remains_v102() -> None:
-    manifest = _manifest("1.0.2")
-    assert manifest["tag"] == "v1.0.2"
-    assert manifest["notes_file"] == "docs/releases/v1.0.2.md"
-    assert manifest["package_dir"] == "skills/img2drawing"
-    assert manifest["assets"] == []
-    assert (ROOT / manifest["notes_file"]).is_file()
-    assert img2drawing.__version__ == "1.0.3rc3"
+def test_v102_manifest_remains_historical_authority_as_v103_publish_intent_opens() -> None:
+    v102 = _manifest("1.0.2")
+    assert v102["tag"] == "v1.0.2"
+    assert v102["notes_file"] == "docs/releases/v1.0.2.md"
+    assert v102["package_dir"] == "skills/img2drawing"
+    assert v102["assets"] == []
+    assert (ROOT / v102["notes_file"]).is_file()
+
+    v103 = _manifest("1.0.3")
+    assert v103 == {
+        "schema": "img2drawing.release.publish.v1",
+        "tag": "v1.0.3",
+        "title": "img2drawing v1.0.3",
+        "notes_file": "docs/releases/v1.0.3.md",
+        "package_dir": "skills/img2drawing",
+        "assets": [],
+    }
+    assert (ROOT / v103["notes_file"]).is_file()
+    assert img2drawing.__version__ == "1.0.3"
 
 
 def test_historical_v100_demo_manifest_and_real_assets_remain_available() -> None:
@@ -52,6 +63,7 @@ def test_v1_featured_demo_links_and_release_notes_resolve() -> None:
     assert (ROOT / "docs" / "releases" / "v1.0.3rc1.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.3rc2.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.3rc3.md").is_file()
+    assert (ROOT / "docs" / "releases" / "v1.0.3.md").is_file()
 
 
 def test_release_publisher_reads_version_without_importing_runtime() -> None:
@@ -61,9 +73,12 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
     assert "import img2drawing" not in workflow
 
 
-def test_rc_identity_has_no_publish_manifest_until_explicit_promotion() -> None:
-    assert img2drawing.__version__ == "1.0.3rc3"
-    assert not (PUBLISH / "v1.0.3rc3.json").exists()
+def test_stable_identity_has_explicit_publish_manifest_at_final_publish_gate() -> None:
+    assert img2drawing.__version__ == "1.0.3"
+    manifest = _manifest("1.0.3")
+    assert manifest["tag"] == f"v{img2drawing.__version__}"
+    assert manifest["package_dir"] == "skills/img2drawing"
+    assert manifest["notes_file"] == "docs/releases/v1.0.3.md"
 
 
 def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:
