@@ -67,23 +67,18 @@ def _apply_terminal_mode(stroke: Stroke, profile) -> Stroke:
     """Resolve semantic terminal intent into a render-only pressure envelope.
 
     v11 remains exact authority for strokes with no semantic terminal metadata and for
-    ``contact`` terminals. The other modes modify only a bounded physical suffix of the
-    prepared stroke, so geometry and upstream authored pressure remain unchanged outside
-    the terminal interval.
+    ``contact`` terminals. Other modes first resample onto the contact trajectory and then
+    modify only a bounded physical suffix. This prevents a sparse authored polyline from
+    stretching a nominal terminal fade across an entire long segment.
     """
 
     mode = _stroke_terminal_mode(stroke)
     if mode is None or mode == "contact" or len(stroke.points) < 2:
         return stroke
 
-    pts = np.asarray(stroke.points, dtype=np.float64)
-    if stroke.pressure is None or len(stroke.pressure) != len(stroke.points):
-        pts, pressure, _ = v10.p4._resample(
-            stroke, spacing=profile.trajectory_spacing
-        )
-    else:
-        pressure = np.asarray(stroke.pressure, dtype=np.float64)
-
+    pts, pressure, _ = v10.p4._resample(
+        stroke, spacing=profile.trajectory_spacing
+    )
     if len(pts) < 2:
         return stroke
 

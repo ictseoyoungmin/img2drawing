@@ -7,31 +7,20 @@ import pytest
 import img2drawing
 from img2drawing._version import PUBLIC_API, RELEASE_REVISION, RELEASE_SLICE
 
-
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "skills" / "img2drawing"
 CANONICAL_ROOT_EXPORTS = {
-    "__version__",
-    "ConstructionMark",
-    "DrawingIntent",
-    "DrawingSession",
-    "InitialConstruct",
-    "PoseObservation",
-    "ReferenceAuthority",
-    "ReferenceConstraint",
-    "ReferenceUnavailableError",
-    "RenderProfile",
-    "author_initial_construct",
-    "inspect_initial_construct",
-    "observe_pose",
+    "__version__", "ConstructionMark", "DrawingIntent", "DrawingSession", "InitialConstruct",
+    "PoseObservation", "ReferenceAuthority", "ReferenceConstraint", "ReferenceUnavailableError",
+    "RenderProfile", "author_initial_construct", "inspect_initial_construct", "observe_pose",
 }
 
 
-def test_stable_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "1.0.3"
-    assert PUBLIC_API == "DrawingSession/1.0.3-vnext"
-    assert RELEASE_REVISION == "A14"
-    assert RELEASE_SLICE == "v1.0.3_gesture_renderer_quality"
+def test_current_candidate_version_and_root_api_are_canonical():
+    assert img2drawing.__version__ == "1.0.4rc1"
+    assert PUBLIC_API == "DrawingSession/1.0.4-vnext"
+    assert RELEASE_REVISION == "A15"
+    assert RELEASE_SLICE == "v1.0.4rc1_terminal_mode_pixels"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
@@ -42,14 +31,12 @@ def test_stable_version_and_root_api_are_canonical():
 def test_pre_rc2_root_aliases_remain_compatible_but_not_discoverable():
     from img2drawing.core import CanvasHistory
     from img2drawing.inspection import ROI
-
     with pytest.warns(DeprecationWarning, match="root-compat shim"):
         assert img2drawing.CanvasHistory is CanvasHistory
     with pytest.warns(DeprecationWarning, match="root-compat shim"):
         assert img2drawing.ROI is ROI
     with pytest.warns(DeprecationWarning, match="root-compat shim"):
         assert img2drawing.VNextDrawingSession is img2drawing.DrawingSession
-
     assert "CanvasHistory" not in dir(img2drawing)
     assert "ROI" not in dir(img2drawing)
     assert "VNextDrawingSession" not in dir(img2drawing)
@@ -57,43 +44,18 @@ def test_pre_rc2_root_aliases_remain_compatible_but_not_discoverable():
 
 def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examples():
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
-    for required in (
-        "LICENSE",
-        "README.md",
-        "SKILL.md",
-        "recursive-include references *.md",
-    ):
+    for required in ("LICENSE", "README.md", "SKILL.md", "recursive-include references *.md"):
         assert required in manifest
-
     for forbidden in (
-        "dev/",
-        "dogfood",
-        "NOTICE",
-        "SUPPORT.md",
-        "MIGRATION.md",
-        "RELEASE.md",
-        "FREEZE.md",
-        "CONTRACT_FREEZE.json",
-        "references/stages",
-        "playbooks",
-        "examples/",
+        "dev/", "dogfood", "NOTICE", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
+        "CONTRACT_FREEZE.json", "references/stages", "playbooks", "examples/",
     ):
         assert forbidden not in manifest
-
     assert not (PACKAGE / "examples").exists()
     for removed in (
-        "NOTICE",
-        "NOTICE.md",
-        "SUPPORT.md",
-        "MIGRATION.md",
-        "RELEASE.md",
-        "FREEZE.md",
-        "CONTRACT_FREEZE.json",
-        "playbooks",
-        "references/stages",
-        "references/legacy-r23.md",
-        "references/intent.md",
-        "references/reference-authority.md",
+        "NOTICE", "NOTICE.md", "SUPPORT.md", "MIGRATION.md", "RELEASE.md", "FREEZE.md",
+        "CONTRACT_FREEZE.json", "playbooks", "references/stages", "references/legacy-r23.md",
+        "references/intent.md", "references/reference-authority.md",
     ):
         assert not (PACKAGE / removed).exists()
 
@@ -101,28 +63,16 @@ def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examp
 def test_instruction_graph_contains_public_api_and_visual_leaves():
     refs = PACKAGE / "references"
     for required in (
-        "foundation/line-economy.md",
-        "foundation/reference-authority.md",
-        "foundation/occlusion-inference.md",
-        "modes/gesture-drawing.md",
-        "modes/croquis.md",
-        "observation/visual-observation.md",
-        "construction/gesture-and-masses.md",
-        "construction/foreshortening-and-depth.md",
-        "description/descriptive-geometry.md",
-        "figure/head-face-hair.md",
-        "figure/hands-and-grip.md",
-        "figure/legs-feet.md",
-        "figure/clothing-folds.md",
-        "props/attached-objects.md",
-        "environment/ground-and-context.md",
-        "review/residual-correction.md",
-        "review/residual-routing.md",
-        "output/render-profile-and-replay.md",
-        "api/public-surface.md",
+        "foundation/line-economy.md", "foundation/reference-authority.md",
+        "foundation/occlusion-inference.md", "modes/gesture-drawing.md", "modes/croquis.md",
+        "observation/visual-observation.md", "construction/gesture-and-masses.md",
+        "construction/foreshortening-and-depth.md", "description/descriptive-geometry.md",
+        "figure/head-face-hair.md", "figure/hands-and-grip.md", "figure/legs-feet.md",
+        "figure/clothing-folds.md", "props/attached-objects.md", "environment/ground-and-context.md",
+        "review/residual-correction.md", "review/residual-routing.md",
+        "output/render-profile-and-replay.md", "api/public-surface.md",
     ):
         assert (refs / required).is_file(), required
-
     skill = (PACKAGE / "SKILL.md").read_text(encoding="utf-8")
     index = (refs / "INDEX.md").read_text(encoding="utf-8")
     assert "references/INDEX.md" in skill
@@ -132,13 +82,7 @@ def test_instruction_graph_contains_public_api_and_visual_leaves():
 
 def test_root_compatibility_names_stay_out_of_normal_discovery():
     for name in (
-        "CanvasHistory",
-        "DrawingRun",
-        "FinishRecord",
-        "Stroke",
-        "StrokeIR",
-        "SubjectPalette",
-        "VNextDrawingSession",
-        "replace_fill_region",
+        "CanvasHistory", "DrawingRun", "FinishRecord", "Stroke", "StrokeIR", "SubjectPalette",
+        "VNextDrawingSession", "replace_fill_region",
     ):
         assert name not in dir(img2drawing)

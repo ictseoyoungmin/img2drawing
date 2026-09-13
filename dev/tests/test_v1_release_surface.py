@@ -3,9 +3,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import img2drawing
-
-
 ROOT = Path(__file__).resolve().parents[2]
 ENTRY = ROOT / "showcase" / "entries" / "croquis-sniper-girl-astra-v1"
 PUBLISH = ROOT / "dev" / "release" / "publish"
@@ -15,25 +12,20 @@ def _manifest(version: str) -> dict:
     return json.loads((PUBLISH / f"v{version}.json").read_text(encoding="utf-8"))
 
 
-def test_v102_manifest_remains_historical_authority_as_v103_publish_intent_opens() -> None:
+def test_v102_and_v103_manifests_remain_historical_release_authority() -> None:
     v102 = _manifest("1.0.2")
     assert v102["tag"] == "v1.0.2"
     assert v102["notes_file"] == "docs/releases/v1.0.2.md"
     assert v102["package_dir"] == "skills/img2drawing"
     assert v102["assets"] == []
     assert (ROOT / v102["notes_file"]).is_file()
-
     v103 = _manifest("1.0.3")
     assert v103 == {
-        "schema": "img2drawing.release.publish.v1",
-        "tag": "v1.0.3",
-        "title": "img2drawing v1.0.3",
-        "notes_file": "docs/releases/v1.0.3.md",
-        "package_dir": "skills/img2drawing",
-        "assets": [],
+        "schema": "img2drawing.release.publish.v1", "tag": "v1.0.3",
+        "title": "img2drawing v1.0.3", "notes_file": "docs/releases/v1.0.3.md",
+        "package_dir": "skills/img2drawing", "assets": [],
     }
     assert (ROOT / v103["notes_file"]).is_file()
-    assert img2drawing.__version__ == "1.0.3"
 
 
 def test_historical_v100_demo_manifest_and_real_assets_remain_available() -> None:
@@ -58,12 +50,8 @@ def test_v1_featured_demo_links_and_release_notes_resolve() -> None:
         assert "ref-vs-drawing.png" not in document
         assert "ref-vs-drawing.jpg" in document
         assert "timelapse.gif" in document
-    assert (ROOT / "docs" / "releases" / "v1.0.1.md").is_file()
-    assert (ROOT / "docs" / "releases" / "v1.0.2.md").is_file()
-    assert (ROOT / "docs" / "releases" / "v1.0.3rc1.md").is_file()
-    assert (ROOT / "docs" / "releases" / "v1.0.3rc2.md").is_file()
-    assert (ROOT / "docs" / "releases" / "v1.0.3rc3.md").is_file()
-    assert (ROOT / "docs" / "releases" / "v1.0.3.md").is_file()
+    for version in ("v1.0.1", "v1.0.2", "v1.0.3rc1", "v1.0.3rc2", "v1.0.3rc3", "v1.0.3"):
+        assert (ROOT / "docs" / "releases" / f"{version}.md").is_file()
 
 
 def test_release_publisher_reads_version_without_importing_runtime() -> None:
@@ -73,10 +61,9 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
     assert "import img2drawing" not in workflow
 
 
-def test_stable_identity_has_explicit_publish_manifest_at_final_publish_gate() -> None:
-    assert img2drawing.__version__ == "1.0.3"
+def test_published_v103_identity_keeps_explicit_manifest_after_source_advances() -> None:
     manifest = _manifest("1.0.3")
-    assert manifest["tag"] == f"v{img2drawing.__version__}"
+    assert manifest["tag"] == "v1.0.3"
     assert manifest["package_dir"] == "skills/img2drawing"
     assert manifest["notes_file"] == "docs/releases/v1.0.3.md"
 
