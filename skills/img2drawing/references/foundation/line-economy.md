@@ -2,6 +2,10 @@
 
 **Croquis economizes marks, not observed geometry.**
 
+For observed work that is expected to become a finished or substantially resolved drawing, read
+`../review/visual-quality-gates.md` before accepting the first descriptive semantic group. The
+gates are reversible evidence checks, not a stage pipeline.
+
 Line economy removes redundant decisions. It does not remove the subject's real bends,
 width changes, overlaps, contact points, asymmetry, folds, component relations, or
 identity-bearing structure.
