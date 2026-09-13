@@ -89,17 +89,21 @@ def main() -> None:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
-                    # A closed stable release may coexist with new design work. Do not force the
-                    # post-release repository to pretend that product development also stopped.
-                    assert "ACTIVE BOTTLENECK:  Q01" in status
+                    # A closed stable release may coexist with new post-release work. The verifier
+                    # checks the current selected slice without freezing mutable development forever.
+                    assert "ACTIVE BOTTLENECK:  S03" in status
+                    assert "S01 DESIGN:         CLOSED" in status
+                    assert "S02 INSTRUCTIONS:   CLOSED" in status
                     assert "CURRENT RENDERER:   pillow-pencil-contact-v11/1" in status
                     assert "RENDERER POLICY:    no additive v12" in status
-                    assert "PACKAGE VERSION:    no new RC/version authorized during design" in status
-                    assert "v1.0.3" in status and "remains CLOSED" in status
-                    assert "Q01 v11 quality-control failure taxonomy + design       ACTIVE" in roadmap
-                    assert "Q02 instruction graph execution-gate patch" in roadmap
+                    assert "PACKAGE VERSION:    no new RC/version authorized" in status
+                    assert "v1.0.3" in status and "latest published stable" in status
+                    assert "S01 v11 quality-control failure taxonomy + design       CLOSED" in roadmap
+                    assert "S02 instruction graph execution-gate patch              CLOSED" in roadmap
+                    assert "S03 fresh-worker visual dogfood                         ACTIVE" in roadmap
                     assert "No renderer v12 is authorized" in roadmap
                     assert (PLANNING / "V11_QUALITY_CONTROL_REDESIGN.md").is_file()
+                    assert (PLANNING / "V11_QUALITY_CONTROL_SLICE_PLAN.md").is_file()
                     assert not (PUBLISH / "v1.0.4.json").exists()
                     assert "CURRENT SOURCE:     1.0.4rc1" not in status
                     assert "RC CANDIDATE:       1.0.4rc1" not in status
@@ -126,8 +130,11 @@ def main() -> None:
         if active_post_release_design:
             assert "G05 stable freeze + wheel verification                  CLOSED" in roadmap
             assert "G06 explicit publish manifest + publish                 CLOSED" in roadmap
-            assert "Q01" in roadmap and "ACTIVE" in roadmap
+            assert "S01" in roadmap and "CLOSED" in roadmap
+            assert "S02" in roadmap and "CLOSED" in roadmap
+            assert "S03" in roadmap and "ACTIVE" in roadmap
             assert "V11_QUALITY_CONTROL_REDESIGN.md" in roadmap
+            assert "V11_QUALITY_CONTROL_SLICE_PLAN.md" in roadmap
         else:
             assert "### G05 — stable freeze and wheel verification — CLOSED" in roadmap
             assert "### G06 — publish — CLOSED" in roadmap
