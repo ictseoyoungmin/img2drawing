@@ -64,6 +64,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "residual-correction.md",
         "residual-routing.md",
         "stroke-retirement.md",
+        "visual-quality-gates.md",
     }
 
 
@@ -79,6 +80,25 @@ def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
     assert "uniform tube" in lower
     assert "circle" in head
     assert "zigzags" in folds
+
+
+def test_visual_quality_gate_closes_instruction_execution_gap() -> None:
+    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
+    economy = (SKILL / "references" / "foundation" / "line-economy.md").read_text(encoding="utf-8")
+    gates = (SKILL / "references" / "review" / "visual-quality-gates.md").read_text(encoding="utf-8")
+    head = (SKILL / "references" / "figure" / "head-face-hair.md").read_text(encoding="utf-8")
+    completion = (SKILL / "references" / "review" / "completion.md").read_text(encoding="utf-8")
+
+    assert "review/visual-quality-gates.md" in index
+    assert "read `../review/visual-quality-gates.md` before accepting the first descriptive semantic group" in economy
+    assert "Visible authority" in gates
+    assert "Line ownership gate" in gates
+    assert "Anti-symbol gate" in gates
+    assert "Perspective-propagation gate" in gates
+    assert "KEEP" in gates and "SOFTEN" in gates and "RETIRE" in gates
+    assert "head + hair outer mass" in head
+    assert "selected strand accents" in head
+    assert "three largest remaining visible mismatches" in completion
 
 
 def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() -> None:
