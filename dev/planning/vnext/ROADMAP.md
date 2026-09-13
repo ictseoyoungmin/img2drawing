@@ -3,109 +3,86 @@
 Updated: 2026-09-13
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-This roadmap describes the **current unreleased main/RC state after v1.0.2**. Older A/B/D/R plans remain historical evidence; they do not override this sequence.
+This roadmap describes the **current unreleased main/RC state after v1.0.2**. Older A/B/D/R plans remain historical evidence and do not override this sequence.
 
 ## Closed foundation
 
 - v1.0.0 established the first stable stage-free Agent Skill/runtime surface.
-- v1.0.1 absorbed general authoring ergonomics from successful explicit-stroke dogfood.
+- v1.0.1 added general authoring ergonomics.
 - v1.0.2 promoted the exact local-first timelapse backend.
-- Post-v1.0.2 source cleanup physically retired the R23 runtime/legacy cluster from current `src`.
-- Post-v1.0.2 instruction hardening added cause-based residual routing, dynamic instruction-graph reachability, explicit observation-id correction provenance, and pure/constructive gesture modes.
-- Renderer parity work closed inspect/current-state ↔ final/replay divergence for v10 while preserving frozen v9 replay behavior.
-- Renderer v10, markmaking runtime discovery, broad-graphite value authority, and renderer-aware fast timelapse were promoted into the `1.0.3rc1 / A11` candidate.
-- RC1 promotion evidence passed same-environment width×3 v9/v10 comparison plus canonical/fast pixel exactness.
-- PR #40 integrated `1.0.3rc1` into `main`; post-merge main CI was green.
-- G01 rc1 fresh dogfood reopened gesture integration after exposing a public runtime-mode mismatch and a generic rounded-mass failure. These findings did not invalidate the closed renderer/timelapse evidence.
-- `1.0.3rc2 / A12` repairs the gesture runtime vocabulary, anti-primitive/anti-blob instruction contract, and semantic markmaking preset adapter.
-- G01 same-reference pure + constructive fresh-session dogfood is **PASS/CLOSED for the target failure class**. Reference-supported roundness is preserved; orientationless/attachment-free stock primitives are rejected.
-- No `1.0.3rc1` or `1.0.3rc2` publish manifest exists, so v1.0.2 remains the latest published stable release.
+- Post-v1.0.2 cleanup physically retired the R23 runtime/legacy cluster.
+- Renderer v10 closed seed/parity and broad authored-value issues while preserving explicit v9 replay.
+- `1.0.3rc1 / A11` integrated renderer v10 and its promotion evidence into main.
+- G01 fresh gesture dogfood reopened and then closed runtime/instruction integration gaps in `1.0.3rc2 / A12`.
+- PR #42 integrated rc2 into main and post-merge main CI passed.
+- G01 remains **PASS/CLOSED**: gesture is a public runtime mode, and final gesture marks must carry facing/asymmetry/attachment information instead of geometric or rounded stock primitives.
+- No v1.0.3 RC publish manifest exists; v1.0.2 remains the latest published stable release.
 
 ## Current sequence
 
 ```text
-G02 broad-pencil material/terminal hardening
+G02 broad-pencil material/terminal hardening — ACTIVE
   ↓
-G03 integrate validated rc2/corrective candidate into main
+G03 integrate validated rc3 into main
   ↓
 G04 stable-promotion decision: v1.0.3 vs another RC
   ↓
 G05 explicit stable freeze + publish manifest
   ↓
-G06 publish only if all current contracts and release notes agree
+G06 publish only after all current contracts agree
 ```
 
 ### G01 — gesture behavior validation — CLOSED
 
-G01 covered two user-facing cases against the same reference:
+Same-reference pure + constructive dogfood found and closed three reusable defects: missing public `gesture` runtime intent, anti-faceted guidance overcorrecting into generic rounded blobs, and semantic markmaking preset IDs being confused with low-level runtime tool names. Bounded evidence is `../../dogfood/g01-gesture-rc2/README.md`.
 
-1. explicit quick/pure gesture;
-2. unqualified `gesture drawing`, which defaults to constructive gesture.
+### G02 — broad-pencil material and terminal quality — ACTIVE
 
-The rc1 run found:
+Thick-line dogfood exposed a renderer/material failure hidden by earlier thin-line work. Transitional broad marks can show a rectangular high-alpha continuity core at their ends, and broad interiors can read too much like a flat digital ribbon instead of graphite on paper.
 
-- `DrawingIntent(drawing_mode="gesture")` was not accepted by the runtime;
-- anti-faceted guidance could overcorrect into generic smooth beans/ovals/capsules;
-- semantic markmaking preset IDs such as `gesture-flow` could be mistaken for literal low-level
-  `session.draw(tool=...)` values.
+Root-cause inspection localized the failure to the v10 broad authored-value core, not to gesture instructions or authored geometry. v10's radial shoulder is physical, but the continuity core uses Pillow line segments whose visible terminal is a butt/square cut. Its intentionally subtle core texture can also dominate the shoulder and weaken the apparent paper tooth.
 
-The rc2 corrective slice:
-
-- adds `gesture` to the public drawing-intent vocabulary and a public `ModeGuide` without creating a workflow stage;
-- requires subject-specific facing/asymmetry/attachment evidence instead of geometric or rounded stock icons;
-- explicitly allows reference-supported roundness, so the worker does not invent corners merely to prove a form is non-primitive;
-- documents and tests `resolve_mark_for_intent()` / `ResolvedMark.draw_kwargs()` as the semantic-preset → runtime-tool adapter;
-- leaves the rc1 renderer/timelapse implementation unchanged.
-
-Intermediate dogfood passes that still read as coarse polyline construction, circle-head shorthand,
-or closed pelvis blobs were rejected. The final reviewed pass preserves head facing, arm/leg chains,
-support, rifle overlap, hip-to-leg attachment, and a stronger constructive near/far read without
-invented faceting. The bounded evidence record is
-`../../dogfood/g01-gesture-rc2/README.md`.
-
-This closure does not claim production croquis quality or cross-agent/cross-subject generalization.
-
-### G02 — broad-pencil material and terminal quality — NEXT
-
-The next highest-impact open problem was already visible in thick-line dogfood: broad pencil strokes
-can read too much like a digital ribbon. At larger widths:
-
-- graphite/tooth variation is too weak;
-- stroke interiors can become too uniformly opaque;
-- start/end terminals can appear blunt or square;
-- simply increasing width does not produce a convincing broad-pencil contact/release.
-
-Open a focused deterministic renderer slice before stable promotion. The intended loop is:
+Because renderer semantics are immutable per identity, G02 does **not** patch `pillow-pencil-contact-v10 / 1` in place. The corrective candidate is:
 
 ```text
-broad-stroke reproduction fixture
-→ inspect terminal geometry + graphite/tooth distribution
-→ locate smallest v10 owner
-→ repair terminal taper/contact material
-→ canonical/fast exactness
-→ thin-line non-regression
-→ width×3/broad visual QA
+1.0.3rc3 / A13
+new sessions → pillow-pencil-contact-v11 / 1
+explicit v10/1 → preserved rc1/rc2 replay
+explicit v9/1  → preserved v1.0.2 replay
 ```
 
-Do not modify frozen v9 replay behavior. If the v10 renderer/timelapse implementation changes, the
-existing rc1 promotion evidence no longer mechanically covers those changed bytes and the affected
-parity/performance evidence must be renewed.
+v11 is deliberately narrow:
 
-### G03 — candidate integration
+- ordinary thin strokes delegate byte-for-byte to v10;
+- the existing v10 broad radial shoulder and authored-value policy remain the base material model;
+- broad continuity cores gain pressure/taper-resolved round contact terminals;
+- broad core/shoulder composition gains stronger deterministic page-fixed graphite/tooth variation, mean-normalized to preserve authored value;
+- canonical final and fast timelapse use the same registered v11 patch builder.
 
-After the broad-pencil gate is closed, integrate the validated corrective candidate into `main`
-through a PR with full CI. Do not create an RC/stable publish manifest merely because the candidate
-is present on main.
+Required G02 gates:
+
+```text
+deterministic broad-stroke reproduction
+→ v10 failure reproduced
+→ v11 terminal morphology regression test
+→ v11 broad graphite/tooth regression test
+→ v10↔v11 thin pixel exactness
+→ v11 canonical↔fast exactness
+→ full current + historical + package CI
+→ visual comparison board
+```
+
+The rc1 width×3 v9/v10 benchmark remains valid historical evidence for v10, but it cannot by itself authorize stable promotion of changed v11 bytes. If G02 closes, record fresh v11 evidence before the stable decision.
+
+### G03 — rc3 integration
+
+After G02 mechanical and visual gates close, integrate `1.0.3rc3` to `main` through a PR. Do not create a stable or RC publish manifest merely because the candidate is on main.
 
 ### G04 — stable-promotion decision
 
-Use the closed renderer parity/performance evidence, G01 gesture dogfood, broad-pencil quality gate,
-and final mechanical verification to decide whether the next artifact is stable `1.0.3` or another
-release candidate.
+Use renderer replay preservation, v11 canonical/fast exactness, thin non-regression, G01 gesture dogfood, G02 broad-pencil quality evidence, and final package verification to choose stable `1.0.3` or another RC.
 
-Deprecated pre-0.6.0rc2 root shims remain intentionally separate from the R23 retirement. Their
-removal requires an explicit compatibility decision and must not be bundled silently into stable
-promotion.
+Deprecated pre-0.6.0rc2 root shims remain a separate compatibility decision and must not be silently bundled into stable promotion.
 
 ### G05 — stable freeze and publish preparation
 
@@ -113,30 +90,28 @@ Only after choosing stable promotion:
 
 - create a new immutable v1.0.3 contract freeze rather than editing `v1.0.2-A10`;
 - create an explicit stable publish manifest;
-- update stable release notes/support metadata to the chosen stable identity;
-- rerun full active tests, current-runtime isolation, dynamic instruction-graph reachability, package/sdist/wheel audit, clean install, replay/timelapse parity, promotion-evidence verification, and frozen-history verification;
-- verify built wheel metadata and hashes before publication.
+- update stable release notes/support metadata;
+- rerun active tests, current-runtime isolation, instruction-graph reachability, package/sdist/wheel audit, clean install, replay/timelapse parity, fresh renderer evidence, and frozen-history verification;
+- verify built wheel metadata and hashes.
 
 ### G06 — publish
 
-Publish only from the explicit stable manifest after every current-facing document, package identity,
-release note, and mechanical gate agrees. The immutable v1.0.2 tag, release notes, publish manifest,
-and historical freeze remain unchanged.
+Publish only from the explicit stable manifest after every current-facing document, package identity, release note, and mechanical gate agrees. The immutable v1.0.2 release history remains unchanged.
 
 ## Later / optional
 
 - remove deprecated root compatibility shims in a separately versioned compatibility cleanup;
-- add representative teaching examples only when they are good enough not to become accidental answer templates;
+- add representative teaching examples only when they are strong enough not to become accidental answer templates;
 - expand fresh cross-agent/cross-subject validation when needed for broader product claims.
 
 ## Authority
 
 - current state: `STATUS.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
-- rc2 candidate notes: `../../../docs/releases/v1.0.3rc2.md`;
-- rc1 integrated notes: `../../../docs/releases/v1.0.3rc1.md`;
+- rc3 candidate notes: `../../../docs/releases/v1.0.3rc3.md`;
+- rc2 historical notes: `../../../docs/releases/v1.0.3rc2.md`;
 - rc1 renderer promotion evidence: `../../release/vnext/V1_0_3_RC1_PROMOTION.{md,json}`;
-- unreleased changes and known issues: `../../../CHANGELOG.md`;
+- unreleased changes: `../../../CHANGELOG.md`;
 - deployable behavior: `../../../skills/img2drawing/SKILL.md` + references;
-- latest published stable notes: `../../../docs/releases/v1.0.2.md`;
+- latest published stable: `../../../docs/releases/v1.0.2.md`;
 - immutable released contract: `../../release/vnext/CONTRACT_FREEZE.json`.
