@@ -21,6 +21,7 @@ CLASSES = (
     "head-hair-closeup",
 )
 STATE_RE = re.compile(r"^State:\s*\*\*(NOT_RUN|BLOCKED|PASS)\*\*\s*$", re.MULTILINE)
+ROOT_STATUS_RE = re.compile(r"^Status:\s*\*\*(.+?)\*\*\s*$", re.MULTILINE)
 SHA_RE = r"[0-9a-f]{64}"
 
 
@@ -33,6 +34,12 @@ def class_state(readme: str, class_name: str) -> str:
     match = STATE_RE.search(readme)
     assert match, f"{class_name}: missing exact State: **NOT_RUN|BLOCKED|PASS** declaration"
     return match.group(1)
+
+
+def root_status(readme: str) -> str:
+    match = ROOT_STATUS_RE.search(readme)
+    assert match, "S03 root README is missing its top-level Status declaration"
+    return match.group(1).strip()
 
 
 def require_executed_review(class_dir: Path, state: str) -> None:
@@ -113,11 +120,15 @@ def main() -> None:
             require_executed_review(class_dir, state)
 
     all_pass = all(state == "PASS" for state in states.values())
-    root_closed = "Status: **PASS / CLOSED**" in root_readme
+    status = root_status(root_readme)
     if all_pass:
-        assert root_closed, "all S03 classes PASS but root harness is not PASS / CLOSED"
+        assert status == "PASS / CLOSED", (
+            "all S03 classes PASS but root harness status is not exactly PASS / CLOSED"
+        )
     else:
-        assert not root_closed, "S03 root cannot be CLOSED while any class is NOT_RUN/BLOCKED"
+        assert status != "PASS / CLOSED", (
+            "S03 root cannot be CLOSED while any class is NOT_RUN/BLOCKED"
+        )
 
     summary = ", ".join(f"{name}={state}" for name, state in states.items())
     print(f"S03_QUALITY_GATE_HARNESS_PASS: {summary}")
