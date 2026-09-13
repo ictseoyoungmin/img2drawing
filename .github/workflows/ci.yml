@@ -36,6 +36,8 @@ jobs:
         run: python dev/tools/verify_instruction_graph.py
       - name: Verify v1.0.3 RC promotion evidence
         run: python dev/tools/verify_v103_rc_promotion.py
+      - name: Verify v1.0.3 stable freeze
+        run: python dev/tools/verify_v103_stable.py
       - name: Run active test suite without ambient plugin influence
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
