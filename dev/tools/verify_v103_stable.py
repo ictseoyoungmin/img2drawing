@@ -68,45 +68,65 @@ def main() -> None:
     assert promotion["version"] == "1.0.3"
     assert promotion["release_revision"] == "A14"
     assert promotion["release_slice"] == RELEASE_SLICE
+    assert promotion["verified_branch"] == "release/1.0.3-stable"
+    assert promotion["verified_commit"] == "0de885e6d3f2ed6ac857c46e60875cc8c5c9f727"
+    assert promotion["verified_root_tree"] == "996836ef4c2188ad39e621550575e0d9780d288f"
+    assert promotion["package_tree"] == "5758c5efa60d80a0d483bcb3573258e34d609055"
+    assert git("show", "-s", "--format=%T", promotion["verified_commit"]) == promotion["verified_root_tree"]
+    assert git("rev-parse", f"{promotion['verified_commit']}:skills/img2drawing") == promotion["package_tree"]
+    assert git("rev-parse", "HEAD:skills/img2drawing") == promotion["package_tree"]
+
+    assert promotion["ci"] == {
+        "workflow": "img2drawing-ci",
+        "run_id": 34749311565,
+        "conclusion": "success",
+    }
+    artifact = promotion["artifact"]
+    assert artifact == {
+        "artifact_id": 10315122558,
+        "artifact_name": "img2drawing-1.0.3-stable-candidate-0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
+        "artifact_zip_sha256": "2c7650e252b2b2f253630724bd35a30c348bd3114eebf034e45ec4f2cbdfe04a",
+        "wheel_filename": "img2drawing-1.0.3-py3-none-any.whl",
+        "wheel_sha256": "eaecfeb08100640211d3de73ea6dcfd1557d097c85318c814e217a3eb4265567",
+        "metadata_name": "img2drawing",
+        "metadata_version": "1.0.3",
+    }
     assert promotion["renderer"]["contract_digest"] == renderer.contract_digest
     assert promotion["renderer"]["thin_v10_v11_pixel_exact"] is True
     assert promotion["renderer"]["current_fast_canonical_pixel_exact"] is True
+    assert promotion["renderer"]["historical_replay"] == [
+        "pillow-pencil-contact-v9/1", "pillow-pencil-contact-v10/1"
+    ]
     assert promotion["behavioral_gates"] == {
         "g01_gesture": "PASS_CLOSED", "g02_broad_pencil": "PASS_CLOSED"
     }
-
-    current_package_tree = git("rev-parse", "HEAD:skills/img2drawing")
-    manifest = PUBLISH / "v1.0.3.json"
-    if promotion["package_tree"] == current_package_tree:
-        assert promotion["ci"]["conclusion"] == "success"
-        artifact = promotion["artifact"]
-        assert artifact["wheel_filename"] == "img2drawing-1.0.3-py3-none-any.whl"
-        assert artifact["metadata_name"] == "img2drawing"
-        assert artifact["metadata_version"] == "1.0.3"
-    else:
-        # Any package-tree mutation explicitly reopens the stable artifact freeze. A stale
-        # publish manifest is forbidden until CI produces and records a new wheel/sdist.
-        assert not manifest.exists(), "publish manifest must be withdrawn during refreeze"
-        print(
-            "V1_0_3_STABLE_REFREEZE_PENDING: "
-            f"old={promotion['package_tree']} current={current_package_tree}"
-        )
+    assert promotion["publication"] == {
+        "manifest_present_when_measured": False,
+        "authorized_next_step": "ADD_V1_0_3_PUBLISH_MANIFEST",
+    }
 
     g01 = (ROOT / "dev" / "dogfood" / "g01-gesture-rc2" / "README.md").read_text(encoding="utf-8")
     g02 = (ROOT / "dev" / "dogfood" / "g02-broad-pencil-v11" / "README.md").read_text(encoding="utf-8")
     assert "PASS" in g01 and "CLOSED" in g01
     assert "PASS / CLOSED" in g02
+
     notes = (ROOT / "docs" / "releases" / "v1.0.3.md").read_text(encoding="utf-8")
     assert notes.startswith("# img2drawing v1.0.3")
     assert "pillow-pencil-contact-v11 / 1" in notes
     assert "CONTRACT_FREEZE_V1_0_3.json" in notes
 
+    manifest = PUBLISH / "v1.0.3.json"
     if manifest.exists():
         payload = load(manifest)
-        assert payload["tag"] == "v1.0.3"
-        assert payload["notes_file"] == "docs/releases/v1.0.3.md"
-        assert payload["package_dir"] == "skills/img2drawing"
-        assert payload["assets"] == []
+        assert payload == {
+            "schema": "img2drawing.release.publish.v1",
+            "tag": "v1.0.3",
+            "title": "img2drawing v1.0.3",
+            "notes_file": "docs/releases/v1.0.3.md",
+            "package_dir": "skills/img2drawing",
+            "assets": [],
+        }
+
     print("V1_0_3_STABLE_FREEZE_PASS")
 
 
