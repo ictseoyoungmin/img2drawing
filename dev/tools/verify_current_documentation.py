@@ -55,6 +55,7 @@ def main() -> None:
 
     v103_manifest = PUBLISH / "v1.0.3.json"
     v103_release_intent = v103_manifest.is_file()
+    active_post_release_design = is_stable and "ACTIVE BOTTLENECK:" in status
 
     if is_rc:
         assert "**Current stable: v1.0.2**" in root_readme
@@ -87,7 +88,22 @@ def main() -> None:
             if released:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
-                assert "NEXT GATE:          none for v1.0.3 · release CLOSED" in status
+                if active_post_release_design:
+                    # A closed stable release may coexist with new design work.  Do not force the
+                    # post-release repository to pretend that product development also stopped.
+                    assert "ACTIVE BOTTLENECK:  Q01" in status
+                    assert "CURRENT RENDERER:   pillow-pencil-contact-v11/1" in status
+                    assert "RENDERER POLICY:    no additive v12" in status
+                    assert "PACKAGE VERSION:    no new RC/version authorized during design" in status
+                    assert "v1.0.3" in status and "remains CLOSED" in status
+                    assert "Q01 v11 quality-control failure taxonomy + design       ACTIVE" in roadmap
+                    assert "Q02 instruction graph execution-gate patch" in roadmap
+                    assert "No renderer v12 is authorized" in roadmap
+                    assert (PLANNING / "V11_QUALITY_CONTROL_REDESIGN.md").is_file()
+                    assert not (PUBLISH / "v1.0.4.json").exists()
+                    assert "1.0.4rc1" not in status
+                else:
+                    assert "NEXT GATE:          none for v1.0.3 · release CLOSED" in status
             else:
                 assert "**Current stable: v1.0.2**" in root_readme
                 assert "RELEASE INTENT:" in status and "v1.0.3" in status
@@ -105,9 +121,15 @@ def main() -> None:
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
 
     if is_stable and "**Current stable: v1.0.3**" in root_readme:
-        assert "### G05 — stable freeze and wheel verification — CLOSED" in roadmap
-        assert "### G06 — publish — CLOSED" in roadmap
-        assert "NEXT PRODUCT BOTTLENECK" in roadmap and "UNSELECTED" in roadmap
+        if active_post_release_design:
+            assert "G05 stable freeze + wheel verification                  CLOSED" in roadmap
+            assert "G06 explicit publish manifest + publish                 CLOSED" in roadmap
+            assert "Q01" in roadmap and "ACTIVE" in roadmap
+            assert "V11_QUALITY_CONTROL_REDESIGN.md" in roadmap
+        else:
+            assert "### G05 — stable freeze and wheel verification — CLOSED" in roadmap
+            assert "### G06 — publish — CLOSED" in roadmap
+            assert "NEXT PRODUCT BOTTLENECK" in roadmap and "UNSELECTED" in roadmap
         assert "v1.0.3 release cycle is closed" in planning_readme
         assert "The latest released stable package is **v1.0.3 / A14 / DrawingSession/1.0.3-vnext**" in contract
         assert "Known current defect:" not in contract
