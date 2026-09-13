@@ -15,6 +15,8 @@ The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 ba
 - G01 closed gesture/runtime/instruction integration gaps.
 - G02 closed the broad-pencil square-terminal / weak-graphite failure class with the renderer family now published as `pillow-pencil-contact-v11 / 1`.
 - G03–G06 integrated, froze, verified, and published `v1.0.3 / A14`.
+- S01 closed the v11 quality-control taxonomy, reversible evidence-gate design, and no-v12 renderer-family policy.
+- S02 integrated the instruction execution gates and passed CI run `34761722278` across current and historical verification surfaces.
 
 ## Current sequence
 
@@ -25,38 +27,25 @@ G03 integrate validated rc3 into main                   CLOSED
 G04 stable-promotion decision                           CLOSED → v1.0.3
 G05 stable freeze + wheel verification                  CLOSED
 G06 explicit publish manifest + publish                 CLOSED
-Q01 v11 quality-control failure taxonomy + design       ACTIVE
-Q02 instruction graph execution-gate patch              BLOCKED by Q01
-Q03 fresh-worker visual dogfood                         BLOCKED by Q02
-Q04 classify remaining geometry vs material residuals   BLOCKED by Q03
-Q05 current-v11 renderer correction if still required   BLOCKED by Q04
-Q06 contract-digest / replay-boundary migration         REQUIRED before release
-Q07 full visual + mechanical validation                 BLOCKED by Q05/Q06
-Q08 choose next package version / release candidate     BLOCKED by Q07
+S01 v11 quality-control failure taxonomy + design       CLOSED
+S02 instruction graph execution-gate patch              CLOSED
+S03 fresh-worker visual dogfood                         ACTIVE
+S04 classify remaining geometry vs material residuals   BLOCKED by S03
+S05 contract-digest / replay-boundary migration         BLOCKED by S04 evidence capture; REQUIRED before pixel change
+S06 current-v11 renderer correction if proven           BLOCKED by S04/S05; MAY SKIP
+S07 full visual + mechanical validation                 BLOCKED by S03–S06
+S08 choose next package version / release candidate     BLOCKED by S07
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
 
-## Q01 — v11 quality-control redesign — ACTIVE
+## S01 — v11 quality-control redesign — CLOSED
 
 Authority: `V11_QUALITY_CONTROL_REDESIGN.md`.
 
-Recent outputs show a repeated gap between what the skill says and what a worker actually accepts:
+The observed failure classes were frozen around one higher-level cause: the skill contained many correct principles but did not require enough evidence before a worker accepted symbolic, generic, cluttered, or weakly retired drawing decisions.
 
-- parallel hair strands appear before hair mass/clump structure is convincingly solved;
-- arms, legs, trousers, and attached objects can collapse into rails/tubes;
-- feet and props become recognizable symbols instead of observed construction;
-- construction/search lines remain because retirement is advisory rather than audited;
-- line hierarchy remains weak despite semantic roles;
-- strong camera perspective can enlarge the head without coherently propagating depth through torso/pelvis/limbs;
-- generic context lines appear without a clear visible owner;
-- local detail can accumulate while the whole remains generic or flat.
-
-The skill already contains many correct principles. Q01 therefore does not solve the problem by adding more warnings. It redesigns **decision closure** around reversible visual evidence gates.
-
-### Q01 target
-
-Each semantic group must be accepted only after evidence establishes:
+The accepted decision-closure model is:
 
 ```text
 visible authority
@@ -70,64 +59,67 @@ visible authority
 → accept, revise, or reopen
 ```
 
-The design also separates renderer-family identity from exact historical pixel identity so quality corrections do not require a new renderer number.
+Renderer-family identity is also separated conceptually from exact historical pixel identity so quality corrections do not require a new renderer number.
 
-## Q02 — instruction graph patch — BLOCKED
+## S02 — instruction execution gates — CLOSED
 
-Planned concentrated edits rather than leaf proliferation:
+The skill now contains one central `review/visual-quality-gates.md` leaf and concentrated edits to existing owners rather than a new rigid stage pipeline.
 
-- add one central `review/visual-quality-gates.md` leaf;
-- strengthen `SKILL.md` canonical loop;
-- add ownership continuity to line economy;
-- add depth-group/anchor evidence to observation;
-- harden hair mass → clump → accent sequencing;
-- reject rail completion for limbs;
-- bind prop construction to body contact;
-- reject ownerless environment/context rays;
-- convert stroke retirement into KEEP/SOFTEN/RETIRE audit;
-- require largest-remaining-residual ranking before finish.
+Closed behavior includes:
 
-## Q03 — fresh-worker dogfood — BLOCKED
+- line ownership continuity;
+- evidence/anchor packets before descriptive acceptance;
+- near/mid/far propagation for strong perspective;
+- hair mass → clump → accent ordering;
+- rejection of rail/tube limb completion;
+- prop/body contact solved as one relation;
+- ownerless context/perspective decoration rejected;
+- explicit KEEP/SOFTEN/RETIRE construction audit;
+- “busier but not more specific” escalation;
+- top remaining residual ranking before finish;
+- terminal/markmaking semantics kept downstream of justified geometry.
 
-Dogfood must use workers that receive the updated skill, reference, and normal runtime surface without privileged access to prior solution strokes.
+CI run `34761722278` passed repository invariants, current documentation, runtime surface, instruction graph reachability, active tests, immutable v1.0.3 evidence, B17, and B18.
 
-Minimum visual classes:
+## S03 — fresh-worker visual dogfood — ACTIVE
 
-1. strong-perspective/close figure;
+Fresh workers must receive the updated skill, reference, and normal public runtime surface without privileged access to prior solution strokes.
+
+Required visual classes:
+
+1. strong-perspective close figure;
 2. full-body 3/4 figure with attached/held prop;
 3. frontal or near-frontal full body;
 4. head/hair close-up.
 
-The supplied recent outputs define the failure classes, not answer templates.
+Each run must produce reviewable provenance:
 
-## Q04 — residual ownership decision — BLOCKED
+- complete canonical `session.json`;
+- final PNG;
+- action-0→latest GIF, normally `every_n=4`;
+- reference/final comparison evidence;
+- top remaining residual ledger;
+- KEEP/SOFTEN/RETIRE summary.
 
-After the instruction patch, re-run the visual tasks. Remaining problems must be classified before renderer work:
+The supplied failure images define the failure classes, not answer templates. One blocking class prevents S03 closure; results are not averaged.
+
+## S04 — residual ownership decision — BLOCKED
+
+After S03, every blocking or repeated residual must be classified before renderer work:
 
 ```text
-wrong path / proportion / ownership / overlap / contact → geometry/instruction
-correct geometry but wrong weight/taper/terminal/grain   → material/runtime
+wrong path / proportion / ownership / overlap / contact
+→ geometry / instruction owner
+
+correct geometry but wrong weight / taper / terminal / grain / deposition
+→ material / runtime candidate
 ```
 
-Renderer changes are forbidden while the visible problem can still be explained by incorrect authored geometry or line ownership.
+A renderer candidate must have both real-drawing evidence and a minimal controlled reproduction with authored geometry frozen.
 
-## Q05 — current v11 correction — BLOCKED
+## S05 — contract-digest replay boundary — BLOCKED
 
-If Q03/Q04 prove a material/runtime defect, modify the **current v11 family**. Do not create v12 solely for the fix.
-
-Renderer correction rules:
-
-- do not move already-correct authored points for a material-only fix;
-- do not let terminal changes reseed or materially change an unrelated stroke body;
-- keep terminal behavior bounded to the intended physical suffix;
-- preserve canonical/fast exactness for the current contract;
-- use fresh visual dogfood, not only synthetic pixel tests.
-
-## Q06 — contract-digest replay boundary — REQUIRED before release
-
-Current registry exposes a renderer contract digest, while `RenderProfile` persists only id/version. This must be reconciled before a mutable current-v11 implementation can coexist honestly with published v1.0.3 replay claims.
-
-Target:
+Before intentional current-v11 pixel divergence, persisted render identity must be able to bind:
 
 ```text
 renderer_id              stable family
@@ -137,26 +129,47 @@ renderer_contract_digest exact pixel-behavior identity
 
 Replay policy:
 
-- matching digest → exact replay eligible;
-- mismatched digest → fail closed or explicit migration;
+- matching family/version/digest → exact replay eligible;
+- same family/version with digest mismatch → no silent exact replay claim;
+- legacy no-digest history remains loadable under an explicitly non-exact current-source policy;
 - published v1.0.3 wheel/tag/freeze remains exact authority for its original v11 contract;
-- historical implementations do not need to accumulate forever in active `src`.
+- migration to the current contract is recorded as migration, not historical exact replay.
 
-## Q07 — full validation — BLOCKED
+This slice is required before S06 changes current-v11 pixels.
 
-Must combine:
+## S06 — current v11 correction — CONDITIONAL
+
+Only defects proven renderer-owned in S04 receive a renderer slice. Each distinct material defect becomes one independent S06.n bottleneck.
+
+Rules:
+
+- keep renderer family `pillow-pencil-contact-v11 / 1`;
+- do not move authored points for material-only fixes;
+- do not reseed unrelated stroke body for a local terminal change;
+- change only the demonstrated material cause;
+- prove locality with controlled reproduction and real dogfood;
+- change the contract digest whenever exact pixel behavior changes.
+
+If S04 finds no renderer-owned blocking defect, S06 is skipped.
+
+## S07 — full validation — BLOCKED
+
+Repeat the S03 visual classes and combine:
 
 - fresh-worker visual evidence;
-- anti-symbol and ownership review;
-- construction-retirement review;
-- final-scale hierarchy review;
-- renderer canonical/fast exactness;
+- anti-symbol/ownership audit;
+- construction-retirement audit;
+- final-scale line hierarchy review;
+- canonical/fast exactness for the current contract;
 - historical v1.0.3 freeze integrity;
-- package/install/runtime CI.
+- package/install/runtime CI;
+- end-to-end timelapse provenance.
 
-## Q08 — version/release decision — BLOCKED
+A green CI run alone does not close S07.
 
-Do not predeclare `1.0.4rc1`. Choose the next package version only after Q07 proves a coherent product state.
+## S08 — version/release decision — BLOCKED
+
+Do not predeclare `1.0.4rc1`. Choose release semantics only after S07 proves a coherent product state. Any new freeze must be additive and must not mutate v1.0.3 evidence.
 
 ## Historical v1.0.3 authority
 
@@ -174,7 +187,8 @@ This historical statement does not require future current source to keep increme
 ## Authority
 
 - current state: `STATUS.md`;
-- active design: `V11_QUALITY_CONTROL_REDESIGN.md`;
+- execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
+- redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - current published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
 - G02 visual/material evidence: `../../dogfood/g02-broad-pencil-v11/README.md`;
