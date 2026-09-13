@@ -5,20 +5,20 @@
   "release_revision": "A14",
   "release_slice": "v1.0.3_gesture_renderer_quality",
   "verified_branch": "release/1.0.3-stable",
-  "verified_commit": "13826f4fd29ac0c021b2837b3f89bc9694e3ca75",
-  "verified_root_tree": "a2605f8d9e0303f8554584b6b657e5211de615dd",
-  "package_tree": "934930f51457c2e075eb5e8ceb8341d5cf65105c",
+  "verified_commit": "0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
+  "verified_root_tree": "996836ef4c2188ad39e621550575e0d9780d288f",
+  "package_tree": "5758c5efa60d80a0d483bcb3573258e34d609055",
   "ci": {
     "workflow": "img2drawing-ci",
-    "run_id": 34748393631,
+    "run_id": 34749311565,
     "conclusion": "success"
   },
   "artifact": {
-    "artifact_id": 10314573024,
-    "artifact_name": "img2drawing-1.0.3-stable-candidate-13826f4fd29ac0c021b2837b3f89bc9694e3ca75",
-    "artifact_zip_sha256": "dc88d28b03253f25cc95a1d7c3838ed9e6575577d798ecbbd55375274309f6a6",
+    "artifact_id": 10315122558,
+    "artifact_name": "img2drawing-1.0.3-stable-candidate-0de885e6d3f2ed6ac857c46e60875cc8c5c9f727",
+    "artifact_zip_sha256": "2c7650e252b2b2f253630724bd35a30c348bd3114eebf034e45ec4f2cbdfe04a",
     "wheel_filename": "img2drawing-1.0.3-py3-none-any.whl",
-    "wheel_sha256": "c1d1b2c764b57e14711cfc8a9d4198288b5832be96c7c3ec4b173b996fcfa703",
+    "wheel_sha256": "eaecfeb08100640211d3de73ea6dcfd1557d097c85318c814e217a3eb4265567",
     "metadata_name": "img2drawing",
     "metadata_version": "1.0.3"
   },
