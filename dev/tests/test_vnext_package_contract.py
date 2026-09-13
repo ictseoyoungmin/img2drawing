@@ -28,10 +28,10 @@ CANONICAL_ROOT_EXPORTS = {
 
 
 def test_rc_version_and_root_api_are_canonical():
-    assert img2drawing.__version__ == "1.0.3rc2"
+    assert img2drawing.__version__ == "1.0.3rc3"
     assert PUBLIC_API == "DrawingSession/1.0.3-vnext"
-    assert RELEASE_REVISION == "A12"
-    assert RELEASE_SLICE == "v1.0.3rc2_gesture_runtime_alignment"
+    assert RELEASE_REVISION == "A13"
+    assert RELEASE_SLICE == "v1.0.3rc3_broad_pencil_material"
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__
