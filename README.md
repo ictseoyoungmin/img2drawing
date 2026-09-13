@@ -1,8 +1,8 @@
 # img2drawing
 
-**Current stable: v1.0.2**
+**Current stable: v1.0.3**
 
-> Development note: `main` contains unreleased post-v1.0.2 hardening, including compatibility-breaking cleanup. The immutable v1.0.2 tag/release remains the stable release; do not treat mutable `main` as a republished v1.0.2 artifact. See [CHANGELOG.md](CHANGELOG.md) for current-main differences.
+> v1.0.3 is the current published stable release. It promotes gesture/runtime alignment and the broad-pencil renderer quality work from the rc1–rc3 cycle while preserving explicit historical replay for v9/1 and v10/1 sessions. See [the v1.0.3 release notes](docs/releases/v1.0.3.md) and [CHANGELOG.md](CHANGELOG.md).
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -16,6 +16,19 @@ Both routes render and inspect the current drawing before correction.
 The action history keeps every revision inspectable, resumable, and replayable. Curated
 human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
 an `examples/` tree until there are genuinely representative instructional examples.
+
+## v1.0.3 — Gesture + renderer quality
+
+v1.0.3 closes the post-v1.0.2 integration cycle as the current stable release.
+
+- `DrawingIntent(drawing_mode="gesture")` is a public runtime mode; unqualified gesture work uses the constructive-gesture default while explicit pure/quick gesture remains available as a finish-level choice.
+- New sessions use renderer identity `pillow-pencil-contact-v11 / 1`, with more physical broad-pencil terminals and stronger page-fixed graphite/tooth variation.
+- Ordinary thin v11 strokes remain pixel-exact with v10, and canonical-final / fast-final rendering stay exact under the active renderer regression gates.
+- Explicit v9/1 and v10/1 renderer identities remain available for historical replay; persisted sessions are not silently migrated.
+- The retired R23 runtime/legacy namespace and orchestration cluster are physically absent from current `src`.
+- Renderer implementation modules use semantic Python filenames rather than generation-tagged names; CI rejects future generation-tagged `src/**/*.py` basenames.
+
+[Read the v1.0.3 release notes](docs/releases/v1.0.3.md) · [Changelog](CHANGELOG.md)
 
 ## v1.0.2 — Local-first exact timelapse export
 
