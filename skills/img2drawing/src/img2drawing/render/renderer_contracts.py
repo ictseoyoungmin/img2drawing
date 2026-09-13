@@ -41,9 +41,6 @@ class RendererContract:
         return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
-# v9 is the already-published historical replay authority. Its implementation stays
-# frozen in pillow_pencil_contact.py; this contract gives registry/cache identity an
-# explicit immutable anchor without changing any v9 pixels.
 V9_CONTRACT = RendererContract(
     renderer_id="pillow-pencil-contact-v9",
     renderer_version="1",
@@ -54,9 +51,8 @@ V9_CONTRACT = RendererContract(
 )
 
 
-# Candidate v10 material contract derived from the graphite / terminal research.
-# These values are renderer semantics, not user-adjustable style knobs. Changing one
-# requires a new renderer identity/version rather than mutating a published contract.
+# RC1/RC2 renderer authority. Kept immutable so sessions authored against v10 replay
+# exactly even after later RCs select a different renderer for new sessions.
 V10_CONTRACT = RendererContract(
     renderer_id="pillow-pencil-contact-v10",
     renderer_version="1",
@@ -84,12 +80,35 @@ V10_CONTRACT = RendererContract(
 )
 
 
+# RC3 corrects a broad-markmaking defect without mutating v10 replay semantics.
+# Thin/flick pixels delegate to v10 exactly. Broad strokes retain the same authored-value
+# shoulder model while using physical round core terminals plus stronger page-fixed tooth.
+V11_CONTRACT = RendererContract(
+    renderer_id="pillow-pencil-contact-v11",
+    renderer_version="1",
+    parameters=(
+        ("base_renderer", "pillow-pencil-contact-v10/1"),
+        ("broad_core_model", "round-terminal-authored-core-v1"),
+        ("broad_texture_base", 0.16),
+        ("broad_texture_exposure_gain", 0.28),
+        ("broad_texture_model", "page-fixed-graphite-tooth-v2"),
+        ("broad_texture_valley_depth", 0.10),
+        ("material_model", "v10-shoulder-v11-core-surface"),
+        ("seed_identity_model", "stage-free-render-seed-v1"),
+        ("terminal_model", "pressure-resolved-round-contact-v2"),
+        ("thin_authority", "byte-identical-v10"),
+    ),
+)
+
+
 def contract_for(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = (str(renderer_id), str(renderer_version))
     if key == (V9_CONTRACT.renderer_id, V9_CONTRACT.renderer_version):
         return V9_CONTRACT
     if key == (V10_CONTRACT.renderer_id, V10_CONTRACT.renderer_version):
         return V10_CONTRACT
+    if key == (V11_CONTRACT.renderer_id, V11_CONTRACT.renderer_version):
+        return V11_CONTRACT
     raise ValueError(f"no renderer contract registered for {key[0]!r}/{key[1]!r}")
 
 
@@ -98,5 +117,6 @@ __all__ = [
     "RendererContract",
     "V9_CONTRACT",
     "V10_CONTRACT",
+    "V11_CONTRACT",
     "contract_for",
 ]
