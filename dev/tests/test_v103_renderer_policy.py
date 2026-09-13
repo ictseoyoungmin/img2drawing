@@ -16,6 +16,7 @@ from img2drawing.vnext import resolve_markmaking
 
 V9 = ("pillow-pencil-contact-v9", "1")
 V10 = ("pillow-pencil-contact-v10", "1")
+V11 = ("pillow-pencil-contact-v11", "1")
 
 
 def _subject(tmp_path: Path, name: str = "subject.png") -> Path:
@@ -58,12 +59,14 @@ def _rgb_mean(path: Path) -> float:
         return float(ImageStat.Stat(crop).mean[0])
 
 
-def test_registry_keeps_v9_and_selects_v10_for_new_profiles() -> None:
-    assert V9 in registered_renderer_identities()
-    assert V10 in registered_renderer_identities()
-    assert current_renderer().identity == V10
+def test_registry_keeps_v9_v10_and_selects_v11_for_new_profiles() -> None:
+    identities = registered_renderer_identities()
+    assert V9 in identities
+    assert V10 in identities
+    assert V11 in identities
+    assert current_renderer().identity == V11
     profile = RenderProfile.canonical(160, 80)
-    assert (profile.renderer_id, profile.renderer_version) == V10
+    assert (profile.renderer_id, profile.renderer_version) == V11
 
 
 def test_checkpoint_header_tracks_profile_and_v9_replays_after_resume(tmp_path: Path) -> None:
@@ -93,9 +96,23 @@ def test_checkpoint_header_tracks_profile_and_v9_replays_after_resume(tmp_path: 
     assert first.pixel_sha256 == second.pixel_sha256
 
 
-def test_v10_material_policies_change_actual_broad_pixels(tmp_path: Path) -> None:
+def test_explicit_v10_remains_available_for_rc1_rc2_replay(tmp_path: Path) -> None:
     subject = _subject(tmp_path)
-    paths: dict[str, Path] = {}
+    session = DrawingSession.create(
+        subject=subject,
+        output_dir=tmp_path / "v10-run",
+        render_profile=_explicit_profile(V10),
+    )
+    _draw_broad(session, "canonical-pencil")
+    first = session.render_final(tmp_path / "v10-first.png")
+    resumed = DrawingSession.resume(session.checkpoint_path, subject=subject)
+    assert (resumed.render_profile.renderer_id, resumed.render_profile.renderer_version) == V10
+    second = resumed.render_final(tmp_path / "v10-resumed.png")
+    assert first.pixel_sha256 == second.pixel_sha256
+
+
+def test_v11_material_policies_change_actual_broad_pixels(tmp_path: Path) -> None:
+    subject = _subject(tmp_path)
     means: dict[str, float] = {}
     hashes: dict[str, str] = {}
 
@@ -104,23 +121,21 @@ def test_v10_material_policies_change_actual_broad_pixels(tmp_path: Path) -> Non
             subject=subject,
             output_dir=tmp_path / policy,
         )
-        assert (session.render_profile.renderer_id, session.render_profile.renderer_version) == V10
+        assert (session.render_profile.renderer_id, session.render_profile.renderer_version) == V11
         _draw_broad(session, policy)
         path = tmp_path / f"{policy}.png"
         artifact = session.render_final(path)
-        paths[policy] = path
         hashes[policy] = artifact.pixel_sha256
         means[policy] = _rgb_mean(path)
 
     assert len(set(hashes.values())) == 3
-    # Strict authored-value preservation should keep the broad core darker than
-    # the intentionally airy manga-light interpretation.
     assert means["canonical-pencil"] < means["manga-light"]
 
 
-def test_v10_fast_final_matches_canonical_and_repairs_late_lower_layer(tmp_path: Path) -> None:
+def test_v11_fast_final_matches_canonical_and_repairs_late_lower_layer(tmp_path: Path) -> None:
     subject = _subject(tmp_path)
     session = DrawingSession.create(subject=subject, output_dir=tmp_path / "fast-run")
+    assert (session.render_profile.renderer_id, session.render_profile.renderer_version) == V11
 
     high = resolve_markmaking(
         "pencil_loose",
@@ -159,7 +174,7 @@ def test_v10_fast_final_matches_canonical_and_repairs_late_lower_layer(tmp_path:
         fast = source.image()
         try:
             with Image.open(canonical_path) as canonical:
-                diff = ImageChops.difference(fast.convert("RGBA"), canonical.convert("RGBA"))
+                diff = ImageChops.difference(fast.convert("RGB"), canonical.convert("RGB"))
                 assert diff.getbbox() is None
         finally:
             fast.close()
