@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify current-facing documentation agrees with stable + current-RC repository truth."""
+"""Verify current-facing documentation agrees with published + candidate repository truth."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PLANNING = ROOT / "dev" / "planning" / "vnext"
 RELEASE = ROOT / "dev" / "release" / "vnext"
+PUBLISH = ROOT / "dev" / "release" / "publish"
 
 
 def _text(path: Path) -> str:
@@ -44,29 +45,57 @@ def main() -> None:
     release_notes = _text(RELEASE / "RELEASE.md")
     support = _text(RELEASE / "SUPPORT.md")
     migration = _text(RELEASE / "MIGRATION.md")
-    frozen = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
+    frozen_v102 = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
 
-    # Published stable and current release-candidate truth are separate authorities. The current
-    # package version is parsed rather than hard-coded so rc follow-ups do not require a stale
-    # one-line verifier edit just to advance from rcN to rcN+1.
     package_version, release_revision = _current_package_identity(version)
-    assert re.fullmatch(r"1\.0\.3rc\d+", package_version), package_version
+    is_rc = re.fullmatch(r"1\.0\.3rc\d+", package_version) is not None
+    is_stable = package_version == "1.0.3"
+    assert is_rc or is_stable, package_version
     assert re.fullmatch(r"A\d+", release_revision), release_revision
 
-    assert "**Current stable: v1.0.2**" in root_readme
-    assert "unreleased post-v1.0.2 hardening" in root_readme
-    assert "## Unreleased" in changelog
-    assert "RELEASED STABLE:" in status and "v1.0.2" in status
-    rc_marker = "RC CANDIDATE:" in status or "RC IN MAIN:" in status
-    assert rc_marker and package_version in status
-    if "RC IN MAIN:" in status:
-        assert "MAIN INTEGRATION:" in status and "PASS" in status
-        assert "MAIN CI:" in status and "PASS" in status
-    assert "PUBLISH STATE:" in status and "v1.0.2 remains latest published stable" in status
+    v103_manifest = PUBLISH / "v1.0.3.json"
+    v103_is_published_intent = v103_manifest.is_file()
+
+    if is_rc:
+        assert "**Current stable: v1.0.2**" in root_readme
+        assert "unreleased post-v1.0.2 hardening" in root_readme
+        assert "## Unreleased" in changelog
+        assert ("RC CANDIDATE:" in status or "RC IN MAIN:" in status) and package_version in status
+        assert "v1.0.2 remains latest published stable" in status
+        assert not v103_is_published_intent
+    else:
+        assert release_revision == "A14"
+        assert "## v1.0.3" in changelog
+        stable_freeze = json.loads(_text(RELEASE / "CONTRACT_FREEZE_V1_0_3.json"))
+        assert stable_freeze["freeze_id"] == "v1.0.3-A14-2026-09-13"
+        assert stable_freeze["package_version"] == "1.0.3"
+        assert stable_freeze["public_api"] == "DrawingSession/1.0.3-vnext"
+        assert stable_freeze["release_revision"] == "A14"
+        assert stable_freeze["canonical_render_profile"]["renderer_id"] == "pillow-pencil-contact-v11"
+        assert str(stable_freeze["canonical_render_profile"]["renderer_version"]) == "1"
+        assert "gesture" in stable_freeze["intent_axes"]["drawing_modes"]
+        assert stable_freeze["renderer_authority"]["thin_v10_v11_exact"] is True
+        assert stable_freeze["renderer_authority"]["current_fast_canonical_exact"] is True
+
+        if v103_is_published_intent:
+            manifest = json.loads(_text(v103_manifest))
+            assert manifest["tag"] == "v1.0.3"
+            assert manifest["notes_file"] == "docs/releases/v1.0.3.md"
+            assert manifest["package_dir"] == "skills/img2drawing"
+            assert "**Current stable: v1.0.3**" in root_readme
+            assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
+        else:
+            assert "**Current stable: v1.0.2**" in root_readme
+            assert "STABLE CANDIDATE:" in status and "v1.0.3" in status
+            assert "manifest intentionally absent" in status
+
     assert "R23" in status and "physically retired" in status
     roadmap_lower = roadmap.lower()
-    assert "current unreleased" in roadmap_lower and "v1.0.2" in roadmap
-    assert "G01" in roadmap and "gesture" in roadmap_lower
+    assert "g01" in roadmap_lower and "gesture" in roadmap_lower
+    assert "g02" in roadmap_lower and "broad-pencil" in roadmap_lower
+    if is_stable:
+        assert "choose v1.0.3" in roadmap_lower
+        assert "g05" in roadmap_lower and "stable freeze" in roadmap_lower
     assert "CURRENT MAIN INVARIANTS" in contract
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
     assert "current validation matrix for unreleased post-v1.0.2 main" in validation
@@ -111,10 +140,10 @@ def main() -> None:
                 f"stale current-state marker in {path.relative_to(ROOT)}: {marker!r}"
             )
 
-    # Frozen release records remain v1.0.2 authority while explicitly separating later RC changes.
-    assert frozen["freeze_id"] == "v1.0.2-A10-2026-09-09"
-    assert frozen["package_version"] == "1.0.2"
-    assert frozen["public_api"] == "DrawingSession/1.0.2-vnext"
+    # v1.0.2 is immutable historical authority even after v1.0.3 becomes current stable.
+    assert frozen_v102["freeze_id"] == "v1.0.2-A10-2026-09-09"
+    assert frozen_v102["package_version"] == "1.0.2"
+    assert frozen_v102["public_api"] == "DrawingSession/1.0.2-vnext"
     assert "v1.0.2 / A10" in release_readme
     assert freeze.startswith("# v1.0.2 stable contract freeze")
     assert release_notes.startswith("# img2drawing v1.0.2 maintainer release record")
