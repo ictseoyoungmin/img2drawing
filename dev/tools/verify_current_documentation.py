@@ -54,7 +54,7 @@ def main() -> None:
     assert re.fullmatch(r"A\d+", release_revision), release_revision
 
     v103_manifest = PUBLISH / "v1.0.3.json"
-    v103_is_published_intent = v103_manifest.is_file()
+    v103_release_intent = v103_manifest.is_file()
 
     if is_rc:
         assert "**Current stable: v1.0.2**" in root_readme
@@ -62,7 +62,7 @@ def main() -> None:
         assert "## Unreleased" in changelog
         assert ("RC CANDIDATE:" in status or "RC IN MAIN:" in status) and package_version in status
         assert "v1.0.2 remains latest published stable" in status
-        assert not v103_is_published_intent
+        assert not v103_release_intent
     else:
         assert release_revision == "A14"
         assert "## v1.0.3" in changelog
@@ -77,13 +77,19 @@ def main() -> None:
         assert stable_freeze["renderer_authority"]["thin_v10_v11_exact"] is True
         assert stable_freeze["renderer_authority"]["current_fast_canonical_exact"] is True
 
-        if v103_is_published_intent:
+        if v103_release_intent:
             manifest = json.loads(_text(v103_manifest))
             assert manifest["tag"] == "v1.0.3"
             assert manifest["notes_file"] == "docs/releases/v1.0.3.md"
             assert manifest["package_dir"] == "skills/img2drawing"
-            assert "**Current stable: v1.0.3**" in root_readme
-            assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
+            assert manifest["assets"] == []
+            released = "**Current stable: v1.0.3**" in root_readme
+            if released:
+                assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
+            else:
+                assert "**Current stable: v1.0.2**" in root_readme
+                assert "RELEASE INTENT:" in status and "v1.0.3" in status
+                assert "GitHub Release pending" in status
         else:
             assert "**Current stable: v1.0.2**" in root_readme
             assert "STABLE CANDIDATE:" in status and "v1.0.3" in status
@@ -140,7 +146,7 @@ def main() -> None:
                 f"stale current-state marker in {path.relative_to(ROOT)}: {marker!r}"
             )
 
-    # v1.0.2 is immutable historical authority even after v1.0.3 becomes current stable.
+    # v1.0.2 remains immutable historical authority even after v1.0.3 promotion.
     assert frozen_v102["freeze_id"] == "v1.0.2-A10-2026-09-09"
     assert frozen_v102["package_version"] == "1.0.2"
     assert frozen_v102["public_api"] == "DrawingSession/1.0.2-vnext"
