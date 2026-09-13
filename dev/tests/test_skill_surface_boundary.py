@@ -89,8 +89,12 @@ def test_visual_quality_gate_closes_instruction_execution_gap() -> None:
     head = (SKILL / "references" / "figure" / "head-face-hair.md").read_text(encoding="utf-8")
     completion = (SKILL / "references" / "review" / "completion.md").read_text(encoding="utf-8")
 
+    economy_flat = " ".join(economy.split())
     assert "review/visual-quality-gates.md" in index
-    assert "read `../review/visual-quality-gates.md` before accepting the first descriptive semantic group" in economy
+    assert (
+        "read `../review/visual-quality-gates.md` before accepting the first descriptive semantic group"
+        in economy_flat
+    )
     assert "Visible authority" in gates
     assert "Line ownership gate" in gates
     assert "Anti-symbol gate" in gates
