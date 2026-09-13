@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 
 import img2drawing
@@ -19,6 +20,10 @@ PUBLISH = ROOT / "dev" / "release" / "publish"
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def git(*args: str) -> str:
+    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
 def main() -> None:
@@ -58,6 +63,33 @@ def main() -> None:
     assert stable["renderer_authority"]["current_fast_canonical_exact"] is True
     assert "gesture" in stable["intent_axes"]["drawing_modes"]
 
+    promotion = load(RELEASE / "V1_0_3_STABLE_PROMOTION.json")
+    assert promotion["schema"] == "img2drawing.v1_0_3_stable_promotion.v1"
+    assert promotion["state"] == "STABLE_WHEEL_VERIFIED"
+    assert promotion["version"] == "1.0.3"
+    assert promotion["release_revision"] == "A14"
+    assert promotion["release_slice"] == RELEASE_SLICE
+    assert promotion["verified_commit"] == "13826f4fd29ac0c021b2837b3f89bc9694e3ca75"
+    assert promotion["verified_root_tree"] == "a2605f8d9e0303f8554584b6b657e5211de615dd"
+    assert promotion["package_tree"] == "934930f51457c2e075eb5e8ceb8341d5cf65105c"
+    assert git("rev-parse", "HEAD:skills/img2drawing") == promotion["package_tree"]
+    assert promotion["ci"]["run_id"] == 34748393631
+    assert promotion["ci"]["conclusion"] == "success"
+    artifact = promotion["artifact"]
+    assert artifact["artifact_id"] == 10314573024
+    assert artifact["artifact_zip_sha256"] == "dc88d28b03253f25cc95a1d7c3838ed9e6575577d798ecbbd55375274309f6a6"
+    assert artifact["wheel_filename"] == "img2drawing-1.0.3-py3-none-any.whl"
+    assert artifact["wheel_sha256"] == "c1d1b2c764b57e14711cfc8a9d4198288b5832be96c7c3ec4b173b996fcfa703"
+    assert artifact["metadata_name"] == "img2drawing"
+    assert artifact["metadata_version"] == "1.0.3"
+    assert promotion["renderer"]["contract_digest"] == renderer.contract_digest
+    assert promotion["renderer"]["thin_v10_v11_pixel_exact"] is True
+    assert promotion["renderer"]["current_fast_canonical_pixel_exact"] is True
+    assert promotion["behavioral_gates"] == {
+        "g01_gesture": "PASS_CLOSED",
+        "g02_broad_pencil": "PASS_CLOSED",
+    }
+
     g01 = (ROOT / "dev" / "dogfood" / "g01-gesture-rc2" / "README.md").read_text(encoding="utf-8")
     g02 = (ROOT / "dev" / "dogfood" / "g02-broad-pencil-v11" / "README.md").read_text(encoding="utf-8")
     assert "PASS" in g01 and "CLOSED" in g01
@@ -74,6 +106,7 @@ def main() -> None:
         assert payload["tag"] == "v1.0.3"
         assert payload["notes_file"] == "docs/releases/v1.0.3.md"
         assert payload["package_dir"] == "skills/img2drawing"
+        assert payload["assets"] == []
 
     print("V1_0_3_STABLE_FREEZE_PASS")
 
