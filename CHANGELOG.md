@@ -4,7 +4,16 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 
 ## Unreleased
 
-No public changes have been queued after v1.0.3 yet.
+### Changed
+
+- `1.0.4rc1 / A15` opens the terminal-semantics bottleneck above the published v1.0.3 baseline. New candidate sessions select additive renderer `pillow-pencil-contact-v12 / 1`; explicit v9/1, v10/1, and v11/1 replay remains available.
+- v12 consumes the already-persisted public `terminal_mode` semantic field. `contact` preserves v11 pixels exactly, while `gentle`, `flick`, and `residue` resolve distinct bounded physical terminal pressure/deposition behavior without moving authored geometry.
+- Non-contact terminals are applied after deterministic trajectory resampling so a physical release span cannot be stretched across one sparse authored segment.
+- The v1.0.3 stable verifier is anchored to the immutable v1.0.3 tag/candidate package tree instead of requiring mutable `HEAD` to remain identical to the published package.
+
+### Validation
+
+- T01 requires same-geometry terminal-mode pixel differentiation, v12-contact ↔ v11 exactness, suffix locality, v12 canonical-final ↔ fast-final exactness, explicit v11 replay preservation, and the full current/historical/package CI stack.
 
 ## v1.0.3 — Gesture + renderer quality
 
@@ -16,34 +25,23 @@ Released 2026-09-13.
 - Ordinary thin v11 strokes delegate byte-for-byte to v10; canonical final and fast timelapse consume the same registered v11 patch builder.
 - `DrawingIntent(drawing_mode="gesture")` and `resolve_mode_guide("gesture")` are public runtime selections while pure-vs-constructive remains an instruction-graph finish-level decision rather than a workflow stage.
 - Gesture guidance rejects smooth generic beans/ovals/capsules as well as hard geometric construction icons. Sparse masses must preserve observed profile/jaw/nape, shoulder/back/side asymmetry, taper, hip shelf, near/far exposure, and leg-attachment relations where visible; `rounded` alone is not a completion criterion.
-- `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`:
-  - the current drawing must contain authored strokes — a session that was never drawn on, or whose marks were all erased again, can no longer be finished;
-  - the final inspection must have a non-stale `record_evidence_read()` event. Generating an inspection is no longer accepted as evidence that the Agent read it.
-- `DrawingSession.inspect()` now renders through the session's persisted `RenderProfile` (paper tooth/scale/seed, background, graphite) instead of renderer defaults, so a customized profile is inspected under the same material it will export under. The inspection sheet stays pinned to 1x canvas space because registration/ROI/measurement geometry is defined in canvas pixels; only final and replay export honor `output_scale`.
-- The v10 renderer normalized the private compatibility `Stroke.stage` field out of render seed identity. `inspect()`, canonical replay/final rendering, and the fast timelapse path therefore see the same v10 hand/material seed for identical authored geometry. Historical v9 seed semantics remain frozen for saved v1.0.2 replay, and profile-less legacy timelapse calls continue to select v9 explicitly.
-- Residual/correction guidance documents the `observation_id` provenance contract explicitly: a repairing mutation for a current residual should carry the residual's observation id, followed by a fresh after-inspection before `resolve_residual()`.
-- Completion guidance makes clear that `accepted_limitations` records acknowledged non-blocking weaknesses; it does not bypass an open residual record.
+- `DrawingSession.finish()` gained two preconditions and now raises `ValueError` where it previously returned a `FinishRecord`: the current drawing must contain authored strokes, and the final inspection must have a non-stale `record_evidence_read()` event.
+- `DrawingSession.inspect()` renders through the session's persisted `RenderProfile`; only final and replay export honor `output_scale`.
+- The v10 renderer normalized private compatibility `Stroke.stage` out of render seed identity. Historical v9 seed semantics remain frozen.
+- Residual/correction guidance documents the `observation_id` provenance contract explicitly.
+- Completion guidance makes clear that `accepted_limitations` does not bypass an open residual record.
 
 ### Removed
 
-- Retired the installable `img2drawing.legacy.r23` compatibility namespace and removed the hidden root fallback for R23-only names such as `DrawingRun` and `StageContract`.
-- Retired the remaining R23 orchestration/runtime cluster from current `src`: `run.py`, `stages/`, `exemplar/`, `review/`, and the historical `registration/` package.
-- Removed layers and data that became orphaned with that cluster: `canvas/`, the historical `reference/` package, non-palette R23 observation contract/lock/evidence modules, and `data/registration_profile.json`.
-- The immutable v1.0.2 release/freeze remains historical truth. Exact retired source remains recoverable from Git history and the pointers under `dev/legacy/`.
-
-### Internal cleanup
-
-- Current installable top-level source is narrowed to `core/`, `data/`, `inspection/`, `observation/` (palette only), `provenance/`, `render/`, and `vnext/`, plus package metadata files.
-- Added `dev/tools/build_skill_zip.py` and release-zip contract tests so local bytecode/cache/build residue cannot silently leak into the distributable skill archive.
-- Historical closure checks use frozen Git/release evidence instead of requiring retired runtime files to remain in mutable `src`.
-- See [`dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md`](dev/release/vnext/SRC_LEGACY_AUDIT_2026-09-09.md).
+- Retired the installable `img2drawing.legacy.r23` compatibility namespace and hidden root fallback for R23-only names.
+- Retired the remaining R23 orchestration/runtime cluster and orphaned canvas/reference/registration layers from current `src`.
+- The immutable v1.0.2 release/freeze remains historical truth.
 
 ### Validation
 
 - G01 gesture dogfood: **PASS/CLOSED** — `dev/dogfood/g01-gesture-rc2/README.md`.
 - G02 broad-pencil visual/material dogfood: **PASS/CLOSED** — `dev/dogfood/g02-broad-pencil-v11/README.md`.
-- v11 current renderer tests cover thin v10↔v11 exactness, broad terminal morphology, stronger graphite/tooth variation, explicit v9/v10 replay, and canonical↔fast final pixel exactness.
-- v1.0.2 historical rendering/export bytes and release history remain frozen and continue to pass their historical gates.
+- v11 tests cover thin v10↔v11 exactness, broad terminal morphology, graphite/tooth variation, explicit v9/v10 replay, and canonical↔fast exactness.
 
 See [`docs/releases/v1.0.3.md`](docs/releases/v1.0.3.md).
 
@@ -53,7 +51,7 @@ Released 2026-09-09.
 
 ### Changed
 
-- `DrawingSession.export_timelapse()` now uses the validated local-first fast backend for eligible stroke histories while preserving whole-export canonical fallback.
+- `DrawingSession.export_timelapse()` uses the validated local-first fast backend for eligible stroke histories while preserving whole-export canonical fallback.
 - Added persistent content-addressed stroke-patch reuse, edit-aware dirty-region recomposition, dirty-region Lanczos resampling, atomic lossless delta-frame staging, and persistent palette reuse.
 - Full PNG frame materialization is no longer required by the default fast path.
 - RenderProfile paper/material parameters remain authoritative for the fast renderer.
@@ -69,10 +67,9 @@ Released 2026-09-09.
 
 - Release CI: **253 passed / 3 skipped**.
 - Real `window-study`: 1,272 actions / 637 frames, warm render+pack **4.168 s**, GIF encode **2.163 s**, internal pipeline **6.331 s**, canonical final RGB pixel-exact.
-- Post-release exemplar benchmark on `dev/exemplar-sources/p2_axes_v2.json`: warm internal pipeline **0.231–0.246 s** across `every_n=4/2/1`; persistent cache produced roughly **4.8–5.35×** pipeline speedup over cold runs.
-- Post-release fast/canonical final RGB SHA-256: `7528508869ed45ff4ce03569af5ccfea606ac79c3a37dd01e1050f5221c4b282` on both paths (`pixel_exact=true`).
+- Post-release exemplar benchmark: warm internal pipeline **0.231–0.246 s** across `every_n=4/2/1`.
 
-See [`docs/releases/v1.0.2.md`](docs/releases/v1.0.2.md) and [`dev/benchmarks/timelapse_perf/V1_0_2_POST_RELEASE_EXEMPLAR.md`](dev/benchmarks/timelapse_perf/V1_0_2_POST_RELEASE_EXEMPLAR.md).
+See [`docs/releases/v1.0.2.md`](docs/releases/v1.0.2.md).
 
 ## v1.0.1 — Astra-derived authoring ergonomics
 
