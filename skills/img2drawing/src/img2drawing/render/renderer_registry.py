@@ -9,12 +9,13 @@ from PIL import ImageChops
 
 from . import pillow_pencil_contact as v9
 from . import pillow_pencil_contact_v10 as v10
+from . import pillow_pencil_contact_v11 as v11
 from .pillow_graphite_grain import _graphite_layer, _material, _stroke_seed
-from .renderer_contracts import RendererContract, V9_CONTRACT, V10_CONTRACT
+from .renderer_contracts import RendererContract, V9_CONTRACT, V10_CONTRACT, V11_CONTRACT
 from .v10_value_authority import install_v10_value_authority_core
 
-# v10 is still an RC-only candidate, so registry binding owns its complete semantic
-# package. Historical v9 remains byte-frozen and is never decorated here.
+# v10 remains an immutable explicit-replay backend. Its RC1 value-authority adapter is
+# installed before v11 delegates thin/shoulder behavior to it. v9 remains byte-frozen.
 install_v10_value_authority_core(v10)
 
 
@@ -46,8 +47,15 @@ def _v10_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, pap
     )
 
 
+def _v11_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, paper_seed, graphite, profile):
+    return module._build_contact_patch(
+        stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale,
+        paper_seed=paper_seed, graphite=graphite, profile=profile,
+    )
+
+
 def _stage_free_stroke(stroke):
-    """Return a detached stroke whose compatibility stage cannot perturb v10 pixels."""
+    """Return a detached stroke whose compatibility stage cannot perturb current pixels."""
 
     prepared = deepcopy(stroke)
     prepared.stage = None
@@ -128,10 +136,14 @@ _BACKENDS = {
     ),
     (v10.RENDERER_ID, str(v10.RENDERER_VERSION)): RendererBackend(
         v10.RENDERER_ID, str(v10.RENDERER_VERSION), v10, _v10_build_patch, V10_CONTRACT,
+        current=False, stage_free_seed_identity=True,
+    ),
+    (v11.RENDERER_ID, str(v11.RENDERER_VERSION)): RendererBackend(
+        v11.RENDERER_ID, str(v11.RENDERER_VERSION), v11, _v11_build_patch, V11_CONTRACT,
         current=True, stage_free_seed_identity=True,
     ),
 }
-_CURRENT_IDENTITY = (v10.RENDERER_ID, str(v10.RENDERER_VERSION))
+_CURRENT_IDENTITY = (v11.RENDERER_ID, str(v11.RENDERER_VERSION))
 
 for _identity, _backend in _BACKENDS.items():
     if (
