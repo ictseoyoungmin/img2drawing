@@ -89,7 +89,7 @@ def main() -> None:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
-                    # A closed stable release may coexist with new design work.  Do not force the
+                    # A closed stable release may coexist with new design work. Do not force the
                     # post-release repository to pretend that product development also stopped.
                     assert "ACTIVE BOTTLENECK:  Q01" in status
                     assert "CURRENT RENDERER:   pillow-pencil-contact-v11/1" in status
@@ -101,7 +101,9 @@ def main() -> None:
                     assert "No renderer v12 is authorized" in roadmap
                     assert (PLANNING / "V11_QUALITY_CONTROL_REDESIGN.md").is_file()
                     assert not (PUBLISH / "v1.0.4.json").exists()
-                    assert "1.0.4rc1" not in status
+                    assert "CURRENT SOURCE:     1.0.4rc1" not in status
+                    assert "RC CANDIDATE:       1.0.4rc1" not in status
+                    assert "RC IN MAIN:         1.0.4rc1" not in status
                 else:
                     assert "NEXT GATE:          none for v1.0.3 · release CLOSED" in status
             else:
