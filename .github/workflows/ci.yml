@@ -63,3 +63,14 @@ jobs:
           path: dist/*.whl
           if-no-files-found: error
           retention-days: 14
+      - name: Build verified v1.0.3 stable candidate wheel
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-stable'
+        run: python -m build --wheel --outdir dist skills/img2drawing
+      - name: Upload verified v1.0.3 stable candidate wheel
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-stable'
+        uses: actions/upload-artifact@v4
+        with:
+          name: img2drawing-1.0.3-stable-candidate-${{ github.sha }}
+          path: dist/*.whl
+          if-no-files-found: error
+          retention-days: 14
