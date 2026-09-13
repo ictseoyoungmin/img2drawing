@@ -86,6 +86,8 @@ def main() -> None:
             released = "**Current stable: v1.0.3**" in root_readme
             if released:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
+                assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
+                assert "NEXT GATE:          none for v1.0.3 · release CLOSED" in status
             else:
                 assert "**Current stable: v1.0.2**" in root_readme
                 assert "RELEASE INTENT:" in status and "v1.0.3" in status
@@ -99,38 +101,56 @@ def main() -> None:
     roadmap_lower = roadmap.lower()
     assert "g01" in roadmap_lower and "gesture" in roadmap_lower
     assert "g02" in roadmap_lower and "broad-pencil" in roadmap_lower
-    if is_stable:
-        assert "choose v1.0.3" in roadmap_lower
-        assert "g05" in roadmap_lower and "stable freeze" in roadmap_lower
     assert "CURRENT MAIN INVARIANTS" in contract
     assert "current `src` contains no installable R23 runtime/legacy namespace" in planning_readme
-    assert "current validation matrix for unreleased post-v1.0.2 main" in validation
+
+    if is_stable and "**Current stable: v1.0.3**" in root_readme:
+        assert "### G05 — stable freeze and wheel verification — CLOSED" in roadmap
+        assert "### G06 — publish — CLOSED" in roadmap
+        assert "NEXT PRODUCT BOTTLENECK" in roadmap and "UNSELECTED" in roadmap
+        assert "v1.0.3 release cycle is closed" in planning_readme
+        assert "The latest released stable package is **v1.0.3 / A14 / DrawingSession/1.0.3-vnext**" in contract
+        assert "Known current defect:" not in contract
+        assert "current validation matrix for work **after the published v1.0.3 baseline**" in validation
+        assert "## V01 — Gesture mode behavior — CLOSED for v1.0.3" in validation
+        assert "## V02 — Render-input parity — CLOSED for v1.0.3" in validation
 
     stale_current_markers = {
         PLANNING / "README.md": (
             "D01 is the next authorized work",
             "Physical R23 retirement occurs only at R03",
+            "The immediate sequence is fresh-worker gesture validation",
+            "release/version hardening for the post-v1.0.2 main state",
         ),
         PLANNING / "STATUS.md": (
             "PACKAGE:          1.0.1",
             "STABLE BASELINE:  v1.0.1",
             "NEXT ENGINEERING: fresh sealed D01 validation",
             "R23 remains explicit compatibility only; physical retirement is still a later bounded decision",
+            "GitHub Release pending",
         ),
         PLANNING / "ROADMAP.md": (
             "Phase E — fresh integrated validation — NEXT",
             "R03 physical R23 retirement",
             "stable v1.0.1 notes",
+            "G05 stable freeze + wheel verification             ACTIVE",
+            "G06 explicit publish manifest + publish            NEXT",
+            "currently published stable until G06",
         ),
         PLANNING / "CONTRACT.md": (
             "FROZEN FOR D01–D06",
             "Physical R23 retirement occurs only at R03",
             "img2drawing.legacy.r23",
+            "Known current defect:",
+            "The latest released stable package is v1.0.2",
+            "still reports package version 1.0.2",
         ),
         PLANNING / "VALIDATION_RELEASE.md": (
             "Starts only after: **B18 CLOSED",
             "R03 — Physical R23 retirement",
             "The current migration implementation first resumes a `DrawingRun`",
+            "current validation matrix for unreleased post-v1.0.2 main",
+            "review compatibility impact of all post-v1.0.2 changes",
         ),
     }
     current_text = {

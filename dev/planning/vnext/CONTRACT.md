@@ -1,11 +1,15 @@
 # img2drawing architecture contract
 
 Status: **CURRENT MAIN INVARIANTS**
-Updated: 2026-09-11
+Updated: 2026-09-13
 
 This document describes durable architecture invariants for current `main`. It is not a release
-freeze. The immutable released v1.0.2/A10 snapshot remains in
-`dev/release/vnext/CONTRACT_FREEZE.json` and may intentionally differ from current main.
+freeze. Immutable released snapshots remain version-specific:
+
+- v1.0.2 / A10: `dev/release/vnext/CONTRACT_FREEZE.json`;
+- v1.0.3 / A14: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`.
+
+Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
 
 ## 1. One canonical orchestration core
 
@@ -84,13 +88,17 @@ Current main requires:
 
 ## 7. Render / replay contract
 
-Final PNG, canonical replay, and timelapse use one persisted `RenderProfile` family. Replay remains
-end-to-end from action 0 through the latest action with a declared sampling policy.
+Final PNG, inspection, canonical replay, and eligible fast timelapse derive from one persisted
+`RenderProfile` family and one registered renderer identity. Replay remains end-to-end from action 0
+through the latest action with a declared sampling policy.
 
-Known current defect: inspection and final/replay can differ by a few luminance levels because
-compatibility-stage metadata participates in hand-dynamics seeding on history reconstruction. The
-fix must normalize render input coherently across inspection, canonical replay, and fast replay;
-do not patch only one output path.
+The inspection/final seed-parity defect identified during the v1.0.3 RC cycle is closed: v10
+normalizes the private compatibility `Stroke.stage` field out of render seed identity, and the
+active suite verifies inspect/final parity plus canonical-final ↔ fast-final exactness where that
+contract applies. Historical v9 seed semantics remain frozen for explicit v9 replay.
+
+New v1.0.3 sessions select `pillow-pencil-contact-v11 / 1`. Explicit v9/1 and v10/1 persisted
+renderer identities remain replayable and are not silently migrated.
 
 ## 8. Instruction graph contract
 
@@ -110,12 +118,21 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-The latest released stable package is v1.0.2. Current main contains unreleased
-compatibility-breaking changes and still reports package version 1.0.2 until a new release version is
-chosen. Do not publish a new artifact as v1.0.2 and do not rewrite the immutable v1.0.2 freeze.
+The latest released stable package is **v1.0.3 / A14 / DrawingSession/1.0.3-vnext**. Git tag and
+GitHub Release `v1.0.3` are immutable published authority for that version; current or future
+`main` changes belong under `CHANGELOG.md` → `Unreleased` until a separately versioned release is
+selected.
+
+The v1.0.2/A10 freeze remains immutable historical authority, and the v1.0.3/A14 freeze is the
+independent immutable snapshot for the current stable release. Do not rewrite either freeze to
+match later `main`.
 
 Deprecated pre-0.6.0rc2 root aliases remain a separate compatibility surface. Their future removal
 requires an explicit versioned compatibility decision.
+
+Current source-module filenames are semantic implementation names rather than renderer-generation
+tags. Serialized renderer identities may retain v9/v10/v11 generation labels because they are
+persistence/replay protocol identifiers, not Python module names.
 
 ## 10. Review triggers
 
@@ -129,4 +146,5 @@ subject- or model-specific answer geometry in the skill
 style/output logic that silently overrides reference geometry
 legacy orchestration returning to the normal route
 release documents that describe mutable main as an immutable past release
+generation-tagged Python module basenames returning to current src
 ```
