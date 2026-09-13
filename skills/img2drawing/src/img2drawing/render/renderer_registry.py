@@ -10,12 +10,19 @@ from PIL import ImageChops
 from . import pillow_pencil_contact as v9
 from . import pillow_pencil_contact_core as v10
 from . import pillow_pencil_contact_material as v11
+from . import pillow_pencil_terminal_material as v12
 from .pillow_graphite_grain import _graphite_layer, _material, _stroke_seed
-from .renderer_contracts import RendererContract, V9_CONTRACT, V10_CONTRACT, V11_CONTRACT
+from .renderer_contracts import (
+    RendererContract,
+    V9_CONTRACT,
+    V10_CONTRACT,
+    V11_CONTRACT,
+    V12_CONTRACT,
+)
 from .pencil_value_authority import install_v10_value_authority_core
 
 # v10 remains an immutable explicit-replay backend. Its RC1 value-authority adapter is
-# installed before v11 delegates thin/shoulder behavior to it. v9 remains byte-frozen.
+# installed before later renderers delegate thin/shoulder behavior to it. v9 remains byte-frozen.
 install_v10_value_authority_core(v10)
 
 
@@ -48,6 +55,13 @@ def _v10_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, pap
 
 
 def _v11_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, paper_seed, graphite, profile):
+    return module._build_contact_patch(
+        stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale,
+        paper_seed=paper_seed, graphite=graphite, profile=profile,
+    )
+
+
+def _v12_build_patch(*, module, stroke, factor, hi_size, tooth, paper_scale, paper_seed, graphite, profile):
     return module._build_contact_patch(
         stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale,
         paper_seed=paper_seed, graphite=graphite, profile=profile,
@@ -140,10 +154,14 @@ _BACKENDS = {
     ),
     (v11.RENDERER_ID, str(v11.RENDERER_VERSION)): RendererBackend(
         v11.RENDERER_ID, str(v11.RENDERER_VERSION), v11, _v11_build_patch, V11_CONTRACT,
+        current=False, stage_free_seed_identity=True,
+    ),
+    (v12.RENDERER_ID, str(v12.RENDERER_VERSION)): RendererBackend(
+        v12.RENDERER_ID, str(v12.RENDERER_VERSION), v12, _v12_build_patch, V12_CONTRACT,
         current=True, stage_free_seed_identity=True,
     ),
 }
-_CURRENT_IDENTITY = (v11.RENDERER_ID, str(v11.RENDERER_VERSION))
+_CURRENT_IDENTITY = (v12.RENDERER_ID, str(v12.RENDERER_VERSION))
 
 for _identity, _backend in _BACKENDS.items():
     if (
