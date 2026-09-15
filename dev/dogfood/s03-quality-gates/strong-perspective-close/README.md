@@ -1,6 +1,6 @@
 # S03.1 strong-perspective close figure
 
-State: **NOT_RUN**
+State: **BLOCKED**
 
 Use a reference where camera proximity or foreshortening makes near/far scale and overlap materially important. This class exists to test whether the updated instruction graph propagates depth through the connected figure rather than expressing perspective only as one enlarged local mass.
 
@@ -42,16 +42,14 @@ geometry survives comparison but weight/taper/terminal/material still fails
 → record only as S04 renderer candidate; do not patch renderer here
 ```
 
-## Required evidence
+## Recorded dogfood
 
-Before changing `State` from `NOT_RUN`, append or link a completed review containing:
+The 2026-09-15 user-supplied dogfood compares three independent model outputs on the same strong-perspective Gojo reference. See `review.md`.
 
-- exact reference identity;
-- canonical session provenance;
-- final PNG and action-0→latest GIF;
-- comparison evidence;
-- top remaining residuals;
-- KEEP/SOFTEN/RETIRE audit;
-- PASS/BLOCKED verdict.
+The class is BLOCKED because:
 
-No evidence has been recorded yet.
+- the best-preserved Claude run overrides reference authority twice: it substitutes original identity/styling for the visible subject and corrects the projected hand toward inferred anatomy;
+- the Gemini run collapses into symbolic/starburst hair, generic hand/body primitives, weak perspective propagation, and surviving scaffold marks;
+- the visually strongest Astra result is a recovered final-mark session whose README explicitly says the original correction/deletion history was not recovered, so it cannot establish canonical fresh-worker provenance for PASS.
+
+No renderer/material defect is established by this class. The blocking evidence routes to S04 instruction/geometry/reference-authority classification first.
