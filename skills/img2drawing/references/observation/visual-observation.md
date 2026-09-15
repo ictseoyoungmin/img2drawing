@@ -80,25 +80,22 @@ hidden contour or terminal.
 
 ## Plausibility conflict check
 
-When a readable part appears anatomically unusual, stylized, distorted, mirrored, compressed, or
-otherwise contrary to expectation, treat the disagreement as a reason to **inspect more carefully**,
-not as permission to normalize the drawing.
+The authority rule itself is owned by `../foundation/reference-authority.md`. This leaf owns only
+the evidence-gathering response when prior knowledge and the visible reference disagree.
 
-Use a local crop plus neighboring anchors to ask:
+Re-observe at useful whole/crop scales and compare:
 
-- does the visible silhouette support the surprising relation?
-- do overlap and negative space support it?
-- does the terminal orientation agree with the connected chain?
-- is the apparent oddity explained by perspective, stylization, occlusion, or pose?
+- neighboring anchors;
+- visible silhouette;
+- overlap and negative space;
+- projected spacing and width change;
+- terminal orientation and connected-chain direction;
+- identity-bearing shapes when the subject is familiar or named.
 
-If the visible evidence remains coherent, preserve it even when category knowledge suggests a more
-conventional anatomy or design. Anatomy and object knowledge may disprove an impossible hidden
-hypothesis, but they may not overwrite a readable visible projection. When evidence is genuinely
-ambiguous, preserve uncertainty or gather better evidence rather than silently replacing the part
-with a familiar template.
-
-For familiar or named subjects, do the same with identity: the supplied reference instance outranks
-memory of a canonical hairstyle, face, costume, accessory, or pose.
+If those observations agree, report the visible projection as coherent evidence even when it is
+unfamiliar. If they conflict or remain weak, preserve the uncertainty or gather better evidence.
+Do not turn uncertainty into a template repair; return the evidence to the authority rule and the
+appropriate construction/description owner.
 
 ## Relation again
 
