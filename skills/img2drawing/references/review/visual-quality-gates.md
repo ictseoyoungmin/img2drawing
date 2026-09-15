@@ -19,6 +19,28 @@ Before accepting a connected group of marks, state the smallest useful packet:
 
 Do not turn this into paperwork. One compact observation can answer several fields. The packet exists to stop category-recognition and convenient shorthand from becoming accepted geometry without comparison.
 
+## Reference-fidelity / anti-normalization gate
+
+Before accepting a correction, ask whether it became **more faithful to the supplied authority** or merely more plausible according to category knowledge, anatomy expectations, remembered character design, or generic aesthetics.
+
+For observed work:
+
+- a surprising visible projection is not a defect merely because it looks anatomically unusual;
+- a supplied identity/style is not replaceable by a remembered canonical version;
+- asymmetry, compression, chirality, unusual proportions, or stylization must not be normalized away when neighboring visible evidence supports them;
+- ambiguity should remain bounded or trigger better observation, not a confident template substitution.
+
+If a proposed correction changes handedness, terminal orientation, feature spacing, hairstyle,
+identity-bearing shape, costume/accessory design, pose, or silhouette because the expected version
+looks "more correct," re-open the observation instead of accepting the correction.
+
+If some higher-priority constraint prevents faithful preservation, do not silently substitute a
+different identity, anatomy, style, or pose and call the result faithful. Surface the limitation or
+route the task appropriately.
+
+A local group fails this gate when it is cleaner or more anatomically conventional but farther from
+the readable reference.
+
 ## Line ownership gate
 
 Every surviving final stroke needs one primary owner, for example:
@@ -168,6 +190,9 @@ After every accepted local semantic group, inspect the fresh whole drawing and a
 
 If the drawing became more generic, flatter, more parallel, or more symmetric, reopen the parent premise immediately.
 
+If the drawing became more anatomically conventional or more like a remembered canonical design
+while moving away from the supplied reference, classify that as **authority drift**, not progress.
+
 ## Finish gate
 
 Before final finish, name the three largest remaining visible mismatches, or explicitly state that fewer than three remain.
@@ -190,9 +215,10 @@ For `finish_intent="subject"`, explicitly account for:
 - prop/body relations when present;
 - grounding/context when present;
 - line hierarchy;
-- construction retirement.
+- construction retirement;
+- reference-fidelity / anti-normalization.
 
-A recognizable subject with unresolved generic rails, symbolic terminals, ownerless lines, or dominant search construction is not finished merely because all categories can be named.
+A recognizable subject with unresolved generic rails, symbolic terminals, ownerless lines, dominant search construction, or silent identity/anatomy normalization is not finished merely because all categories can be named.
 
 ## Relationship to runtime checks
 

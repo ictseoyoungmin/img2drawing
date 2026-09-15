@@ -22,6 +22,20 @@ Before drawing more contour, identify:
 A segment may occupy little image-space while representing substantial physical length. Do
 not unfold a foreshortened limb to the anatomical length you expect to see.
 
+## Projection authority before plausibility repair
+
+When the projected relation looks anatomically surprising, preserve the readable image-space
+evidence first. Expected anatomy may trigger a re-check, but it may not silently replace a coherent
+projection.
+
+Do not lengthen a compressed segment, rotate a terminal, flip an apparent hand/foot orientation,
+restore bilateral symmetry, or move an anchor merely because the resulting anatomy would look more
+conventional. Re-check projected spacing, overlap, width, negative space, and neighboring anchors.
+If those relations agree, the projection remains the authority.
+
+If the reference is genuinely ambiguous, mark the uncertainty and avoid overclaiming. Do not turn
+ambiguity into a confident anatomical correction.
+
 ## Construct from visible anchors and minimum hidden continuity
 
 Place the visible anchors and their projected relations first. Let overlap account for missing

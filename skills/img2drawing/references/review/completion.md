@@ -12,11 +12,19 @@ Before finishing, inspect the current drawing and ask:
 - Does line hierarchy actually read at final output scale?
 - Have redundant construction/search lines been classified and retired where they damage clarity?
 - Do any final strokes lack a clear physical/semantic owner?
+- Has any readable reference relation been silently normalized toward expected anatomy, symmetry,
+  a remembered canonical design, or a more generic/attractive substitute?
 - Are all open residual records resolved? Are any remaining non-blocking weaknesses stated
   honestly in `accepted_limitations` rather than hidden by the finish rationale?
 
-Use `visual-quality-gates.md` for the ownership, anti-symbol, hierarchy, retirement, whole-read,
-and perspective-propagation checks.
+Use `visual-quality-gates.md` for the reference-fidelity, ownership, anti-symbol, hierarchy,
+retirement, whole-read, and perspective-propagation checks.
+
+A drawing may not finish as "faithful" when a visible hand, face, hair shape, costume/accessory,
+pose, terminal orientation, or other identity-bearing relation was knowingly replaced because a
+more conventional anatomy or remembered design seemed preferable. If the supplied reference is
+uncertain, state the uncertainty; if a higher-priority constraint prevents faithful preservation,
+surface that limitation instead of silently substituting another result.
 
 ## Rank the largest remaining visible mismatches
 
@@ -34,7 +42,8 @@ why it is acceptable if non-blocking
 
 This is not a requirement to invent flaws. It is a forcing function against the common failure
 where "recognizable" silently becomes "finished" while obvious generic rails, symbolic feet,
-parallel strand fields, ownerless context lines, or dominant construction remain visible.
+parallel strand fields, ownerless context lines, dominant construction, or authority drift remain
+visible.
 
 A blocking mismatch must be repaired or routed/reopened. A non-blocking mismatch may become an
 `accepted_limitation` only after the Agent consciously judges it against the requested finish.
@@ -65,7 +74,8 @@ For `finish_intent="subject"` in particular, do not finish without explicitly ac
 - prop/body relation when present;
 - grounding/context when present;
 - line hierarchy;
-- construction retirement.
+- construction retirement;
+- reference-fidelity / anti-normalization.
 
 For each relation, either it is resolved or a remaining non-blocking limitation is named in
 `accepted_limitations`. `accepted_limitations` is not a bypass for an open residual record. A
