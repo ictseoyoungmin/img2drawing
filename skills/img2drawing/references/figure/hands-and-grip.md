@@ -25,23 +25,15 @@ any visible reappearance of the hand or object contact, and the prop/body relati
 the hidden interval. The hidden portion may matter structurally even when no hidden contour should
 appear in the final drawing.
 
-## Preserve the visible projection before expected anatomy
+## Projection-fidelity reminder
 
-Anatomy is a consistency prior, not permission to redraw a readable hand into a more conventional
-one. Strong perspective, stylization, overlap, lens distortion, or unusual posing can make a hand
-look chirally surprising or anatomically awkward in image space.
+Canonical anti-normalization authority lives in `../foundation/reference-authority.md`; re-observation
+procedure lives in `../observation/visual-observation.md`.
 
-If the visible hand seems "wrong":
-
-1. re-check wrist entry, palm envelope, visible gaps, overlaps, and terminal orientation;
-2. compare those anchors to the connected arm and nearby body/prop relation;
-3. if the projection remains coherent, draw that projection rather than correcting it toward the
-   hand you expect to exist in 3D.
-
-Do not flip handedness, re-order visible finger groups, rotate the palm, open/close the hand, or
-replace a compressed terminal merely to make the anatomy feel more plausible. If the reference is
-genuinely ambiguous, keep the uncertainty bounded or seek better evidence; do not resolve ambiguity
-by silently normalizing it.
+For this leaf, preserve the visible wrist entry, palm envelope, finger grouping, gaps, overlaps,
+terminal orientation, and contact. Do not flip handedness, reorder visible finger groups, rotate the
+palm, or replace a compressed terminal merely to make the anatomy feel more conventional. If those
+relations are uncertain, reopen observation instead of repairing from memory.
 
 ## Author with grouped geometry
 
