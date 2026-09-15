@@ -88,6 +88,8 @@ def verify_single_skill_entrypoint() -> None:
 
 
 def verify_skill_router() -> None:
+    """Generic router/path invariant; keep product-specific routes out of this layer."""
+
     text = SKILL.read_text(encoding="utf-8")
     assert "`references/INDEX.md`" in text, "SKILL.md must route through references/INDEX.md"
 
@@ -105,15 +107,6 @@ def verify_skill_router() -> None:
         "SKILL.md must keep authored-element navigation discoverable"
     )
 
-    quality_gate = "references/review/visual-quality-gates.md"
-    assert quality_gate in tokens, (
-        "SKILL.md must directly route observed finished/substantially-resolved work "
-        "to the central visual-quality gate"
-    )
-    assert "before accepting the first descriptive semantic group" in text, (
-        "the direct visual-quality route must state its acceptance boundary"
-    )
-
 
 def verify_index_reachability() -> None:
     """Generic invariant: every leaf in this graph is reachable from INDEX transitively."""
@@ -128,7 +121,7 @@ def verify_index_reachability() -> None:
 
 
 def verify_product_required_routes() -> None:
-    """Current img2drawing-specific leaves that must remain reachable."""
+    """Current img2drawing-specific routes layered on top of generic graph reachability."""
 
     reachable = _reachable_reference_leaves()
     assert "review/authored-element-navigation.md" in reachable, (
@@ -139,6 +132,17 @@ def verify_product_required_routes() -> None:
     )
     assert "api/runtime-discovery.md" in reachable, (
         "instruction graph must route runtime discovery through the public API boundary"
+    )
+
+    skill_text = SKILL.read_text(encoding="utf-8")
+    skill_tokens = _skill_routing_paths(skill_text)
+    quality_gate = "references/review/visual-quality-gates.md"
+    assert quality_gate in skill_tokens, (
+        "SKILL.md must directly route observed finished/substantially-resolved work "
+        "to the central visual-quality gate"
+    )
+    assert "before accepting the first descriptive semantic group" in skill_text, (
+        "the direct visual-quality route must state its acceptance boundary"
     )
 
 
