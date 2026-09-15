@@ -29,6 +29,7 @@ Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAP
 - instruction-graph cleanup Slice B reduced `SKILL.md` to a true router and made the central visual-quality gate a direct conditional route from the root.
 - instruction-graph cleanup Slice C reduced `references/INDEX.md` to a direct map with one `open when` / `owns` row per deployable leaf.
 - instruction-graph cleanup Slice D restored canonical leaf ownership: reference authority owns anti-normalization, observation/gates/residual/completion own their distinct decisions, gesture completion stays in its mode leaf, and runtime provenance/finish mechanics live in the public API leaf.
+- instruction-graph cleanup Slice E added structural CI for root/INDEX attention budgets, root fan-out, internal route integrity, canonical-owner reachability, and deployable/control-plane separation without changing drawing semantics.
 
 ## Current sequence
 
@@ -53,18 +54,18 @@ S08 choose next package version / release candidate     BLOCKED by S07
 
 ## Instruction-graph attention cleanup — maintenance sequence
 
-This cleanup is bounded maintenance around the S03 bottleneck. It does not add a new product-quality target.
+This cleanup was bounded maintenance around the S03 bottleneck. It is now closed and does not add a new product-quality target.
 
 ```text
 Slice A authority synchronization                         CLOSED
 Slice B SKILL.md router reduction + direct quality gate   CLOSED
 Slice C INDEX.md map-only reduction                       CLOSED
 Slice D leaf ownership / runtime-boundary cleanup         CLOSED
-Slice E attention-architecture QA + structural CI         READY
-clean S03.1 rerun                                         follows the cleaned graph
+Slice E attention-architecture QA + structural CI         CLOSED
+clean S03.1 rerun                                         NEXT within active S03
 ```
 
-The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`.
+The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. The cleaned graph must now be validated by the isolated S03.1 fresh-worker rerun rather than expanded with more instructions by default.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
