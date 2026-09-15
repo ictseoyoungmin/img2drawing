@@ -7,380 +7,147 @@ description: Draws inspectable images with explicit strokes through observation,
 
 ## Mission
 
-Draw with explicit, inspectable marks instead of generating a finished image. The Agent is
-the semantic and artistic authority. Rendering, measurement, overlays, crops, and other
-evidence tools may help the Agent see the current state; they may not decide pose,
-anatomy, identity, topology, or artistic correctness.
-
-For observed work, the subject is the geometry truth. For imaginative work, declared
-intent is the truth. For hybrid work, preserve and transform only the explicitly declared
-constraints. Read [`references/foundation/reference-authority.md`](references/foundation/reference-authority.md).
-
-## Runtime awareness
-
-The ordinary drawing worker is **runtime-aware and implementation-blind**.
-
-When this skill is used to produce a drawing programmatically, know from the beginning that
-`img2drawing` already provides the supported drawing runtime. Final authored marks must enter
-through `DrawingSession` and documented public helpers so history, inspection, replay,
-render-profile authority, and finish provenance stay intact. Read
-[`references/api/public-surface.md`](references/api/public-surface.md) before authoring the first
-programmatic mark.
-
-Do not replace the runtime with a hand-written PIL/Pillow drawing script, raw OpenCV raster edits,
-SVG/canvas drawing, a custom `StrokeCanvas`, or another bespoke rasterizer. Pillow, NumPy, OpenCV,
-crops, overlays, and similar tools may still support bounded observation/evidence work when
-appropriate; they are not alternative final-authoring runtimes.
-
-At the same time, ordinary drawing does **not** require reading the renderer implementation or the
-whole `src/` tree. Private renderer classes, cache internals, history storage, and implementation
-algorithms are framework concerns. Read implementation only for an explicit framework/debugging
-task or when a demonstrated runtime defect must be investigated. If the public surface cannot
-express a required mark, record a runtime capability gap rather than silently bypassing it.
-
-## Non-negotiable drawing principles
-
-1. **Croquis economizes marks, not observed geometry.** Fewer lines mean fewer redundant
-   decisions, not a simpler head, flatter face, straighter leg, boxier foot, or invented
-   fold pattern.
-2. **Preserve shape while reducing line count.** Keep the observed curvature, width
-   changes, overlap, negative space, contact, fold origin, and identity-bearing asymmetry.
-3. **Defer secondary detail, not structural specificity.** Early work may omit texture,
-   decoration, repeated small features, or other low-impact local information, but it must
-   already preserve the subject's specific placement, orientation, proportion, envelope,
-   width/depth changes, major overlap/contact/negative space, and connected-part relations.
-4. **Construction is provisional, not geometry authority.** Gesture, masses, axes, boxes,
-   circles, or other primitives are reasoning aids. A mark does not earn preservation merely
-   because it was drawn earlier or because later marks depend on it.
-5. **Do not inherit unverified structure.** Before a new descriptive pass builds on existing
-   construction, compare the whole drawing against its authority again. If the parent relation
-   is wrong, replace the responsible geometry instead of refining around it.
-6. **There is no generic “detail stage.”** Descriptive lines are added when a specific
-   relationship requires them. A face, shoe, cuff, rifle, fold, joint, seam, or component can
-   become the next highest-impact problem at any time.
-7. **Infer hidden structure when continuity requires it; do not fabricate hidden appearance.**
-   Occlusion does not erase the need to reason about a connected chain, mass, topology, contact,
-   or depth relation. Build the minimum provisional continuation needed to keep visible anchors
-   coherent, but do not render an unobserved contour, terminal, fold, seam, finger, fastener, or
-   surface detail as if it were visible.
-8. **Macro residuals outrank micro polish.** Pose, mass, orientation, balance, silhouette,
-   overlap, grounding, and major object relations are repaired before small accents.
-9. **Line accumulation is not fidelity.** When many simple strokes pile up around one
-   feature, replace them with fewer lines that describe the correct boundary or form.
-10. **Do not finish weak structure with tone.** Broad value, dense hatch, texture, or detail
-    may reinforce structure only after the major spatial relations already read without them.
-
-Read [`references/foundation/structural-specificity.md`](references/foundation/structural-specificity.md)
-for the cross-subject rule that separates secondary detail from structural information and
-requires revalidation before inherited construction is refined. Read
-[`references/foundation/occlusion-inference.md`](references/foundation/occlusion-inference.md)
-when a visible relation crosses behind another form or an occluded continuation materially affects
-pose, topology, contact, depth, or a downstream anchor.
-
-## Instruction graph
-
-`SKILL.md` is the router. Read `references/INDEX.md`, then load only the smallest relevant
-leaves. Paths written in this file are relative to the skill root, so reference leaves always
-start with `references/`:
-
-```text
-SKILL.md
-└─ references/
-   ├─ foundation/   truth, precedence, line economy, structural specificity, occlusion inference
-   ├─ modes/        gesture (pure/constructive), croquis, figure, line, tonal, free draw
-   ├─ observation/  whole/part reading and measurement boundaries
-   ├─ construction/ gesture, masses, orientation/twist, balance, limbs, foreshortening/depth
-   ├─ description/  contour, descriptive geometry, value/edge/material
-   ├─ markmaking/   style policy, semantic stroke roles, tool presets, dynamics, terminals, custom tools
-   ├─ figure/       head/face/hair, torso/arms, hands/grip, legs/feet, clothing folds
-   ├─ props/        attached-object geometry and body contact
-   ├─ environment/  ground and contextual structure
-   ├─ review/       residual correction/routing, markmaking residuals, navigation, retirement, completion
-   ├─ output/       canonical render and replay
-   └─ api/          public runtime surface only
-```
-
-This taxonomy is not a lifecycle. Move backward whenever observation disproves the current
-premise, and skip leaves that do not own the current problem.
-
-Geometry answers **what relation should be drawn**. Markmaking answers **what kind of mark should
-express that relation**. The two routes may be opened together, but markmaking may not hide an
-incorrect path, overlap, proportion, or contact. Read
-[`references/markmaking/stroke-role-vocabulary.md`](references/markmaking/stroke-role-vocabulary.md)
-and the smallest additional markmaking leaf only when line language matters.
-
-## Start route
-
-For every new task:
-
-1. Establish reference authority, requested drawing mode, and any explicit style intent. If style
-   is unspecified, default to `canonical-pencil`; do not invent a decorative style.
-2. If the task will author marks programmatically, read `references/api/public-surface.md` before
-   the first mutation. Use the documented public runtime; do not inspect the whole implementation
-   as a prerequisite and do not replace it with a bespoke Pillow/OpenCV/SVG/canvas rasterizer.
-3. Read `references/foundation/line-economy.md`, `references/foundation/structural-specificity.md`, and the chosen
-   mode guide. If the user asks for **gesture drawing**, choose `references/modes/gesture-drawing.md` rather
-   than treating construction gesture as a finish target: an unqualified gesture request defaults
-   to constructive gesture, while explicit quick/pure/line-of-action requests use pure gesture.
-   If the request says to *start* with gesture and continue to a fuller drawing, gesture remains an
-   intermediate pass and does not end the larger task.
-4. For observed work, read `references/observation/visual-observation.md`. If a material relation disappears
-   behind another form, read `references/foundation/occlusion-inference.md` before deciding that the hidden
-   structure simply ends. Use `references/observation/measuring-boundaries.md` only when measurements or
-   ambiguous boundaries are actually needed.
-5. Form one whole-subject structural hypothesis before spending marks on local description.
-   Preserve the specific placement, orientation, proportion, envelope, width/depth changes,
-   overlaps, contacts, negative spaces, and connected-part or anchor relations that materially
-   define the subject. When continuity passes behind an occluder, infer only the hidden relation
-   needed to keep the visible anchors coherent. Load specialized construction leaves only when
-   those relationships need them.
-6. Before local description, re-read the whole drawing against its authority. Existing
-   construction, including hidden-continuation hypotheses, may be retained only when the parent
-   structure is still credible without relying on detail or tone. If not, replace the responsible
-   geometry first.
-7. For each mark whose geometry is justified, choose its semantic role and the smallest suitable
-   markmaking/tool behavior. Do not collapse an entire drawing into one tool merely for convenience.
-   Use `references/markmaking/` only as needed; explicit reference/style intent remains the authority.
-8. Route each remaining mismatch to the smallest descriptive, subject-specific, or markmaking leaf
-   that owns its cause. If the visible part may only be a symptom, use
-   `references/review/residual-routing.md`; if the path is correct but the line language/material is
-   wrong, use `references/review/markmaking-residuals.md`.
-9. After every meaningful mutation, inspect a fresh render and use
-   `references/review/residual-correction.md`.
-10. Finish only from current evidence, then export through the output route.
-
-## Canonical drawing loop
-
-`observe → construct → choose mark language → render → inspect → select residual → correct → render again`
-
-Continue the same loop while description and finish marks are added. Do not stop merely
-because a routine pass completed, and do not ask for permission after each pass when the
-requested target is already clear.
-
-A useful correction changes the drawing, not the paperwork. Fix one to three highest-impact
-problems at a time. When a local cleanup would hide a larger structural error, revise the
-structural premise instead. Repeated failure of the same local correction is a routing
-signal to inspect the parent relation, not a reason to add more local strokes.
-
-## Whole-subject structural hypothesis
-
-For observed work, establish one coherent hypothesis covering the high-impact relationships that
-make this subject specific rather than generic:
-
-- placement and occupied extent of the major forms or parts;
-- dominant flow, principal direction, or organizing axes when present;
-- major orientation, turn, and relative spatial relation;
-- proportion, spacing, characteristic envelope, and width/depth changes;
-- support, balance, grounding, or load path when they materially define the subject;
-- connected-part or anchor relations, including hidden continuity when an occlusion separates
-  visible fragments of the same structure;
-- large negative spaces, overlaps, contacts, and occlusion order;
-- attached-object relations when present.
-
-Construction marks may be sparse, but the represented relationships may not be vague. A short
-line can encode an exact direction; a simple mass can preserve a specific orientation and width
-change. Do not replace observed structure with a generic primitive merely because local detail is
-being deferred.
-
-For figures, the same rule includes head/ribcage/pelvis placement and turn, shoulder/pelvis
-relation, support, limb chains, stance, and prop/body overlap. For articulated objects or
-mechanisms, the same rule applies to major axes, joint or part envelopes, relative widths,
-connections, and overlaps. These are examples of the same invariant, not separate workflows.
-
-## Structural read before description
-
-A rough silhouette or simple construction is not enough to justify contour refinement, local
-identity, or value. Before spending marks downstream, inspect whether the current drawing already
-communicates the structural relations that materially define the subject:
-
-- placement, occupied extent, and relative proportion;
-- major orientation / turn / principal axes;
-- characteristic envelope and width/depth changes;
-- major connected-part or anchor relations, including plausible continuity through important
-  occlusions when the visible arrangement depends on it;
-- overlap, contact, negative space, and occlusion order;
-- support or grounding when applicable.
-
-This is **not** a stage gate. It is a reversible drawing decision. Any later observation may
-invalidate one of these relations, in which case retire or replace the responsible marks and
-reconstruct before continuing downstream.
-
-A warning sign is a drawing whose local parts become cleaner or more detailed while the whole
-subject becomes more generic, flatter, more symmetric, more parallel, or otherwise less faithful
-to its authority. Another warning sign is a connected form that is treated as if it terminates at
-an occluder even though its visible downstream anchor requires continuity. Route those failures
-upstream rather than polishing them.
-
-## Revalidate before inheriting construction
-
-Earlier construction is not a source of truth. Before each meaningful descriptive pass, compare
-the whole drawing against the reference authority or declared intent again.
-
-```text
-previous construction
-→ fresh whole-subject comparison
-→ parent structure still credible?
-   ├─ yes → retain and describe further
-   └─ no  → replace responsible geometry first
-```
-
-Do not preserve a wrong primitive because later strokes were placed relative to it. The cost of
-replacing an upstream premise is lower than carrying its error through every downstream contour,
-detail, value region, or accent.
-
-## Occlusion inference boundary
-
-Do not use “not visible” as a synonym for “structurally irrelevant.” When a connected form,
-articulated chain, garment mass, hair mass, attached object, or contact relation passes behind an
-occluder, separate three questions:
-
-1. **What is visible?** Locate the last visible anchor before disappearance, the first visible
-   reappearance when one exists, local direction/tangent, width/taper, foreground ownership, and
-   any visible contact or alignment cues.
-2. **What hidden relation is needed?** Infer the minimum centerline, connected-part path, mass
-   continuation, topology, relative depth, or attachment/contact relation needed to make those
-   visible anchors coherent. This is provisional construction, not observed appearance.
-3. **What should be rendered?** Final descriptive linework normally stops at the foreground
-   occluder and resumes only where the background form is actually visible again. The inferred
-   hidden path may constrain placement without appearing as a visible contour.
-
-If both sides are visible, use them together: a hidden continuation that cannot connect the entry
-and reappearance anchors without an unsupported bend is evidence that the parent premise needs
-revision. If only one side is visible, reduce certainty: infer only enough continuation to support
-the visible parent relation and leave the exact hidden terminal unspecified.
-
-A temporary construction line may pass through an occluder when it materially helps reasoning,
-but it must remain recognizably provisional and should be retired or softened before it reads as a
-claimed visible edge. Never promote category knowledge into exact hidden appearance: anatomy,
-mechanics, garment construction, or object familiarity may constrain plausibility but cannot reveal
-an unseen fingertip, fold path, seam, fastener, hair tip, surface corner, or terminal.
-
-Read `references/foundation/occlusion-inference.md` for the full decision procedure and failure signals.
-
-## Descriptive geometry, not symbolic detail
-
-Descriptive drawing means selecting lines that explain real observed form. A good sparse
-line set usually prioritizes:
-
-- silhouette turns and width changes;
-- overlap boundaries and contact handoffs;
-- form turns or plane breaks that clarify volume;
-- identity-bearing feature placement;
-- seams, folds, joints, or component boundaries that explain construction or force;
-- ground/contact and object/body or part/part relations.
-
-Do not substitute generic symbols for these relationships. In particular:
-
-- a head is not a circle with facial ticks;
-- hair is not a stack of parallel strands;
-- a hand is not a mitten with finger ticks;
-- a leg is not a pair of rails;
-- a foot or shoe is not a rectangular block;
-- clothing is not a field of decorative zigzags;
-- a joint, housing, or connected part is not automatically a generic circle or box;
-- extra strokes around an uncertain form do not make the form more accurate.
-
-Read the matching `references/description/` and subject leaves when one of these becomes limiting.
-
-## Head and face policy
-
-When the head is visible enough to matter, preserve its cranial-to-jaw silhouette, face
-orientation, feature spacing, hair mass, and the few internal turns that make the subject
-recognizable. Spend lines on informative boundaries, not repeated search marks. A few
-accurate exterior and interior lines are preferred over many simplified ones. See
-`references/figure/head-face-hair.md`.
-
-## Hands and grip policy
-
-When a visible hand matters, preserve wrist entry, hand orientation, palm/hand envelope,
-thumb opposition, informative finger groups, visible gaps/terminations, and actual contact.
-Do not convert the terminal into a mitten and then add finger ticks. When digits or part of the
-hand are occluded, infer only the hidden hand/contact relation needed to make the visible grip
-coherent; do not invent exact hidden digits or render them as observed. If the parent arm or prop
-relation is wrong, route upstream rather than deforming the hand to compensate. See
-`references/figure/hands-and-grip.md`.
-
-## Foreshortening and depth policy
-
-When a form points toward or away from the viewer, preserve projected joint spacing,
-near/far order, overlap, supported apparent-width change, and terminal orientation. Do not
-unfold a foreshortened limb to the anatomical length you expect. If part of the chain is occluded,
-infer the minimum hidden continuity needed to connect visible anchors, but do not draw the hidden
-contour through the occluder as if it were visible. See
-`references/construction/foreshortening-and-depth.md`.
-
-## Legs and feet policy
-
-Preserve thigh/calf width changes, knee transition, ankle direction, foot orientation,
-heel/toe/sole relationships, footwear structure, stance spacing, and ground contact. Do
-not hide an incorrect lower body behind a generic tapered tube or box foot. See
-`references/figure/legs-feet.md`.
-
-## Clothing-fold policy
-
-Folds must originate at observed anchors, tension, compression, drape, or contact. Keep
-their exact location and direction even when only a few are drawn. Remove decorative fold
-noise that does not explain form. See `references/figure/clothing-folds.md`.
-
-## Croquis value boundary
-
-In croquis, broad value regions and dense regular hatch fields are off by default. Use them
-only when the request explicitly calls for shaded/tonal croquis or the declared intent materially
-depends on form/light, and only after the structural read above remains credible without tone.
-A small local value accent may clarify an observed relation; value must not manufacture missing
-turn, overlap, or mass.
-
-## Evidence boundary
-
-Whole views, focused crops, overlays, grids, plumb lines, material samples, and profiles are
-observation aids. They answer bounded visual questions; they do not select the drawing
-solution. A luminance edge is not automatically an anatomical edge. A measurement cannot pass
-through an occluder or prove an exact hidden terminal; the Agent may still infer a provisional
-hidden relation from visible anchors when continuity, topology, contact, pose, or depth requires
-it. Keep that inference distinct from measured evidence and from rendered visible appearance.
-
-After any mutation, old visual evidence may no longer describe the current drawing. Render
-and inspect again before accepting the correction.
-
-## Stroke retirement
-
-When a stronger contour, overlap, or descriptive line takes over a construction cue,
-reduce or remove the obsolete cue instead of stacking another line on top. Preserve a faint
-construction line only when it still contributes rhythm, weight, or an intentional
-handoff. All edits remain history-safe. See `references/review/stroke-retirement.md`.
+Draw with explicit, inspectable marks instead of generating a finished image. The Agent is the
+semantic and artistic authority. Rendering, measurement, overlays, crops, and other evidence tools
+may help the Agent see the current state; they may not decide pose, anatomy, identity, topology, or
+artistic correctness.
+
+For observed work, the supplied subject is the geometry authority. For imaginative work, declared
+intent is the authority. For hybrid work, preserve and transform only the explicitly declared
+constraints. Read
+[`references/foundation/reference-authority.md`](references/foundation/reference-authority.md).
 
 ## Runtime boundary
 
-`DrawingSession` is the canonical public orchestration surface for new work. Drawing
-knowledge belongs in this instruction graph; runtime implementation belongs in `src/`.
-Do not read implementation details to decide what the subject should look like, and do not
-copy implementation code into drawing guides. Skill-facing API guidance names only the
-supported public surface; see `references/api/public-surface.md`.
+The ordinary drawing worker is **runtime-aware and implementation-blind**. When marks are authored
+programmatically, use the supported `DrawingSession` public surface from
+[`references/api/public-surface.md`](references/api/public-surface.md). Do not replace it with a
+hand-written Pillow/OpenCV/SVG/canvas rasterizer and do not inspect private renderer/source internals
+as a prerequisite for ordinary drawing. If the documented public surface cannot express a required
+mark, report a runtime capability gap rather than silently bypassing the runtime.
 
-When this skill is invoked to produce a drawing programmatically, every authored mark MUST
-enter through `DrawingSession` (`draw`, `fill_region`, and the other public mutation surface).
-Do not substitute a hand-rolled PIL/Pillow drawing script, raw SVG/canvas code, a custom
-`StrokeCanvas`, or any other bespoke rasterizer, even if it satisfies individual principles
-above (line economy, structural specificity, etc.). Those principles describe what a mark
-should preserve; they do not license drawing through a different runtime. A drawing produced
-outside `DrawingSession` has no history, no inspection record, and no finish provenance, and
-does not satisfy this skill regardless of how it looks.
+## Non-negotiable invariants
 
-The public runtime is the worker-facing boundary. If a required line behavior is unavailable there,
-report or implement a runtime capability extension through framework work; do not make ordinary
-drawing workers discover private renderer internals as an undocumented second API.
+1. **Visible reference evidence outranks normalization.** For observed work, do not replace a
+   readable projection, asymmetry, pose, hand relation, identity, hairstyle, costume, or terminal
+   orientation merely because another solution seems more anatomically plausible, canonical, or
+   attractive. Re-observe uncertainty; do not silently normalize it.
+2. **Croquis economizes marks, not observed geometry.** Preserve the subject-specific curvature,
+   placement, orientation, proportion, envelope, width/depth changes, overlap, contact, negative
+   space, and identity-bearing asymmetry that make the subject specific.
+3. **Construction is provisional.** Gesture, masses, axes, boxes, circles, and other primitives are
+   reasoning aids, not geometry authority. Revalidate parent structure against current evidence
+   before inheriting it downstream; replace disproven construction instead of polishing around it.
+4. **Infer hidden structure only when continuity requires it; do not fabricate hidden appearance.**
+   Use the minimum provisional continuation needed to keep visible anchors coherent through
+   occlusion, but do not render unseen contour, digits, folds, terminals, seams, or details as if
+   they were observed.
+5. **Route residuals by cause, not by noun.** Macro pose, mass, orientation, depth, balance,
+   silhouette, overlap, grounding, contact, and object relations outrank micro polish. Repeated
+   local repair that leaves the same mismatch visible is a signal to reopen the responsible parent
+   premise rather than add more strokes.
+6. **Geometry precedes material.** Decide what relationship a mark expresses before choosing its
+   line language. Markmaking may clarify correct geometry; it may not hide an incorrect path,
+   proportion, overlap, contact, or owner.
+7. **Fresh evidence closes decisions.** After meaningful mutations, render and inspect again. Retire
+   or soften provisional marks when stronger descriptive geometry has taken over, return to the
+   whole drawing after local corrections, and finish only from current evidence.
 
-## Completion
+Canonical definitions live in the reference graph. Root invariants are summaries, not competing
+textbooks.
 
-Finish only after the Agent has actually looked at a fresh current-state inspection (not
-merely generated one), after every open residual record has been resolved, and after any remaining
-non-blocking weakness has been stated honestly in `accepted_limitations`. `accepted_limitations`
-is finish provenance, not a way to leave an open residual unresolved. The final drawing must
-satisfy the requested mode and finish intent without relying on hidden construction notes or a
-checklist to excuse visible errors. The runtime mechanically rejects finishing a blank current
-canvas and finishing on an inspection the Agent never read, but passing those checks is not itself
-a completion judgment; the Agent's read of the actual pixels is. See `references/review/completion.md`.
+## Instruction graph
 
-Final PNG, replay, and timelapse must use the same persisted render profile. Replay must be
-end-to-end from the initial state through the latest action. See
-`references/output/render-profile-and-replay.md`.
+`SKILL.md` is the router. Read [`references/INDEX.md`](references/INDEX.md), then open only the
+smallest leaves that own the current problem. The graph is not a lifecycle; move backward whenever
+fresh evidence disproves a premise.
+
+```text
+references/
+├─ foundation/    truth, line economy, specificity, occlusion
+├─ modes/         user-facing finish modes
+├─ observation/   whole↔part reading and measurement boundaries
+├─ construction/  gesture, masses, orientation, balance, limbs, depth
+├─ description/   contour, geometry, value, edge, material
+├─ markmaking/    semantic stroke roles and tool behavior
+├─ figure/        head/face/hair, torso/arms, hands/grip, legs/feet, clothing
+├─ props/         attached-object geometry and body contact
+├─ environment/   grounding and contextual structure
+├─ review/        quality gates, residuals, navigation, retirement, completion
+├─ output/        render profile, replay, timelapse
+└─ api/           public runtime operation only
+```
+
+Geometry and markmaking routes may be opened together when needed, but use the specialist leaves
+rather than expanding this root into subject-specific policy.
+
+## Conditional start route
+
+For a new task:
+
+1. Establish reference/declaration authority, requested drawing mode, finish intent, and explicit
+   style intent. If style is unspecified, use the canonical pencil default rather than inventing a
+   decorative style.
+2. If final marks will be authored programmatically, read
+   [`references/api/public-surface.md`](references/api/public-surface.md) before the first mutation.
+3. Read [`references/foundation/line-economy.md`](references/foundation/line-economy.md),
+   [`references/foundation/structural-specificity.md`](references/foundation/structural-specificity.md),
+   and the smallest matching mode leaf from `references/INDEX.md`.
+4. For observed work, read
+   [`references/observation/visual-observation.md`](references/observation/visual-observation.md).
+   When continuity materially crosses an occluder, also read
+   [`references/foundation/occlusion-inference.md`](references/foundation/occlusion-inference.md).
+5. **If observed work is intended to become finished or substantially resolved, read
+   [`references/review/visual-quality-gates.md`](references/review/visual-quality-gates.md) directly
+   before accepting the first descriptive semantic group.** Do not rely on transitive discovery of
+   this gate through another leaf.
+6. Use `references/INDEX.md` to open only the specialist construction, description, figure, prop,
+   environment, or markmaking leaves that own the current relationship. Do not preload every branch.
+7. After meaningful mutations, inspect a fresh render and route mismatches through
+   [`references/review/residual-correction.md`](references/review/residual-correction.md). When the
+   visible part may only be a symptom, use
+   [`references/review/residual-routing.md`](references/review/residual-routing.md); when geometry is
+   already correct but line language/material is wrong, use
+   [`references/review/markmaking-residuals.md`](references/review/markmaking-residuals.md).
+8. If a correction must locate an existing authored mark, use the documented navigation route in
+   [`references/review/authored-element-navigation.md`](references/review/authored-element-navigation.md)
+   rather than parsing session history ad hoc.
+9. Finish only from current evidence through
+   [`references/review/completion.md`](references/review/completion.md), then export through
+   [`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md).
+
+## Canonical drawing loop
+
+```text
+observe
+→ construct / author the smallest justified semantic group
+→ choose mark language only after geometry is justified
+→ render
+→ gate / inspect current evidence
+→ name and route the highest-impact residual
+→ correct or retire the responsible marks
+→ re-read the whole
+→ repeat or finish
+```
+
+For observed finished/substantially-resolved work, the gate step uses
+`references/review/visual-quality-gates.md`. A semantic group is accepted because current evidence
+supports its authority, anchors, owner, geometry claim, and whole-drawing effect—not because a
+routine pass completed or because more marks were added.
+
+Fix one to three highest-impact residuals at a time. A useful correction changes the drawing, not
+just the paperwork. If a local correction repeatedly fails, reopen the parent relation rather than
+stacking additional local strokes.
+
+## Completion and output routing
+
+The matching mode leaf owns mode-specific finish semantics. `references/review/completion.md` owns
+the final artistic decision, residual ranking, and accepted-limitation boundary. The runtime may
+enforce mechanical provenance preconditions, but those checks do not decide whether the drawing is
+good.
+
+Before finish, inspect current pixels, ensure blocking residuals are closed or correctly reopened,
+and classify surviving construction/search marks through the retirement route when they damage the
+final read. Final PNG, replay, and timelapse must use the persisted render profile; replay is
+end-to-end from the initial state through the latest action. Use
+[`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md).
