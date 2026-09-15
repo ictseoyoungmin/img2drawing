@@ -1,7 +1,7 @@
 # Instruction graph attention-architecture cleanup plan
 
 Updated: 2026-09-15
-Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D READY
+Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E READY
 Scope: instruction-graph organization and documentation authority only
 
 ## Goal
@@ -173,45 +173,59 @@ Make INDEX a low-attention navigation layer instead of a second textbook.
 
 ## Slice D — canonical leaf ownership + runtime boundary cleanup
 
-Status: **READY**
+Status: **CLOSED**
 
 ### Purpose
 
 Remove semantic duplication between leaves while preserving concise boundary reminders.
 
-### Priority ownership cleanup
+### Changes completed
 
-1. **Anti-normalization**
-   - definition: `foundation/reference-authority.md`;
-   - evidence conflict/re-observation: `observation/visual-observation.md`;
-   - accept/reject test: `review/visual-quality-gates.md`;
-   - reopen decision: `review/residual-correction.md`;
-   - final blocker: `review/completion.md`.
+1. **Anti-normalization ownership**
+   - canonical definition remains in `foundation/reference-authority.md`;
+   - `observation/visual-observation.md` now owns only plausibility-conflict evidence gathering;
+   - `review/visual-quality-gates.md` owns accept/reject behavior;
+   - `review/residual-correction.md` owns reopen/correction decisions;
+   - `review/completion.md` treats unresolved authority drift only as a final blocker;
+   - hand, foreshortening, and head/identity leaves retain concise domain reminders and route back to the canonical authority/observation owners.
 
 2. **Residual runtime provenance**
-   - move executable `record_residual() → edit → inspect() → resolve_residual()` tutorial from `review/residual-correction.md` to `api/public-surface.md`;
-   - review leaf keeps semantic correction logic only.
+   - moved the executable `record_residual() → corrective edit → inspect() → resolve_residual()` pattern and `observation_id`/freshness compatibility notes to `api/public-surface.md`;
+   - `review/residual-correction.md` now keeps semantic correction logic plus a short runtime-boundary route only.
 
 3. **Gesture completion**
-   - detailed pure/constructive gesture finish criteria remain in `modes/gesture-drawing.md`;
-   - `review/completion.md` links to that owner rather than repeating the gesture textbook.
+   - detailed pure/constructive gesture finish semantics remain owned by `modes/gesture-drawing.md`;
+   - `review/completion.md` routes to the mode owner rather than repeating gesture-specific primitive criteria.
 
 4. **`finish()` mechanics**
-   - runtime preconditions belong in `api/public-surface.md`;
-   - `review/completion.md` owns the artistic judgment and residual/limitation decision.
+   - evidence-read, open-residual, stale-inspection, empty-canvas, and public `finish()` mechanics now live in `api/public-surface.md`;
+   - `review/completion.md` owns the artistic decision, residual ranking, and accepted-limitation judgment only.
 
-### Definition of closed
+5. **Ownership regression tests**
+   - updated reference-fidelity and gesture tests to assert canonical owners instead of duplicated prose locations;
+   - added `test_instruction_leaf_ownership.py` to prevent runtime mutation tutorials and mode textbooks from regrowing inside review leaves.
 
-- each central policy has one canonical definition owner;
-- reminders elsewhere are short and route back to the owner;
-- non-API review/foundation leaves do not contain long executable runtime tutorials;
-- no dogfood-derived anti-normalization protection is weakened.
+### Forbidden changes honored
+
+- no renderer/runtime implementation behavior change;
+- no package/release version change;
+- no dogfood verdict change;
+- no new drawing principle added;
+- no Slice E attention budgets/fan-out policy added early.
+
+### Closure evidence
+
+- each central policy has one canonical definition owner with short routed reminders elsewhere;
+- review leaves no longer embed the executable residual provenance tutorial or detailed `finish()` runtime mechanics;
+- gesture completion remains fully covered in its mode owner;
+- dogfood-derived anti-normalization semantics remain regression-tested;
+- implementation CI run `34977641399` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 
 ---
 
 ## Slice E — attention-architecture QA and structural CI
 
-Status: **BLOCKED by Slice D**
+Status: **READY**
 
 ### Purpose
 
