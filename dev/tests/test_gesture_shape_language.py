@@ -26,6 +26,9 @@ def test_gesture_final_marks_do_not_collapse_to_generic_primitives() -> None:
     assert "stock rounded blobs" in mode
     assert "do not invent corners or plane breaks" in mode
     assert "temporary search primitives" in mode
+    assert "orientationless circle" in mode
+    assert "smooth bean/oval/capsule" in mode
+    assert "completion test" in mode
 
     assert "construction shorthand is disposable reasoning" in construction
     assert "head search sphere must become a directional cranial volume" in construction
@@ -44,7 +47,9 @@ def test_gesture_final_marks_do_not_collapse_to_generic_primitives() -> None:
     assert "cranial search sphere is temporary reasoning" in head
     assert "face cross-axis is an orientation aid, not a substitute for head volume" in head
 
-    assert "orientationless circle-head" in completion
-    assert "flat/sharply faceted ribcage" in completion
-    assert "smooth generic bean/oval/capsule" in completion
-    assert "rounded` alone is not a completion criterion" in completion
+    assert "mode-specific completion ownership" in completion
+    assert "../modes/gesture-drawing.md" in completion
+    assert "do not repeat or weaken its pure/constructive criteria here" in completion
+    assert "orientationless circle-head" not in completion
+    assert "flat/sharply faceted ribcage" not in completion
+    assert "smooth generic bean/oval/capsule" not in completion
