@@ -8,6 +8,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / "skills" / "img2drawing"
 
 
+def _text(relative: str) -> str:
+    return (SKILL / relative).read_text(encoding="utf-8")
+
+
 def test_deployable_skill_root_is_attention_clean() -> None:
     assert {path.name for path in SKILL.iterdir()} == {
         "LICENSE",
@@ -67,12 +71,37 @@ def test_reference_surface_is_the_instruction_graph() -> None:
     }
 
 
+def test_skill_root_is_router_not_specialist_textbook() -> None:
+    skill = _text("SKILL.md")
+
+    assert "`SKILL.md` is the router" in skill
+    assert "references/INDEX.md" in skill
+    assert "## Conditional start route" in skill
+    assert "## Canonical drawing loop" in skill
+    assert "## Completion and output routing" in skill
+
+    for specialist_heading in (
+        "## Whole-subject structural hypothesis",
+        "## Structural read before description",
+        "## Revalidate before inheriting construction",
+        "## Occlusion inference boundary",
+        "## Head and face policy",
+        "## Hands and grip policy",
+        "## Foreshortening and depth policy",
+        "## Legs and feet policy",
+        "## Clothing-fold policy",
+        "## Croquis value boundary",
+        "## Stroke retirement",
+    ):
+        assert specialist_heading not in skill
+
+
 def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    croquis = (SKILL / "references" / "modes" / "croquis.md").read_text(encoding="utf-8")
-    lower = (SKILL / "references" / "figure" / "legs-feet.md").read_text(encoding="utf-8")
-    head = (SKILL / "references" / "figure" / "head-face-hair.md").read_text(encoding="utf-8")
-    folds = (SKILL / "references" / "figure" / "clothing-folds.md").read_text(encoding="utf-8")
+    skill = _text("SKILL.md")
+    croquis = _text("references/modes/croquis.md")
+    lower = _text("references/figure/legs-feet.md")
+    head = _text("references/figure/head-face-hair.md")
+    folds = _text("references/figure/clothing-folds.md")
 
     assert "Croquis economizes marks, not observed geometry" in skill
     assert "Economize marks, not geometry" in croquis
@@ -81,19 +110,17 @@ def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
     assert "zigzags" in folds
 
 
-def test_visual_quality_gate_closes_instruction_execution_gap() -> None:
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    economy = (SKILL / "references" / "foundation" / "line-economy.md").read_text(encoding="utf-8")
-    gates = (SKILL / "references" / "review" / "visual-quality-gates.md").read_text(encoding="utf-8")
-    head = (SKILL / "references" / "figure" / "head-face-hair.md").read_text(encoding="utf-8")
-    completion = (SKILL / "references" / "review" / "completion.md").read_text(encoding="utf-8")
+def test_visual_quality_gate_is_a_direct_conditional_root_route() -> None:
+    skill = _text("SKILL.md")
+    index = _text("references/INDEX.md")
+    gates = _text("references/review/visual-quality-gates.md")
+    head = _text("references/figure/head-face-hair.md")
+    completion = _text("references/review/completion.md")
 
-    economy_flat = " ".join(economy.split())
+    assert "references/review/visual-quality-gates.md" in skill
+    assert "before accepting the first descriptive semantic group" in skill
+    assert "Do not rely on transitive discovery" in skill
     assert "review/visual-quality-gates.md" in index
-    assert (
-        "read `../review/visual-quality-gates.md` before accepting the first descriptive semantic group"
-        in economy_flat
-    )
     assert "Visible authority" in gates
     assert "Line ownership gate" in gates
     assert "Anti-symbol gate" in gates
@@ -105,16 +132,14 @@ def test_visual_quality_gate_closes_instruction_execution_gap() -> None:
 
 
 def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    correction = (SKILL / "references" / "review" / "residual-correction.md").read_text(
-        encoding="utf-8"
-    )
-    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
-        encoding="utf-8"
-    )
+    skill = _text("SKILL.md")
+    index = _text("references/INDEX.md")
+    correction = _text("references/review/residual-correction.md")
+    routing = _text("references/review/residual-routing.md")
 
-    assert "review/residual-routing.md" in skill
+    assert "references/review/residual-routing.md" in skill
+    assert "references/review/residual-correction.md" in skill
+    assert "Route residuals by cause, not by noun" in skill
     assert "route by the relationship that must change" in index.lower()
     assert "Do not route by the noun that looks wrong" in correction
     assert "Route by **cause**, not by the noun that looks wrong" in routing
@@ -136,21 +161,13 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
     assert "Do not read every branch below" in routing
 
 
-def test_high_value_hand_and_foreshortening_leaves_are_bounded_and_routable() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    hands = (SKILL / "references" / "figure" / "hands-and-grip.md").read_text(
-        encoding="utf-8"
-    )
-    depth = (
-        SKILL / "references" / "construction" / "foreshortening-and-depth.md"
-    ).read_text(encoding="utf-8")
-    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
-        encoding="utf-8"
-    )
+def test_high_value_hand_and_foreshortening_leaves_remain_routable() -> None:
+    index = _text("references/INDEX.md")
+    hands = _text("references/figure/hands-and-grip.md")
+    depth = _text("references/construction/foreshortening-and-depth.md")
+    routing = _text("references/review/residual-routing.md")
 
     for path in ("figure/hands-and-grip.md", "construction/foreshortening-and-depth.md"):
-        assert path in skill
         assert path in index
         assert path in routing
 
@@ -163,97 +180,67 @@ def test_high_value_hand_and_foreshortening_leaves_are_bounded_and_routable() ->
     assert "Foreshortening or depth compression looks wrong" in routing
 
 
-def test_structural_orientation_hardening_blocks_flattening_and_premature_value() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    observation = (SKILL / "references" / "observation" / "visual-observation.md").read_text(
-        encoding="utf-8"
-    )
-    orientation = (
-        SKILL / "references" / "construction" / "orientation-and-twist.md"
-    ).read_text(encoding="utf-8")
-    croquis = (SKILL / "references" / "modes" / "croquis.md").read_text(encoding="utf-8")
-    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
-        encoding="utf-8"
-    )
+def test_structural_orientation_hardening_is_owned_by_leaves_not_root_textbook() -> None:
+    skill = _text("SKILL.md")
+    index = _text("references/INDEX.md")
+    observation = _text("references/observation/visual-observation.md")
+    orientation = _text("references/construction/orientation-and-twist.md")
+    croquis = _text("references/modes/croquis.md")
+    routing = _text("references/review/residual-routing.md")
 
     for document in (index, routing):
         assert "construction/orientation-and-twist.md" in document
-    assert "orientation/twist" in skill
 
+    assert "Macro pose, mass, orientation" in skill
     assert "tilt" in observation
     assert "turn" in observation
     assert "near/far" in observation
     assert "projected centerline" in observation
-
     assert "head / ribcage / pelvis orientation" in orientation
     assert "shoulder / pelvis counter-relation" in orientation
     assert "local contours look clean while the whole pose has lost" in orientation
     assert "not a runtime stage" in orientation.lower()
-
     assert "Broad value regions and dense regular hatch fields are **off by default**" in croquis
     assert "pose must remain readable" in croquis
     assert "Whole pose feels flatter, more frontal, or more symmetric" in routing
     assert "local parts become cleaner while the whole pose becomes more frontal" in routing
-    assert "Do not finish weak structure with tone" in skill
-    assert "Structural read before description" in skill
 
 
 def test_structural_specificity_is_cross_subject_and_revalidates_inheritance() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    specificity = (
-        SKILL / "references" / "foundation" / "structural-specificity.md"
-    ).read_text(encoding="utf-8")
-    economy = (SKILL / "references" / "foundation" / "line-economy.md").read_text(
-        encoding="utf-8"
-    )
-    correction = (SKILL / "references" / "review" / "residual-correction.md").read_text(
-        encoding="utf-8"
-    )
-    descriptive = (
-        SKILL / "references" / "description" / "descriptive-geometry.md"
-    ).read_text(encoding="utf-8")
+    skill = _text("SKILL.md")
+    index = _text("references/INDEX.md")
+    specificity = _text("references/foundation/structural-specificity.md")
+    economy = _text("references/foundation/line-economy.md")
+    correction = _text("references/review/residual-correction.md")
+    descriptive = _text("references/description/descriptive-geometry.md")
 
-    assert "foundation/structural-specificity.md" in skill
+    assert "references/foundation/structural-specificity.md" in skill
     assert "foundation/structural-specificity.md" in index
     assert "For any observed subject" in index
     assert "Defer secondary detail, not structural specificity" in specificity
     assert "A small feature is not automatically secondary" in specificity
     assert "merely because it was drawn earlier" in specificity
     assert "parent structure still credible?" in specificity
-    assert "Construction is provisional, not geometry authority" in skill
-    assert "Do not inherit unverified structure" in skill
-    assert "Revalidate before inheriting construction" in skill
+    assert "Construction is provisional" in skill
+    assert "Revalidate parent structure against current evidence" in skill
     assert "Detail is not classified by size" in economy
     assert "Earlier construction is provisional" in correction
     assert "must not promote a provisional construction primitive" in descriptive
 
 
 def test_occlusion_inference_separates_hidden_structure_from_visible_appearance() -> None:
-    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    index = (SKILL / "references" / "INDEX.md").read_text(encoding="utf-8")
-    occlusion = (
-        SKILL / "references" / "foundation" / "occlusion-inference.md"
-    ).read_text(encoding="utf-8")
-    observation = (SKILL / "references" / "observation" / "visual-observation.md").read_text(
-        encoding="utf-8"
-    )
-    measuring = (SKILL / "references" / "observation" / "measuring-boundaries.md").read_text(
-        encoding="utf-8"
-    )
-    contour = (SKILL / "references" / "description" / "contour-and-overlap.md").read_text(
-        encoding="utf-8"
-    )
-    routing = (SKILL / "references" / "review" / "residual-routing.md").read_text(
-        encoding="utf-8"
-    )
+    skill = _text("SKILL.md")
+    index = _text("references/INDEX.md")
+    occlusion = _text("references/foundation/occlusion-inference.md")
+    observation = _text("references/observation/visual-observation.md")
+    measuring = _text("references/observation/measuring-boundaries.md")
+    contour = _text("references/description/contour-and-overlap.md")
+    routing = _text("references/review/residual-routing.md")
 
-    assert "foundation/occlusion-inference.md" in skill
+    assert "references/foundation/occlusion-inference.md" in skill
     assert "foundation/occlusion-inference.md" in index
-    assert "Infer hidden structure when continuity requires it" in skill
+    assert "Infer hidden structure only when continuity requires it" in skill
     assert "do not fabricate hidden appearance" in skill
-
     assert "Keep three layers separate" in occlusion
     assert "Visible evidence" in occlusion
     assert "Provisional hidden structure" in occlusion
@@ -262,7 +249,6 @@ def test_occlusion_inference_separates_hidden_structure_from_visible_appearance(
     assert "How to infer without overclaiming" in occlusion
     assert "Partial and one-sided occlusion" in occlusion
     assert "Measurement tools stop at occlusion" in occlusion
-
     assert "entry direction before an occluder" in observation
     assert "first visible reappearance" in observation
     assert "hard boundary for **measurement**, not for all structural reasoning" in measuring

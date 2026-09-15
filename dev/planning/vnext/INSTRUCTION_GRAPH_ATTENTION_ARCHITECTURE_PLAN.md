@@ -1,7 +1,7 @@
 # Instruction graph attention-architecture cleanup plan
 
 Updated: 2026-09-15
-Status: Slice A CLOSED · Slice B READY
+Status: Slice A CLOSED · Slice B CLOSED · Slice C READY
 Scope: instruction-graph organization and documentation authority only
 
 ## Goal
@@ -97,61 +97,48 @@ Remove current-state ambiguity before restructuring the deployable graph.
 - S02 is implementation CLOSED after the bounded anti-normalization reopen while S03.1 remains BLOCKED pending clean rerun;
 - S04 remains ACTIVE / PARTIAL with zero proven renderer-owned blockers from the current S03.1 batch;
 - CI run `34963437056` passed current documentation, runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED state transition;
-- the final CLOSED transition must pass the same CI surface before merge.
+- merged Slice A main CI also passed the same verification surface.
 
 ---
 
 ## Slice B — make `SKILL.md` a real router
 
-Status: **READY**
+Status: **CLOSED**
 
 ### Purpose
 
 Reduce root attention load while preserving all high-value invariants and direct routing.
 
-### Target root contents
+### Changes completed
 
-Keep only:
+- reduced the root to frontmatter/mission, a compact runtime boundary, seven non-negotiable invariants, graph routing, a conditional start route, the canonical correction loop, and completion/output routing;
+- removed root specialist textbook sections for whole-subject hypothesis detail, structural-read procedure, inheritance procedure, occlusion procedure, head/face, hands/grip, foreshortening, legs/feet, clothing folds, croquis value, and stroke-retirement detail;
+- directly routed observed finished/substantially-resolved work to `references/review/visual-quality-gates.md` before the first descriptive semantic-group acceptance;
+- kept authored-element navigation directly discoverable from the root;
+- changed root regression tests from duplicated-prose location locks to routing/canonical-owner checks;
+- kept detailed runtime-awareness semantics owned by API leaves while preserving a compact root boundary.
 
-1. frontmatter + mission;
-2. compact runtime boundary;
-3. approximately 6–8 non-negotiable invariants;
-4. instruction-graph map pointer;
-5. conditional start route;
-6. canonical observation/correction loop;
-7. completion/output routing.
+### Forbidden changes honored
 
-### Required routing change
+- no `references/INDEX.md` reduction;
+- no specialist leaf semantic rewrite;
+- no renderer/runtime behavior change;
+- no package/release version change;
+- no dogfood verdict change.
 
-For observed work targeting a finished or substantially resolved drawing, `SKILL.md` must directly route to `references/review/visual-quality-gates.md` before acceptance of the first descriptive semantic group. Do not rely on transitive discovery through `line-economy.md`.
+### Closure evidence
 
-### Primary removal candidates from root
-
-Move ownership back to leaves for:
-
-- whole-subject structural-hypothesis textbook detail;
-- structural-read textbook detail;
-- revalidation procedure detail;
-- occlusion decision procedure;
-- head/face, hand/grip, foreshortening, legs/feet, clothing specialist policies;
-- croquis value detail;
-- stroke-retirement detail;
-- duplicate runtime boundary explanation;
-- detailed completion mechanics.
-
-### Definition of closed
-
-- specialist knowledge remains reachable through canonical owners;
-- direct quality-gate route exists;
-- no required drawing invariant disappears from the graph;
-- root prose is materially smaller than the Slice A baseline;
-- regression tests assert routing/ownership, not old duplicated root prose.
+- specialist knowledge remains reachable from `references/INDEX.md` and existing owner leaves;
+- instruction-graph verifier now enforces the direct visual-quality route as an img2drawing-specific product route without contaminating the generic graph invariant;
+- `SKILL.md` is materially smaller than the Slice A baseline (the rewrite removed 357 old lines while adding 124 focused router lines in the initial diff, a net reduction of 233 lines);
+- active-suite regression after the generic/product verifier split is green;
+- PR CI run `34968493328` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 
 ---
 
 ## Slice C — reduce `references/INDEX.md` to a map
 
-Status: **BLOCKED by Slice B**
+Status: **READY**
 
 ### Purpose
 
