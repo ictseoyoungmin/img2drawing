@@ -25,6 +25,7 @@ Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAP
 - G03–G06 integrated, froze, verified, and published `v1.0.3 / A14`.
 - S01 closed the v11 quality-control taxonomy, reversible evidence-gate design, and no-v12 renderer-family policy.
 - S02 integrated the instruction execution gates. S03.1 later caused one bounded reference-authority reopen; that implementation patch is merged, while behavioral proof remains in the clean S03.1 rerun.
+- instruction-graph cleanup Slice A synchronized planning authority and added CI enforcement so `STATUS.md` is the one point-in-time mutable-state source.
 
 ## Current sequence
 
@@ -52,8 +53,8 @@ S08 choose next package version / release candidate     BLOCKED by S07
 This cleanup is bounded maintenance around the S03 bottleneck. It does not add a new product-quality target.
 
 ```text
-Slice A authority synchronization                         ACTIVE
-Slice B SKILL.md router reduction + direct quality gate   BLOCKED by A
+Slice A authority synchronization                         CLOSED
+Slice B SKILL.md router reduction + direct quality gate   READY
 Slice C INDEX.md map-only reduction                       BLOCKED by B
 Slice D leaf ownership / runtime-boundary cleanup         BLOCKED by C
 Slice E attention-architecture QA + structural CI         BLOCKED by D
