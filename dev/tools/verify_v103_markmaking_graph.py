@@ -44,13 +44,13 @@ def main() -> None:
     custom = (REFS / "markmaking" / "custom-tools.md").read_text(encoding="utf-8")
     residual = (REFS / "review" / "markmaking-residuals.md").read_text(encoding="utf-8")
 
+    # SKILL.md owns only the compact runtime boundary and routes to the API owner.
     require(
         skill_entry,
         "runtime-aware and implementation-blind",
-        "img2drawing` already provides the supported drawing runtime",
         "references/api/public-surface.md",
-        "Do not replace the runtime with a hand-written PIL/Pillow drawing script",
-        "does **not** require reading the renderer implementation or the whole `src/` tree",
+        "Do not replace it with a",
+        "private renderer/source internals",
         "runtime capability gap",
     )
     require(
