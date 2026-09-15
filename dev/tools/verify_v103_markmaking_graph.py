@@ -53,15 +53,26 @@ def main() -> None:
         "private renderer/source internals",
         "runtime capability gap",
     )
+
+    # INDEX.md is a map, not a second runtime/markmaking textbook. Verify discoverability only.
     require(
         index,
-        "runtime-aware and implementation-blind",
-        "DrawingSession",
+        "This file is a **map**",
+        "open when:",
+        "owns:",
         "markmaking/style-policy.md",
         "markmaking/stroke-role-vocabulary.md",
+        "markmaking/tool-preset-selection.md",
+        "markmaking/stroke-dynamics.md",
+        "markmaking/pressure-and-terminals.md",
+        "markmaking/broad-graphite.md",
+        "markmaking/custom-tools.md",
         "review/markmaking-residuals.md",
         "api/public-surface.md",
+        "api/runtime-discovery.md",
     )
+    assert "## Runtime-awareness invariant" not in index
+
     require(
         public,
         "runtime-aware and implementation-blind",

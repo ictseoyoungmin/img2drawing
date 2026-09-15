@@ -57,15 +57,16 @@ def main() -> None:
     assert "does not create a second current-state truth" in roadmap
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in status
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in roadmap
-    assert "Status: Slice A CLOSED · Slice B CLOSED · Slice C READY" in attention_plan
+    assert "Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D READY" in attention_plan
     assert (
-        "GRAPH CLEANUP:      Slice A CLOSED · Slice B SKILL router reduction CLOSED · "
-        "Slice C INDEX reduction READY"
+        "GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C INDEX map reduction CLOSED · "
+        "Slice D ownership cleanup READY"
         in status
     )
     assert "Slice A authority synchronization                         CLOSED" in roadmap
     assert "Slice B SKILL.md router reduction + direct quality gate   CLOSED" in roadmap
-    assert "Slice C INDEX.md map-only reduction                       READY" in roadmap
+    assert "Slice C INDEX.md map-only reduction                       CLOSED" in roadmap
+    assert "Slice D leaf ownership / runtime-boundary cleanup         READY" in roadmap
     for slice_heading in (
         "## Slice A — authority synchronization",
         "## Slice B — make `SKILL.md` a real router",
@@ -124,8 +125,6 @@ def main() -> None:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
-                    # A closed stable release may coexist with new post-release work. The verifier
-                    # checks the current selected slice without freezing mutable development forever.
                     assert "ACTIVE BOTTLENECK:  S03" in status
                     assert "S01 DESIGN:         CLOSED" in status
                     assert "S02 INSTRUCTIONS:   CLOSED" in status
@@ -235,7 +234,6 @@ def main() -> None:
                 f"stale current-state marker in {path.relative_to(ROOT)}: {marker!r}"
             )
 
-    # v1.0.2 remains immutable historical authority even after v1.0.3 promotion.
     assert frozen_v102["freeze_id"] == "v1.0.2-A10-2026-09-09"
     assert frozen_v102["package_version"] == "1.0.2"
     assert frozen_v102["public_api"] == "DrawingSession/1.0.2-vnext"

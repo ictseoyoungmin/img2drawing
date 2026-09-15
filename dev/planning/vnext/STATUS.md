@@ -12,7 +12,7 @@ S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; behavioral proof remains in S03.1
 S03.1 RERUN:        READY / NOT_RUN · initial batch remains BLOCKED until clean fresh-worker rerun
 S04 CLASSIFICATION: ACTIVE / PARTIAL · S03.1 classified; renderer-owned blocker count = 0
-GRAPH CLEANUP:      Slice A CLOSED · Slice B SKILL router reduction CLOSED · Slice C INDEX reduction READY
+GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C INDEX map reduction CLOSED · Slice D ownership cleanup READY
 PACKAGE VERSION:    no new RC/version authorized before integrated validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
@@ -45,8 +45,8 @@ Authority is intentionally split by purpose:
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof belongs to the clean S03.1 fresh-worker rerun.
 - **S03 fresh-worker visual dogfood remains the active product bottleneck.** S03.1's initial batch is BLOCKED; its clean rerun is READY / NOT_RUN. S03.2–S03.4 remain pending.
 - **S04 is ACTIVE / PARTIAL.** S03.1 residuals are classified as reference-authority / authored-geometry / anti-symbol-retirement failures. No renderer-owned blocking defect is proven in that batch.
-- **Instruction-graph attention cleanup remains bounded maintenance around S03.** Slice A synchronized planning authority. Slice B is now CLOSED: `SKILL.md` is reduced to mission, seven root invariants, conditional routing, the canonical correction loop, and completion/output routing; observed finished/substantially-resolved work now routes directly to `review/visual-quality-gates.md`. Slice C is READY and owns only the `references/INDEX.md` map reduction.
-- Slice B changed no specialist leaf semantics, renderer/runtime behavior, package version, or dogfood verdict. PR CI run `34968493328` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
+- **Instruction-graph attention cleanup remains bounded maintenance around S03.** Slice A synchronized planning authority. Slice B reduced `SKILL.md` to the root router. Slice C is now CLOSED: `references/INDEX.md` is a compact direct map with one `open when` / `owns` row per deployable leaf; duplicated runtime, gesture, construction, residual-example, and geometry-vs-material teaching was removed from the map. Slice D is READY and owns canonical leaf-ownership/runtime-boundary cleanup.
+- Slice C changed no specialist leaf semantics, renderer/runtime behavior, package version, or dogfood verdict. PR CI run `34972282707` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
 - No `1.0.4rc1` or other package-version bump is authorized yet. Version selection happens only after visual and mechanical validation close.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
@@ -85,13 +85,13 @@ Current bounded sequence:
 ```text
 Slice A authority synchronization                         CLOSED
 Slice B SKILL.md router reduction + direct quality gate   CLOSED
-Slice C INDEX.md map-only reduction                       READY
-Slice D leaf ownership / runtime-boundary cleanup         BLOCKED by C
+Slice C INDEX.md map-only reduction                       CLOSED
+Slice D leaf ownership / runtime-boundary cleanup         READY
 Slice E attention-architecture QA + structural CI         BLOCKED by D
 clean S03.1 rerun                                         follows the cleaned graph
 ```
 
-The detailed scope and closure rules live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. Do not broaden Slice C into leaf ownership cleanup before its own closure criteria pass.
+The detailed scope and closure rules live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. Do not broaden Slice D into attention-budget/CI hardening before its own ownership cleanup closes.
 
 ## Renderer/replay direction
 
