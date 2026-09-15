@@ -35,6 +35,20 @@ to its local boundary, parent axis, anchor relation, overlap, or contact. When t
 scope is uncertain, use `residual-routing.md` to select the smallest leaf that can actually repair
 the relationship and to identify when an upstream premise must be reopened.
 
+## Authority drift is an upstream residual
+
+A correction is not progress merely because it produces a more conventional anatomy, cleaner
+silhouette, more familiar character design, or aesthetically pleasing local part.
+
+For observed work, compare the correction to the supplied authority before accepting it. If a hand,
+face, hairstyle, costume detail, terminal orientation, asymmetry, or foreshortened relation becomes
+more plausible according to memory/category knowledge but less faithful to the visible reference,
+classify the change as **authority drift** and reject or reopen it.
+
+When visible evidence itself is uncertain, gather better evidence or preserve the uncertainty.
+Do not resolve uncertainty by silently substituting a canonical template. See
+`../foundation/reference-authority.md` and `visual-quality-gates.md`.
+
 ## Revalidate inherited construction
 
 Earlier construction is provisional. Before refining a child contour, detail, value region, or
@@ -93,7 +107,9 @@ Escalate upstream when:
 - context lines accumulate without visible owners;
 - local parts improve while the whole becomes flatter, more parallel, more symmetric, or less
   convincingly foreshortened;
-- a correction introduces a new tangent/merge/ownership conflict.
+- a correction introduces a new tangent/merge/ownership conflict;
+- a correction becomes more anatomically conventional or more canonically familiar while drifting
+  away from readable reference evidence.
 
 A repeated local repair that leaves the same mismatch visible is an escalation signal, not
 a request for more local strokes. Re-observe the parent relation and route upstream.
