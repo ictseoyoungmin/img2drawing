@@ -21,25 +21,19 @@ Do not turn this into paperwork. One compact observation can answer several fiel
 
 ## Reference-fidelity / anti-normalization gate
 
-Before accepting a correction, ask whether it became **more faithful to the supplied authority** or merely more plausible according to category knowledge, anatomy expectations, remembered character design, or generic aesthetics.
+The canonical authority rule lives in `../foundation/reference-authority.md`. This gate owns only
+the acceptance test.
 
-For observed work:
+Before accepting a correction, compare it to the supplied authority. If it is cleaner, more
+conventional, more symmetric, or more familiar **but less faithful to the readable reference**,
+classify it as **authority drift** and reject/reopen it. Handedness, terminal orientation, feature
+spacing, identity-bearing shape, hairstyle, costume/accessory design, pose, silhouette, and strong
+foreshortening are common places to check.
 
-- a surprising visible projection is not a defect merely because it looks anatomically unusual;
-- a supplied identity/style is not replaceable by a remembered canonical version;
-- asymmetry, compression, chirality, unusual proportions, or stylization must not be normalized away when neighboring visible evidence supports them;
-- ambiguity should remain bounded or trigger better observation, not a confident template substitution.
-
-If a proposed correction changes handedness, terminal orientation, feature spacing, hairstyle,
-identity-bearing shape, costume/accessory design, pose, or silhouette because the expected version
-looks "more correct," re-open the observation instead of accepting the correction.
-
-If some higher-priority constraint prevents faithful preservation, do not silently substitute a
-different identity, anatomy, style, or pose and call the result faithful. Surface the limitation or
-route the task appropriately.
-
-A local group fails this gate when it is cleaner or more anatomically conventional but farther from
-the readable reference.
+When the evidence is genuinely ambiguous, reopen observation through
+`../observation/visual-observation.md` rather than accepting a confident template substitution. If
+a higher-priority constraint prevents faithful preservation, surface the limitation instead of
+silently substituting another result.
 
 ## Line ownership gate
 
@@ -190,8 +184,8 @@ After every accepted local semantic group, inspect the fresh whole drawing and a
 
 If the drawing became more generic, flatter, more parallel, or more symmetric, reopen the parent premise immediately.
 
-If the drawing became more anatomically conventional or more like a remembered canonical design
-while moving away from the supplied reference, classify that as **authority drift**, not progress.
+If a correction passed local plausibility but failed the reference-fidelity gate, treat that as
+authority drift rather than progress.
 
 ## Finish gate
 
