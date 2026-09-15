@@ -5,6 +5,14 @@ Workflow: Bottleneck · one highest-impact open problem at a time
 
 The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
 
+## Authority and precedence
+
+`STATUS.md` is the canonical **point-in-time current-state authority** for mutable development. This roadmap owns sequencing, dependencies, rationale, and closure criteria; it does not create a second current-state truth.
+
+If a state label in this file and `STATUS.md` diverge, treat the divergence as a documentation defect and update both in the same bounded authority slice. Historical release tags/freezes/manifests remain authoritative for their immutable release facts regardless of mutable planning state.
+
+Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. That plan may change graph organization only within its declared slices; it does not replace S03 as the active product-quality bottleneck.
+
 ## Closed foundation
 
 - v1.0.0 established the first stable stage-free Agent Skill/runtime surface.
@@ -16,7 +24,8 @@ The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 ba
 - G02 closed the broad-pencil square-terminal / weak-graphite failure class with the renderer family now published as `pillow-pencil-contact-v11 / 1`.
 - G03–G06 integrated, froze, verified, and published `v1.0.3 / A14`.
 - S01 closed the v11 quality-control taxonomy, reversible evidence-gate design, and no-v12 renderer-family policy.
-- S02 integrated the instruction execution gates and passed CI run `34761722278` across current and historical verification surfaces.
+- S02 integrated the instruction execution gates. S03.1 later caused one bounded reference-authority reopen; that implementation patch is merged, while behavioral proof remains in the clean S03.1 rerun.
+- instruction-graph cleanup Slice A synchronized planning authority and added CI enforcement so `STATUS.md` is the one point-in-time mutable-state source.
 
 ## Current sequence
 
@@ -29,7 +38,7 @@ G05 stable freeze + wheel verification                  CLOSED
 G06 explicit publish manifest + publish                 CLOSED
 S01 v11 quality-control failure taxonomy + design       CLOSED
 S02 instruction graph execution-gate patch              CLOSED
-S03 fresh-worker visual dogfood                         ACTIVE · S03.1 BLOCKED; S03.2–S03.4 pending
+S03 fresh-worker visual dogfood                         ACTIVE · S03.1 initial batch BLOCKED; clean rerun READY/NOT_RUN; S03.2–S03.4 pending
 S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL · S03.1 classified
 S05 contract-digest / replay-boundary migration         BLOCKED by global S04 evidence; REQUIRED before pixel change
 S06 current-v11 renderer correction if proven           BLOCKED by S04/S05; MAY SKIP
@@ -38,6 +47,21 @@ S08 choose next package version / release candidate     BLOCKED by S07
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
+
+## Instruction-graph attention cleanup — maintenance sequence
+
+This cleanup is bounded maintenance around the S03 bottleneck. It does not add a new product-quality target.
+
+```text
+Slice A authority synchronization                         CLOSED
+Slice B SKILL.md router reduction + direct quality gate   READY
+Slice C INDEX.md map-only reduction                       BLOCKED by B
+Slice D leaf ownership / runtime-boundary cleanup         BLOCKED by C
+Slice E attention-architecture QA + structural CI         BLOCKED by D
+clean S03.1 rerun                                         follows the cleaned graph
+```
+
+The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
@@ -61,7 +85,7 @@ visible authority
 
 Renderer-family identity is also separated conceptually from exact historical pixel identity so quality corrections do not require a new renderer number.
 
-## S02 — instruction execution gates — CLOSED, PARTIALLY REOPENED BY S03.1
+## S02 — instruction execution gates — CLOSED AFTER BOUNDED REOPEN
 
 The skill contains one central `review/visual-quality-gates.md` leaf and concentrated edits to existing owners rather than a new rigid stage pipeline.
 
@@ -79,20 +103,22 @@ Originally closed behavior included:
 - top remaining residual ranking before finish;
 - terminal/markmaking semantics kept downstream of justified geometry.
 
-S03.1 exposed one missing execution rule: workers could still let anatomical plausibility or a remembered canonical identity silently overrule readable reference evidence. The bounded reopen adds reference-fidelity / anti-normalization enforcement without introducing a stage pipeline or renderer change.
+S03.1 exposed one missing execution rule: workers could still let anatomical plausibility or a remembered canonical identity silently overrule readable reference evidence. That caused a bounded reopen adding reference-fidelity / anti-normalization enforcement without introducing a stage pipeline or renderer change.
 
-CI run `34761722278` remains the original S02 closure record. The reopened patch receives its own post-dogfood CI evidence.
+That implementation patch is now merged, so **S02 implementation is CLOSED again**. Its effectiveness is not considered behaviorally proven until the clean S03.1 rerun executes without evaluator leakage. That pending proof belongs to S03, not to S02's implementation state.
+
+CI run `34761722278` remains the original S02 closure record; the bounded reopen has its own later CI evidence.
 
 ## S03 — fresh-worker visual dogfood — ACTIVE
 
-Fresh workers must receive the updated skill, reference, and normal public runtime surface without privileged access to prior solution strokes.
+Fresh workers must receive the updated skill, reference, and normal public runtime surface without privileged access to prior solution strokes or evaluator hints.
 
 Required visual classes:
 
-1. strong-perspective close figure — **BLOCKED; residuals routed to S04**;
-2. full-body 3/4 figure with attached/held prop — pending;
-3. frontal or near-frontal full body — pending;
-4. head/hair close-up — pending.
+1. strong-perspective close figure — **initial batch BLOCKED; clean rerun READY / NOT_RUN**;
+2. full-body 3/4 figure with attached/held prop — NOT_RUN;
+3. frontal or near-frontal full body — NOT_RUN;
+4. head/hair close-up — NOT_RUN.
 
 Each run must produce reviewable provenance:
 
@@ -201,8 +227,10 @@ This historical statement does not require future current source to keep increme
 
 ## Authority
 
-- current state: `STATUS.md`;
-- execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
+- **current point-in-time mutable state: `STATUS.md`**;
+- product sequencing, dependencies, and closure criteria: this file, `ROADMAP.md`;
+- instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
+- v11 execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;

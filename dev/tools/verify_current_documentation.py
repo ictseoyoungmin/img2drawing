@@ -27,6 +27,12 @@ def _current_package_identity(version_text: str) -> tuple[str, str]:
     return version_match.group(1), revision_match.group(1)
 
 
+def _updated_date(text: str, name: str) -> str:
+    match = re.search(r"^Updated: (\d{4}-\d{2}-\d{2})$", text, flags=re.MULTILINE)
+    assert match, f"{name} must declare an Updated date"
+    return match.group(1)
+
+
 def main() -> None:
     assert not (ROOT / "GATES.md").exists(), "retired root GATES.md reappeared"
     assert not (ROOT / "HANDOFF.md").exists(), "retired root HANDOFF.md reappeared"
@@ -37,8 +43,32 @@ def main() -> None:
     planning_readme = _text(PLANNING / "README.md")
     status = _text(PLANNING / "STATUS.md")
     roadmap = _text(PLANNING / "ROADMAP.md")
+    attention_plan = _text(PLANNING / "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md")
     contract = _text(PLANNING / "CONTRACT.md")
     validation = _text(PLANNING / "VALIDATION_RELEASE.md")
+
+    # Mutable planning documents have one current-state authority and one sequencing authority.
+    assert _updated_date(status, "STATUS.md") == _updated_date(roadmap, "ROADMAP.md"), (
+        "STATUS.md and ROADMAP.md must be synchronized in the same bounded authority slice"
+    )
+    assert "canonical point-in-time development status" in status
+    assert "current mutable state: **this file, `STATUS.md`**" in status
+    assert "canonical **point-in-time current-state authority**" in roadmap
+    assert "does not create a second current-state truth" in roadmap
+    assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in status
+    assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in roadmap
+    assert "Status: Slice A CLOSED · Slice B READY" in attention_plan
+    assert "GRAPH CLEANUP:      Slice A authority cleanup CLOSED · Slice B router reduction READY" in status
+    assert "Slice A authority synchronization                         CLOSED" in roadmap
+    assert "Slice B SKILL.md router reduction + direct quality gate   READY" in roadmap
+    for slice_heading in (
+        "## Slice A — authority synchronization",
+        "## Slice B — make `SKILL.md` a real router",
+        "## Slice C — reduce `references/INDEX.md` to a map",
+        "## Slice D — canonical leaf ownership + runtime boundary cleanup",
+        "## Slice E — attention-architecture QA and structural CI",
+    ):
+        assert slice_heading in attention_plan, slice_heading
 
     release_readme = _text(RELEASE / "README.md")
     freeze = _text(RELEASE / "FREEZE.md")
@@ -94,6 +124,8 @@ def main() -> None:
                     assert "ACTIVE BOTTLENECK:  S03" in status
                     assert "S01 DESIGN:         CLOSED" in status
                     assert "S02 INSTRUCTIONS:   CLOSED" in status
+                    assert "S03.1 RERUN:        READY / NOT_RUN" in status
+                    assert "S04 CLASSIFICATION: ACTIVE / PARTIAL" in status
                     assert "CURRENT RENDERER:   pillow-pencil-contact-v11/1" in status
                     assert "RENDERER POLICY:    no additive v12" in status
                     assert "PACKAGE VERSION:    no new RC/version authorized" in status
@@ -101,6 +133,7 @@ def main() -> None:
                     assert "S01 v11 quality-control failure taxonomy + design       CLOSED" in roadmap
                     assert "S02 instruction graph execution-gate patch              CLOSED" in roadmap
                     assert "S03 fresh-worker visual dogfood                         ACTIVE" in roadmap
+                    assert "S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL" in roadmap
                     assert "No renderer v12 is authorized" in roadmap
                     assert (PLANNING / "V11_QUALITY_CONTROL_REDESIGN.md").is_file()
                     assert (PLANNING / "V11_QUALITY_CONTROL_SLICE_PLAN.md").is_file()

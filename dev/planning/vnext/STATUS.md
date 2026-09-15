@@ -1,6 +1,6 @@
 # img2drawing current status
 
-Updated: 2026-09-13
+Updated: 2026-09-15
 
 ```text
 PUBLISHED STABLE:   v1.0.3 · DrawingSession/1.0.3-vnext · A14
@@ -9,7 +9,10 @@ CURRENT RENDERER:   pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
 ACTIVE BOTTLENECK:  S03 · fresh-worker visual dogfood
 S01 DESIGN:         CLOSED
-S02 INSTRUCTIONS:   CLOSED · CI 34761722278 PASS
+S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; behavioral proof remains in S03.1
+S03.1 RERUN:        READY / NOT_RUN · initial batch remains BLOCKED until clean fresh-worker rerun
+S04 CLASSIFICATION: ACTIVE / PARTIAL · S03.1 classified; renderer-owned blocker count = 0
+GRAPH CLEANUP:      Slice A authority cleanup CLOSED · Slice B router reduction READY
 PACKAGE VERSION:    no new RC/version authorized before integrated validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
@@ -21,41 +24,73 @@ PUBLISH WORKFLOW:   34749920471 · PASS
 PUBLISH STATE:      GitHub Release v1.0.3 published
 ```
 
+## Authority contract
+
+This file is the **canonical point-in-time development status** for mutable `main` work.
+
+Authority is intentionally split by purpose:
+
+1. `STATUS.md` — current point-in-time state: what is ACTIVE, BLOCKED, READY, CLOSED, or NOT_RUN now;
+2. `ROADMAP.md` — sequencing, slice definitions, dependencies, and closure criteria;
+3. `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md` — bounded execution plan for the current instruction-graph cleanup slices A–E;
+4. release tags, freezes, manifests, and release notes — immutable historical release authority.
+
+`ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
+
 ## Current truth
 
 - `v1.0.3` remains the latest published stable release and its tag, artifacts, freeze, and historical dogfood are immutable.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
-- **S02 instruction execution gates are complete.** `review/visual-quality-gates.md` is reachable from the normal worker route; line ownership, anti-symbol, perspective propagation, hierarchy, retirement, and top-residual completion checks are integrated. CI run `34761722278` passed repository/docs/runtime/instruction graph, active tests, historical evidence, B17, and B18.
-- **S03 fresh-worker visual dogfood is now the active bottleneck.** No renderer pixel change is authorized before S03 evidence is classified in S04.
+- **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof belongs to the clean S03.1 fresh-worker rerun.
+- **S03 fresh-worker visual dogfood remains the active product bottleneck.** S03.1's initial batch is BLOCKED; its clean rerun is READY / NOT_RUN. S03.2–S03.4 remain pending.
+- **S04 is ACTIVE / PARTIAL.** S03.1 residuals are classified as reference-authority / authored-geometry / anti-symbol-retirement failures. No renderer-owned blocking defect is proven in that batch.
+- **Instruction-graph attention cleanup is maintenance work around the same bottleneck, not a replacement product bottleneck.** Slice A is CLOSED after synchronizing planning authority and adding CI enforcement. Slice B is READY and owns the next graph change: reducing `SKILL.md` back to a real router.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
 - No `1.0.4rc1` or other package-version bump is authorized yet. Version selection happens only after visual and mechanical validation close.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
 
 ## Active S03 evidence loop
 
-Fresh workers receive the updated skill, the reference, and the normal public runtime surface without prior solution strokes.
+Fresh workers receive the updated skill, the reference, and the normal public runtime surface without prior solution strokes or evaluator hints.
 
 Required classes:
 
-1. strong-perspective close figure;
-2. full-body 3/4 figure with attached or held prop;
-3. frontal or near-frontal full body;
-4. head/hair close-up.
+1. strong-perspective close figure — **initial batch BLOCKED; clean rerun READY / NOT_RUN**;
+2. full-body 3/4 figure with attached or held prop — NOT_RUN;
+3. frontal or near-frontal full body — NOT_RUN;
+4. head/hair close-up — NOT_RUN.
 
 Each run must preserve canonical provenance and provide a final PNG, action-0→latest GIF, comparison evidence, top remaining residuals, and a KEEP/SOFTEN/RETIRE audit. A blocking failure in any class stays open; results are not averaged into one score.
 
-The next decision is S04 residual ownership:
+S04 residual ownership uses this split:
 
 ```text
-wrong path / proportion / ownership / overlap / contact
-→ geometry/instruction owner
+wrong path / proportion / ownership / overlap / contact / reference substitution
+→ geometry / instruction owner
 
 correct geometry but wrong weight / taper / terminal / grain / deposition
 → renderer-material candidate
 ```
 
 A renderer candidate requires both real-drawing evidence and a minimal controlled reproduction.
+
+## Instruction-graph cleanup state
+
+The current cleanup exists because the graph accumulated strong but duplicated guidance across `SKILL.md`, `references/INDEX.md`, and specialist leaves.
+
+Current bounded sequence:
+
+```text
+Slice A authority synchronization                         CLOSED
+Slice B SKILL.md router reduction + direct quality gate   READY
+Slice C INDEX.md map-only reduction                       BLOCKED by B
+Slice D leaf ownership / runtime-boundary cleanup         BLOCKED by C
+Slice E attention-architecture QA + structural CI         BLOCKED by D
+clean S03.1 rerun                                         follows the cleaned graph
+```
+
+The detailed scope and closure rules live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. Do not broaden Slice B into INDEX/leaf ownership cleanup before its own closure criteria pass.
 
 ## Renderer/replay direction
 
@@ -104,8 +139,11 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 
 ## Authority map
 
-- execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
-- design rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
+- current mutable state: **this file, `STATUS.md`**;
+- product sequencing and closure criteria: `ROADMAP.md`;
+- instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
+- v11 quality execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
+- v11 redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - current published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
 - exact stable candidate: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;
 - immutable v1.0.3 contract: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
