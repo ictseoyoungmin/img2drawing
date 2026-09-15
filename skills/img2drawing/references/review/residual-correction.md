@@ -37,17 +37,11 @@ the relationship and to identify when an upstream premise must be reopened.
 
 ## Authority drift is an upstream residual
 
-A correction is not progress merely because it produces a more conventional anatomy, cleaner
-silhouette, more familiar character design, or aesthetically pleasing local part.
-
-For observed work, compare the correction to the supplied authority before accepting it. If a hand,
-face, hairstyle, costume detail, terminal orientation, asymmetry, or foreshortened relation becomes
-more plausible according to memory/category knowledge but less faithful to the visible reference,
-classify the change as **authority drift** and reject or reopen it.
-
-When visible evidence itself is uncertain, gather better evidence or preserve the uncertainty.
-Do not resolve uncertainty by silently substituting a canonical template. See
-`../foundation/reference-authority.md` and `visual-quality-gates.md`.
+Canonical authority and anti-normalization are defined in `../foundation/reference-authority.md`.
+This leaf owns the correction decision: if a proposed fix becomes more plausible or familiar but
+less faithful to the supplied authority, reject that fix and reopen the responsible observation or
+parent geometry. Use `../observation/visual-observation.md` when the visible evidence itself is
+uncertain, then re-run `visual-quality-gates.md` before acceptance.
 
 ## Revalidate inherited construction
 
@@ -117,56 +111,11 @@ a request for more local strokes. Re-observe the parent relation and route upstr
 The Agent decides whether the mismatch is resolved. Tooling may record evidence and edits
 but must not emit an artistic verdict on the Agent's behalf.
 
-## Recording the correction
+## Runtime provenance boundary
 
-The current public mutation surface binds a correction to the observation that found the problem.
-Author the corrective edit under the **same `observation_id` passed to `record_residual()`**, then
-inspect the edited state and resolve the residual:
+This leaf decides **what** must change and **why**. The supported `record_residual() → corrective
+edit → inspect() → resolve_residual()` call sequence, `observation_id` binding, compatibility notes,
+and freshness requirements are owned by `../api/public-surface.md`.
 
-```python
-observation_id = session.observe({"jaw": "contour sits too low at the cheek handoff"})
-before_inspection_id = session.inspection_history[-1]["inspection_id"]
-
-residual_id = session.record_residual(
-    observation_id=observation_id,
-    observation="jaw contour sits too low at the cheek handoff",
-    scope="head/jaw",
-    severity="material",
-    impact_rationale="the face shape reads heavier than the reference",
-    responsible_premise="jaw contour placement",
-    responsible_stroke_ids=(jaw_stroke_id,),
-    planned_edit="raise the jaw contour while preserving the cheek anchor",
-    before_inspection_id=before_inspection_id,
-)
-
-fix_action_id = session.replace_stroke(
-    jaw_stroke_id,
-    corrected_jaw_points,
-    observation_id=observation_id,
-    reason="raise the jaw contour to the observed cheek-to-chin relation",
-)
-session.inspect()
-after_inspection_id = session.inspection_history[-1]["inspection_id"]
-
-session.resolve_residual(
-    residual_id,
-    action_ids=(fix_action_id,),
-    after_inspection_id=after_inspection_id,
-    rationale="the fresh inspection now matches the observed jaw handoff",
-)
-```
-
-If a later `session.observe(...)` call has happened, do **not** rely on the mutation methods'
-default-to-latest observation behavior for an older residual. Pass that residual's original
-`observation_id` explicitly on the repairing edit. An edit authored under a different later
-observation is rejected with `correction action observation mismatch`.
-
-If the finding itself has materially changed by the time it is repaired, record it again as a new
-residual under the new observation instead of pretending the old provenance still owns the fix.
-Persisted historical actions may contain legacy/unobserved provenance tolerated for compatibility;
-that tolerance is not the authoring contract for new corrections.
-
-`resolve_residual()` also requires an after-inspection whose drawing state differs from the
-before-inspection and matches the current drawing, so inspect *after* the edit, not before. The
-runtime's freshness checks are mechanical provenance checks; the Agent must still actually look at
-the fresh artifact before deciding that the visible mismatch is resolved.
+Use that API owner when executing the correction; do not duplicate runtime mutation tutorials in
+review leaves.
