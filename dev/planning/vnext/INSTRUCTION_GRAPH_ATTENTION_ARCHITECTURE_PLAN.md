@@ -1,7 +1,7 @@
 # Instruction graph attention-architecture cleanup plan
 
 Updated: 2026-09-15
-Status: Slice A CLOSED · Slice B CLOSED · Slice C READY
+Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D READY
 Scope: instruction-graph organization and documentation authority only
 
 ## Goal
@@ -138,45 +138,42 @@ Reduce root attention load while preserving all high-value invariants and direct
 
 ## Slice C — reduce `references/INDEX.md` to a map
 
-Status: **READY**
+Status: **CLOSED**
 
 ### Purpose
 
 Make INDEX a low-attention navigation layer instead of a second textbook.
 
-### Target entry format
+### Changes completed
 
-Each leaf should normally communicate only:
+- replaced policy-teaching sections with one compact direct row per deployable leaf;
+- each map row now states only `open when:` routing context and `owns:` canonical responsibility;
+- removed duplicated runtime-awareness prose, gesture behavior teaching, construction prerequisite prose, residual-routing examples, and repeated geometry-vs-material instruction from INDEX;
+- kept only short branch-level distinction where needed, such as opening markmaking after geometry is justified;
+- moved tests/verifiers away from requiring duplicated INDEX policy prose;
+- added a structural invariant requiring every deployable reference leaf to appear exactly once as a direct INDEX row with both routing and ownership metadata.
 
-```text
-path
-open when: <routing condition>
-owns: <canonical responsibility>
-```
+### Forbidden changes honored
 
-Short branch-level notes are allowed only when needed to distinguish neighboring leaves.
+- no `SKILL.md` rewrite;
+- no specialist leaf semantic rewrite;
+- no renderer/runtime behavior change;
+- no package/release version change;
+- no dogfood verdict change.
 
-### Remove or relocate
+### Closure evidence
 
-- duplicated runtime-awareness policy;
-- detailed gesture-mode behavior;
-- construction prerequisites already owned by foundation/construction leaves;
-- long residual-routing examples;
-- repeated geometry-vs-material teaching;
-- prose that defines policies instead of locating owners.
-
-### Definition of closed
-
-- every deployable leaf remains transitively reachable;
-- INDEX does not become a lifecycle or preload curriculum;
-- worker can choose the smallest relevant leaf from routing metadata alone;
-- INDEX size is materially below the Slice A baseline without losing leaf discoverability.
+- every deployable leaf remains reachable and is now directly discoverable from INDEX;
+- INDEX is explicitly a map, not a lifecycle/preload curriculum;
+- the final INDEX rewrite is 87 lines smaller than the Slice B baseline diff (`+78 / -165` for INDEX itself);
+- v1.0.3 runtime/markmaking semantics remain verified in `SKILL.md`, API leaves, runtime source, and markmaking owner leaves rather than duplicated in INDEX;
+- PR CI run `34972282707` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED state transition.
 
 ---
 
 ## Slice D — canonical leaf ownership + runtime boundary cleanup
 
-Status: **BLOCKED by Slice C**
+Status: **READY**
 
 ### Purpose
 
