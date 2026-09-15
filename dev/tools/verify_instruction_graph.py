@@ -77,6 +77,8 @@ def _resolve_reference_target(source: Path, token: str) -> Path | None:
         return None
     if raw.startswith("references/"):
         candidate = SKILL_ROOT / raw
+    elif raw.startswith(("./", "../")):
+        candidate = source.parent / raw
     elif "/" in raw:
         candidate = REFERENCES / raw
     else:
