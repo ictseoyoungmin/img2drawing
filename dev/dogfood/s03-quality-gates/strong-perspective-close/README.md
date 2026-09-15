@@ -53,3 +53,11 @@ The class is BLOCKED because:
 - the visually strongest Astra result is a recovered final-mark session whose README explicitly says the original correction/deletion history was not recovered, so it cannot establish canonical fresh-worker provenance for PASS.
 
 No renderer/material defect is established by this class. The blocking evidence routes to S04 instruction/geometry/reference-authority classification first.
+
+## Next required rerun
+
+S04.1 classified the current blockers as instruction/geometry/authority-owned and PR #52 hardened the skill against silent identity and anatomy normalization. The class remains BLOCKED until that diagnosis is tested with a genuinely fresh rerun.
+
+Use `RERUN_AFTER_S04.md` as the benchmark-control contract. The worker must **not** receive the earlier outputs, this review, the S04 analysis, corrected coordinates, or special prompt hints naming the previous failures. It should receive only the current skill/runtime, the exact reference, and the ordinary drawing request.
+
+The rerun must preserve canonical action-0→latest provenance. A visually strong reconstructed history is not sufficient to close this class.
