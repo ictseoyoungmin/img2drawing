@@ -105,6 +105,15 @@ def verify_skill_router() -> None:
         "SKILL.md must keep authored-element navigation discoverable"
     )
 
+    quality_gate = "references/review/visual-quality-gates.md"
+    assert quality_gate in tokens, (
+        "SKILL.md must directly route observed finished/substantially-resolved work "
+        "to the central visual-quality gate"
+    )
+    assert "before accepting the first descriptive semantic group" in text, (
+        "the direct visual-quality route must state its acceptance boundary"
+    )
+
 
 def verify_index_reachability() -> None:
     """Generic invariant: every leaf in this graph is reachable from INDEX transitively."""
@@ -124,6 +133,9 @@ def verify_product_required_routes() -> None:
     reachable = _reachable_reference_leaves()
     assert "review/authored-element-navigation.md" in reachable, (
         "instruction graph must route authored-element navigation"
+    )
+    assert "review/visual-quality-gates.md" in reachable, (
+        "instruction graph must keep the central visual-quality gate reachable"
     )
     assert "api/runtime-discovery.md" in reachable, (
         "instruction graph must route runtime discovery through the public API boundary"
