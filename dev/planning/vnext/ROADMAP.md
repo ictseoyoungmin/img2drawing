@@ -28,6 +28,7 @@ Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAP
 - instruction-graph cleanup Slice A synchronized planning authority and added CI enforcement so `STATUS.md` is the one point-in-time mutable-state source.
 - instruction-graph cleanup Slice B reduced `SKILL.md` to a true router and made the central visual-quality gate a direct conditional route from the root.
 - instruction-graph cleanup Slice C reduced `references/INDEX.md` to a direct map with one `open when` / `owns` row per deployable leaf.
+- instruction-graph cleanup Slice D restored canonical leaf ownership: reference authority owns anti-normalization, observation/gates/residual/completion own their distinct decisions, gesture completion stays in its mode leaf, and runtime provenance/finish mechanics live in the public API leaf.
 
 ## Current sequence
 
@@ -58,8 +59,8 @@ This cleanup is bounded maintenance around the S03 bottleneck. It does not add a
 Slice A authority synchronization                         CLOSED
 Slice B SKILL.md router reduction + direct quality gate   CLOSED
 Slice C INDEX.md map-only reduction                       CLOSED
-Slice D leaf ownership / runtime-boundary cleanup         READY
-Slice E attention-architecture QA + structural CI         BLOCKED by D
+Slice D leaf ownership / runtime-boundary cleanup         CLOSED
+Slice E attention-architecture QA + structural CI         READY
 clean S03.1 rerun                                         follows the cleaned graph
 ```
 

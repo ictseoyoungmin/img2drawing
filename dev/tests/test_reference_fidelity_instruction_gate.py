@@ -26,38 +26,61 @@ def test_plausibility_conflict_routes_to_reobservation_not_template_repair() -> 
     depth = _flat(REFS / "construction" / "foreshortening-and-depth.md")
 
     assert "plausibility conflict check" in observation
-    assert "inspect more carefully" in observation
-    assert "anatomy and object knowledge" in observation
+    assert "authority rule itself is owned by `../foundation/reference-authority.md`" in observation
+    assert "re-observe at useful whole/crop scales" in observation
+    assert "do not turn uncertainty into a template repair" in observation
 
-    assert "preserve the visible projection before expected anatomy" in hands
+    assert "projection-fidelity reminder" in hands
+    assert "../foundation/reference-authority.md" in hands
     assert "do not flip handedness" in hands
-    assert "silently normalizing" in hands
+    assert "reopen observation instead of repairing from memory" in hands
 
-    assert "projection authority before plausibility repair" in depth
-    assert "may not silently replace a coherent projection" in depth
+    assert "projection-fidelity reminder" in depth
+    assert "../foundation/reference-authority.md" in depth
     assert "do not lengthen a compressed segment" in depth
+    assert "reopen observation rather than repairing from memory" in depth
 
 
-def test_supplied_identity_outranks_remembered_character_design() -> None:
+def test_supplied_identity_routes_to_canonical_reference_authority() -> None:
     head = _flat(REFS / "figure" / "head-face-hair.md")
 
-    assert "observed identity beats remembered identity" in head
-    assert "do not redraw the supplied instance from memory" in head
-    assert "does not authorize substitution" in head
+    assert "identity-fidelity reminder" in head
+    assert "../foundation/reference-authority.md" in head
+    assert "do not redraw a familiar or named subject from memory" in head
+    assert "reopen observation rather than substituting a canonical model-sheet version" in head
 
 
-def test_visual_acceptance_and_completion_block_authority_drift() -> None:
+def test_visual_acceptance_correction_and_completion_keep_distinct_ownership() -> None:
     gates = _flat(REFS / "review" / "visual-quality-gates.md")
     correction = _flat(REFS / "review" / "residual-correction.md")
     completion = _flat(REFS / "review" / "completion.md")
 
     assert "reference-fidelity / anti-normalization gate" in gates
+    assert "canonical authority rule lives in `../foundation/reference-authority.md`" in gates
     assert "authority drift" in gates
-    assert "silently substitute" in gates
+    assert "reopen observation" in gates
 
     assert "authority drift is an upstream residual" in correction
-    assert "less faithful to the visible reference" in correction
+    assert "canonical authority and anti-normalization are defined in `../foundation/reference-authority.md`" in correction
+    assert "reopen the responsible observation or parent geometry" in correction
 
-    assert "silently normalized toward expected anatomy" in completion
-    assert "reference-fidelity / anti-normalization" in completion
-    assert "silently substituting another result" in completion
+    assert "canonical anti-normalization semantics live in `../foundation/reference-authority.md`" in completion
+    assert "unresolved authority drift as a blocker" in completion
+
+
+def test_canonical_definition_phrases_do_not_spread_into_boundary_reminders() -> None:
+    nonowners = " ".join(
+        _flat(REFS / path)
+        for path in (
+            "observation/visual-observation.md",
+            "figure/hands-and-grip.md",
+            "construction/foreshortening-and-depth.md",
+            "figure/head-face-hair.md",
+            "review/visual-quality-gates.md",
+            "review/residual-correction.md",
+            "review/completion.md",
+        )
+    )
+
+    assert "diagnostic priors, not correction authority" not in nonowners
+    assert "particular supplied reference instance" not in nonowners

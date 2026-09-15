@@ -14,21 +14,15 @@ to keep the head from reading as an orientationless circle. A cranial search sph
 reasoning; if it remains visible in the final gesture, reshape or retire it unless the subject truly
 supports that circular silhouette.
 
-## Observed identity beats remembered identity
+## Identity-fidelity reminder
 
-When the subject is familiar or named, do not redraw the supplied instance from memory. The
-reference's visible head shape, feature spacing, hair silhouette, parting, accessories, and styling
-remain the authority even when they differ from a remembered canonical design, model sheet, or
-more familiar appearance.
+Canonical authority, including supplied-instance-over-remembered-design, lives in
+`../foundation/reference-authority.md`.
 
-A recognizable character name may help identify which details deserve careful observation; it does
-not authorize substitution. If the reference shows a different hairstyle, face proportion,
-accessory, costume-adjacent head detail, or stylization, preserve the supplied instance unless the
-user explicitly requests transformation toward another design.
-
-If a higher-priority limitation prevents faithful preservation, state that limitation rather than
-silently replacing the reference with a different identity or style while presenting the result as
-faithful.
+For this leaf, do not redraw a familiar or named subject from memory. Preserve the supplied head
+shape, feature spacing, hair silhouette/parting, visible accessories, and styling unless the user
+explicitly requests a transformation. If identity evidence is uncertain, reopen observation rather
+than substituting a canonical model-sheet version.
 
 ## Face
 
