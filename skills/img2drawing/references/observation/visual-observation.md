@@ -78,6 +78,28 @@ or tangent, nearby width/taper, foreground ownership, and any visible contact/at
 Those observations may constrain a hidden structural hypothesis; they do not reveal the exact
 hidden contour or terminal.
 
+## Plausibility conflict check
+
+When a readable part appears anatomically unusual, stylized, distorted, mirrored, compressed, or
+otherwise contrary to expectation, treat the disagreement as a reason to **inspect more carefully**,
+not as permission to normalize the drawing.
+
+Use a local crop plus neighboring anchors to ask:
+
+- does the visible silhouette support the surprising relation?
+- do overlap and negative space support it?
+- does the terminal orientation agree with the connected chain?
+- is the apparent oddity explained by perspective, stylization, occlusion, or pose?
+
+If the visible evidence remains coherent, preserve it even when category knowledge suggests a more
+conventional anatomy or design. Anatomy and object knowledge may disprove an impossible hidden
+hypothesis, but they may not overwrite a readable visible projection. When evidence is genuinely
+ambiguous, preserve uncertainty or gather better evidence rather than silently replacing the part
+with a familiar template.
+
+For familiar or named subjects, do the same with identity: the supplied reference instance outranks
+memory of a canonical hairstyle, face, costume, accessory, or pose.
+
 ## Relation again
 
 Return to the whole after every local correction. A locally attractive head, hand, fold, or
