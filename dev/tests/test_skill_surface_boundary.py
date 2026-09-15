@@ -96,6 +96,39 @@ def test_skill_root_is_router_not_specialist_textbook() -> None:
         assert specialist_heading not in skill
 
 
+def test_reference_index_is_map_not_second_textbook() -> None:
+    index = _text("references/INDEX.md")
+
+    assert "This file is a **map**" in index
+    assert "open when:" in index
+    assert "owns:" in index
+    for duplicated_policy_heading in (
+        "## Runtime-awareness invariant",
+        "## Croquis value boundary",
+        "## Structural read before description",
+        "## Revalidate before inheriting construction",
+    ):
+        assert duplicated_policy_heading not in index
+
+    for path in (
+        "foundation/reference-authority.md",
+        "foundation/structural-specificity.md",
+        "modes/gesture-drawing.md",
+        "observation/visual-observation.md",
+        "construction/orientation-and-twist.md",
+        "description/descriptive-geometry.md",
+        "markmaking/stroke-role-vocabulary.md",
+        "figure/head-face-hair.md",
+        "props/attached-objects.md",
+        "review/visual-quality-gates.md",
+        "review/residual-routing.md",
+        "review/completion.md",
+        "output/render-profile-and-replay.md",
+        "api/public-surface.md",
+    ):
+        assert path in index
+
+
 def test_instruction_graph_hardens_geometry_preserving_line_economy() -> None:
     skill = _text("SKILL.md")
     croquis = _text("references/modes/croquis.md")
@@ -121,6 +154,7 @@ def test_visual_quality_gate_is_a_direct_conditional_root_route() -> None:
     assert "before accepting the first descriptive semantic group" in skill
     assert "Do not rely on transitive discovery" in skill
     assert "review/visual-quality-gates.md" in index
+    assert "semantic-group evidence acceptance gates" in index
     assert "Visible authority" in gates
     assert "Line ownership gate" in gates
     assert "Anti-symbol gate" in gates
@@ -140,7 +174,8 @@ def test_instruction_graph_routes_residuals_by_cause_and_escalates_upstream() ->
     assert "references/review/residual-routing.md" in skill
     assert "references/review/residual-correction.md" in skill
     assert "Route residuals by cause, not by noun" in skill
-    assert "route by the relationship that must change" in index.lower()
+    assert "review/residual-routing.md" in index
+    assert "cause-based local/upstream routing" in index
     assert "Do not route by the noun that looks wrong" in correction
     assert "Route by **cause**, not by the noun that looks wrong" in routing
 
@@ -216,7 +251,7 @@ def test_structural_specificity_is_cross_subject_and_revalidates_inheritance() -
 
     assert "references/foundation/structural-specificity.md" in skill
     assert "foundation/structural-specificity.md" in index
-    assert "For any observed subject" in index
+    assert "structural specificity and revalidation of provisional construction" in index
     assert "Defer secondary detail, not structural specificity" in specificity
     assert "A small feature is not automatically secondary" in specificity
     assert "merely because it was drawn earlier" in specificity
@@ -239,6 +274,7 @@ def test_occlusion_inference_separates_hidden_structure_from_visible_appearance(
 
     assert "references/foundation/occlusion-inference.md" in skill
     assert "foundation/occlusion-inference.md" in index
+    assert "minimum hidden continuity reasoning versus visible rendered appearance" in index
     assert "Infer hidden structure only when continuity requires it" in skill
     assert "do not fabricate hidden appearance" in skill
     assert "Keep three layers separate" in occlusion
