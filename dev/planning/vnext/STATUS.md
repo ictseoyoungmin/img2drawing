@@ -12,7 +12,7 @@ S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; behavioral proof remains in S03.1
 S03.1 RERUN:        READY / NOT_RUN · initial batch remains BLOCKED until clean fresh-worker rerun
 S04 CLASSIFICATION: ACTIVE / PARTIAL · S03.1 classified; renderer-owned blocker count = 0
-GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA READY
+GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
 PACKAGE VERSION:    no new RC/version authorized before integrated validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
@@ -45,8 +45,8 @@ Authority is intentionally split by purpose:
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof belongs to the clean S03.1 fresh-worker rerun.
 - **S03 fresh-worker visual dogfood remains the active product bottleneck.** S03.1's initial batch is BLOCKED; its clean rerun is READY / NOT_RUN. S03.2–S03.4 remain pending.
 - **S04 is ACTIVE / PARTIAL.** S03.1 residuals are classified as reference-authority / authored-geometry / anti-symbol-retirement failures. No renderer-owned blocking defect is proven in that batch.
-- **Instruction-graph attention cleanup remains bounded maintenance around S03.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, and Slice D is now CLOSED after restoring canonical leaf ownership and the runtime boundary. Anti-normalization is defined by `foundation/reference-authority.md`; evidence, acceptance, correction, and completion leaves keep only their role-specific responsibilities. Residual provenance and `finish()` mechanics now live in `api/public-surface.md`; gesture completion remains owned by `modes/gesture-drawing.md`. Slice E is READY and owns only attention-architecture/structural CI hardening.
-- Slice D changed no renderer/runtime behavior, package version, or dogfood verdict. PR CI run `34977641399` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
+- **Instruction-graph attention cleanup is CLOSED through Slice E.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, Slice D restored canonical leaf ownership/runtime boundaries, and Slice E added structural CI for attention budgets, direct root fan-out, broken internal routes, canonical owner reachability, and deployable/control-plane separation. The cleaned baseline remains `SKILL.md` 9,066 bytes and `references/INDEX.md` 7,692 bytes, guarded by 12,000-byte / 10,000-byte ceilings and a 16-leaf direct-root-route ceiling.
+- Slice E changed no drawing semantics, renderer/runtime behavior, package version, or dogfood verdict. Implementation CI run `34982967070` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
 - No `1.0.4rc1` or other package-version bump is authorized yet. Version selection happens only after visual and mechanical validation close.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
@@ -78,7 +78,7 @@ A renderer candidate requires both real-drawing evidence and a minimal controlle
 
 ## Instruction-graph cleanup state
 
-The current cleanup exists because the graph accumulated strong but duplicated guidance across `SKILL.md`, `references/INDEX.md`, and specialist leaves.
+The cleanup existed because the graph accumulated strong but duplicated guidance across `SKILL.md`, `references/INDEX.md`, and specialist leaves. It is now closed through the structural QA slice.
 
 Current bounded sequence:
 
@@ -87,11 +87,11 @@ Slice A authority synchronization                         CLOSED
 Slice B SKILL.md router reduction + direct quality gate   CLOSED
 Slice C INDEX.md map-only reduction                       CLOSED
 Slice D leaf ownership / runtime-boundary cleanup         CLOSED
-Slice E attention-architecture QA + structural CI         READY
-clean S03.1 rerun                                         follows the cleaned graph
+Slice E attention-architecture QA + structural CI         CLOSED
+clean S03.1 rerun                                         NEXT within the active S03 bottleneck
 ```
 
-The detailed scope and closure rules live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. Slice E may harden structure/budgets/tests, but it must not add new drawing semantics merely to satisfy cleanup CI.
+The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the next validation target is the isolated clean S03.1 fresh-worker rerun.
 
 ## Renderer/replay direction
 

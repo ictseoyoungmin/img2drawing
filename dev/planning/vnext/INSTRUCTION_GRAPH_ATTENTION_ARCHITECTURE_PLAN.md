@@ -1,7 +1,7 @@
 # Instruction graph attention-architecture cleanup plan
 
 Updated: 2026-09-15
-Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E READY
+Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E CLOSED
 Scope: instruction-graph organization and documentation authority only
 
 ## Goal
@@ -225,40 +225,56 @@ Remove semantic duplication between leaves while preserving concise boundary rem
 
 ## Slice E — attention-architecture QA and structural CI
 
-Status: **READY**
+Status: **CLOSED**
 
 ### Purpose
 
 Prevent the graph from regrowing into overlapping textbooks while avoiding brittle prose locks.
 
-### QA to add
+### Changes completed
 
-Prefer structural assertions over exact-sentence assertions:
+- added explicit attention ceilings derived from the cleaned Slice D baseline: `SKILL.md` 12,000 bytes and `references/INDEX.md` 10,000 bytes;
+- capped direct root leaf fan-out at 16 routes, leaving bounded headroom over the cleaned 13-route baseline without allowing the root to become a second index;
+- extended the graph verifier so slash-qualified deployable Markdown routes must resolve inside the reference graph;
+- made canonical policy-owner leaves an explicit structural reachability invariant;
+- moved deployable/control-plane separation into the direct graph verifier while preserving the existing skill-surface regression tests;
+- added focused Slice E regression tests that execute the attention budget, route-integrity, control-plane, and owner-reachability checks;
+- retained existing sole-entrypoint, direct visual-quality route, direct INDEX map-row, generic reachability, and Slice D ownership tests rather than replacing them with new prose locks.
 
-- `SKILL.md` remains the sole skill-root Markdown entrypoint;
-- direct required routes exist, including the visual-quality gate;
-- all leaves remain reachable from INDEX;
-- deployable docs contain no `dev/` or release-control-plane leakage;
-- non-API drawing/review leaves do not embed long runtime mutation tutorials;
-- canonical policy owners are present and routed;
-- root and INDEX stay below explicit attention budgets chosen from the cleaned baseline;
-- excessive root fan-out / unreachable leaves / broken links fail CI;
-- current-state documentation authority remains synchronized.
+### Attention baseline and budgets
 
-### Test migration
+The closed Slice D graph measured:
 
-Existing tests that require specific duplicated sentences to remain in `SKILL.md` or INDEX should be replaced with assertions that the invariant exists in its canonical owner and remains reachable from the router.
+```text
+SKILL.md                              9,066 bytes
+references/INDEX.md                   7,692 bytes
+root direct leaf routes              13  (INDEX excluded)
+```
 
-Do not replace all semantic tests: dogfood-derived behavior such as anti-normalization must still have regression coverage. The change is from **where exact prose must live** to **which owner must preserve the behavior**.
+Slice E ceilings are:
 
-### Definition of closed
+```text
+SKILL.md                             12,000 bytes
+references/INDEX.md                  10,000 bytes
+root direct leaf routes              16
+```
 
-- current instruction graph and active test suite green;
-- historical v1.0.3/v1.0.2 evidence green;
-- B17/B18 green;
-- new attention-architecture checks green;
-- no new drawing rule was added merely to satisfy cleanup CI;
-- cleaned graph is ready for the isolated S03.1 fresh-worker rerun.
+These are architecture guardrails, not drawing rules. A future increase requires an explicit attention-architecture decision rather than incidental instruction growth.
+
+### Forbidden changes honored
+
+- no drawing principle or subject policy added;
+- no renderer/runtime implementation behavior changed;
+- no package/release version changed;
+- no S03/S04 dogfood verdict changed;
+- no historical release evidence rewritten.
+
+### Closure evidence
+
+- implementation PR CI run `34982967070` passed repository/package invariants, current documentation, runtime surface, the strengthened instruction-graph verifier, S03 harness, active tests including the new Slice E suite, historical evidence, B17/supply-chain verification, and B18;
+- the strengthened graph verifier passed on the cleaned deployable graph without requiring any semantic instruction additions;
+- `STATUS.md`, `ROADMAP.md`, and this execution plan now agree that A–E are CLOSED;
+- the clean S03.1 rerun remains READY / NOT_RUN and is the next product-quality action.
 
 ---
 

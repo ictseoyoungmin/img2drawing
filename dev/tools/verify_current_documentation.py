@@ -57,17 +57,17 @@ def main() -> None:
     assert "does not create a second current-state truth" in roadmap
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in status
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in roadmap
-    assert "Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E READY" in attention_plan
+    assert "Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E CLOSED" in attention_plan
     assert (
         "GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · "
-        "Slice D ownership cleanup CLOSED · Slice E structural QA READY"
+        "Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED"
         in status
     )
     assert "Slice A authority synchronization                         CLOSED" in roadmap
     assert "Slice B SKILL.md router reduction + direct quality gate   CLOSED" in roadmap
     assert "Slice C INDEX.md map-only reduction                       CLOSED" in roadmap
     assert "Slice D leaf ownership / runtime-boundary cleanup         CLOSED" in roadmap
-    assert "Slice E attention-architecture QA + structural CI         READY" in roadmap
+    assert "Slice E attention-architecture QA + structural CI         CLOSED" in roadmap
     for slice_heading in (
         "## Slice A — authority synchronization",
         "## Slice B — make `SKILL.md` a real router",
