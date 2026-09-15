@@ -199,24 +199,85 @@ than importing a private renderer helper or inventing unsupported keyword argume
 
 ## Residual provenance
 
-`record_residual()`, the corrective edits, and `resolve_residual()` form one provenance chain.
-For new corrections, the repairing mutation must carry the residual's own `observation_id`; do
-not let a later observation become the mutation's implicit provenance. The after-inspection must
-be taken after the edit and must match the current drawing. See `review/residual-correction.md`
-for a complete executable pattern and the compatibility note for older persisted actions.
+`record_residual()`, the corrective mutation, fresh inspection, and `resolve_residual()` form one
+public provenance chain. Artistic diagnosis stays in `../review/residual-correction.md`; this
+section owns how to record and execute that decision.
 
-## Evidence and completion
+Bind the corrective edit to the **same `observation_id` passed to `record_residual()`**:
 
-`session.inspect()` only produces an inspection artifact; it does not by itself mean the Agent
-has seen it. Call `session.record_evidence_read(inspection_id)` after actually viewing the
-returned artifact, and only then call `session.finish(...)`. `finish()` rejects a canvas with no
-current authored strokes, including a canvas whose earlier marks were all erased again. It also
-rejects finishing on an inspection that was never confirmed read, a stale inspection, or any
-session with an open residual.
+```python
+observation_id = session.observe({"jaw": "contour sits too low at the cheek handoff"})
+before_inspection_id = session.inspection_history[-1]["inspection_id"]
 
-`accepted_limitations` records acknowledged non-blocking limitations in the Agent's finish
-decision. It does **not** bypass an open residual: close or reclassify the finding through the
-correction workflow before finishing. See `review/completion.md`.
+residual_id = session.record_residual(
+    observation_id=observation_id,
+    observation="jaw contour sits too low at the cheek handoff",
+    scope="head/jaw",
+    severity="material",
+    impact_rationale="the face shape reads heavier than the reference",
+    responsible_premise="jaw contour placement",
+    responsible_stroke_ids=(jaw_stroke_id,),
+    planned_edit="raise the jaw contour while preserving the cheek anchor",
+    before_inspection_id=before_inspection_id,
+)
+
+fix_action_id = session.replace_stroke(
+    jaw_stroke_id,
+    corrected_jaw_points,
+    observation_id=observation_id,
+    reason="raise the jaw contour to the observed cheek-to-chin relation",
+)
+session.inspect()
+after_inspection_id = session.inspection_history[-1]["inspection_id"]
+
+session.resolve_residual(
+    residual_id,
+    action_ids=(fix_action_id,),
+    after_inspection_id=after_inspection_id,
+    rationale="the fresh inspection now matches the observed jaw handoff",
+)
+```
+
+If a later `session.observe(...)` call occurs before the repair, do **not** rely on a mutation
+method's default-to-latest observation behavior for the older residual. Pass that residual's
+original `observation_id` explicitly. A repairing edit authored under a different later observation
+is rejected with `correction action observation mismatch`.
+
+If the finding itself materially changes before repair, record a new residual under the new
+observation instead of pretending the old provenance still owns the fix. Persisted historical
+actions may contain legacy/unobserved provenance tolerated for compatibility; that tolerance is not
+the authoring contract for new corrections.
+
+`resolve_residual()` requires an after-inspection whose drawing state differs from the before-state
+and matches the current drawing. Inspect **after** the edit, then actually view that artifact before
+deciding the visual mismatch is resolved. The runtime checks provenance freshness; it does not make
+the artistic verdict.
+
+## Evidence and completion mechanics
+
+`session.inspect()` only produces an inspection artifact; it does not by itself mean the Agent has
+seen it. After actually viewing the artifact, call:
+
+```python
+inspection_id = session.inspection_history[-1]["inspection_id"]
+session.record_evidence_read(inspection_id)
+```
+
+`DrawingSession.finish()` then binds the Agent's completion decision to current evidence. It rejects
+finishing when:
+
+- the current drawing has no authored strokes, including a session whose earlier marks were all
+  erased again;
+- the final inspection has not been explicitly recorded as read;
+- the inspection is stale, superseded, or predates the current intent;
+- any residual record remains open.
+
+These checks are mechanical. They do not certify artistic quality. Decide whether the drawing is
+actually finished through `../review/completion.md`, then use the public finish call.
+
+`accepted_limitations` records acknowledged non-blocking limitations in that Agent decision. It does
+**not** bypass an open residual: resolve or re-record the finding through the residual provenance
+chain before finishing.
 
 ## Output
 
