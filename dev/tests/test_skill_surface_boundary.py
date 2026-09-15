@@ -12,7 +12,6 @@ def test_deployable_skill_root_is_attention_clean() -> None:
     assert {path.name for path in SKILL.iterdir()} == {
         "LICENSE",
         "MANIFEST.in",
-        "README.md",
         "SKILL.md",
         "pyproject.toml",
         "references",
@@ -275,7 +274,7 @@ def test_occlusion_inference_separates_hidden_structure_from_visible_appearance(
 
 
 def test_skill_facing_docs_do_not_leak_internal_or_release_control_plane() -> None:
-    documents = [SKILL / "SKILL.md", SKILL / "README.md"]
+    documents = [SKILL / "SKILL.md"]
     documents.extend((SKILL / "references").rglob("*.md"))
 
     slice_label = re.compile(r"\bB(?:0[0-9]|1[0-8])(?:-R\d+)?\b")

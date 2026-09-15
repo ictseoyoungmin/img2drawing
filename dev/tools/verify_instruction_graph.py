@@ -77,6 +77,16 @@ def _reachable_reference_leaves() -> set[str]:
     return reachable
 
 
+def verify_single_skill_entrypoint() -> None:
+    """The deployable skill root has one Agent-facing Markdown entrypoint: SKILL.md."""
+
+    assert SKILL.is_file(), "skills/img2drawing/SKILL.md must exist"
+    assert not (SKILL_ROOT / "README.md").exists(), (
+        "skills/img2drawing/README.md creates a second skill-root entrypoint; "
+        "keep Agent routing authority in SKILL.md"
+    )
+
+
 def verify_skill_router() -> None:
     text = SKILL.read_text(encoding="utf-8")
     assert "`references/INDEX.md`" in text, "SKILL.md must route through references/INDEX.md"
@@ -121,6 +131,7 @@ def verify_product_required_routes() -> None:
 
 
 def main() -> None:
+    verify_single_skill_entrypoint()
     verify_skill_router()
     verify_index_reachability()
     verify_product_required_routes()
