@@ -9,11 +9,15 @@ Date: `<YYYY-MM-DD>`
 - reference identifier/source:
 - reference SHA-256 or stable source locator when available:
 - worker/model/configuration when available:
-- fresh-worker confirmation: `yes/no`
+- fresh-worker confirmation: `yes / no / unverified`
 - skill/source commit:
 - package identity:
 - renderer family:
 - session ID:
+
+`PASS` requires `fresh-worker confirmation: yes`. A `BLOCKED` review may record `no` or
+`unverified` when provenance itself is part of the blocking evidence; do not upgrade uncertain
+provenance into a PASS claim.
 
 ## Required artifacts
 
@@ -32,6 +36,11 @@ Timelapse requirements:
 - normally `every_n=4`;
 - PNG and GIF use the same pencil-renderer family;
 - no hidden earlier session substituted for the reviewed final.
+
+If the class is BLOCKED because an additional comparison worker omitted source/session evidence,
+anchor the formal artifact block above to the best-preserved executed run and list supplementary
+workers separately. Missing supplementary evidence must remain a blocking note when it materially
+limits the claim.
 
 ## Whole-read verdict
 
@@ -135,6 +144,6 @@ expected local pixel/material behavior:
 
 Reason:
 
-- `PASS` requires no blocking residual and complete evidence above.
-- `BLOCKED` must identify the highest-impact owner to reopen.
-- Missing evidence cannot be converted into an accepted limitation.
+- `PASS` requires no blocking residual, verified fresh-worker provenance, and complete evidence above.
+- `BLOCKED` must identify the highest-impact owner to reopen and may truthfully preserve uncertain provenance.
+- Missing evidence cannot be converted into an accepted limitation or a PASS claim.
