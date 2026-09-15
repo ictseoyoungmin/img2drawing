@@ -2,8 +2,9 @@
 """Verify the S03 fresh-worker visual-quality evidence harness.
 
 The harness may remain NOT_RUN while references/workers are being selected. Once a class claims
-PASS or BLOCKED, it must provide a concrete review.md with provenance and artifact hashes. This
-prevents a prose-only status flip from masquerading as visual evidence.
+PASS or BLOCKED, it must provide a concrete review.md with provenance and artifact hashes. PASS
+requires verified fresh-worker provenance; BLOCKED may truthfully record unverified/non-fresh
+provenance when that provenance failure is itself part of the blocking evidence.
 """
 
 from __future__ import annotations
@@ -22,6 +23,7 @@ CLASSES = (
 )
 STATE_RE = re.compile(r"^State:\s*\*\*(NOT_RUN|BLOCKED|PASS)\*\*\s*$", re.MULTILINE)
 ROOT_STATUS_RE = re.compile(r"^Status:\s*\*\*(.+?)\*\*\s*$", re.MULTILINE)
+FRESH_RE = re.compile(r"^\s*-?\s*fresh-worker confirmation:\s*`?(yes|no|unverified)`?\s*(?:\([^\n]*\))?\s*$", re.MULTILINE | re.IGNORECASE)
 SHA_RE = r"[0-9a-f]{64}"
 
 
@@ -47,9 +49,13 @@ def require_executed_review(class_dir: Path, state: str) -> None:
     review = text(review_path)
     lower = review.lower()
 
-    assert "fresh-worker confirmation: `yes`" in lower or "fresh-worker confirmation: yes" in lower, (
-        f"{class_dir.name}: executed review must confirm a fresh worker"
-    )
+    fresh = FRESH_RE.search(review)
+    assert fresh, f"{class_dir.name}: executed review must declare fresh-worker confirmation"
+    if state == "PASS":
+        assert fresh.group(1).lower() == "yes", (
+            f"{class_dir.name}: PASS requires verified fresh-worker confirmation"
+        )
+
     assert "skill/source commit:" in lower, f"{class_dir.name}: skill/source commit missing"
     assert "renderer family:" in lower, f"{class_dir.name}: renderer family missing"
     assert "session id:" in lower, f"{class_dir.name}: session id missing"
