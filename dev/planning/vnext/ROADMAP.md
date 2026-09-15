@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-09-13
+Updated: 2026-09-15
 Workflow: Bottleneck · one highest-impact open problem at a time
 
 The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
@@ -29,9 +29,9 @@ G05 stable freeze + wheel verification                  CLOSED
 G06 explicit publish manifest + publish                 CLOSED
 S01 v11 quality-control failure taxonomy + design       CLOSED
 S02 instruction graph execution-gate patch              CLOSED
-S03 fresh-worker visual dogfood                         ACTIVE
-S04 classify remaining geometry vs material residuals   BLOCKED by S03
-S05 contract-digest / replay-boundary migration         BLOCKED by S04 evidence capture; REQUIRED before pixel change
+S03 fresh-worker visual dogfood                         ACTIVE · S03.1 BLOCKED; S03.2–S03.4 pending
+S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL · S03.1 classified
+S05 contract-digest / replay-boundary migration         BLOCKED by global S04 evidence; REQUIRED before pixel change
 S06 current-v11 renderer correction if proven           BLOCKED by S04/S05; MAY SKIP
 S07 full visual + mechanical validation                 BLOCKED by S03–S06
 S08 choose next package version / release candidate     BLOCKED by S07
@@ -61,11 +61,11 @@ visible authority
 
 Renderer-family identity is also separated conceptually from exact historical pixel identity so quality corrections do not require a new renderer number.
 
-## S02 — instruction execution gates — CLOSED
+## S02 — instruction execution gates — CLOSED, PARTIALLY REOPENED BY S03.1
 
-The skill now contains one central `review/visual-quality-gates.md` leaf and concentrated edits to existing owners rather than a new rigid stage pipeline.
+The skill contains one central `review/visual-quality-gates.md` leaf and concentrated edits to existing owners rather than a new rigid stage pipeline.
 
-Closed behavior includes:
+Originally closed behavior included:
 
 - line ownership continuity;
 - evidence/anchor packets before descriptive acceptance;
@@ -79,7 +79,9 @@ Closed behavior includes:
 - top remaining residual ranking before finish;
 - terminal/markmaking semantics kept downstream of justified geometry.
 
-CI run `34761722278` passed repository invariants, current documentation, runtime surface, instruction graph reachability, active tests, immutable v1.0.3 evidence, B17, and B18.
+S03.1 exposed one missing execution rule: workers could still let anatomical plausibility or a remembered canonical identity silently overrule readable reference evidence. The bounded reopen adds reference-fidelity / anti-normalization enforcement without introducing a stage pipeline or renderer change.
+
+CI run `34761722278` remains the original S02 closure record. The reopened patch receives its own post-dogfood CI evidence.
 
 ## S03 — fresh-worker visual dogfood — ACTIVE
 
@@ -87,10 +89,10 @@ Fresh workers must receive the updated skill, reference, and normal public runti
 
 Required visual classes:
 
-1. strong-perspective close figure;
-2. full-body 3/4 figure with attached/held prop;
-3. frontal or near-frontal full body;
-4. head/hair close-up.
+1. strong-perspective close figure — **BLOCKED; residuals routed to S04**;
+2. full-body 3/4 figure with attached/held prop — pending;
+3. frontal or near-frontal full body — pending;
+4. head/hair close-up — pending.
 
 Each run must produce reviewable provenance:
 
@@ -103,9 +105,20 @@ Each run must produce reviewable provenance:
 
 The supplied failure images define the failure classes, not answer templates. One blocking class prevents S03 closure; results are not averaged.
 
-## S04 — residual ownership decision — BLOCKED
+## S04 — residual ownership decision — ACTIVE / PARTIAL
 
-After S03, every blocking or repeated residual must be classified before renderer work:
+S03.1 is classified in `../../dogfood/s04-residual-ownership/README.md`.
+
+Current S03.1 decision:
+
+```text
+reference/identity substitution        → instruction / subject-specific geometry
+visible hand anatomy normalization     → observation / projection / authored geometry
+symbolic geometry + scaffold survival  → anti-symbol / completion / retirement
+renderer-owned blocking defect         → none proven
+```
+
+For every later S03 blocking or repeated residual, continue to classify before renderer work:
 
 ```text
 wrong path / proportion / ownership / overlap / contact
@@ -116,6 +129,8 @@ correct geometry but wrong weight / taper / terminal / grain / deposition
 ```
 
 A renderer candidate must have both real-drawing evidence and a minimal controlled reproduction with authored geometry frozen.
+
+Global S04 cannot close until S03.2–S03.4 evidence is also classified. The current batch does not authorize S06.
 
 ## S05 — contract-digest replay boundary — BLOCKED
 
@@ -189,6 +204,8 @@ This historical statement does not require future current source to keep increme
 - current state: `STATUS.md`;
 - execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
+- S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
+- S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
 - current published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
 - G02 visual/material evidence: `../../dogfood/g02-broad-pencil-v11/README.md`;
