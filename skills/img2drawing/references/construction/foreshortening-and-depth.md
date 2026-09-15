@@ -22,19 +22,15 @@ Before drawing more contour, identify:
 A segment may occupy little image-space while representing substantial physical length. Do
 not unfold a foreshortened limb to the anatomical length you expect to see.
 
-## Projection authority before plausibility repair
+## Projection-fidelity reminder
 
-When the projected relation looks anatomically surprising, preserve the readable image-space
-evidence first. Expected anatomy may trigger a re-check, but it may not silently replace a coherent
-projection.
+Canonical anti-normalization authority lives in `../foundation/reference-authority.md`; use
+`../observation/visual-observation.md` when expected anatomy and the visible projection disagree.
 
-Do not lengthen a compressed segment, rotate a terminal, flip an apparent hand/foot orientation,
-restore bilateral symmetry, or move an anchor merely because the resulting anatomy would look more
-conventional. Re-check projected spacing, overlap, width, negative space, and neighboring anchors.
-If those relations agree, the projection remains the authority.
-
-If the reference is genuinely ambiguous, mark the uncertainty and avoid overclaiming. Do not turn
-ambiguity into a confident anatomical correction.
+For this leaf, do not lengthen a compressed segment, rotate a terminal, flip an apparent hand/foot
+orientation, restore bilateral symmetry, or move an anchor merely to make the anatomy more
+conventional. Re-check projected spacing, overlap, width, negative space, and neighboring anchors;
+if those observations are uncertain, reopen observation rather than repairing from memory.
 
 ## Construct from visible anchors and minimum hidden continuity
 
