@@ -25,14 +25,14 @@ No image generation, pixel paste, edge-trace paste, or raster repair is allowed 
 
 | ID | Class | State |
 | --- | --- | --- |
-| S03.1 | strong-perspective close figure | `NOT_RUN` |
+| S03.1 | strong-perspective close figure | `BLOCKED` |
 | S03.2 | full-body 3/4 figure with attached/held prop | `NOT_RUN` |
 | S03.3 | frontal or near-frontal full body | `NOT_RUN` |
 | S03.4 | head/hair close-up | `NOT_RUN` |
 
 A class may become `PASS`, `BLOCKED`, or remain `NOT_RUN`. There is no averaged S03 score. One blocking class keeps S03 open.
 
-The class README owns the state declaration. Once a class changes from `NOT_RUN` to `PASS` or `BLOCKED`, that class directory must also contain a completed `review.md` based on `REVIEW_TEMPLATE.md`. CI verifies the executed review contains fresh-worker confirmation, artifact paths and SHA-256 values, residual ownership, retirement audit, and a verdict matching the README state. A prose-only status flip is invalid.
+The class README owns the state declaration. Once a class changes from `NOT_RUN` to `PASS` or `BLOCKED`, that class directory must also contain a completed `review.md` based on `REVIEW_TEMPLATE.md`. CI verifies artifact paths and SHA-256 values, residual ownership, retirement audit, and a verdict matching the README state. `PASS` additionally requires verified fresh-worker provenance. A `BLOCKED` review may truthfully record `no` or `unverified` freshness when provenance itself is part of the blocker; uncertain provenance can never be upgraded into PASS.
 
 ## Per-run evidence contract
 
@@ -104,11 +104,11 @@ s03-quality-gates/
    └─ review.md               # required once executed
 ```
 
-Each class README is an evidence ledger, not an answer template. Replace `NOT_RUN` only when a real fresh-worker run exists.
+Each class README is an evidence ledger, not an answer template. Replace `NOT_RUN` only when a real run or a truthfully provenance-blocked dogfood package exists.
 
 ## Mechanical harness gate
 
-`python dev/tools/verify_s03_quality_gate_harness.py` verifies the class/state surface. `NOT_RUN` is valid while no run exists. `PASS` or `BLOCKED` requires a concrete `review.md` with the evidence contract above. If all four classes become `PASS`, this root document must also be changed to `Status: **PASS / CLOSED**`; otherwise CI refuses closure.
+`python dev/tools/verify_s03_quality_gate_harness.py` verifies the class/state surface. `NOT_RUN` is valid while no run exists. `PASS` or `BLOCKED` requires a concrete `review.md` with the review contract above; PASS is stricter and requires verified freshness. If all four classes become `PASS`, this root document must also be changed to `Status: **PASS / CLOSED**`; otherwise CI refuses closure.
 
 ## Closure
 
