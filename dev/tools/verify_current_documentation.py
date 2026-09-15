@@ -57,7 +57,10 @@ def main() -> None:
     assert "does not create a second current-state truth" in roadmap
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in status
     assert "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md" in roadmap
-    assert "Status: Slice A ACTIVE" in attention_plan
+    assert "Status: Slice A CLOSED · Slice B READY" in attention_plan
+    assert "GRAPH CLEANUP:      Slice A authority cleanup CLOSED · Slice B router reduction READY" in status
+    assert "Slice A authority synchronization                         CLOSED" in roadmap
+    assert "Slice B SKILL.md router reduction + direct quality gate   READY" in roadmap
     for slice_heading in (
         "## Slice A — authority synchronization",
         "## Slice B — make `SKILL.md` a real router",
