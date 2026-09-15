@@ -1,7 +1,7 @@
 # Instruction graph attention-architecture cleanup plan
 
 Updated: 2026-09-15
-Status: Slice A ACTIVE
+Status: Slice A CLOSED · Slice B READY
 Scope: instruction-graph organization and documentation authority only
 
 ## Goal
@@ -66,45 +66,44 @@ The table is an ownership target, not a reason to delete every cross-reference. 
 
 ## Slice A — authority synchronization
 
-Status: **ACTIVE**
+Status: **CLOSED**
 
 ### Purpose
 
 Remove current-state ambiguity before restructuring the deployable graph.
 
-### Allowed changes
+### Changes completed
 
-- synchronize `STATUS.md` and `ROADMAP.md`;
-- define document precedence explicitly;
-- distinguish S02 implementation closure from pending S03.1 behavioral proof;
-- record S03.1 / S04 state accurately;
-- add this A–E execution plan;
-- add current-documentation checks that prevent authority drift.
+- synchronized `STATUS.md` and `ROADMAP.md` on 2026-09-15;
+- defined `STATUS.md` as point-in-time mutable-state authority;
+- defined `ROADMAP.md` as sequencing/dependency/closure-definition authority;
+- distinguished S02 implementation closure from pending S03.1 behavioral proof;
+- recorded S03.1 and S04 state consistently;
+- added this A–E execution plan and canonical node-ownership target;
+- extended current-documentation verification to fail on authority/date drift.
 
-### Forbidden changes
+### Forbidden changes honored
 
-- no `SKILL.md` reduction yet;
-- no `INDEX.md` reduction yet;
+- no `SKILL.md` reduction;
+- no `INDEX.md` reduction;
 - no leaf semantic rewrite;
-- no renderer/runtime behavior changes;
+- no renderer/runtime behavior change;
 - no package/release version change;
 - no dogfood verdict change without new evidence.
 
-### Definition of closed
+### Closure evidence
 
 - `STATUS.md` and `ROADMAP.md` use the same update date and compatible current-state labels;
-- `STATUS.md` is explicitly the canonical point-in-time current-state authority;
-- `ROADMAP.md` explicitly owns sequence/dependencies/closure definitions rather than current-state precedence;
-- S02 is represented as implementation CLOSED after the bounded anti-normalization reopen, while S03.1 remains BLOCKED pending clean rerun;
-- S04 is ACTIVE / PARTIAL with zero proven renderer-owned blockers from the current S03.1 batch;
-- CI structurally checks the authority relationship;
-- all existing runtime, historical release, S03 harness, B17, and B18 checks remain green.
+- S02 is implementation CLOSED after the bounded anti-normalization reopen while S03.1 remains BLOCKED pending clean rerun;
+- S04 remains ACTIVE / PARTIAL with zero proven renderer-owned blockers from the current S03.1 batch;
+- CI run `34963437056` passed current documentation, runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED state transition;
+- the final CLOSED transition must pass the same CI surface before merge.
 
 ---
 
 ## Slice B — make `SKILL.md` a real router
 
-Status: **BLOCKED by Slice A**
+Status: **READY**
 
 ### Purpose
 
