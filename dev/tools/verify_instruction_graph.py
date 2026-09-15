@@ -120,6 +120,25 @@ def verify_index_reachability() -> None:
     )
 
 
+def verify_index_map_surface() -> None:
+    """INDEX is a direct low-attention map: one routing row per deployable leaf."""
+
+    text = INDEX.read_text(encoding="utf-8")
+    assert "This file is a **map**" in text
+    assert "## Runtime-awareness invariant" not in text
+
+    lines = text.splitlines()
+    for leaf in sorted(_all_reference_leaves()):
+        marker = f"`{leaf}`"
+        matches = [line for line in lines if marker in line]
+        assert len(matches) == 1, (
+            f"INDEX.md must contain exactly one direct map row for {leaf}; found {len(matches)}"
+        )
+        row = matches[0]
+        assert "open when:" in row, f"INDEX.md map row missing open-when metadata: {leaf}"
+        assert "owns:" in row, f"INDEX.md map row missing ownership metadata: {leaf}"
+
+
 def verify_product_required_routes() -> None:
     """Current img2drawing-specific routes layered on top of generic graph reachability."""
 
@@ -150,6 +169,7 @@ def main() -> None:
     verify_single_skill_entrypoint()
     verify_skill_router()
     verify_index_reachability()
+    verify_index_map_surface()
     verify_product_required_routes()
     print("INSTRUCTION_GRAPH_REACHABILITY_PASS")
 
