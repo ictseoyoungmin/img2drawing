@@ -98,12 +98,11 @@ that retired compatibility namespace.
 ## Current-state operations
 
 The public session supports the stage-free workflow used by the skill: inspect the current
-state, record a residual, apply history-safe stroke/fill edits, re-inspect, resolve or revise
+state, record a residual, apply history-safe stroke edits, re-inspect, resolve or revise
 the residual, and finish from current evidence.
 
-Use public authored-element lookup when a later correction must locate an existing stroke
-or fill. Use the supported replace/soften/delete operations rather than raster editing the
-rendered PNG.
+Use public authored-element lookup when a later correction must locate an existing stroke.
+Use the supported replace/soften/delete operations rather than raster editing the rendered PNG.
 
 When only stroke material is wrong and the path is already correct, prefer:
 
@@ -160,8 +159,10 @@ For boundaries whose endpoints should read continuously, `tool="continuous_penci
 form-pencil material family with very low endpoint taper. Use it only when the observed boundary
 is actually continuous; it is not a subject-specific or mechanical-object preset.
 
-For value regions, use the session's fill/replace-fill surface rather than manually generating
-a cloud of synthetic value strokes.
+For value work, author the visible mark language explicitly through `draw()` or `draw_many()`.
+Group directional hatching or other value strokes by observed form/light family, keep each stroke
+addressable in history, and revise the responsible strokes when the value read is disproved. Do not
+substitute a region-to-hatch generator for those artistic decisions.
 
 ## Markmaking presets and the draw adapter
 
