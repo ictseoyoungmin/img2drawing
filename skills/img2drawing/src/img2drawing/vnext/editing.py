@@ -15,7 +15,7 @@ from ..core.history import CanvasAction, CanvasHistory
 
 AUTHORED_ELEMENT_SCHEMA = "img2drawing.vnext.authored_element.v1"
 AUTHORING_SUMMARY_SCHEMA = "img2drawing.vnext.authoring_summary.v1"
-ELEMENT_TYPES = ("stroke", "fill")
+ELEMENT_TYPES = ("stroke",)
 ELEMENT_STATUSES = ("current", "superseded", "deleted")
 
 
@@ -35,7 +35,7 @@ def _identity(value: Any, field: str) -> str:
 
 @dataclass(frozen=True)
 class AuthoredElement:
-    """Portable identity/provenance view of one authored stroke or fill decision."""
+    """Portable identity/provenance view of one authored stroke decision."""
 
     element_type: str
     element_id: str
@@ -141,7 +141,6 @@ class AuthoringSummary:
     history_cursor: int
     drawing_state_hash: str
     current_strokes: int
-    current_fills: int
     superseded_strokes: int
     deleted_strokes: int
     open_residual_ids: tuple[str, ...]
@@ -156,7 +155,6 @@ class AuthoringSummary:
             "drawing_state_hash": self.drawing_state_hash,
             "counts": {
                 "current_strokes": self.current_strokes,
-                "current_fills": self.current_fills,
                 "superseded_strokes": self.superseded_strokes,
                 "deleted_strokes": self.deleted_strokes,
                 "open_residuals": len(self.open_residual_ids),
@@ -237,7 +235,7 @@ def _touch(
 
 
 def authored_elements(history: CanvasHistory) -> tuple[AuthoredElement, ...]:
-    """Rebuild authored stroke/fill identity state from actions up to current cursor."""
+    """Rebuild authored stroke identity state from actions up to current cursor."""
 
     records: dict[tuple[str, str], AuthoredElement] = {}
     order: list[tuple[str, str]] = []
@@ -299,33 +297,6 @@ def authored_elements(history: CanvasHistory) -> tuple[AuthoredElement, ...]:
             if key not in records or records[key].status != "current":
                 raise ValueError(f"delete targets non-current stroke: {stroke_id}")
             records[key] = _touch(records[key], action, status="deleted")
-        elif action.action == "region.fill":
-            raw = payload.get("region") or {}
-            fill_id = _identity(raw.get("fill_id"), "fill_id")
-            key = ("fill", fill_id)
-            if key in records:
-                raise ValueError(f"duplicate authored fill identity: {fill_id}")
-            records[key] = _new_element(
-                element_type="fill",
-                element_id=fill_id,
-                action=action,
-                part=raw.get("part", action.part),
-                role=raw.get("role", action.role),
-            )
-            order.append(key)
-        elif action.action == "region.replace":
-            raw = payload.get("region") or {}
-            fill_id = _identity(payload.get("fill_id") or raw.get("fill_id"), "fill_id")
-            key = ("fill", fill_id)
-            if key not in records or records[key].status != "current":
-                raise ValueError(f"replacement targets non-current fill: {fill_id}")
-            records[key] = _touch(
-                records[key],
-                action,
-                part=raw.get("part", action.part),
-                role=raw.get("role", action.role),
-                revision_increment=1,
-            )
     return tuple(records[key] for key in order)
 
 

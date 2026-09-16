@@ -7,7 +7,6 @@ from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any, Iterable
 
-from .fill import FillRegion
 from .history import CanvasHistory
 from .ir import Stroke, StrokeIR
 from ..render.presets import get_pencil_preset
@@ -17,7 +16,7 @@ from .tools import ToolState, get_tool
 
 DRAW_KINDS = {
     "draw_stroke", "replace_stroke", "soft_lift", "delete_stroke", "marker",
-    "replace_segment", "soft_lift_segment", "fill_region", "replace_fill_region",
+    "replace_segment", "soft_lift_segment",
 }
 TOOL_OVERRIDE_FIELDS = {
     "width", "pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter",
@@ -57,7 +56,6 @@ class DrawingAction:
     lock_boundaries: bool = True
     feather_points: int = 1
     strength: float | None = None
-    region: dict[str, Any] | None = None
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "DrawingAction":
@@ -97,7 +95,6 @@ class DrawingAction:
             lock_boundaries=bool(raw.get("lock_boundaries", True)),
             feather_points=int(raw.get("feather_points", 1)),
             strength=None if raw.get("strength") is None else float(raw.get("strength")),
-            region=deepcopy(raw.get("region")),
         )
         action.validate()
         return action
@@ -164,23 +161,6 @@ class DrawingAction:
                 raise ValueError("soft_lift_segment requires observation and correction provenance")
             if self.revision_of != self.target_stroke_id:
                 raise ValueError("soft_lift_segment revision_of must match target_stroke_id")
-        elif self.kind in {"fill_region", "replace_fill_region"}:
-            if self.points:
-                raise ValueError(f"{self.kind} carries a region, not loose points")
-            if not isinstance(self.region, dict):
-                raise ValueError(f"{self.kind} requires a region payload")
-            if not isinstance(self.tool, dict) or not str(self.tool.get("preset", "")).strip():
-                raise ValueError(f"{self.kind} requires an explicit tool preset")
-            if not self.observation_id or not self.source_observation:
-                raise ValueError(f"{self.kind} requires observation provenance")
-            region = FillRegion.from_dict(self.region)
-            if self.kind == "replace_fill_region":
-                if not self.revision_of:
-                    raise ValueError("replace_fill_region requires revision_of fill_id")
-                if region.fill_id != self.revision_of:
-                    raise ValueError("replace_fill_region preserves fill identity")
-                if not self.reason:
-                    raise ValueError("replace_fill_region requires correction reason")
         elif self.kind in {"soft_lift", "delete_stroke"}:
             if not self.target_stroke_id:
                 raise ValueError(f"{self.kind} requires target_stroke_id")
@@ -228,9 +208,8 @@ def _stroke_from_action(action: DrawingAction) -> Stroke:
     if tool.mode != "draw":
         raise ValueError(
             f"draw action cannot use erase-mode tool: {tool.tool}. "
-            "To keep a light inside a tone region, reserve it in fill_region(reserved=[...]) "
-            "instead of erasing it back out; to retire an existing mark use soft_lift() "
-            "or delete_stroke()."
+            "Use a draw-mode tool for authored marks; to retire an existing mark use "
+            "soft_lift() or delete_stroke()."
         )
     stroke = tool_stroke(
         action.points,
@@ -339,10 +318,7 @@ class AgentDrawingSession:
             action = DrawingAction.from_dict(action)
         if action.action_id in self.executed_action_ids:
             raise ValueError(f"duplicate action_id: {action.action_id}")
-        bounds_points = list(action.points)
-        if action.kind in {"fill_region", "replace_fill_region"} and isinstance(action.region, dict):
-            bounds_points += [tuple(map(float, q)) for q in action.region.get("polygon", ())]
-        for x, y in bounds_points:
+        for x, y in action.points:
             if not (0.0 <= float(x) <= self.width - 1 and 0.0 <= float(y) <= self.height - 1):
                 raise ValueError(f"drawing action point out of canvas bounds: {(x, y)}")
         result: str | None = None
@@ -355,25 +331,6 @@ class AgentDrawingSession:
             result = self.history.replace_stroke(
                 str(action.target_stroke_id), stroke, new_stroke_id=action.stroke_id, provenance=provenance
             )
-        elif action.kind in {"fill_region", "replace_fill_region"}:
-            assert action.tool is not None and action.region is not None
-            tool, grade = _resolve_tool(action.tool)
-            if tool.mode != "draw":
-                raise ValueError(f"{action.kind} cannot use erase-mode tool: {tool.tool}")
-            tool_state = tool.to_dict()
-            tool_state["pencil_grade"] = grade
-            tool_state["action_id"] = action.action_id
-            tool_state["provenance"] = provenance
-            region = FillRegion.from_dict(action.region)
-            if action.kind == "fill_region":
-                result = self.history.fill_region(
-                    region, tool_state, stage=action.stage, provenance=provenance,
-                )
-            else:
-                result = self.history.replace_fill_region(
-                    str(action.revision_of), region, tool_state,
-                    stage=action.stage, provenance=provenance,
-                )
         elif action.kind == "replace_segment":
             result = self.history.replace_segment(
                 str(action.target_stroke_id), int(action.segment_start), int(action.segment_end),

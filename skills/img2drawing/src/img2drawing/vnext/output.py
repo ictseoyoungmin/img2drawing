@@ -115,8 +115,6 @@ def _duration_ms(history, cursor: int, *, final: bool) -> int:
     if cursor == 0:
         return 180
     action = history.actions[cursor - 1]
-    if action.action in {"region.fill", "region.replace"}:
-        return 320
     if action.action in {
         "stroke.delete",
         "stroke.soft_lift",
@@ -248,13 +246,11 @@ def _export_session_timelapse_canonical(
             "action_zero_included": cursors[0] == 0,
             "latest_included": cursors[-1] == history.cursor,
             "cursor_semantics": "cursor N is state after the first N authored actions",
-            "region_action_frame_policy": "one authored region action produces one cursor/frame",
         },
         "timing": {
             "initial_ms": 180,
             "ordinary_action_ms": 120,
             "edit_action_ms": 180,
-            "region_action_ms": 320,
             "final_hold_ms": 900,
         },
         "budget": {
@@ -495,7 +491,6 @@ def export_session_timelapse(
             "action_zero_included": cursors[0] == 0,
             "latest_included": cursors[-1] == history.cursor,
             "cursor_semantics": "cursor N is state after the first N authored actions",
-            "region_action_frame_policy": "unsupported region actions use whole-export canonical fallback",
         },
         "timing": {
             "policy": "constant-fps-fast-backend",
