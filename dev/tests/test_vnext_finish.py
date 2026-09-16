@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import importlib.util
 from pathlib import Path
 
 import pytest
+from PIL import Image
 
-from img2drawing import (
+from img2drawing import DrawingIntent, DrawingSession
+from img2drawing.vnext import (
     FINISH_GUIDE_SCHEMA,
     FINISH_INTENTS,
     FinishGuide,
@@ -14,17 +15,7 @@ from img2drawing import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[2]
-FIXTURE = ROOT / "dev" / "fixtures" / "vnext-b09" / "run.py"
 LIFECYCLE_KEYS = {"phase", "phase_count", "stage", "cursor", "advance", "close", "verdict", "pass_fail"}
-
-
-def _load_fixture():
-    spec = importlib.util.spec_from_file_location("img2drawing_vnext_b09_fixture", FIXTURE)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def _keys(value):
@@ -89,25 +80,60 @@ def test_subject_finish_is_relational_and_macro_first() -> None:
 
 
 def test_form_light_and_expressive_preserve_structural_truth() -> None:
-    tonal = " ".join(sum((relation.authoring_policy + relation.avoid for relation in resolve_finish_guide("form_light").relations), ()))
+    tonal = " ".join(
+        sum((relation.authoring_policy + relation.avoid for relation in resolve_finish_guide("form_light").relations), ())
+    )
     assert "line-only" in tonal
     assert "one-off opacity guessing" in tonal
+    assert "explicit observed strokes" in tonal
     expressive = resolve_finish_guide("expressive")
     assert "explicit reference constraints" in expressive.preserve
     assert any("silent sacrifice" in item for item in expressive.relations[0].avoid)
 
 
-def test_fixture_authors_distinct_decisions_through_one_session(tmp_path: Path) -> None:
-    trace = _load_fixture().run_fixture(tmp_path / "fixture")
-    assert trace["quality_claim"] == "mechanical-only"
-    assert trace["session_schema"] == "img2drawing.vnext.session.v2"
-    assert trace["intent_event_count"] == 4
-    assert trace["intent_order"] == list(FINISH_INTENTS)
-    assert set(trace["decisions"]) == set(FINISH_INTENTS)
-    assert {decision["actions"][0]["finish_intent"] for decision in trace["decisions"].values()} == set(FINISH_INTENTS)
-    assert {decision["actions"][0]["kind"] for decision in trace["decisions"].values()} == {
-        "stroke.add", "region.fill"
-    }
-    assert len({decision["actions"][0]["part"] for decision in trace["decisions"].values()}) == 4
-    assert trace["decisions"]["subject"]["actions"][0]["part"] == "hands_and_feet/pocket_contact"
-    assert trace["decisions"]["form_light"]["actions"][0]["kind"] == "region.fill"
+def test_finish_intents_author_distinct_stroke_decisions_through_one_session(tmp_path: Path) -> None:
+    subject = tmp_path / "subject.png"
+    Image.new("RGB", (96, 72), (244, 242, 236)).save(subject)
+    session = DrawingSession.create(
+        subject=subject,
+        output_dir=tmp_path / "run",
+        intent=DrawingIntent(finish_intent="pose"),
+    )
+    observation_id = session.observe(
+        {"read": "synthetic current-state fixture for finish-intent mechanics"},
+        observation_id="finish-read",
+    )
+
+    decisions = (
+        ("pose", "whole_pose/gesture", ((8, 12), (25, 30), (42, 58)), "structure"),
+        ("subject", "hands_and_feet/pocket_contact", ((44, 30), (53, 38), (59, 35)), "contour"),
+        ("form_light", "light_shadow_families/arm_shadow", ((20, 28), (38, 26), (55, 31)), "value"),
+        ("expressive", "composition_and_focal/focal_arc", ((16, 18), (34, 10), (63, 24)), "accent"),
+    )
+    action_ids = []
+    for index, (finish_intent, part, points, role) in enumerate(decisions):
+        if index:
+            session.set_intent(
+                DrawingIntent(finish_intent=finish_intent),
+                reason=f"exercise {finish_intent} authoring policy",
+            )
+        stroke_id = session.draw(
+            points,
+            action_id=f"finish-{finish_intent}-action",
+            stroke_id=f"finish-{finish_intent}-stroke",
+            part=part,
+            role=role,
+            observation_id=observation_id,
+            metadata={"finish_intent": finish_intent},
+        )
+        action_ids.append(stroke_id)
+
+    assert len(session.intent_history) == 4
+    assert [event.intent.finish_intent for event in session.intent_history] == list(FINISH_INTENTS)
+    assert len(action_ids) == 4
+    history = session._agent.history.actions
+    assert {action.action for action in history} == {"stroke.add"}
+    assert len({action.part for action in history}) == 4
+    assert history[1].part == "hands_and_feet/pocket_contact"
+    assert history[2].part == "light_shadow_families/arm_shadow"
+    assert (history[2].provenance or {})["metadata"]["finish_intent"] == "form_light"
