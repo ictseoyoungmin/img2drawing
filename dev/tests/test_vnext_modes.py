@@ -93,8 +93,9 @@ def test_retained_modes_express_their_distinct_authoring_contracts() -> None:
     assert "rounded blobs" in gesture
     assert all(term in croquis for term in ("gesture", "balance", "line economy"))
     assert all(term in figure for term in ("anatomy", "garment", "hands", "feet", "contact"))
-    assert all(term in tonal for term in ("fill_region", "form before value", "edge hierarchy"))
-    assert "renderer filters" in tonal and "microhatching" in tonal
+    assert all(term in tonal for term in ("directional hatching", "form before value", "edge hierarchy"))
+    assert "explicit strokes" in tonal and "renderer filters" in tonal
+    assert "fill_region" not in tonal
     assert all(term in line for term in ("contour ownership", "overlap", "negative space"))
     assert all(term in free for term in ("composition", "focal", "shape language", "authority"))
 
@@ -143,11 +144,27 @@ def test_every_mode_uses_one_session_history_inspection_and_output_core(tmp_path
             observation_id=observation_id,
         )
         if mode == "tonal_study":
-            session.fill_region(
-                ((8, 9), (34, 9), (34, 31), (8, 31)),
-                value=150,
-                part="large_shadow_family",
-                observation_id=observation_id,
+            session.draw_many(
+                (
+                    {
+                        "points": ((8, 12), (34, 12)),
+                        "role": "value",
+                        "part": "large_shadow_family",
+                        "observation_id": observation_id,
+                    },
+                    {
+                        "points": ((8, 18), (34, 18)),
+                        "role": "value",
+                        "part": "large_shadow_family",
+                        "observation_id": observation_id,
+                    },
+                    {
+                        "points": ((8, 24), (34, 24)),
+                        "role": "value",
+                        "part": "large_shadow_family",
+                        "observation_id": observation_id,
+                    },
+                )
             )
         session.inspect()
         rendered = session.render_final(tmp_path / mode / "final.png")
