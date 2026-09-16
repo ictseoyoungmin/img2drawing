@@ -4,9 +4,11 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Iterator, Sequence
 
+from ...core.fill import FillRegion
 from ...core.history import (
     CanvasAction,
     CanvasHistory,
+    _fill_strokes,
     _replay_segment_replace,
     _replay_segment_soft_lift,
     _stroke_from_dict,
@@ -38,6 +40,7 @@ class ForwardHistoryReplay:
         self.cursor = 0
         self.order: list[str] = []
         self.state: dict[str, Stroke] = {}
+        self.fill_members: dict[str, set[str]] = {}
         self.stats = ForwardReplayStats()
 
     def _apply(self, item: CanvasAction) -> None:
@@ -81,6 +84,38 @@ class ForwardHistoryReplay:
                 self.state[sid] = _replay_segment_soft_lift(self.state[sid], item)
         elif action == "stroke.delete":
             self.state.pop(str(p["stroke_id"]), None)
+        elif action == "region.fill":
+            region = FillRegion.from_dict(p["region"])
+            members: set[str] = set()
+            for stroke in _fill_strokes(region, item):
+                sid = str(stroke.stroke_id)
+                members.add(sid)
+                if sid not in self.state:
+                    self.order.append(sid)
+                self.state[sid] = stroke
+            self.fill_members[region.fill_id] = members
+        elif action == "region.replace":
+            region = FillRegion.from_dict(p["region"])
+            target = str(p.get("fill_id") or region.fill_id)
+            if region.fill_id != target:
+                raise ValueError("region.replace fill identity mismatch")
+            previous_members = self.fill_members.get(target, set())
+            prior_positions = [i for i, sid in enumerate(self.order) if sid in previous_members]
+            insert_at = min(prior_positions) if prior_positions else len(self.order)
+            for sid in previous_members:
+                self.state.pop(sid, None)
+            if previous_members:
+                self.order = [sid for sid in self.order if sid not in previous_members]
+            replacement_strokes = _fill_strokes(region, item)
+            members: set[str] = set()
+            for offset, stroke in enumerate(replacement_strokes):
+                sid = str(stroke.stroke_id)
+                members.add(sid)
+                if sid in self.order:
+                    self.order.remove(sid)
+                self.order.insert(min(insert_at + offset, len(self.order)), sid)
+                self.state[sid] = stroke
+            self.fill_members[target] = members
         elif action == "snapshot":
             pass
         else:
