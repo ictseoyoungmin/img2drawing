@@ -6,11 +6,8 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing import (
-    AuthoredElement,
-    DrawingSession,
-    replace_fill_region,
-)
+from img2drawing import DrawingSession
+from img2drawing.vnext import AuthoredElement
 
 
 def _subject(tmp_path: Path) -> Path:
@@ -22,13 +19,13 @@ def _subject(tmp_path: Path) -> Path:
 def _session(tmp_path: Path) -> tuple[DrawingSession, str]:
     session = DrawingSession.create(subject=_subject(tmp_path), output_dir=tmp_path / "run")
     observation_id = session.observe(
-        {"question": "which authored element carries the shoulder-to-elbow relation"},
+        {"question": "which authored stroke carries the shoulder-to-elbow relation"},
         observation_id="body-read",
     )
     return session, observation_id
 
 
-def test_authored_element_is_portable_immutable_context() -> None:
+def test_authored_element_is_portable_immutable_stroke_context() -> None:
     element = AuthoredElement(
         element_type="stroke",
         element_id="arm-1",
@@ -48,9 +45,11 @@ def test_authored_element_is_portable_immutable_context() -> None:
     assert AuthoredElement.from_dict(element.to_dict()) == element
     with pytest.raises(ValueError, match="superseded_by"):
         AuthoredElement.from_dict({**element.to_dict(), "status": "superseded"})
+    with pytest.raises(ValueError, match="unsupported element_type"):
+        AuthoredElement.from_dict({**element.to_dict(), "element_type": "fill"})
 
 
-def test_query_finds_current_authored_decisions_by_responsibility_and_provenance(
+def test_query_finds_current_authored_strokes_by_responsibility_and_provenance(
     tmp_path: Path,
 ) -> None:
     session, observation_id = _session(tmp_path)
@@ -70,12 +69,12 @@ def test_query_finds_current_authored_decisions_by_responsibility_and_provenance
         role="contour",
         observation_id=observation_id,
     )
-    session.fill_region(
-        ((18, 20), (52, 20), (52, 56), (18, 56)),
-        value=160,
+    session.draw(
+        ((18, 26), (34, 24), (50, 29)),
+        action_id="draw-torso-value",
+        stroke_id="torso-value-1",
         part="torso",
-        fill_id="torso-value",
-        action_id="fill-torso",
+        role="value",
         observation_id=observation_id,
     )
 
@@ -85,13 +84,13 @@ def test_query_finds_current_authored_decisions_by_responsibility_and_provenance
     assert [item.element_id for item in session.authored_elements(role="contour")] == [
         "far-arm"
     ]
-    assert [item.element_id for item in session.authored_elements(element_type="fill")] == [
-        "torso-value"
+    assert [item.element_id for item in session.authored_elements(role="value")] == [
+        "torso-value-1"
     ]
     assert {
         item.element_id
         for item in session.authored_elements(observation_id=observation_id)
-    } == {"near-arm", "far-arm", "torso-value"}
+    } == {"near-arm", "far-arm", "torso-value-1"}
     assert session.authored_elements(action_id="draw-near-arm")[0].element_id == "near-arm"
 
 
@@ -213,59 +212,44 @@ def test_local_segment_edits_preserve_identity_and_accumulate_provenance(tmp_pat
     assert session.current_stroke("contour-1").stroke_id == "contour-1"
 
 
-def test_fill_revision_uses_same_query_and_session_edit_surface(tmp_path: Path) -> None:
+def test_value_stroke_revision_uses_same_query_and_session_edit_surface(tmp_path: Path) -> None:
     session, observation_id = _session(tmp_path)
-    fill_id = session.fill_region(
-        ((12, 14), (70, 14), (70, 58), (12, 58)),
-        value=165,
+    stroke_id = session.draw(
+        ((12, 22), (34, 20), (58, 24), (70, 30)),
+        role="value",
         part="coat",
-        fill_id="coat-value",
-        action_id="fill-coat",
+        stroke_id="coat-value-1",
+        action_id="draw-coat-value",
         observation_id=observation_id,
     )
-    action_id = session.replace_fill_region(
-        fill_id,
-        value=95,
-        reason="inspection shows a darker connected coat family",
-        action_id="revise-coat-1",
+    action_id = session.replace_stroke(
+        stroke_id,
+        ((12, 24), (34, 22), (58, 26), (70, 32)),
+        role="value",
+        part="coat",
+        stroke_id="coat-value-2",
+        reason="inspection shows the coat value stroke follows a lower form turn",
+        action_id="revise-coat-value",
         observation_id=observation_id,
     )
-    assert action_id == "revise-coat-1"
-    compatibility_action = replace_fill_region(
-        session,
-        fill_id,
-        value=105,
-        reason="retain a little more reflected light",
-        action_id="revise-coat-2",
-        observation_id=observation_id,
-    )
-    assert compatibility_action == "revise-coat-2"
-    element = session.authored_elements(element_type="fill")[0]
-    assert element.element_id == fill_id
+    assert action_id == "revise-coat-value"
+    element = session.resolve_authored_element("coat-value-1", element_type="stroke")
+    assert element is not None
+    assert element.element_id == "coat-value-2"
     assert element.status == "current"
-    assert element.revision_count == 2
-    assert element.action_ids == ("fill-coat", "revise-coat-1", "revise-coat-2")
-    assert session.current_fill_region(fill_id).fill_id == fill_id
+    assert session.current_stroke("coat-value-1").stroke_id == "coat-value-2"
 
 
-def test_summary_is_bounded_derived_truth_and_excludes_generated_fill_contacts(
-    tmp_path: Path,
-) -> None:
+def test_summary_is_bounded_derived_stroke_truth(tmp_path: Path) -> None:
     session, observation_id = _session(tmp_path)
-    for index in range(3):
+    for index in range(4):
         session.draw(
             ((8 + index * 3, 8), (30 + index * 3, 35)),
             stroke_id=f"line-{index}",
             part="figure",
+            role="value" if index == 3 else "structure",
             observation_id=observation_id,
         )
-    session.fill_region(
-        ((12, 14), (72, 14), (72, 60), (12, 60)),
-        value=145,
-        part="figure",
-        fill_id="figure-value",
-        observation_id=observation_id,
-    )
     session.inspect()
     residual_id = session.record_residual(
         observation_id=observation_id,
@@ -280,14 +264,15 @@ def test_summary_is_bounded_derived_truth_and_excludes_generated_fill_contacts(
     )
 
     summary = session.authoring_summary(limit=2, part="figure")
-    assert summary.current_strokes == 3
-    assert summary.current_fills == 1
+    assert summary.current_strokes == 4
+    assert summary.superseded_strokes == 0
+    assert summary.deleted_strokes == 0
     assert summary.total_matching_elements == 4
     assert len(summary.elements) == 2 and summary.truncated
     assert summary.open_residual_ids == (residual_id,)
     assert summary.history_cursor == session.history_cursor
     assert summary.drawing_state_hash == session.drawing_state_hash()
-    assert len(session.current_ir().strokes) > summary.current_strokes
+    assert len(session.current_ir().strokes) == summary.current_strokes
     payload = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
     assert "authoring_summary" not in payload
     assert "authored_elements" not in payload
@@ -296,23 +281,16 @@ def test_summary_is_bounded_derived_truth_and_excludes_generated_fill_contacts(
     assert resumed.authoring_summary(limit=2, part="figure").to_dict() == summary.to_dict()
 
 
-def test_query_validation_and_ambiguous_cross_type_identity_are_explicit(tmp_path: Path) -> None:
+def test_query_validation_is_stroke_only_and_explicit(tmp_path: Path) -> None:
     session, observation_id = _session(tmp_path)
     session.draw(
         ((10, 10), (35, 38)),
         stroke_id="shared-id",
         observation_id=observation_id,
     )
-    session.fill_region(
-        ((15, 15), (65, 15), (65, 55), (15, 55)),
-        value=155,
-        part="torso",
-        fill_id="shared-id",
-        observation_id=observation_id,
-    )
-    with pytest.raises(ValueError, match="ambiguous"):
-        session.resolve_authored_element("shared-id")
-    assert session.resolve_authored_element("shared-id", element_type="fill").element_type == "fill"
+    assert session.resolve_authored_element("shared-id").element_type == "stroke"
+    with pytest.raises(ValueError, match="unsupported element_type"):
+        session.authored_elements(element_type="fill")
     with pytest.raises(ValueError, match="unsupported element_type"):
         session.authored_elements(element_type="pixel")
     with pytest.raises(ValueError, match="unsupported element status"):
