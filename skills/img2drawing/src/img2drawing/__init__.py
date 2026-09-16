@@ -39,9 +39,6 @@ _ROOT_COMPAT_TARGETS: dict[str, tuple[str, str]] = {
     "Stroke": ("img2drawing.core", "Stroke"),
     "StrokeIR": ("img2drawing.core", "StrokeIR"),
     "CanvasHistory": ("img2drawing.core", "CanvasHistory"),
-    "FillRegion": ("img2drawing.core.fill", "FillRegion"),
-    "ReservedLight": ("img2drawing.core.fill", "ReservedLight"),
-    "expand_fill": ("img2drawing.core.fill", "expand_fill"),
 
     # Optional observation/material evidence.
     "MaterialSample": ("img2drawing.observation.palette", "MaterialSample"),
@@ -97,7 +94,6 @@ _ROOT_COMPAT_TARGETS: dict[str, tuple[str, str]] = {
     "ELEMENT_TYPES": ("img2drawing.vnext", "ELEMENT_TYPES"),
     "AuthoredElement": ("img2drawing.vnext", "AuthoredElement"),
     "AuthoringSummary": ("img2drawing.vnext", "AuthoringSummary"),
-    "replace_fill_region": ("img2drawing.vnext", "replace_fill_region"),
     "COMPATIBILITY_INTENTS": ("img2drawing.vnext", "COMPATIBILITY_INTENTS"),
     "DRAWING_MODES": ("img2drawing.vnext", "DRAWING_MODES"),
     "FINISH_INTENTS": ("img2drawing.vnext", "FINISH_INTENTS"),

@@ -629,7 +629,7 @@ _MODE_GUIDES = {
         ),
     ),
     "tonal_study": ModeGuide(
-        "mode-tonal-study-v2", "tonal_study",
+        "mode-tonal-study-v3", "tonal_study",
         (
             "light and shadow families",
             "largest value shapes and dominant shadow mass",
@@ -638,12 +638,12 @@ _MODE_GUIDES = {
         ),
         (
             "form before value",
-            "authored fill_region decisions for large value families",
+            "explicit strokes organized as directional hatching for large value families",
             "reserved lights inside established forms",
             "edge transitions and selective dark accents",
         ),
         (
-            "machine-authored microhatching as artistic decisions",
+            "synthetic microhatching detached from observed form",
             "local values that fragment the large family",
             "renderer filters used to simulate authored light or form",
         ),
@@ -653,7 +653,7 @@ _MODE_GUIDES = {
         ),
         (
             "Do the light and shadow families read before local detail?",
-            "Does every value region sit inside a structurally correct form?",
+            "Does every value group sit inside a structurally correct form?",
             "Do edge changes explain light, material, or spatial turn?",
         ),
     ),
@@ -740,7 +740,7 @@ _STYLE_GUIDES = {
     "graphite_tonal": StyleGuide(
         "graphite_tonal",
         (
-            "use form-directed strokes at region boundaries",
+            "use form-directed strokes at value-group boundaries",
             "reserve the darkest line accents for structural turns and contact",
         ),
         (
@@ -752,9 +752,9 @@ _STYLE_GUIDES = {
             "omit texture that fragments the light and shadow families",
         ),
         (
-            "author large calibrated value regions before local accents",
+            "author large calibrated value groups with explicit strokes before local accents",
             "preserve observed lights inside established forms",
-            "revise a disproved region instead of stacking darkness",
+            "revise disproved strokes instead of stacking darkness",
         ),
         (
             "use hard, soft, and lost edges according to form, light, and material",
@@ -908,7 +908,7 @@ _FINISH_GUIDES = {
         ),
     ),
     "form_light": FinishGuide(
-        guide_id="finish-form-light-v1",
+        guide_id="finish-form-light-v2",
         finish_intent="form_light",
         priorities=(
             "line/tone-off structural readability",
@@ -918,16 +918,16 @@ _FINISH_GUIDES = {
         preserve=(
             "major limb, torso, clothing, and prop volume before tone",
             "observed light direction and family membership",
-            "compact authored region decisions",
+            "compact explicit value-stroke groups",
         ),
         mark_policy=(
             "correct contour and overlap premises before adding value",
             "use form-directed cross-contour only where it clarifies turning volume",
         ),
         value_policy=(
-            "author one calibrated region decision per observed value family",
+            "author one calibrated explicit stroke group per observed value family",
             "reserve observed light inside a correct dark form instead of erasing it back out",
-            "revise a disproved region rather than stacking another fill",
+            "revise disproved strokes rather than stacking another dark pass",
         ),
         edge_policy=(
             "sharpen selected cast/contact edges and focal turns",
@@ -935,7 +935,7 @@ _FINISH_GUIDES = {
         ),
         omissions=(
             "arbitrary dark bands",
-            "brute-force authored hatch microstrokes",
+            "synthetic hatch clouds generated instead of observed strokes",
             "tone that manufactures missing geometry",
         ),
         relations=(
@@ -948,7 +948,7 @@ _FINISH_GUIDES = {
             _relation(
                 "light_shadow_families",
                 ("light direction", "connected shadow family", "reserved observed lights"),
-                ("group broad regions by observed family", "keep value decisions compact"),
+                ("group broad values with explicit observed strokes", "keep value decisions compact"),
                 ("local banding", "one-off opacity guessing inside the session"),
             ),
             _relation(

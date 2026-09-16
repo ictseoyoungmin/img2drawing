@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 from img2drawing import DrawingIntent, DrawingSession, RenderProfile
+from img2drawing.provenance.fast_timelapse.frame_source import inspect_fast_path_eligibility
 from img2drawing.vnext.output import export_session_timelapse
 
 
@@ -46,14 +47,13 @@ def test_explicit_canonical_backend_preserves_legacy_export_contract(tmp_path: P
     assert r.manifest['final']['last_frame_pixel_match'] is True
 
 
-def test_unsupported_fill_fails_closed_to_whole_canonical_export(tmp_path: Path):
+def test_current_stroke_only_history_is_fast_path_eligible(tmp_path: Path):
     s = _session(tmp_path)
-    s.fill_region(((10, 15), (40, 15), (42, 35), (12, 36)), value=150, part='shadow', fill_id='f1')
-    r = s.export_timelapse(tmp_path / 'fallback', mode='action', max_pixel_work=10**9)
-    assert r.manifest['backend']['selected'] == 'canonical-fallback'
-    assert 'unsupported actions' in r.manifest['backend']['fallback_reason']
-    assert list(r.frame_dir.glob('*.png'))
-    assert r.manifest['final']['last_frame_pixel_match'] is True
+    eligibility = inspect_fast_path_eligibility(s._agent.history)
+    assert eligibility.eligible
+    assert eligibility.reasons == ()
+    assert set(eligibility.action_types) == {'stroke.add'}
+    assert not hasattr(s, 'fill_region')
 
 
 @pytest.mark.skipif(shutil.which('ffmpeg') is None, reason='ffmpeg unavailable')

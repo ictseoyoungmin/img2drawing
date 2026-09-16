@@ -1,19 +1,17 @@
-"""Region tone fill: one authored action, deterministically expanded to strokes.
+"""Legacy region-fill compatibility for frozen replay evidence.
 
-A value pass is a single artistic decision ("this garment sits near value 90"),
-not three hundred of them.  Authoring it as a region keeps the canonical session
-one action long while the renderer still receives real, individually addressable
-pencil strokes.
-
-Hatch lines are clipped analytically against the region boundary, so a straight
-line is stored as its two endpoints instead of a sampled polyline.
+The current img2drawing authoring surface is stroke-only. This module is retained solely
+so frozen v1.0.3 replay code can import and reconstruct historical region actions. It is
+not exported from ``img2drawing`` or ``img2drawing.core`` and must not be used by current
+authoring code.
 """
 
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
-from typing import Any, Iterable, Sequence
+from copy import deepcopy
+from dataclasses import dataclass
+from typing import Any, Sequence
 
 Point = tuple[float, float]
 
@@ -32,11 +30,7 @@ def _as_points(values: Sequence[Sequence[float]], *, field_name: str) -> tuple[P
 
 @dataclass(frozen=True)
 class ReservedLight:
-    """A light the fill must leave in the paper, instead of erasing it back out.
-
-    ``path`` is a centre line; ``width`` is the full reserved band.  ``strength``
-    of 1.0 drops crossing hatch entirely, lower values thin it.
-    """
+    """Historical reserved-light record used only while replaying old region actions."""
 
     path: tuple[Point, ...]
     width: float = 12.0
@@ -80,7 +74,7 @@ class ReservedLight:
 
 @dataclass(frozen=True)
 class FillRegion:
-    """One authored tone region: boundary, direction, density, reserved lights."""
+    """Historical region record used only by frozen replay compatibility."""
 
     fill_id: str
     polygon: tuple[Point, ...]
@@ -158,12 +152,9 @@ def _point_segment_distance(p: Point, a: Point, b: Point) -> float:
     return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
 
 
-def _scanline_spans(polygon: Sequence[Point], ux: float, uy: float, offset: float) -> list[tuple[float, float]]:
-    """Analytic intersection of one infinite hatch line with the polygon.
-
-    Returns inside spans as ``t`` ranges along the hatch direction, so a straight
-    run is described by two numbers rather than a sampled path.
-    """
+def _scanline_spans(
+    polygon: Sequence[Point], ux: float, uy: float, offset: float
+) -> list[tuple[float, float]]:
     nx, ny = -uy, ux
     hits: list[float] = []
     n = len(polygon)
@@ -174,7 +165,6 @@ def _scanline_spans(polygon: Sequence[Point], ux: float, uy: float, offset: floa
         sb = bx * nx + by * ny - offset
         if sa == sb:
             continue
-        # half-open edge test keeps vertices from being counted twice
         if (sa <= 0.0 < sb) or (sb <= 0.0 < sa):
             f = sa / (sa - sb)
             hits.append((ax + f * (bx - ax)) * ux + (ay + f * (by - ay)) * uy)
@@ -191,11 +181,9 @@ def _apply_reserved(
     offset: float,
     reserved: Sequence[ReservedLight],
 ) -> list[tuple[tuple[float, float], float]]:
-    """Split one span where reserved lights cross it. Returns (span, attenuation)."""
     if not reserved:
         return [(span, 1.0)]
     start, end = span
-    # Sample only to locate reserve boundaries; the emitted span stays analytic.
     step = 2.0
     n = max(2, int((end - start) / step) + 1)
     marks: list[float] = []
@@ -221,12 +209,6 @@ def _apply_reserved(
 
 
 def expand_fill(region: FillRegion) -> list[dict[str, Any]]:
-    """Deterministically expand one region into hatch line descriptors.
-
-    Each descriptor is ``{"stroke_id", "points", "attenuation"}`` with exactly two
-    points per straight run - the whole reason a fill costs one action instead of
-    several hundred.
-    """
     ux = math.cos(math.radians(region.angle))
     uy = math.sin(math.radians(region.angle))
     nx, ny = -uy, ux
@@ -245,10 +227,46 @@ def expand_fill(region: FillRegion) -> list[dict[str, Any]]:
                     continue
                 a = (round(ux * t0 + nx * offset, 3), round(uy * t0 + ny * offset, 3))
                 b = (round(ux * t1 + nx * offset, 3), round(uy * t1 + ny * offset, 3))
-                out.append({
-                    "stroke_id": f"{region.fill_id}#{index:04d}",
-                    "points": [list(a), list(b)],
-                    "attenuation": round(keep, 4),
-                })
+                out.append(
+                    {
+                        "stroke_id": f"{region.fill_id}#{index:04d}",
+                        "points": [list(a), list(b)],
+                        "attenuation": round(keep, 4),
+                    }
+                )
                 index += 1
     return out
+
+
+def _install_frozen_replay_bridge() -> None:
+    """Expose the v1.0.3 private helper only when this compatibility module is imported."""
+
+    from . import history as _history
+    from .ir import Stroke
+
+    def _fill_strokes(region: FillRegion, action) -> list[Stroke]:
+        base = action.tool_state or {}
+        strokes: list[Stroke] = []
+        for line in expand_fill(region):
+            ts = deepcopy(base)
+            attenuation = float(line["attenuation"])
+            stroke = Stroke(
+                points=[tuple(map(float, q)) for q in line["points"]],
+                width=float(ts.get("width", 1.5)),
+                opacity=float(ts.get("opacity", 1.0)) * attenuation,
+                role=region.role,
+                layer=region.layer,
+                tool_state=ts,
+                part=region.part,
+                stage=action.stage,
+                stroke_id=line["stroke_id"],
+            )
+            stroke.pressure = None
+            strokes.append(stroke)
+        return strokes
+
+    if not hasattr(_history, "_fill_strokes"):
+        _history._fill_strokes = _fill_strokes
+
+
+_install_frozen_replay_bridge()

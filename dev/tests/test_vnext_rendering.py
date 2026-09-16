@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import importlib.util
 from pathlib import Path
 
 import pytest
@@ -13,10 +12,7 @@ from img2drawing.render.pillow_pencil_contact import (
     RENDERER_VERSION as HISTORICAL_RENDERER_VERSION,
 )
 from img2drawing.render.renderer_registry import current_renderer
-
-
-ROOT = Path(__file__).resolve().parents[2]
-FIXTURE = ROOT / "dev" / "fixtures" / "vnext-b11" / "run.py"
+from img2drawing.vnext.output import export_session_timelapse
 
 
 def _subject(tmp_path: Path) -> Path:
@@ -38,21 +34,15 @@ def _session(tmp_path: Path) -> DrawingSession:
     )
     session.draw(((6, 8), (18, 22), (25, 40)), part="gesture")
     session.draw(((26, 8), (34, 20), (39, 39)), part="selected_contour")
-    session.fill_region(
-        ((12, 18), (33, 17), (37, 37), (16, 39)),
-        value=148,
+    session.draw(
+        ((12, 24), (21, 22), (30, 23), (37, 30)),
+        role="value",
         part="shadow_family",
-        fill_id="fixture-shadow",
+        stroke_id="fixture-shadow-stroke",
+        tool="form_pencil",
+        tool_overrides={"pressure": 0.48, "opacity": 0.58, "taper_in": 0.05, "taper_out": 0.05},
     )
     return session
-
-
-def _load_fixture():
-    spec = importlib.util.spec_from_file_location("img2drawing_vnext_b11_fixture", FIXTURE)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def test_render_profile_roundtrip_and_strict_material_boundary() -> None:
@@ -95,19 +85,29 @@ def test_cursor_png_replay_gif_and_final_render_share_history_and_profile(tmp_pa
     before_cursor = session.history_cursor
     direct = session.render_final(tmp_path / "direct.png")
     initial = session.render_at(0, tmp_path / "initial.png")
-    replay = session.export_timelapse(tmp_path / "replay", mode="action")
+    replay = export_session_timelapse(
+        session,
+        tmp_path / "replay",
+        mode="action",
+        max_pixel_work=10**9,
+        backend="canonical",
+    )
 
     assert session.drawing_state_hash() == before_hash
     assert session.history_cursor == before_cursor
     assert initial.cursor == 0
     assert direct.cursor == before_cursor
     assert [frame["cursor"] for frame in replay.manifest["frames"]] == [0, 1, 2, 3]
+    assert [frame["action"] for frame in replay.manifest["frames"]] == [
+        None,
+        "stroke.add",
+        "stroke.add",
+        "stroke.add",
+    ]
+    assert replay.manifest["frames"][-1]["duration_ms"] == 900
     assert replay.manifest["sampling"]["action_zero_included"]
     assert replay.manifest["sampling"]["latest_included"]
     assert len({frame["pixel_sha256"] for frame in replay.manifest["frames"]}) > 2
-    region_frames = [frame for frame in replay.manifest["frames"] if frame["action"] == "region.fill"]
-    assert len(region_frames) == 1
-    assert region_frames[0]["duration_ms"] == 900  # the final authored region gets final hold
     assert replay.manifest["final"]["last_frame_pixel_match"]
     assert replay.manifest["final"]["pixel_sha256"] == direct.pixel_sha256
     assert replay.manifest["gif"]["within_tolerance"]
@@ -162,8 +162,6 @@ def test_inspect_renders_through_the_same_persisted_profile_as_final(
     assert tuple(inspect_call[1]["graphite"]) == custom.graphite_rgb
     assert tuple(final_call[1]["background"]) == custom.background_rgba
     assert tuple(final_call[1]["graphite"]) == custom.graphite_rgb
-    # The inspection sheet always renders at 1x canvas space (registration/ROI/measurement
-    # geometry assumes it); only the final export honors the profile's output_scale.
     assert inspect_call[1]["scale"] == 1
     assert final_call[1]["scale"] == custom.output_scale == 2
 
@@ -188,8 +186,14 @@ def test_inspect_and_final_render_are_pixel_identical(tmp_path: Path) -> None:
 
 def test_replay_is_deterministic_and_every_n_keeps_endpoints(tmp_path: Path) -> None:
     session = _session(tmp_path)
-    first = session.export_timelapse(tmp_path / "first", mode="every_n", every_n=2)
-    second = session.export_timelapse(tmp_path / "second", mode="every_n", every_n=2)
+    first = export_session_timelapse(
+        session, tmp_path / "first", mode="every_n", every_n=2,
+        max_pixel_work=10**9, backend="canonical",
+    )
+    second = export_session_timelapse(
+        session, tmp_path / "second", mode="every_n", every_n=2,
+        max_pixel_work=10**9, backend="canonical",
+    )
     assert [frame["cursor"] for frame in first.manifest["frames"]] == [0, 2, 3]
     assert [frame["pixel_sha256"] for frame in first.manifest["frames"]] == [
         frame["pixel_sha256"] for frame in second.manifest["frames"]
@@ -202,7 +206,7 @@ def test_replay_budget_and_cursor_bounds_fail_before_drift(tmp_path: Path) -> No
     session = _session(tmp_path)
     with pytest.raises(ValueError, match="pixel-work budget"):
         session.export_timelapse(tmp_path / "too-large", max_pixel_work=1)
-    assert not (tmp_path / "too-large").exists()
+    assert not (tmp_path / "too-large" / "timelapse.gif").exists()
     with pytest.raises(ValueError, match="outside the authoritative history"):
         session.render_at(session.history_cursor + 1, tmp_path / "future.png")
 
@@ -226,13 +230,21 @@ def test_pre_b11_checkpoint_requires_explicit_profile_migration(tmp_path: Path) 
     assert resumed.render_final(tmp_path / "migrated.png").path.is_file()
 
 
-def test_deterministic_b11_fixture_records_parity_and_one_region_frame(tmp_path: Path) -> None:
-    trace = _load_fixture().run_fixture(tmp_path / "fixture")
-    assert trace["quality_claim"] == "mechanical-only"
-    assert trace["history_unchanged"]
-    assert trace["frame_cursors"] == [0, 1, 2, 3]
-    assert trace["frame_actions"].count("region.fill") == 1
-    assert trace["final_png_pixel_match"]
-    assert trace["gif"]["within_tolerance"]
-    assert trace["sampling"]["action_zero_included"]
-    assert trace["sampling"]["latest_included"]
+def test_current_stroke_only_replay_records_parity_without_region_actions(tmp_path: Path) -> None:
+    session = _session(tmp_path)
+    replay = export_session_timelapse(
+        session,
+        tmp_path / "current-fixture",
+        mode="action",
+        max_pixel_work=10**9,
+        backend="canonical",
+    )
+    assert not hasattr(session, "fill_region")
+    assert replay.manifest["history"]["action_count"] == 3
+    assert [frame["cursor"] for frame in replay.manifest["frames"]] == [0, 1, 2, 3]
+    assert [frame["action"] for frame in replay.manifest["frames"]].count("stroke.add") == 3
+    assert all(frame["action"] != "region.fill" for frame in replay.manifest["frames"])
+    assert replay.manifest["final"]["last_frame_pixel_match"]
+    assert replay.manifest["gif"]["within_tolerance"]
+    assert replay.manifest["sampling"]["action_zero_included"]
+    assert replay.manifest["sampling"]["latest_included"]

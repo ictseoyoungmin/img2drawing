@@ -60,9 +60,18 @@ def test_preset_surface_is_small_distinct_and_portable() -> None:
     assert all(StyleGuide.from_dict(guide.to_dict()) == guide for guide in guides)
 
 
-def test_graphite_tonal_is_authored_value_policy_not_output_filter() -> None:
+def test_graphite_tonal_is_explicit_stroke_value_policy_not_output_filter() -> None:
     text = _guide_text(resolve_style_guide("graphite_tonal"))
-    assert all(term in text for term in ("large calibrated value regions", "observed lights", "hard, soft, and lost edges"))
+    assert all(
+        term in text
+        for term in (
+            "large calibrated value groups",
+            "explicit strokes",
+            "observed lights",
+            "hard, soft, and lost edges",
+        )
+    )
+    assert "fill_region" not in text
     assert "renderprofile remains unchanged" in text
     assert "raster filter" in text and "incorrect geometry" in text
 
