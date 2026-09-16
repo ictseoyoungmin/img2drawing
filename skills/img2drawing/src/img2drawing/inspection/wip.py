@@ -94,7 +94,7 @@ class WIPGuideStyle:
 
 @dataclass(frozen=True)
 class WIPGuideView:
-    """One immutable derived guide-visibility artifact bound to a fresh inspection."""
+    """One derived guide-visibility artifact bound to a fresh canonical inspection."""
 
     path: Path
     manifest_path: Path
@@ -155,6 +155,22 @@ def _confined_output(session: Any, inspection_id: str, out_dir: str | Path | Non
     return destination
 
 
+def _view_key(
+    inspection_id: str,
+    drawing_state_hash: str,
+    stroke_ids: Sequence[str],
+    style: WIPGuideStyle,
+) -> str:
+    payload = {
+        "inspection_id": inspection_id,
+        "drawing_state_hash": drawing_state_hash,
+        "stroke_ids": list(stroke_ids),
+        "style": style.to_dict(),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()[:16]
+
+
 def render_wip_guides(
     session: Any,
     stroke_ids: Iterable[str],
@@ -176,6 +192,7 @@ def render_wip_guides(
     style = WIPGuideStyle(color=tuple(color), width_scale=width_scale, opacity=opacity)
     record = _inspection_record(session, inspection_id)
     inspection_id = str(record["inspection_id"])
+    drawing_state_hash = str(record["drawing_state_hash"])
     root = Path(session.output_dir).resolve()
     manifest_path = (root / str(record["manifest"])).resolve()
     try:
@@ -194,6 +211,10 @@ def render_wip_guides(
         raise ValueError("inspection raw drawing escapes its immutable directory") from exc
     if not raw_path.is_file():
         raise FileNotFoundError(raw_path)
+    raw_sha256 = _sha256_file(raw_path)
+    expected_raw_sha256 = str(record.get("drawing_artifact_sha256") or manifest.get("drawing_artifact_sha256") or "")
+    if expected_raw_sha256 and raw_sha256 != expected_raw_sha256:
+        raise ValueError("inspection raw drawing no longer matches its recorded artifact digest")
 
     ir = session.current_ir()
     by_id = {str(stroke.stroke_id): stroke for stroke in ir.strokes if stroke.stroke_id is not None}
@@ -203,8 +224,9 @@ def render_wip_guides(
 
     destination = _confined_output(session, inspection_id, out_dir)
     destination.mkdir(parents=True, exist_ok=True)
-    view_path = destination / "wip_guides.png"
-    output_manifest = destination / "wip_guides.json"
+    view_key = _view_key(inspection_id, drawing_state_hash, selected_ids, style)
+    view_path = destination / f"wip_guides-{view_key}.png"
+    output_manifest = destination / f"wip_guides-{view_key}.json"
 
     with Image.open(raw_path) as source:
         base = source.convert("RGBA")
@@ -231,8 +253,8 @@ def render_wip_guides(
         path=view_path,
         manifest_path=output_manifest,
         inspection_id=inspection_id,
-        drawing_state_hash=str(record["drawing_state_hash"]),
-        raw_drawing_sha256=_sha256_file(raw_path),
+        drawing_state_hash=drawing_state_hash,
+        raw_drawing_sha256=raw_sha256,
         wip_view_sha256=_sha256_file(view_path),
         stroke_ids=selected_ids,
         style=style,
