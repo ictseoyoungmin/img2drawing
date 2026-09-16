@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 import pytest
 
-from img2drawing import DrawingSession
+from img2drawing import DrawingIntent, DrawingSession, ReferenceAuthority
 from img2drawing.inspection import WIPGuideStyle, render_wip_guides
 from img2drawing.runtime import runtime_capabilities
 
@@ -16,6 +16,8 @@ def _session(tmp_path: Path) -> DrawingSession:
         canvas=(100, 80),
         output_dir=tmp_path,
         session_id="wip-guide-visibility",
+        intent=DrawingIntent(reference_mode="imaginative", drawing_mode="free_draw"),
+        reference_authority=ReferenceAuthority.imaginative(("WIP guide visibility test fixture",)),
     )
     observation_id = session.observe({"construction": "two explicit working axes"})
     session.draw(
