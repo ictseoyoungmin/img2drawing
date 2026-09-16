@@ -31,9 +31,18 @@ from .model import (
     Size,
 )
 from .sheet import InspectionSheet
+from .wip import (
+    DEFAULT_WIP_GUIDE_COLOR,
+    WIP_GUIDE_STYLE_SCHEMA,
+    WIP_GUIDE_VIEW_SCHEMA,
+    WIPGuideStyle,
+    WIPGuideView,
+    render_wip_guides,
+)
 
 __all__ = [
     "Box",
+    "DEFAULT_WIP_GUIDE_COLOR",
     "GroundGuide",
     "Grid",
     "GridMeasurement",
@@ -47,6 +56,10 @@ __all__ = [
     "ROI",
     "Registration",
     "Size",
+    "WIP_GUIDE_STYLE_SCHEMA",
+    "WIP_GUIDE_VIEW_SCHEMA",
+    "WIPGuideStyle",
+    "WIPGuideView",
     "angle",
     "distance",
     "drawing_state_hash",
@@ -57,6 +70,7 @@ __all__ = [
     "map_subject_to_canvas",
     "point",
     "plumb_line",
+    "render_wip_guides",
     "sample_pixel",
     "stage_free_drawing_state_hash",
     "vertical_profile",
