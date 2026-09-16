@@ -148,6 +148,22 @@ tertiary  intentional construction remnant / hatch / context accent
 
 The exact numeric pressure is style-dependent. The requirement is perceptual: at final output scale, these roles must actually read with different priority. If they do not, retune or retire marks instead of trusting nominal tool names.
 
+## WIP guide visibility gate
+
+While a construction/search mark still carries a live hypothesis, the Agent must be able to see it
+well enough to compare that hypothesis against the reference. A guide that is technically present
+but nearly invisible in the inspection is not useful evidence.
+
+When provisional marks are too faint to re-read, use the documented **display-only WIP guide view**
+from `../api/public-surface.md`: explicitly select the current stroke IDs and, when useful, choose a
+contrasting colour, larger display width, and higher display opacity. Do not darken the authored
+stroke permanently merely to make the WIP inspection readable, and do not infer guide membership
+from generic role names.
+
+The visibility boost changes only the inspection aid. It does not strengthen the underlying drawing
+claim and does not excuse unresolved construction clutter at finish. Once the hypothesis is replaced
+or no longer needed, classify the authored mark through KEEP/SOFTEN/RETIRE below.
+
 ## Retirement gate
 
 Before calling a drawing clean/final, classify each surviving provisional mark:
