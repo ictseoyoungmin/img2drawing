@@ -164,6 +164,40 @@ Group directional hatching or other value strokes by observed form/light family,
 addressable in history, and revise the responsible strokes when the value read is disproved. Do not
 substitute a region-to-hatch generator for those artistic decisions.
 
+## WIP guide visibility
+
+Construction/search marks must remain visually readable while they are still carrying a live
+hypothesis. Do not make an authored guide permanently dark merely so the Agent can see it, and do
+not weaken the final pencil renderer to expose it. After a **fresh** `session.inspect()`, create a
+display-only WIP view for the explicit current stroke IDs that need stronger visibility:
+
+```python
+from img2drawing.inspection import render_wip_guides
+
+inspection_id = session.inspection_history[-1]["inspection_id"]
+wip = render_wip_guides(
+    session,
+    (shoulder_axis_id, pelvis_axis_id, face_cross_id),
+    inspection_id=inspection_id,
+    color=(40, 120, 255),       # Agent-selected contrast colour
+    width_scale=2.2,
+    opacity=0.78,
+)
+```
+
+The runtime deliberately does **not** infer which lines are guides from role names, geometry, or
+stage labels. The Agent chooses the stroke IDs and may choose a contrasting RGB colour, width boost,
+and opacity. The helper rejects stale inspections and stroke IDs that are no longer current.
+
+`render_wip_guides()` is inspection-only. It writes a derived WIP PNG + manifest under the session
+output directory and does not mutate history, current geometry, `RenderProfile`, canonical
+`raw_drawing.png`, replay, or final output. Different style choices receive different artifact
+names instead of overwriting one another.
+
+This visibility boost is temporary evidence, not permission to keep construction clutter in the
+finished drawing. Once a stronger description supersedes the guide, use the normal
+KEEP/SOFTEN/RETIRE decision and edit the authored stroke itself when appropriate.
+
 ## Markmaking presets and the draw adapter
 
 The 1.0.3 runtime exposes semantic markmaking roles/presets through the public vNext resolver. Names
