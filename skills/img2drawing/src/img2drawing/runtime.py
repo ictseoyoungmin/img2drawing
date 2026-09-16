@@ -35,8 +35,6 @@ class RuntimeCapabilities:
         "replace-stroke",
         "soften-stroke",
         "delete-stroke",
-        "fill",
-        "replace-fill",
         "inspect",
         "render",
         "replay",
