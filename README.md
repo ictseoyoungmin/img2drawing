@@ -123,7 +123,16 @@ guidance needed for the current residual.
 
 ## Install
 
-**As an agent skill** — copy the skill folder into wherever your agent loads skills from:
+**With the Skills CLI (recommended)**:
+
+```bash
+npx skills add ictseoyoungmin/img2drawing --skill img2drawing --agent claude-code
+npx skills add ictseoyoungmin/img2drawing --skill img2drawing --agent codex
+```
+
+Use the matching `--agent` value for another supported agent.
+
+**Manual skill install** — copy the skill folder into wherever your agent loads skills from:
 
 ```bash
 cp -r skills/img2drawing /path/to/your/skills/
