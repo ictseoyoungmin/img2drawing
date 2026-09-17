@@ -1,0 +1,14 @@
+{
+  "name": "img2drawing",
+  "owner": {
+    "name": "ictseoyoungmin"
+  },
+  "description": "Claude Code marketplace for img2drawing.",
+  "plugins": [
+    {
+      "name": "img2drawing",
+      "source": "./skills/",
+      "description": "Observation-first drawing with explicit strokes, visual QA, correction, and replay without image generation."
+    }
+  ]
+}
