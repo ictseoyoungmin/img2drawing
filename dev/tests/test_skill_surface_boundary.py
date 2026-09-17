@@ -17,10 +17,12 @@ def test_deployable_skill_root_is_attention_clean() -> None:
         "LICENSE",
         "MANIFEST.in",
         "SKILL.md",
+        "assets",
         "pyproject.toml",
         "references",
         "src",
     }
+    assert {path.name for path in (SKILL / "assets").iterdir()} == {"icon.svg"}
     assert not (SKILL / "examples").exists()
 
 
