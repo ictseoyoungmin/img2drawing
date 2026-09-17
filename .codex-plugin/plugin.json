@@ -1,0 +1,42 @@
+{
+  "name": "img2drawing",
+  "version": "1.0.3",
+  "description": "Observation-first agent drawing with explicit, inspectable strokes, visual QA, and replayable sessions.",
+  "author": {
+    "name": "ictseoyoungmin",
+    "url": "https://github.com/ictseoyoungmin"
+  },
+  "homepage": "https://github.com/ictseoyoungmin/img2drawing",
+  "repository": "https://github.com/ictseoyoungmin/img2drawing",
+  "license": "Apache-2.0",
+  "keywords": [
+    "drawing",
+    "croquis",
+    "pencil",
+    "agent-skill",
+    "visual-qa",
+    "explicit-strokes",
+    "replay"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "img2drawing",
+    "shortDescription": "Draw references with explicit inspectable strokes",
+    "longDescription": "An observation-first drawing skill and runtime that lets an agent construct, inspect, correct, and replay drawings with explicit authored strokes instead of image generation.",
+    "developerName": "ictseoyoungmin",
+    "category": "Creative Tools",
+    "capabilities": [
+      "Instructions",
+      "Visualization",
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/ictseoyoungmin/img2drawing",
+    "defaultPrompt": [
+      "Use img2drawing to draw this reference with explicit strokes and visual QA.",
+      "Use img2drawing to build this drawing from construction through correction without image generation."
+    ],
+    "brandColor": "#6F5A46",
+    "composerIcon": "./skills/img2drawing/assets/icon.svg",
+    "logo": "./skills/img2drawing/assets/icon.svg"
+  }
+}
