@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"
+     role="img" aria-labelledby="title desc" focusable="false" shape-rendering="geometricPrecision">
+  <title id="title">img2drawing icon</title>
+  <desc id="desc">A drawing sheet where faint construction geometry resolves into deliberate graphite strokes under a pencil tip.</desc>
+
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#242724"/>
+      <stop offset="0.68" stop-color="#171917"/>
+      <stop offset="1" stop-color="#0f1110"/>
+    </radialGradient>
+
+    <linearGradient id="paper" x1="0" y1="0" x2="0.92" y2="1">
+      <stop offset="0" stop-color="#fbf5e9"/>
+      <stop offset="0.58" stop-color="#f0e7d6"/>
+      <stop offset="1" stop-color="#ddcfb8"/>
+    </linearGradient>
+
+    <linearGradient id="paperEdge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf7"/>
+      <stop offset="1" stop-color="#c9b99f"/>
+    </linearGradient>
+
+    <linearGradient id="pencilWood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d39a69"/>
+      <stop offset="0.55" stop-color="#ba7848"/>
+      <stop offset="1" stop-color="#8b5433"/>
+    </linearGradient>
+
+    <linearGradient id="pencilBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9c5d3d"/>
+      <stop offset="1" stop-color="#6d3d2a"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="200%">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#000000" flood-opacity="0.34"/>
+    </filter>
+
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.22"/>
+    </filter>
+
+    <filter id="graphiteSoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="0.7"/>
+    </filter>
+
+    <clipPath id="paperClip">
+      <path d="M255 194
+               Q255 168 282 163
+               L716 198
+               Q742 200 748 226
+               L703 742
+               Q700 769 672 772
+               L253 722
+               Q227 719 229 693
+               Z"/>
+    </clipPath>
+  </defs>
+
+  <rect x="0" y="0" width="1024" height="1024" rx="170" fill="url(#bg)"/>
+  <rect x="18" y="18" width="988" height="988" rx="152"
+        fill="none" stroke="#d9dfd9" stroke-width="2" opacity="0.08"/>
+
+  <g filter="url(#shadow)">
+    <path d="M255 194
+             Q255 168 282 163
+             L716 198
+             Q742 200 748 226
+             L703 742
+             Q700 769 672 772
+             L253 722
+             Q227 719 229 693
+             Z"
+          fill="url(#paper)" stroke="url(#paperEdge)" stroke-width="6"/>
+  </g>
+
+  <g clip-path="url(#paperClip)" fill="none" stroke="#8799a0" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="470" cy="358" rx="86" ry="105" stroke-width="8" opacity="0.26"/>
+    <path d="M470 252v222" stroke-width="7" opacity="0.26"/>
+    <path d="M395 346c44-18 102-18 151 2" stroke-width="7" opacity="0.22"/>
+    <path d="M415 456c-58 31-94 82-101 146" stroke-width="9" opacity="0.24"/>
+    <path d="M529 456c49 35 78 82 83 140" stroke-width="9" opacity="0.24"/>
+    <path d="M415 456c31 13 77 14 114 0" stroke-width="7" opacity="0.22"/>
+    <path d="M354 528c50 22 103 26 154 13" stroke-width="6" opacity="0.18"/>
+  </g>
+
+  <g clip-path="url(#paperClip)" fill="none" stroke="#292824" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M404 332
+             C407 283 438 249 479 247
+             C524 245 559 277 568 323
+             C577 364 563 403 542 427"
+          stroke-width="18"/>
+    <path d="M403 333
+             C394 368 401 405 423 431
+             C436 447 451 456 469 460"
+          stroke-width="15"/>
+    <path d="M541 428
+             C531 447 514 462 494 469
+             C474 476 450 470 432 454"
+          stroke-width="13"/>
+    <path d="M438 452
+             C440 478 435 500 420 517"
+          stroke-width="12"/>
+    <path d="M506 466
+             C510 489 519 507 535 522"
+          stroke-width="12"/>
+    <path d="M420 517
+             C378 526 349 550 330 592
+             C313 628 308 662 306 694"
+          stroke-width="17"/>
+    <path d="M535 522
+             C576 530 607 553 627 587
+             C648 623 657 658 659 704"
+          stroke-width="17"/>
+    <path d="M446 510
+             C468 535 480 566 481 603
+             C482 634 476 658 463 681"
+          stroke-width="8" opacity="0.7"/>
+    <path d="M555 351
+             C584 379 588 425 565 466
+             C553 487 539 499 523 508"
+          stroke-width="10"/>
+  </g>
+
+  <g clip-path="url(#paperClip)" stroke="#37342f" stroke-linecap="round" opacity="0.62">
+    <path d="M378 588l48-31M372 610l58-38M369 632l61-39M548 565l48 31M555 588l49 31" stroke-width="7"/>
+    <path d="M438 304l-24 53M458 289l-25 62M481 286l-23 57" stroke-width="6" opacity="0.72"/>
+  </g>
+
+  <path d="M353 416c30 17 60 24 92 23"
+        fill="none" stroke="#8a9da6" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="18 16" opacity="0.28"/>
+
+  <g transform="translate(690 640) rotate(-39)" filter="url(#softShadow)">
+    <path d="M0 0 L54 -18 L54 18 Z" fill="#242320"/>
+    <path d="M54 -18 L110 -30 L110 30 L54 18 Z" fill="url(#pencilWood)"/>
+    <rect x="106" y="-30" width="224" height="60" rx="18" fill="url(#pencilBody)"/>
+    <path d="M118 -16H314" stroke="#d6a077" stroke-width="5" stroke-linecap="round" opacity="0.32"/>
+    <rect x="302" y="-30" width="28" height="60" rx="8" fill="#5d6460"/>
+  </g>
+
+  <path d="M686 645
+           C654 661 630 681 613 706
+           C603 721 595 735 589 748"
+        fill="none" stroke="#252421" stroke-width="15" stroke-linecap="round"/>
+
+  <g clip-path="url(#paperClip)" stroke="#6c6254" stroke-width="2" opacity="0.06">
+    <path d="M250 305C380 288 551 312 727 298"/>
+    <path d="M247 405C389 388 565 409 716 396"/>
+    <path d="M241 510C377 493 560 516 710 502"/>
+    <path d="M236 620C391 601 556 627 699 613"/>
+  </g>
+</svg>
