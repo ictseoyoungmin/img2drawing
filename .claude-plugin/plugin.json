@@ -1,0 +1,21 @@
+{
+  "name": "img2drawing",
+  "version": "1.0.3",
+  "description": "Observation-first agent drawing with explicit, inspectable strokes, visual QA, and replayable sessions.",
+  "author": {
+    "name": "ictseoyoungmin",
+    "url": "https://github.com/ictseoyoungmin"
+  },
+  "homepage": "https://github.com/ictseoyoungmin/img2drawing",
+  "repository": "https://github.com/ictseoyoungmin/img2drawing",
+  "license": "Apache-2.0",
+  "keywords": [
+    "drawing",
+    "croquis",
+    "pencil",
+    "agent-skill",
+    "visual-qa",
+    "explicit-strokes",
+    "replay"
+  ]
+}
