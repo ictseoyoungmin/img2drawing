@@ -1,4 +1,7 @@
-# img2drawing
+<div align="center">
+  <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
+  <h1>img2drawing</h1>
+</div>
 
 **Current stable: v1.0.3**
 
