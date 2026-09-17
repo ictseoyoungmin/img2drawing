@@ -1,6 +1,13 @@
 <div align="center">
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
+  <p>
+    <a href="docs/releases/v1.0.3.md"><img src="https://img.shields.io/badge/version-v1.0.3-6f5a46" alt="Version v1.0.3"></a>
+    <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+    <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
+    <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache-2.0 License"></a>
+  </p>
 </div>
 
 **Current stable: v1.0.3**
