@@ -27,6 +27,17 @@ The action history keeps every revision inspectable, resumable, and replayable. 
 human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
 an `examples/` tree until there are genuinely representative instructional examples.
 
+## Drawing process
+
+Three hand line studies progressing from early authored lines to finished line work:
+
+<p align="center">
+  <img src="docs/media/hand-line-studies.gif" width="560" alt="Three hand line studies progressing from early lines to finished line work">
+</p>
+
+Each panel advances through explicit drawing actions; this lightweight preview shows the process
+rather than only the final image.
+
 ## v1.0.3 — Gesture + renderer quality
 
 v1.0.3 closes the post-v1.0.2 integration cycle as the current stable release.
