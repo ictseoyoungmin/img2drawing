@@ -4,7 +4,8 @@ The expected hashes were recorded from the v1.0.3 source before the v1.1 structu
 refactor. Any change to these digests is a pixel change and must be an intentional,
 versioned renderer decision rather than a side effect of moving code.
 
-Regenerate only when a renderer change is deliberate:
+Digests depend on the Pillow/NumPy rasterization used; the recording environment is stored
+under ``_environment``. Regenerate only when a renderer change is deliberate:
 
     IMG2DRAWING_REGEN_GOLDEN=1 python -m pytest dev/tests/test_v11_render_golden.py
 """
@@ -41,7 +42,14 @@ def _pixel_sha(path: Path) -> str:
         return hashlib.sha256(f"{rgba.size}".encode() + rgba.tobytes()).hexdigest()
 
 
-def _load_golden() -> dict[str, str]:
+def _environment() -> dict[str, str]:
+    import numpy
+    import PIL
+
+    return {"pillow": PIL.__version__, "numpy": numpy.__version__}
+
+
+def _load_golden() -> dict:
     if GOLDEN_PATH.exists():
         return json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
     return {}
@@ -53,12 +61,16 @@ _RECORDED: dict[str, str] = {}
 def _check(key: str, digest: str) -> None:
     if REGEN:
         _RECORDED[key] = digest
-        merged = {**_load_golden(), **_RECORDED}
+        merged = {**_load_golden(), **_RECORDED, "_environment": _environment()}
         GOLDEN_PATH.write_text(json.dumps(merged, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return
     golden = _load_golden()
     assert key in golden, f"missing golden digest for {key}; regenerate deliberately"
-    assert digest == golden[key], f"v11 pixel drift for {key}"
+    recorded_env, current_env = golden.get("_environment"), _environment()
+    assert digest == golden[key], (
+        f"v11 pixel drift for {key} (golden recorded with {recorded_env}, running {current_env}; "
+        "a Pillow/NumPy change can move pixels without any img2drawing change)"
+    )
 
 
 def _ir_from_fixture(name: str) -> StrokeIR:
@@ -279,12 +291,10 @@ def test_v11_session_outputs_are_pixel_stable(tmp_path: Path) -> None:
         pytest.skip("ffmpeg unavailable; fast timelapse golden requires it")
     fast = session.export_timelapse(tmp_path / "tl-fast", every_n=2)
     _check("session/timelapse-final", _pixel_sha(fast.final_path))
-    with Image.open(fast.gif_path) as gif:
-        frames = []
-        for index in range(gif.n_frames):
-            gif.seek(index)
-            frames.append(hashlib.sha256(gif.convert("RGB").tobytes()).hexdigest())
-    _check("session/timelapse-gif-frames", hashlib.sha256("".join(frames).encode()).hexdigest())
+    # Lossless fast-backend frame RGB hashes (renderer-only). The GIF itself is not pinned:
+    # its palette depends on the ffmpeg version.
+    frames = [frame["pixel_sha256"] for frame in fast.manifest["frames"]]
+    _check("session/timelapse-fast-frames", hashlib.sha256("".join(frames).encode()).hexdigest())
 
     canonical = session.export_timelapse(tmp_path / "tl-canonical", every_n=2, backend="canonical")
     _check("session/timelapse-canonical-final", _pixel_sha(canonical.final_path))

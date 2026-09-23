@@ -7,7 +7,7 @@ import pytest
 from PIL import Image
 
 from img2drawing.inspection import Grid, ROI
-from img2drawing.vnext import DrawingSession
+from img2drawing.session import DrawingSession
 
 
 def _subject(tmp_path: Path) -> Path:

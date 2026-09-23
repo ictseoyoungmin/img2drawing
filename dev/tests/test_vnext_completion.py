@@ -7,7 +7,8 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing import DrawingIntent, DrawingSession, FinishRecord
+from img2drawing import DrawingIntent, DrawingSession
+from img2drawing.session import FinishRecord
 
 
 ROOT = Path(__file__).resolve().parents[2]

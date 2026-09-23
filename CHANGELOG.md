@@ -2,9 +2,28 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
-## Unreleased
+## Unreleased (1.1.0.dev0)
 
-No public changes have been queued after v1.0.3 yet.
+A structural release: drawing semantics and rendered pixels are unchanged from v1.0.3 (pinned by a v11 golden over direct renders and session final/cursor/inspect/timelapse output), but the import surface and legacy compatibility are cut.
+
+### Changed
+
+- `img2drawing.vnext` is split by role: `img2drawing.session` holds `DrawingSession` and its records/schemas; `img2drawing.authoring` holds `resolve_mark_for_intent`, `resolve_markmaking`, `retune_stroke(s)`, `sample_catmull_rom`, and the construction facade. The package root is unchanged.
+- The renderer is one package, `img2drawing.render`, with identity `img2drawing-pencil / 11`. It is the v1.0.3 `pillow-pencil-contact-v11 / 1` renderer flattened (no generation-layered modules, no runtime monkey-patching); v1.0.3 v11 profiles resume as the same contract.
+- `RenderProfile` (schema `img2drawing.render_profile.v2`) persists `renderer_contract_digest`. Unknown identities and foreign digests raise `UnsupportedRendererError` instead of rendering differently.
+- Timelapse export has one implementation, `img2drawing.timelapse`, behind `DrawingSession.export_timelapse()`, which gains `backend=`, `fps=`, `materialize_frames=`, and `cache_dir=`. The replay manifest is `img2drawing.replay_export.v2` and records `backend.requested/selected/fallback_reason`.
+- `runtime_capabilities()` (v2) lists the new namespaces and `output_entrypoints`.
+
+### Removed
+
+- `img2drawing.vnext`, `img2drawing.provenance` (including the legacy v9 `export_timelapse` and `render_session_at`), `img2drawing.core.session`, and the deprecated pre-0.6.0rc2 root compatibility shims.
+- Historical renderers `pillow-pencil-contact-v9 / 1` and `v10 / 1` and region-fill replay. Such sessions fail closed with a pointer to `img2drawing==1.0.3`, which remains their exact replay authority.
+- `img2drawing.render.tone_scale` (calibrated against the retired v9 renderer), `line_weight`, and `scale_guidance`.
+- `_version.PUBLIC_API`, `RELEASE_REVISION`, `RELEASE_SLICE`, `DEFAULT_SESSION_ID`.
+
+### Fixed
+
+- A broad stroke whose contact mask was empty (for example, drawn past the canvas edge) crashed rendering with `Operation on closed image`.
 
 ## v1.0.3 — Gesture + renderer quality
 

@@ -26,8 +26,6 @@ PACKAGE = ROOT / "skills" / "img2drawing"
 VERSION_FILE = PACKAGE / "src" / "img2drawing" / "_version.py"
 VERSION_NS = runpy.run_path(str(VERSION_FILE))
 VERSION = str(VERSION_NS["__version__"])
-PUBLIC_API = str(VERSION_NS["PUBLIC_API"])
-RELEASE_REVISION = str(VERSION_NS["RELEASE_REVISION"])
 TEXT_SUFFIXES = {".md", ".py", ".json", ".toml", ".txt", ".yml", ".yaml"}
 FORBIDDEN_ARCHIVE_PARTS = {
     ".git", ".github", ".pytest_cache", ".unlazy", "__pycache__", "dev",
@@ -102,7 +100,6 @@ def _canonical_docs() -> list[Path]:
 def check_source() -> None:
     version_text = VERSION_FILE.read_text(encoding="utf-8")
     assert f'__version__ = "{VERSION}"' in version_text
-    assert f'RELEASE_REVISION = "{RELEASE_REVISION}"' in version_text
     assert (ROOT / "LICENSE").read_bytes() == (PACKAGE / "LICENSE").read_bytes()
 
     pyproject = (PACKAGE / "pyproject.toml").read_text(encoding="utf-8")
@@ -151,9 +148,9 @@ def _scan_text(name: str, payload: bytes) -> None:
 
 def _probe(python: Path, *, cwd: Path, env: dict[str, str]) -> dict[str, object]:
     code = (
-        "import json,img2drawing; from img2drawing._version import PUBLIC_API,RELEASE_REVISION; "
-        "print(json.dumps({'version':img2drawing.__version__,'api':PUBLIC_API,"
-        "'revision':RELEASE_REVISION,'exports':sorted(img2drawing.__all__),"
+        "import json,img2drawing; from img2drawing.render import RENDERER_ID,RENDERER_VERSION,RENDERER_CONTRACT_DIGEST; "
+        "print(json.dumps({'version':img2drawing.__version__,'exports':sorted(img2drawing.__all__),"
+        "'renderer':[RENDERER_ID,RENDERER_VERSION,RENDERER_CONTRACT_DIGEST],"
         "'file':img2drawing.__file__}))"
     )
     return __import__("json").loads(_run([str(python), "-c", code], cwd=cwd, env=env).strip())
@@ -226,11 +223,9 @@ def check_clean_install(work: Path, wheel: Path) -> None:
     source_env["PYTHONPATH"] = str(PACKAGE / "src")
     source = _probe(Path(sys.executable), cwd=work, env=source_env)
     installed = _probe(python, cwd=work, env=clean_env)
-    for field in ("version", "api", "revision", "exports"):
+    for field in ("version", "exports", "renderer"):
         assert source[field] == installed[field], f"source/install {field} mismatch"
     assert installed["version"] == VERSION
-    assert installed["api"] == PUBLIC_API
-    assert installed["revision"] == RELEASE_REVISION
     assert str(installed["file"]).startswith(str(environment)), installed["file"]
     assert "DrawingSession" in installed["exports"] and "DrawingRun" not in installed["exports"]
 

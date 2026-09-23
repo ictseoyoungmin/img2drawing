@@ -46,17 +46,13 @@ def test_r23_root_names_no_longer_resolve_through_hidden_fallback() -> None:
     assert "StageContract" not in img2drawing.__all__
 
 
-def test_current_compat_shims_only_target_still_owned_namespaces() -> None:
+def test_pre_rc2_root_compat_shims_are_retired() -> None:
     import img2drawing
-    from img2drawing.core import CanvasHistory
-    from img2drawing.inspection import ROI
 
-    with pytest.warns(DeprecationWarning, match="root-compat shim"):
-        assert img2drawing.CanvasHistory is CanvasHistory
-    with pytest.warns(DeprecationWarning, match="root-compat shim"):
-        assert img2drawing.ROI is ROI
-    assert "CanvasHistory" not in dir(img2drawing)
-    assert "ROI" not in dir(img2drawing)
+    for name in ("CanvasHistory", "ROI"):
+        with pytest.raises(AttributeError):
+            getattr(img2drawing, name)
+        assert name not in dir(img2drawing)
 
 
 def test_v102_freeze_preserves_historical_legacy_truth_without_requiring_current_code() -> None:

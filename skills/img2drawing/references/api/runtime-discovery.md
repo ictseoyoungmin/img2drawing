@@ -24,6 +24,7 @@ assert caps.orchestration == "DrawingSession"
 assert caps.final_authoring_runtime
 assert not caps.implementation_read_required
 assert caps.capability_gap_policy == "report-not-bypass"
+caps.output_entrypoints  # the only render/replay operations: inspect, render_final, render_at, export_timelapse
 ```
 
 The manifest intentionally exposes capability names and boundaries only. It must not grow into a

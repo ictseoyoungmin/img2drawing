@@ -6,13 +6,7 @@ import pytest
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession
-from img2drawing.vnext import (
-    FINISH_GUIDE_SCHEMA,
-    FINISH_INTENTS,
-    FinishGuide,
-    FinishRelation,
-    resolve_finish_guide,
-)
+from img2drawing.session import FINISH_GUIDE_SCHEMA, FINISH_INTENTS, FinishGuide, FinishRelation, resolve_finish_guide
 
 
 LIFECYCLE_KEYS = {"phase", "phase_count", "stage", "cursor", "advance", "close", "verdict", "pass_fail"}

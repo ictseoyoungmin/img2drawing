@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-09-15
+Updated: 2026-09-23
 Workflow: Bottleneck · one highest-impact open problem at a time
 
 The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
@@ -30,6 +30,7 @@ Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAP
 - instruction-graph cleanup Slice C reduced `references/INDEX.md` to a direct map with one `open when` / `owns` row per deployable leaf.
 - instruction-graph cleanup Slice D restored canonical leaf ownership: reference authority owns anti-normalization, observation/gates/residual/completion own their distinct decisions, gesture completion stays in its mode leaf, and runtime provenance/finish mechanics live in the public API leaf.
 - instruction-graph cleanup Slice E added structural CI for root/INDEX attention budgets, root fan-out, internal route integrity, canonical-owner reachability, and deployable/control-plane separation without changing drawing semantics.
+- R1 (1.1.0.dev0) restructured the runtime without changing pixels: `img2drawing.vnext` became `img2drawing.session` + `img2drawing.authoring`; the nine generation-layered renderer modules and four runtime monkey-patches became one `img2drawing.render` package with identity `img2drawing-pencil / 11`; the legacy v9 timelapse/replay path and `provenance` package were replaced by one `img2drawing.timelapse` export behind `DrawingSession.export_timelapse()`. A committed v11 golden (direct renders plus session final/cursor/inspect/fast and canonical timelapse) is pixel-identical before and after.
 
 ## Current sequence
 
@@ -44,8 +45,9 @@ S01 v11 quality-control failure taxonomy + design       CLOSED
 S02 instruction graph execution-gate patch              CLOSED
 S03 fresh-worker visual dogfood                         ACTIVE · S03.1 initial batch BLOCKED; clean rerun READY/NOT_RUN; S03.2–S03.4 pending
 S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL · S03.1 classified
-S05 contract-digest / replay-boundary migration         BLOCKED by global S04 evidence; REQUIRED before pixel change
-S06 current-v11 renderer correction if proven           BLOCKED by S04/S05; MAY SKIP
+R1 1.1 structural refactor (session/authoring/render/timelapse)  CLOSED · pixel-identical v11 golden
+S05 contract-digest / replay-boundary migration         CLOSED by R1 · digest persisted in RenderProfile v2
+S06 current-v11 renderer correction if proven           BLOCKED by S04; MAY SKIP
 S07 full visual + mechanical validation                 BLOCKED by S03–S06
 S08 choose next package version / release candidate     BLOCKED by S07
 ```
@@ -162,7 +164,7 @@ A renderer candidate must have both real-drawing evidence and a minimal controll
 
 Global S04 cannot close until S03.2–S03.4 evidence is also classified. The current batch does not authorize S06.
 
-## S05 — contract-digest replay boundary — BLOCKED
+## S05 — contract-digest replay boundary — CLOSED by R1
 
 Before intentional current-v11 pixel divergence, persisted render identity must be able to bind:
 
@@ -182,13 +184,22 @@ Replay policy:
 
 This slice is required before S06 changes current-v11 pixels.
 
+Implemented in R1: `RenderProfile` (schema `img2drawing.render_profile.v2`) persists
+`renderer_contract_digest`; a foreign digest or an unknown identity raises
+`UnsupportedRendererError` pointing to the producing release. The published v1.0.3 identity
+`pillow-pencil-contact-v11 / 1` is accepted as the current contract because the v11 golden proves
+pixel identity. Deviation from the original policy, by maintainer decision: pre-v11 (`v9`/`v10`)
+profiles and retired region-fill histories are **not** loaded under a non-exact current-source
+policy; they fail closed and must be replayed with `img2drawing==1.0.3`. Profile-less checkpoints
+still resume and render only after an explicit `migrate_render_profile()`.
+
 ## S06 — current v11 correction — CONDITIONAL
 
 Only defects proven renderer-owned in S04 receive a renderer slice. Each distinct material defect becomes one independent S06.n bottleneck.
 
 Rules:
 
-- keep renderer family `pillow-pencil-contact-v11 / 1`;
+- keep renderer family `img2drawing-pencil / 11` (the v1.0.3 `pillow-pencil-contact-v11 / 1` contract);
 - do not move authored points for material-only fixes;
 - do not reseed unrelated stroke body for a local terminal change;
 - change only the demonstrated material cause;

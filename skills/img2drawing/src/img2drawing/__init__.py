@@ -44,3 +44,9 @@ __all__ = [
     "inspect_initial_construct",
     "observe_pose",
 ]
+
+
+def __dir__() -> list[str]:
+    """Expose only the canonical root surface to discovery tools, not implementation modules."""
+
+    return sorted(__all__)

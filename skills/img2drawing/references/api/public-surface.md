@@ -70,25 +70,21 @@ Do not widen the root merely because a utility is public. Import specialized too
 namespace that owns them:
 
 ```python
-from img2drawing.inspection import GroundGuide, PlumbLine, ROI, angle, distance
-from img2drawing.observation import SubjectPalette
-from img2drawing.runtime import runtime_capabilities
-from img2drawing.vnext import (
+from img2drawing.authoring import (
     resolve_mark_for_intent,
     retune_stroke,
     retune_strokes,
     sample_catmull_rom,
 )
+from img2drawing.inspection import GroundGuide, PlumbLine, ROI, angle, distance
+from img2drawing.observation import SubjectPalette
+from img2drawing.runtime import runtime_capabilities
 ```
 
-Advanced vNext records, guide objects, schemas, derived authoring records, and authoring helpers
-remain available from `img2drawing.vnext` when a framework/debugging task actually needs them.
-Low-level stroke/history types live under `img2drawing.core`. These are not alternative
-orchestration routes and ordinary drawing workers should not start there.
-
-Pre-0.6.0rc2 direct root imports for those still-owned specialized names resolve through deprecated
-compatibility shims for existing callers, but they are intentionally absent from
-`img2drawing.__all__` and normal discovery.
+Session record types, guide objects, and schemas live in `img2drawing.session` for framework or
+debugging work. Low-level stroke/history types live under `img2drawing.core`. These are not
+alternative orchestration routes and ordinary drawing workers should not start there. Names that
+are not exported from the root or from one of these namespaces are not public.
 
 Historical R23 orchestration is different: the post-v1.0.2 source tree no longer ships
 `img2drawing.legacy.r23`, and R23-only root names such as `DrawingRun` and `StageContract` no longer
@@ -107,7 +103,7 @@ Use the supported replace/soften/delete operations rather than raster editing th
 When only stroke material is wrong and the path is already correct, prefer:
 
 ```python
-from img2drawing.vnext import retune_stroke
+from img2drawing.authoring import retune_stroke
 
 retune_stroke(
     session,
@@ -127,7 +123,7 @@ When several strokes share one coherent material residual, use `retune_strokes()
 repeating manual geometry submissions:
 
 ```python
-from img2drawing.vnext import retune_strokes
+from img2drawing.authoring import retune_strokes
 
 retune_strokes(
     session,
@@ -146,7 +142,7 @@ For a smooth observed interval, a worker may use the deterministic shared sample
 reimplementing spline math per run:
 
 ```python
-from img2drawing.vnext import sample_catmull_rom
+from img2drawing.authoring import sample_catmull_rom
 
 points = sample_catmull_rom(control_points, spacing=3.0)
 session.draw(points, role="contour", part="observed-boundary")
@@ -200,14 +196,14 @@ KEEP/SOFTEN/RETIRE decision and edit the authored stroke itself when appropriate
 
 ## Markmaking presets and the draw adapter
 
-The 1.0.3 runtime exposes semantic markmaking roles/presets through the public vNext resolver. Names
+The runtime exposes semantic markmaking roles/presets through the public authoring resolver. Names
 such as `gesture-flow`, `contour-weighted`, and `broad-graphite` describe semantic mark behavior;
 they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
 Resolve semantic intent first, then pass the returned public draw kwargs to the session:
 
 ```python
-from img2drawing.vnext import resolve_mark_for_intent
+from img2drawing.authoring import resolve_mark_for_intent
 
 mark = resolve_mark_for_intent(
     session.intent,
@@ -316,10 +312,18 @@ chain before finishing.
 
 ## Output
 
-Use the session's public final render, cursor render, and timelapse export operations so all
-outputs share the persisted render profile and history. `inspect()` renders through the same
-persisted `RenderProfile` (paper, background, graphite) as the final export; only its output
-scale is pinned to 1x canvas space for registration/ROI/measurement geometry.
+Every output goes through the session so it shares the persisted render profile and history:
+
+```python
+session.render_final("out/final.png")            # latest cursor
+session.render_at(cursor, "out/cursor.png")      # any authored cursor
+session.export_timelapse("out/timelapse", every_n=4)  # action 0 -> latest GIF + manifest
+```
+
+`inspect()` renders through the same persisted `RenderProfile` (paper, background, graphite) as the
+final export; only its output scale is pinned to 1x canvas space for registration/ROI/measurement
+geometry. `export_timelapse()` is the only timelapse operation; see
+`../output/render-profile-and-replay.md` for its backend and artifact contract.
 
 ## Boundary
 

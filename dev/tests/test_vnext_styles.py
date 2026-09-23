@@ -5,15 +5,8 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing import (
-    STYLE_PROFILES,
-    DrawingIntent,
-    DrawingSession,
-    StyleClarificationRequired,
-    StyleConflictError,
-    StyleGuide,
-    resolve_style_guide,
-)
+from img2drawing import DrawingIntent, DrawingSession
+from img2drawing.session import STYLE_PROFILES, StyleClarificationRequired, StyleConflictError, StyleGuide, resolve_style_guide
 
 
 EXPECTED_STYLES = ("pencil_loose", "graphite_academic", "graphite_tonal")

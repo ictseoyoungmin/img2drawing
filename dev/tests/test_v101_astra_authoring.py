@@ -8,7 +8,7 @@ import pytest
 import img2drawing
 from img2drawing import DrawingIntent, DrawingSession
 from img2drawing.core.tools import get_tool
-from img2drawing.vnext import retune_stroke, retune_strokes, sample_catmull_rom
+from img2drawing.authoring import retune_stroke, retune_strokes, sample_catmull_rom
 
 
 def _session(tmp_path):

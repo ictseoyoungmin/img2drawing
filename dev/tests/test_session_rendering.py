@@ -7,12 +7,11 @@ import pytest
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession, RenderProfile
-from img2drawing.render.pillow_pencil_contact import (
-    RENDERER_ID as HISTORICAL_RENDERER_ID,
-    RENDERER_VERSION as HISTORICAL_RENDERER_VERSION,
-)
-from img2drawing.render.renderer_registry import current_renderer
-from img2drawing.vnext.output import export_session_timelapse
+from img2drawing.render import RENDERER_ID, RENDERER_VERSION
+from img2drawing.render.artifact import pixel_sha256
+
+# Renderer header written by checkpoints that predate RenderProfile (<= 1.0.3).
+PROFILELESS_RENDERER_ID = "pillow-pencil-contact-v9"
 
 
 def _subject(tmp_path: Path) -> Path:
@@ -49,10 +48,10 @@ def test_render_profile_roundtrip_and_strict_material_boundary() -> None:
     profile = RenderProfile.canonical(64, 48)
     assert RenderProfile.from_dict(profile.to_dict()) == profile
     assert profile.digest() == RenderProfile.from_dict(profile.to_dict()).digest()
-    assert (profile.renderer_id, profile.renderer_version) == current_renderer().identity
+    assert (profile.renderer_id, profile.renderer_version) == (RENDERER_ID, RENDERER_VERSION)
     assert "style_profile" not in profile.to_dict()
     assert "line_behavior" not in profile.to_dict()
-    with pytest.raises(ValueError, match="unsupported renderer"):
+    with pytest.raises(ValueError, match="not available in this package"):
         RenderProfile.from_dict({**profile.to_dict(), "renderer_version": "future"})
     with pytest.raises(ValueError, match="custom file paths"):
         RenderProfile.from_dict({**profile.to_dict(), "material_profile": "/tmp/custom.json"})
@@ -85,8 +84,7 @@ def test_cursor_png_replay_gif_and_final_render_share_history_and_profile(tmp_pa
     before_cursor = session.history_cursor
     direct = session.render_final(tmp_path / "direct.png")
     initial = session.render_at(0, tmp_path / "initial.png")
-    replay = export_session_timelapse(
-        session,
+    replay = session.export_timelapse(
         tmp_path / "replay",
         mode="action",
         max_pixel_work=10**9,
@@ -121,8 +119,8 @@ def test_cursor_png_replay_gif_and_final_render_share_history_and_profile(tmp_pa
 def test_inspect_renders_through_the_same_persisted_profile_as_final(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    import img2drawing.vnext.output as output_module
-    import img2drawing.vnext.session as session_module
+    import img2drawing.render.artifact as artifact_module
+    import img2drawing.session.drawing_session as session_module
 
     custom = RenderProfile.from_dict({
         **RenderProfile.canonical(48, 48).to_dict(),
@@ -150,7 +148,7 @@ def test_inspect_renders_through_the_same_persisted_profile_as_final(
         return wrapper
 
     monkeypatch.setattr(session_module, "render", _spy(session_module.render))
-    monkeypatch.setattr(output_module, "render", _spy(output_module.render))
+    monkeypatch.setattr(artifact_module, "render", _spy(artifact_module.render))
 
     session.inspect(supersample=custom.supersample)
     session.render_final(tmp_path / "final.png")
@@ -167,9 +165,7 @@ def test_inspect_renders_through_the_same_persisted_profile_as_final(
 
 
 def test_inspect_and_final_render_are_pixel_identical(tmp_path: Path) -> None:
-    """v10 seed identity must ignore the private compatibility-stage transport tag."""
-
-    from img2drawing.provenance.timelapse import pixel_sha256
+    """Seed identity must ignore the private compatibility-stage transport tag."""
 
     session = DrawingSession.create(
         subject=_subject(tmp_path),
@@ -186,12 +182,12 @@ def test_inspect_and_final_render_are_pixel_identical(tmp_path: Path) -> None:
 
 def test_replay_is_deterministic_and_every_n_keeps_endpoints(tmp_path: Path) -> None:
     session = _session(tmp_path)
-    first = export_session_timelapse(
-        session, tmp_path / "first", mode="every_n", every_n=2,
+    first = session.export_timelapse(
+        tmp_path / "first", mode="every_n", every_n=2,
         max_pixel_work=10**9, backend="canonical",
     )
-    second = export_session_timelapse(
-        session, tmp_path / "second", mode="every_n", every_n=2,
+    second = session.export_timelapse(
+        tmp_path / "second", mode="every_n", every_n=2,
         max_pixel_work=10**9, backend="canonical",
     )
     assert [frame["cursor"] for frame in first.manifest["frames"]] == [0, 2, 3]
@@ -216,7 +212,7 @@ def test_pre_b11_checkpoint_requires_explicit_profile_migration(tmp_path: Path) 
     payload = json.loads(session.checkpoint_path.read_text(encoding="utf-8"))
     payload.pop("render_profile")
     payload["renderer"] = {
-        "id": HISTORICAL_RENDERER_ID,
+        "id": PROFILELESS_RENDERER_ID,
         "version": "vnext-stage-free-1",
         "seed_domain": "vnext-stage-free",
     }
@@ -232,8 +228,7 @@ def test_pre_b11_checkpoint_requires_explicit_profile_migration(tmp_path: Path) 
 
 def test_current_stroke_only_replay_records_parity_without_region_actions(tmp_path: Path) -> None:
     session = _session(tmp_path)
-    replay = export_session_timelapse(
-        session,
+    replay = session.export_timelapse(
         tmp_path / "current-fixture",
         mode="action",
         max_pixel_work=10**9,

@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing.vnext import DrawingSession
+from img2drawing.session import DrawingSession
 
 
 def _subject(tmp_path: Path) -> Path:

@@ -1,12 +1,8 @@
 from __future__ import annotations
 
 from img2drawing import DrawingIntent, DrawingSession
-from img2drawing.vnext import (
-    DRAWING_MODES,
-    ReferenceAuthority,
-    resolve_mark_for_intent,
-    resolve_mode_guide,
-)
+from img2drawing.session import DRAWING_MODES, ReferenceAuthority, resolve_mode_guide
+from img2drawing.authoring import resolve_mark_for_intent
 
 
 def test_gesture_is_a_public_drawing_intent_mode() -> None:

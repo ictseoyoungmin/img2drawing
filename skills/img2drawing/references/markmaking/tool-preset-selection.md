@@ -49,11 +49,11 @@ intent outrank the example mapping.
 
 ## Runtime adapter
 
-Resolve semantic markmaking through the public vNext API, then pass the resolved draw kwargs to the
+Resolve semantic markmaking through the public authoring API, then pass the resolved draw kwargs to the
 session:
 
 ```python
-from img2drawing.vnext import resolve_mark_for_intent
+from img2drawing.authoring import resolve_mark_for_intent
 
 mark = resolve_mark_for_intent(
     session.intent,

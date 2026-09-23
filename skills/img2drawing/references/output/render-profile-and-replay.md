@@ -9,36 +9,39 @@ identity merely to make one artifact look better.
 
 ## Inspection shares the persisted profile
 
-`inspect()` must render through the same persisted `RenderProfile` as `render_final()`: paper
+`inspect()` renders through the same persisted `RenderProfile` as `render_final()`: paper
 tooth/scale/seed, background, and graphite come from the bound profile, not renderer defaults. The
 inspection sheet always renders at 1x canvas space, because registration, ROI, and measurement
 geometry are defined in canvas pixels; only final/replay export honors the profile's
-`output_scale`.
+`output_scale`. At 1x the inspection drawing and the final render are pixel-identical.
 
-This is a **render-profile contract**, not currently a pixel-identity claim. Post-v1.0.2 `main`
-has a known compatibility-seed gap: current-state inspection strips the inert historical
-`Stroke.stage` field while history replay still carries the compatibility tag, and that field
-currently participates in deterministic hand-dynamics seeding. As a result, inspection and final
-render can differ by a few pixel levels even though they use the same paper/material profile. A
-strict repository regression records this until the render/replay paths are normalized together.
-Do not compensate by changing the profile between inspection and export.
+Do not change the profile between inspection and export.
 
-## v1.0.2 replay execution
+## Timelapse export
 
-`DrawingSession.export_timelapse()` uses the local-first exact incremental backend by default for
-supported stroke histories. The fast engine must consume the bound `RenderProfile`, including
-paper tooth/scale/seed, and its lossless final frame must match an independently rendered canonical
-final RGB exactly.
+There is exactly one timelapse operation:
 
-Unsupported action semantics, raw ordered spatial erasers, or an unavailable fast encoder must
-fail closed to the preserved canonical exporter for the whole replay. Do not combine canonical and
-fast frame semantics inside one export.
+```python
+result = session.export_timelapse("out/timelapse", every_n=4)
+result.gif_path          # action 0 -> latest GIF
+result.final_path        # independently rendered canonical_final.png
+result.manifest_path     # replay_manifest.json (backend, sampling, frame hashes)
+```
 
-The fast backend stores changing RGB rectangles in an atomic delta-frame pack and does not need to
-materialize one PNG per frame. Frame PNG materialization is explicit/optional. Persistent patch and
-palette caches are disposable acceleration state, never drawing authority.
+Do not look for, import, or write another replay/timelapse exporter. `export_timelapse()` picks the
+exact incremental backend when the history supports it and ffmpeg is available, and otherwise
+renders every frame canonically for the whole export; both consume the bound `RenderProfile`, and
+the export fails unless its last frame matches `canonical_final.png` exactly. `backend="canonical"`
+forces full per-frame PNG rendering; `materialize_frames=True` also writes PNG frames on the fast
+backend. Persistent patch and palette caches under the output directory are disposable acceleration
+state, never drawing authority.
 
-Replay remains end-to-end: sampling must include cursor 0 and the latest authored cursor. Reducing
-frame sampling is allowed, but must not remove the beginning or final state. Region/fill actions
-that are not part of the fast semantic surface replay through the canonical fallback as authored
-actions rather than being approximated.
+Replay is end-to-end: sampling always includes cursor 0 and the latest authored cursor. Coarser
+`every_n` sampling is allowed; removing the beginning or final state is not.
+
+## Renderer identity
+
+A session's `RenderProfile` binds the renderer identity and its contract digest. A checkpoint bound
+to a renderer this package cannot reproduce exactly (for example a pre-1.1 `v9`/`v10` profile, or a
+history containing retired region-fill actions) fails closed instead of being silently re-rendered;
+replay it with the release that produced it.
