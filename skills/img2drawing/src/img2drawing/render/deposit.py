@@ -1,73 +1,82 @@
+"""Graphite contact deposition for one prepared stroke.
+
+A stroke becomes one RGBA patch on the supersampled canvas. Thin strokes use a pressure-
+sampled line mask with correlated grain/paper modulation; broad strokes combine a dry radial
+contact shoulder with an authored-value core that has physical round terminals, then add
+page-fixed graphite tooth. The same patch builder serves canonical rendering and the
+incremental timelapse cache, which is what keeps the two pixel-exact.
+"""
+
 from __future__ import annotations
-from copy import deepcopy
-from math import pi
-from pathlib import Path
+
 import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
-from ..core.ir import Stroke, StrokeIR
-from .contact_profile import PencilContactProfile, load_pencil_contact_profile
-from . import pillow_graphite_grain as p3
-from . import pillow_hand_dynamics as p4
-from . import pillow_paper_interaction as p5
-from . import pillow_pencil_grades as p6
-from . import pillow_eraser_material as p7
-from .renderer_contracts import V10_CONTRACT
-RENDERER_ID = 'pillow-pencil-contact-v10'
-RENDERER_VERSION = '1'
-DEFAULT_SUPERSAMPLE = 4
-HIGH_QUALITY_SUPERSAMPLE = 8
+
+from ..core.ir import Stroke
+from .contact_profile import PencilContactProfile
+from .contract import PENCIL_CONTRACT
+from .hand import grain_seed, hand_seed, stroke_material
+from .paper import mean_stroke_pressure, paper_field, pixel_hash_tooth, value_noise
+
+_C = PENCIL_CONTRACT
+_BROAD_START = float(_C.value("broad_start"))
+_BROAD_FULL = float(_C.value("broad_full"))
+_DEPOSITION_VARIABILITY_AMP = float(_C.value("deposition_variability_amp"))
+_DEPOSITION_VARIABILITY_COARSE = float(_C.value("deposition_variability_coarse"))
+_DEPOSITION_VARIABILITY_FINE = float(_C.value("deposition_variability_fine"))
+_DEPOSITION_VARIABILITY_FINE_MIX = float(_C.value("deposition_variability_fine_mix"))
+_AUTHORED_CONTRAST_GAMMA = float(_C.value("authored_contrast_gamma"))
+_BROAD_DIAMETER_SCALE = float(_C.value("broad_diameter_scale"))
+_BROAD_FLOW_GAIN = float(_C.value("broad_flow_gain"))
+_BROAD_PIGMENT_DARKEN = float(_C.value("broad_pigment_darken"))
+_BROAD_TEXTURE_BASE = float(_C.value("broad_texture_base"))
+_BROAD_TEXTURE_EXPOSURE_GAIN = float(_C.value("broad_texture_exposure_gain"))
+_BROAD_TEXTURE_VALLEY_DEPTH = float(_C.value("broad_texture_valley_depth"))
+_DEFAULT_MATERIAL_POLICY = {
+    "policy_id": str(_C.value("default_material_policy")),
+    "value_authority": "strict",
+    "core_preservation": 0.92,
+    "shoulder_breakup": 0.28,
+    "grain_exposure": 0.32,
+    "local_variation": 0.24,
+}
+_STRICTNESS = {"relaxed": 0.0, "balanced": 0.5, "strict": 1.0}
+
 
 def _clamp01(v: float) -> float:
     return max(0.0, min(1.0, float(v)))
 
-def _pixel_hash_tooth(lx: np.ndarray, ly: np.ndarray, seed: int=7) -> np.ndarray:
-    x = np.floor(lx).astype(np.uint32)
-    y = np.floor(ly).astype(np.uint32)
 
-    def h2(xx, yy, s):
-        with np.errstate(over='ignore'):
-            n = xx * np.uint32(374761393) + yy * np.uint32(668265263) + np.uint32(s & 4294967295) * np.uint32(1274126177)
-            n = (n ^ n >> np.uint32(13)) * np.uint32(1274126177)
-            n = n ^ n >> np.uint32(16)
-        return n.astype(np.float32) / np.float32(4294967295.0)
-    fine = h2(x, y, seed)
-    coarse = h2(x // np.uint32(3), y // np.uint32(3), seed + 991)
-    return np.clip(np.float32(0.45) * fine + np.float32(0.55) * coarse, 0.0, 1.0)
-RENDERER_CONTRACT = V10_CONTRACT
-_BROAD_START = float(RENDERER_CONTRACT.value('broad_start'))
-_BROAD_FULL = float(RENDERER_CONTRACT.value('broad_full'))
-_DEPOSITION_VARIABILITY_AMP = float(RENDERER_CONTRACT.value('deposition_variability_amp'))
-_DEPOSITION_VARIABILITY_COARSE = float(RENDERER_CONTRACT.value('deposition_variability_coarse'))
-_DEPOSITION_VARIABILITY_FINE = float(RENDERER_CONTRACT.value('deposition_variability_fine'))
-_DEPOSITION_VARIABILITY_FINE_MIX = float(RENDERER_CONTRACT.value('deposition_variability_fine_mix'))
-_AUTHORED_CONTRAST_GAMMA = float(RENDERER_CONTRACT.value('authored_contrast_gamma'))
-_BROAD_DIAMETER_SCALE = float(RENDERER_CONTRACT.value('broad_diameter_scale'))
-_BROAD_FLOW_GAIN = float(RENDERER_CONTRACT.value('broad_flow_gain'))
-_BROAD_PIGMENT_DARKEN = float(RENDERER_CONTRACT.value('broad_pigment_darken'))
-_DEFAULT_MATERIAL_POLICY = {'policy_id': 'canonical-pencil', 'value_authority': 'strict', 'core_preservation': 0.92, 'shoulder_breakup': 0.28, 'grain_exposure': 0.32, 'local_variation': 0.24}
+def _smoothstep01(x: float) -> float:
+    x = _clamp01(x)
+    return x * x * (3.0 - 2.0 * x)
 
-def _stroke_material_policy(stroke: Stroke) -> dict:
-    """Resolve persisted markmaking material policy without importing vNext.
 
-    The renderer intentionally consumes only the already-resolved provenance payload.
-    This keeps the render layer independent from agent instruction code and makes replay
+# ---------------------------------------------------------------------------
+# Resolved markmaking material policy
+# ---------------------------------------------------------------------------
+
+def stroke_material_policy(stroke: Stroke) -> dict:
+    """Resolve the persisted markmaking material policy carried by the stroke.
+
+    The renderer consumes only the already-resolved provenance payload, so replay is
     source-opaque: historical strokes carry the policy values needed to reproduce pixels.
     """
     ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
     policy = None
-    provenance = ts.get('provenance')
+    provenance = ts.get("provenance")
     if isinstance(provenance, dict):
-        metadata = provenance.get('metadata')
+        metadata = provenance.get("metadata")
         if isinstance(metadata, dict):
-            markmaking = metadata.get('markmaking')
+            markmaking = metadata.get("markmaking")
             if isinstance(markmaking, dict):
-                candidate = markmaking.get('material_policy')
+                candidate = markmaking.get("material_policy")
                 if isinstance(candidate, dict):
                     policy = candidate
     if policy is None:
-        markmaking = ts.get('markmaking')
+        markmaking = ts.get("markmaking")
         if isinstance(markmaking, dict):
-            candidate = markmaking.get('material_policy')
+            candidate = markmaking.get("material_policy")
             if isinstance(candidate, dict):
                 policy = candidate
     raw = dict(_DEFAULT_MATERIAL_POLICY)
@@ -75,48 +84,70 @@ def _stroke_material_policy(stroke: Stroke) -> dict:
         for key in raw:
             if key in policy:
                 raw[key] = policy[key]
-    raw['policy_id'] = str(raw['policy_id']).strip().lower() or 'canonical-pencil'
-    authority = str(raw['value_authority']).strip().lower()
-    raw['value_authority'] = authority if authority in {'strict', 'balanced', 'relaxed'} else 'strict'
-    for key in ('core_preservation', 'shoulder_breakup', 'grain_exposure', 'local_variation'):
+    raw["policy_id"] = str(raw["policy_id"]).strip().lower() or "canonical-pencil"
+    authority = str(raw["value_authority"]).strip().lower()
+    raw["value_authority"] = authority if authority in _STRICTNESS else "strict"
+    for key in ("core_preservation", "shoulder_breakup", "grain_exposure", "local_variation"):
         raw[key] = _clamp01(raw[key])
     return raw
 
+
 def _policy_broad_grain(policy: dict, broadness: float) -> float:
-    exposure = _clamp01(policy['grain_exposure'])
+    exposure = _clamp01(policy["grain_exposure"])
     return _clamp01((0.34 + 0.46 * exposure) * (0.88 + 0.12 * broadness))
 
+
 def _policy_flow_multiplier(policy: dict, broadness: float) -> float:
-    core = _clamp01(policy['core_preservation'])
-    strictness = {'relaxed': 0.0, 'balanced': 0.5, 'strict': 1.0}[policy['value_authority']]
+    core = _clamp01(policy["core_preservation"])
+    strictness = _STRICTNESS[policy["value_authority"]]
     normalized = _clamp01((core - 0.55) / 0.37)
     gain = 0.9 + 0.36 * normalized + 0.16 * strictness
     return 1.0 + (gain - 1.0) * broadness
 
+
 def _policy_variation_scale(policy: dict) -> float:
-    return max(0.0, min(1.8, float(policy['local_variation']) / 0.24))
+    return max(0.0, min(1.8, float(policy["local_variation"]) / 0.24))
+
 
 def _policy_continuity_floor(policy: dict, broadness: float) -> tuple[float, float]:
-    core = _clamp01(policy['core_preservation'])
+    core = _clamp01(policy["core_preservation"])
     normalized = _clamp01((core - 0.55) / 0.37)
-    strictness = {'relaxed': 0.0, 'balanced': 0.5, 'strict': 1.0}[policy['value_authority']]
+    strictness = _STRICTNESS[policy["value_authority"]]
     width_extra = broadness * (0.22 * normalized + 0.08 * strictness)
     alpha_extra = broadness * (0.34 * normalized + 0.12 * strictness)
     return (width_extra, alpha_extra)
 
+
 def _policy_pigment_darken(policy: dict, broadness: float) -> float:
-    authority = policy['value_authority']
-    base = {'relaxed': float(_BROAD_PIGMENT_DARKEN) * 0.45, 'balanced': float(_BROAD_PIGMENT_DARKEN), 'strict': float(_BROAD_PIGMENT_DARKEN) * 0.82}[authority]
+    base = {
+        "relaxed": float(_BROAD_PIGMENT_DARKEN) * 0.45,
+        "balanced": float(_BROAD_PIGMENT_DARKEN),
+        "strict": float(_BROAD_PIGMENT_DARKEN) * 0.82,
+    }[policy["value_authority"]]
     return max(0.0, min(0.65, base * broadness))
 
-def _smoothstep01(x: float) -> float:
-    x = _clamp01(x)
-    return x * x * (3.0 - 2.0 * x)
+
+def _core_width_alpha_ratios(policy: dict, broadness: float) -> tuple[float, float]:
+    """Authored-core narrowing: converges to full contact at the broad threshold."""
+
+    core = _clamp01(policy["core_preservation"])
+    strictness = _STRICTNESS[policy["value_authority"]]
+    target_width_ratio = _clamp01(0.10 + 0.18 * core + 0.06 * strictness)
+    width_ratio = 1.0 - broadness * (1.0 - target_width_ratio)
+    target_alpha_retention = _clamp01(0.45 + 0.45 * core + 0.08 * strictness)
+    alpha_retention = 1.0 - broadness * (1.0 - target_alpha_retention)
+    return width_ratio, alpha_retention
+
+
+# ---------------------------------------------------------------------------
+# Contact geometry
+# ---------------------------------------------------------------------------
 
 def _broadness(width_logical: float) -> float:
     if _BROAD_FULL <= _BROAD_START:
         return 1.0
     return _smoothstep01((float(width_logical) - _BROAD_START) / (_BROAD_FULL - _BROAD_START))
+
 
 def _broad_edge_radius(width_logical: float, hardness: float) -> float:
     b = _broadness(width_logical)
@@ -125,30 +156,36 @@ def _broad_edge_radius(width_logical: float, hardness: float) -> float:
     softness = (1.0 - _clamp01(hardness)) ** 1.25
     return b * max(0.15, min(1.6, float(width_logical) * (0.02 + 0.05 * softness)))
 
+
 def _physical_terminal_span(width_logical: float, *, incoming: bool) -> float:
     if incoming:
         return max(6.0, min(24.0, 3.0 + 0.95 * float(width_logical)))
     return max(7.0, min(28.0, 4.0 + 1.2 * float(width_logical)))
+
 
 def _pressure_variability(samples: np.ndarray) -> float:
     if len(samples) <= 1:
         return 0.0
     return float(min(1.0, max(0.0, np.std(samples) / 0.22)))
 
+
 def _wrapped_angle_delta(a: np.ndarray) -> np.ndarray:
     d = np.diff(a)
     return (d + np.pi) % (2.0 * np.pi) - np.pi
+
 
 def _thin_flick_gate(width_logical: float, taper_out: float) -> float:
     thin_zone = _smoothstep01((float(width_logical) - 2.1) / 1.9) * (1.0 - _smoothstep01((float(width_logical) - 6.4) / 2.0))
     flick_zone = _smoothstep01((float(taper_out) - 0.72) / 0.2)
     return thin_zone * flick_zone
 
+
 def _hash1_scalar(i: int, seed: int) -> float:
     n = int(i) * 374761393 + int(seed) * 668265263 & 4294967295
     n = (n ^ n >> 13) * 1274126177 & 4294967295
     n = (n ^ n >> 16) & 4294967295
     return float(n) / 4294967295.0
+
 
 def _value_noise_1d(s: np.ndarray, cell: float, seed: int) -> np.ndarray:
     cell = max(0.25, float(cell))
@@ -159,6 +196,7 @@ def _value_noise_1d(s: np.ndarray, cell: float, seed: int) -> np.ndarray:
     a = np.array([_hash1_scalar(int(i), seed) for i in i0], dtype=np.float64)
     b = np.array([_hash1_scalar(int(i) + 1, seed) for i in i0], dtype=np.float64)
     return a * (1.0 - f) + b * f
+
 
 def _authored_contrast_field(chosen: list, broadness: float) -> np.ndarray:
     n = len(chosen)
@@ -174,7 +212,8 @@ def _authored_contrast_field(chosen: list, broadness: float) -> np.ndarray:
         field = field / mean
     return field.astype(np.float32)
 
-def _local_deposition_field(chosen: list, seed: int, broadness: float, *, variation_scale: float=1.0) -> np.ndarray:
+
+def _local_deposition_field(chosen: list, seed: int, broadness: float, *, variation_scale: float = 1.0) -> np.ndarray:
     n = len(chosen)
     if n <= 1 or broadness <= 1e-08 or _DEPOSITION_VARIABILITY_AMP <= 1e-08:
         return np.ones(n, dtype=np.float32)
@@ -203,53 +242,6 @@ def _local_deposition_field(chosen: list, seed: int, broadness: float, *, variat
         field = field / mean
     return field.astype(np.float32)
 
-def _selected_grade(stroke: Stroke, global_grade: str | None) -> str | None:
-    ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-    local = ts.get('pencil_grade')
-    if local is not None:
-        return str(local).upper()
-    return None if global_grade is None else str(global_grade).upper()
-
-def _prepare_grade(stroke: Stroke, global_grade: str | None) -> Stroke:
-    grade = _selected_grade(stroke, global_grade)
-    return deepcopy(stroke) if grade is None else p6.apply_grade(stroke, grade)
-
-def _smooth_hand_dynamics(stroke: Stroke, profile: PencilContactProfile) -> Stroke:
-    """P4-compatible path wobble with continuous pressure variation, not micro-breaks."""
-    jitter, taper_in, taper_out = p4._dynamics(stroke)
-    if jitter <= 1e-12 and taper_in <= 1e-12 and (taper_out <= 1e-12):
-        return deepcopy(stroke)
-    pts, pressure, t = p4._resample(stroke, spacing=profile.trajectory_spacing)
-    if len(pts) < 2:
-        return deepcopy(stroke)
-    tangent = np.empty_like(pts)
-    tangent[0] = pts[1] - pts[0]
-    tangent[-1] = pts[-1] - pts[-2]
-    if len(pts) > 2:
-        tangent[1:-1] = pts[2:] - pts[:-2]
-    norm = np.linalg.norm(tangent, axis=1)
-    norm[norm < 1e-09] = 1.0
-    tangent /= norm[:, None]
-    normal = np.column_stack([-tangent[:, 1], tangent[:, 0]])
-    seed = p4._stable_seed(stroke)
-    wave = p4._hand_wave(t, seed)
-    end_anchor = np.sin(pi * t) ** 0.78
-    amp = min(1.35, (0.42 + 0.14 * min(float(stroke.width), 5.0)) * np.sqrt(jitter))
-    moved = pts + normal * (amp * end_anchor * wave)[:, None]
-    moved[0] = pts[0]
-    moved[-1] = pts[-1]
-    hp = profile.hand
-    entry = p4._smoothstep(t / hp.tip_span)
-    release = p4._smoothstep((1.0 - t) / hp.tip_span)
-    tip_factor = (1.0 - hp.taper_in_strength * taper_in * (1.0 - entry)) * (1.0 - hp.taper_out_strength * taper_out * (1.0 - release))
-    phase = 2.0 * pi * p4._seed_unit(seed ^ 3039394381, 12)
-    freq = hp.pressure_cadence_frequency_min + hp.pressure_cadence_frequency_span * p4._seed_unit(seed, 28)
-    cadence = 1.0 + hp.pressure_cadence_strength * np.sqrt(jitter) * np.sin(2.0 * pi * freq * t + phase)
-    dyn_pressure = np.clip(pressure * tip_factor * cadence, 0.025, 1.0)
-    out = deepcopy(stroke)
-    out.points = [(float(x), float(y)) for x, y in moved]
-    out.pressure = [float(v) for v in dyn_pressure]
-    return out.cleaned()
 
 def _contact_width(base_width: float, pressure: float, hardness: float, profile: PencilContactProfile) -> float:
     m = profile.material
@@ -258,6 +250,7 @@ def _contact_width(base_width: float, pressure: float, hardness: float, profile:
     pressure_width = float(base_width) * (m.width_base + m.width_pressure_gain * p)
     return max(m.min_width, pressure_width * (1.08 - 0.16 * h))
 
+
 def _contact_deposition(base_opacity: float, pressure: float, hardness: float, profile: PencilContactProfile) -> float:
     m = profile.material
     p = _clamp01(pressure)
@@ -265,6 +258,16 @@ def _contact_deposition(base_opacity: float, pressure: float, hardness: float, p
     load = m.deposition_floor + (1.0 - m.deposition_floor) * p ** m.deposition_exponent
     hardness_release = 1.1 - 0.18 * h
     return _clamp01(float(base_opacity) * load * hardness_release)
+
+
+def _mean_contact_width(stroke: Stroke, hardness: float, profile: PencilContactProfile) -> float:
+    if stroke.pressure is not None and len(stroke.pressure) == len(stroke.points) and stroke.pressure:
+        pressure = float(np.mean(np.asarray(stroke.pressure, dtype=np.float32)))
+    else:
+        ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
+        pressure = _clamp01(ts.get("pressure", 0.55))
+    return _contact_width(stroke.width, pressure, hardness, profile)
+
 
 def _contact_bounds(stroke: Stroke, factor: float, hardness: float, hi_size: tuple[int, int], profile: PencilContactProfile) -> tuple[int, int, int, int]:
     pts = [(float(x) * factor, float(y) * factor) for x, y in stroke.points]
@@ -284,7 +287,10 @@ def _contact_bounds(stroke: Stroke, factor: float, hardness: float, hi_size: tup
     y1 = min(int(hi_size[1]), int(np.ceil(max(ys) + margin)) + 1)
     return (x0, y0, max(x0 + 1, x1), max(y0 + 1, y1))
 
+
 def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: float, profile: PencilContactProfile):
+    """Resample the path into ``(x, y, contact_diameter, alpha, pressure)`` contact samples."""
+
     pts = np.asarray(stroke.points, dtype=np.float64)
     if len(pts) < 2:
         return []
@@ -301,14 +307,14 @@ def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: f
         src_p = np.asarray(stroke.pressure, dtype=np.float64)
     else:
         ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-        src_p = np.full(len(stroke.points), _clamp01(ts.get('pressure', 0.55)), dtype=np.float64)
+        src_p = np.full(len(stroke.points), _clamp01(ts.get("pressure", 0.55)), dtype=np.float64)
     p = np.interp(sdist, cumulative, src_p)
     mean_p = float(np.mean(p)) if len(p) else 0.55
     nominal_width = _contact_width(stroke.width, mean_p, hardness, profile)
     b = _broadness(nominal_width)
     ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-    taper_in = _clamp01(ts.get('taper_in', 0.0))
-    taper_out = _clamp01(ts.get('taper_out', 0.0))
+    taper_in = _clamp01(ts.get("taper_in", 0.0))
+    taper_out = _clamp01(ts.get("taper_out", 0.0))
     broad_gate = _smoothstep01((nominal_width - 5.2) / 3.8)
     thin_flick = _thin_flick_gate(nominal_width, taper_out)
     if broad_gate <= 1e-08 and thin_flick <= 1e-08:
@@ -384,11 +390,16 @@ def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: f
         out.append((float(xx) * factor, float(yy) * factor, width * factor, alpha, pp))
     return out
 
-def _continuous_contact_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile) -> Image.Image:
-    """Thin: exact RC1 line mask. Broad: radial max-contact envelope."""
+
+# ---------------------------------------------------------------------------
+# Masks
+# ---------------------------------------------------------------------------
+
+def _contact_shoulder_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile) -> Image.Image:
+    """Thin: pressure-sampled line mask with soft halo. Broad: radial low-flow contact envelope."""
     x0, y0, x1, y1 = bounds
     samples = _pressure_samples(stroke, factor, hardness, profile.trajectory_spacing, profile)
-    mask = Image.new('L', (x1 - x0, y1 - y0), 0)
+    mask = Image.new("L", (x1 - x0, y1 - y0), 0)
     if len(samples) < 2:
         return mask
     mean_w_logical = float(np.mean([q[2] for q in samples])) / float(factor)
@@ -420,12 +431,12 @@ def _continuous_contact_mask(stroke: Stroke, factor: float, hardness: float, bou
     yy, xx = np.indices((hh, ww), dtype=np.float64)
     lx = (xx + float(x0)) / float(factor)
     ly = (yy + float(y0)) / float(factor)
-    tooth = _pixel_hash_tooth(lx, ly, 7).astype(np.float32)
-    policy = _stroke_material_policy(stroke)
+    tooth = pixel_hash_tooth(lx, ly, 7).astype(np.float32)
+    policy = stroke_material_policy(stroke)
     broad_grain = np.float32(_policy_broad_grain(policy, b))
     flow_base = np.float32(0.041 + 0.05 * b)
     flow_policy = np.float32(_policy_flow_multiplier(policy, b))
-    seed = p4._stable_seed(stroke)
+    seed = hand_seed(stroke)
     local_variability = _local_deposition_field(chosen, seed, b, variation_scale=_policy_variation_scale(policy))
     authored_contrast = _authored_contrast_field(chosen, b)
     for idx, (cx, cy, diameter, alpha, pressure) in enumerate(chosen):
@@ -453,11 +464,13 @@ def _continuous_contact_mask(stroke: Stroke, factor: float, hardness: float, bou
         trans[ya:yb, xa:xb] *= np.float32(1.0) - dab
     ink = np.clip(np.float32(1.0) - trans, 0.0, 1.0)
     ink = np.minimum(ink, np.float32(0.92))
-    return Image.fromarray(np.clip(ink * 255.0, 0, 255).astype(np.uint8), mode='L')
+    return Image.fromarray(np.clip(ink * 255.0, 0, 255).astype(np.uint8), mode="L")
 
-def _continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile) -> Image.Image:
+
+def _thin_continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile) -> Image.Image:
+    """Continuity floor keyed on the pressure-sampled mean width (thin and flick regimes)."""
     x0, y0, x1, y1 = bounds
-    mask = Image.new('L', (x1 - x0, y1 - y0), 0)
+    mask = Image.new("L", (x1 - x0, y1 - y0), 0)
     samples = _pressure_samples(stroke, factor, hardness, profile.trajectory_spacing, profile)
     if len(samples) < 2:
         return mask
@@ -465,14 +478,14 @@ def _continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bound
     mean_w = float(np.mean([s[2] for s in samples])) / float(factor)
     b = _broadness(mean_w)
     ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-    thin_flick = _thin_flick_gate(mean_w, _clamp01(ts.get('taper_out', 0.0)))
+    thin_flick = _thin_flick_gate(mean_w, _clamp01(ts.get("taper_out", 0.0)))
     min_width = max(1, int(round(min((s[2] for s in samples)))))
     min_alpha = min((s[3] for s in samples))
     max_alpha = max((s[3] for s in samples)) if samples else 0
     m = profile.material
     d = ImageDraw.Draw(mask)
     if b > 1e-08:
-        policy = _stroke_material_policy(stroke)
+        policy = stroke_material_policy(stroke)
         width_extra, alpha_extra = _policy_continuity_floor(policy, b)
         width_ratio = min(1.0, 1.0 - 0.92 * b + width_extra)
         alpha_ratio = min(1.0, 1.0 - 0.94 * b + alpha_extra)
@@ -480,11 +493,11 @@ def _continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bound
         base_alpha = max(int(round(m.continuity_min_coverage * 255.0)), int(round(min_alpha * m.continuity_floor_ratio)))
         alpha = max(1, int(round(base_alpha * alpha_ratio)))
         if alpha > 1 or b < 0.75:
-            d.line(pts, fill=alpha, width=min_width, joint='curve')
+            d.line(pts, fill=alpha, width=min_width, joint="curve")
         return mask
     if thin_flick <= 1e-06:
         alpha = max(int(round(m.continuity_min_coverage * 255.0)), int(round(min_alpha * m.continuity_floor_ratio)))
-        d.line(pts, fill=alpha, width=min_width, joint='curve')
+        d.line(pts, fill=alpha, width=min_width, joint="curve")
         return mask
     base_alpha = max(1, int(round(max(int(round(m.continuity_min_coverage * 255.0 * 0.45)), min_alpha * (0.34 + 0.2 * (1.0 - thin_flick))))))
     floor_w = max(1, int(round(min_width * (0.8 - 0.25 * thin_flick))))
@@ -506,8 +519,121 @@ def _continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bound
         seg_width = max(1, int(round(min(floor_w, max(1.0, seg_width_src * (0.16 + 0.1 * alpha_norm))))))
         segs.append((seg_alpha, seg_width, a, bpt))
     for alpha, width, a, bpt in sorted(segs, key=lambda row: row[0]):
-        d.line([a, bpt], fill=alpha, width=width, joint='curve')
+        d.line([a, bpt], fill=alpha, width=width, joint="curve")
     return mask
+
+
+def _authored_core_floor_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile, broadness: float) -> Image.Image:
+    """Authored-value core with subtle page-fixed texture (policy core floor model v2).
+
+    The dry radial shoulder must not erase an explicitly dark authored stroke merely
+    because contact width enters the broad regime: only the dark core narrows as contact
+    widens, so width changes material character without re-authoring value.
+    """
+    x0, y0, x1, y1 = bounds
+    samples = _pressure_samples(stroke, factor, hardness, profile.trajectory_spacing, profile)
+    if len(samples) < 2:
+        return Image.new("L", (x1 - x0, y1 - y0), 0)
+
+    mask = Image.new("L", (x1 - x0, y1 - y0), 0)
+    draw = ImageDraw.Draw(mask)
+    points = [(sample[0] - x0, sample[1] - y0) for sample in samples]
+    policy = stroke_material_policy(stroke)
+    width_ratio, alpha_retention = _core_width_alpha_ratios(policy, broadness)
+    material = profile.material
+    coverage_floor = int(round(material.continuity_min_coverage * 255.0))
+
+    for index in range(len(samples) - 1):
+        a = points[index]
+        b = points[index + 1]
+        width_src = 0.5 * (samples[index][2] + samples[index + 1][2])
+        alpha_src = 0.5 * (samples[index][3] + samples[index + 1][3])
+        width = max(1, int(round(width_src * width_ratio)))
+        legacy_floor = max(coverage_floor, int(round(alpha_src * material.continuity_floor_ratio)))
+        authored_floor = int(round(alpha_src * alpha_retention))
+        alpha = max(1, legacy_floor, authored_floor)
+        draw.line([a, b], fill=alpha, width=width, joint="curve")
+
+    # Preserve a graphite core rather than a flat digital band; this modulation is subtle
+    # and cannot remove the core floor.
+    arr = np.asarray(mask, dtype=np.float32)
+    active = arr > 0.5
+    if np.any(active):
+        height, width = arr.shape
+        yy, xx = np.indices((height, width), dtype=np.float64)
+        lx = (xx + float(x0)) / float(factor)
+        ly = (yy + float(y0)) / float(factor)
+        tooth = pixel_hash_tooth(lx, ly, 17).astype(np.float32)
+        texture_strength = np.float32(0.025 + 0.055 * _clamp01(policy["grain_exposure"]))
+        modulation = np.float32(1.0) + texture_strength * (tooth - np.float32(0.5)) * np.float32(2.0)
+        arr[active] *= modulation[active]
+        mask = Image.fromarray(np.clip(arr, 0.0, 255.0).astype(np.uint8), mode="L")
+    return mask
+
+
+def _continuity_floor_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile: PencilContactProfile) -> Image.Image:
+    """Dispatch on the stroke's mean contact width: thin floor, or authored broad core."""
+
+    broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+    if broadness <= 1e-08:
+        return _thin_continuity_floor_mask(stroke, factor, hardness, bounds, profile)
+    return _authored_core_floor_mask(stroke, factor, hardness, bounds, profile, broadness)
+
+
+def _broad_core_mask(stroke: Stroke, factor: float, hardness: float, bounds: tuple[int, int, int, int], profile) -> Image.Image:
+    """Authored-value broad core with physical round terminals.
+
+    The line body keeps the authored-value core; only the two physical contact terminals
+    get explicit discs using the pressure/taper-resolved sample width and alpha, so a
+    transitional broad stroke does not end in a digitally chopped square cut.
+    """
+    x0, y0, x1, y1 = bounds
+    samples = _pressure_samples(stroke, factor, hardness, profile.trajectory_spacing, profile)
+    mask = Image.new("L", (x1 - x0, y1 - y0), 0)
+    if len(samples) < 2:
+        return mask
+
+    mean_width = float(np.mean([sample[2] for sample in samples])) / float(factor)
+    broadness = _broadness(mean_width)
+    if broadness <= 1e-08:
+        return _continuity_floor_mask(stroke, factor, hardness, bounds, profile)
+
+    points = [(sample[0] - x0, sample[1] - y0) for sample in samples]
+    policy = stroke_material_policy(stroke)
+    width_ratio, alpha_retention = _core_width_alpha_ratios(policy, broadness)
+    material = profile.material
+    coverage_floor = int(round(material.continuity_min_coverage * 255.0))
+
+    draw = ImageDraw.Draw(mask)
+    for index in range(len(samples) - 1):
+        a = points[index]
+        b = points[index + 1]
+        width_src = 0.5 * (samples[index][2] + samples[index + 1][2])
+        alpha_src = 0.5 * (samples[index][3] + samples[index + 1][3])
+        width = max(1, int(round(width_src * width_ratio)))
+        legacy_floor = max(coverage_floor, int(round(alpha_src * material.continuity_floor_ratio)))
+        authored_floor = int(round(alpha_src * alpha_retention))
+        alpha = max(1, legacy_floor, authored_floor)
+        draw.line([a, b], fill=alpha, width=width, joint="curve")
+
+    for index in (0, -1):
+        cx, cy = points[index]
+        width = max(1, int(round(samples[index][2] * width_ratio)))
+        alpha_src = samples[index][3]
+        alpha = max(
+            1,
+            coverage_floor,
+            int(round(alpha_src * material.continuity_floor_ratio)),
+            int(round(alpha_src * alpha_retention)),
+        )
+        radius = max(0.5, 0.5 * float(width))
+        draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill=alpha)
+    return mask
+
+
+# ---------------------------------------------------------------------------
+# Texture modulation
+# ---------------------------------------------------------------------------
 
 def _thin_texture_gain(width_logical: float, reference: float, floor: float) -> float:
     if reference <= 1e-09:
@@ -516,15 +642,8 @@ def _thin_texture_gain(width_logical: float, reference: float, floor: float) -> 
     s = float(u * u * (3.0 - 2.0 * u))
     return float(floor + (1.0 - floor) * s)
 
-def _mean_contact_width(stroke: Stroke, hardness: float, profile: PencilContactProfile) -> float:
-    if stroke.pressure is not None and len(stroke.pressure) == len(stroke.points) and stroke.pressure:
-        pressure = float(np.mean(np.asarray(stroke.pressure, dtype=np.float32)))
-    else:
-        ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-        pressure = _clamp01(ts.get('pressure', 0.55))
-    return _contact_width(stroke.width, pressure, hardness, profile)
 
-def _smooth_grain_modulate(mask: Image.Image, *, stroke: Stroke, grain: float, hardness: float, factor: float, global_origin: tuple[int, int], seed: int, profile: PencilContactProfile) -> Image.Image:
+def _grain_modulate(mask: Image.Image, *, stroke: Stroke, grain: float, hardness: float, factor: float, global_origin: tuple[int, int], seed: int, profile: PencilContactProfile) -> Image.Image:
     """Continuous correlated grain modulation; never removes isolated pixels."""
     g = _clamp01(grain)
     if g <= 1e-08:
@@ -539,19 +658,19 @@ def _smooth_grain_modulate(mask: Image.Image, *, stroke: Stroke, grain: float, h
     lx = (xx + float(ox)) / float(factor)
     ly = (yy + float(oy)) / float(factor)
     gp = profile.grain
-    coarse = p5._value_noise(lx, ly, gp.coarse_cell, seed ^ 2769414579)
-    fine = p5._value_noise(lx, ly, gp.fine_cell, seed ^ 1675113877)
+    coarse = value_noise(lx, ly, gp.coarse_cell, seed ^ 2769414579)
+    fine = value_noise(lx, ly, gp.fine_cell, seed ^ 1675113877)
     width = _mean_contact_width(stroke, hardness, profile)
     b = _broadness(width)
     ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-    thin_flick = _thin_flick_gate(width, _clamp01(ts.get('taper_out', 0.0)))
+    thin_flick = _thin_flick_gate(width, _clamp01(ts.get("taper_out", 0.0)))
     activity = max(b, thin_flick)
     variability = 0.0
     if activity > 1e-08 and stroke.pressure is not None and (len(stroke.pressure) == len(stroke.points)) and (len(stroke.pressure) > 1):
         variability = _pressure_variability(np.asarray(stroke.pressure, dtype=np.float32))
     if b > 1e-08:
-        micro = p5._value_noise(lx, ly, 0.22, seed ^ 3535225863)
-        sparkle = p5._value_noise(lx, ly, 0.11, seed ^ 2465573313)
+        micro = value_noise(lx, ly, 0.22, seed ^ 3535225863)
+        sparkle = value_noise(lx, ly, 0.11, seed ^ 2465573313)
         field = np.float32(0.42) * coarse + np.float32(0.18) * fine + np.float32(0.25) * micro + np.float32(0.15) * sparkle
     else:
         field = np.float32(0.72) * coarse + np.float32(0.28) * fine
@@ -563,9 +682,10 @@ def _smooth_grain_modulate(mask: Image.Image, *, stroke: Stroke, grain: float, h
         mod = mod / np.float32(mean_mod)
     mod = np.clip(mod, np.float32(gp.min_modulation), np.float32(gp.max_modulation))
     out = np.clip(arr * mod, 0.0, 255.0).astype(np.uint8)
-    return Image.fromarray(out, mode='L')
+    return Image.fromarray(out, mode="L")
 
-def _smooth_paper_modulate(mask: Image.Image, *, stroke: Stroke, tooth: float, paper_scale: float, paper_seed: int, factor: float, global_origin: tuple[int, int], hardness: float, profile: PencilContactProfile) -> Image.Image:
+
+def _paper_modulate(mask: Image.Image, *, stroke: Stroke, tooth: float, paper_scale: float, paper_seed: int, factor: float, global_origin: tuple[int, int], hardness: float, profile: PencilContactProfile) -> Image.Image:
     """Page-fixed tooth with smooth valley attenuation and thin-line protection."""
     t = _clamp01(tooth)
     if t <= 1e-08:
@@ -574,8 +694,8 @@ def _smooth_paper_modulate(mask: Image.Image, *, stroke: Stroke, tooth: float, p
     active = arr > 0.5
     if not np.any(active):
         return mask
-    pressure = p5._stroke_pressure(stroke)
-    field = p5.paper_field(arr.shape, factor=factor, global_origin=global_origin, paper_scale=paper_scale, paper_seed=paper_seed)
+    pressure = mean_stroke_pressure(stroke)
+    field = paper_field(arr.shape, factor=factor, global_origin=global_origin, paper_scale=paper_scale, paper_seed=paper_seed)
     pp = profile.paper
     width = _mean_contact_width(stroke, hardness, profile)
     thin_gain = _thin_texture_gain(width, pp.thin_width_reference, pp.thin_texture_floor)
@@ -597,74 +717,113 @@ def _smooth_paper_modulate(mask: Image.Image, *, stroke: Stroke, tooth: float, p
         mod = mod / np.float32(mean_mod)
     mod = np.clip(mod, np.float32(pp.min_modulation), np.float32(pp.max_modulation))
     out = np.clip(arr * mod, 0.0, 255.0).astype(np.uint8)
-    return Image.fromarray(out, mode='L')
+    return Image.fromarray(out, mode="L")
 
-def _build_contact_patch(stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile):
-    """Return the exact canonical contact patch used by both full and fast renderers."""
+
+def _broad_graphite_modulate(mask: Image.Image, *, stroke: Stroke, broadness: float, factor: float, global_origin: tuple[int, int], paper_scale: float, paper_seed: int) -> Image.Image:
+    """Strengthen page-fixed graphite/tooth read without re-authoring mean value."""
+
+    if broadness <= 1e-08:
+        return mask
+    arr = np.asarray(mask, dtype=np.float32)
+    active = arr > 0.5
+    if not np.any(active):
+        return mask
+
+    height, width = arr.shape
+    yy, xx = np.indices((height, width), dtype=np.float64)
+    lx = (xx + float(global_origin[0])) / float(factor)
+    ly = (yy + float(global_origin[1])) / float(factor)
+    paper = paper_field(arr.shape, factor=factor, global_origin=global_origin, paper_scale=paper_scale, paper_seed=paper_seed).astype(np.float32)
+    micro = pixel_hash_tooth(lx, ly, paper_seed ^ 0x5F356495).astype(np.float32)
+    field = np.float32(0.70) * paper + np.float32(0.30) * micro
+
+    policy = stroke_material_policy(stroke)
+    exposure = _clamp01(policy["grain_exposure"])
+    strength = np.float32(broadness * (_BROAD_TEXTURE_BASE + _BROAD_TEXTURE_EXPOSURE_GAIN * exposure))
+    modulation = np.float32(1.0) + strength * (field - np.float32(0.5)) * np.float32(2.0)
+    valley = np.clip((np.float32(0.48) - field) / np.float32(0.48), 0.0, 1.0)
+    modulation *= np.float32(1.0) - np.float32(_BROAD_TEXTURE_VALLEY_DEPTH * broadness) * valley
+
+    # Keep authored mean density stable while allowing local tooth/grain variation.
+    mean = float(np.mean(modulation[active]))
+    if mean > 1e-06:
+        modulation = modulation / np.float32(mean)
+    modulation = np.clip(modulation, np.float32(0.74), np.float32(1.26))
+    arr[active] *= modulation[active]
+    return Image.fromarray(np.clip(arr, 0.0, 255.0).astype(np.uint8), mode="L")
+
+
+# ---------------------------------------------------------------------------
+# Patch
+# ---------------------------------------------------------------------------
+
+def _graphite_layer(size: tuple[int, int], mask: Image.Image, graphite) -> Image.Image:
+    layer = Image.new("RGBA", size, (int(graphite[0]), int(graphite[1]), int(graphite[2]), 0))
+    layer.putalpha(mask)
+    return layer
+
+
+def _pigment(graphite, policy: dict, broadness: float) -> tuple[int, int, int]:
+    darken = _policy_pigment_darken(policy, broadness)
+    return tuple(max(0, min(255, int(round(float(c) * (1.0 - darken))))) for c in graphite)
+
+
+def _thin_patch(stroke: Stroke, *, factor: float, hi_size, tooth: float, paper_scale: float, paper_seed: int, graphite, profile: PencilContactProfile):
     if len(stroke.points) < 2:
-        return ((0, 0, 0, 0), Image.new('RGBA', (1, 1), (0, 0, 0, 0)))
-    grain, hardness = p3._material(stroke)
+        return ((0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0)))
+    grain, hardness = stroke_material(stroke)
     bounds = _contact_bounds(stroke, factor, hardness, hi_size, profile)
-    mask = _continuous_contact_mask(stroke, factor, hardness, bounds, profile)
+    origin = (bounds[0], bounds[1])
+    mask = _contact_shoulder_mask(stroke, factor, hardness, bounds, profile)
     continuity = _continuity_floor_mask(stroke, factor, hardness, bounds, profile)
-    mean_width = _mean_contact_width(stroke, hardness, profile)
-    broad_material = _broadness(mean_width)
-    if broad_material < 0.35:
-        mask = _smooth_grain_modulate(mask, stroke=stroke, grain=grain, hardness=hardness, factor=factor, global_origin=(bounds[0], bounds[1]), seed=p3._stroke_seed(stroke), profile=profile)
-        mask = _smooth_paper_modulate(mask, stroke=stroke, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, factor=factor, global_origin=(bounds[0], bounds[1]), hardness=hardness, profile=profile)
-    elif broad_material < 0.7:
-        soft_grain = max(0.0, float(grain) * (0.7 - broad_material) / 0.35)
+    broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+    if broadness < 0.35:
+        mask = _grain_modulate(mask, stroke=stroke, grain=grain, hardness=hardness, factor=factor, global_origin=origin, seed=grain_seed(stroke), profile=profile)
+        mask = _paper_modulate(mask, stroke=stroke, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, factor=factor, global_origin=origin, hardness=hardness, profile=profile)
+    elif broadness < 0.7:
+        soft_grain = max(0.0, float(grain) * (0.7 - broadness) / 0.35)
         if soft_grain > 1e-06:
-            mask = _smooth_grain_modulate(mask, stroke=stroke, grain=soft_grain, hardness=hardness, factor=factor, global_origin=(bounds[0], bounds[1]), seed=p3._stroke_seed(stroke), profile=profile)
+            mask = _grain_modulate(mask, stroke=stroke, grain=soft_grain, hardness=hardness, factor=factor, global_origin=origin, seed=grain_seed(stroke), profile=profile)
     mask = ImageChops.lighter(mask, continuity)
-    pigment_b = _broadness(mean_width)
-    policy = _stroke_material_policy(stroke)
-    darken = _policy_pigment_darken(policy, pigment_b)
-    local_graphite = tuple((max(0, min(255, int(round(float(c) * (1.0 - darken))))) for c in graphite))
-    layer = p3._graphite_layer(mask.size, mask, graphite=local_graphite)
+    layer = _graphite_layer(mask.size, mask, _pigment(graphite, stroke_material_policy(stroke), broadness))
     mask.close()
     continuity.close()
     return (bounds, layer)
 
-def _deposit(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile) -> None:
-    bounds, layer = _build_contact_patch(stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, graphite=graphite, profile=profile)
-    graphite_canvas.alpha_composite(layer, dest=(bounds[0], bounds[1]))
-    layer.close()
 
-def render(ir: StrokeIR, path: str | Path, background=(255, 255, 255, 255), *, scale: int=1, supersample: int=DEFAULT_SUPERSAMPLE, graphite=(36, 34, 32), grade: str | None=None, contact_profile: str | Path | None=None) -> None:
-    """Candidate Contact Patch v10 renderer.
+def build_patch(stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile):
+    """Return ``(bounds, rgba_layer)`` for one grade- and hand-prepared stroke."""
 
-    Ordinary thin strokes preserve the historical v9 material path while broad graphite,
-    authored pressure dynamics, physical-pixel terminal spans, and thin flicks use the v10
-    material model. Resolved markmaking material policy is read from stroke provenance rather
-    than from private agent/runtime implementation state.
-    """
-    if int(scale) != scale or scale < 1:
-        raise ValueError('scale must be a positive integer')
-    if int(supersample) != supersample or supersample < 2:
-        raise ValueError('supersample must be an integer >= 2')
-    if grade is not None:
-        p6.get_grade(grade)
-    profile = load_pencil_contact_profile(contact_profile)
-    scale = int(scale)
-    supersample = int(supersample)
-    factor = float(scale * supersample)
-    hi_size = (int(ir.width * factor), int(ir.height * factor))
-    out_size = (int(ir.width * scale), int(ir.height * scale))
-    tooth, paper_scale, paper_seed = p5._paper_settings(ir)
-    graphite_canvas = Image.new('RGBA', hi_size, (int(graphite[0]), int(graphite[1]), int(graphite[2]), 0))
-    for stroke in sorted(ir.strokes, key=lambda z: z.layer):
-        if p7.is_eraser(stroke):
-            p7._erase(graphite_canvas, stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed)
-            continue
-        prepared = _prepare_grade(stroke, grade)
-        prepared = _smooth_hand_dynamics(prepared, profile)
-        _deposit(graphite_canvas, prepared, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, graphite=(int(graphite[0]), int(graphite[1]), int(graphite[2])), profile=profile)
-    base = Image.new('RGBA', hi_size, background)
-    base = Image.alpha_composite(base, graphite_canvas)
-    final = base.resize(out_size, Image.Resampling.LANCZOS)
-    p = str(path)
-    if p.lower().endswith(('.jpg', '.jpeg')):
-        final.convert('RGB').save(p, quality=95)
-    else:
-        final.save(p)
+    grain, hardness = stroke_material(stroke)
+    broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+    if broadness <= 1e-08:
+        return _thin_patch(stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, graphite=graphite, profile=profile)
+
+    bounds = _contact_bounds(stroke, factor, hardness, hi_size, profile)
+    origin = (bounds[0], bounds[1])
+    shoulder = _contact_shoulder_mask(stroke, factor, hardness, bounds, profile)
+    core = _broad_core_mask(stroke, factor, hardness, bounds, profile)
+
+    # Transitional broad widths keep the thin-regime shoulder texture, fading out by 0.7.
+    if broadness < 0.35:
+        shoulder = _grain_modulate(shoulder, stroke=stroke, grain=grain, hardness=hardness, factor=factor, global_origin=origin, seed=grain_seed(stroke), profile=profile)
+        shoulder = _paper_modulate(shoulder, stroke=stroke, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, factor=factor, global_origin=origin, hardness=hardness, profile=profile)
+    elif broadness < 0.7:
+        soft_grain = max(0.0, float(grain) * (0.7 - broadness) / 0.35)
+        if soft_grain > 1e-06:
+            shoulder = _grain_modulate(shoulder, stroke=stroke, grain=soft_grain, hardness=hardness, factor=factor, global_origin=origin, seed=grain_seed(stroke), profile=profile)
+
+    mask = ImageChops.lighter(shoulder, core)
+    textured = _broad_graphite_modulate(mask, stroke=stroke, broadness=broadness, factor=factor, global_origin=origin, paper_scale=paper_scale, paper_seed=paper_seed)
+    if textured is not mask:
+        mask.close()
+    shoulder.close()
+    core.close()
+
+    layer = _graphite_layer(textured.size, textured, _pigment(graphite, stroke_material_policy(stroke), broadness))
+    textured.close()
+    return bounds, layer
+
+
+__all__ = ["build_patch", "stroke_material_policy"]

@@ -1,4 +1,9 @@
-"""Versioned raster configuration for canonical vNext output and replay."""
+"""Versioned raster configuration bound into every session checkpoint.
+
+A ``RenderProfile`` is the complete deterministic renderer input apart from authored strokes:
+canvas, paper, supersampling, colours, GIF policy, and the renderer identity plus contract
+digest that must match this package for exact output.
+"""
 
 from __future__ import annotations
 
@@ -6,25 +11,21 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from ..core.session import sha256_obj
-from ..render.pillow_paper_interaction import (
-    DEFAULT_PAPER_SCALE,
-    DEFAULT_PAPER_SEED,
-    DEFAULT_PAPER_TOOTH,
-)
-from ..render.renderer_dispatch import RENDER_AUTHORITY_METADATA_KEY
-from ..render.renderer_registry import current_renderer, resolve_renderer
+from ..core.digest import sha256_obj
+from .contract import RENDERER_ID, RENDERER_VERSION, canonical_identity, verify_contract_digest
+from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
+from .pencil import DEFAULT_SUPERSAMPLE
 
-_CURRENT_RENDERER = current_renderer()
-DEFAULT_SUPERSAMPLE = _CURRENT_RENDERER.default_supersample
-
-
-RENDER_PROFILE_SCHEMA = "img2drawing.vnext.render_profile.v1"
+RENDER_PROFILE_SCHEMA = "img2drawing.render_profile.v2"
+# v1 profiles (img2drawing <= 1.0.3) carry no contract digest; they resume only when their
+# renderer identity is pixel-equivalent to the current renderer.
+_LEGACY_RENDER_PROFILE_SCHEMAS = ("img2drawing.vnext.render_profile.v1",)
 SEED_DOMAIN = "pencil-contact-stroke-and-paper-coordinate-v1"
 _FIELDS = {
     "profile_id",
     "renderer_id",
     "renderer_version",
+    "renderer_contract_digest",
     "canvas_width",
     "canvas_height",
     "material_profile",
@@ -89,14 +90,18 @@ class RenderProfile:
     gif_palette_colors: int = 256
     gif_loop: int = 0
     gif_disposal: int = 2
+    renderer_contract_digest: str | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "profile_id", _text(self.profile_id, "profile_id"))
-        renderer_id = _text(self.renderer_id, "renderer_id")
-        renderer_version = _text(self.renderer_version, "renderer_version")
-        resolve_renderer(renderer_id, renderer_version)
+        renderer_id, renderer_version = canonical_identity(
+            _text(self.renderer_id, "renderer_id"), _text(self.renderer_version, "renderer_version")
+        )
         object.__setattr__(self, "renderer_id", renderer_id)
         object.__setattr__(self, "renderer_version", renderer_version)
+        object.__setattr__(
+            self, "renderer_contract_digest", verify_contract_digest(self.renderer_contract_digest)
+        )
         width, height = int(self.canvas_width), int(self.canvas_height)
         if width <= 0 or height <= 0:
             raise ValueError("render profile canvas dimensions must be positive")
@@ -151,8 +156,8 @@ class RenderProfile:
     def canonical(cls, width: int, height: int) -> "RenderProfile":
         return cls(
             profile_id="pencil-contact-canonical-v1",
-            renderer_id=_CURRENT_RENDERER.renderer_id,
-            renderer_version=_CURRENT_RENDERER.renderer_version,
+            renderer_id=RENDERER_ID,
+            renderer_version=RENDERER_VERSION,
             canvas_width=int(width),
             canvas_height=int(height),
         )
@@ -163,6 +168,7 @@ class RenderProfile:
             "profile_id": self.profile_id,
             "renderer_id": self.renderer_id,
             "renderer_version": self.renderer_version,
+            "renderer_contract_digest": self.renderer_contract_digest,
             "canvas_width": self.canvas_width,
             "canvas_height": self.canvas_height,
             "material_profile": self.material_profile,
@@ -183,12 +189,17 @@ class RenderProfile:
 
     @classmethod
     def from_dict(cls, raw: Mapping[str, Any]) -> "RenderProfile":
-        if raw.get("schema") not in (None, RENDER_PROFILE_SCHEMA):
-            raise ValueError(f"unsupported render profile schema: {raw.get('schema')!r}")
+        schema = raw.get("schema")
+        if schema not in (None, RENDER_PROFILE_SCHEMA, *_LEGACY_RENDER_PROFILE_SCHEMAS):
+            raise ValueError(f"unsupported render profile schema: {schema!r}")
         unknown = set(raw).difference(_FIELDS | {"schema"})
         if unknown:
             raise ValueError(f"render profile contains unsupported fields: {sorted(unknown)}")
-        return cls(**{field: raw[field] for field in _FIELDS})
+        optional = {"renderer_contract_digest"}
+        missing = _FIELDS.difference(raw).difference(optional)
+        if missing:
+            raise ValueError(f"render profile is missing fields: {sorted(missing)}")
+        return cls(**{field: raw[field] for field in _FIELDS if field in raw})
 
     def digest(self) -> str:
         return sha256_obj(self.to_dict())
@@ -198,7 +209,7 @@ class RenderProfile:
             raise ValueError("render profile canvas does not match session canvas")
 
     def prepared_ir(self, ir):
-        """Return a render-only view with profile-owned paper and renderer authority."""
+        """Return a render-only view whose paper state comes from this profile."""
 
         self.validate_canvas(ir.width, ir.height)
         prepared = deepcopy(ir)
@@ -207,10 +218,6 @@ class RenderProfile:
             "tooth": self.paper_tooth,
             "scale": self.paper_scale,
             "seed": self.paper_seed,
-        }
-        metadata[RENDER_AUTHORITY_METADATA_KEY] = {
-            "id": self.renderer_id,
-            "version": self.renderer_version,
         }
         prepared.metadata = metadata
         return prepared
@@ -221,7 +228,6 @@ class RenderProfile:
             "scale": self.output_scale,
             "supersample": self.supersample,
             "graphite": self.graphite_rgb,
-            "contact_profile": None,
         }
 
 

@@ -30,9 +30,9 @@ REGEN = os.environ.get("IMG2DRAWING_REGEN_GOLDEN") == "1"
 
 
 def _current_render():
-    from img2drawing.render.renderer_registry import current_renderer
+    from img2drawing.render import render
 
-    return current_renderer().render
+    return render
 
 
 def _pixel_sha(path: Path) -> str:
@@ -286,9 +286,7 @@ def test_v11_session_outputs_are_pixel_stable(tmp_path: Path) -> None:
             frames.append(hashlib.sha256(gif.convert("RGB").tobytes()).hexdigest())
     _check("session/timelapse-gif-frames", hashlib.sha256("".join(frames).encode()).hexdigest())
 
-    from img2drawing.vnext.output import export_session_timelapse
-
-    canonical = export_session_timelapse(session, tmp_path / "tl-canonical", every_n=2, backend="canonical")
+    canonical = session.export_timelapse(tmp_path / "tl-canonical", every_n=2, backend="canonical")
     _check("session/timelapse-canonical-final", _pixel_sha(canonical.final_path))
     frame_hashes = [
         _pixel_sha(path) for path in sorted(Path(canonical.frame_dir).glob("*.png"))

@@ -1,43 +1,28 @@
+"""Deterministic hand dynamics and stroke seeds.
+
+Seeds are derived from authored stroke identity/geometry only. The private compatibility
+``Stroke.stage`` field is excluded (seed identity model ``stage-free-render-seed-v1``), so
+identical authored geometry renders identically wherever it is replayed.
+"""
+
 from __future__ import annotations
 
-from copy import deepcopy
 import hashlib
 import json
-from math import hypot, pi
+from copy import deepcopy
+from math import pi
 
 import numpy as np
 
-from ..core.ir import Stroke, StrokeIR
-from . import pillow_graphite_grain as p3
-
-RENDERER_ID = "pillow-hand-dynamics-v5"
-RENDERER_VERSION = "1"
-DEFAULT_SUPERSAMPLE = 8
-DEFAULT_JITTER = 0.0
-DEFAULT_TAPER_IN = 0.0
-DEFAULT_TAPER_OUT = 0.0
+from ..core.ir import Stroke
+from .contact_profile import PencilContactProfile
 
 
 def _clamp01(v: float) -> float:
     return max(0.0, min(1.0, float(v)))
 
 
-def _dynamics(stroke: Stroke) -> tuple[float, float, float]:
-    ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
-    return (
-        _clamp01(ts.get("jitter", DEFAULT_JITTER)),
-        _clamp01(ts.get("taper_in", DEFAULT_TAPER_IN)),
-        _clamp01(ts.get("taper_out", DEFAULT_TAPER_OUT)),
-    )
-
-
-def _stable_seed(stroke: Stroke) -> int:
-    """Stable latent hand-motion seed independent of dynamics strength.
-
-    Geometry, stroke identity and semantic ownership define the latent motion field.
-    Changing jitter/taper therefore exposes more or less of the same field rather than
-    inventing an unrelated stroke.  No process-global RNG state is used.
-    """
+def _seed_payload(stroke: Stroke) -> bytes:
     payload = {
         "stroke_id": stroke.stroke_id,
         "points": [[float(x), float(y)] for x, y in stroke.points],
@@ -46,11 +31,38 @@ def _stable_seed(stroke: Stroke) -> int:
         "opacity": float(stroke.opacity),
         "role": stroke.role,
         "part": stroke.part,
-        "stage": stroke.stage,
+        "stage": None,
         "layer": int(stroke.layer),
     }
-    blob = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
-    return int.from_bytes(hashlib.sha256(blob).digest()[:8], "little")
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+
+
+def grain_seed(stroke: Stroke) -> int:
+    """Material-particle seed, independent of grain/hardness values."""
+
+    return int.from_bytes(hashlib.sha256(_seed_payload(stroke)).digest()[:4], "little")
+
+
+def hand_seed(stroke: Stroke) -> int:
+    """Latent hand-motion seed, independent of dynamics strength."""
+
+    return int.from_bytes(hashlib.sha256(_seed_payload(stroke)).digest()[:8], "little")
+
+
+def stroke_material(stroke: Stroke) -> tuple[float, float]:
+    """Return ``(grain, hardness)`` from tool state with the pencil defaults."""
+
+    ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
+    return _clamp01(ts.get("grain", 0.30)), _clamp01(ts.get("hardness", 0.65))
+
+
+def _dynamics(stroke: Stroke) -> tuple[float, float, float]:
+    ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
+    return (
+        _clamp01(ts.get("jitter", 0.0)),
+        _clamp01(ts.get("taper_in", 0.0)),
+        _clamp01(ts.get("taper_out", 0.0)),
+    )
 
 
 def _seed_unit(seed: int, shift: int) -> float:
@@ -115,29 +127,11 @@ def _micro_pressure(t: np.ndarray, seed: int, jitter: float) -> np.ndarray:
     phase = 2.0 * pi * _seed_unit(seed, 12)
     freq = 5.5 + 4.0 * _seed_unit(seed, 28)
     cadence = 0.5 + 0.5 * np.sin(2.0 * pi * freq * t + phase)
-    # Hand dynamics remain restrained at preset jitter values. At diagnostic jitter=1,
-    # weak touches can momentarily drop by about 30%, enough to create micro-break feel.
     strength = 0.30 * np.sqrt(jitter)
     return 1.0 - strength * (cadence ** 8)
 
 
-def apply_hand_dynamics(stroke: Stroke) -> Stroke:
-    """Return a derived stroke with deterministic tangent-aware hand dynamics.
-
-    The source Stroke is never mutated.  Dynamics are applied in logical coordinates
-    before P3 material deposition, so every visible change remains attributable to the
-    explicit stroke and deterministic under replay.
-    """
-    jitter, taper_in, taper_out = _dynamics(stroke)
-    if jitter <= 1e-12 and taper_in <= 1e-12 and taper_out <= 1e-12:
-        return deepcopy(stroke)
-
-    pts, pressure, t = _resample(stroke)
-    if len(pts) < 2:
-        return deepcopy(stroke)
-
-    # Tangent from centered finite differences; displacement occurs along the local normal,
-    # so dynamics do not introduce systematic shortening/lengthening of the intended path.
+def _normals(pts: np.ndarray) -> np.ndarray:
     tangent = np.empty_like(pts)
     tangent[0] = pts[1] - pts[0]
     tangent[-1] = pts[-1] - pts[-2]
@@ -146,21 +140,32 @@ def apply_hand_dynamics(stroke: Stroke) -> Stroke:
     norm = np.linalg.norm(tangent, axis=1)
     norm[norm < 1e-9] = 1.0
     tangent /= norm[:, None]
-    normal = np.column_stack([-tangent[:, 1], tangent[:, 0]])
+    return np.column_stack([-tangent[:, 1], tangent[:, 0]])
 
-    seed = _stable_seed(stroke)
+
+def eraser_hand_dynamics(stroke: Stroke) -> Stroke:
+    """Hand dynamics for eraser passes: path wobble plus micro pressure dips.
+
+    Endpoints stay anchored; explicit pressure remains the authority and only gets a
+    bounded entry/release touch and cadence variation.
+    """
+    jitter, taper_in, taper_out = _dynamics(stroke)
+    if jitter <= 1e-12 and taper_in <= 1e-12 and taper_out <= 1e-12:
+        return deepcopy(stroke)
+
+    pts, pressure, t = _resample(stroke)
+    if len(pts) < 2:
+        return deepcopy(stroke)
+    normal = _normals(pts)
+
+    seed = hand_seed(stroke)
     wave = _hand_wave(t, seed)
-    # Endpoints remain anchored. sqrt(jitter) makes low preset values perceptible without
-    # allowing high diagnostic values to wander arbitrarily far from the authored path.
     end_anchor = np.sin(pi * t) ** 0.78
     amp = min(1.35, (0.42 + 0.14 * min(float(stroke.width), 5.0)) * np.sqrt(jitter))
-    displacement = amp * end_anchor * wave
-    moved = pts + normal * displacement[:, None]
+    moved = pts + normal * (amp * end_anchor * wave)[:, None]
     moved[0] = pts[0]
     moved[-1] = pts[-1]
 
-    # Explicit pressure remains the authority. P4 only adds a bounded entry/release touch
-    # and cadence variation. This avoids re-authoring the stroke in the renderer.
     tip_span = 0.14
     entry = _smoothstep(t / tip_span)
     release = _smoothstep((1.0 - t) / tip_span)
@@ -174,35 +179,40 @@ def apply_hand_dynamics(stroke: Stroke) -> Stroke:
     return out.cleaned()
 
 
-def dynamic_ir(ir: StrokeIR) -> StrokeIR:
-    """Derive a replay-stable P4 IR view without mutating authoritative StrokeIR."""
-    out = StrokeIR(int(ir.width), int(ir.height), metadata=deepcopy(ir.metadata))
-    for stroke in ir.strokes:
-        out.add(apply_hand_dynamics(stroke))
-    return out
+def pencil_hand_dynamics(stroke: Stroke, profile: PencilContactProfile) -> Stroke:
+    """Path wobble with continuous pressure variation, not micro-breaks."""
+    jitter, taper_in, taper_out = _dynamics(stroke)
+    if jitter <= 1e-12 and taper_in <= 1e-12 and (taper_out <= 1e-12):
+        return deepcopy(stroke)
+    pts, pressure, t = _resample(stroke, spacing=profile.trajectory_spacing)
+    if len(pts) < 2:
+        return deepcopy(stroke)
+    normal = _normals(pts)
+    seed = hand_seed(stroke)
+    wave = _hand_wave(t, seed)
+    end_anchor = np.sin(pi * t) ** 0.78
+    amp = min(1.35, (0.42 + 0.14 * min(float(stroke.width), 5.0)) * np.sqrt(jitter))
+    moved = pts + normal * (amp * end_anchor * wave)[:, None]
+    moved[0] = pts[0]
+    moved[-1] = pts[-1]
+    hp = profile.hand
+    entry = _smoothstep(t / hp.tip_span)
+    release = _smoothstep((1.0 - t) / hp.tip_span)
+    tip_factor = (1.0 - hp.taper_in_strength * taper_in * (1.0 - entry)) * (1.0 - hp.taper_out_strength * taper_out * (1.0 - release))
+    phase = 2.0 * pi * _seed_unit(seed ^ 3039394381, 12)
+    freq = hp.pressure_cadence_frequency_min + hp.pressure_cadence_frequency_span * _seed_unit(seed, 28)
+    cadence = 1.0 + hp.pressure_cadence_strength * np.sqrt(jitter) * np.sin(2.0 * pi * freq * t + phase)
+    dyn_pressure = np.clip(pressure * tip_factor * cadence, 0.025, 1.0)
+    out = deepcopy(stroke)
+    out.points = [(float(x), float(y)) for x, y in moved]
+    out.pressure = [float(v) for v in dyn_pressure]
+    return out.cleaned()
 
 
-def render(
-    ir: StrokeIR,
-    path: str,
-    background=(255, 255, 255, 255),
-    *,
-    scale: int = 1,
-    supersample: int = DEFAULT_SUPERSAMPLE,
-    graphite=(36, 34, 32),
-) -> None:
-    """Render P3 graphite material with deterministic P4 hand dynamics.
-
-    P4 adds only stroke-local path/touch dynamics:
-      * tangent-aware subpixel wobble controlled by tool_state.jitter;
-      * restrained deterministic pressure cadence/micro-break behavior;
-      * bounded entry/release touch controlled by taper_in/taper_out.
-
-    Deliberately absent: paper-coordinate tooth (P5), named grades (P6), graphite-aware
-    erasing (P7), and any final-raster sketch/noise filter.
-    """
-    # Exact delegation preserves P3 byte behavior when dynamics are explicitly disabled.
-    if all(sum(_dynamics(s)) <= 1e-12 for s in ir.strokes):
-        p3.render(ir, path, background=background, scale=scale, supersample=supersample, graphite=graphite)
-        return
-    p3.render(dynamic_ir(ir), path, background=background, scale=scale, supersample=supersample, graphite=graphite)
+__all__ = [
+    "eraser_hand_dynamics",
+    "grain_seed",
+    "hand_seed",
+    "pencil_hand_dynamics",
+    "stroke_material",
+]

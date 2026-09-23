@@ -11,7 +11,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from ..core.session import sha256_obj
+from ..core.digest import sha256_obj
 
 
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")

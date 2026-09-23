@@ -23,15 +23,17 @@ from typing import Any, Iterable, Mapping, Sequence
 
 from PIL import Image
 
-from ..core.action import AgentDrawingSession, DrawingAction, sha256_file
+from ..core.action import AgentDrawingSession, DrawingAction
+from ..core.digest import sha256_file, sha256_obj
 from ..core.ir import Stroke, StrokeIR
-from ..core.session import TOOLSET_ID, sha256_obj
+from ..core.tools import TOOLSET_ID
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
-from ..render.pillow_pencil_contact import RENDERER_ID, RENDERER_VERSION, render
-from ..render.presets import default_grade_name
+from ..render import UnsupportedRendererError, canonical_identity, default_grade_name, render
+from ..render.artifact import RenderArtifact, render_history_at
+from ..render.profile import SEED_DOMAIN, RenderProfile
+from ..timelapse import ReplayExport, export_timelapse
 from .correction import CorrectionRecord, ResidualRecord
 from .completion import FinishRecord
-from .render_profile import SEED_DOMAIN, RenderProfile
 from .evidence import (
     EvidencePolicy,
     EvidenceReadRecord,
@@ -52,8 +54,13 @@ from .reference_authority import (
 
 
 SESSION_SCHEMA = "img2drawing.vnext.session.v2"
-_LEGACY_RENDERER_VERSION = "vnext-stage-free-1"
-_LEGACY_SEED_DOMAIN = "vnext-stage-free"
+# Checkpoints written before RenderProfile existed carry this renderer header. They resume,
+# but cannot render until migrate_render_profile() explicitly binds the current renderer.
+_PROFILELESS_RENDERER_ID = "pillow-pencil-contact-v9"
+_MISSING_PROFILE = (
+    "checkpoint has no RenderProfile; call migrate_render_profile() to bind the current renderer "
+    "(exact replay of pre-RenderProfile sessions requires img2drawing==1.0.3)"
+)
 _COMPAT_STAGE = "__vnext_compat__"
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
@@ -292,25 +299,19 @@ class DrawingSession:
         render_profile = (
             None if raw_render_profile is None else RenderProfile.from_dict(raw_render_profile)
         )
-        legacy_renderer_header = (
-            raw_render_profile is None
-            and renderer.get("id") == RENDERER_ID
-            and str(renderer.get("version")) == _LEGACY_RENDERER_VERSION
-            and renderer.get("seed_domain") == _LEGACY_SEED_DOMAIN
-        )
         if render_profile is None:
-            if not legacy_renderer_header and (
-                renderer.get("id") != RENDERER_ID
-                or str(renderer.get("version")) != RENDERER_VERSION
-                or renderer.get("seed_domain") != SEED_DOMAIN
+            if renderer.get("id") != _PROFILELESS_RENDERER_ID:
+                raise ValueError("checkpoint renderer header does not match a supported renderer")
+        else:
+            try:
+                header_identity = canonical_identity(renderer.get("id", ""), renderer.get("version", ""))
+            except UnsupportedRendererError as exc:
+                raise ValueError("checkpoint renderer header does not match RenderProfile") from exc
+            if (
+                header_identity != (render_profile.renderer_id, render_profile.renderer_version)
+                or renderer.get("seed_domain") != render_profile.seed_domain
             ):
-                raise ValueError("vNext renderer identity/version mismatch")
-        elif (
-            renderer.get("id") != render_profile.renderer_id
-            or str(renderer.get("version")) != render_profile.renderer_version
-            or renderer.get("seed_domain") != render_profile.seed_domain
-        ):
-            raise ValueError("checkpoint renderer header does not match RenderProfile")
+                raise ValueError("checkpoint renderer header does not match RenderProfile")
         toolset = payload.get("toolset") or {}
         if toolset.get("id") != TOOLSET_ID or str(toolset.get("version")) != "1":
             raise ValueError("vNext toolset identity/version mismatch")
@@ -977,6 +978,21 @@ class DrawingSession:
                 truncated=len(matching) > selected_limit,
             )
 
+    def _renderer_header(self) -> dict[str, str]:
+        profile = self._render_profile
+        if profile is None:
+            return {"id": _PROFILELESS_RENDERER_ID, "version": "1", "seed_domain": SEED_DOMAIN}
+        return {
+            "id": profile.renderer_id,
+            "version": profile.renderer_version,
+            "seed_domain": profile.seed_domain,
+        }
+
+    def _require_render_profile(self) -> RenderProfile:
+        if self._render_profile is None:
+            raise ValueError(_MISSING_PROFILE)
+        return self._render_profile
+
     def _checkpoint_payload(self) -> dict[str, Any]:
         self._assert_subject_current()
         snapshot = self._snapshot()
@@ -984,7 +1000,7 @@ class DrawingSession:
         return {
             "schema": SESSION_SCHEMA,
             "session_id": self.session_id,
-            "renderer": {"id": RENDERER_ID, "version": RENDERER_VERSION, "seed_domain": SEED_DOMAIN},
+            "renderer": self._renderer_header(),
             "toolset": {"id": TOOLSET_ID, "version": "1"},
             "canvas": {"width": self.width, "height": self.height},
             "subject": (
@@ -1058,15 +1074,13 @@ class DrawingSession:
                 raise
             return profile
 
-    def render_at(self, cursor: int, out: str | Path):
+    def render_at(self, cursor: int, out: str | Path) -> RenderArtifact:
         """Render one authoritative cursor through the session's bound profile."""
 
-        from .output import render_session_at
-
         with self._lock:
-            return render_session_at(self, cursor, out)
+            return render_history_at(self._agent.history, cursor, out, self._require_render_profile())
 
-    def render_final(self, out: str | Path):
+    def render_final(self, out: str | Path) -> RenderArtifact:
         """Render the latest authoritative cursor through the bound profile."""
 
         return self.render_at(self.history_cursor, out)
@@ -1077,20 +1091,33 @@ class DrawingSession:
         *,
         mode: str = "every_n",
         every_n: int = 4,
+        backend: str = "auto",
+        fps: int = 12,
+        materialize_frames: bool = False,
+        cache_dir: str | Path | None = None,
         max_pixel_work: int = 20_000_000,
         max_gif_bytes: int = 25_000_000,
         clean: bool = True,
-    ):
-        """Export action-ordered PNG frames and GIF from one history/profile."""
+    ) -> ReplayExport:
+        """Export action 0 → latest as ``timelapse.gif`` with a replay manifest.
 
-        from .output import export_session_timelapse
+        The exact incremental backend is used when eligible and ffmpeg is available;
+        otherwise every frame is rendered canonically. Either way the last frame must match
+        an independently rendered ``canonical_final.png``.
+        """
 
         with self._lock:
-            return export_session_timelapse(
-                self,
+            return export_timelapse(
+                self._agent.history,
+                self._require_render_profile(),
                 out_dir,
+                session_id=self.session_id,
                 mode=mode,
                 every_n=every_n,
+                backend=backend,
+                fps=fps,
+                materialize_frames=materialize_frames,
+                cache_dir=cache_dir,
                 max_pixel_work=max_pixel_work,
                 max_gif_bytes=max_gif_bytes,
                 clean=clean,
@@ -1697,17 +1724,13 @@ class DrawingSession:
                     raise ValueError("registration is required when subject and canvas sizes differ")
                 registration = Registration.identity((self.width, self.height))
             try:
-                profile = self._render_profile
-                if profile is None:
-                    render(snapshot, raw_path, supersample=int(supersample))
-                else:
-                    renderer_kwargs = profile.renderer_kwargs()
-                    renderer_kwargs["supersample"] = int(supersample)
-                    # Registration/ROI/measurement geometry is defined in canvas-pixel
-                    # space; the inspection sheet always renders at 1x regardless of the
-                    # profile's final output_scale.
-                    renderer_kwargs["scale"] = 1
-                    render(profile.prepared_ir(snapshot), raw_path, **renderer_kwargs)
+                profile = self._require_render_profile()
+                renderer_kwargs = profile.renderer_kwargs()
+                renderer_kwargs["supersample"] = int(supersample)
+                # Registration/ROI/measurement geometry is defined in canvas-pixel space;
+                # the inspection sheet always renders at 1x regardless of output_scale.
+                renderer_kwargs["scale"] = 1
+                render(profile.prepared_ir(snapshot), raw_path, **renderer_kwargs)
                 sheet = InspectionSheet.create(
                     subject=self.subject,
                     drawing=raw_path,

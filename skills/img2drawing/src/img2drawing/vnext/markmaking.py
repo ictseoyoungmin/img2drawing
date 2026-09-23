@@ -11,9 +11,9 @@ from copy import deepcopy
 from dataclasses import asdict, dataclass, replace
 from typing import Any, Mapping
 
-from ..core.session import sha256_obj
+from ..core.digest import sha256_obj
 from ..core.tools import ToolState, get_tool
-from ..render.presets import get_pencil_preset
+from ..render.grades import get_pencil_preset
 
 
 MARKMAKING_SCHEMA = "img2drawing.vnext.markmaking.v1"

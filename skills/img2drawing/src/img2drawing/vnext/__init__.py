@@ -12,7 +12,7 @@ from .construction import (
 )
 from .correction import CorrectionRecord, ResidualRecord
 from .completion import FINISH_RECORD_SCHEMA, FinishRecord
-from .render_profile import RENDER_PROFILE_SCHEMA, RenderProfile
+from ..render.profile import RENDER_PROFILE_SCHEMA, RenderProfile
 from .reference_authority import (
     CONSTRAINT_DISPOSITIONS,
     REFERENCE_AUTHORITY_SCHEMA,
@@ -21,12 +21,8 @@ from .reference_authority import (
     ReferenceConstraint,
     ReferenceUnavailableError,
 )
-from .output import (
-    RENDER_ARTIFACT_SCHEMA,
-    REPLAY_EXPORT_SCHEMA,
-    RenderArtifact,
-    ReplayExport,
-)
+from ..render.artifact import RENDER_ARTIFACT_SCHEMA, RenderArtifact
+from ..timelapse import REPLAY_EXPORT_SCHEMA, ReplayExport
 from .evidence import EvidencePolicy, EvidenceReadRecord, EvidenceTelemetry
 from .editing import (
     AUTHORED_ELEMENT_SCHEMA,
@@ -148,18 +144,3 @@ __all__ = [
     "retune_strokes",
     "sample_catmull_rom",
 ]
-
-# Bind the stable vNext public session/output hooks to the renderer registry only after
-# the ordinary public modules above have finished importing. This keeps the worker-facing
-# API source-opaque while making RenderProfile renderer identity authoritative at runtime.
-from .renderer_binding import bind_vnext_renderer_runtime as _bind_vnext_renderer_runtime
-
-_bind_vnext_renderer_runtime()
-del _bind_vnext_renderer_runtime
-
-# Gesture is a user-facing drawing mode, not a workflow stage. Bind it after the base intent
-# module is loaded, then refresh the exported mode tuple so public discovery stays consistent.
-from .gesture_binding import bind_gesture_intent_runtime as _bind_gesture_intent_runtime
-
-DRAWING_MODES = _bind_gesture_intent_runtime()
-del _bind_gesture_intent_runtime

@@ -1,6 +1,10 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 
+# Persisted in session checkpoints; bump only when tool preset semantics change.
+TOOLSET_ID = "atelier-core-a2"
+
+
 @dataclass(frozen=True)
 class ToolState:
     tool: str

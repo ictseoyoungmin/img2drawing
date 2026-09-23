@@ -10,7 +10,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Iterable, Mapping
 
-from ..core.session import sha256_obj
+from ..core.digest import sha256_obj
 from .intent import REFERENCE_MODES
 
 

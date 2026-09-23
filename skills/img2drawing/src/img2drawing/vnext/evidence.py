@@ -12,7 +12,7 @@ import re
 from dataclasses import dataclass, replace
 from typing import Any, Mapping, Sequence
 
-from ..core.session import sha256_obj
+from ..core.digest import sha256_obj
 
 
 EVIDENCE_MODES = ("quick", "focused", "deep")

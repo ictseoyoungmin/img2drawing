@@ -12,11 +12,11 @@ import re
 from dataclasses import dataclass, replace
 from typing import Any, Mapping, Sequence
 
-from ..core.session import sha256_obj
+from ..core.digest import sha256_obj
 
 
 REFERENCE_MODES = ("observed", "imaginative", "hybrid")
-DRAWING_MODES = ("croquis", "figure_drawing", "tonal_study", "line_study", "free_draw")
+DRAWING_MODES = ("gesture", "croquis", "figure_drawing", "tonal_study", "line_study", "free_draw")
 FINISH_INTENTS = ("pose", "subject", "form_light", "expressive")
 STYLE_PROFILES = ("pencil_loose", "graphite_academic", "graphite_tonal")
 COMPATIBILITY_INTENTS = ("full_body_croquis",)
@@ -571,6 +571,38 @@ class StyleGuide:
 
 
 _MODE_GUIDES = {
+    "gesture": ModeGuide(
+        "mode-gesture-v1",
+        "gesture",
+        (
+            "whole-pose action, support, and balance before local description",
+            "head facing and cranial-to-jaw direction",
+            "ribcage/pelvis turn, asymmetry, and width transition",
+            "major limb chains, decisive negative spaces, and prop/body anchors",
+        ),
+        (
+            "line of action and support relation",
+            "directional head volume rather than a circle symbol",
+            "specific asymmetric ribcage and pelvic masses rather than boxes or rounded blobs",
+            "connected limb chains with joint direction and width transition",
+            "selective outer envelope only where it strengthens the pose read",
+        ),
+        (
+            "facial, garment, and surface detail that does not change the gesture read",
+            "generic circle, box, bean, capsule, or polygon symbols left as finished masses",
+            "uniform contour polishing before the whole action and support read",
+        ),
+        (
+            "whole-pose readability with economical marks",
+            "reference-specific direction, asymmetry, support, and occupied volume",
+        ),
+        (
+            "Does the whole pose read without mentally borrowing missing relations from the reference?",
+            "Does the head preserve facing and jaw/profile direction instead of collapsing to a circle?",
+            "Do torso and pelvis preserve observed asymmetry and attachment directions instead of becoming a box or smooth blob?",
+            "Are both major limb chains, support, negative spaces, and decisive prop/body anchors present?",
+        ),
+    ),
     "croquis": ModeGuide(
         "mode-croquis-v2", "croquis",
         (
