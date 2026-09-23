@@ -1,4 +1,4 @@
-"""Evidence presentation/read-budget and observation telemetry primitives for vNext.
+"""Evidence presentation/read-budget and observation telemetry primitives.
 
 The policy controls inspection presentation and read budget; it never chooses a residual
 or judges artistic quality.  Telemetry counts observable work only and deliberately has
@@ -71,7 +71,7 @@ class EvidencePolicy:
         grid_count = 0 if grid is None or grid is False else 1
         if roi_count > MAX_PRIORITIZED_ROIS:
             raise ValueError(
-                f"vNext inspection permits at most {MAX_PRIORITIZED_ROIS} prioritized ROIs"
+                f"inspection permits at most {MAX_PRIORITIZED_ROIS} prioritized ROIs"
             )
         explicit_mode = None if mode is None else _text(mode, "mode").lower()
         has_guides_or_measurements = bool(guide_count or measurement_count or grid_count)

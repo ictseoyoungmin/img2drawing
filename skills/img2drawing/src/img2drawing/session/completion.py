@@ -1,4 +1,4 @@
-"""Portable Agent completion provenance for the stage-free vNext session.
+"""Portable Agent completion provenance for a drawing session.
 
 A finish record binds one Agent decision to immutable session facts. It is not a
 stage, artistic score, or PASS certificate, and it never prevents later edits.

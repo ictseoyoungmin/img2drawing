@@ -1,4 +1,4 @@
-"""Stage-free residual and correction records for the vNext session.
+"""Stage-free residual and correction records for a drawing session.
 
 The records keep the Agent's visual judgement and the session's immutable evidence
 references together.  They do not rank residuals, score images, or create a lifecycle

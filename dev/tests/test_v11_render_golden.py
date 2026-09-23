@@ -223,7 +223,7 @@ def _session_subject(tmp_path: Path) -> Path:
 
 
 def _build_session(tmp_path: Path) -> DrawingSession:
-    from img2drawing.vnext import resolve_markmaking
+    from img2drawing.authoring import resolve_markmaking
 
     session = DrawingSession.create(
         subject=_session_subject(tmp_path),

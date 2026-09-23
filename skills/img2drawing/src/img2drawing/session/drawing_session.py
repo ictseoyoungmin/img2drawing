@@ -1,10 +1,15 @@
-"""Minimal stage-agnostic session facade for the vNext workflow.
+"""``DrawingSession``: the single stage-free orchestration surface for drawing work.
 
-The facade owns session metadata and persistence, while ``AgentDrawingSession``
-and ``CanvasHistory`` remain the single authoritative drawing implementation.
-The compatibility stage below is intentionally opaque: it exists only because
-the shared legacy action/history representation still has a stage field. Public
-vNext methods never expose or branch on it.
+The session owns metadata and persistence, while ``AgentDrawingSession`` and
+``CanvasHistory`` remain the single authoritative drawing implementation. The
+compatibility stage below is intentionally opaque: it exists only because the
+history representation still has a stage field. Public methods never expose or
+branch on it.
+
+Persisted identifiers that still read ``vnext`` (checkpoint/record schemas, the
+compatibility stage, ``vnext-unobserved``, generated action ids) are data, not module
+names: checkpoint and record digests are computed over them, so they stay stable for
+sessions written by earlier releases.
 """
 
 from __future__ import annotations
@@ -47,7 +52,7 @@ from .editing import (
     resolve_current_element as _resolve_current_element,
 )
 from .intent import DrawingIntent, IntentChangeRecord, ModeGuide, resolve_mode_guide
-from .reference_authority import (
+from .reference import (
     ReferenceAuthority,
     ReferenceUnavailableError,
 )
@@ -115,7 +120,7 @@ def _tool_payload(tool: str | Mapping[str, Any], grade: str | None, overrides: M
 
 
 class DrawingSession:
-    """The minimal vNext drawing session.
+    """One drawing: authored history plus the evidence and provenance around it.
 
     ``CanvasHistory`` is authoritative. The public facade exposes only drawing
     capabilities and portable lifecycle state; it has no current stage, stage
@@ -258,7 +263,7 @@ class DrawingSession:
         )
         selected_profile.validate_canvas(width, height)
         session = cls(
-            session_id=session_id or f"vnext-{uuid.uuid4().hex[:12]}",
+            session_id=session_id or f"session-{uuid.uuid4().hex[:12]}",
             subject=subject_path,
             output_dir=output,
             agent_session=AgentDrawingSession(width, height, metadata={"vnext": True}),
@@ -293,7 +298,7 @@ class DrawingSession:
         checkpoint_path = Path(checkpoint)
         payload = json.loads(checkpoint_path.read_text(encoding="utf-8"))
         if payload.get("schema") != SESSION_SCHEMA:
-            raise ValueError(f"unsupported vNext session schema: {payload.get('schema')!r}")
+            raise ValueError(f"unsupported session checkpoint schema: {payload.get('schema')!r}")
         renderer = payload.get("renderer") or {}
         raw_render_profile = payload.get("render_profile")
         render_profile = (
@@ -314,7 +319,7 @@ class DrawingSession:
                 raise ValueError("checkpoint renderer header does not match RenderProfile")
         toolset = payload.get("toolset") or {}
         if toolset.get("id") != TOOLSET_ID or str(toolset.get("version")) != "1":
-            raise ValueError("vNext toolset identity/version mismatch")
+            raise ValueError("checkpoint toolset identity/version mismatch")
 
         subject_record = payload.get("subject")
         if subject_record is None:
@@ -452,7 +457,7 @@ class DrawingSession:
     def _stage_free_projection(ir: StrokeIR) -> StrokeIR:
         projection = deepcopy(ir)
         for stroke in projection.strokes:
-            # The legacy stage slot is compatibility provenance, not vNext state.
+            # The legacy stage slot is compatibility provenance, not session state.
             stroke.stage = None
         return projection
 
@@ -1060,7 +1065,11 @@ class DrawingSession:
                 raise
 
     def migrate_render_profile(self) -> RenderProfile:
-        """Explicitly attach the canonical profile to a pre-B11 vNext checkpoint."""
+        """Explicitly bind the current renderer to a checkpoint written before RenderProfile.
+
+        The result is not an exact replay of the original pixels; that requires the
+        release the checkpoint was written with.
+        """
 
         with self._lock:
             if self._render_profile is not None:
@@ -1147,7 +1156,7 @@ class DrawingSession:
             elif str(observation_id) not in known_observations:
                 raise ValueError(f"unknown observation_id: {observation_id}")
         if source_observation is None:
-            source_observation = "agent-authored vNext drawing action"
+            source_observation = "agent-authored drawing action"
         return str(observation_id), str(source_observation), None if reason is None else str(reason)
 
     def _draw_action(
@@ -2019,7 +2028,7 @@ def _portable_artifact(path: Path, root: Path) -> str:
     try:
         return path.resolve().relative_to(root.resolve()).as_posix()
     except ValueError as exc:
-        raise ValueError("vNext inspection artifacts must live under the session output directory") from exc
+        raise ValueError("inspection artifacts must live under the session output directory") from exc
 
 
 def _relative_reference(path: Path, base: Path) -> str:

@@ -20,7 +20,7 @@ from typing import Any, Mapping, Sequence
 
 from ..core.digest import sha256_obj
 from ..inspection import GroundGuide, Grid, PlumbLine, ROI, Registration
-from .session import DrawingSession
+from ..session.drawing_session import DrawingSession
 
 
 CONSTRUCTION_PHASES = (

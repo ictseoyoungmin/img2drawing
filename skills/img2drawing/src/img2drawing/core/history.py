@@ -512,7 +512,7 @@ class CanvasHistory:
             stroke_payload = payload.get("stroke")
             if isinstance(stroke_payload, dict):
                 if stroke_payload.get("pressure") is not None and stroke_payload.get("tool_state") is not None:
-                    # Pre-B07-R1 vNext persisted both derived pressure and tool state
+                    # Pre-B07-R1 sessions persisted both derived pressure and tool state
                     # inline. Keep this only as transient compatibility evidence.
                     legacy_inline_pressure = True
             actions.append(

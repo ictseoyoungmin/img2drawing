@@ -1,4 +1,4 @@
-"""Portable reference-authority records for one shared vNext session.
+"""Portable reference-authority records for one drawing session.
 
 Authority describes what the Agent may compare the current drawing against. It
 does not score the comparison, choose a residual, or create a mode pipeline.

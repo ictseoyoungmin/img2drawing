@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
-RUNTIME_CAPABILITY_SCHEMA = "img2drawing.runtime.capabilities.v1"
+RUNTIME_CAPABILITY_SCHEMA = "img2drawing.runtime.capabilities.v2"
 
 
 @dataclass(frozen=True)
@@ -25,9 +25,10 @@ class RuntimeCapabilities:
     capability_gap_policy: str = "report-not-bypass"
     public_namespaces: tuple[str, ...] = (
         "img2drawing",
-        "img2drawing.vnext",
+        "img2drawing.authoring",
         "img2drawing.inspection",
         "img2drawing.observation",
+        "img2drawing.session",
         "img2drawing.runtime",
     )
     supported_authoring_operations: tuple[str, ...] = (
@@ -39,6 +40,12 @@ class RuntimeCapabilities:
         "render",
         "replay",
         "timelapse",
+    )
+    output_entrypoints: tuple[str, ...] = (
+        "DrawingSession.inspect",
+        "DrawingSession.render_final",
+        "DrawingSession.render_at",
+        "DrawingSession.export_timelapse",
     )
     markmaking_contract: str = "semantic-role -> public tool preset -> resolved authored state"
     prohibited_final_authoring_bypasses: tuple[str, ...] = (
@@ -58,6 +65,7 @@ class RuntimeCapabilities:
             "capability_gap_policy": self.capability_gap_policy,
             "public_namespaces": list(self.public_namespaces),
             "supported_authoring_operations": list(self.supported_authoring_operations),
+            "output_entrypoints": list(self.output_entrypoints),
             "markmaking_contract": self.markmaking_contract,
             "prohibited_final_authoring_bypasses": list(self.prohibited_final_authoring_bypasses),
         }
