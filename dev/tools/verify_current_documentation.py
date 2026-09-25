@@ -19,12 +19,10 @@ def _text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def _current_package_identity(version_text: str) -> tuple[str, str]:
+def _current_package_version(version_text: str) -> str:
     version_match = re.search(r'^__version__ = "([^"]+)"$', version_text, flags=re.MULTILINE)
-    revision_match = re.search(r'^RELEASE_REVISION = "([^"]+)"$', version_text, flags=re.MULTILINE)
     assert version_match, "current package version declaration missing"
-    assert revision_match, "current release revision declaration missing"
-    return version_match.group(1), revision_match.group(1)
+    return version_match.group(1)
 
 
 def _updated_date(text: str, name: str) -> str:
@@ -84,11 +82,18 @@ def main() -> None:
     migration = _text(RELEASE / "MIGRATION.md")
     frozen_v102 = json.loads(_text(RELEASE / "CONTRACT_FREEZE.json"))
 
-    package_version, release_revision = _current_package_identity(version)
+    package_version = _current_package_version(version)
     is_rc = re.fullmatch(r"1\.0\.3rc\d+", package_version) is not None
-    is_stable = package_version == "1.0.3"
+    # 1.1.0.devN is unreleased development on main after the published v1.0.3 baseline;
+    # every v1.0.3 historical fact below must still hold.
+    is_dev = re.fullmatch(r"1\.1\.0\.dev\d+", package_version) is not None
+    is_stable = package_version == "1.0.3" or is_dev
     assert is_rc or is_stable, package_version
-    assert re.fullmatch(r"A\d+", release_revision), release_revision
+
+    if is_dev:
+        assert "## Unreleased" in changelog and "No public changes have been queued" not in changelog
+        assert f"CURRENT SOURCE:     {package_version}" in status
+        assert "**Current stable: v1.0.3**" in root_readme
 
     v103_manifest = PUBLISH / "v1.0.3.json"
     v103_release_intent = v103_manifest.is_file()
@@ -102,7 +107,6 @@ def main() -> None:
         assert "v1.0.2 remains latest published stable" in status
         assert not v103_release_intent
     else:
-        assert release_revision == "A14"
         assert "## v1.0.3" in changelog
         stable_freeze = json.loads(_text(RELEASE / "CONTRACT_FREEZE_V1_0_3.json"))
         assert stable_freeze["freeze_id"] == "v1.0.3-A14-2026-09-13"
@@ -131,7 +135,7 @@ def main() -> None:
                     assert "S02 INSTRUCTIONS:   CLOSED" in status
                     assert "S03.1 RERUN:        READY / NOT_RUN" in status
                     assert "S04 CLASSIFICATION: ACTIVE / PARTIAL" in status
-                    assert "CURRENT RENDERER:   pillow-pencil-contact-v11/1" in status
+                    assert "CURRENT RENDERER:   img2drawing-pencil/11" in status
                     assert "RENDERER POLICY:    no additive v12" in status
                     assert "PACKAGE VERSION:    no new RC/version authorized" in status
                     assert "v1.0.3" in status and "latest published stable" in status

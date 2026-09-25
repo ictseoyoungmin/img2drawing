@@ -10,7 +10,7 @@ import pytest
 from PIL import Image, ImageDraw
 
 from img2drawing.inspection import Registration
-from img2drawing.vnext import DrawingSession
+from img2drawing.session import DrawingSession
 
 
 def _subject(tmp_path: Path) -> Path:
@@ -31,7 +31,7 @@ def test_vnext_import_does_not_load_legacy_stage_workflow():
     source_root = str(Path(__file__).parents[2] / "skills" / "img2drawing" / "src")
     code = """
 import sys
-from img2drawing.vnext import DrawingSession
+from img2drawing.session import DrawingSession
 assert DrawingSession.__name__ == 'DrawingSession'
 assert 'img2drawing.run' not in sys.modules
 assert 'img2drawing.stages' not in sys.modules

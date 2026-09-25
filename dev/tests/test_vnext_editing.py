@@ -7,7 +7,7 @@ import pytest
 from PIL import Image
 
 from img2drawing import DrawingSession
-from img2drawing.vnext import AuthoredElement
+from img2drawing.session import AuthoredElement
 
 
 def _subject(tmp_path: Path) -> Path:

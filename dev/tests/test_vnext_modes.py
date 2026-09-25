@@ -7,15 +7,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from img2drawing import (
-    DRAWING_MODES,
-    DrawingIntent,
-    DrawingSession,
-    ModeGuide,
-    ReferenceAuthority,
-    ReferenceConstraint,
-    resolve_mode_guide,
-)
+from img2drawing import DrawingIntent, DrawingSession, ReferenceAuthority, ReferenceConstraint
+from img2drawing.session import DRAWING_MODES, ModeGuide, resolve_mode_guide
 
 
 EXPECTED_MODES = (

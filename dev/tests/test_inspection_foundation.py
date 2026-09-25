@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageChops
 
-from img2drawing import Stroke, StrokeIR
+from img2drawing.core import Stroke, StrokeIR
 from img2drawing.inspection import (
     GroundGuide,
     Grid,

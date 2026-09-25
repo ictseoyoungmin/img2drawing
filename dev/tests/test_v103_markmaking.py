@@ -6,14 +6,7 @@ import pytest
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession
-from img2drawing.vnext import (
-    MATERIAL_POLICIES,
-    SEMANTIC_STROKE_ROLES,
-    TOOL_PRESETS,
-    material_policy_for_style,
-    resolve_mark_for_intent,
-    resolve_markmaking,
-)
+from img2drawing.authoring import MATERIAL_POLICIES, SEMANTIC_STROKE_ROLES, TOOL_PRESETS, material_policy_for_style, resolve_mark_for_intent, resolve_markmaking
 
 
 def _subject(tmp_path: Path) -> Path:

@@ -1,0 +1,22 @@
+{
+  "_environment": {
+    "numpy": "2.2.6",
+    "pillow": "12.3.0"
+  },
+  "render/fixture-croquis-sniper-girl": "7f2104acb8dd46c73ce7ccbddfd2570dd21267c3e16c6a463833915e094754cf",
+  "render/fixture-s10-quality-run": "8077a84917d5a03acc4704e55e1ff5d4075d2143e737355f65330e8d3694430a",
+  "render/synthetic-colors-grade": "bcacc88daeb99aa79ded6b95489fbede4f08458ac6948c2cbcf49b0ce18b3394",
+  "render/synthetic-default-ss4": "e877994c117686c9b33c527fe0bdefb30b39f93afdea98909d4406088b23d4e7",
+  "render/synthetic-no-tooth": "7c8748f54db91008fd184c51b28f903ed8c417e4b1ec6f02da66ce021ae35bad",
+  "render/synthetic-paper": "11d675359ae24540dba80d25cd5a590eaae137a9e1b200c9925adcae71cce593",
+  "render/synthetic-scale2": "f47d63e6f97895a473a8f56396a9d9444b3636f7928a00dc6a37c69b4dae9062",
+  "render/synthetic-ss2": "e2aa484a48b5fbc27b9acfd9e535e706d39a295b64ad325438eb03497b8e8358",
+  "render/synthetic-ss8": "5ead62dca25186d43f0b0625a2b6d87c6f851eb236040563a5626d0c2e2c8f61",
+  "session/final": "32d49f06a94b31228b9aeebaeb78f8f29badc55f664152b5d07e389186046130",
+  "session/inspect-raw": "7b9eed1812775f612ed3f930c723c21a6948a1a0f970432c946f6bed4805694f",
+  "session/mid": "a24fde190c4c8e5fd000c56d2a282a83763a16dfb9b5d93011d3fee4225230a7",
+  "session/timelapse-canonical-final": "32d49f06a94b31228b9aeebaeb78f8f29badc55f664152b5d07e389186046130",
+  "session/timelapse-canonical-frames": "de924f42cf0525744a66622c96e87221111954fcd92b1975d6622e2349e842ac",
+  "session/timelapse-fast-frames": "9032b3cd1334c2811135a355339313c573035170a2ff9142da5ea70047f49412",
+  "session/timelapse-final": "32d49f06a94b31228b9aeebaeb78f8f29badc55f664152b5d07e389186046130"
+}

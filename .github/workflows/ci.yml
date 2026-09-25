@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+      - name: Install ffmpeg for the fast timelapse backend
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       - name: Install runtime and test dependencies
         run: python -m pip install -e 'skills/img2drawing[dev]'
       - name: Verify repository and package invariants
@@ -31,7 +33,9 @@ jobs:
         run: |
           python -m pytest -q \
             dev/tests/test_runtime_physical_isolation.py \
-            dev/tests/test_fast_timelapse_release_contract.py
+            dev/tests/test_render_contract.py \
+            dev/tests/test_timelapse.py \
+            dev/tests/test_v11_render_golden.py
       - name: Verify skill instruction graph reachability
         run: python dev/tools/verify_instruction_graph.py
       - name: Verify S03 dogfood evidence harness

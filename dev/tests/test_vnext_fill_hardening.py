@@ -10,8 +10,8 @@ from PIL import Image
 import img2drawing
 from img2drawing import DrawingSession, PoseObservation
 from img2drawing.core import AgentDrawingSession
-from img2drawing.core.session import sha256_obj
-from img2drawing.vnext import ELEMENT_TYPES
+from img2drawing.core.digest import sha256_obj
+from img2drawing.session import ELEMENT_TYPES
 
 
 def _subject(tmp_path: Path) -> Path:

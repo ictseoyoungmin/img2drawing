@@ -114,7 +114,7 @@ print(json.dumps({
 }))
 """
     )
-    assert payload["drawing_session_module"] == "img2drawing.vnext.session"
+    assert payload["drawing_session_module"] == "img2drawing.session.drawing_session"
     assert not any(payload["retired_loaded"].values())
 
 
@@ -160,7 +160,7 @@ print(json.dumps({
 
 
 def test_canonical_session_source_has_no_retired_cluster_imports() -> None:
-    source = (PACKAGE / "vnext" / "session.py").read_text(encoding="utf-8")
+    source = (PACKAGE / "session" / "drawing_session.py").read_text(encoding="utf-8")
     for forbidden in (
         "from ..stages",
         "from ..exemplar",

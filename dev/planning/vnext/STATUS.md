@@ -1,17 +1,20 @@
 # img2drawing current status
 
-Updated: 2026-09-15
+Updated: 2026-09-23
 
 ```text
 PUBLISHED STABLE:   v1.0.3 · DrawingSession/1.0.3-vnext · A14
 RELEASE TAG:        v1.0.3 → d6151ba8dfef8dc37ef5cddd24c2c6c974d53976
-CURRENT RENDERER:   pillow-pencil-contact-v11/1
+CURRENT SOURCE:     1.1.0.dev0 · R1 structural refactor (unreleased)
+CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
 ACTIVE BOTTLENECK:  S03 · fresh-worker visual dogfood
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; behavioral proof remains in S03.1
 S03.1 RERUN:        READY / NOT_RUN · initial batch remains BLOCKED until clean fresh-worker rerun
 S04 CLASSIFICATION: ACTIVE / PARTIAL · S03.1 classified; renderer-owned blocker count = 0
+R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
+S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
 PACKAGE VERSION:    no new RC/version authorized before integrated validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
@@ -93,24 +96,37 @@ clean S03.1 rerun                                         NEXT within the active
 
 The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the next validation target is the isolated clean S03.1 fresh-worker rerun.
 
-## Renderer/replay direction
+## Renderer/replay boundary (S05, closed by R1)
 
-Before current-v11 pixel behavior is intentionally changed, persisted render identity must become capable of binding:
+Persisted render identity now binds:
 
 ```text
-renderer_id
-renderer_version
-renderer_contract_digest
+renderer_id              img2drawing-pencil
+renderer_version         11
+renderer_contract_digest RenderProfile v2 field; exact pixel-behavior identity
 ```
 
-Target replay rule:
+Replay rule in current source:
 
-- family/version/digest match → exact replay eligible;
-- same family/version with digest mismatch → fail closed or require explicit migration;
-- a legacy session without a digest remains loadable under an explicitly non-exact current-source policy;
-- published `v1.0.3` package/tag/freeze remains canonical authority for its original v11 behavior.
+- identity + digest match → exact;
+- v1.0.3 `pillow-pencil-contact-v11 / 1` profiles (no digest) → accepted as the current contract; the v11 golden proves pixel identity;
+- foreign digest, `v9`/`v10`, unknown identity, or retired `region.*` history → fail closed with a pointer to `img2drawing==1.0.3`;
+- profile-less checkpoints resume and render only after an explicit `migrate_render_profile()`;
+- published `v1.0.3` package/tag/freeze remains canonical authority for its original behavior.
 
-Historical implementation accumulation in active `src` is not the long-term replay strategy.
+Current `src` carries one renderer. Historical renderer implementations live in Git history and published releases, not in active source.
+
+## R1 structural refactor (1.1.0.dev0)
+
+R1 changed structure, not drawing semantics or pixels:
+
+- `img2drawing.vnext` → `img2drawing.session` (DrawingSession + records) and `img2drawing.authoring` (markmaking, retune, curves, construction facade);
+- nine generation-layered `render/pillow_*` modules + registry/dispatch/binding monkey-patches → `img2drawing.render` (`contract`, `paper`, `hand`, `grades`, `deposit`, `eraser`, `pencil`, `profile`, `artifact`);
+- `provenance/timelapse.py` (legacy v9 exporter that fresh workers kept selecting) and `provenance/fast_timelapse/` → `img2drawing.timelapse` with one `export_timelapse()` behind `DrawingSession.export_timelapse()`;
+- removed: `core/session.py`, `core/fill.py`, root compat shims, gesture/renderer runtime bindings, v9-calibrated `tone_scale`, orphan `line_weight`/`scale_guidance`;
+- fixed: a v1.0.3 crash when a broad stroke's mask was empty (e.g. clipped by the canvas edge).
+
+Persisted `img2drawing.vnext.*` schema strings and ids are unchanged data so earlier checkpoints and digests still resume. The S03.1 clean-rerun packet still names its pre-R1 skill baseline; re-pin it to post-R1 main before running.
 
 ## Stable release authority
 

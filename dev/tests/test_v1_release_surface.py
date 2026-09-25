@@ -33,7 +33,6 @@ def test_v102_manifest_remains_historical_authority_as_v103_publish_intent_opens
         "assets": [],
     }
     assert (ROOT / v103["notes_file"]).is_file()
-    assert img2drawing.__version__ == "1.0.3"
 
 
 def test_historical_v100_demo_manifest_and_real_assets_remain_available() -> None:
@@ -73,12 +72,15 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
     assert "import img2drawing" not in workflow
 
 
-def test_stable_identity_has_explicit_publish_manifest_at_final_publish_gate() -> None:
-    assert img2drawing.__version__ == "1.0.3"
-    manifest = _manifest("1.0.3")
-    assert manifest["tag"] == f"v{img2drawing.__version__}"
-    assert manifest["package_dir"] == "skills/img2drawing"
-    assert manifest["notes_file"] == "docs/releases/v1.0.3.md"
+def test_unreleased_development_version_has_no_publish_manifest() -> None:
+    version = img2drawing.__version__
+    manifest = PUBLISH / f"v{version}.json"
+    if ".dev" in version:
+        # A development version must never trigger the publish workflow.
+        assert not manifest.exists()
+        assert sorted(p.stem for p in PUBLISH.glob("v*.json"))[-1] == "v1.0.3"
+    else:
+        assert json.loads(manifest.read_text(encoding="utf-8"))["tag"] == f"v{version}"
 
 
 def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:

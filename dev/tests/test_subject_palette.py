@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from img2drawing import SubjectPalette
+from img2drawing.observation import SubjectPalette
 
 GARMENT = (22, 25, 32)      # near-black jacket
 SKIN = (167, 143, 137)      # warm

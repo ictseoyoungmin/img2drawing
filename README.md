@@ -14,6 +14,8 @@
 
 > v1.0.3 is the current published stable release. It promotes gesture/runtime alignment and the broad-pencil renderer quality work from the rc1–rc3 cycle while preserving explicit historical replay for v9/1 and v10/1 sessions. See [the v1.0.3 release notes](docs/releases/v1.0.3.md) and [CHANGELOG.md](CHANGELOG.md).
 
+> `main` carries unreleased **1.1.0** development: the same drawings and pixels with a restructured import surface (`img2drawing.session`, `img2drawing.authoring`) and one timelapse exporter. See the Unreleased section of [CHANGELOG.md](CHANGELOG.md).
+
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
 image.
@@ -79,8 +81,9 @@ not an API guarantee.
 v1.0.1 absorbs reusable mechanics exposed by the successful Astra run without copying its
 subject-specific coordinates, scripts, control-point tables, or answer geometry:
 
-- `img2drawing.vnext.retune_stroke()` changes stroke material while preserving authored geometry;
-- `img2drawing.vnext.sample_catmull_rom()` provides deterministic shared smooth-curve sampling;
+- `retune_stroke()` changes stroke material while preserving authored geometry;
+- `sample_catmull_rom()` provides deterministic shared smooth-curve sampling (both in
+  `img2drawing.authoring` since 1.1.0);
 - `continuous_pencil` provides a low-taper option for boundaries whose endpoints should read as
   continuous, while `form_pencil` remains unchanged;
 - guidance now separates geometry residuals from material residuals and groups related edits by

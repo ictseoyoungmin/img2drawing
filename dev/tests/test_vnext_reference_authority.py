@@ -7,16 +7,8 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing import (
-    DrawingIntent,
-    DrawingSession,
-    ReferenceAuthority,
-    ReferenceConstraint,
-    ReferenceUnavailableError,
-    Measurement,
-    Registration,
-    ROI,
-)
+from img2drawing import DrawingIntent, DrawingSession, ReferenceAuthority, ReferenceConstraint, ReferenceUnavailableError
+from img2drawing.inspection import Measurement, Registration, ROI
 
 
 def _subject(tmp_path: Path) -> Path:

@@ -6,20 +6,8 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing import (
-    ConstructionMark,
-    DrawingSession,
-    GroundGuide,
-    Grid,
-    InitialConstruct,
-    PlumbLine,
-    PoseObservation,
-    ROI,
-    Registration,
-    author_initial_construct,
-    inspect_initial_construct,
-    observe_pose,
-)
+from img2drawing import ConstructionMark, DrawingSession, InitialConstruct, PoseObservation, author_initial_construct, inspect_initial_construct, observe_pose
+from img2drawing.inspection import GroundGuide, Grid, PlumbLine, ROI, Registration
 
 
 def _subject(tmp_path: Path) -> Path:

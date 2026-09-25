@@ -66,17 +66,14 @@ def check_contract_snapshot() -> None:
     assert frozen["ownership"]["legacy_namespace"] == "img2drawing.legacy.r23"
 
     # Current source is allowed to move forward. B18 verifies that today's canonical profile
-    # agrees with today's registry and is not the frozen v9 release authority; it deliberately
-    # does not pin a later RC renderer generation.
+    # agrees with today's renderer and is not the frozen v9 release authority; it deliberately
+    # does not pin a later renderer generation.
     import img2drawing
-    from img2drawing._version import PUBLIC_API, RELEASE_REVISION
-    from img2drawing.render.renderer_registry import current_renderer
-    from img2drawing.vnext.render_profile import RenderProfile
+    from img2drawing import RenderProfile
+    from img2drawing.render import RENDERER_ID, RENDERER_VERSION
 
     assert img2drawing.__version__ != frozen["package_version"]
-    assert PUBLIC_API != frozen["public_api"]
-    assert RELEASE_REVISION != frozen["release_revision"]
-    current = current_renderer().identity
+    current = (RENDERER_ID, RENDERER_VERSION)
     profile = RenderProfile.canonical(96, 72)
     assert (profile.renderer_id, profile.renderer_version) == current
     assert current != (historical_profile["renderer_id"], str(historical_profile["renderer_version"]))

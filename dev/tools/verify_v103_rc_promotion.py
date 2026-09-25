@@ -50,34 +50,22 @@ def main() -> None:
     measured_commit = payload["measured_commit"]
     assert _git("show", "-s", "--format=%T", measured_commit) == payload["measured_tree"]
 
-    immutable_same_paths = [
+    # The RC1 renderer sources are verified at the measured commit. Current main no longer
+    # carries v9/v10 replay (retired in 1.1.0 development); v1.0.3 remains their authority.
+    for path in (
         "skills/img2drawing/src/img2drawing/provenance/fast_timelapse",
         "skills/img2drawing/src/img2drawing/render/renderer_dispatch.py",
         "skills/img2drawing/src/img2drawing/vnext/render_profile.py",
         "skills/img2drawing/src/img2drawing/vnext/renderer_binding.py",
-    ]
-    subprocess.run(
-        ["git", "diff", "--quiet", measured_commit, "HEAD", "--", *immutable_same_paths],
-        cwd=ROOT,
-        check=True,
-    )
-    renamed_immutable_paths = {
-        "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_v10.py":
-            "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_core.py",
-        "skills/img2drawing/src/img2drawing/render/v10_value_authority.py":
-            "skills/img2drawing/src/img2drawing/render/pencil_value_authority.py",
-    }
-    for historical_path, current_path in renamed_immutable_paths.items():
-        assert _blob(measured_commit, historical_path) == _blob("HEAD", current_path)
-
+        "skills/img2drawing/src/img2drawing/render/pillow_pencil_contact_v10.py",
+        "skills/img2drawing/src/img2drawing/render/v10_value_authority.py",
+    ):
+        _blob(measured_commit, path)
     historical_contracts = _git_show(measured_commit, CONTRACTS)
-    current_contracts = (ROOT / CONTRACTS).read_text(encoding="utf-8")
-    assert _assignment_block(current_contracts, "V10_CONTRACT") == _assignment_block(historical_contracts, "V10_CONTRACT")
-
-    from img2drawing.render.renderer_registry import registered_renderer_identities
-    identities = set(registered_renderer_identities())
-    assert ("pillow-pencil-contact-v9", "1") in identities
-    assert ("pillow-pencil-contact-v10", "1") in identities
+    v10_contract = _assignment_block(historical_contracts, "V10_CONTRACT")
+    assert 'renderer_id="pillow-pencil-contact-v10"' in v10_contract
+    tagged_contracts = _git_show("v1.0.3", CONTRACTS)
+    assert _assignment_block(tagged_contracts, "V10_CONTRACT") == v10_contract
 
     fixture = payload["fixture"]
     assert fixture["actions"] == 1272

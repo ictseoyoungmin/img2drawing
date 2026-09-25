@@ -1,4 +1,4 @@
-"""Stage-free inspection foundation for the vNext workflow."""
+"""Stage-free inspection: registration, measurement, inspection sheets, and WIP guide views."""
 
 from .measure import (
     angle,

@@ -187,6 +187,15 @@ def _replay_segment_soft_lift(stroke: Stroke, action: CanvasAction) -> Stroke:
     return out.cleaned()
 
 
+def unsupported_action_error(action: str) -> ValueError:
+    if str(action).startswith("region."):
+        return ValueError(
+            f"unsupported replay action: {action}; region-fill authoring was retired after "
+            "img2drawing 1.0.3 — replay this history with img2drawing==1.0.3"
+        )
+    return ValueError(f"unsupported replay action: {action}")
+
+
 class CanvasHistory:
     """Replayable authoritative drawing history.
 
@@ -472,7 +481,7 @@ class CanvasHistory:
             elif item.action == "snapshot":
                 pass
             else:
-                raise ValueError(f"unsupported replay action: {item.action}")
+                raise unsupported_action_error(item.action)
         ir = StrokeIR(self.width, self.height, metadata={**self.metadata, "history_cursor": limit})
         if self._legacy_inline_pressure:
             # Inspection hashing uses this transient signal only to reproduce a genuine
@@ -503,7 +512,7 @@ class CanvasHistory:
             stroke_payload = payload.get("stroke")
             if isinstance(stroke_payload, dict):
                 if stroke_payload.get("pressure") is not None and stroke_payload.get("tool_state") is not None:
-                    # Pre-B07-R1 vNext persisted both derived pressure and tool state
+                    # Pre-B07-R1 sessions persisted both derived pressure and tool state
                     # inline. Keep this only as transient compatibility evidence.
                     legacy_inline_pressure = True
             actions.append(

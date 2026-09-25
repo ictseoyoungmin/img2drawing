@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 import img2drawing
-from img2drawing import DrawingSession, PoseObservation, available_values, resolve_tone
+from img2drawing import DrawingSession, PoseObservation
 from img2drawing.core import AgentDrawingSession, DrawingAction
 from img2drawing.core.history import CanvasAction, CanvasHistory
 
@@ -67,15 +67,6 @@ def test_retired_region_history_fails_closed_in_current_runtime():
         history.state_at()
 
 
-def test_tone_scale_remains_available_without_region_authoring():
-    values = available_values()
-    assert list(values) == sorted(values, reverse=True)
-    assert min(values) <= 40
-    assert resolve_tone(120).measured == pytest.approx(120.0, abs=12)
-    with pytest.raises(ValueError):
-        resolve_tone(-1)
-
-
 def test_derived_pressure_is_not_persisted_but_is_restored(tmp_path, subject):
     session = _session(tmp_path, subject)
     session.draw([(10, 10), (60, 60), (120, 30)], part="axis", observation_id="observation-0001")
@@ -109,8 +100,8 @@ def test_tool_state_is_stored_once_per_action(tmp_path, subject):
 
 
 def test_legacy_inline_pressure_stroke_history_still_loads(tmp_path, subject):
-    from img2drawing import drawing_state_hash
-    from img2drawing.core.session import sha256_obj
+    from img2drawing.core.digest import sha256_obj
+    from img2drawing.inspection import drawing_state_hash
 
     session = _session(tmp_path, subject)
     session.draw([(10, 10), (60, 60), (120, 30)], part="axis", observation_id="observation-0001")

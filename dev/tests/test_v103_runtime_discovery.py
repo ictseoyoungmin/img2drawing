@@ -25,7 +25,10 @@ def test_manifest_exposes_public_authoring_not_private_implementation() -> None:
     assert "inspect" in caps.supported_authoring_operations
     assert "replay" in caps.supported_authoring_operations
     assert "timelapse" in caps.supported_authoring_operations
-    assert "img2drawing.vnext" in caps.public_namespaces
+    assert "img2drawing.authoring" in caps.public_namespaces
+    assert "img2drawing.session" in caps.public_namespaces
+    assert "img2drawing.vnext" not in caps.public_namespaces
+    assert "DrawingSession.export_timelapse" in caps.output_entrypoints
     assert "img2drawing.runtime" in caps.public_namespaces
     assert all("._" not in name for name in caps.public_namespaces)
 

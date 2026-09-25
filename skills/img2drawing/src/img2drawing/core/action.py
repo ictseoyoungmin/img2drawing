@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-import hashlib
-import json
 from copy import deepcopy
-from dataclasses import asdict, dataclass, replace
-from pathlib import Path
+from dataclasses import dataclass, replace
 from typing import Any, Iterable
 
 from .history import CanvasHistory
 from .ir import Stroke, StrokeIR
-from ..render.presets import get_pencil_preset
+from ..render.grades import get_pencil_preset
 from .stroke import tool_stroke
 from .tools import ToolState, get_tool
 
@@ -22,14 +19,6 @@ TOOL_OVERRIDE_FIELDS = {
     "width", "pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter",
     "erase_strength",
 }
-
-
-def sha256_file(path: str | Path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for block in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(block)
-    return h.hexdigest()
 
 
 @dataclass(frozen=True)
@@ -367,11 +356,6 @@ class AgentDrawingSession:
         self.executed_action_ids.add(action.action_id)
         return result
 
-    def to_drawing_session(self, *, session_id: str = "img2drawing-run", metadata: dict[str, Any] | None = None):
-        """Return the supported persisted-session bridge for replay/timelapse export."""
-        from .session import DrawingSession
-        return DrawingSession.from_agent_session(self, session_id=session_id, metadata=metadata)
-
     def transaction(self, label: str | None = None):
         return _DrawingTransaction(self, label=label)
 
@@ -393,45 +377,3 @@ class AgentDrawingSession:
             "history": self.history.to_dict(),
             "executed_action_ids": sorted(self.executed_action_ids),
         }
-
-
-def load_drawing_plan(plan: str | Path | dict[str, Any], *, expected_width: int | None = None,
-                      expected_height: int | None = None, source_path: str | Path | None = None) -> dict[str, Any]:
-    if isinstance(plan, (str, Path)):
-        payload = json.loads(Path(plan).read_text(encoding="utf-8"))
-    else:
-        payload = deepcopy(plan)
-    if payload.get("schema") not in {None, "img2drawing.drawing_plan.v1"}:
-        raise ValueError(f"unsupported drawing plan schema: {payload.get('schema')!r}")
-    canvas = payload.get("canvas") or {}
-    if expected_width is not None and int(canvas.get("width", -1)) != int(expected_width):
-        raise ValueError("drawing plan width does not match source")
-    if expected_height is not None and int(canvas.get("height", -1)) != int(expected_height):
-        raise ValueError("drawing plan height does not match source")
-    if source_path is not None:
-        expected_hash = (payload.get("source") or {}).get("sha256")
-        if expected_hash and str(expected_hash).lower() != sha256_file(source_path).lower():
-            raise ValueError("drawing plan source sha256 does not match input")
-    actions = payload.get("actions")
-    if not isinstance(actions, list) or not actions:
-        raise ValueError("drawing plan requires non-empty actions")
-    ids: set[str] = set()
-    for raw in actions:
-        a = DrawingAction.from_dict(raw)
-        if a.action_id in ids:
-            raise ValueError(f"duplicate action_id in plan: {a.action_id}")
-        ids.add(a.action_id)
-    return payload
-
-
-def build_agent_drawing_ir(width: int, height: int, plan: str | Path | dict[str, Any], *,
-                           source_path: str | Path | None = None) -> tuple[StrokeIR, AgentDrawingSession]:
-    payload = load_drawing_plan(plan, expected_width=width, expected_height=height, source_path=source_path)
-    session = AgentDrawingSession(width, height, metadata={
-        "mode": "pencil",
-        "plan_schema": "img2drawing.drawing_plan.v1",
-        "source": deepcopy(payload.get("source") or {}),
-        "paper": deepcopy(payload.get("paper") or {}),
-    })
-    session.execute_many(payload["actions"])
-    return session.current_ir(), session

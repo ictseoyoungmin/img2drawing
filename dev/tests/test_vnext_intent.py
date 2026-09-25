@@ -6,15 +6,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from img2drawing.vnext import (
-    DrawingIntent,
-    DrawingSession,
-    IntentProvenance,
-    StyleGuide,
-    compatibility_intent,
-    resolve_mode_guide,
-    resolve_style_guide,
-)
+from img2drawing.session import DrawingIntent, DrawingSession, IntentProvenance, StyleGuide, compatibility_intent, resolve_mode_guide, resolve_style_guide
 
 
 def _subject(tmp_path: Path) -> Path:
