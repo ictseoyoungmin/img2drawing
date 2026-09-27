@@ -49,7 +49,7 @@ R1 1.1 structural refactor (session/authoring/render/timelapse)  CLOSED · pixel
 S05 contract-digest / replay-boundary migration         CLOSED by R1 · digest persisted in RenderProfile v2
 S06 current-v11 renderer correction if proven           SKIPPED · no defect selected
 S07 mechanical release validation                       CLOSED · main CI 36327459040 passed
-S08 choose next package version / release candidate     CLOSED → v1.1.0 release manifest staged
+S08 choose next package version / release candidate     CLOSED → v1.1.0 published
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -221,7 +221,7 @@ S07 closed after main CI run `36327459040` passed the active mechanical checks, 
 
 ## S08 — version/release decision — CLOSED
 
-After S07 passed, v1.1.0 was selected for the structural compatibility release. The additive freeze is `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`; the publication intent is `dev/release/publish/v1.1.0.json`. The v1.0.3 evidence remains immutable.
+After S07 passed, v1.1.0 was selected for the structural compatibility release. The additive freeze is `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`; the release was published from `dev/release/publish/v1.1.0.json` after main CI `36328874580` and publish workflow `36329064232` passed. The v1.0.3 evidence remains immutable.
 
 ## Historical v1.0.3 authority
 
@@ -245,7 +245,7 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- v1.1.0 release intent: `../../release/publish/v1.1.0.json` and `../../../docs/releases/v1.1.0.md`;
+- current published stable: Git tag / GitHub Release `v1.1.0`, `../../release/publish/v1.1.0.json`, and `../../../docs/releases/v1.1.0.md`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
 - G02 visual/material evidence: `../../dogfood/g02-broad-pencil-v11/README.md`;
