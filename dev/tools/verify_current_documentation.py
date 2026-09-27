@@ -198,7 +198,7 @@ def main() -> None:
             "title": "img2drawing v1.1.0",
             "notes_file": "docs/releases/v1.1.0.md",
             "package_dir": "skills/img2drawing",
-            "assets": [],
+            "assets": ["dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json"],
         }
         notes = _text(ROOT / v110_manifest["notes_file"])
         assert notes.startswith("# img2drawing v1.1.0")
