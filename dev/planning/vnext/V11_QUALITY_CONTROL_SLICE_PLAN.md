@@ -7,8 +7,14 @@ Current renderer family: `pillow-pencil-contact-v11 / 1`
 
 This plan converts `V11_QUALITY_CONTROL_REDESIGN.md` into narrow, reviewable bottleneck slices.
 
-The goal is not to finish a checklist. The goal is to close one highest-impact cause at a time and
-reopen the responsible upstream premise whenever fresh evidence disproves it.
+## Current S03 scope amendment (2026-09-27)
+
+Per user decision, the exact Gojo rerun and the 2026-09-25 figure-based pilot are superseded by
+the four simple still-life references and isolated-worker procedure in
+`../../dogfood/s03-quality-gates/SIMPLE_SUBJECT_CAMPAIGN.md`. Earlier runs remain historical/pilot
+evidence and do not count toward current closure. Image generation may create target references only;
+all drawing output must still come from the current public runtime. The current SVG references were
+rendered to PNG after the image_gen service reached its usage limit. On 2026-09-27 the user accepted the S03 dogfood release gate with the four still-life classes unfinished. See `../../dogfood/s03-quality-gates/USER_ACCEPTANCE_2026-09-27.md`. This is a release decision, not class-level visual proof.
 
 ## Global invariants
 
@@ -16,7 +22,7 @@ The following rules apply to every slice:
 
 1. **No additive renderer v12.** The current family remains `pillow-pencil-contact-v11 / 1`.
 2. **No package-version bump during design/dogfood.** Version selection belongs only after full validation.
-3. **No image generation, pixel pasting, edge-trace pasting, or raster repair** for img2drawing dogfood.
+3. **No image generation, pixel pasting, edge-trace pasting, or raster repair for drawing output.** Original raster or vector target references are allowed only when listed in `SIMPLE_SUBJECT_CAMPAIGN.md`.
 4. **Canonical session provenance is preserved.** Dogfood keeps the complete `session.json`; final replay is action 0 → latest, normally `every_n=4`, using the same pencil renderer family as the PNG.
 5. **Macro correctness precedes material polish.** A renderer change is forbidden while wrong authored geometry, ownership, overlap, contact, or perspective can explain the visible defect.
 6. **One material defect per renderer slice.** Do not combine terminal, grain, pressure, broad-contact, and unrelated rendering changes into one correction.
@@ -218,45 +224,25 @@ Each task produces:
 - residual ledger with top three remaining visible mismatches;
 - explicit KEEP/SOFTEN/RETIRE summary for surviving construction.
 
-## S03.1 Strong-perspective close figure
+## S03.1 Apple still life
 
-Primary questions:
-- does depth propagate head → torso → pelvis → legs rather than stopping at head scale?
-- are near/far overlap and projected spacing coherent?
-- are hair/body/environment ownership conflicts absent?
-- are context lines tied to actual planes/edges?
+Review the apple silhouette, stem/leaf attachment, volume, light/shadow separation, and retirement of exploratory marks.
 
-**Reopen owner**
-- perspective/path failure → observation/construction instruction;
-- correct path but wrong terminal/material → S04 material candidate.
+## S03.2 Ceramic mug still life
 
-## S03.2 Full-body 3/4 figure with attached/held prop
+Review the rim ellipse, body taper, handle attachment/negative space, volume, and contact shadow.
 
-Primary questions:
-- do limbs avoid rail/tube completion?
-- is prop thickness/axis/body contact coherent?
-- are strap/grip/occlusion and negative space solved jointly?
-- do shoes preserve observed orientation rather than wedge symbolism?
+## S03.3 Closed umbrella still life
 
-## S03.3 Frontal or near-frontal full body
+Review canopy silhouette/folds, shaft continuity, handle shape, lean, and floor contact.
 
-Primary questions:
-- does the worker preserve asymmetry rather than normalize into mirrored symbols?
-- do sleeves/trousers preserve taper, joint insertion, and local width change?
-- is line hierarchy readable at final scale?
+## S03.4 Potted plant still life
 
-## S03.4 Head/hair close-up
-
-Primary questions:
-- does the outer head/hair mass read before strand accents?
-- are major clumps/parting limited to observed structure?
-- do strand accents remain subordinate and sparse?
-- do face features follow head orientation rather than icon placement?
+Review leaf masses and stems, pot opening/body, overlap order, volume, and contact shadow.
 
 ## S03 close condition
 
-All four classes must have reviewable artifacts. A blocking failure in any class prevents global
-closure and routes to S04; do not average four tasks into one score that hides a critical failure.
+Ordinary evidence closure requires reviewable artifacts and no blocking residual in all four classes. The current release uses the separate 2026-09-27 user acceptance decision; class ledgers remain NOT_RUN and no measured visual PASS is claimed.
 
 ---
 
@@ -426,8 +412,7 @@ S07 proves the integrated product rather than individual patches.
 
 ## S07.1 Fresh-worker rerun
 
-Repeat the four S03 classes with fresh workers where practical. Do not reuse previous solution
-strokes as hidden scaffolding.
+For the current release, the user-accepted S03 gate replaces a second fresh-worker visual rerun. Future visual-proof work must use fresh workers and must not reuse previous solution strokes as hidden scaffolding.
 
 Compare:
 - pre-redesign baseline;
@@ -435,6 +420,8 @@ Compare:
 - post-renderer result when S06 exists.
 
 ## S07.2 Visual acceptance
+
+For the current release, the dated user acceptance record owns this decision and limits the visual claim. The detailed checklist below applies when measured class-level visual proof is resumed.
 
 Require explicit review of:
 - whole pose/composition;
@@ -458,12 +445,11 @@ Require:
 - clean package/install/runtime checks;
 - canonical/fast exactness for current contract;
 - historical v1.0.3 freeze integrity;
-- end-to-end timelapse provenance on dogfood sessions.
+- end-to-end timelapse provenance on committed current-version fixtures; local dogfood sessions may supplement but are not release artifacts.
 
 ## S07 close condition
 
-No blocking visual residual remains across the required dogfood classes, and all mechanical gates
-are green. A green CI run alone cannot close S07.
+For the current release, the documented user decision owns visual acceptance. S07 closes only when the active mechanical, package/install, replay, and historical-freeze gates are green. This does not create a new measured visual-quality claim.
 
 ---
 

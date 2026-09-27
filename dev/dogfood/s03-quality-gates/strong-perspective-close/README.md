@@ -1,63 +1,10 @@
-# S03.1 strong-perspective close figure
+# S03.1 Single apple with stem and leaf
 
-State: **BLOCKED**
+State: **NOT_RUN**
+Readiness: references and task packet pinned; isolated worker not yet started.
+Current campaign: [`../SIMPLE_SUBJECT_CAMPAIGN.md`](../SIMPLE_SUBJECT_CAMPAIGN.md)
 
-Use a reference where camera proximity or foreshortening makes near/far scale and overlap materially important. This class exists to test whether the updated instruction graph propagates depth through the connected figure rather than expressing perspective only as one enlarged local mass.
+Pinned input: `../simple-subjects/references/apple.png`
+SHA-256: `c960d945e30be1618cbff39171bf42937e5869ad7fab671baef98edc0b16c11c`
 
-## Fresh-worker task contract
-
-The worker receives the current skill, normal runtime, and exact reference. It must not receive prior solution strokes or the earlier failure output as an answer template.
-
-Preserve the artifacts and fill a review using `../REVIEW_TEMPLATE.md`.
-
-## Primary visual questions
-
-- Does head scale/facing connect coherently into neck/shoulder, torso, pelvis, and legs?
-- Are near/mid/far groups visible through projected spacing, apparent width, overlap, and terminal orientation?
-- Does a near feature avoid becoming an isolated oversized symbol while the rest of the body stays diagrammatically flat?
-- Are hidden continuations inferred only where entry/reappearance evidence supports them?
-- Do hair, jaw, collar, arm, and environment boundaries keep separate physical owners?
-- Are long context lines tied to actual planes/edges rather than generic perspective decoration?
-- After local corrections, does the whole become more spatially specific rather than merely more detailed?
-
-## Failure signatures to watch
-
-- large near head with flat torso/pelvis/leg chain;
-- limbs converted to parallel rails after foreshortening;
-- symmetrical normalization of a strongly asymmetric projection;
-- hair/body/background tangents caused by convenience strokes;
-- unexplained vanishing-point rays or floor lines;
-- weak construction retained because local detail is recognizable.
-
-## Reopen routing
-
-```text
-projected spacing / overlap / path is wrong
-→ observation or construction owner
-
-local contour is plausible but parent depth relation is wrong
-→ reopen parent perspective/orientation premise
-
-geometry survives comparison but weight/taper/terminal/material still fails
-→ record only as S04 renderer candidate; do not patch renderer here
-```
-
-## Recorded dogfood
-
-The 2026-09-15 user-supplied dogfood compares three independent model outputs on the same strong-perspective Gojo reference. See `review.md`.
-
-The class is BLOCKED because:
-
-- the best-preserved Claude run overrides reference authority twice: it substitutes original identity/styling for the visible subject and corrects the projected hand toward inferred anatomy;
-- the Gemini run collapses into symbolic/starburst hair, generic hand/body primitives, weak perspective propagation, and surviving scaffold marks;
-- the visually strongest Astra result is a recovered final-mark session whose README explicitly says the original correction/deletion history was not recovered, so it cannot establish canonical fresh-worker provenance for PASS.
-
-No renderer/material defect is established by this class. The blocking evidence routes to S04 instruction/geometry/reference-authority classification first.
-
-## Next required rerun
-
-S04.1 classified the current blockers as instruction/geometry/authority-owned and PR #52 hardened the skill against silent identity and anatomy normalization. The class remains BLOCKED until that diagnosis is tested with a genuinely fresh rerun.
-
-Use `RERUN_AFTER_S04.md` as the benchmark-control contract. The worker must **not** receive the earlier outputs, this review, the S04 analysis, corrected coordinates, or special prompt hints naming the previous failures. It should receive only the current skill/runtime, the exact reference, and the ordinary drawing request.
-
-The rerun must preserve canonical action-0→latest provenance. A visually strong reconstructed history is not sufficient to close this class.
+The earlier figure-based output under `runs/simple/` is a superseded pilot and does not count toward this class verdict. Give an isolated worker only `WORKER_TASK_SIMPLE_SUBJECT.md`, its single pinned input, and the current deployable skill/runtime. Review the new output against the simple-subject quality gates.

@@ -44,6 +44,8 @@ def main() -> None:
     attention_plan = _text(PLANNING / "INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md")
     contract = _text(PLANNING / "CONTRACT.md")
     validation = _text(PLANNING / "VALIDATION_RELEASE.md")
+    s03_campaign = _text(ROOT / "dev" / "dogfood" / "s03-quality-gates" / "SIMPLE_SUBJECT_CAMPAIGN.md")
+    s03_acceptance = _text(ROOT / "dev" / "dogfood" / "s03-quality-gates" / "USER_ACCEPTANCE_2026-09-27.md")
 
     # Mutable planning documents have one current-state authority and one sequencing authority.
     assert _updated_date(status, "STATUS.md") == _updated_date(roadmap, "ROADMAP.md"), (
@@ -130,19 +132,33 @@ def main() -> None:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
-                    assert "ACTIVE BOTTLENECK:  S03" in status
+                    assert "ACTIVE BOTTLENECK:  S07" in status
                     assert "S01 DESIGN:         CLOSED" in status
                     assert "S02 INSTRUCTIONS:   CLOSED" in status
-                    assert "S03.1 RERUN:        READY / NOT_RUN" in status
-                    assert "S04 CLASSIFICATION: ACTIVE / PARTIAL" in status
+                    assert "S03 CAMPAIGN:      PASS / USER_ACCEPTED" in status
+                    assert "S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE" in status
+                    assert "The user accepted the gate on 2026-09-27" in status
+                    assert "Decision: **PASS / USER_ACCEPTED**" in s03_acceptance
+                    assert "not a measured visual-quality PASS" in s03_acceptance
+                    assert "SIMPLE_SUBJECT_CAMPAIGN.md" in status
+                    for digest in (
+                        "c960d945e30be1618cbff39171bf42937e5869ad7fab671baef98edc0b16c11c",
+                        "bdbefc3375c31b326ab4f69fbba58c955e306974c78f1358e003c9ebccd87e44",
+                        "de87a334ac1b180e3b48326bb3630f3659491b13956158fd25b20b0b0f838df5",
+                        "98d376c8fdb5037c9e15d45b7e7c10c2360d0de4dc11b3bbb8015062975f2a5a",
+                    ):
+                        assert digest in s03_campaign
+                    assert "No generated or hand-built image may be used as a" in s03_campaign
                     assert "CURRENT RENDERER:   img2drawing-pencil/11" in status
                     assert "RENDERER POLICY:    no additive v12" in status
                     assert "PACKAGE VERSION:    no new RC/version authorized" in status
                     assert "v1.0.3" in status and "latest published stable" in status
                     assert "S01 v11 quality-control failure taxonomy + design       CLOSED" in roadmap
                     assert "S02 instruction graph execution-gate patch              CLOSED" in roadmap
-                    assert "S03 fresh-worker visual dogfood                         ACTIVE" in roadmap
-                    assert "S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL" in roadmap
+                    assert "S03 fresh-worker visual dogfood                         PASS / USER_ACCEPTED" in roadmap
+                    assert "S04 classify remaining geometry vs material residuals   CLOSED / NO RENDERER CHANGE" in roadmap
+                    assert "S07 mechanical release validation                       ACTIVE" in roadmap
+                    assert "four fixed still-life references" in roadmap.lower()
                     assert "No renderer v12 is authorized" in roadmap
                     assert (PLANNING / "V11_QUALITY_CONTROL_REDESIGN.md").is_file()
                     assert (PLANNING / "V11_QUALITY_CONTROL_SLICE_PLAN.md").is_file()
