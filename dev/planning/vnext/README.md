@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-The **v1.0.3 release cycle is closed**. There is no active release gate or pre-authorized next feature in this planning index. Future work starts from `CHANGELOG.md` → `Unreleased` after the next highest-impact bottleneck is explicitly selected, then `ROADMAP.md` should be updated to describe that selected slice.
+The **v1.0.3 release cycle is closed**. S07 mechanical validation closed and v1.1.0 is the selected S08 structural release. Its additive freeze, release notes, and publication manifest are the current release authority; later work should be selected in `ROADMAP.md` after this release is published.
 
 ## Authority order
 

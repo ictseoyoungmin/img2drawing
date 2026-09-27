@@ -1,13 +1,14 @@
 # img2drawing architecture contract
 
 Status: **CURRENT MAIN INVARIANTS**
-Updated: 2026-09-13
+Updated: 2026-09-27
 
 This document describes durable architecture invariants for current `main`. It is not a release
 freeze. Immutable released snapshots remain version-specific:
 
 - v1.0.2 / A10: `dev/release/vnext/CONTRACT_FREEZE.json`;
-- v1.0.3 / A14: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`.
+- v1.0.3 / A14: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
+- v1.1.0 / R1: `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
 
@@ -97,8 +98,7 @@ normalizes the private compatibility `Stroke.stage` field out of render seed ide
 active suite verifies inspect/final parity plus canonical-final ↔ fast-final exactness where that
 contract applies. Historical v9 seed semantics remain frozen for explicit v9 replay.
 
-New v1.0.3 sessions select `pillow-pencil-contact-v11 / 1`. Explicit v9/1 and v10/1 persisted
-renderer identities remain replayable and are not silently migrated.
+New v1.1.0 sessions select `img2drawing-pencil / 11` and persist a renderer contract digest. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
 
 ## 8. Instruction graph contract
 
@@ -118,17 +118,9 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-The latest released stable package is **v1.0.3 / A14 / DrawingSession/1.0.3-vnext**. Git tag and
-GitHub Release `v1.0.3` are immutable published authority for that version; current or future
-`main` changes belong under `CHANGELOG.md` → `Unreleased` until a separately versioned release is
-selected.
+v1.1.0 is the selected structural release; its contract freeze and publication intent are additive. Git tag and GitHub Release `v1.0.3` remain immutable published authority for the earlier package. The v1.0.2/A10 and v1.0.3/A14 freezes are historical evidence and must not be rewritten.
 
-The v1.0.2/A10 freeze remains immutable historical authority, and the v1.0.3/A14 freeze is the
-independent immutable snapshot for the current stable release. Do not rewrite either freeze to
-match later `main`.
-
-Deprecated pre-0.6.0rc2 root aliases remain a separate compatibility surface. Their future removal
-requires an explicit versioned compatibility decision.
+The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 
 Current source-module filenames are semantic implementation names rather than renderer-generation
 tags. Serialized renderer identities may retain v9/v10/v11 generation labels because they are

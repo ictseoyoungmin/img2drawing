@@ -5,10 +5,10 @@ Updated: 2026-09-27
 ```text
 PUBLISHED STABLE:   v1.0.3 · DrawingSession/1.0.3-vnext · A14
 RELEASE TAG:        v1.0.3 → d6151ba8dfef8dc37ef5cddd24c2c6c974d53976
-CURRENT SOURCE:     1.1.0.dev0 · R1 structural refactor (unreleased)
+CURRENT SOURCE:     1.1.0 · R1 structural release
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  S07 · mechanical release validation
+ACTIVE BOTTLENECK:  none · S07 mechanical validation CLOSED; S08 v1.1.0 release staged
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    no new RC/version authorized before S07 mechanical validation
+PACKAGE VERSION:    1.1.0 selected after S07 mechanical validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -42,7 +42,7 @@ Authority is intentionally split by purpose:
 
 ## Current truth
 
-- `v1.0.3` remains the latest published stable release and its tag, artifacts, freeze, and historical dogfood are immutable.
+- `v1.0.3` remains an immutable published release. v1.1.0 is staged through `dev/release/publish/v1.1.0.json`; the GitHub Release workflow records publication after main CI.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
@@ -116,9 +116,11 @@ Replay rule in current source:
 - profile-less checkpoints resume and render only after an explicit `migrate_render_profile()`;
 - published `v1.0.3` package/tag/freeze remains canonical authority for its original behavior.
 
+S07 mechanical validation closed on main CI run `36327459040` after PR #68; v1.1.0 is the selected S08 release version.
+
 Current `src` carries one renderer. Historical renderer implementations live in Git history and published releases, not in active source.
 
-## R1 structural refactor (1.1.0.dev0)
+## R1 structural refactor (1.1.0)
 
 R1 changed structure, not drawing semantics or pixels:
 
@@ -163,7 +165,8 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 - instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
 - v11 quality execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - v11 redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
-- current published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
+- v1.1.0 release intent: `dev/release/publish/v1.1.0.json`, `docs/releases/v1.1.0.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
+- historical published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
 - exact stable candidate: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;
 - immutable v1.0.3 contract: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
 - G01 evidence: `dev/dogfood/g01-gesture-rc2/README.md`;

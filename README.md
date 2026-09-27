@@ -2,7 +2,7 @@
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
   <p>
-    <a href="docs/releases/v1.0.3.md"><img src="https://img.shields.io/badge/version-v1.0.3-6f5a46" alt="Version v1.0.3"></a>
+    <a href="docs/releases/v1.1.0.md"><img src="https://img.shields.io/badge/version-v1.1.0-6f5a46" alt="Version v1.1.0"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
@@ -10,11 +10,9 @@
   </p>
 </div>
 
-**Current stable: v1.0.3**
+**Current stable: v1.1.0**
 
-> v1.0.3 is the current published stable release. It promotes gesture/runtime alignment and the broad-pencil renderer quality work from the rc1–rc3 cycle while preserving explicit historical replay for v9/1 and v10/1 sessions. See [the v1.0.3 release notes](docs/releases/v1.0.3.md) and [CHANGELOG.md](CHANGELOG.md).
-
-> `main` carries unreleased **1.1.0** development: the same drawings and pixels with a restructured import surface (`img2drawing.session`, `img2drawing.authoring`) and one timelapse exporter. See the Unreleased section of [CHANGELOG.md](CHANGELOG.md).
+> v1.1.0 restructures the session, authoring, renderer, and timelapse modules while preserving the v1.0.3 v11 drawing pixels. Older v9/v10 sessions require `img2drawing==1.0.3` for exact replay. See [the v1.1.0 release notes](docs/releases/v1.1.0.md) and [CHANGELOG.md](CHANGELOG.md).
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -40,9 +38,13 @@ Three hand line studies progressing from early authored lines to finished line w
 Each panel advances through explicit drawing actions; this lightweight preview shows the process
 rather than only the final image.
 
+## v1.1.0 — Structural release
+
+The public package root remains the entry point for `DrawingSession`. Specialized APIs now live in `img2drawing.session`, `img2drawing.authoring`, `img2drawing.render`, and `img2drawing.timelapse`. The v11 renderer is pixel-identical to v1.0.3; the new `RenderProfile` digest makes exact replay identity explicit. See [the v1.1.0 release notes](docs/releases/v1.1.0.md) for removed imports and replay compatibility.
+
 ## v1.0.3 — Gesture + renderer quality
 
-v1.0.3 closes the post-v1.0.2 integration cycle as the current stable release.
+v1.0.3 closed the post-v1.0.2 integration cycle.
 
 - `DrawingIntent(drawing_mode="gesture")` is a public runtime mode; unqualified gesture work uses the constructive-gesture default while explicit pure/quick gesture remains available as a finish-level choice.
 - New sessions use renderer identity `pillow-pencil-contact-v11 / 1`, with more physical broad-pencil terminals and stronger page-fixed graphite/tooth variation.
