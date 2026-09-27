@@ -127,13 +127,24 @@ def main() -> None:
 
     all_pass = all(state == "PASS" for state in states.values())
     status = root_status(root_readme)
-    if all_pass:
+    if status == "PASS / USER_ACCEPTED":
+        acceptance = text(S03 / "USER_ACCEPTANCE_2026-09-27.md")
+        for required in (
+            "Date: 2026-09-27",
+            "Decision: **PASS / USER_ACCEPTED**",
+            "not a measured visual-quality PASS",
+            "Luna workers did not complete",
+            "A class ledger remains `NOT_RUN`",
+        ):
+            assert required in acceptance, f"user-accepted gate missing {required!r}"
+        assert not all_pass, "use ordinary PASS / CLOSED when every class has verified evidence"
+    elif all_pass:
         assert status == "PASS / CLOSED", (
             "all S03 classes PASS but root harness status is not exactly PASS / CLOSED"
         )
     else:
         assert status != "PASS / CLOSED", (
-            "S03 root cannot be CLOSED while any class is NOT_RUN/BLOCKED"
+            "S03 root cannot claim evidence closure while any class is NOT_RUN/BLOCKED"
         )
 
     summary = ", ".join(f"{name}={state}" for name, state in states.items())

@@ -1,9 +1,13 @@
 # S03 fresh-worker visual-quality dogfood
 
-Status: **ACTIVE / EVIDENCE NOT YET COMPLETE**  
+Status: **PASS / USER_ACCEPTED**
 Baseline: `main` after PR #49 (`c10e3f36a3347dad3195e450bd2bb3be89c3095f`)  
 Renderer family under observation: `pillow-pencil-contact-v11 / 1`  
 Package identity: unchanged from published `v1.0.3 / A14`
+
+The current user-directed still-life campaign is defined in
+[`SIMPLE_SUBJECT_CAMPAIGN.md`](SIMPLE_SUBJECT_CAMPAIGN.md). It supersedes both the original Gojo
+rerun and the figure-based pilot; those outputs remain historical and do not count as class-level PASS evidence. The user accepted the dogfood release gate on 2026-09-27 in [`USER_ACCEPTANCE_2026-09-27.md`](USER_ACCEPTANCE_2026-09-27.md).
 
 This directory owns S03 of `dev/planning/vnext/V11_QUALITY_CONTROL_SLICE_PLAN.md`.
 
@@ -19,16 +23,16 @@ A valid S03 worker receives:
 
 It must **not** receive prior solution strokes, a corrected session, hidden answer geometry, or the four failure outputs as a tracing/template source. Those failure outputs define the failure taxonomy only.
 
-No image generation, pixel paste, edge-trace paste, or raster repair is allowed for img2drawing output.
+Fixed source references may be generated as raster or vector targets. The current references are original SVG compositions rendered to PNG because the image_gen service returned a usage-limit error. Image generation, SVG/canvas tracing, pixel paste, edge-trace paste, and raster repair remain prohibited for img2drawing drawing output.
 
 ## Required classes
 
 | ID | Class | State |
 | --- | --- | --- |
-| S03.1 | strong-perspective close figure | `BLOCKED` |
-| S03.2 | full-body 3/4 figure with attached/held prop | `NOT_RUN` |
-| S03.3 | frontal or near-frontal full body | `NOT_RUN` |
-| S03.4 | head/hair close-up | `NOT_RUN` |
+| S03.1 | apple still life | `NOT_RUN` |
+| S03.2 | ceramic mug still life | `NOT_RUN` |
+| S03.3 | closed umbrella still life | `NOT_RUN` |
+| S03.4 | potted plant still life | `NOT_RUN` |
 
 A class may become `PASS`, `BLOCKED`, or remain `NOT_RUN`. There is no averaged S03 score. One blocking class keeps S03 open.
 
@@ -108,8 +112,8 @@ Each class README is an evidence ledger, not an answer template. Replace `NOT_RU
 
 ## Mechanical harness gate
 
-`python dev/tools/verify_s03_quality_gate_harness.py` verifies the class/state surface. `NOT_RUN` is valid while no run exists. `PASS` or `BLOCKED` requires a concrete `review.md` with the review contract above; PASS is stricter and requires verified freshness. If all four classes become `PASS`, this root document must also be changed to `Status: **PASS / CLOSED**`; otherwise CI refuses closure.
+`python dev/tools/verify_s03_quality_gate_harness.py` verifies the class/state surface. `NOT_RUN` is valid while no run exists. `PASS` or `BLOCKED` requires a concrete `review.md` with the review contract above; class PASS is stricter and requires verified freshness. Ordinary evidence closure requires all four classes PASS and `Status: **PASS / CLOSED**`. The separate `PASS / USER_ACCEPTED` gate requires the dated acceptance record and leaves unfinished class ledgers truthful.
 
 ## Closure
 
-S03 closes only when all four class ledgers contain reviewable real evidence and none has an unresolved blocking failure. Any blocking failure routes to S04 without being averaged away.
+The ordinary evidence route closes S03 only when all four class ledgers contain reviewable real evidence and none has an unresolved blocking failure. The current release gate was accepted by the user with incomplete class evidence; this decision closes the gate for this release scope without a measured visual-quality claim. Any later class-level PASS still requires the full evidence contract.

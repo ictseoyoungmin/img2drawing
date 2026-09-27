@@ -1,6 +1,6 @@
 # img2drawing current status
 
-Updated: 2026-09-23
+Updated: 2026-09-27
 
 ```text
 PUBLISHED STABLE:   v1.0.3 · DrawingSession/1.0.3-vnext · A14
@@ -8,15 +8,15 @@ RELEASE TAG:        v1.0.3 → d6151ba8dfef8dc37ef5cddd24c2c6c974d53976
 CURRENT SOURCE:     1.1.0.dev0 · R1 structural refactor (unreleased)
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  S03 · fresh-worker visual dogfood
+ACTIVE BOTTLENECK:  S07 · mechanical release validation
 S01 DESIGN:         CLOSED
-S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; behavioral proof remains in S03.1
-S03.1 RERUN:        READY / NOT_RUN · initial batch remains BLOCKED until clean fresh-worker rerun
-S04 CLASSIFICATION: ACTIVE / PARTIAL · S03.1 classified; renderer-owned blocker count = 0
+S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
+S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
+S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect was proven
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    no new RC/version authorized before integrated validation
+PACKAGE VERSION:    no new RC/version authorized before S07 mechanical validation
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -45,27 +45,27 @@ Authority is intentionally split by purpose:
 - `v1.0.3` remains the latest published stable release and its tag, artifacts, freeze, and historical dogfood are immutable.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
-- **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof belongs to the clean S03.1 fresh-worker rerun.
-- **S03 fresh-worker visual dogfood remains the active product bottleneck.** S03.1's initial batch is BLOCKED; its clean rerun is READY / NOT_RUN. S03.2–S03.4 remain pending.
-- **S04 is ACTIVE / PARTIAL.** S03.1 residuals are classified as reference-authority / authored-geometry / anti-symbol-retirement failures. No renderer-owned blocking defect is proven in that batch.
+- **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
+- **S03 dogfood is PASS / USER_ACCEPTED for this release scope.** The user accepted the gate on 2026-09-27; the four prepared simple still-life classes remain NOT_RUN after Luna usage limits interrupted execution. This records an explicit decision, not measured drawing-quality proof. See `../../dogfood/s03-quality-gates/USER_ACCEPTANCE_2026-09-27.md`.
+- **S04 is CLOSED / NO RENDERER CHANGE SELECTED.** Historical Gojo residuals were classified. The current campaign has no completed visual evidence from which to prove a renderer-owned defect, so S06 is skipped without a claim that no defects exist. S07 mechanical release validation is active.
 - **Instruction-graph attention cleanup is CLOSED through Slice E.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, Slice D restored canonical leaf ownership/runtime boundaries, and Slice E added structural CI for attention budgets, direct root fan-out, broken internal routes, canonical owner reachability, and deployable/control-plane separation. The cleaned baseline remains `SKILL.md` 9,066 bytes and `references/INDEX.md` 7,692 bytes, guarded by 12,000-byte / 10,000-byte ceilings and a 16-leaf direct-root-route ceiling.
 - Slice E changed no drawing semantics, renderer/runtime behavior, package version, or dogfood verdict. Implementation CI run `34982967070` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
-- No `1.0.4rc1` or other package-version bump is authorized yet. Version selection happens only after visual and mechanical validation close.
+- No next package version or release candidate is authorized yet. Version selection happens only after visual and mechanical validation close.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
 
-## Active S03 evidence loop
+## S03 accepted scope and remaining evidence
 
 Fresh workers receive the updated skill, the reference, and the normal public runtime surface without prior solution strokes or evaluator hints.
 
 Required classes:
 
-1. strong-perspective close figure — **initial batch BLOCKED; clean rerun READY / NOT_RUN**;
-2. full-body 3/4 figure with attached or held prop — NOT_RUN;
-3. frontal or near-frontal full body — NOT_RUN;
-4. head/hair close-up — NOT_RUN.
+1. apple still life — NOT_RUN;
+2. ceramic mug still life — NOT_RUN;
+3. closed umbrella still life — NOT_RUN;
+4. potted plant still life — NOT_RUN. The S03 release gate was accepted by the user; no class-level PASS is claimed.
 
-Each run must preserve canonical provenance and provide a final PNG, action-0→latest GIF, comparison evidence, top remaining residuals, and a KEEP/SOFTEN/RETIRE audit. A blocking failure in any class stays open; results are not averaged into one score.
+Any future class-level PASS still requires canonical provenance, final PNG, action-0→latest GIF, comparison evidence, residual review, and a KEEP/SOFTEN/RETIRE audit. The user acceptance record is the current release decision.
 
 S04 residual ownership uses this split:
 
@@ -91,10 +91,12 @@ Slice B SKILL.md router reduction + direct quality gate   CLOSED
 Slice C INDEX.md map-only reduction                       CLOSED
 Slice D leaf ownership / runtime-boundary cleanup         CLOSED
 Slice E attention-architecture QA + structural CI         CLOSED
-clean S03.1 rerun                                         NEXT within the active S03 bottleneck
+S03 dogfood user acceptance                              PASS / USER_ACCEPTED
+S04 renderer decision                                     CLOSED / NO CHANGE
+S07 mechanical release validation                         ACTIVE
 ```
 
-The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the next validation target is the isolated clean S03.1 fresh-worker rerun.
+The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the next release target is S07 mechanical validation under the recorded dogfood acceptance.
 
 ## Renderer/replay boundary (S05, closed by R1)
 
@@ -126,7 +128,7 @@ R1 changed structure, not drawing semantics or pixels:
 - removed: `core/session.py`, `core/fill.py`, root compat shims, gesture/renderer runtime bindings, v9-calibrated `tone_scale`, orphan `line_weight`/`scale_guidance`;
 - fixed: a v1.0.3 crash when a broad stroke's mask was empty (e.g. clipped by the canvas edge).
 
-Persisted `img2drawing.vnext.*` schema strings and ids are unchanged data so earlier checkpoints and digests still resume. The S03.1 clean-rerun packet still names its pre-R1 skill baseline; re-pin it to post-R1 main before running.
+Persisted `img2drawing.vnext.*` schema strings and ids are unchanged data so earlier checkpoints and digests still resume. Current workers use the post-R1 public skill/runtime and fixed references in `../../dogfood/s03-quality-gates/SIMPLE_SUBJECT_CAMPAIGN.md`; Gojo and figure-pilot packets remain historical.
 
 ## Stable release authority
 

@@ -94,3 +94,9 @@ dev/p3_reference_run/run/timelapse/
 dev/p3_reference_run/run/compare/
 dev/p3_reference_run/run/canonical_trace.json
 dev/archives
+# S03 dogfood runs are local, regenerable evidence. Keep plans and fixed
+# reference sources in Git; exclude sessions, renders, replay frames, and caches.
+/dev/dogfood/s03-quality-gates/runs/
+/dev/dogfood/s03-quality-gates/*/runs/
+# Superseded image_gen figure references are local pilot inputs.
+/dev/dogfood/s03-quality-gates/references/

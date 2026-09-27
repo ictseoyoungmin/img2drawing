@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-09-23
+Updated: 2026-09-27
 Workflow: Bottleneck · one highest-impact open problem at a time
 
 The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
@@ -11,7 +11,7 @@ The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 ba
 
 If a state label in this file and `STATUS.md` diverge, treat the divergence as a documentation defect and update both in the same bounded authority slice. Historical release tags/freezes/manifests remain authoritative for their immutable release facts regardless of mutable planning state.
 
-Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. That plan may change graph organization only within its declared slices; it does not replace S03 as the active product-quality bottleneck.
+Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. That plan may change graph organization only within its declared slices; the current release bottleneck is S07 mechanical validation after user acceptance of S03.
 
 ## Closed foundation
 
@@ -24,7 +24,7 @@ Instruction-graph attention cleanup is sequenced separately in `INSTRUCTION_GRAP
 - G02 closed the broad-pencil square-terminal / weak-graphite failure class with the renderer family now published as `pillow-pencil-contact-v11 / 1`.
 - G03–G06 integrated, froze, verified, and published `v1.0.3 / A14`.
 - S01 closed the v11 quality-control taxonomy, reversible evidence-gate design, and no-v12 renderer-family policy.
-- S02 integrated the instruction execution gates. S03.1 later caused one bounded reference-authority reopen; that implementation patch is merged, while behavioral proof remains in the clean S03.1 rerun.
+- S02 integrated the instruction execution gates. S03.1 later caused one bounded reference-authority reopen; that implementation patch is merged, while the user accepted the S03 release gate without completed new behavioral proof.
 - instruction-graph cleanup Slice A synchronized planning authority and added CI enforcement so `STATUS.md` is the one point-in-time mutable-state source.
 - instruction-graph cleanup Slice B reduced `SKILL.md` to a true router and made the central visual-quality gate a direct conditional route from the root.
 - instruction-graph cleanup Slice C reduced `references/INDEX.md` to a direct map with one `open when` / `owns` row per deployable leaf.
@@ -43,12 +43,12 @@ G05 stable freeze + wheel verification                  CLOSED
 G06 explicit publish manifest + publish                 CLOSED
 S01 v11 quality-control failure taxonomy + design       CLOSED
 S02 instruction graph execution-gate patch              CLOSED
-S03 fresh-worker visual dogfood                         ACTIVE · S03.1 initial batch BLOCKED; clean rerun READY/NOT_RUN; S03.2–S03.4 pending
-S04 classify remaining geometry vs material residuals   ACTIVE / PARTIAL · S03.1 classified
+S03 fresh-worker visual dogfood                         PASS / USER_ACCEPTED · no class-level PASS claimed
+S04 classify remaining geometry vs material residuals   CLOSED / NO RENDERER CHANGE · current evidence incomplete
 R1 1.1 structural refactor (session/authoring/render/timelapse)  CLOSED · pixel-identical v11 golden
 S05 contract-digest / replay-boundary migration         CLOSED by R1 · digest persisted in RenderProfile v2
-S06 current-v11 renderer correction if proven           BLOCKED by S04; MAY SKIP
-S07 full visual + mechanical validation                 BLOCKED by S03–S06
+S06 current-v11 renderer correction if proven           SKIPPED · no defect selected
+S07 mechanical release validation                       ACTIVE · visual dogfood accepted by user
 S08 choose next package version / release candidate     BLOCKED by S07
 ```
 
@@ -64,10 +64,10 @@ Slice B SKILL.md router reduction + direct quality gate   CLOSED
 Slice C INDEX.md map-only reduction                       CLOSED
 Slice D leaf ownership / runtime-boundary cleanup         CLOSED
 Slice E attention-architecture QA + structural CI         CLOSED
-clean S03.1 rerun                                         NEXT within active S03
+S07 mechanical release validation                       NEXT / ACTIVE
 ```
 
-The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. The cleaned graph must now be validated by the isolated S03.1 fresh-worker rerun rather than expanded with more instructions by default.
+The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. The current release now requires S07 mechanical validation under the documented user acceptance of S03.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
@@ -111,20 +111,20 @@ Originally closed behavior included:
 
 S03.1 exposed one missing execution rule: workers could still let anatomical plausibility or a remembered canonical identity silently overrule readable reference evidence. That caused a bounded reopen adding reference-fidelity / anti-normalization enforcement without introducing a stage pipeline or renderer change.
 
-That implementation patch is now merged, so **S02 implementation is CLOSED again**. Its effectiveness is not considered behaviorally proven until the clean S03.1 rerun executes without evaluator leakage. That pending proof belongs to S03, not to S02's implementation state.
+That implementation patch is now merged, so **S02 implementation is CLOSED again**. Its effectiveness is not considered behaviorally proven by the unfinished still-life campaign. The user accepted that limit for the release gate; it remains a later visual-proof question.
 
 CI run `34761722278` remains the original S02 closure record; the bounded reopen has its own later CI evidence.
 
-## S03 — fresh-worker visual dogfood — ACTIVE
+## S03 — fresh-worker visual dogfood — PASS / USER_ACCEPTED
 
 Fresh workers must receive the updated skill, reference, and normal public runtime surface without privileged access to prior solution strokes or evaluator hints.
 
 Required visual classes:
 
-1. strong-perspective close figure — **initial batch BLOCKED; clean rerun READY / NOT_RUN**;
-2. full-body 3/4 figure with attached/held prop — NOT_RUN;
-3. frontal or near-frontal full body — NOT_RUN;
-4. head/hair close-up — NOT_RUN.
+1. apple still life — NOT_RUN;
+2. ceramic mug still life — NOT_RUN;
+3. closed umbrella still life — NOT_RUN;
+4. potted plant still life — NOT_RUN. The gate is accepted by the user; no class-level PASS is claimed.
 
 Each run must produce reviewable provenance:
 
@@ -135,13 +135,13 @@ Each run must produce reviewable provenance:
 - top remaining residual ledger;
 - KEEP/SOFTEN/RETIRE summary.
 
-The supplied failure images define the failure classes, not answer templates. One blocking class prevents S03 closure; results are not averaged.
+The four fixed still-life references in `../../dogfood/s03-quality-gates/SIMPLE_SUBJECT_CAMPAIGN.md` define current targets, not answer templates. They are original SVG sources rendered to PNG after image_gen usage limits blocked new raster generation. All drawing output uses the current public runtime. Ordinary evidence closure still requires four class-level PASS verdicts. The current release uses the explicit acceptance record in `../../dogfood/s03-quality-gates/USER_ACCEPTANCE_2026-09-27.md`.
 
-## S04 — residual ownership decision — ACTIVE / PARTIAL
+## S04 — residual ownership decision — CLOSED / NO RENDERER CHANGE
 
-S03.1 is classified in `../../dogfood/s04-residual-ownership/README.md`.
+The old Gojo batch and 2026-09-25 figure pilot remain historical evidence. No new material defect is selected from the unfinished still-life campaign. Historical classification remains intact.
 
-Current S03.1 decision:
+Historical Gojo decision:
 
 ```text
 reference/identity substitution        → instruction / subject-specific geometry
@@ -162,7 +162,7 @@ correct geometry but wrong weight / taper / terminal / grain / deposition
 
 A renderer candidate must have both real-drawing evidence and a minimal controlled reproduction with authored geometry frozen.
 
-Global S04 cannot close until S03.2–S03.4 evidence is also classified. The current batch does not authorize S06.
+For this release scope, S04 closes with no renderer correction selected under the user-accepted dogfood decision. This does not prove an absence of defects; future class-level evidence can reopen S04. The historical Gojo batch does not authorize S06.
 
 ## S05 — contract-digest replay boundary — CLOSED by R1
 
@@ -208,20 +208,16 @@ Rules:
 
 If S04 finds no renderer-owned blocking defect, S06 is skipped.
 
-## S07 — full validation — BLOCKED
+## S07 — mechanical release validation — ACTIVE
 
-Repeat the S03 visual classes and combine:
+The user acceptance record covers the visual dogfood decision for this release. Verify the remaining mechanical contract:
 
-- fresh-worker visual evidence;
-- anti-symbol/ownership audit;
-- construction-retirement audit;
-- final-scale line hierarchy review;
 - canonical/fast exactness for the current contract;
 - historical v1.0.3 freeze integrity;
 - package/install/runtime CI;
 - end-to-end timelapse provenance.
 
-A green CI run alone does not close S07.
+S07 closes when the active mechanical checks, package-install check, current replay contract, and historical freeze integrity all pass; the visual claim remains limited by the user acceptance record.
 
 ## S08 — version/release decision — BLOCKED
 
