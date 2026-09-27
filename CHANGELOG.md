@@ -2,7 +2,9 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
-## Unreleased (1.1.0.dev0)
+## v1.1.0 — Structural release
+
+Released 2026-09-27.
 
 A structural release: drawing semantics and rendered pixels are unchanged from v1.0.3 (pinned by a v11 golden over direct renders and session final/cursor/inspect/timelapse output), but the import surface and legacy compatibility are cut.
 

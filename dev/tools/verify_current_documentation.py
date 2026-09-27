@@ -89,7 +89,8 @@ def main() -> None:
     # 1.1.0.devN is unreleased development on main after the published v1.0.3 baseline;
     # every v1.0.3 historical fact below must still hold.
     is_dev = re.fullmatch(r"1\.1\.0\.dev\d+", package_version) is not None
-    is_stable = package_version == "1.0.3" or is_dev
+    is_v110_stable = package_version == "1.1.0"
+    is_stable = package_version == "1.0.3" or is_dev or is_v110_stable
     assert is_rc or is_stable, package_version
 
     if is_dev:
@@ -99,7 +100,7 @@ def main() -> None:
 
     v103_manifest = PUBLISH / "v1.0.3.json"
     v103_release_intent = v103_manifest.is_file()
-    active_post_release_design = is_stable and "ACTIVE BOTTLENECK:" in status
+    active_post_release_design = (is_dev or package_version == "1.0.3") and "ACTIVE BOTTLENECK:  S07" in status
 
     if is_rc:
         assert "**Current stable: v1.0.2**" in root_readme
@@ -128,7 +129,7 @@ def main() -> None:
             assert manifest["package_dir"] == "skills/img2drawing"
             assert manifest["assets"] == []
             released = "**Current stable: v1.0.3**" in root_readme
-            if released:
+            if released or is_v110_stable:
                 assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
                 assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
@@ -166,7 +167,7 @@ def main() -> None:
                     assert "CURRENT SOURCE:     1.0.4rc1" not in status
                     assert "RC CANDIDATE:       1.0.4rc1" not in status
                     assert "RC IN MAIN:         1.0.4rc1" not in status
-                else:
+                elif not is_v110_stable:
                     assert "NEXT GATE:          none for v1.0.3 · release CLOSED" in status
             else:
                 assert "**Current stable: v1.0.2**" in root_readme
@@ -176,6 +177,34 @@ def main() -> None:
             assert "**Current stable: v1.0.2**" in root_readme
             assert "STABLE CANDIDATE:" in status and "v1.0.3" in status
             assert "manifest intentionally absent" in status
+
+    if is_v110_stable:
+        assert "## v1.1.0 — Structural release" in changelog
+        assert "**Current stable: v1.1.0**" in root_readme
+        assert "CURRENT SOURCE:     1.1.0" in status
+        assert "S07 mechanical release validation                       CLOSED" in roadmap
+        assert "S08 choose next package version / release candidate     CLOSED" in roadmap
+        v110_freeze = json.loads(_text(RELEASE / "CONTRACT_FREEZE_V1_1_0.json"))
+        assert v110_freeze["package_version"] == package_version
+        assert v110_freeze["freeze_id"] == "v1.1.0-R1-2026-09-27"
+        assert v110_freeze["renderer_authority"]["current"] == "img2drawing-pencil/11"
+        assert len(v110_freeze["renderer_authority"]["current_contract_digest"]) == 64
+        assert v110_freeze["renderer_authority"]["v103_v11_pixel_identical"] is True
+        assert "DrawingSession" in v110_freeze["root_exports"]
+        v110_manifest = json.loads(_text(PUBLISH / "v1.1.0.json"))
+        assert v110_manifest == {
+            "schema": "img2drawing.release.publish.v1",
+            "tag": "v1.1.0",
+            "title": "img2drawing v1.1.0",
+            "notes_file": "docs/releases/v1.1.0.md",
+            "package_dir": "skills/img2drawing",
+            "assets": [],
+        }
+        notes = _text(ROOT / v110_manifest["notes_file"])
+        assert notes.startswith("# img2drawing v1.1.0")
+        assert "PASS / USER_ACCEPTED" in notes
+        assert "img2drawing==1.0.3" in notes
+        assert "dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json" in notes
 
     assert "R23" in status and "physically retired" in status
     roadmap_lower = roadmap.lower()
