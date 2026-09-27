@@ -130,8 +130,13 @@ def main() -> None:
             assert manifest["assets"] == []
             released = "**Current stable: v1.0.3**" in root_readme
             if released or is_v110_stable:
-                assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
-                assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
+                if is_v110_stable:
+                    assert "PUBLISHED STABLE:   v1.1.0" in status
+                    assert "PUBLISH STATE:      GitHub Release v1.1.0 published" in status
+                    assert "GitHub Release `v1.0.3`" in status
+                else:
+                    assert ("PUBLISHED STABLE:" in status or "RELEASED STABLE:" in status) and "v1.0.3" in status
+                    assert "PUBLISH STATE:      GitHub Release v1.0.3 published" in status
                 if active_post_release_design:
                     assert "ACTIVE BOTTLENECK:  S07" in status
                     assert "S01 DESIGN:         CLOSED" in status
@@ -183,7 +188,11 @@ def main() -> None:
         assert "**Current stable: v1.1.0**" in root_readme
         assert "CURRENT SOURCE:     1.1.0" in status
         assert "S07 mechanical release validation                       CLOSED" in roadmap
-        assert "S08 choose next package version / release candidate     CLOSED" in roadmap
+        assert "S08 choose next package version / release candidate     CLOSED → v1.1.0 published" in roadmap
+        assert "MAIN RELEASE CI:    36328874580 · PASS" in status
+        assert "PUBLISH WORKFLOW:   36329064232 · PASS" in status
+        assert "GitHub Release v1.1.0 is published" in planning_readme
+        assert "latest published stable structural release" in contract
         v110_freeze = json.loads(_text(RELEASE / "CONTRACT_FREEZE_V1_1_0.json"))
         assert v110_freeze["package_version"] == package_version
         assert v110_freeze["freeze_id"] == "v1.1.0-R1-2026-09-27"

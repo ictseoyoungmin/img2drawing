@@ -118,7 +118,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-v1.1.0 is the selected structural release; its contract freeze and publication intent are additive. Git tag and GitHub Release `v1.0.3` remain immutable published authority for the earlier package. The v1.0.2/A10 and v1.0.3/A14 freezes are historical evidence and must not be rewritten.
+v1.1.0 is the latest published stable structural release; its tag, contract freeze, and publication manifest are authoritative. Git tag and GitHub Release `v1.0.3` remain immutable published authority for the earlier package. The v1.0.2/A10 and v1.0.3/A14 freezes are historical evidence and must not be rewritten.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 
