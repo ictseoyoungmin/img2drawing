@@ -1,9 +1,9 @@
 # img2drawing roadmap
 
-Updated: 2026-09-27
+Updated: 2026-09-28
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-The v1.0.3 release cycle is closed. New work begins from the published v1.0.3 baseline and must not mutate its tag, wheel, freeze, or historical evidence.
+The v1.1.0 structural release cycle is closed. New work begins from the published v1.1.0 baseline and must not mutate its tag, wheel, contract freeze, or historical evidence; v1.0.3 remains immutable historical pixel authority.
 
 ## Authority and precedence
 
@@ -67,7 +67,7 @@ Slice E attention-architecture QA + structural CI         CLOSED
 S07 mechanical release validation                       CLOSED
 ```
 
-The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. The current release now requires S07 mechanical validation under the documented user acceptance of S03.
+The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. S07/S08 are closed, v1.1.0 is published, and no next bottleneck is currently selected.
 
 ## S01 — v11 quality-control redesign — CLOSED
 

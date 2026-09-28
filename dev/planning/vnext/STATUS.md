@@ -1,6 +1,6 @@
 # img2drawing current status
 
-Updated: 2026-09-27
+Updated: 2026-09-28
 
 ```text
 PUBLISHED STABLE:   v1.1.0 · R1 structural release
@@ -47,11 +47,11 @@ Authority is intentionally split by purpose:
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
 - **S03 dogfood is PASS / USER_ACCEPTED for this release scope.** The user accepted the gate on 2026-09-27; the four prepared simple still-life classes remain NOT_RUN after Luna usage limits interrupted execution. This records an explicit decision, not measured drawing-quality proof. See `../../dogfood/s03-quality-gates/USER_ACCEPTANCE_2026-09-27.md`.
-- **S04 is CLOSED / NO RENDERER CHANGE SELECTED.** Historical Gojo residuals were classified. The current campaign has no completed visual evidence from which to prove a renderer-owned defect, so S06 is skipped without a claim that no defects exist. S07 mechanical release validation is active.
+- **S04 is CLOSED / NO RENDERER CHANGE SELECTED.** Historical Gojo residuals were classified. The current campaign has no completed visual evidence from which to prove a renderer-owned defect, so S06 was skipped without a claim that no defects exist. S07 mechanical release validation and S08 release selection are both CLOSED; v1.1.0 is published.
 - **Instruction-graph attention cleanup is CLOSED through Slice E.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, Slice D restored canonical leaf ownership/runtime boundaries, and Slice E added structural CI for attention budgets, direct root fan-out, broken internal routes, canonical owner reachability, and deployable/control-plane separation. The cleaned baseline remains `SKILL.md` 9,066 bytes and `references/INDEX.md` 7,692 bytes, guarded by 12,000-byte / 10,000-byte ceilings and a 16-leaf direct-root-route ceiling.
 - Slice E changed no drawing semantics, renderer/runtime behavior, package version, or dogfood verdict. Implementation CI run `34982967070` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
-- No next package version or release candidate is authorized yet. Version selection happens only after visual and mechanical validation close.
+- No next package version or release candidate is authorized yet. Any future version selection must begin from a new bounded bottleneck rather than reopening the closed v1.1.0 release cycle.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
 
 ## S03 accepted scope and remaining evidence
@@ -93,10 +93,10 @@ Slice D leaf ownership / runtime-boundary cleanup         CLOSED
 Slice E attention-architecture QA + structural CI         CLOSED
 S03 dogfood user acceptance                              PASS / USER_ACCEPTED
 S04 renderer decision                                     CLOSED / NO CHANGE
-S07 mechanical release validation                         ACTIVE
+S07 mechanical release validation                         CLOSED
 ```
 
-The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the next release target is S07 mechanical validation under the recorded dogfood acceptance.
+The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the v1.1.0 release cycle is closed and no next bottleneck is currently selected.
 
 ## Renderer/replay boundary (S05, closed by R1)
 
