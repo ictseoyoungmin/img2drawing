@@ -2,6 +2,17 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## Unreleased
+
+### Fixed
+
+- Plugin manifests now track the package version instead of remaining pinned to the pre-v1.1 value; CI compares them directly with `img2drawing.__version__`.
+- Runtime capability discovery names the supported soft-retirement operation `soft-lift` and exposes exact public authoring entrypoints so workers do not guess a nonexistent `soften_stroke()` method.
+- Residual correction binding now requires exact observation ownership, and eraser actions need explicit reason provenance before they can close a residual.
+- The semantic markmaking resolver accepts the explicit `value` role used by stroke-authored tonal work.
+- Initial construction serialization preserves authored pressure/tool/grade/override state instead of dropping it.
+- Inspection documentation now distinguishes persisted material authority from its evidence-only 1x/3x raster policy without changing v11 pixels.
+
 ## v1.1.0 — Structural release
 
 Released 2026-09-27.
