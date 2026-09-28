@@ -325,9 +325,12 @@ session.render_at(cursor, "out/cursor.png")      # any authored cursor
 session.export_timelapse("out/timelapse", every_n=4)  # action 0 -> latest GIF + manifest
 ```
 
-`inspect()` renders through the same persisted `RenderProfile` (paper, background, graphite) as the
-final export; only its output scale is pinned to 1x canvas space for registration/ROI/measurement
-geometry. `export_timelapse()` is the only timelapse operation; see
+`inspect()` uses the session's persisted material/profile authority for paper, background, graphite,
+renderer identity, and seed domain, while remaining a derived evidence raster: output scale is
+pinned to 1x canvas space and inspection supersampling defaults to 3 unless explicitly supplied.
+When pixel identity with a 1x final render is required, call
+`session.inspect(supersample=session.render_profile.supersample)`. `export_timelapse()` is the
+only timelapse operation; see
 `../output/render-profile-and-replay.md` for its backend and artifact contract.
 
 ## Boundary
