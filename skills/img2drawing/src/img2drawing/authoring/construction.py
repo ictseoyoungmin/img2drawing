@@ -169,6 +169,25 @@ class ConstructionMark:
         if self.tool_overrides is not None:
             object.__setattr__(self, "tool_overrides", deepcopy(dict(self.tool_overrides)))
 
+    def to_dict(self) -> dict[str, Any]:
+        """Return the complete portable authored construction mark."""
+
+        return {
+            "mark_id": self.mark_id,
+            "phase": self.phase,
+            "role": self.role,
+            "part": self.part,
+            "points": [list(point) for point in self.points],
+            "confidence": self.confidence,
+            "layer": self.layer,
+            "pressure": None if self.pressure is None else list(self.pressure),
+            "tool": deepcopy(self.tool),
+            "grade": self.grade,
+            "tool_overrides": (
+                None if self.tool_overrides is None else deepcopy(dict(self.tool_overrides))
+            ),
+        }
+
     def to_draw_spec(self, registration: Registration) -> dict[str, Any]:
         """Return stage-free ``DrawingSession.draw_many`` input."""
 
@@ -219,18 +238,7 @@ class InitialConstruct:
         return {
             "format": "initial-construct/v1",
             "observation": self.observation.to_dict(),
-            "marks": [
-                {
-                    "mark_id": mark.mark_id,
-                    "phase": mark.phase,
-                    "role": mark.role,
-                    "part": mark.part,
-                    "points": [list(point) for point in mark.points],
-                    "confidence": mark.confidence,
-                    "layer": mark.layer,
-                }
-                for mark in self.marks
-            ],
+            "marks": [mark.to_dict() for mark in self.marks],
             "guides": [guide.to_dict() for guide in self.guides],
             "rois": [roi.to_dict() for roi in self.rois],
         }
