@@ -34,12 +34,18 @@ class RuntimeCapabilities:
     supported_authoring_operations: tuple[str, ...] = (
         "draw",
         "replace-stroke",
-        "soften-stroke",
+        "soft-lift",
         "delete-stroke",
         "inspect",
         "render",
         "replay",
         "timelapse",
+    )
+    authoring_entrypoints: tuple[str, ...] = (
+        "DrawingSession.draw",
+        "DrawingSession.replace_stroke",
+        "DrawingSession.soft_lift",
+        "DrawingSession.delete_stroke",
     )
     output_entrypoints: tuple[str, ...] = (
         "DrawingSession.inspect",
@@ -65,6 +71,7 @@ class RuntimeCapabilities:
             "capability_gap_policy": self.capability_gap_policy,
             "public_namespaces": list(self.public_namespaces),
             "supported_authoring_operations": list(self.supported_authoring_operations),
+            "authoring_entrypoints": list(self.authoring_entrypoints),
             "output_entrypoints": list(self.output_entrypoints),
             "markmaking_contract": self.markmaking_contract,
             "prohibited_final_authoring_bypasses": list(self.prohibited_final_authoring_bypasses),

@@ -24,12 +24,17 @@ assert caps.orchestration == "DrawingSession"
 assert caps.final_authoring_runtime
 assert not caps.implementation_read_required
 assert caps.capability_gap_policy == "report-not-bypass"
-caps.output_entrypoints  # the only render/replay operations: inspect, render_final, render_at, export_timelapse
+caps.authoring_entrypoints  # exact mutation callables: draw, replace_stroke, soft_lift, delete_stroke
+caps.output_entrypoints     # exact evidence/output callables: inspect, render_final, render_at, export_timelapse
 ```
 
-The manifest intentionally exposes capability names and boundaries only. It must not grow into a
-map of private modules, renderer implementation classes, cache objects, internal history layouts,
-or other source-navigation hints.
+The semantic operation labels are compact discovery vocabulary; exact callable names are listed in
+`authoring_entrypoints` and `output_entrypoints`. In particular, retiring or subordinating a
+stroke uses `DrawingSession.soft_lift`, not a guessed `soften_stroke` method.
+
+The manifest intentionally exposes public capability names and boundaries only. It must not grow
+into a map of private modules, renderer implementation classes, cache objects, internal history
+layouts, or other source-navigation hints.
 
 ## Drawing-worker rule
 

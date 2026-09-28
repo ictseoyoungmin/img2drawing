@@ -83,3 +83,49 @@ def test_later_observation_cannot_implicitly_own_an_older_residual_fix(tmp_path:
     assert correction.observation_id == finding_observation
     assert session.residual_history[0].status == "resolved"
     assert session.correction_history == (correction,)
+
+
+def test_eraser_correction_requires_explicit_reason_provenance(tmp_path: Path) -> None:
+    session = DrawingSession.create(
+        subject=_subject(tmp_path),
+        output_dir=tmp_path / "eraser-run",
+        intent=DrawingIntent(drawing_mode="croquis", finish_intent="subject"),
+    )
+    observation_id = session.observe({"construction": "guide is now superseded"})
+    stroke_id = session.draw(
+        ((10, 18), (30, 24), (48, 20)),
+        part="construction/guide",
+        observation_id=observation_id,
+    )
+    session.inspect()
+    before_id = session.inspection_history[-1]["inspection_id"]
+    residual_id = session.record_residual(
+        observation_id=observation_id,
+        observation="superseded construction guide remains too dominant",
+        scope="construction/guide",
+        severity="material",
+        impact_rationale="the obsolete guide competes with the accepted contour",
+        responsible_premise="guide visibility",
+        responsible_stroke_ids=(stroke_id,),
+        planned_edit="soft-lift the superseded guide",
+        before_inspection_id=before_id,
+    )
+
+    action_id = session.soft_lift(
+        stroke_id,
+        strength=0.35,
+        observation_id=observation_id,
+    )
+    session.inspect()
+    after_id = session.inspection_history[-1]["inspection_id"]
+
+    with pytest.raises(ValueError, match="correction eraser action requires reason provenance"):
+        session.resolve_residual(
+            residual_id,
+            action_ids=(action_id,),
+            after_inspection_id=after_id,
+            rationale="an eraser correction without a reason must not close the residual",
+        )
+
+    assert session.residual_history[0].status == "open"
+    assert session.correction_history == ()

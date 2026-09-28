@@ -81,6 +81,28 @@ def test_construction_marks_validate_geometry_and_preserve_authored_order():
     assert [mark.mark_id for mark in construct.marks] == ["mass", "loa"]
 
 
+def test_initial_construct_serialization_preserves_authored_mark_material() -> None:
+    mark = ConstructionMark(
+        mark_id="material-mark",
+        phase="mass_blocking",
+        role="structure",
+        part="ribcage",
+        points=((8.0, 10.0), (18.0, 22.0), (30.0, 28.0)),
+        confidence=0.72,
+        layer=3,
+        pressure=(0.2, 0.6, 0.35),
+        tool="form_pencil",
+        grade="2B",
+        tool_overrides={"opacity": 0.64, "taper_out": 0.2},
+    )
+    payload = InitialConstruct(observation=_observation(), marks=(mark,)).to_dict()
+    [saved] = payload["marks"]
+    assert saved["pressure"] == [0.2, 0.6, 0.35]
+    assert saved["tool"] == "form_pencil"
+    assert saved["grade"] == "2B"
+    assert saved["tool_overrides"] == {"opacity": 0.64, "taper_out": 0.2}
+
+
 def test_author_initial_construct_observes_first_and_preserves_order(tmp_path: Path):
     subject = _subject(tmp_path)
     session = DrawingSession.create(subject=subject, output_dir=tmp_path / "run")

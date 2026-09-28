@@ -41,6 +41,13 @@ A mark belonging to hair/fur/whisker-like flow where directional grouping and te
 matter. Do not turn the role into many parallel strands when the observed structure is a larger
 mass.
 
+### `value`
+
+A stroke whose primary job is to establish an observed or declared light/dark family without
+claiming a contour boundary. It may be a single directional value mark or a member of a larger
+tonal group. Choose a more specific preset such as broad graphite when the required contact is
+materially broad.
+
 ### `hatch`
 
 A repeated line used to build value or form direction. Hatching is value construction, not a
@@ -67,6 +74,7 @@ ordinary visible form?            -> form
 ownership / silhouette / overlap? -> contour
 small deliberate emphasis?        -> accent
 hair-like directional terminal?   -> hair
+light/dark family mark?            -> value
 value built from repeated lines?   -> hatch
 large graphite contact/value mass? -> broad_mass
 contextual environment relation?  -> environment

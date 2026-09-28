@@ -98,7 +98,9 @@ state, record a residual, apply history-safe stroke edits, re-inspect, resolve o
 the residual, and finish from current evidence.
 
 Use public authored-element lookup when a later correction must locate an existing stroke.
-Use the supported replace/soften/delete operations rather than raster editing the rendered PNG.
+Use the exact public edit methods `replace_stroke()`, `soft_lift()`, and `delete_stroke()`
+rather than guessing a `soften_stroke()` alias or raster-editing the rendered PNG. The runtime
+capability manifest exposes these exact callables through `authoring_entrypoints`.
 
 When only stroke material is wrong and the path is already correct, prefer:
 
@@ -272,7 +274,10 @@ session.resolve_residual(
 If a later `session.observe(...)` call occurs before the repair, do **not** rely on a mutation
 method's default-to-latest observation behavior for the older residual. Pass that residual's
 original `observation_id` explicitly. A repairing edit authored under a different later observation
-is rejected with `correction action observation mismatch`.
+is rejected with `correction action observation mismatch`. New correction binding requires exact
+observation ownership; the historical `vnext-unobserved` compatibility marker is not accepted as
+proof for a current residual. Eraser corrections (`soft_lift()` / `delete_stroke()`) must also
+carry a non-empty `reason` before they can close a residual.
 
 If the finding itself materially changes before repair, record a new residual under the new
 observation instead of pretending the old provenance still owns the fix. Persisted historical
@@ -320,9 +325,12 @@ session.render_at(cursor, "out/cursor.png")      # any authored cursor
 session.export_timelapse("out/timelapse", every_n=4)  # action 0 -> latest GIF + manifest
 ```
 
-`inspect()` renders through the same persisted `RenderProfile` (paper, background, graphite) as the
-final export; only its output scale is pinned to 1x canvas space for registration/ROI/measurement
-geometry. `export_timelapse()` is the only timelapse operation; see
+`inspect()` uses the session's persisted material/profile authority for paper, background, graphite,
+renderer identity, and seed domain, while remaining a derived evidence raster: output scale is
+pinned to 1x canvas space and inspection supersampling defaults to 3 unless explicitly supplied.
+When pixel identity with a 1x final render is required, call
+`session.inspect(supersample=session.render_profile.supersample)`. `export_timelapse()` is the
+only timelapse operation; see
 `../output/render-profile-and-replay.md` for its backend and artifact contract.
 
 ## Boundary

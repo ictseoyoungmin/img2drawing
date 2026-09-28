@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from img2drawing import __version__
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -14,7 +16,7 @@ def _json(path: str) -> dict:
 def test_codex_plugin_manifest_points_at_skill_and_icon() -> None:
     manifest = _json(".codex-plugin/plugin.json")
     assert manifest["name"] == "img2drawing"
-    assert manifest["version"] == "1.0.3"
+    assert manifest["version"] == __version__
     assert manifest["license"] == "Apache-2.0"
     assert manifest["skills"] == "./skills/"
 
@@ -30,7 +32,7 @@ def test_claude_plugin_and_marketplace_point_at_img2drawing_skill() -> None:
     marketplace = _json(".claude-plugin/marketplace.json")
 
     assert plugin["name"] == "img2drawing"
-    assert plugin["version"] == "1.0.3"
+    assert plugin["version"] == __version__
     assert plugin["license"] == "Apache-2.0"
     assert marketplace["name"] == "img2drawing"
     assert marketplace["plugins"] == [

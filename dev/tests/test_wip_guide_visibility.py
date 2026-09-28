@@ -125,4 +125,4 @@ def test_wip_style_is_bounded_and_runtime_manifest_is_stroke_only() -> None:
     operations = runtime_capabilities().supported_authoring_operations
     assert "fill" not in operations
     assert "replace-fill" not in operations
-    assert {"draw", "replace-stroke", "soften-stroke", "delete-stroke"}.issubset(operations)
+    assert {"draw", "replace-stroke", "soft-lift", "delete-stroke"}.issubset(operations)

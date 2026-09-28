@@ -1,8 +1,9 @@
 """Versioned raster configuration bound into every session checkpoint.
 
-A ``RenderProfile`` is the complete deterministic renderer input apart from authored strokes:
-canvas, paper, supersampling, colours, GIF policy, and the renderer identity plus contract
-digest that must match this package for exact output.
+A ``RenderProfile`` is the complete deterministic renderer input for canonical render/replay
+apart from authored strokes: canvas, paper, supersampling, colours, GIF policy, and the renderer
+identity plus contract digest that must match this package for exact output. Inspection reuses the
+persisted material/identity authority but may choose an evidence-only supersampling budget.
 """
 
 from __future__ import annotations
