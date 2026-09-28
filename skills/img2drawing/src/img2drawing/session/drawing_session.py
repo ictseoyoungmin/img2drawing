@@ -1605,8 +1605,14 @@ class DrawingSession:
                     raise ValueError(f"correction action predates residual: {requested_id}")
                 provenance = action.provenance or {}
                 action_observation = provenance.get("observation_id")
-                if action_observation not in (None, "vnext-unobserved", residual.observation_id):
+                if action_observation != residual.observation_id:
                     raise ValueError(f"correction action observation mismatch: {requested_id}")
+                if action.action in {"stroke.soft_lift", "stroke.delete"}:
+                    eraser_reason = str(provenance.get("reason") or "").strip()
+                    if not eraser_reason:
+                        raise ValueError(
+                            f"correction eraser action requires reason provenance: {requested_id}"
+                        )
             if len(set(normalized_actions)) != len(normalized_actions):
                 raise ValueError("correction action_ids must be unique")
 
