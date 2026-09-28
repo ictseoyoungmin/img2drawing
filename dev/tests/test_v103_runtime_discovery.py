@@ -25,6 +25,14 @@ def test_manifest_exposes_public_authoring_not_private_implementation() -> None:
     assert "inspect" in caps.supported_authoring_operations
     assert "replay" in caps.supported_authoring_operations
     assert "timelapse" in caps.supported_authoring_operations
+    assert "soft-lift" in caps.supported_authoring_operations
+    assert "soften-stroke" not in caps.supported_authoring_operations
+    assert caps.authoring_entrypoints == (
+        "DrawingSession.draw",
+        "DrawingSession.replace_stroke",
+        "DrawingSession.soft_lift",
+        "DrawingSession.delete_stroke",
+    )
     assert "img2drawing.authoring" in caps.public_namespaces
     assert "img2drawing.session" in caps.public_namespaces
     assert "img2drawing.vnext" not in caps.public_namespaces
