@@ -98,7 +98,9 @@ state, record a residual, apply history-safe stroke edits, re-inspect, resolve o
 the residual, and finish from current evidence.
 
 Use public authored-element lookup when a later correction must locate an existing stroke.
-Use the supported replace/soften/delete operations rather than raster editing the rendered PNG.
+Use the exact public edit methods `replace_stroke()`, `soft_lift()`, and `delete_stroke()`
+rather than guessing a `soften_stroke()` alias or raster-editing the rendered PNG. The runtime
+capability manifest exposes these exact callables through `authoring_entrypoints`.
 
 When only stroke material is wrong and the path is already correct, prefer:
 
@@ -272,7 +274,10 @@ session.resolve_residual(
 If a later `session.observe(...)` call occurs before the repair, do **not** rely on a mutation
 method's default-to-latest observation behavior for the older residual. Pass that residual's
 original `observation_id` explicitly. A repairing edit authored under a different later observation
-is rejected with `correction action observation mismatch`.
+is rejected with `correction action observation mismatch`. New correction binding requires exact
+observation ownership; the historical `vnext-unobserved` compatibility marker is not accepted as
+proof for a current residual. Eraser corrections (`soft_lift()` / `delete_stroke()`) must also
+carry a non-empty `reason` before they can close a residual.
 
 If the finding itself materially changes before repair, record a new residual under the new
 observation instead of pretending the old provenance still owns the fix. Persisted historical
