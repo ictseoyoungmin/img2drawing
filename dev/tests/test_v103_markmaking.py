@@ -28,6 +28,7 @@ def test_public_vocabularies_are_small_and_explicit() -> None:
         "contour",
         "accent",
         "hair",
+        "value",
         "hatch",
         "broad_mass",
         "environment",
@@ -56,6 +57,14 @@ def test_semantic_role_resolves_to_public_tool_without_renderer_internals() -> N
     assert mark.resolved_tool_state["width"] == pytest.approx(2.2)
     assert "renderer" not in mark.to_dict()
     assert "patch" not in str(mark.to_dict()).lower()
+
+
+def test_value_role_resolves_without_bypassing_semantic_markmaking() -> None:
+    mark = resolve_markmaking("graphite_tonal", "value")
+    assert mark.semantic_role == "value"
+    assert mark.tool_preset_id == "hatch-light"
+    assert mark.runtime_tool == "construction_pencil"
+    assert mark.material_policy.policy_id == "dry-graphite-expressive"
 
 
 def test_modifiers_are_resolved_and_recordable() -> None:
