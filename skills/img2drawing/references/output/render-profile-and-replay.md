@@ -9,13 +9,20 @@ identity merely to make one artifact look better.
 
 ## Inspection shares the persisted profile
 
-`inspect()` renders through the same persisted `RenderProfile` as `render_final()`: paper
-tooth/scale/seed, background, and graphite come from the bound profile, not renderer defaults. The
-inspection sheet always renders at 1x canvas space, because registration, ROI, and measurement
-geometry are defined in canvas pixels; only final/replay export honors the profile's
-`output_scale`. At 1x the inspection drawing and the final render are pixel-identical.
+`inspect()` uses the same persisted material authority as `render_final()`: paper tooth/scale/seed,
+background, graphite, renderer identity, and seed domain come from the bound profile rather than
+renderer defaults. Inspection is nevertheless a derived evidence raster. It is always rendered at
+1x canvas space for registration/ROI/measurement geometry and defaults to 3x internal
+supersampling; final/replay export use the profile's persisted `output_scale` and `supersample`.
 
-Do not change the profile between inspection and export.
+When a test or workflow requires pixel identity between the inspection raw drawing and a 1x final
+render, request the profile supersampling explicitly:
+
+```python
+session.inspect(supersample=session.render_profile.supersample)
+```
+
+Do not change the persisted profile between inspection and export merely to improve one artifact.
 
 ## Timelapse export
 
