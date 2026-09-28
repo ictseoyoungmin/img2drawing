@@ -6,7 +6,7 @@ from the current task.
 
 ## Initial builtin vocabulary
 
-The 1.0.3 runtime exposes these semantic preset roles through the public markmaking resolver:
+The current runtime exposes these semantic preset roles through the public markmaking resolver:
 
 - `construction-light` — light provisional construction with low visual authority;
 - `gesture-flow` — pressure swell with a clean release for major motion;
