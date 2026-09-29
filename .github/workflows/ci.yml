@@ -40,9 +40,9 @@ jobs:
         run: python dev/tools/verify_instruction_graph.py
       - name: Verify S03 dogfood evidence harness
         run: python dev/tools/verify_s03_quality_gate_harness.py
-      - name: Verify v1.0.3 RC promotion evidence
+      - name: Verify frozen v1.0.3 RC promotion evidence
         run: python dev/tools/verify_v103_rc_promotion.py
-      - name: Verify v1.0.3 stable freeze
+      - name: Verify frozen v1.0.3 stable freeze
         run: python dev/tools/verify_v103_stable.py
       - name: Run active test suite without ambient plugin influence
         env:
@@ -57,28 +57,6 @@ jobs:
       - name: Verify package, installed API, instruction graph, and supply-chain boundary
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
-        run: python dev/tools/verify_vnext_b17.py
+        run: python dev/tools/verify_package_boundary.py
       - name: Verify frozen v1.0.2 release history
         run: python dev/tools/verify_vnext_b18.py
-      - name: Build verified RC wheel artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-rc'
-        run: python -m build --wheel --outdir dist skills/img2drawing
-      - name: Upload verified RC wheel artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-rc'
-        uses: actions/upload-artifact@v4
-        with:
-          name: img2drawing-1.0.3-rc-candidate-${{ github.sha }}
-          path: dist/*.whl
-          if-no-files-found: error
-          retention-days: 14
-      - name: Build verified v1.0.3 stable candidate wheel
-        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-stable'
-        run: python -m build --wheel --outdir dist skills/img2drawing
-      - name: Upload verified v1.0.3 stable candidate wheel
-        if: github.event_name == 'push' && github.ref == 'refs/heads/release/1.0.3-stable'
-        uses: actions/upload-artifact@v4
-        with:
-          name: img2drawing-1.0.3-stable-candidate-${{ github.sha }}
-          path: dist/*.whl
-          if-no-files-found: error
-          retention-days: 14
