@@ -3,7 +3,7 @@
 
 This is the current package verifier. Historical release identity belongs to B18 and
 ``dev/release/vnext/CONTRACT_FREEZE.json``; do not use that frozen v1.0.2 record as the
-version authority for a later RC package.
+version authority for a later current package.
 """
 
 from __future__ import annotations
@@ -238,7 +238,7 @@ def main() -> None:
     if args.source_only:
         print(f"CURRENT_PACKAGE_SOURCE_BOUNDARY_PASS ({VERSION})")
         return
-    with tempfile.TemporaryDirectory(prefix="img2drawing-b17-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="img2drawing-package-") as temporary:
         work = Path(temporary)
         wheel, _sdist = check_artifacts(work)
         check_clean_install(work, wheel)
