@@ -140,7 +140,7 @@ M01 closed post-v1.1.0 drift without changing renderer pixels or persisted drawi
 - runtime discovery separates authoring operations from output operations while retaining the v1.1.0 mixed-list compatibility alias;
 - correction provenance, semantic value-role authoring, and construction-mark serialization are aligned with their documented contracts;
 - current documentation verification is release-generic;
-- the current package verifier and active tests use semantic names rather than stale vNext/v1.0.3 labels where they represent current behavior;
+- the current package verifier plus runtime-discovery/markmaking tests use semantic names instead of stale release labels; deliberately historical vNext compatibility/freeze tests retain their historical names;
 - retired v1.0.3 branch-only artifact steps are absent from active CI.
 
 The v11 renderer identity/digest and golden pixels are unchanged.
