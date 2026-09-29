@@ -24,13 +24,18 @@ assert caps.orchestration == "DrawingSession"
 assert caps.final_authoring_runtime
 assert not caps.implementation_read_required
 assert caps.capability_gap_policy == "report-not-bypass"
-caps.authoring_entrypoints  # exact mutation callables: draw, replace_stroke, soft_lift, delete_stroke
-caps.output_entrypoints     # exact evidence/output callables: inspect, render_final, render_at, export_timelapse
+caps.authoring_operations  # draw, replace-stroke, soft-lift, delete-stroke
+caps.output_operations     # inspect, render, replay, timelapse
+caps.authoring_entrypoints # exact mutation callables: draw, replace_stroke, soft_lift, delete_stroke
+caps.output_entrypoints    # exact evidence/output callables: inspect, render_final, render_at, export_timelapse
 ```
 
-The semantic operation labels are compact discovery vocabulary; exact callable names are listed in
-`authoring_entrypoints` and `output_entrypoints`. In particular, retiring or subordinating a
-stroke uses `DrawingSession.soft_lift`, not a guessed `soften_stroke` method.
+The semantic operation labels are split into `authoring_operations` and `output_operations`;
+`supported_operations` is their combined worker-facing view. Exact callable names are listed in
+`authoring_entrypoints` and `output_entrypoints`. The old
+`supported_authoring_operations` attribute remains a compatibility alias for the combined list,
+not a description of authoring-only operations. In particular, retiring or subordinating a stroke
+uses `DrawingSession.soft_lift`, not a guessed `soften_stroke` method.
 
 The manifest intentionally exposes public capability names and boundaries only. It must not grow
 into a map of private modules, renderer implementation classes, cache objects, internal history

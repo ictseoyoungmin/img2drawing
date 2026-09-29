@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Audit the current package, clean install, instruction graph, and supply-chain boundary.
 
-B17 is a *current package* verifier. Historical release identity belongs to B18 and
+This is the current package verifier. Historical release identity belongs to B18 and
 ``dev/release/vnext/CONTRACT_FREEZE.json``; do not use that frozen v1.0.2 record as the
-version authority for a later RC package.
+version authority for a later current package.
 """
 
 from __future__ import annotations
@@ -108,7 +108,7 @@ def check_source() -> None:
     assert 'license-files = ["LICENSE"]' in pyproject
 
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
-    assert "verify_vnext_b17.py" in workflow
+    assert "verify_package_boundary.py" in workflow
     assert "verify_v103_rc_promotion.py" in workflow
     assert "validate_r23_release.py" not in workflow
 
@@ -236,13 +236,13 @@ def main() -> None:
     args = parser.parse_args()
     check_source()
     if args.source_only:
-        print(f"B17 current source/docs/CI audit: PASS ({VERSION})")
+        print(f"CURRENT_PACKAGE_SOURCE_BOUNDARY_PASS ({VERSION})")
         return
-    with tempfile.TemporaryDirectory(prefix="img2drawing-b17-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="img2drawing-package-") as temporary:
         work = Path(temporary)
         wheel, _sdist = check_artifacts(work)
         check_clean_install(work, wheel)
-    print(f"B17 current package/API/clean-install/instruction-graph/supply-chain audit: PASS ({VERSION})")
+    print(f"CURRENT_PACKAGE_BOUNDARY_PASS ({VERSION})")
 
 
 if __name__ == "__main__":

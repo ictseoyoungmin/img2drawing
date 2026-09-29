@@ -122,7 +122,7 @@ def test_wip_style_is_bounded_and_runtime_manifest_is_stroke_only() -> None:
     with pytest.raises(ValueError, match="RGB"):
         WIPGuideStyle(color=(256, 0, 0))
 
-    operations = runtime_capabilities().supported_authoring_operations
+    operations = runtime_capabilities().authoring_operations
     assert "fill" not in operations
     assert "replace-fill" not in operations
-    assert {"draw", "replace-stroke", "soft-lift", "delete-stroke"}.issubset(operations)
+    assert {"draw", "replace-stroke", "soft-lift", "delete-stroke"} == set(operations)

@@ -63,6 +63,8 @@ def test_v1_featured_demo_links_and_release_notes_resolve() -> None:
     assert (ROOT / "docs" / "releases" / "v1.0.3rc2.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.3rc3.md").is_file()
     assert (ROOT / "docs" / "releases" / "v1.0.3.md").is_file()
+    assert (ROOT / "docs" / "releases" / "v1.1.0.md").is_file()
+    assert (ROOT / "docs" / "releases" / "v1.1.1.md").is_file()
 
 
 def test_release_publisher_reads_version_without_importing_runtime() -> None:
@@ -72,15 +74,27 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
     assert "import img2drawing" not in workflow
 
 
-def test_unreleased_development_version_has_no_publish_manifest() -> None:
+def test_current_stable_version_has_matching_publish_manifest() -> None:
     version = img2drawing.__version__
     manifest = PUBLISH / f"v{version}.json"
-    if ".dev" in version:
-        # A development version must never trigger the publish workflow.
-        assert not manifest.exists()
-        assert sorted(p.stem for p in PUBLISH.glob("v*.json"))[-1] == "v1.0.3"
-    else:
-        assert json.loads(manifest.read_text(encoding="utf-8"))["tag"] == f"v{version}"
+    assert ".dev" not in version
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    assert payload["tag"] == f"v{version}"
+    assert payload["title"] == f"img2drawing v{version}"
+    assert (ROOT / payload["notes_file"]).is_file()
+    for asset in payload["assets"]:
+        assert (ROOT / asset).is_file()
+
+
+def test_v110_manifest_remains_immutable_historical_authority() -> None:
+    assert _manifest("1.1.0") == {
+        "schema": "img2drawing.release.publish.v1",
+        "tag": "v1.1.0",
+        "title": "img2drawing v1.1.0",
+        "notes_file": "docs/releases/v1.1.0.md",
+        "package_dir": "skills/img2drawing",
+        "assets": ["dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json"],
+    }
 
 
 def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:

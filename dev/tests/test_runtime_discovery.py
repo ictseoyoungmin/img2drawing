@@ -21,12 +21,16 @@ def test_runtime_capability_manifest_is_source_opaque() -> None:
 
 def test_manifest_exposes_public_authoring_not_private_implementation() -> None:
     caps = runtime_capabilities()
-    assert "draw" in caps.supported_authoring_operations
-    assert "inspect" in caps.supported_authoring_operations
-    assert "replay" in caps.supported_authoring_operations
-    assert "timelapse" in caps.supported_authoring_operations
-    assert "soft-lift" in caps.supported_authoring_operations
-    assert "soften-stroke" not in caps.supported_authoring_operations
+    assert caps.authoring_operations == (
+        "draw",
+        "replace-stroke",
+        "soft-lift",
+        "delete-stroke",
+    )
+    assert caps.output_operations == ("inspect", "render", "replay", "timelapse")
+    assert caps.supported_operations == caps.authoring_operations + caps.output_operations
+    assert caps.supported_authoring_operations == caps.supported_operations
+    assert "soften-stroke" not in caps.supported_operations
     assert caps.authoring_entrypoints == (
         "DrawingSession.draw",
         "DrawingSession.replace_stroke",

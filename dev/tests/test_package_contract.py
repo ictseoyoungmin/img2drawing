@@ -27,7 +27,7 @@ CANONICAL_ROOT_EXPORTS = {
 
 
 def test_version_and_root_api_are_canonical():
-    assert img2drawing.__version__.startswith("1.1.0")
+    assert img2drawing.__version__.startswith("1.")
     assert set(img2drawing.__all__) == CANONICAL_ROOT_EXPORTS
     assert set(dir(img2drawing)) == CANONICAL_ROOT_EXPORTS
     assert "DrawingRun" not in img2drawing.__all__

@@ -31,16 +31,25 @@ class RuntimeCapabilities:
         "img2drawing.session",
         "img2drawing.runtime",
     )
-    supported_authoring_operations: tuple[str, ...] = (
+    authoring_operations: tuple[str, ...] = (
         "draw",
         "replace-stroke",
         "soft-lift",
         "delete-stroke",
+    )
+    output_operations: tuple[str, ...] = (
         "inspect",
         "render",
         "replay",
         "timelapse",
     )
+    supported_operations: tuple[str, ...] = authoring_operations + output_operations
+
+    @property
+    def supported_authoring_operations(self) -> tuple[str, ...]:
+        """Compatibility alias for the pre-v1.1.1 mixed operation list."""
+
+        return self.supported_operations
     authoring_entrypoints: tuple[str, ...] = (
         "DrawingSession.draw",
         "DrawingSession.replace_stroke",
@@ -70,6 +79,10 @@ class RuntimeCapabilities:
             "bespoke_raster_authoring_supported": self.bespoke_raster_authoring_supported,
             "capability_gap_policy": self.capability_gap_policy,
             "public_namespaces": list(self.public_namespaces),
+            "supported_operations": list(self.supported_operations),
+            "authoring_operations": list(self.authoring_operations),
+            "output_operations": list(self.output_operations),
+            # Compatibility key retained for callers that consumed the v1.1.0 payload.
             "supported_authoring_operations": list(self.supported_authoring_operations),
             "authoring_entrypoints": list(self.authoring_entrypoints),
             "output_entrypoints": list(self.output_entrypoints),

@@ -2,7 +2,7 @@
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
   <p>
-    <a href="docs/releases/v1.1.0.md"><img src="https://img.shields.io/badge/version-v1.1.0-6f5a46" alt="Version v1.1.0"></a>
+    <a href="docs/releases/v1.1.1.md"><img src="https://img.shields.io/badge/version-v1.1.1-6f5a46" alt="Version v1.1.1"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
@@ -10,9 +10,9 @@
   </p>
 </div>
 
-**Current stable: v1.1.0**
+**Current stable: v1.1.1**
 
-> v1.1.0 restructures the session, authoring, renderer, and timelapse modules while preserving the v1.0.3 v11 drawing pixels. Older v9/v10 sessions require `img2drawing==1.0.3` for exact replay. See [the v1.1.0 release notes](docs/releases/v1.1.0.md) and [CHANGELOG.md](CHANGELOG.md).
+> v1.1.1 is a maintenance release that aligns public capability metadata, provenance checks, plugin/version identity, and release tooling without changing the `img2drawing-pencil / 11` renderer pixels. See [the v1.1.1 release notes](docs/releases/v1.1.1.md) and [CHANGELOG.md](CHANGELOG.md).
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -37,6 +37,12 @@ Three hand line studies progressing from early authored lines to finished line w
 
 Each panel advances through explicit drawing actions; this lightweight preview shows the process
 rather than only the final image.
+
+## v1.1.1 — Public contract coherence
+
+v1.1.1 closes post-v1.1.0 contract and release-hygiene drift: plugin metadata follows the package version, runtime discovery distinguishes authoring from output operations, residual eraser corrections require explicit provenance, semantic value strokes and complete construction serialization are supported, and release verification no longer hard-codes the v1.0.3→v1.1.0 transition. Renderer identity and pixels remain `img2drawing-pencil / 11`.
+
+[Read the v1.1.1 release notes](docs/releases/v1.1.1.md) · [Changelog](CHANGELOG.md)
 
 ## v1.1.0 — Structural release
 

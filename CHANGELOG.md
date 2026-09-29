@@ -2,7 +2,9 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
-## Unreleased
+## v1.1.1 — Public contract coherence
+
+Released 2026-09-29.
 
 ### Fixed
 
@@ -12,6 +14,8 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 - The semantic markmaking resolver accepts the explicit `value` role used by stroke-authored tonal work.
 - Initial construction serialization preserves authored pressure/tool/grade/override state instead of dropping it.
 - Inspection documentation now distinguishes persisted material authority from its evidence-only 1x/3x raster policy without changing v11 pixels.
+- Runtime capability discovery now separates authoring operations from evidence/output operations while retaining the mixed v1.1.0 field as a compatibility alias.
+- Current-documentation verification is release-generic, the current package verifier has a semantic name, and retired v1.0.3 branch-only artifact steps were removed from active CI.
 
 ## v1.1.0 — Structural release
 
