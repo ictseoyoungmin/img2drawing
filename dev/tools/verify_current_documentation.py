@@ -112,6 +112,13 @@ def main() -> None:
         assert freeze["canonical_render_profile"]["renderer_id"] == "img2drawing-pencil"
         assert str(freeze["canonical_render_profile"]["renderer_version"]) == "11"
         assert len(freeze["renderer_authority"]["current_contract_digest"]) == 64
+        runtime = freeze.get("runtime_capabilities")
+        assert runtime == {
+            "schema": "img2drawing.runtime.capabilities.v2",
+            "authoring_operations": ["draw", "replace-stroke", "soft-lift", "delete-stroke"],
+            "output_operations": ["inspect", "render", "replay", "timelapse"],
+            "compatibility_alias": "supported_authoring_operations -> supported_operations",
+        }
 
     # Historical release authority remains present and version-specific.
     for required in (
