@@ -1,0 +1,10 @@
+{
+  "schema": "img2drawing.release.publish.v1",
+  "tag": "v1.1.1",
+  "title": "img2drawing v1.1.1",
+  "notes_file": "docs/releases/v1.1.1.md",
+  "package_dir": "skills/img2drawing",
+  "assets": [
+    "dev/release/vnext/CONTRACT_FREEZE_V1_1_1.json"
+  ]
+}
