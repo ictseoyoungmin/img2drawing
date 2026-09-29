@@ -1,9 +1,9 @@
 # img2drawing roadmap
 
-Updated: 2026-09-28
+Updated: 2026-09-29
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-The v1.1.0 structural release cycle is closed. New work begins from the published v1.1.0 baseline and must not mutate its tag, wheel, contract freeze, or historical evidence; v1.0.3 remains immutable historical pixel authority.
+The v1.1.1 maintenance release cycle is closed. New work begins from the published v1.1.1 baseline and must not mutate its tag, wheel, contract freeze, or historical evidence; v1.1.0 remains immutable structural-release authority and v1.0.3 remains immutable historical pixel authority.
 
 ## Authority and precedence
 
@@ -50,6 +50,7 @@ S05 contract-digest / replay-boundary migration         CLOSED by R1 · digest p
 S06 current-v11 renderer correction if proven           SKIPPED · no defect selected
 S07 mechanical release validation                       CLOSED · main CI 36327459040 passed
 S08 choose next package version / release candidate     CLOSED → v1.1.0 published
+M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -67,7 +68,7 @@ Slice E attention-architecture QA + structural CI         CLOSED
 S07 mechanical release validation                       CLOSED
 ```
 
-The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. S07/S08 are closed, v1.1.0 is published, and no next bottleneck is currently selected.
+The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. S07/S08 and M01 are closed, v1.1.1 is published, and no next bottleneck is currently selected.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
@@ -223,6 +224,20 @@ S07 closed after main CI run `36327459040` passed the active mechanical checks, 
 
 After S07 passed, v1.1.0 was selected for the structural compatibility release. The additive freeze is `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`; the release was published from `dev/release/publish/v1.1.0.json` after main CI `36328874580` and publish workflow `36329064232` passed. The v1.0.3 evidence remains immutable.
 
+## M01 — public-contract / release-hygiene maintenance — CLOSED
+
+Post-v1.1.0 source review found no renderer-quality blocker, but it did find public-contract and
+release-control drift: plugin versions lagged the package, correction provenance was looser than
+the documented contract, runtime capability naming mixed authoring with output operations, current
+release verification encoded the v1.0.3→v1.1.0 transition, and active CI still carried retired
+v1.0.3 branch-only artifact steps.
+
+M01 closes those issues in v1.1.1 without changing `img2drawing-pencil / 11` pixels, persisted
+drawing schemas, or the package-root API. The mixed
+`supported_authoring_operations` runtime attribute remains as a compatibility alias while the
+canonical discovery surface uses `authoring_operations`, `output_operations`, and
+`supported_operations`.
+
 ## Historical v1.0.3 authority
 
 The released renderer boundary remains historically true for the published package:
@@ -245,7 +260,8 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- current published stable: Git tag / GitHub Release `v1.1.0`, `../../release/publish/v1.1.0.json`, and `../../../docs/releases/v1.1.0.md`;
+- current published stable: Git tag / GitHub Release `v1.1.1`, `../../release/publish/v1.1.1.json`, and `../../../docs/releases/v1.1.1.md`;
+- historical structural release: Git tag / GitHub Release `v1.1.0` + `../../release/publish/v1.1.0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
 - G02 visual/material evidence: `../../dogfood/g02-broad-pencil-v11/README.md`;
