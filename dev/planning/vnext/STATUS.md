@@ -1,14 +1,14 @@
 # img2drawing current status
 
-Updated: 2026-09-28
+Updated: 2026-09-29
 
 ```text
-PUBLISHED STABLE:   v1.1.0 · R1 structural release
-RELEASE TAG:        v1.1.0 → c789296ab7767affdd51555a9f1730a8ed80a0b3
-CURRENT SOURCE:     1.1.0 · R1 structural release
+PUBLISHED STABLE:   v1.1.1 · public contract maintenance release
+RELEASE TAG:        v1.1.1 · manifest-driven publish authority
+CURRENT SOURCE:     1.1.1 · public contract maintenance release
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  none · S07/S08 CLOSED; v1.1.0 published
+ACTIVE BOTTLENECK:  none · M01 CLOSED; v1.1.1 published
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -16,15 +16,15 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.1.0 selected after S07 mechanical validation
+PACKAGE VERSION:    1.1.1 maintenance release
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
 HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc8c5c9f727
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
-MAIN RELEASE CI:    36328874580 · PASS
-PUBLISH WORKFLOW:   36329064232 · PASS
-PUBLISH STATE:      GitHub Release v1.1.0 published
+MAIN RELEASE CI:    required green before manifest-driven publish
+PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
+PUBLISH STATE:      GitHub Release v1.1.1 published
 ```
 
 ## Authority contract
@@ -42,7 +42,7 @@ Authority is intentionally split by purpose:
 
 ## Current truth
 
-- `v1.1.0` is the latest published stable release. Its tag points to `c789296ab7767affdd51555a9f1730a8ed80a0b3`; main CI `36328874580` and publish workflow `36329064232` passed. The v1.0.3 tag, artifacts, freeze, and historical dogfood remain immutable.
+- `v1.1.1` is the latest published stable maintenance release. It preserves the v1.1.0 renderer/persisted-data contract while closing public capability, provenance, plugin-version, and release-tooling drift. The v1.1.0 structural release and all earlier tags, artifacts, freezes, and historical dogfood remain immutable.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
@@ -51,7 +51,7 @@ Authority is intentionally split by purpose:
 - **Instruction-graph attention cleanup is CLOSED through Slice E.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, Slice D restored canonical leaf ownership/runtime boundaries, and Slice E added structural CI for attention budgets, direct root fan-out, broken internal routes, canonical owner reachability, and deployable/control-plane separation. The cleaned baseline remains `SKILL.md` 9,066 bytes and `references/INDEX.md` 7,692 bytes, guarded by 12,000-byte / 10,000-byte ceilings and a 16-leaf direct-root-route ceiling.
 - Slice E changed no drawing semantics, renderer/runtime behavior, package version, or dogfood verdict. Implementation CI run `34982967070` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
-- No next package version or release candidate is authorized yet. Any future version selection must begin from a new bounded bottleneck rather than reopening the closed v1.1.0 release cycle.
+- No next package version or release candidate is authorized. v1.1.1 closes the bounded post-v1.1.0 maintenance cycle; future work must begin from new evidence or a new product requirement.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
 
 ## S03 accepted scope and remaining evidence
@@ -96,7 +96,7 @@ S04 renderer decision                                     CLOSED / NO CHANGE
 S07 mechanical release validation                         CLOSED
 ```
 
-The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; the v1.1.0 release cycle is closed and no next bottleneck is currently selected.
+The detailed scope and closure evidence live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. New instruction accumulation is not authorized by Slice E closure; v1.1.1 is published and no next bottleneck is currently selected.
 
 ## Renderer/replay boundary (S05, closed by R1)
 
@@ -132,6 +132,19 @@ R1 changed structure, not drawing semantics or pixels:
 
 Persisted `img2drawing.vnext.*` schema strings and ids are unchanged data so earlier checkpoints and digests still resume. Current workers use the post-R1 public skill/runtime and fixed references in `../../dogfood/s03-quality-gates/SIMPLE_SUBJECT_CAMPAIGN.md`; Gojo and figure-pilot packets remain historical.
 
+## M01 public-contract maintenance (1.1.1)
+
+M01 closed post-v1.1.0 drift without changing renderer pixels or persisted drawing schemas:
+
+- plugin manifests follow the package version and are checked against `img2drawing.__version__`;
+- runtime discovery separates authoring operations from output operations while retaining the v1.1.0 mixed-list compatibility alias;
+- correction provenance, semantic value-role authoring, and construction-mark serialization are aligned with their documented contracts;
+- current documentation verification is release-generic;
+- the current package verifier and active tests use semantic names rather than stale vNext/v1.0.3 labels where they represent current behavior;
+- retired v1.0.3 branch-only artifact steps are absent from active CI.
+
+The v11 renderer identity/digest and golden pixels are unchanged.
+
 ## Stable release authority
 
 Before publication, the selected package was rebuilt from `release/1.0.3-stable` commit `0de885e6d3f2ed6ac857c46e60875cc8c5c9f727` and verified by CI run `34749311565`.
@@ -166,6 +179,13 @@ Published assets:
 
 The S03 gate remains user-accepted; no class-level visual-quality PASS was measured.
 
+## Published v1.1.1 release authority
+
+The release is declared by `dev/release/publish/v1.1.1.json`, with human-facing notes in
+`docs/releases/v1.1.1.md` and additive freeze
+`dev/release/vnext/CONTRACT_FREEZE_V1_1_1.json`. The manifest-driven publish workflow requires
+green main CI before creating the GitHub Release and building wheel/sdist assets.
+
 ## Historical B18 boundary
 
 At the B18 implementation freeze, the product foundation was **frozen through B18** and the formal **D01–D06 not started** campaign was still future work. Those phrases are historical evidence only and do not describe current sequencing.
@@ -177,7 +197,8 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 - instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
 - v11 quality execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - v11 redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
-- current published stable: Git tag / GitHub Release `v1.1.0`, `dev/release/publish/v1.1.0.json`, `docs/releases/v1.1.0.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
+- current published stable: Git tag / GitHub Release `v1.1.1`, `dev/release/publish/v1.1.1.json`, `docs/releases/v1.1.1.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_1_1.json`;
+- historical structural release: Git tag / GitHub Release `v1.1.0` + `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
 - exact stable candidate: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;
 - immutable v1.0.3 contract: `dev/release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
