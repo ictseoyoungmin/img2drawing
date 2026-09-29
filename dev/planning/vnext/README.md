@@ -9,7 +9,7 @@ It is not a second product specification. The deployable drawing authority remai
 1. [`STATUS.md`](STATUS.md) — current mutable repository truth and open work.
 2. [`ROADMAP.md`](ROADMAP.md) — current near-term sequence and closed release-cycle handoff.
 3. [`CONTRACT.md`](CONTRACT.md) — durable architecture invariants for current main.
-4. [`../../../CHANGELOG.md`](../../../CHANGELOG.md) — released history plus the current `Unreleased` section.
+4. [`../../../CHANGELOG.md`](../../../CHANGELOG.md) — released public history and maintenance notes.
 
 ## Historical records
 
@@ -18,7 +18,7 @@ The rest of this tree is primarily evidence from the B/A vNext buildout and earl
 - `slices/`, `capsules/`, and `archive/` — closed implementation/reopen history;
 - `A*_*.md`, `B18_IMPLEMENTATION_INVENTORY.md`, `BASELINE.md`, and `R03_RUNTIME_OWNERSHIP_INVENTORY.md` — dated planning/audit records;
 - `failure-dossier/` and path-sanitization records — evidence that motivated earlier corrections;
-- `VALIDATION_RELEASE.md` — retained reusable validation design, updated to the published v1.0.3 baseline.
+- `VALIDATION_RELEASE.md` — retained historical/reusable validation design from the published v1.0.3 baseline; it is not current release authority.
 
 Historical records may describe a state that was true at the time they closed. They must not be read as current package/support/runtime truth. When a historical statement conflicts with current `STATUS.md`, current source, or the immutable release record for its version, the historical statement stays historical.
 
@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-The **v1.0.3 release cycle is closed**. S07 mechanical validation closed and v1.1.0 is the selected S08 structural release. GitHub Release v1.1.0 is published with its additive freeze, release notes, wheel, and sdist; later work should be selected in `ROADMAP.md`.
+The v1.0.3 and v1.1.0 release cycles are closed. M01 closes the post-v1.1.0 public-contract/release-hygiene maintenance as **GitHub Release v1.1.1** with its additive freeze, release notes, wheel, and sdist. No next bottleneck is selected; later work must begin from new evidence or a new product requirement in `ROADMAP.md`.
 
 ## Authority order
 
