@@ -203,6 +203,12 @@ such as `gesture-flow`, `contour-weighted`, and `broad-graphite` describe semant
 they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
 Resolve semantic intent first, then pass the returned public draw kwargs to the session:
+For a width/pressure/opacity adjustment, prefer `modifiers={...}` at
+`resolve_mark_for_intent()`. From v1.2.1 development, per-call
+`tool_overrides={...}` also **merges selectively** with the resolved tool
+mapping instead of discarding untouched grain/hardness; the recorded
+markmaking metadata is reconciled against the executed ToolState and
+rejects inconsistent semantic roles or runtime presets.
 
 ```python
 from img2drawing.authoring import resolve_mark_for_intent
