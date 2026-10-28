@@ -1,9 +1,9 @@
 # img2drawing roadmap
 
-Updated: 2026-09-29
+Updated: 2026-10-28
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-The v1.1.1 maintenance release cycle is closed. New work begins from the published v1.1.1 baseline and must not mutate its tag, wheel, contract freeze, or historical evidence; v1.1.0 remains immutable structural-release authority and v1.0.3 remains immutable historical pixel authority.
+The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 begins a separately evidenced markmaking override/provenance and tonal-area authoring slice.
 
 ## Authority and precedence
 
@@ -51,6 +51,8 @@ S06 current-v11 renderer correction if proven           SKIPPED · no defect sel
 S07 mechanical release validation                       CLOSED · main CI 36327459040 passed
 S08 choose next package version / release candidate     CLOSED → v1.1.0 published
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
+M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
+M03 broad tonal overdraw / resolver provenance             NEXT → v1.2.1 branch
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -68,7 +70,7 @@ Slice E attention-architecture QA + structural CI         CLOSED
 S07 mechanical release validation                       CLOSED
 ```
 
-The exact scope, forbidden changes, and closure evidence for A–E live in `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`. S07/S08 and M01 are closed, v1.1.1 is published, and no next bottleneck is currently selected.
+The instruction graph A–E and S07/S08/M01 scopes remain CLOSED. The new M03 authoring bottleneck is independent; its observed failure is not a renderer-v12 authorization.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
@@ -260,7 +262,8 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- current published stable: Git tag / GitHub Release `v1.1.1`, `../../release/publish/v1.1.1.json`, and `../../../docs/releases/v1.1.1.md`;
+- current published stable: Git tag / GitHub Release `v1.2.0`, `../../release/publish/v1.2.0.json`, and `../../../docs/releases/v1.2.0.md`;
+- previous published stable: v1.1.1, unchanged manifest and freeze;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `../../release/publish/v1.1.0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
@@ -268,3 +271,13 @@ This historical statement does not require future current source to keep increme
 - v1.0.3 stable freeze: `../../release/vnext/CONTRACT_FREEZE_V1_0_3.json`;
 - exact v1.0.3 stable candidate: `../../release/vnext/V1_0_3_STABLE_PROMOTION.json`;
 - immutable v1.0.2 snapshot: `../../release/vnext/CONTRACT_FREEZE.json`.
+
+## M02 — v1.2.0 authoring and GIF fidelity recovery — CLOSED
+
+PR #75 delivers portrait identity-oriented dual-scale comparisons, geometry-only `reshape_stroke` preserving edited material and residual action identity, and bounded-frame GIF palette recovery. The renderer v11 and persisted schema contract do not change. 264 active and 44 package-boundary tests passed on the implementation commit, with PR-head CI green; independent portrait and long-frame peak RSS remain NOT_RUN.
+
+## M03 — v1.2.1 broad markmaking and tonal area — NEXT
+
+The author-reported 511-action drawing included 125 `broad-graphite` marks (58 hair values); widths up to 32 for hair and 82 for clothing. Partial `tool_overrides` passed alongside resolver kwargs may discard `hardness` and `grain` while the stored markmaking provenance claims the original material. This is an authored-action/runtime API defect first, not proof of a graphite renderer material defect.
+
+Required gates: (1) merge intentional partial overrides into resolved material with explicit precedence and reject ambiguous conflicting channels; (2) replay provenance must match effective executed `ToolState` with regression tests; (3) observed tonal area boundaries, direction, layering, reserved highlights and density must precede use of broad strokes; (4) compare controlled swatches and fresh drawing results, preserve action history and end-to-end GIF. Do not replace the stroke architecture with unaudited raster fills, or invent universal hard width caps. This work must not silently modify the v1.2.0 published contract.

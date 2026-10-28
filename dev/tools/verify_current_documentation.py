@@ -155,7 +155,7 @@ def main() -> None:
 
     # The release notes named by the current manifest are the human-facing release authority.
     notes = _text(ROOT / current_manifest["notes_file"])
-    assert f"Release date: 2026-09-29" in notes
+    assert re.search(r"^Release date: \d{4}-\d{2}-\d{2}$", notes, flags=re.MULTILINE), "release notes must declare an ISO date"
     assert "img2drawing-pencil / 11" in notes
     assert "renderer pixels" in notes.lower() or "pixel" in notes.lower()
 
