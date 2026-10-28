@@ -64,7 +64,7 @@ def test_fast_palette_failure_retries_with_local_palettes(tmp_path: Path, monkey
         "retry", "retry", "verify",
     ]
     assert events[-1] == {"phase": "verify", "completed": 1, "total": 1}
-    assert events[-1]["completed"] == events[-1]["total"] == 2
+    assert events[-2] == {"phase": "retry", "completed": 2, "total": 2}
     assert result.manifest["gif"]["encoding_fallback"] == "local-frame-palettes"
     assert result.manifest["gif"]["within_tolerance"]
     assert result.manifest["fast"]["encode"]["gif_sha256"] == result.manifest["gif"]["sha256"]
@@ -145,14 +145,17 @@ def test_streaming_local_gif_closes_each_frame_before_next(tmp_path: Path):
         previous = None
         for index in range(24):
             if previous is not None:
-                assert previous.im is None, "previous frame retained in memory"
+                with pytest.raises(ValueError, match="closed"):
+                    previous.getpixel((0, 0))
             previous = Image.new("RGBA", (96, 64), (index * 10, 24, 56, 255))
             released.append(previous)
             yield previous
 
     output = tmp_path / "stream.gif"
     save_gif_frames(input_frames(), [100] * 24, output)
-    assert all(im.im is None for im in released)
+    for im in released:
+        with pytest.raises(ValueError, match="closed"):
+            im.getpixel((0, 0))
     assert not list(tmp_path.glob(".stream.gif.*.tmp"))
     with Image.open(output) as gif:
         assert gif.n_frames == 24

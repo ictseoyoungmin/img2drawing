@@ -82,9 +82,9 @@ The canonical GIF writer also streams its input PNG frames. The final GIF is
 atomically replaced after encoding, then verified against the independent
 canonical final PNG using the unchanged tolerance and file-size budget.
 
-The manifest's authoritative GIF hash is \`gif.sha256\`; the fast encoding
-record's \`gif_sha256\` refers to the **same final file**. An unsuccessful FFmpeg
-attempt is explicitly kept under \`fast.encode.initial_attempt\`. Retry time is
+The manifest's authoritative GIF hash is `gif.sha256`; the fast encoding
+record's `gif_sha256` refers to the **same final file**. An unsuccessful FFmpeg
+attempt is explicitly kept under `fast.encode.initial_attempt`. Retry time is
 included in final encoding and pipeline performance figures.
 
 Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
