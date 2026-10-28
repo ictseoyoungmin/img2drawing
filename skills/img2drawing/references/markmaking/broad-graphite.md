@@ -67,8 +67,13 @@ the **spatial area** from the **contact footprint of a single stroke**:
    comparing the observed area's width, graphite core/shoulder and reserved light.
 
 Keep the stroke group in the canonical history with semantic part and observed
-area ownership recorded in the existing action metadata. Do not introduce a
-separate raster-only filling path or replace authored marks with pixel tracing.
+area ownership recorded in the existing action metadata. The optional
+`img2drawing.authoring.TonalAreaPlan` makes the observed boundary, direction,
+intended density/value, pressure range and reserved highlights explicit. It
+attaches only validated **planning metadata** to individual authored strokes;
+it does not derive any marks, authorize raster fills or certify accurate
+coverage. Inspect every resulting mark family at the current canvas scale.
+Do not replace authored marks with pixel tracing.
 
 ### Override consistency
 
