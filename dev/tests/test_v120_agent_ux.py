@@ -59,10 +59,19 @@ def test_fast_palette_failure_retries_with_local_palettes(tmp_path: Path, monkey
     session.draw([(8, 8), (50, 50)], tool="continuous_pencil")
     events = []
     result = session.export_timelapse(tmp_path / "replay", every_n=1, max_pixel_work=10**7, progress=events.append)
-    assert [e["phase"] for e in events] == ["render", "render", "encode", "verify", "retry"]
+    assert [e["phase"] for e in events] == [
+        "render", "render", "encode", "encode", "verify", "retry",
+        "retry", "retry", "verify",
+    ]
+    assert events[-1] == {"phase": "verify", "completed": 1, "total": 1}
     assert events[-1]["completed"] == events[-1]["total"] == 2
     assert result.manifest["gif"]["encoding_fallback"] == "local-frame-palettes"
     assert result.manifest["gif"]["within_tolerance"]
+    assert result.manifest["fast"]["encode"]["gif_sha256"] == result.manifest["gif"]["sha256"]
+    assert result.manifest["fast"]["encode"]["strategy"] == "local-frame-palettes"
+    assert "initial_attempt" in result.manifest["fast"]["encode"]
+    assert result.manifest["fast"]["performance"]["encode_sec"] >= result.manifest["fast"]["encode"]["retry_encode_sec"]
+    assert not (tmp_path / "replay" / "frames").exists()
     assert result.manifest["final"]["last_frame_pixel_match"]
 
 
@@ -77,3 +86,75 @@ def test_reshape_action_closes_residual_with_matching_observation(tmp_path: Path
     session.inspect(supersample=2)
     session.resolve_residual(residual, action_ids=(action,), after_inspection_id=session.inspection_history[-1]["inspection_id"], rationale="new jaw path inspected")
     assert session.residual_history[-1].status == "resolved"
+
+
+def test_reshape_preserves_global_soft_lift(tmp_path: Path):
+    session = DrawingSession.create(subject=subject(tmp_path), output_dir=tmp_path / "session")
+    oid = session.observe({"jaw": "needs reshaping"})
+    sid = session.draw([(10, 10), (40, 20), (70, 40)], tool="continuous_pencil", observation_id=oid)
+    session.soft_lift(sid, strength=0.6, observation_id=oid, reason="reduce search-line strength")
+    faded = session.current_stroke(sid)
+    assert faded.opacity < faded.tool_state["opacity"]
+    action = reshape_stroke(session, sid, [(10, 10), (45, 24), (70, 40)],
+                            reason="fix jaw geometry", observation_id=oid)
+    after = session.current_stroke(sid)
+    assert after.opacity == pytest.approx(faded.opacity)
+    assert after.tool_state["tool"] == "continuous_pencil"
+    assert session.resolve_authored_element(sid).latest_action_id == action
+
+
+def test_reshape_retains_locally_lifted_pressure(tmp_path: Path):
+    from img2drawing.core.tools import soft_eraser
+
+    session = DrawingSession.create(subject=subject(tmp_path), output_dir=tmp_path / "session")
+    oid = session.observe({"contour": "partially attenuated line"})
+    points = [(10, 10), (25, 12), (45, 22), (70, 40)]
+    sid = session.draw(points, tool="continuous_pencil", observation_id=oid)
+    # Exercise historical local-edit replay, which is not a public worker API.
+    session._agent.history.soft_lift_segment(sid, 1, 2, soft_eraser(), strength=0.8)
+    faded = session.current_stroke(sid)
+    assert not faded.pressure_authored
+    with pytest.raises(ValueError, match="requires pressure"):
+        reshape_stroke(session, sid, points + [(75, 42)], reason="add detail", observation_id=oid)
+    reshape_stroke(session, sid, [(11, 11), (26, 13), (46, 23), (69, 39)],
+                   reason="adjust shape", observation_id=oid)
+    revised = session.current_stroke(sid)
+    assert revised.pressure == pytest.approx(faded.pressure)
+    assert revised.pressure_authored
+
+
+def test_reshape_after_segment_replace_preserves_resulting_geometry(tmp_path: Path):
+    session = DrawingSession.create(subject=subject(tmp_path), output_dir=tmp_path / "session")
+    oid = session.observe({"contour": "needs correction"})
+    sid = session.draw([(10, 10), (25, 12), (45, 22), (70, 40)],
+                       tool="continuous_pencil", observation_id=oid)
+    session.replace_segment(sid, 1, 2, [(25, 12), (35, 25), (45, 22)],
+                            reason="local adjustment", observation_id=oid)
+    previous = session.current_stroke(sid)
+    assert len(previous.points) == 5
+    reshape_stroke(session, sid, [(11, 11), (25, 12), (34, 26), (45, 22), (69, 39)],
+                   reason="overall adjustment", observation_id=oid)
+    assert len(session.current_stroke(sid).points) == 5
+
+
+def test_streaming_local_gif_closes_each_frame_before_next(tmp_path: Path):
+    from img2drawing.timelapse.gif import save_gif_frames
+
+    released = []
+    def input_frames():
+        previous = None
+        for index in range(24):
+            if previous is not None:
+                assert previous.im is None, "previous frame retained in memory"
+            previous = Image.new("RGBA", (96, 64), (index * 10, 24, 56, 255))
+            released.append(previous)
+            yield previous
+
+    output = tmp_path / "stream.gif"
+    save_gif_frames(input_frames(), [100] * 24, output)
+    assert all(im.im is None for im in released)
+    assert not list(tmp_path.glob(".stream.gif.*.tmp"))
+    with Image.open(output) as gif:
+        assert gif.n_frames == 24
+        gif.seek(23)
+        assert gif.convert("RGB").getpixel((0, 0)) == (230, 24, 56)

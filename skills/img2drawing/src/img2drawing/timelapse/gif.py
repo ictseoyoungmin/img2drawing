@@ -6,10 +6,12 @@ import hashlib
 import os
 import shutil
 import subprocess
+import tempfile
 import time
 from pathlib import Path
+from typing import Callable, Iterable
 
-from PIL import Image, ImageChops
+from PIL import GifImagePlugin, Image, ImageChops
 
 from ..core.digest import sha256_file
 from .delta_pack import iter_rgb_views, read_info
@@ -55,6 +57,85 @@ def encode_gif(pack:Path,out_dir:Path,fps:int=12,*,palette_cache_dir:Path|None=N
             "pack_sha256":pack_hash,"palette_key":key,"rectangle":bool(rectangle)}
 
 
+def save_gif_frames(
+    frame_images: Iterable[Image.Image],
+    durations: list[int],
+    out_path: Path,
+    *,
+    colors: int = 64,
+    loop: int = 0,
+    disposal: int = 2,
+    progress: Callable[[int, int], None] | None = None,
+) -> None:
+    """Write locally paletted GIF frames one at a time, with bounded peak RAM.
+
+    No decoded-frame list, indexed-frame list, or temporary PNG frame spool is
+    accumulated. Every source image is closed before the next one is requested.
+    The GIF is atomically published only after its trailer has been written.
+    """
+    if not durations:
+        raise ValueError("cannot write GIF with no frames")
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    frames = iter(frame_images)
+    temporary: Path | None = None
+    count = 0
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb", dir=out_path.parent, prefix=f".{out_path.name}.",
+            suffix=".tmp", delete=False,
+        ) as stream:
+            temporary = Path(stream.name)
+            for index, image in enumerate(frames):
+                try:
+                    if index >= len(durations):
+                        raise ValueError("GIF has more frames than durations")
+                    paper = Image.new("RGBA", image.size, (255, 255, 255, 255))
+                    try:
+                        rgba = image.convert("RGBA")
+                        try:
+                            paper.alpha_composite(rgba)
+                        finally:
+                            rgba.close()
+                        rgb = paper.convert("RGB")
+                    finally:
+                        paper.close()
+                    try:
+                        indexed = rgb.quantize(
+                            colors=int(colors), method=Image.Quantize.MAXCOVERAGE,
+                        )
+                    finally:
+                        rgb.close()
+                    try:
+                        if index == 0:
+                            header, _ = GifImagePlugin.getheader(
+                                indexed, info={"loop": int(loop)},
+                            )
+                            for chunk in header:
+                                stream.write(chunk)
+                        for chunk in GifImagePlugin.getdata(
+                            indexed, duration=int(durations[index]),
+                            disposal=int(disposal), include_color_table=True,
+                        ):
+                            stream.write(chunk)
+                    finally:
+                        indexed.close()
+                    count += 1
+                    if progress is not None:
+                        progress(count, len(durations))
+                finally:
+                    image.close()
+            if count != len(durations):
+                raise ValueError("GIF has fewer frames than durations")
+            stream.write(b";")
+        os.replace(temporary, out_path)
+    finally:
+        if callable(getattr(frames, "close", None)):
+            frames.close()
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 def save_gif(
     frame_paths: list[Path],
     durations: list[int],
@@ -64,30 +145,11 @@ def save_gif(
     loop: int = 0,
     disposal: int = 2,
 ) -> None:
-    """Write PNG frames as a GIF, flattened onto white paper."""
-
-    if not frame_paths:
-        raise ValueError("cannot write GIF with no frames")
-    flattened = []
-    for path in frame_paths:
-        with Image.open(path) as image:
-            bg = Image.new("RGBA", image.size, (255, 255, 255, 255))
-            bg.alpha_composite(image.convert("RGBA"))
-        # MAXCOVERAGE keeps sparse graphite-on-paper tones represented in the local
-        # frame palette; MEDIANCUT can leave anti-aliased pixels far from the PNG.
-        flattened.append(bg.convert("RGB").quantize(colors=int(colors), method=Image.Quantize.MAXCOVERAGE))
-        bg.close()
-    flattened[0].save(
-        out_path,
-        save_all=True,
-        append_images=flattened[1:],
-        duration=durations,
-        loop=int(loop),
-        optimize=False,
-        disposal=int(disposal),
+    """Stream canonical PNG inputs with local frame palettes and bounded RAM."""
+    save_gif_frames(
+        (Image.open(path) for path in frame_paths),
+        durations, out_path, colors=colors, loop=loop, disposal=disposal,
     )
-    for image in flattened:
-        image.close()
 
 
 def gif_final_frame_error(gif_path: Path, final_png: Path) -> tuple[int, float]:

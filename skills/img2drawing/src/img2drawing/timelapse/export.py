@@ -11,7 +11,6 @@ from __future__ import annotations
 import json
 import shutil
 import time
-import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
@@ -24,7 +23,7 @@ from ..render.artifact import action_log_sha256, render_history_at, rgb_sha256
 from ..render.profile import RenderProfile
 from .delta_pack import DeltaPackWriter, iter_frames, read_info
 from .frames import FastFrameSource, inspect_fast_path_eligibility
-from .gif import encode_gif, gif_final_frame_error, save_gif
+from .gif import encode_gif, gif_final_frame_error, save_gif, save_gif_frames
 
 REPLAY_EXPORT_SCHEMA = "img2drawing.replay_export.v2"
 BACKENDS = ("auto", "fast", "canonical")
@@ -146,9 +145,11 @@ def _export_canonical(history, profile: RenderProfile, output: Path, cursors: li
             progress({"phase": "render", "completed": index + 1, "total": len(cursors)})
     gif_path = output / "timelapse.gif"
     if progress is not None:
-        progress({"phase": "encode", "completed": len(cursors), "total": len(cursors)})
+        progress({"phase": "encode", "completed": 0, "total": 1})
     save_gif(frame_paths, durations, gif_path, colors=profile.gif_palette_colors,
              loop=profile.gif_loop, disposal=profile.gif_disposal)
+    if progress is not None:
+        progress({"phase": "encode", "completed": 1, "total": 1})
     timing = {"policy": "per-action", "initial_ms": 180, "ordinary_action_ms": 120,
               "edit_action_ms": 180, "final_hold_ms": 900}
     return frames, gif_path, timing
@@ -182,8 +183,10 @@ def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[in
         source.close()
 
     if progress is not None:
-        progress({"phase": "encode", "completed": len(cursors), "total": len(cursors)})
+        progress({"phase": "encode", "completed": 0, "total": 1})
     encode = encode_gif(pack_path, output, int(fps), palette_cache_dir=cache_dir / "palettes", rectangle=bool(rectangle))
+    if progress is not None:
+        progress({"phase": "encode", "completed": 1, "total": 1})
 
     files: list[str | None] = [None] * len(cursors)
     if materialize_frames:
@@ -324,7 +327,7 @@ def export_timelapse(
         tolerance = _CANONICAL_GIF_TOLERANCE
 
     if progress is not None:
-        progress({"phase": "verify", "completed": len(cursors), "total": len(cursors)})
+        progress({"phase": "verify", "completed": 0, "total": 1})
     final_path = output / "canonical_final.png"
     final_artifact = render_history_at(history, history.cursor, final_path, profile)
     with Image.open(final_path) as image:
@@ -339,36 +342,51 @@ def export_timelapse(
     except ValueError:
         gif_path.unlink(missing_ok=True)
         raise
-    except GifFidelityError:
-        # A global ffmpeg palette may omit rare final-frame tones. Retry from the
-        # already-rendered exact frames using local palettes, without changing history,
-        # the persisted profile, or the final-frame tolerance.
+    except GifFidelityError as initial_error:
         if selected != "fast":
             gif_path.unlink(missing_ok=True)
             raise
         try:
+            # Reuse the exact delta-pack frames. Never materialize PNG frames or
+            # hold all decoded/indexed frames in memory to recover a GIF.
             if progress is not None:
-                progress({"phase": "retry", "completed": len(cursors), "total": len(cursors)})
-            with tempfile.TemporaryDirectory(prefix="img2drawing-gif-") as tmp:
-                frame_paths = []
-                for index, image in enumerate(iter_frames(output / "frames.idp")):
-                    path = Path(tmp) / f"{index:06d}.png"
-                    try:
-                        image.save(path)
-                    finally:
-                        image.close()
-                    frame_paths.append(path)
-                retry_path = Path(tmp) / "timelapse.gif"
-                durations = [frame["duration_ms"] for frame in frames]
-                save_gif(frame_paths, durations, retry_path, colors=profile.gif_palette_colors,
-                         loop=profile.gif_loop, disposal=profile.gif_disposal)
-                _check_gif(retry_path, final_path, tolerance, max_gif_bytes)
-                shutil.copyfile(retry_path, gif_path)
+                progress({"phase": "retry", "completed": 0, "total": len(cursors)})
+            started = time.perf_counter()
+            save_gif_frames(
+                iter_frames(output / "frames.idp"),
+                [frame["duration_ms"] for frame in frames],
+                gif_path, colors=profile.gif_palette_colors,
+                loop=profile.gif_loop, disposal=profile.gif_disposal,
+                progress=(
+                    None if progress is None else
+                    lambda done, total: progress(
+                        {"phase": "retry", "completed": done, "total": total}
+                    )
+                ),
+            )
+            retry_seconds = time.perf_counter() - started
             gif = _check_gif(gif_path, final_path, tolerance, max_gif_bytes)
             gif["encoding_fallback"] = "local-frame-palettes"
+            if fast_summary is not None:
+                first = dict(fast_summary["encode"])
+                first.pop("gif", None)  # That pathname now contains the successful retry.
+                first["strategy"] = "ffmpeg-global-palette"
+                first["failure"] = str(initial_error)
+                fast_summary["encode"] = {
+                    "strategy": "local-frame-palettes",
+                    "gif": str(gif_path),
+                    "gif_sha256": gif["sha256"],
+                    "initial_attempt": first,
+                    "retry_encode_sec": retry_seconds,
+                    "total_encode_sec": float(first["total_encode_sec"]) + retry_seconds,
+                }
+                fast_summary["performance"]["encode_sec"] += retry_seconds
+                fast_summary["performance"]["pipeline_sec"] += retry_seconds
         except Exception:
             gif_path.unlink(missing_ok=True)
             raise
+    if progress is not None:
+        progress({"phase": "verify", "completed": 1, "total": 1})
     if history.to_dict() != before_history:
         raise RuntimeError("timelapse export mutated authoritative history")
 

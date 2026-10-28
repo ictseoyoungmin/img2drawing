@@ -70,3 +70,23 @@ For long exports, pass `progress=callback` to `session.export_timelapse()`. The 
 receives dictionaries with `phase` (`render`, `encode`, `verify`, or `retry`) and `completed`/`total` sampled
 frames. Callbacks execute synchronously while the session is locked; use them for reporting,
 not session mutation. Exceptions in the callback abort the export.
+
+
+## Memory-bounded palette recovery (v1.2.0 development)
+
+If FFmpeg's global-palette fast GIF fails final-frame fidelity, the exporter
+re-reads the exact delta pack and encodes each frame with its own local palette.
+The decoder, quantizer, and GIF writer consume **one frame at a time**; they do
+not retain a list of decoded or indexed frames and do not spool a PNG sequence.
+The canonical GIF writer also streams its input PNG frames. The final GIF is
+atomically replaced after encoding, then verified against the independent
+canonical final PNG using the unchanged tolerance and file-size budget.
+
+The manifest's authoritative GIF hash is \`gif.sha256\`; the fast encoding
+record's \`gif_sha256\` refers to the **same final file**. An unsuccessful FFmpeg
+attempt is explicitly kept under \`fast.encode.initial_attempt\`. Retry time is
+included in final encoding and pipeline performance figures.
+
+Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
+necessary, retry frames 0→N. A completed retry frame count is not an
+all-phases-complete signal; the final verify event closes the operation.

@@ -183,11 +183,21 @@ def reshape_stroke(
     if not preset:
         raise ValueError("current stroke has no recoverable tool preset")
     new_points = list(points)
-    if pressure is None and current.pressure_authored and current.pressure is not None:
+    local_lift = any(
+        isinstance(edit, Mapping) and edit.get("kind") == "segment_soft_lift"
+        for edit in (state.get("local_edits") or ())
+    )
+    # A local eraser attenuates point pressures even when the original curve
+    # was derived. Carry that edited curve forward instead of regenerating it.
+    if pressure is None and (current.pressure_authored or local_lift) and current.pressure is not None:
         if len(current.pressure) != len(new_points):
-            raise ValueError("reshaping a stroke with authored pressure and a different point count requires pressure")
+            raise ValueError("reshaping a stroke with edited pressure and a different point count requires pressure")
         pressure = list(current.pressure)
     overrides = {name: float(state[name]) for name in _TOOL_OVERRIDE_FIELDS if name in state}
+    # Global soft_lift changes the replayed stroke opacity, not its original
+    # tool_state. Preserve the visible attenuation across geometry correction.
+    if current.opacity != float(state.get("opacity", current.opacity)):
+        overrides["opacity"] = float(current.opacity)
     provenance = state.get("provenance")
     metadata = deepcopy(dict(provenance.get("metadata", {}))) if isinstance(provenance, Mapping) and isinstance(provenance.get("metadata"), Mapping) else {}
     metadata["geometry_reshaped_from"] = current_id
