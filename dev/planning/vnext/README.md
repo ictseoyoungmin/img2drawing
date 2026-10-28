@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-The v1.0.3 and v1.1.0 release cycles are closed. M01 closes the post-v1.1.0 public-contract/release-hygiene maintenance as **GitHub Release v1.1.1** with its additive freeze, release notes, wheel, and sdist. No next bottleneck is selected; later work must begin from new evidence or a new product requirement in `ROADMAP.md`.
+The release cycles through v1.1.1 remain immutable. M02 promotes the portrait/reshape/GIF recovery release as **GitHub Release v1.2.0** through its additive contract freeze and manifest-driven publish workflow after green main CI. M03/v1.2.1 is the newly identified markmaking override/provenance and tonal-area bottleneck; see `STATUS.md` and `ROADMAP.md`.
 
 ## Authority order
 

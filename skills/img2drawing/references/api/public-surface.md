@@ -230,6 +230,28 @@ If the runtime cannot express the requested line language through the public res
 stroke/tool arguments, or retune helpers, record that as a capability gap for framework work rather
 than importing a private renderer helper or inventing unsupported keyword arguments.
 
+## Geometry-only correction and action identity
+
+For a corrected path that should retain the existing stroke's tool, role, part, layer and
+confidence, use `reshape_stroke()` from `img2drawing.authoring`. It resolves the current
+replacement descendant and returns the **action ID** for `resolve_residual()`; `draw()` and
+`replace_stroke()` return stroke IDs. Explicitly authored pressure is preserved when point
+counts match; if they change, supply a new pressure sequence. Derived pressure is regenerated.
+This prevents a geometry edit from silently reverting to the construction pencil. The lower-level
+`session.replace_stroke(...)` remains available for intentional material changes; it returns
+a stroke ID, so resolve its authored element to obtain the corresponding action ID.
+
+```python
+from img2drawing.authoring import reshape_stroke
+fix_action_id = reshape_stroke(session, jaw_stroke_id, corrected_jaw_points,
+                               reason="match the observed cheek-to-chin taper",
+                               observation_id=observation_id)
+```
+
+When authoring a related group, `draw_many()` accepts a list of point sequences or per-stroke
+mappings and commits them together. Use this to reduce repeated checkpoint work while keeping
+each stroke addressable; it does not decide geometry or replace fresh visual inspection.
+
 ## Residual provenance
 
 `record_residual()`, the corrective mutation, fresh inspection, and `resolve_residual()` form one
@@ -254,9 +276,9 @@ residual_id = session.record_residual(
     before_inspection_id=before_inspection_id,
 )
 
-fix_action_id = session.replace_stroke(
-    jaw_stroke_id,
-    corrected_jaw_points,
+from img2drawing.authoring import reshape_stroke
+fix_action_id = reshape_stroke(
+    session, jaw_stroke_id, corrected_jaw_points,
     observation_id=observation_id,
     reason="raise the jaw contour to the observed cheek-to-chin relation",
 )

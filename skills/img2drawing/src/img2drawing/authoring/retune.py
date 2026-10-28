@@ -155,4 +155,59 @@ def retune_strokes(
     )
 
 
-__all__ = ["retune_stroke", "retune_strokes"]
+__all__ = ["reshape_stroke", "retune_stroke", "retune_strokes"]
+
+
+def reshape_stroke(
+    session: Any,
+    stroke_id: str,
+    points: Sequence[Sequence[float]],
+    *,
+    reason: str,
+    pressure: Sequence[float] | None = None,
+    observation_id: str | None = None,
+    source_observation: str | None = None,
+) -> str:
+    """Replace geometry while retaining the current stroke's semantic and material properties.
+
+    Returns the *action ID* for correction provenance. An explicitly authored pressure
+    profile can be reused when the point count is unchanged; otherwise a replacement
+    profile is required. Derived pressure is regenerated for the new path.
+    """
+    if not str(reason).strip():
+        raise ValueError("reshape_stroke requires a non-empty reason")
+    current = session.current_stroke(stroke_id)
+    current_id = str(current.stroke_id or stroke_id)
+    state = deepcopy(current.tool_state or {})
+    preset = str(state.get("tool", "")).strip()
+    if not preset:
+        raise ValueError("current stroke has no recoverable tool preset")
+    new_points = list(points)
+    local_lift = any(
+        isinstance(edit, Mapping) and edit.get("kind") == "segment_soft_lift"
+        for edit in (state.get("local_edits") or ())
+    )
+    # A local eraser attenuates point pressures even when the original curve
+    # was derived. Carry that edited curve forward instead of regenerating it.
+    if pressure is None and (current.pressure_authored or local_lift) and current.pressure is not None:
+        if len(current.pressure) != len(new_points):
+            raise ValueError("reshaping a stroke with edited pressure and a different point count requires pressure")
+        pressure = list(current.pressure)
+    overrides = {name: float(state[name]) for name in _TOOL_OVERRIDE_FIELDS if name in state}
+    # Global soft_lift changes the replayed stroke opacity, not its original
+    # tool_state. Preserve the visible attenuation across geometry correction.
+    if current.opacity != float(state.get("opacity", current.opacity)):
+        overrides["opacity"] = float(current.opacity)
+    provenance = state.get("provenance")
+    metadata = deepcopy(dict(provenance.get("metadata", {}))) if isinstance(provenance, Mapping) and isinstance(provenance.get("metadata"), Mapping) else {}
+    metadata["geometry_reshaped_from"] = current_id
+    session.replace_stroke(
+        current_id, new_points, reason=str(reason).strip(), stroke_id=current_id,
+        role=current.role, part=current.part, confidence=current.confidence, layer=current.layer,
+        pressure=pressure, tool=preset, grade=state.get("pencil_grade"), tool_overrides=overrides,
+        observation_id=observation_id, source_observation=source_observation, metadata=metadata,
+    )
+    element = session.resolve_authored_element(current_id, element_type="stroke")
+    if element is None or not element.latest_action_id:
+        raise RuntimeError("reshaped stroke has no current action")
+    return str(element.latest_action_id)
