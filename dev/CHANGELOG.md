@@ -1,10 +1,11 @@
 # img2drawing changelog
 
-## 2026-10-28 — v1.2.0 agent UX, portrait fidelity and bounded-memory GIF recovery (unreleased)
+## 2026-10-28 — v1.2.0 agent UX, portrait fidelity and bounded-memory GIF recovery
 
 Development in [PR #75](https://github.com/ictseoyoungmin/img2drawing/pull/75).
-The released baseline remains v1.1.1; these are changes on the v1.2.0 development branch,
-not a published release or a visual-quality certification.
+The released predecessor is v1.1.1. v1.2.0 is promoted by the
+manifest-driven GitHub Actions workflow after green main CI; this is not
+a claim of independent portrait-likeness or measured high-resolution peak RSS.
 
 ### Portrait and croquis authoring guidance
 

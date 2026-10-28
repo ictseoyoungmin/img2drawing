@@ -2,7 +2,7 @@
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
   <p>
-    <a href="docs/releases/v1.1.1.md"><img src="https://img.shields.io/badge/version-v1.1.1-6f5a46" alt="Version v1.1.1"></a>
+    <a href="docs/releases/v1.2.0.md"><img src="https://img.shields.io/badge/version-v1.2.0-6f5a46" alt="Version v1.2.0"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
@@ -10,9 +10,9 @@
   </p>
 </div>
 
-**Current stable: v1.1.1**
+**Current stable: v1.2.0**
 
-> v1.1.1 is a maintenance release that aligns public capability metadata, provenance checks, plugin/version identity, and release tooling without changing the `img2drawing-pencil / 11` renderer pixels. See [the v1.1.1 release notes](docs/releases/v1.1.1.md) and [CHANGELOG.md](CHANGELOG.md).
+> v1.2.0 improves portrait-authoring guidance, geometry-only stroke reshape and memory-bounded GIF fidelity recovery. Renderer identity remains `img2drawing-pencil / 11`; independent portrait likeness and high-resolution peak-RSS benchmarks remain unverified. See [the v1.2.0 release notes](docs/releases/v1.2.0.md) and [CHANGELOG.md](CHANGELOG.md).
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -37,6 +37,12 @@ Three hand line studies progressing from early authored lines to finished line w
 
 Each panel advances through explicit drawing actions; this lightweight preview shows the process
 rather than only the final image.
+
+## v1.2.0 — Portrait authoring and replay recovery
+
+Whole-head/enlarged-face comparison guides likeness-bearing authoring. `reshape_stroke()` preserves material, erasure and correction action provenance through geometry changes. GIF export reports work budgets and progress, and recovers palette-fidelity failures with streaming, one-frame-at-a-time local palette encoding. No all-frame pixel accumulation or temporary PNG fallback spool is used.
+
+[Read the v1.2.0 release notes](docs/releases/v1.2.0.md) · [Changelog](CHANGELOG.md)
 
 ## v1.1.1 — Public contract coherence
 

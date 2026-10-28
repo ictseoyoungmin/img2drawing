@@ -2,7 +2,9 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
-## Unreleased — v1.2.0 development
+## v1.2.0 — Portrait authoring and memory-bounded GIF recovery
+
+Released 2026-10-28.
 
 - Compare likeness-bearing faces at whole-head and face scales, route jaw and soft-value mismatches to their owners, and retain selective value in croquis when identity depends on it.
 - Add `reshape_stroke` for geometry corrections that preserve semantic and material properties and return a correction action ID.
