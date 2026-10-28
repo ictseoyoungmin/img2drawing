@@ -50,7 +50,7 @@ def test_partial_override_preserves_broad_graphite_material_and_provenance(tmp_p
     assert stored["digest"] != mark.digest()  # new effective material, new provenance
 
     checkpoint = session.checkpoint()
-    resumed = DrawingSession.resume(checkpoint)
+    resumed = DrawingSession.resume(checkpoint, subject=session.subject)
     _assert_reconciled(resumed.current_stroke(sid), width=22.0)
     assert resumed.drawing_state_hash() == session.drawing_state_hash()
 
