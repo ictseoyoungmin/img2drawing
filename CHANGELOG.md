@@ -2,6 +2,13 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## Unreleased — v1.2.0 development
+
+- Compare likeness-bearing faces at whole-head and face scales, route jaw and soft-value mismatches to their owners, and retain selective value in croquis when identity depends on it.
+- Add `reshape_stroke` for geometry corrections that preserve semantic and material properties and return a correction action ID.
+- Make replay budget failures actionable, expose progress callbacks, and retry a fast GIF palette fidelity failure with local palettes under the persisted profile and unchanged validation.
+- Document project handoff and replay recovery.
+
 ## v1.1.1 — Public contract coherence
 
 Released 2026-09-29.

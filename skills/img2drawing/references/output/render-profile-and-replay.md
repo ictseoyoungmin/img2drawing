@@ -52,3 +52,21 @@ A session's `RenderProfile` binds the renderer identity and its contract digest.
 to a renderer this package cannot reproduce exactly (for example a pre-1.1 `v9`/`v10` profile, or a
 history containing retired region-fill actions) fails closed instead of being silently re-rendered;
 replay it with the release that produced it.
+
+## Agent-facing handoff and recovery
+
+When the user needs the project, put the authored script(s), session checkpoint, reference
+location, outputs, environment/dependency instructions and replay manifest together in a
+discoverable project directory. Document commands from the stated working directory, and test
+them when feasible. Do not imply that a PNG alone contains the drawing history.
+
+The pixel-work error reports the required work and budget before writing output. Increase
+`every_n` or explicitly choose a larger budget when warranted; both endpoints remain included.
+If the fast GIF's global palette fails final-frame fidelity, export retries with local frame
+palettes under the persisted profile and the same tolerance. If that still fails, no unvalidated
+GIF is returned; report the measured error and retain the independent final PNG.
+
+For long exports, pass `progress=callback` to `session.export_timelapse()`. The callback
+receives dictionaries with `phase` (`render`, `encode`, `verify`, or `retry`) and `completed`/`total` sampled
+frames. Callbacks execute synchronously while the session is locked; use them for reporting,
+not session mutation. Exceptions in the callback abort the export.

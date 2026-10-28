@@ -28,6 +28,7 @@ caps.authoring_operations  # draw, replace-stroke, soft-lift, delete-stroke
 caps.output_operations     # inspect, render, replay, timelapse
 caps.authoring_entrypoints # exact mutation callables: draw, replace_stroke, soft_lift, delete_stroke
 caps.output_entrypoints    # exact evidence/output callables: inspect, render_final, render_at, export_timelapse
+caps.authoring_helpers     # geometry and material editing helpers
 ```
 
 The semantic operation labels are split into `authoring_operations` and `output_operations`;

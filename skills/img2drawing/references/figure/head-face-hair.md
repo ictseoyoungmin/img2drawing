@@ -38,6 +38,22 @@ Before accepting facial detail, check that feature placement still agrees with t
 shape and visible side plane. If the face reads as eye/nose/mouth symbols pasted into a generic head,
 reopen head volume/orientation instead of refining the symbols.
 
+## Portrait comparison before detail and finish
+
+For a likeness-bearing face, inspect the reference and current drawing at the same useful
+whole-head and enlarged-face scales. Use visible landmarks rather than a standard face template:
+compare each eye envelope and iris-to-lid overlap, eye spacing and tilt, nose base, mouth width
+and position, cheek-to-jaw transitions, chin width and height, and the head/neck/hair handoffs.
+Compare landmarks as relationships (for example eye spacing against face width and mouth-to-chin
+distance against nose-to-mouth distance); do not assume symmetry or infer hidden boundaries.
+
+Identify the largest mismatch and its owner before adding detail. A broad or misplaced jaw is a
+face-silhouette problem, not a reason to add eyelashes. Reopen that parent contour first; inspect
+again at both scales. Check whether an apparent line is an actual edge or a soft value transition:
+do not turn a shaded nose bridge into a hard contour merely to name the nose. A recognizable face
+is not evidence that the portrait likeness is resolved. If it remains materially different,
+continue correction or explicitly report the limitation instead of claiming a faithful finish.
+
 ## Hair
 
 Hair is solved in three levels:

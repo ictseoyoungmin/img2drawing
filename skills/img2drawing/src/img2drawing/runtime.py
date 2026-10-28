@@ -56,6 +56,11 @@ class RuntimeCapabilities:
         "DrawingSession.soft_lift",
         "DrawingSession.delete_stroke",
     )
+    authoring_helpers: tuple[str, ...] = (
+        "img2drawing.authoring.reshape_stroke",
+        "img2drawing.authoring.retune_stroke",
+        "img2drawing.authoring.retune_strokes",
+    )
     output_entrypoints: tuple[str, ...] = (
         "DrawingSession.inspect",
         "DrawingSession.render_final",
@@ -85,6 +90,7 @@ class RuntimeCapabilities:
             # Compatibility key retained for callers that consumed the v1.1.0 payload.
             "supported_authoring_operations": list(self.supported_authoring_operations),
             "authoring_entrypoints": list(self.authoring_entrypoints),
+            "authoring_helpers": list(self.authoring_helpers),
             "output_entrypoints": list(self.output_entrypoints),
             "markmaking_contract": self.markmaking_contract,
             "prohibited_final_authoring_bypasses": list(self.prohibited_final_authoring_bypasses),

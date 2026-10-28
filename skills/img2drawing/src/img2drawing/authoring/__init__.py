@@ -36,7 +36,7 @@ from .markmaking import (
     resolve_mark_for_intent,
     resolve_markmaking,
 )
-from .retune import retune_stroke, retune_strokes
+from .retune import reshape_stroke, retune_stroke, retune_strokes
 
 __all__ = [
     "CONSTRUCTION_PHASES",
@@ -60,6 +60,7 @@ __all__ = [
     "observe_pose",
     "resolve_mark_for_intent",
     "resolve_markmaking",
+    "reshape_stroke",
     "retune_stroke",
     "retune_strokes",
     "sample_catmull_rom",

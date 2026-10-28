@@ -27,7 +27,11 @@ intent materially depends on form/light. Even then, the pose must remain readabl
 is mentally removed: major masses, support, limb chains, negative spaces, and prop/body overlap
 must already work as structure.
 
-A small local accent is allowed when it clarifies a real observed relation. Do not use value to
+A small local accent is allowed when it clarifies a real observed relation. When a reference's
+identity or important form depends on dark hair, garment masses, or soft facial transitions,
+selective value marks may carry those observed relationships even in an otherwise line-led
+croquis. Preserve the geometry and reserved light; do not treat every soft transition as a
+hard outline or fill a dark region with uniform parallel lines. Do not use value to
 manufacture missing form or to substitute for unresolved contour ownership.
 
 Omit redundant search lines, repeated texture, and low-impact shading. Do not replace a

@@ -24,7 +24,7 @@ import uuid
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from PIL import Image
 
@@ -1107,6 +1107,7 @@ class DrawingSession:
         max_pixel_work: int = 20_000_000,
         max_gif_bytes: int = 25_000_000,
         clean: bool = True,
+        progress: Callable[[dict[str, Any]], None] | None = None,
     ) -> ReplayExport:
         """Export action 0 → latest as ``timelapse.gif`` with a replay manifest.
 
@@ -1130,6 +1131,7 @@ class DrawingSession:
                 max_pixel_work=max_pixel_work,
                 max_gif_bytes=max_gif_bytes,
                 clean=clean,
+                progress=progress,
             )
 
     def _commit(self, action: DrawingAction | Iterable[DrawingAction]) -> Any:
