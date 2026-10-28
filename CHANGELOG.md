@@ -2,6 +2,12 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## Unreleased — v1.2.1 tonal authoring development
+
+- Merge per-call `tool_overrides` into resolved tool modifiers without dropping untouched material properties; reconcile markmaking provenance to the executed ToolState.
+- Add `TonalAreaPlan` as validated, observation-owned spatial/value evidence attached to authored stroke metadata (boundary, flow, density, value, pressure range, light reserves). It performs no automatic filling or geometry generation.
+- Document a distinct tonal-area planning/overdraw gate for hair and garments while retaining stroke-authoritative renderer v11 and existing replay/session schemas. Visual effectiveness is pending fresh drawing evidence.
+
 ## v1.2.0 — Portrait authoring and memory-bounded GIF recovery
 
 Released 2026-10-28.

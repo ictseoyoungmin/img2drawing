@@ -203,6 +203,12 @@ such as `gesture-flow`, `contour-weighted`, and `broad-graphite` describe semant
 they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
 Resolve semantic intent first, then pass the returned public draw kwargs to the session:
+For a width/pressure/opacity adjustment, prefer `modifiers={...}` at
+`resolve_mark_for_intent()`. From v1.2.1 development, per-call
+`tool_overrides={...}` also **merges selectively** with the resolved tool
+mapping instead of discarding untouched grain/hardness; the recorded
+markmaking metadata is reconciled against the executed ToolState and
+rejects inconsistent semantic roles or runtime presets.
 
 ```python
 from img2drawing.authoring import resolve_mark_for_intent
@@ -229,6 +235,38 @@ the runtime explicitly documents them as direct draw tools.
 If the runtime cannot express the requested line language through the public resolver, supported
 stroke/tool arguments, or retune helpers, record that as a capability gap for framework work rather
 than importing a private renderer helper or inventing unsupported keyword arguments.
+
+## Tonal-area evidence without raster filling (v1.2.1 development)
+
+Use the optional `TonalAreaPlan` when dark hair or garment value must be built
+from several authored pencil marks rather than an oversized solid stripe.
+The plan is evidence for the region and stroke family; it performs **no
+automatic fill, shape inference, or pixel copying**. Individual strokes stay
+in the same canonical history and are evaluated using fresh renders:
+
+```python
+from img2drawing.authoring import TonalAreaPlan, resolve_mark_for_intent
+
+area = TonalAreaPlan(
+    area_id="hair-left-dark", part="hair",
+    reference_evidence="observed left clump with retained highlight",
+    boundary=((10, 10), (50, 12), (47, 68), (12, 65)),
+    direction_degrees=74,
+    target_density=0.48, target_value=0.58, pressure_range=(0.22, 0.55),
+    highlight_reserves=(((24, 20), (32, 24), (29, 52)),),
+)
+mark = resolve_mark_for_intent(session.intent, "value",
+                               tool_preset="broad-graphite",
+                               modifiers={"width": 6.0, "pressure": 0.4, "opacity": 0.45})
+session.draw(
+    observed_stroke_points, part="hair",
+    **mark.draw_kwargs(metadata=area.stroke_metadata(stroke_family="clump-flow")),
+)
+```
+
+The plan's target density/value and highlight polygons are *observation
+intent*, not renderer-verified fill constraints. Compare actual coverage,
+preserved light and pencil grain with the reference before accepting a group.
 
 ## Geometry-only correction and action identity
 

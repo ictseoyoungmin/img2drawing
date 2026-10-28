@@ -136,6 +136,18 @@ Solve an attached/held object and its body relation together. Verify:
 
 Do not finish the prop independently and place it beside the body afterward.
 
+## Tonal-area / overdraw gate
+
+Before accepting broad value in hair, garment or skin, identify the owned
+area boundary, its adjacent plane/clump and the highlights that must remain.
+Compare stroke direction with observed form flow; compare accumulated coverage
+and center darkness with the reference, not with the nominal 4B label.
+If repeated wide strokes erase value transitions or light reserves, classify
+this as **tonal overdraw** and revise the authored mark family, density or
+boundary instead of painting over the failure. The area is a semantic planning
+owner, not an independent raster authority. Consult
+[`broad-graphite.md`](../markmaking/broad-graphite.md).
+
 ## Hierarchy gate
 
 Use at least three semantic dominance levels conceptually:

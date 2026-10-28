@@ -1,5 +1,17 @@
 # img2drawing changelog
 
+## 2026-10-28 — v1.2.1 tonal authoring dev, first corrective slice (unreleased)
+
+The reported 511-action hair/garment overdraw exposed a pair of concerns:
+resolver-provided material overrides could be replaced by a narrower
+`DrawingSession.draw(tool_overrides=...)` mapping; repeated, oversized
+4B strokes were also used as substitutes for planned tonal areas. The initial
+runtime change merges partial tool overrides and reconciles recognized
+markmaking metadata to the resolved action ToolState/digest; the instruction
+graph now distinguishes tonal-area structure, direction, protected highlights
+and graded deposits from arbitrary width inflation. Renderer v11 remains
+unchanged and no fresh independent drawing-quality gate is claimed.
+
 ## 2026-10-28 — v1.2.0 agent UX, portrait fidelity and bounded-memory GIF recovery
 
 Development in [PR #75](https://github.com/ictseoyoungmin/img2drawing/pull/75).
