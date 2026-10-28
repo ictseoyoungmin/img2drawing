@@ -1,5 +1,84 @@
 # img2drawing changelog
 
+## 2026-10-28 — v1.2.0 agent UX, portrait fidelity and bounded-memory GIF recovery (unreleased)
+
+Development in [PR #75](https://github.com/ictseoyoungmin/img2drawing/pull/75).
+The released baseline remains v1.1.1; these are changes on the v1.2.0 development branch,
+not a published release or a visual-quality certification.
+
+### Portrait and croquis authoring guidance
+
+- The skill router now directs likeness-bearing portraits to
+  `references/figure/head-face-hair.md` before facial detail or finish.
+  Workers compare the reference and rendered drawing at **whole-head and enlarged-face
+  scales**, checking observed eye envelopes/spacing/tilt, iris-to-lid overlap,
+  nose and mouth landmarks, cheek-to-jaw/chin transitions, and head/hair/neck handoffs.
+  Ratios and relative landmarks are evidence, not a generic symmetrical face template.
+- Reopen the **responsible upstream structure** (for example, jaw/face silhouette)
+  before adding downstream details. Do not substitute eyelashes or other symbolic
+  features for a misplaced face mass; do not convert soft value transitions into
+  artificial hard outlines. Recognizability alone does not prove portrait likeness.
+  Disclose unresolved material discrepancies instead of claiming faithful completion.
+- Croquis guidance explicitly permits **selective authored value marks** for
+  observed dark hair, garment masses, and soft facial transitions needed for
+  identity, while retaining line-led structure, light reserves and contour ownership.
+
+### Stroke-editing and correction provenance
+
+- Added public `img2drawing.authoring.reshape_stroke(session, stroke_id, points, ...)`
+  as a **geometry correction** that inherits the current stroke's semantic role,
+  part, layer, confidence, tool/material parameters and pencil grade.
+- Unlike `DrawingSession.replace_stroke()` (which returns a stroke ID),
+  `reshape_stroke()` returns the **correction action ID**, which can be passed
+  to `resolve_residual()` after fresh inspection. It uses the existing
+  `stroke.replace` history action: no new persisted schema or renderer contract.
+- Corrected edit-history regressions: preserve globally soft-lifted visible
+  opacity and locally soft-lifted point pressure when reshaping. When the
+  authored or locally edited pressure profile cannot align with changed point
+  counts, require an explicitly authored new pressure array instead of silently
+  restoring the original pressure. Segment replacement is covered by regression
+  tests, too.
+- Runtime capability discovery exposes `authoring_helpers` rather than requiring
+  agent workers to guess helper names.
+
+### Replay, memory use, validation and handoff
+
+- Pixel-work budget failures now state required work, frame count and limit
+  **before** creating output; sampling still includes action cursor 0 and the
+  latest action.
+- `DrawingSession.export_timelapse(progress=callback)` reports phase-scoped
+  `render`, `encode`, `verify` and (if needed) `retry` events with
+  `completed`/`total`; an all-frames-complete retry is not a final validation.
+- When FFmpeg's global palette misses the final-frame color tolerance, the
+  exporter reuses the **exact delta-pack frames** and writes a GIF with
+  per-frame local palettes. The fallback and canonical Pillow writer now
+  **stream and close one frame at a time**, with an atomic GIF file handoff.
+  They neither retain a decoded/quantized list of all frames nor spool a
+  temporary PNG sequence. This removes frame-count-proportional in-memory
+  pixel accumulation from these paths; it does **not** establish a measured
+  maximum RSS at large resolution.
+- Final GIF validation uses the same persisted RenderProfile and unchanged
+  fidelity thresholds. The manifest identifies the actual output GIF hash
+  consistently, retains the failed FFmpeg attempt under
+  `fast.encode.initial_attempt`, and includes the retry in encoding/pipeline
+  timings. Failed/unvalidated GIFs are not returned as successful exports.
+- Handoff instructions require discoverable authored scripts, reference location,
+  session checkpoint, generated artifacts, environment instructions and replay
+  manifest; a standalone PNG is not replayable drawing provenance.
+
+### Verification and outstanding evidence
+
+- The final PR-head GitHub Actions **push and pull_request** workflows passed at
+  commit `93e399b3e1c1d3923188a967085d4a6d68e98a18`:
+  **264 active tests passed** and **44 package/supply-chain boundary tests passed**.
+- Regression coverage includes stroke reshape/residual action IDs, budget failure,
+  enforced local-palette retry, manifest hash consistency, phase progress,
+  global/local soft-lift behavior, segment replacement, and streaming frame
+  release. Historical release and instruction-graph checks also passed.
+- **Still unproven:** measured peak RSS for a long high-resolution recovery,
+  and independent fresh-portrait dogfood establishing improved facial likeness.
+  CI success must not be reported as a substitute for either validation.
+
 Release history for the `img2drawing` skill. This is the external home for
 version/release narrative that used to be woven directly into `SKILL.md` and
 `references/`, which made the operating instructions read as an append-only
@@ -13,10 +92,10 @@ This file keeps the *why* and the *history* — what each release changed and
 what dogfood testing found along the way — without pinning the operational
 docs to a specific revision.
 
-The current release is tracked in `src/img2drawing/_version.py`
-(`__version__`, `RELEASE_REVISION`, `RELEASE_SLICE`), which `pyproject.toml`
-reads from dynamically. That module is the single source of truth for "what
-version is this" at build/runtime; release notes may record the version they describe.
+The installable runtime version is defined in
+`skills/img2drawing/src/img2drawing/_version.py` (`__version__`) and read by
+`pyproject.toml` for packaging. The older revision/slice labels below are
+historical and no longer define the current runtime contract.
 
 ## 0.6.0rc2 — Public-root API alignment
 

@@ -8,6 +8,10 @@ All notable public changes to `img2drawing` are documented here. Internal develo
 - Add `reshape_stroke` for geometry corrections that preserve semantic and material properties and return a correction action ID.
 - Make replay budget failures actionable, expose progress callbacks, and retry a fast GIF palette fidelity failure with local palettes under the persisted profile and unchanged validation.
 - Document project handoff and replay recovery.
+- Preserve global soft-lift attenuation and locally erased pressure through `reshape_stroke`; explicitly require replacement pressure when edited point counts change.
+- Eliminate full-frame GIF palette accumulation in Pillow paths: stream local-palette frames directly from the delta pack or canonical PNG sequence, release each frame immediately, and publish the encoded GIF atomically. No decoded-frame list or PNG fallback spool is used.
+- Make the final GIF digest authoritative across replay manifest fields; retain failed FFmpeg attempt metadata separately, include retry work in performance totals, and report phase-aware export progress.
+- PR #75 verification: 264 active tests and 44 package-boundary tests passed. High-resolution peak-RSS benchmarks and independent portrait-likeness dogfood remain outstanding.
 
 ## v1.1.1 — Public contract coherence
 
