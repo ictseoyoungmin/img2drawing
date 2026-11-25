@@ -91,6 +91,21 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
+## Actual tonal interval inspection
+
+`img2drawing.inspection.inspect_tonal_interval(session, before_cursor, after_cursor, area_ids=...)`
+measures canonical rendered darkness relative to cursor zero against explicit
+live tonal plans. It also reports current stroke centerline exposure, axial
+direction and pressure diagnostics. Optional disjoint `separation_pairs` compare
+mean darkness; no automatic artistic verdict or per-stroke raster attribution.
+Use isolated intervals for leakage claims; current plans are not historical ones.
+Optional `cached_renders={cursor: png_path}` reuses trusted local canonical PNGs
+with matching render manifests, profile, history prefix, cursor state and pixel
+hashes. Missing cursors render normally; invalid provided evidence fails closed.
+Prepare selected pressure-only corrections with `TonalPressureAdjustment` and
+`prepare_tonal_pressure_edits`; preview and commit via the normal stroke-edit API.
+See [broad graphite](../markmaking/broad-graphite.md).
+
 ## Explicit curve sampling and atomic geometry editing
 
 `sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`,

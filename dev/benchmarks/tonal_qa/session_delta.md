@@ -1,6 +1,6 @@
 # Real-session tonal QA
 
-This is developer-only diagnosis, not a new drawing backend or a release-quality judge.
+The CLI delegates to the public read-only `img2drawing.inspection.inspect_tonal_interval` runtime helper. It is not a drawing backend or release-quality judge.
 It re-renders cursor 0, the selected before cursor, and the after cursor with the session's
 persisted RenderProfile. It collects explicitly authored TonalAreaPlan metadata from one
 current IR snapshot, verifies its digests, rejects conflicting live plans, and measures

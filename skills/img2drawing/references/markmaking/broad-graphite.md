@@ -84,3 +84,17 @@ settled before drawing. If a supported `tool_overrides` modifier is supplied
 at `DrawingSession.draw()` time, it selectively updates the resolved map
 while inherited grain/hardness remain intact. The stored markmaking
 provenance must identify that **executed** material, not the earlier snapshot.
+
+## Inspect and correct actual deposits
+
+Use `inspect_tonal_interval` on canonical before/after cursors and selected
+live `TonalAreaPlan` IDs. Read protected coverage, saturation and darkness
+change relative to blank paper. Outside-area additions include all edits in
+the interval, so isolate the responsible mark family before attributing leakage.
+Current-stroke centerline exposure and direction/pressure reports are approximate
+diagnostics, not the raster contribution of a stroke. Explicit disjoint area
+pairs can report signed tonal separation; they do not rank artistic quality.
+Select the responsible stroke and point interval yourself, prepare an explicit
+`TonalPressureAdjustment`, then preview and apply via the existing edit path.
+A pressure reduction may fail to recover the clump: reopen geometry and mark
+placement instead of repeatedly darkening or weakening unrelated areas.

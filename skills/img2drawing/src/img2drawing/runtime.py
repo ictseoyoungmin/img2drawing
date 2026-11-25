@@ -57,6 +57,8 @@ class RuntimeCapabilities:
         "DrawingSession.delete_stroke",
     )
     authoring_helpers: tuple[str, ...] = (
+        "img2drawing.authoring.TonalPressureAdjustment",
+        "img2drawing.authoring.prepare_tonal_pressure_edits",
         "img2drawing.authoring.resample_polyline",
         "img2drawing.authoring.sample_cubic_bezier",
         "img2drawing.authoring.pressure_along_path",
@@ -75,6 +77,7 @@ class RuntimeCapabilities:
         "img2drawing.authoring.retune_strokes",
     )
     observation_helpers: tuple[str, ...] = (
+        "img2drawing.inspection.inspect_tonal_interval",
         "img2drawing.observation.Landmark",
         "img2drawing.observation.LandmarkSet",
         "img2drawing.observation.compare_landmarks",
