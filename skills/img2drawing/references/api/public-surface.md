@@ -97,7 +97,7 @@ Use `img2drawing.observation.Landmark`, `LandmarkSet` and the read-only
 comparison helpers when a visible relationship needs measurement. Declare
 reference and drawing landmarks independently, with evidence and visibility.
 They share existing `Registration` / `Measurement` contracts, so the results
-can be included in `session.inspect(measurements=(report,))` or recorded using
+can be included in `session.inspect(measurements=(report,), escalation_reason="check landmark discrepancy")` or recorded using
 `session.observe(report.to_dict())`. Use canvas-pixel coordinates for drawing
 landmarks, not display zoom, ROI crop coordinates or output-scale pixels.
 See [measuring boundaries](../observation/measuring-boundaries.md) for

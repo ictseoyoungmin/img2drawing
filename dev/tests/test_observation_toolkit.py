@@ -117,6 +117,7 @@ def test_session_inspection_accepts_measurement_and_does_not_mutate_strokes(tmp_
     b = landmarks("canvas",(32,32),p=(2,2),q=(20,20))
     m = compare_landmarks(a,b,registration=Registration.identity((32,32)),labels=("p","q"),normalizer=("p","q"))
     session.observe(a.to_dict())
-    session.inspect(measurements=(m,),supersample=2)
+    session.inspect(measurements=(m,), supersample=2,
+                    escalation_reason="check the declared visible landmark discrepancy")
     assert (session.history_cursor,session.drawing_state_hash()) == before
     assert "img2drawing.observation.compare_landmarks" in runtime_capabilities().observation_helpers
