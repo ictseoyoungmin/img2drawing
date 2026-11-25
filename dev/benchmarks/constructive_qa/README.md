@@ -57,3 +57,25 @@ Do not commit private reference bytes, reference fingerprints, sessions, frame p
 or answer geometry. Keep them in authorized local evidence storage. S00 remains open
 until all six reference cases, prompts, actual model settings, budgets, baseline results
 and review evidence are fixed. S07 remains the independent quality gate.
+
+## S07 isolated worker delivery and submitted replay verification
+
+`campaign.py packet` creates a new ZIP from the exact pinned Git commit, including only
+`skills/img2drawing`, the byte-identical reference and normal task metadata. Keep the receipt
+and all evaluator comparisons outside the worker packet. Launch each arm in an independent
+context using the sealed actual model/configuration and budget; this tool does not launch or
+attest an agent. Do not use the developer's existing portrait session as a fresh baseline.
+
+```sh
+python dev/benchmarks/constructive_qa/campaign.py packet . sealed-case.json reference.png v1.2.1 1127e673e05799040e802e9fd3a887d7781f2941 worker-id private-qa/worker.zip private-qa/receipt.json
+python dev/benchmarks/constructive_qa/campaign.py verify-replay sealed-case.json reference.png run.json evidence evidence/replay/replay_manifest.json private-qa/replay-check.json
+```
+
+Run the verification with the pinned arm's installed runtime. It validates actual session resume,
+canvas/intent, action count and log identity, canonical independent final pixels, sample cursors,
+GIF bytes and actual decoded first/last frame tolerance. It does not check every intermediate
+frame or prove independent model execution. Use the existing full-history replay tests and a
+separate visual reviewer; no auto-PASS. The prior S00 protocol remains the metadata authority.
+
+The current campaign's independent six-class execution is NOT_RUN. Controlled shared-stroke
+replays and local development studies are diagnostic only, not worker or quality comparisons.
