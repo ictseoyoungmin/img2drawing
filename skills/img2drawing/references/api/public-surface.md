@@ -91,6 +91,15 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
+## Explicit semantic group navigation
+
+Use `SemanticGroup`, `record_semantic_groups` and `inspect_semantic_groups`
+to declare disjoint stroke membership and directed dependencies in ordinary
+observation records. `prepare_group_transform` feeds the existing atomic edit
+and preview path; `retire_group_guides` deletes only selected declared guides.
+`review_semantic_group` requires current inspected/read evidence and records
+an agent review, never artistic PASS. See [authored element navigation](../review/authored-element-navigation.md).
+
 ## Actual tonal interval inspection
 
 `img2drawing.inspection.inspect_tonal_interval(session, before_cursor, after_cursor, area_ids=...)`

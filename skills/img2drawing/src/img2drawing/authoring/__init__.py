@@ -23,6 +23,7 @@ from .construction import (
 from .projection import ProjectedSection, projected_ellipse, projected_envelope, author_projection_guides
 from .sampling import resample_polyline, sample_cubic_bezier, pressure_along_path, curve_join, deform_interval
 from .stroke_edits import StrokeEdit, transform_strokes, apply_stroke_edits, preview_stroke_edits
+from .semantic_groups import SemanticGroup, record_semantic_groups, inspect_semantic_groups, review_semantic_group, prepare_group_transform, retire_group_guides
 from .curves import sample_catmull_rom
 from .markmaking import (
     MARKMAKING_SCHEMA,
@@ -44,6 +45,12 @@ from .tonal_area import TONAL_AREA_SCHEMA, TonalAreaPlan
 from .tonal_correction import TonalPressureAdjustment, prepare_tonal_pressure_edits
 
 __all__ = [
+    "SemanticGroup",
+    "record_semantic_groups",
+    "inspect_semantic_groups",
+    "review_semantic_group",
+    "prepare_group_transform",
+    "retire_group_guides",
     "TonalPressureAdjustment",
     "prepare_tonal_pressure_edits",
     "resample_polyline",
