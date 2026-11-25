@@ -1,7 +1,7 @@
 import math
 import pytest
 from PIL import Image
-from img2drawing import DrawingSession, ConstructionMark
+from img2drawing import DrawingSession, ConstructionMark, DrawingIntent, ReferenceAuthority
 from img2drawing.inspection import Registration
 from img2drawing.authoring import projected_ellipse, ProjectedSection, projected_envelope, author_projection_guides
 
@@ -45,7 +45,9 @@ def test_construction_uses_canonical_actions_and_retires(tmp_path):
     assert resumed.drawing_state_hash()==s.drawing_state_hash()
 
 def test_invalid_batch_fails_without_history_change(tmp_path):
-    s=DrawingSession.create(canvas=(64,64),output_dir=tmp_path/"run")
+    s=DrawingSession.create(canvas=(64,64),output_dir=tmp_path/"run",
+        intent=DrawingIntent(reference_mode="imaginative",drawing_mode="free_draw"),
+        reference_authority=ReferenceAuthority.imaginative(("test explicit guide geometry",)))
     oid=s.observe({"owner":"declared shape"})
     good=ConstructionMark("good","mass_blocking","structure","mass",((1,1),(4,4)))
     bad=ConstructionMark("bad","mass_blocking","structure","mass",((1,1),(80,80)))
