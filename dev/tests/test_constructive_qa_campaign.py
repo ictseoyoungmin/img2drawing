@@ -84,6 +84,7 @@ def test_actual_replay_verification_and_tampering(tmp_path):
     assert report["freshness_attestation"]=="not_fresh"
     audited=campaign.verify_submitted_replay(case_record,ref,run,evidence,replay.manifest_path,
                                              sample_audit_budget=1_000_000)
+    assert audited["status"]=="ALL_SAMPLES_VERIFIED"
     assert audited["all_intermediate_frames"]=="ALL_SAMPLES_VERIFIED"
     assert audited["sample_audit"]["sample_count"]==3
     assert audited["sample_audit"]["sampled_hashes_matched"]==3
@@ -108,6 +109,13 @@ def test_actual_replay_verification_and_tampering(tmp_path):
     result=campaign.verify_sampled_frames(s,corrupted,forged,max_pixel_work=1_000_000)
     assert result["status"]=="SAMPLE_TOLERANCE_FAILED"
     assert any(row["cursor"]==2 for row in result["out_of_tolerance"])
+    forged_run=deepcopy(run)
+    forged_run["artifacts"]["timelapse_gif"]={"file":"forged.gif","sha256":protocol.file_digest(forged)}
+    forged_manifest=evidence/"forged-manifest.json"
+    forged_manifest.write_text(json.dumps(corrupted))
+    strict=campaign.verify_submitted_replay(case_record,ref,forged_run,evidence,forged_manifest,
+                                           sample_audit_budget=1_000_000)
+    assert strict["status"]=="SAMPLE_TOLERANCE_FAILED"
     m=json.loads(replay.manifest_path.read_text());m["frames"][0]["cursor"]=1
     replay.manifest_path.write_text(json.dumps(m))
     with pytest.raises(ValueError,match="sampling"):

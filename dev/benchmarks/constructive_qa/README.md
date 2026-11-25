@@ -79,7 +79,8 @@ budget) to `verify-replay`. The evaluator regenerates each declared cursor using
 backend, checks each unquantized hash and compares each decoded GIF frame to the regenerated
 RGB pixels using the pinned final-frame tolerance as a stricter per-frame diagnostic. The strict
 audit requires an opaque profile and one decoded GIF frame per sample; coalesced sequences fail
-closed. This is not a separate renderer comparison or verification of unsampled actions, and
+closed. If a sampled frame exceeds tolerance, the report records `SAMPLE_TOLERANCE_FAILED`
+and the command exits nonzero. This is not a separate renderer comparison or verification of unsampled actions, and
 neither mode proves independent model execution. Use the existing full-history replay tests and a
 separate visual reviewer; no auto-PASS. The prior S00 protocol remains the metadata authority.
 

@@ -288,7 +288,8 @@ def verify_submitted_replay(case,reference,run,evidence_root,replay_manifest, *,
                  verify_sampled_frames(session, manifest, paths["timelapse_gif"], max_pixel_work=sample_audit_budget))
     if file_digest(paths["session"])!=before:
         raise RuntimeError("verification modified submitted checkpoint")
-    return {"status":"ENDPOINTS_VERIFIED","case_digest":case["case_digest"],
+    return {"status":"ENDPOINTS_VERIFIED" if audit is None else audit["status"],
+            "case_digest":case["case_digest"],
             "arm":run["arm"],"commit":run["commit"],"runtime_version":__version__,
             "cursor":cursor,"manifest_sample_count":len(cursors),"decoded_gif_frames":frames,
             "first_frame_error":errors[0],"last_frame_error":errors[1],
@@ -317,6 +318,8 @@ def main():
         result=verify_submitted_replay(read_json(a.case),a.reference,read_json(a.run),a.evidence_root,a.replay_manifest, sample_audit_budget=a.sample_audit_budget)
         _write_json(a.report,result)
     print(json.dumps(result,indent=2))
+    if result["status"] == "SAMPLE_TOLERANCE_FAILED":
+        raise SystemExit(1)
 
 
 if __name__=="__main__":
