@@ -20,6 +20,7 @@ from .construction import (
     inspect_initial_construct,
     observe_pose,
 )
+from .projection import ProjectedSection, projected_ellipse, projected_envelope, author_projection_guides
 from .curves import sample_catmull_rom
 from .markmaking import (
     MARKMAKING_SCHEMA,
@@ -40,6 +41,10 @@ from .retune import reshape_stroke, retune_stroke, retune_strokes
 from .tonal_area import TONAL_AREA_SCHEMA, TonalAreaPlan
 
 __all__ = [
+    "ProjectedSection",
+    "projected_ellipse",
+    "projected_envelope",
+    "author_projection_guides",
     "CONSTRUCTION_PHASES",
     "MARKMAKING_SCHEMA",
     "MATERIAL_POLICIES",

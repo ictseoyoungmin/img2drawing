@@ -57,6 +57,10 @@ class RuntimeCapabilities:
         "DrawingSession.delete_stroke",
     )
     authoring_helpers: tuple[str, ...] = (
+        "img2drawing.authoring.ProjectedSection",
+        "img2drawing.authoring.projected_ellipse",
+        "img2drawing.authoring.projected_envelope",
+        "img2drawing.authoring.author_projection_guides",
         "img2drawing.authoring.reshape_stroke",
         "img2drawing.authoring.retune_stroke",
         "img2drawing.authoring.retune_strokes",
