@@ -1,0 +1,58 @@
+name: img2drawing-opt-in-tonal-qa
+on:
+  push:
+    branches: [qa/v1.2.1-tonal-evidence]
+    paths:
+      - 'dev/benchmarks/tonal_qa/**'
+      - '.github/workflows/tonal-qa.yml'
+  workflow_dispatch:
+jobs:
+  swatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -e 'skills/img2drawing'
+      - run: python dev/benchmarks/tonal_qa/benchmark.py swatch --out qa-results/swatch
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tonal-swatch
+          path: |
+            qa-results/swatch/swatch.json
+            qa-results/swatch/*/final.png
+          retention-days: 7
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: fast-every4
+            step: 4
+            retry: ''
+          - label: retry-every16
+            step: 16
+            retry: '--force-retry'
+          - label: retry-every4
+            step: 4
+            retry: '--force-retry'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - run: python -m pip install -e 'skills/img2drawing'
+      - name: Measure replay in isolated process
+        run: python dev/benchmarks/tonal_qa/benchmark.py replay --out qa-results/replay --size 2048 --actions 511 --every-n ${{ matrix.step }} ${{ matrix.retry }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replay-${{ matrix.label }}
+          path: qa-results/replay/replay.json
+          retention-days: 7

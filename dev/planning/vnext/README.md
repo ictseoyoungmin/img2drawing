@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-The release cycles through v1.1.1 remain immutable. M02 promotes the portrait/reshape/GIF recovery release as **GitHub Release v1.2.0** through its additive contract freeze and manifest-driven publish workflow after green main CI. M03/v1.2.1 is the newly identified markmaking override/provenance and tonal-area bottleneck; see `STATUS.md` and `ROADMAP.md`.
+The release cycles through v1.2.0 remain immutable. M03 selects **GitHub Release v1.2.1** for bounded markmaking provenance, tonal authoring and QA maintenance, gated by green main CI and manifest-driven publication. v1.3.0 constructive drawing quality and independent validation are next; see `STATUS.md` and `ROADMAP.md`.
 
 ## Authority order
 

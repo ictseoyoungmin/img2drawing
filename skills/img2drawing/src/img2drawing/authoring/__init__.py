@@ -37,6 +37,7 @@ from .markmaking import (
     resolve_markmaking,
 )
 from .retune import reshape_stroke, retune_stroke, retune_strokes
+from .tonal_area import TONAL_AREA_SCHEMA, TonalAreaPlan
 
 __all__ = [
     "CONSTRUCTION_PHASES",
@@ -47,6 +48,8 @@ __all__ = [
     "TERMINAL_MODES",
     "TOOL_PRESETS",
     "TOOL_PRESET_REVISION",
+    "TONAL_AREA_SCHEMA",
+    "TonalAreaPlan",
     "ConstructionMark",
     "InitialConstruct",
     "InitialConstructResult",

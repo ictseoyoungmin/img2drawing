@@ -34,6 +34,14 @@ croquis. Preserve the geometry and reserved light; do not treat every soft trans
 hard outline or fill a dark region with uniform parallel lines. Do not use value to
 manufacture missing form or to substitute for unresolved contour ownership.
 
+For identity-bearing dark hair or clothing, distinguish an observed tonal
+*region* from the width of a single mark. Map its boundary, plane/clump flow,
+and protected highlights first; then layer a small number of deliberately
+oriented graphite marks with inspected pressure and density changes.
+A painted-black stripe made from overlapping opaque broad strokes is not
+evidence of faithful graphite texture or recovered form. See
+[`broad-graphite.md`](../markmaking/broad-graphite.md).
+
 Omit redundant search lines, repeated texture, and low-impact shading. Do not replace a
 visible head with a circle, limbs with tubes, feet with boxes, or folds with symbols merely
 because the drawing is quick.

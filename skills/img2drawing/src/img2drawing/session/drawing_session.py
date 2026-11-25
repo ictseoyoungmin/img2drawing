@@ -28,7 +28,7 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from PIL import Image
 
-from ..core.action import AgentDrawingSession, DrawingAction
+from ..core.action import AgentDrawingSession, DrawingAction, _resolve_tool
 from ..core.digest import sha256_file, sha256_obj
 from ..core.ir import Stroke, StrokeIR
 from ..core.tools import TOOLSET_ID
@@ -100,23 +100,58 @@ def _action_id(history: Any, requested: str | None) -> str:
 
 
 def _tool_payload(tool: str | Mapping[str, Any], grade: str | None, overrides: Mapping[str, Any] | None) -> dict[str, Any]:
+    """Merge per-call modifiers onto a resolved tool rather than discarding its material."""
     if isinstance(tool, Mapping):
         payload = deepcopy(dict(tool))
-        preset = payload.get("preset")
-        if not preset:
+        if not payload.get("preset"):
             raise ValueError("tool mapping requires a preset")
         if grade is not None:
             payload["grade"] = str(grade)
         if overrides is not None:
-            payload["overrides"] = deepcopy(dict(overrides))
+            inherited = payload.get("overrides") or {}
+            if not isinstance(inherited, Mapping):
+                raise ValueError("tool mapping overrides must be a mapping")
+            payload["overrides"] = {**deepcopy(dict(inherited)), **deepcopy(dict(overrides))}
         return payload
-    payload = {
-        "preset": str(tool),
-        "grade": default_grade_name() if grade is None else str(grade),
-    }
+    payload = {"preset": str(tool), "grade": default_grade_name() if grade is None else str(grade)}
     if overrides:
         payload["overrides"] = deepcopy(dict(overrides))
     return payload
+
+
+def _reconcile_markmaking_provenance(
+    metadata: Mapping[str, Any] | None,
+    tool_payload: dict[str, Any],
+    role: str,
+) -> dict[str, Any] | None:
+    """Store the executed material, not a resolver snapshot superseded by call modifiers.
+
+    This only updates the known public markmaking schema. Other user metadata stays
+    untouched, and a mismatched preset/role fails before a history mutation.
+    """
+    if metadata is None:
+        return None
+    outer = deepcopy(dict(metadata))
+    mark = outer.get("markmaking")
+    if not isinstance(mark, Mapping) or mark.get("schema") != "img2drawing.vnext.markmaking.v1":
+        return outer
+    mark = deepcopy(dict(mark))
+    if mark.get("runtime_tool") != tool_payload.get("preset"):
+        raise ValueError("markmaking provenance runtime_tool differs from executed preset")
+    if mark.get("semantic_role") != str(role):
+        raise ValueError("markmaking provenance semantic_role differs from executed role")
+    # The core's own resolver validates per-call overrides and is also used
+    # by the replay path. Do not duplicate its ToolState arithmetic.
+    resolved, pencil_grade = _resolve_tool(tool_payload)
+    if pencil_grade is None:
+        raise ValueError("markmaking provenance requires a pencil grade")
+    mark["grade"] = pencil_grade
+    mark["tool_overrides"] = deepcopy(dict(tool_payload.get("overrides") or {}))
+    mark["resolved_tool_state"] = {**resolved.to_dict(), "pencil_grade": pencil_grade}
+    mark.pop("digest", None)
+    mark["digest"] = sha256_obj(mark)
+    outer["markmaking"] = mark
+    return outer
 
 
 class DrawingSession:
@@ -1188,6 +1223,7 @@ class DrawingSession:
             source_observation=source_observation,
             reason=reason,
         )
+        selected_tool = _tool_payload(tool, grade, tool_overrides)
         return DrawingAction(
             action_id=_action_id(self._agent.history, action_id),
             kind=kind,
@@ -1199,13 +1235,13 @@ class DrawingSession:
             stroke_id=stroke_id,
             confidence=float(confidence),
             layer=int(layer),
-            tool=_tool_payload(tool, grade, tool_overrides),
+            tool=selected_tool,
             pressure=None if pressure is None else tuple(float(value) for value in pressure),
             observation_id=oid,
             source_observation=source,
             reason=normalized_reason,
             revision_of=revision_of,
-            metadata=None if metadata is None else deepcopy(dict(metadata)),
+            metadata=_reconcile_markmaking_provenance(metadata, selected_tool, str(role)),
         )
 
     def draw(

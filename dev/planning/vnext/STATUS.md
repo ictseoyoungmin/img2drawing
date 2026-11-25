@@ -1,14 +1,14 @@
 # img2drawing current status
 
-Updated: 2026-10-28
+Updated: 2026-11-26
 
 ```text
-PUBLISHED STABLE:   v1.2.0 · portrait authoring and replay recovery
-RELEASE TAG:        v1.2.0 · manifest-driven publish authority
-CURRENT SOURCE:     1.2.0 · portrait authoring and replay recovery
+PUBLISHED STABLE:   v1.2.1 · selected maintenance release (publication gated by main CI)
+RELEASE TAG:        v1.2.1 · manifest-driven publish authority
+CURRENT SOURCE:     1.2.1 · tonal authoring and provenance maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  M03 · broad tonal overdraw and markmaking override provenance (v1.2.1 next)
+ACTIVE BOTTLENECK:  v1.3.0 constructive drawing quality and independent validation · S00 NEXT
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.2.0 portrait/replay release
+PACKAGE VERSION:    1.2.1 tonal authoring/provenance maintenance
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -24,7 +24,7 @@ HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
 MAIN RELEASE CI:    required green before manifest-driven publish
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      GitHub Release v1.2.0 via main CI + publish manifest
+PUBLISH STATE:      GitHub Release v1.2.1 selected via main CI + publish manifest; v1.2.0 remains published until successful workflow
 ```
 
 ## Authority contract
@@ -42,7 +42,7 @@ Authority is intentionally split by purpose:
 
 ## Current truth
 
-- `v1.2.0` is the selected stable portrait/reshape/GIF recovery release. Earlier v1.1.1 maintenance, v1.1.0 structural and v1.0.3 renderer/replay authorities remain immutable. Renderer v11 and its exact contract are unchanged; new independent portrait-quality and high-resolution peak-RSS evidence have not been obtained.
+- `v1.2.1` is the selected bounded maintenance release. Actual publication follows successful main CI and the manifest-driven workflow; v1.2.0 is immutable. Renderer v11 and the persisted history contract are unchanged. Synthetic high-resolution replay is measured; independent portrait-quality proof remains open.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
@@ -51,7 +51,7 @@ Authority is intentionally split by purpose:
 - **Instruction-graph attention cleanup is CLOSED through Slice E.** Slice A synchronized planning authority, Slice B reduced `SKILL.md` to the root router, Slice C reduced `references/INDEX.md` to a direct map, Slice D restored canonical leaf ownership/runtime boundaries, and Slice E added structural CI for attention budgets, direct root fan-out, broken internal routes, canonical owner reachability, and deployable/control-plane separation. The cleaned baseline remains `SKILL.md` 9,066 bytes and `references/INDEX.md` 7,692 bytes, guarded by 12,000-byte / 10,000-byte ceilings and a 16-leaf direct-root-route ceiling.
 - Slice E changed no drawing semantics, renderer/runtime behavior, package version, or dogfood verdict. Implementation CI run `34982967070` passed current docs/runtime, instruction graph, S03 harness, active suite, historical evidence, B17, and B18 before the final CLOSED transition.
 - The redesign keeps `pillow-pencil-contact-v11 / 1` as the current renderer family. Exact pixel identity will move to a persisted renderer contract digest plus immutable package/tag boundary before intentional current-v11 pixel divergence.
-- M03 / v1.2.1 is newly authorized by the author-reported 511-action drawing: large opaque broad-graphite strokes and partial `tool_overrides` overwrite the resolver's provenance/material map. Fixing these remains a separate branch and is not included in v1.2.0.
+- M03 maintenance: partial override merge and executed-state provenance, explicit tonal-area plans, and developer-only QA are implemented in PRs #76–#78. The maintainer approved promotion of the bounded maintenance/QA scope on 2026-11-26; this is not an independent visual-quality pass. Real portrait exploration found striped dark masses, excessive highlight coverage and likeness errors. Independent fresh-worker likeness, the original 511-action reproduction and real long-session segment erasure remain open for v1.3.0.
 - The installable R23 runtime/legacy namespace remains physically retired from current `src`.
 
 ## S03 accepted scope and remaining evidence
@@ -179,6 +179,10 @@ Published assets:
 
 The S03 gate remains user-accepted; no class-level visual-quality PASS was measured.
 
+## Selected v1.2.1 release authority
+
+`docs/releases/v1.2.1.md`, `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json` and `dev/release/publish/v1.2.1.json` define the bounded promotion. PR #77 measured synthetic replay and swatch QA; PR #78 adds real-session diagnostics. The independent visual gate is deferred, not passed. v1.3.0 starts with a pinned evaluation protocol (S00), then observation, construction, stroke authoring, tonal inspection, semantic groups, cleanup, independent comparison and release validation. See `ROADMAP.md` and the Work OS parent WK-110.
+
 ## Published v1.2.0 release authority
 
 v1.2.0 is described in `docs/releases/v1.2.0.md`, the additive freeze
@@ -203,8 +207,8 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 - instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
 - v11 quality execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - v11 redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
-- current published stable: Git tag / GitHub Release `v1.2.0`, `dev/release/publish/v1.2.0.json`, `docs/releases/v1.2.0.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_2_0.json`;
-- previous published stable: v1.1.1 remains frozen at its existing tag, manifest and contract freeze;
+- selected stable: Git tag / GitHub Release `v1.2.1` (publication gated), `dev/release/publish/v1.2.1.json`, `docs/releases/v1.2.1.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`;
+- previous published stable: v1.2.0 and v1.1.1 remain frozen at their existing tags, manifests and contract freezes;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
 - exact stable candidate: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;
