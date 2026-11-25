@@ -98,3 +98,11 @@ Select the responsible stroke and point interval yourself, prepare an explicit
 `TonalPressureAdjustment`, then preview and apply via the existing edit path.
 A pressure reduction may fail to recover the clump: reopen geometry and mark
 placement instead of repeatedly darkening or weakening unrelated areas.
+
+The inspection helper lives in `img2drawing.inspection` and accepts
+`inspect_tonal_interval(session, before_cursor, after_cursor, area_ids=...)`.
+Optional disjoint separation_pairs compare mean darkness. Optional cached_renders
+maps requested cursor integers to trusted canonical PNG paths. Manifests, profile,
+history prefix, cursor state and pixel hashes must match; invalid supplied evidence
+fails closed. Missing cursors render normally. The correction proposal is an
+explicit authoring helper, not an area-to-stroke generator.

@@ -80,3 +80,8 @@ centroid and bounds. It is an approximation, not automatically extracted silhoue
 reappearance directions. It never estimates hidden distance or contour. The comparison
 normalizer must be a nonzero observed reference span. Nonuniform registration is applied
 before computing angles or ratios. No metric certifies anatomy, artistic quality or identity.
+
+Measurement reports can be stored with `session.observe(report.to_dict())` or
+included in the current sheet using
+`session.inspect(measurements=(report,), escalation_reason="check landmark discrepancy")`.
+Use canvas-pixel coordinates (not output-scale pixels or cropped display coordinates).

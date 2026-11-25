@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from pathlib import Path
 
 
@@ -21,6 +22,16 @@ def test_public_reference_run_contains_no_machine_absolute_paths():
             if matches:
                 leaks.append((str(path.relative_to(ROOT)), matches[:3]))
     assert leaks == []
+    # Preserve the original full P1 portability check after archiving its retired run.
+    frozen = '1127e673e05799040e802e9fd3a887d7781f2941'
+    names = subprocess.check_output(['git','ls-tree','-r','--name-only','-z',frozen,'dev/p1_reference_run'], cwd=ROOT).decode().split('\0')
+    archived_leaks = []
+    for name in names:
+        if name.endswith(('.md','.json')):
+            content = subprocess.check_output(['git','show',f'{frozen}:{name}'], cwd=ROOT).decode('utf-8')
+            if MACHINE_PATH.findall(content):
+                archived_leaks.append(name)
+    assert not archived_leaks, archived_leaks
 
 
 def test_frozen_public_checkpoint_init_remains_portable_evidence():

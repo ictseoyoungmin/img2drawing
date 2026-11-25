@@ -1,0 +1,1274 @@
+{
+  "schema": "img2drawing.historical_evidence_archive.v1",
+  "source_commit": "1127e673e05799040e802e9fd3a887d7781f2941",
+  "reason": "retired P1/P2/P3 stage reference runs; retained P1 portable checkpoint required by current regression and v1.0.2 release notes",
+  "archive_bytes": 29211911,
+  "archive_count": 253,
+  "files": [
+    {
+      "path": "dev/p1_reference_run/build.py",
+      "git_blob_sha": "2f8d77d5d4eb385d475516df777a370e88eca707",
+      "bytes": 4218
+    },
+    {
+      "path": "dev/p1_reference_run/canonical_trace.json",
+      "git_blob_sha": "dc9547743785cddeeeeb520c3035aa362b47559c",
+      "bytes": 3382
+    },
+    {
+      "path": "dev/p1_reference_run/compare.png",
+      "git_blob_sha": "b3aaaeb1f65cbe9f4a657ecae04cb8e67c3ca2af",
+      "bytes": 562854
+    },
+    {
+      "path": "dev/p1_reference_run/overlay.png",
+      "git_blob_sha": "3550a96aecb7bab20907193e51fdc9a62713c530",
+      "bytes": 172404
+    },
+    {
+      "path": "dev/p1_reference_run/run/canonical_trace.json",
+      "git_blob_sha": "dc9547743785cddeeeeb520c3035aa362b47559c",
+      "bytes": 3382
+    },
+    {
+      "path": "dev/p1_reference_run/run/compare/subject_vs_final.png",
+      "git_blob_sha": "b2ded1c5d77c92416a10594750315b49246eb7d8",
+      "bytes": 445088
+    },
+    {
+      "path": "dev/p1_reference_run/run/final/drawing.png",
+      "git_blob_sha": "be87881c5e0989809b3303911c2629bb09aaebe5",
+      "bytes": 34744
+    },
+    {
+      "path": "dev/p1_reference_run/run/observation/pre_draw_observation.json",
+      "git_blob_sha": "c5b0f58b7928d9b901793a7be52c7fad74ff98ed",
+      "bytes": 3976
+    },
+    {
+      "path": "dev/p1_reference_run/run/review_manifest.json",
+      "git_blob_sha": "1a0df45040068502964f59c477bb683088057fd7",
+      "bytes": 79768
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/artifacts.json",
+      "git_blob_sha": "49e70cb00f8982d8a84686d655c714c1792e8dfb",
+      "bytes": 1700
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "git_blob_sha": "f5e1b363a634f96f256dd2367128fee13d8cd455",
+      "bytes": 33666
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews_manifest.json",
+      "git_blob_sha": "432bd4d1687578f0a67857e7c29f951e2a68e170",
+      "bytes": 23627
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/drawing.png",
+      "git_blob_sha": "2f98701fe25ad8b0766442c1f77bec8534f2a0c4",
+      "bytes": 5124
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/subject.png",
+      "git_blob_sha": "fb40d4c3ac38cf480697ccff1fef87b4c34ad91d",
+      "bytes": 62889
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/crops/task_target.png",
+      "git_blob_sha": "779d9dce084d41c4a6b227a8f4bdbec6c95026c2",
+      "bytes": 116340
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/local_reference_overview.png",
+      "git_blob_sha": "e317d68222b6d235135c756d9814e6d0b3bec402",
+      "bytes": 151573
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/local_review.json",
+      "git_blob_sha": "25064d60fd35ba25049acd96c03f3e286a76d045",
+      "bytes": 3672
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_drawing_absdiff.png",
+      "git_blob_sha": "6bf74f5b36083dc225f373d5c5d7f6a21fca27d8",
+      "bytes": 44968
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_drawing_overlay.png",
+      "git_blob_sha": "30fccee113377fd136d37a74929c71f644b6ddee",
+      "bytes": 64871
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/subject_vs_drawing.png",
+      "git_blob_sha": "ad828c133dcac7bb786c03680d29a38b2d8f3ba9",
+      "bytes": 78313
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/task_target_vs_drawing.png",
+      "git_blob_sha": "e8f714a7928de20c5eb73122089ad998181fbfd2",
+      "bytes": 140142
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/drawing.png",
+      "git_blob_sha": "7731fabc3b82420058dec1be593247d42a92d77c",
+      "bytes": 4339
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/subject.png",
+      "git_blob_sha": "b7d152d8a1a2791084f7bcde58bc4adb9d07f41e",
+      "bytes": 49800
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/crops/task_target.png",
+      "git_blob_sha": "c6cd6c6885dff8534aca65d339b9b9a2e131827b",
+      "bytes": 97893
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/local_reference_overview.png",
+      "git_blob_sha": "d37cedfe104e1f503d0bd49141a47915319f7db7",
+      "bytes": 168812
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/local_review.json",
+      "git_blob_sha": "c397b32a9da7b6434de94f88b360afe8016a6107",
+      "bytes": 3677
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_drawing_absdiff.png",
+      "git_blob_sha": "6dad18d850639ba60758cfb7fb51943f02324858",
+      "bytes": 38075
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_drawing_overlay.png",
+      "git_blob_sha": "cc4537955a39277b4f6b6f86c6b05b1b8aacf1ab",
+      "bytes": 51737
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/subject_vs_drawing.png",
+      "git_blob_sha": "dd028c80b7b0f95fd791c2c540e72dc774c5ca57",
+      "bytes": 62943
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/task_target_vs_drawing.png",
+      "git_blob_sha": "2e34ae3b9b6a92c94816b481a6e8ec00eff2f8d7",
+      "bytes": 120095
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/drawing.png",
+      "git_blob_sha": "3118a322ab34b0c939d3119df8347c1c5576207f",
+      "bytes": 5065
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/subject.png",
+      "git_blob_sha": "66acd9361e0dec77df30e17e0782110bbea15e72",
+      "bytes": 30450
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/crops/task_target.png",
+      "git_blob_sha": "7723cf3ada1ee2efcb7f00fcbb94a1e3487cb688",
+      "bytes": 52114
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_reference_overview.png",
+      "git_blob_sha": "2aede88fc25f39f05a35bb1a7bd932eb4f81cccc",
+      "bytes": 102166
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_review.json",
+      "git_blob_sha": "cceed4e59e70de4023915c327ed5edab9c1a6656",
+      "bytes": 3612
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_absdiff.png",
+      "git_blob_sha": "2d501fc80c177d53f8ffe309bcac014538d90bc7",
+      "bytes": 21114
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_drawing_overlay.png",
+      "git_blob_sha": "146a65d98b556dfa2b49a5c65fe2bbcfaa0891ac",
+      "bytes": 31482
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/subject_vs_drawing.png",
+      "git_blob_sha": "45f00222aa65bfc0023ca7ec6b68c4d355d9927a",
+      "bytes": 43883
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/task_target_vs_drawing.png",
+      "git_blob_sha": "115bc24cad9058fa667ff0c677104a10fd0e4f08",
+      "bytes": 72656
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/drawing.png",
+      "git_blob_sha": "1b29550c292f49a42ed62637d5dd8f31bd7886a7",
+      "bytes": 11123
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/subject.png",
+      "git_blob_sha": "d7ca1ed05270dc5ba342eb071a5f87940c47132e",
+      "bytes": 150970
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/crops/task_target.png",
+      "git_blob_sha": "d7b86d71cebf60e600f579b31a3d0d65044bf1ca",
+      "bytes": 352066
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/local_reference_overview.png",
+      "git_blob_sha": "1725a365439647a44a97df722444e3fb09514543",
+      "bytes": 246601
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/local_review.json",
+      "git_blob_sha": "8294846b10cbb91a24adaa703e74e96669d363ff",
+      "bytes": 3654
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_absdiff.png",
+      "git_blob_sha": "c90e1d8f3e898a1a9edc0ef6587d4257ba033703",
+      "bytes": 113762
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_drawing_overlay.png",
+      "git_blob_sha": "ef55437069eaeb2537ce3da7519ae39accd7fe0a",
+      "bytes": 156215
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/subject_vs_drawing.png",
+      "git_blob_sha": "643b17657acdcc55b4faf196546e7b4d8f5ce4ea",
+      "bytes": 180574
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/task_target_vs_drawing.png",
+      "git_blob_sha": "deb4ac63dafce9967d8ee56cf83e08020afeb2ea",
+      "bytes": 403476
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/drawing.png",
+      "git_blob_sha": "301c473289ec2545340f922c9107e822e12edf2b",
+      "bytes": 13028
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/subject.png",
+      "git_blob_sha": "47e6c9f4bd84358e4125081a0f2df9ac2cdc6b31",
+      "bytes": 166674
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/crops/task_target.png",
+      "git_blob_sha": "f6bed3b33197aa83008aa279b0ea44a90b9877a1",
+      "bytes": 385955
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_reference_overview.png",
+      "git_blob_sha": "4c17c843d854370ab8751ffa4ac0ceb580ecaea3",
+      "bytes": 236303
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_review.json",
+      "git_blob_sha": "e77a8c3497af517f23baa2d613305964e0d438eb",
+      "bytes": 3705
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+      "git_blob_sha": "e205cd5cfb0518e5949aef554d6b0f4f78e5f600",
+      "bytes": 124870
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_drawing_overlay.png",
+      "git_blob_sha": "d83d4e6bb4b09769fd57dc8766f9ba491ec27889",
+      "bytes": 172278
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/subject_vs_drawing.png",
+      "git_blob_sha": "ce09dd95ace049d10a2db079568f856bf4d7296c",
+      "bytes": 200001
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/task_target_vs_drawing.png",
+      "git_blob_sha": "3c255e8502371dc8d7b899f29480d6576100e8d2",
+      "bytes": 443954
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/drawing.png",
+      "git_blob_sha": "bff107b5fc52ef6655eddd8da4d528eab0c15961",
+      "bytes": 7474
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/subject.png",
+      "git_blob_sha": "18da3a452e4d23ed3b83b44085a95ebad81ef311",
+      "bytes": 118813
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/crops/task_target.png",
+      "git_blob_sha": "f779bdf8358125eb531e3aeb2598a7ab0be24e20",
+      "bytes": 209311
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/local_reference_overview.png",
+      "git_blob_sha": "fb2628bb9895ed224a430c75aa64ef54dbdcfda3",
+      "bytes": 273043
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/local_review.json",
+      "git_blob_sha": "90ccb0284ecd182582cbe6d7eb16e78a4552b187",
+      "bytes": 3686
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_drawing_absdiff.png",
+      "git_blob_sha": "19d7601fca9b6ee276908155a94907b4361243c9",
+      "bytes": 82856
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_drawing_overlay.png",
+      "git_blob_sha": "041d1b4c61637359ba21c8a2e92b3748c260e320",
+      "bytes": 121551
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/subject_vs_drawing.png",
+      "git_blob_sha": "b6f27525e7f8ae4c54aeb64a3495958347230f88",
+      "bytes": 141071
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/task_target_vs_drawing.png",
+      "git_blob_sha": "b73ced22564ddb97fb456b8a1c721040b85fba66",
+      "bytes": 244551
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/pass_memory.json",
+      "git_blob_sha": "ca5b4fd001264654bb88fa4a2e8ac14a67ccd3cd",
+      "bytes": 10361
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/reference_authority_overview.png",
+      "git_blob_sha": "e6ba64a0d78a24b2f58f9b993390e85e34ed7fc8",
+      "bytes": 440584
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/review.json",
+      "git_blob_sha": "cd7ec758175af61312a8418d386f7194836b579b",
+      "bytes": 5988
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/stage_contract.json",
+      "git_blob_sha": "dc9f90d0de2f539525a23b65d69fae4c52d21d70",
+      "bytes": 3885
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_absdiff.png",
+      "git_blob_sha": "426b8ec6ff5bb288a5c5a232814ee1e08095c848",
+      "bytes": 278298
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_drawing_overlay.png",
+      "git_blob_sha": "9e81067058c4ce2aebead973fb362ea06162a3f7",
+      "bytes": 384639
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_split.png",
+      "git_blob_sha": "4afa8d190fdddf29a6dd118f8dc5e31b66c29f75",
+      "bytes": 214168
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/subject_vs_drawing.png",
+      "git_blob_sha": "9dc59ddf73f8c256b706249c32d1bf14887604f5",
+      "bytes": 444830
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_split.png",
+      "git_blob_sha": "232666f733d7ecfa28eef5133bcde401d5af73be",
+      "bytes": 698627
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/task_target_vs_drawing.png",
+      "git_blob_sha": "68f577f6ba44b28005d6f423f98defa9fb2eaa6b",
+      "bytes": 1415800
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.json",
+      "git_blob_sha": "54d9bddcbdfc63cec0bebd877726005825162e2c",
+      "bytes": 29181
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.md",
+      "git_blob_sha": "5e73b2b756c7d46c4cf4d49eaf3af69689fd0272",
+      "bytes": 15209
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/artifacts.json",
+      "git_blob_sha": "b1e855adfe166f7af26557eac27511d54244cf7f",
+      "bytes": 1700
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+      "git_blob_sha": "4a5fdafba749cb1f81b20121e0c37fa661bdf76e",
+      "bytes": 34514
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews_manifest.json",
+      "git_blob_sha": "c114a8294a786a1e4aca3b401eed5b43501c8740",
+      "bytes": 23645
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/crops/drawing.png",
+      "git_blob_sha": "e40bcf25e97fcfab8b9cc7052eec5850b48c4d2e",
+      "bytes": 5578
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/crops/subject.png",
+      "git_blob_sha": "fb40d4c3ac38cf480697ccff1fef87b4c34ad91d",
+      "bytes": 62889
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/crops/task_target.png",
+      "git_blob_sha": "779d9dce084d41c4a6b227a8f4bdbec6c95026c2",
+      "bytes": 116340
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/local_reference_overview.png",
+      "git_blob_sha": "48ecbeef8d84fd418d2e959d88b920022994fae6",
+      "bytes": 152032
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/local_review.json",
+      "git_blob_sha": "9fa6074d830fab59f9ed9fcecb4d7b6ee02a774c",
+      "bytes": 3675
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/subject_drawing_absdiff.png",
+      "git_blob_sha": "6b002dece4270659b097445c418c80679c099c86",
+      "bytes": 45054
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/subject_drawing_overlay.png",
+      "git_blob_sha": "bfcac7b015d250aab1eb08442769b170a02cb231",
+      "bytes": 65025
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/subject_vs_drawing.png",
+      "git_blob_sha": "74e3e0911c263bd3210a5bf9b8a97cbbc6b75d95",
+      "bytes": 79160
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/task_target_vs_drawing.png",
+      "git_blob_sha": "58d2d3b53f3996ce25a683754ef0fffe37f4e04a",
+      "bytes": 141555
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/drawing.png",
+      "git_blob_sha": "2829cca2685aa360bc70a3abd34141cec7522e1a",
+      "bytes": 4497
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/subject.png",
+      "git_blob_sha": "b7d152d8a1a2791084f7bcde58bc4adb9d07f41e",
+      "bytes": 49800
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/crops/task_target.png",
+      "git_blob_sha": "c6cd6c6885dff8534aca65d339b9b9a2e131827b",
+      "bytes": 97893
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/local_reference_overview.png",
+      "git_blob_sha": "e202c0724dceb1491abe3300093a934b4ae5840c",
+      "bytes": 168996
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/local_review.json",
+      "git_blob_sha": "6efda546c197dd9bd104597403284f6bd3a70970",
+      "bytes": 3680
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_drawing_absdiff.png",
+      "git_blob_sha": "20123ea28d72d275aea7bceb807db3c9423bf1c7",
+      "bytes": 38093
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_drawing_overlay.png",
+      "git_blob_sha": "b5fb3ed2ea3cc1e915729d8a12ae03dbf5be5d7a",
+      "bytes": 51761
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/subject_vs_drawing.png",
+      "git_blob_sha": "23dcf094d0765556cbed41bb303f3161eb72b79e",
+      "bytes": 63245
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/task_target_vs_drawing.png",
+      "git_blob_sha": "cf39f4f2536a1c3d00c31d2cf0f40ed6fc37bdfa",
+      "bytes": 120548
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/drawing.png",
+      "git_blob_sha": "3118a322ab34b0c939d3119df8347c1c5576207f",
+      "bytes": 5065
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/subject.png",
+      "git_blob_sha": "66acd9361e0dec77df30e17e0782110bbea15e72",
+      "bytes": 30450
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/crops/task_target.png",
+      "git_blob_sha": "7723cf3ada1ee2efcb7f00fcbb94a1e3487cb688",
+      "bytes": 52114
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/local_reference_overview.png",
+      "git_blob_sha": "2aede88fc25f39f05a35bb1a7bd932eb4f81cccc",
+      "bytes": 102166
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/local_review.json",
+      "git_blob_sha": "06db49bdf1d6d155c7b551d2bf4ef6a479915d93",
+      "bytes": 3615
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_absdiff.png",
+      "git_blob_sha": "2d501fc80c177d53f8ffe309bcac014538d90bc7",
+      "bytes": 21114
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_drawing_overlay.png",
+      "git_blob_sha": "146a65d98b556dfa2b49a5c65fe2bbcfaa0891ac",
+      "bytes": 31482
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/subject_vs_drawing.png",
+      "git_blob_sha": "45f00222aa65bfc0023ca7ec6b68c4d355d9927a",
+      "bytes": 43883
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/task_target_vs_drawing.png",
+      "git_blob_sha": "115bc24cad9058fa667ff0c677104a10fd0e4f08",
+      "bytes": 72656
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/crops/drawing.png",
+      "git_blob_sha": "8c507de0f3036d5239c613baf7bcc4eaa19a686c",
+      "bytes": 11286
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/crops/subject.png",
+      "git_blob_sha": "d7ca1ed05270dc5ba342eb071a5f87940c47132e",
+      "bytes": 150970
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/crops/task_target.png",
+      "git_blob_sha": "d7b86d71cebf60e600f579b31a3d0d65044bf1ca",
+      "bytes": 352066
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/local_reference_overview.png",
+      "git_blob_sha": "207a2910e5e98e333a6fc022161f075587724a4c",
+      "bytes": 246763
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/local_review.json",
+      "git_blob_sha": "fbd74f545d61c3f0250e3e7bbc92fcc454e05104",
+      "bytes": 3657
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/subject_drawing_absdiff.png",
+      "git_blob_sha": "dd5d96b5b64ff9844ffe1d8b558d6b94dbe7e118",
+      "bytes": 113682
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/subject_drawing_overlay.png",
+      "git_blob_sha": "f89658459cd23d2c8ced9d9f1bde29a449bef410",
+      "bytes": 156159
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/subject_vs_drawing.png",
+      "git_blob_sha": "1ee203a1b64a361285cab84f8ae0ee607851d27d",
+      "bytes": 180684
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/task_target_vs_drawing.png",
+      "git_blob_sha": "c18039e511a5c7fb6ccc7c430d284a5e1e91da02",
+      "bytes": 403881
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/drawing.png",
+      "git_blob_sha": "0ce1f57757cf842c2ace3dcb82f0d68d1be4369c",
+      "bytes": 12616
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/subject.png",
+      "git_blob_sha": "47e6c9f4bd84358e4125081a0f2df9ac2cdc6b31",
+      "bytes": 166674
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/crops/task_target.png",
+      "git_blob_sha": "f6bed3b33197aa83008aa279b0ea44a90b9877a1",
+      "bytes": 385955
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/local_reference_overview.png",
+      "git_blob_sha": "8f9b34adfc28835c9228dc465163431b96c2f39f",
+      "bytes": 236042
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/local_review.json",
+      "git_blob_sha": "fb40ec9ac6e588b036e034a21ce94dd7d0886f3a",
+      "bytes": 3708
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_drawing_absdiff.png",
+      "git_blob_sha": "4b4bba95958ab63d1470b80ce459935d28b639e2",
+      "bytes": 124711
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_drawing_overlay.png",
+      "git_blob_sha": "f15b5d1fc58232ce5d5a57752a047490b9ec9c21",
+      "bytes": 171956
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/subject_vs_drawing.png",
+      "git_blob_sha": "da6d905b3df1eb3ee43e7ca17b59eaf7af4bb461",
+      "bytes": 199336
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/task_target_vs_drawing.png",
+      "git_blob_sha": "2091e74a57f6c5c34f942bf98f209bc75d414427",
+      "bytes": 442977
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/drawing.png",
+      "git_blob_sha": "a7d71128eac8d80c8b6bb18245063c80a7d9a616",
+      "bytes": 7990
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/subject.png",
+      "git_blob_sha": "18da3a452e4d23ed3b83b44085a95ebad81ef311",
+      "bytes": 118813
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/crops/task_target.png",
+      "git_blob_sha": "f779bdf8358125eb531e3aeb2598a7ab0be24e20",
+      "bytes": 209311
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/local_reference_overview.png",
+      "git_blob_sha": "4c2a945897d7e32bbbcb5a82d38e5cb763161369",
+      "bytes": 273774
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/local_review.json",
+      "git_blob_sha": "775f06590e3954f7033a44fa340d94d408238fa2",
+      "bytes": 3689
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_drawing_absdiff.png",
+      "git_blob_sha": "ec0b769375a4c51a5c46026b319b8d1a7d74b93b",
+      "bytes": 82979
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_drawing_overlay.png",
+      "git_blob_sha": "3430fb0aaed7fb66419701c0804c3392472d6892",
+      "bytes": 121897
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/subject_vs_drawing.png",
+      "git_blob_sha": "ee4820a3e258564fb41ed558591a939ba5743164",
+      "bytes": 142311
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/task_target_vs_drawing.png",
+      "git_blob_sha": "3da9219c28a01c902e50c6cccce5a2b690f480be",
+      "bytes": 246687
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/pass_memory.json",
+      "git_blob_sha": "2f31ca4928e1c07a624521363fb2d08186b6b2da",
+      "bytes": 6706
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/reference_authority_overview.png",
+      "git_blob_sha": "e86642a7752392bbedebf2fe31a731336aaeca05",
+      "bytes": 441386
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/review.json",
+      "git_blob_sha": "99c05c95ee1fcc75d72d8dff97889e37bbe2950c",
+      "bytes": 6555
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/stage_contract.json",
+      "git_blob_sha": "dc9f90d0de2f539525a23b65d69fae4c52d21d70",
+      "bytes": 3885
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_absdiff.png",
+      "git_blob_sha": "6006f9c145450796c438a87f51b24cedfb92dbf3",
+      "bytes": 278473
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_drawing_overlay.png",
+      "git_blob_sha": "f28d2a40112aaf090222d6e1c7930a2b958792a9",
+      "bytes": 385033
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_split.png",
+      "git_blob_sha": "4a19ed088221c146c17a3e36d8a92587d16700ba",
+      "bytes": 214503
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/subject_vs_drawing.png",
+      "git_blob_sha": "8db6a248b45b44bd2f7e0ede05a3a98b7d60943f",
+      "bytes": 446296
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_split.png",
+      "git_blob_sha": "6101dddc541162cf8b3348f4130dce361e9d8b4f",
+      "bytes": 699200
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/task_target_vs_drawing.png",
+      "git_blob_sha": "c31d74c0aaeccd721be8a02ad7fcc7df3f192c09",
+      "bytes": 1418598
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.json",
+      "git_blob_sha": "cc1b11047566060ca2e648f9d7f616d7d097f509",
+      "bytes": 25080
+    },
+    {
+      "path": "dev/p1_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md",
+      "git_blob_sha": "ef7a00752c04450e56ef0215d5763fbbcb1564c0",
+      "bytes": 16962
+    },
+    {
+      "path": "dev/p1_reference_run/run/session/session.json",
+      "git_blob_sha": "685b425de8aa99b615f4aa46b2b7d8c44a3cbf77",
+      "bytes": 226810
+    },
+    {
+      "path": "dev/p1_reference_run/run/timelapse/manifest.json",
+      "git_blob_sha": "15d6674a510fc158a4993b2f1562590d2bb63e30",
+      "bytes": 24836
+    },
+    {
+      "path": "dev/p1_reference_run/run/timelapse/timelapse.gif",
+      "git_blob_sha": "1b4503ebd91686595d78170e85b42ac132e8d331",
+      "bytes": 428737
+    },
+    {
+      "path": "dev/p2_reference_run/build.py",
+      "git_blob_sha": "5c49d428ee57bc9f7029bd7469b038c86baca5c3",
+      "bytes": 4317
+    },
+    {
+      "path": "dev/p2_reference_run/canonical_trace.json",
+      "git_blob_sha": "479435fae045007b950330113561b0a5241fe987",
+      "bytes": 7068
+    },
+    {
+      "path": "dev/p2_reference_run/compare.png",
+      "git_blob_sha": "a4c43054c72e9e8c887c4f9da576292fc07d4c88",
+      "bytes": 597370
+    },
+    {
+      "path": "dev/p2_reference_run/overlay.png",
+      "git_blob_sha": "e0999bf857b641f9c870e18b516323fe5a1f3012",
+      "bytes": 173797
+    },
+    {
+      "path": "dev/p2_reference_run/run.py",
+      "git_blob_sha": "07e7cba2d32f83a09a2863a21d16135da82195d0",
+      "bytes": 49132
+    },
+    {
+      "path": "dev/p2_reference_run/run/canonical_trace.json",
+      "git_blob_sha": "479435fae045007b950330113561b0a5241fe987",
+      "bytes": 7068
+    },
+    {
+      "path": "dev/p2_reference_run/run/compare/subject_vs_final.png",
+      "git_blob_sha": "db019b24b9a7b23455a1d7a9406def34a624ecb2",
+      "bytes": 452396
+    },
+    {
+      "path": "dev/p2_reference_run/run/final/drawing.png",
+      "git_blob_sha": "01ee29a0277095e22f867ccc23c84ba93e47e9e3",
+      "bytes": 39878
+    },
+    {
+      "path": "dev/p2_reference_run/run/observation/pre_draw_observation.json",
+      "git_blob_sha": "c5b0f58b7928d9b901793a7be52c7fad74ff98ed",
+      "bytes": 3976
+    },
+    {
+      "path": "dev/p2_reference_run/run/review_manifest.json",
+      "git_blob_sha": "b8cf67c08199861e3a0c0c6c3a82da0000238dec",
+      "bytes": 129075
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/artifacts.json",
+      "git_blob_sha": "c2aa6135b614e6ef8c096ac4ca1fd01faf46f18b",
+      "bytes": 1700
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/current_drawing.png",
+      "git_blob_sha": "f5e1b363a634f96f256dd2367128fee13d8cd455",
+      "bytes": 33666
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews_manifest.json",
+      "git_blob_sha": "346c130c1af39347a4d315fbf73dcb065c062aac",
+      "bytes": 23627
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_left_flow/local_review.json",
+      "git_blob_sha": "b3b5c97386f0d73b3547b688c6c745ba93e3705f",
+      "bytes": 3672
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/arm_right_flow/local_review.json",
+      "git_blob_sha": "1d46ded64940c9a90a98c3486978ab239a188f40",
+      "bytes": 3677
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/head_face/local_review.json",
+      "git_blob_sha": "7755148f6e473f882b64d6ec80d74323063318bf",
+      "bytes": 3612
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/legs_chain/local_review.json",
+      "git_blob_sha": "4d50cb615fb09f0decc14e8c9cc8facaefc55633",
+      "bytes": 3654
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/pelvis_support/local_review.json",
+      "git_blob_sha": "f645bfdfcf569e267a22e2918a823e2546ae4ebb",
+      "bytes": 3705
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/local_reviews/torso_rhythm/local_review.json",
+      "git_blob_sha": "c43e34501c8865322d9051b2cb66abe59c6f1bed",
+      "bytes": 3686
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/pass_memory.json",
+      "git_blob_sha": "ca5b4fd001264654bb88fa4a2e8ac14a67ccd3cd",
+      "bytes": 10361
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/review.json",
+      "git_blob_sha": "cd7ec758175af61312a8418d386f7194836b579b",
+      "bytes": 5988
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/stage_contract.json",
+      "git_blob_sha": "dc9f90d0de2f539525a23b65d69fae4c52d21d70",
+      "bytes": 3885
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.json",
+      "git_blob_sha": "42a1c49510008fb194134d792785f72c863aaf21",
+      "bytes": 29181
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_01/worker_packet.md",
+      "git_blob_sha": "2ce9042ac5907b186ea1f28213ffbe07d5d05236",
+      "bytes": 15209
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/artifacts.json",
+      "git_blob_sha": "fed1db594ac10630f18483b550264d4291036721",
+      "bytes": 1700
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/current_drawing.png",
+      "git_blob_sha": "4a5fdafba749cb1f81b20121e0c37fa661bdf76e",
+      "bytes": 34514
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews_manifest.json",
+      "git_blob_sha": "5783e9e11f51a32e9e46abc2200773ca210dce5c",
+      "bytes": 23645
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_left_flow/local_review.json",
+      "git_blob_sha": "04408b726e87ddbb07797b98a46761f87f852b90",
+      "bytes": 3675
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/arm_right_flow/local_review.json",
+      "git_blob_sha": "e9d5b2b5e47b7a337b35d101e3933186e1751f9f",
+      "bytes": 3680
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/head_face/local_review.json",
+      "git_blob_sha": "d99f6cb147d663cc068b910f05c8a9acf3895630",
+      "bytes": 3615
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/legs_chain/local_review.json",
+      "git_blob_sha": "5b5a90af6f2dfa9a797749d64557d939b89126c7",
+      "bytes": 3657
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/pelvis_support/local_review.json",
+      "git_blob_sha": "15c9457b2e4207f92ee08d5bf6749a4239d8378d",
+      "bytes": 3708
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/local_reviews/torso_rhythm/local_review.json",
+      "git_blob_sha": "615840bb49b2e64b08d1f23c9ef6b4b80d91b795",
+      "bytes": 3689
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/pass_memory.json",
+      "git_blob_sha": "2f31ca4928e1c07a624521363fb2d08186b6b2da",
+      "bytes": 6706
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/review.json",
+      "git_blob_sha": "99c05c95ee1fcc75d72d8dff97889e37bbe2950c",
+      "bytes": 6555
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/stage_contract.json",
+      "git_blob_sha": "dc9f90d0de2f539525a23b65d69fae4c52d21d70",
+      "bytes": 3885
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.json",
+      "git_blob_sha": "6219bd2c07fef4310c52d2f692735b7e72e8208d",
+      "bytes": 25080
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P1_gesture/pass_02/worker_packet.md",
+      "git_blob_sha": "c374481bc76d1cb10e475cda43038d6944063ef1",
+      "bytes": 16962
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/artifacts.json",
+      "git_blob_sha": "4a010ee723739a75b7e5787da4aa2fe76cb5e430",
+      "bytes": 1462
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/current_drawing.png",
+      "git_blob_sha": "32eb06150be80b523f7fc9594a348f572de680db",
+      "bytes": 41809
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews_manifest.json",
+      "git_blob_sha": "a674fafaafdb19f1770c27b3b9a8306eee5987dd",
+      "bytes": 18982
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/arm_segments/local_review.json",
+      "git_blob_sha": "a0a71bba5f871ce3b946359cf500ecfd57b88508",
+      "bytes": 2946
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/foot_blocks/local_review.json",
+      "git_blob_sha": "f2cba85e2f286a4958e7923a65ef9de070984ea6",
+      "bytes": 2928
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/hand_blocks/local_review.json",
+      "git_blob_sha": "bcea38fef411d52f05683d11091f630d7ef525e6",
+      "bytes": 2932
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/leg_segments/local_review.json",
+      "git_blob_sha": "ef45ba6ed3de17382f9214d101da0380564af5d0",
+      "bytes": 2937
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/neck_ribcage/local_review.json",
+      "git_blob_sha": "2d26a664ab7a50fe33366037c02c3dc79699f379",
+      "bytes": 2930
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/local_reviews/ribcage_pelvis/local_review.json",
+      "git_blob_sha": "8ec31903a16056ab34790a37bb9b292932f825e8",
+      "bytes": 2959
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/pass_memory.json",
+      "git_blob_sha": "bfdb4d1c55bf9f1f065f0cd8337783125c058e7a",
+      "bytes": 6727
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/review.json",
+      "git_blob_sha": "d29711e561f6f01c02fff44c82f21f476b65001d",
+      "bytes": 5073
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/stage_contract.json",
+      "git_blob_sha": "dc26843bc937dc65b2c1301eca5fa250d21c3ad9",
+      "bytes": 2359
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/worker_packet.json",
+      "git_blob_sha": "552744db1ef98c85013b649c9371078e9cbe7dfb",
+      "bytes": 20394
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_01/worker_packet.md",
+      "git_blob_sha": "3b9662bf1c6dd59a8e5372cba601a3af730b2594",
+      "bytes": 11064
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/artifacts.json",
+      "git_blob_sha": "802ef90bd9af47358e0b4889cd9ffde0d62ce965",
+      "bytes": 1462
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/current_drawing.png",
+      "git_blob_sha": "a6002ed40f1004808e5fb119c2d69bd968374c18",
+      "bytes": 39938
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews_manifest.json",
+      "git_blob_sha": "f5bef2ce720713af497961d3a606491a87c8d0dc",
+      "bytes": 19000
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/arm_segments/local_review.json",
+      "git_blob_sha": "689e03e0b04741b84352c3945e6213d7c061e0bd",
+      "bytes": 2949
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/foot_blocks/local_review.json",
+      "git_blob_sha": "22a604984db76467a15a9d25f290b08598b03c53",
+      "bytes": 2931
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/hand_blocks/local_review.json",
+      "git_blob_sha": "58fc8ae22b0361ffa1529f4f0a19e1eb449495c3",
+      "bytes": 2935
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/leg_segments/local_review.json",
+      "git_blob_sha": "43df18f485d580caa80ac7dc62855b5487c7662f",
+      "bytes": 2940
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/neck_ribcage/local_review.json",
+      "git_blob_sha": "7bcba92682e66dee6b4b30545f818cfdd3932f77",
+      "bytes": 2933
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/local_reviews/ribcage_pelvis/local_review.json",
+      "git_blob_sha": "aeeddef66d26be025fd73304282a4203992891f5",
+      "bytes": 2962
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/pass_memory.json",
+      "git_blob_sha": "a87ba0da40b7e5a58c5cca4e66a50e9cefd7cad2",
+      "bytes": 7295
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/review.json",
+      "git_blob_sha": "e09594f9363db3bb10491361d58923af773c73ef",
+      "bytes": 5565
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/stage_contract.json",
+      "git_blob_sha": "dc26843bc937dc65b2c1301eca5fa250d21c3ad9",
+      "bytes": 2359
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/worker_packet.json",
+      "git_blob_sha": "22027abe5921ef981efbd54432257e8af3bbda0c",
+      "bytes": 20796
+    },
+    {
+      "path": "dev/p2_reference_run/run/reviews/P2_primary_axes/pass_02/worker_packet.md",
+      "git_blob_sha": "134594198426f2a47e170743586380993319fee1",
+      "bytes": 13014
+    },
+    {
+      "path": "dev/p2_reference_run/run/session/checkpoint.json",
+      "git_blob_sha": "0a1ce14ed5c68a7e953bc124aaa0ceed842de274",
+      "bytes": 366575
+    },
+    {
+      "path": "dev/p2_reference_run/run/session/session.json",
+      "git_blob_sha": "343cf778039ebda894e169d85a874e9086aa196b",
+      "bytes": 357858
+    },
+    {
+      "path": "dev/p2_reference_run/run/timelapse/manifest.json",
+      "git_blob_sha": "92fc907b41ba58a8358b77e1ac3441396f51001f",
+      "bytes": 40858
+    },
+    {
+      "path": "dev/p2_reference_run/run/timelapse/timelapse.gif",
+      "git_blob_sha": "6a8b447c7354a66921508aa51a80d57f9d57714a",
+      "bytes": 909185
+    },
+    {
+      "path": "dev/p3_reference_run/build.py",
+      "git_blob_sha": "1c522ae78b5349c437c6c3b2d1959bf2449ccd69",
+      "bytes": 4058
+    },
+    {
+      "path": "dev/p3_reference_run/canonical_trace.json",
+      "git_blob_sha": "124be1bebb38abe1f98eba71a6a0dce5d7344934",
+      "bytes": 55146
+    },
+    {
+      "path": "dev/p3_reference_run/compare.png",
+      "git_blob_sha": "4edc77b59c1b3dfc38e27bb9f93eae8b6c6edb73",
+      "bytes": 723295
+    },
+    {
+      "path": "dev/p3_reference_run/overlay.png",
+      "git_blob_sha": "0042fa4b88a53c368c7c6ac4a76673d6694c124b",
+      "bytes": 183111
+    },
+    {
+      "path": "dev/p3_reference_run/reopen.py",
+      "git_blob_sha": "1b2bf00433459d4d4343ff1a85bc423be5493215",
+      "bytes": 22946
+    },
+    {
+      "path": "dev/p3_reference_run/run.py",
+      "git_blob_sha": "4633f1128fdbd9480317ebe0e5a407c18f0f632d",
+      "bytes": 32446
+    },
+    {
+      "path": "dev/p3_reference_run/run/final/drawing.png",
+      "git_blob_sha": "aafcfc0bd5de0ed8b210199478c86f8948ba4ed5",
+      "bytes": 67658
+    },
+    {
+      "path": "dev/p3_reference_run/run/observation/pre_draw_observation.json",
+      "git_blob_sha": "c5b0f58b7928d9b901793a7be52c7fad74ff98ed",
+      "bytes": 3976
+    },
+    {
+      "path": "dev/p3_reference_run/run/p2_trace.json",
+      "git_blob_sha": "479435fae045007b950330113561b0a5241fe987",
+      "bytes": 7068
+    },
+    {
+      "path": "dev/p3_reference_run/run/reopens/reopen_01.json",
+      "git_blob_sha": "5dba3b3eea5edc461d0d8dd1c0bb654f834e0183",
+      "bytes": 4737
+    },
+    {
+      "path": "dev/p3_reference_run/run/reopens/reopen_manifest.json",
+      "git_blob_sha": "b2866581b45f1b098bfa9fbdbf72a6918a9c216b",
+      "bytes": 5334
+    },
+    {
+      "path": "dev/p3_reference_run/run/review_manifest.json",
+      "git_blob_sha": "23f206e0e1aaae01483c682896b7af74c9cb05d4",
+      "bytes": 276350
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_01/current_drawing.png",
+      "git_blob_sha": "e99f3059df37801c18077d1122e0f32fbcbe08f2",
+      "bytes": 66767
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_03/current_drawing.png",
+      "git_blob_sha": "6622c3efdc5624763d30d0ed820f18a02c326f52",
+      "bytes": 66728
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/artifacts.json",
+      "git_blob_sha": "7d1725a4f34d4ab07dd1dc22b8a88fa06c2f3025",
+      "bytes": 1481
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/blind_visual_packet.json",
+      "git_blob_sha": "c88151407119e3b666f6996ca3a3e0d46f48eb47",
+      "bytes": 5741
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/current_drawing.png",
+      "git_blob_sha": "e8173e9d12b7a48d8ed2b803b6bef8ea80d4deef",
+      "bytes": 67417
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews_manifest.json",
+      "git_blob_sha": "f1e0872c5f3f5f1ae93a2c4879c54405845fbdc5",
+      "bytes": 19151
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/attached_object/local_review.json",
+      "git_blob_sha": "01c93d738c09a365654fa4fe6ae2583ff62331c1",
+      "bytes": 2994
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/far_arm/local_review.json",
+      "git_blob_sha": "08f80ea4bf4a40d2643e8a87dfdd1665bfab1cde",
+      "bytes": 2927
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/head_hair/local_review.json",
+      "git_blob_sha": "91167735f66b8be38758beb3daffb77af66bf012",
+      "bytes": 2937
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/near_arm/local_review.json",
+      "git_blob_sha": "d73915350ccc5f27968fde11d28f52aa0fd208ee",
+      "bytes": 2946
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/pelvis_legs/local_review.json",
+      "git_blob_sha": "6ee4b5e162824f60b3b8ffcfafd9020aeffa90ea",
+      "bytes": 2975
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/local_reviews/torso_orientation/local_review.json",
+      "git_blob_sha": "0cf57229ab72c85c06f504f83ac7ed3cd48b61f8",
+      "bytes": 3020
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/pass_memory.json",
+      "git_blob_sha": "2154723d70ae155813e9f3d605b2393d624ca91f",
+      "bytes": 7924
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/region_closure_manifest.json",
+      "git_blob_sha": "0b1ca966b011c74751adf8daace9d78968187de4",
+      "bytes": 5113
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/review.json",
+      "git_blob_sha": "d79697419614d4bd12daeef4caea57ba2ac05097",
+      "bytes": 3252
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/stage_contract.json",
+      "git_blob_sha": "e1877e136b5066750ee0677f1df9f70ed8964b2a",
+      "bytes": 1882
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/visual_fidelity_review.json",
+      "git_blob_sha": "a226aaa799d780df2e9159404460845b20853b41",
+      "bytes": 1458
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/worker_packet.json",
+      "git_blob_sha": "158e05525e8c7af88eafebb66a8e693c9086e68b",
+      "bytes": 19845
+    },
+    {
+      "path": "dev/p3_reference_run/run/reviews/P3_primary_masses/pass_06/worker_packet.md",
+      "git_blob_sha": "07411699a76f82e14397d7cdd7b6b16fa91931a3",
+      "bytes": 10454
+    },
+    {
+      "path": "dev/p3_reference_run/run/session/checkpoint.json",
+      "git_blob_sha": "33ffed37e72d3c99165fbe6d82d2866d64631bb8",
+      "bytes": 748623
+    },
+    {
+      "path": "dev/p3_reference_run/run/session/session.json",
+      "git_blob_sha": "b3f4e84e764b34ebb86d051b72ea182e8c63d901",
+      "bytes": 712715
+    }
+  ]
+}

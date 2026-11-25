@@ -91,65 +91,20 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
-## Explicit semantic group navigation
+## Optional task-specific toolkits
 
-Use `SemanticGroup`, `record_semantic_groups` and `inspect_semantic_groups`
-to declare disjoint stroke membership and directed dependencies in ordinary
-observation records. `prepare_group_transform` feeds the existing atomic edit
-and preview path; `retire_group_guides` deletes only selected declared guides.
-`review_semantic_group` requires current inspected/read evidence and records
-an agent review, never artistic PASS. See [authored element navigation](../review/authored-element-navigation.md).
+Open only the leaf that owns the current problem; use the listed public names.
 
-## Actual tonal interval inspection
+| Need | Public helper entrypoints | Detailed operation and limits |
+|---|---|---|
+| Compare observed geometry | `LandmarkSet`, `compare_landmarks`, `compare_ratios`, `compare_axes`, `cross_section`, `compare_negative_space`, `occlusion_relation` | [Measuring boundaries](../observation/measuring-boundaries.md) |
+| Author projected scaffold | `projected_ellipse`, `ProjectedSection`, `projected_envelope`, `author_projection_guides` | [Gesture and masses](../construction/gesture-and-masses.md) |
+| Sample or edit explicit strokes | `sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`, `curve_join`, `deform_interval`, `StrokeEdit`, `apply_stroke_edits`, `transform_strokes`, `preview_stroke_edits` | [Stroke dynamics](../markmaking/stroke-dynamics.md) |
+| Inspect tonal deposits and correct selected pressure | `inspect_tonal_interval`, `TonalPressureAdjustment`, `prepare_tonal_pressure_edits` | [Broad graphite](../markmaking/broad-graphite.md) |
+| Edit meaningful stroke groups and recheck dependencies | `SemanticGroup`, `record_semantic_groups`, `inspect_semantic_groups`, `review_semantic_group`, `prepare_group_transform`, `retire_group_guides` | [Authored element navigation](../review/authored-element-navigation.md) |
 
-`img2drawing.inspection.inspect_tonal_interval(session, before_cursor, after_cursor, area_ids=...)`
-measures canonical rendered darkness relative to cursor zero against explicit
-live tonal plans. It also reports current stroke centerline exposure, axial
-direction and pressure diagnostics. Optional disjoint `separation_pairs` compare
-mean darkness; no automatic artistic verdict or per-stroke raster attribution.
-Use isolated intervals for leakage claims; current plans are not historical ones.
-Optional `cached_renders={cursor: png_path}` reuses trusted local canonical PNGs
-with matching render manifests, profile, history prefix, cursor state and pixel
-hashes. Missing cursors render normally; invalid provided evidence fails closed.
-Prepare selected pressure-only corrections with `TonalPressureAdjustment` and
-`prepare_tonal_pressure_edits`; preview and commit via the normal stroke-edit API.
-See [broad graphite](../markmaking/broad-graphite.md).
-
-## Explicit curve sampling and atomic geometry editing
-
-`sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`,
-`curve_join` and `deform_interval` are pure path helpers; see
-[stroke dynamics](../markmaking/stroke-dynamics.md). Use `StrokeEdit` and
-`apply_stroke_edits(session, edits, reason=..., observation_id=...)` to
-replace selected current strokes atomically, retaining material and pressure.
-`transform_strokes` prepares an affine edit list without changing material.
-`preview_stroke_edits` renders a detached prospective history using the same
-profile. Supply its base_cursor and base_state_hash as expected_cursor and
-expected_state_hash on apply to reject stale evidence. Preview output is not
-a committed drawing. Split at an explicit interior sample with a new ID;
-the second fragment is appended and may affect overlap/contact rendering.
-Compare a preview before accepting; no split pixel-equivalence promise.
-
-## Explicit projection scaffolds
-
-Use `projected_ellipse`, `ProjectedSection`, `projected_envelope` and
-`author_projection_guides` from `img2drawing.authoring` for explicitly chosen
-projected arcs, section widths and taper. Convert each selected path into a
-normal `ConstructionMark`; commit via the existing batch with an observation ID
-and registration. Never infer unseen edges or add all guides automatically.
-See [gesture and masses](../construction/gesture-and-masses.md).
-
-## Explicit projected-geometry observation
-
-Use `img2drawing.observation.Landmark`, `LandmarkSet` and the read-only
-comparison helpers when a visible relationship needs measurement. Declare
-reference and drawing landmarks independently, with evidence and visibility.
-They share existing `Registration` / `Measurement` contracts, so the results
-can be included in `session.inspect(measurements=(report,), escalation_reason="check landmark discrepancy")` or recorded using
-`session.observe(report.to_dict())`. Use canvas-pixel coordinates for drawing
-landmarks, not display zoom, ROI crop coordinates or output-scale pixels.
-See [measuring boundaries](../observation/measuring-boundaries.md) for
-the explicit comparison example and limits. No new authoring path.
+These optional helpers never replace DrawingSession, determine subject semantics, or
+turn a diagnostic into artistic acceptance.
 
 ## Current-state operations
 
