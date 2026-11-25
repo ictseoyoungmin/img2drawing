@@ -91,6 +91,18 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
+## Explicit projected-geometry observation
+
+Use `img2drawing.observation.Landmark`, `LandmarkSet` and the read-only
+comparison helpers when a visible relationship needs measurement. Declare
+reference and drawing landmarks independently, with evidence and visibility.
+They share existing `Registration` / `Measurement` contracts, so the results
+can be included in `session.inspect(measurements=(report,), escalation_reason="check landmark discrepancy")` or recorded using
+`session.observe(report.to_dict())`. Use canvas-pixel coordinates for drawing
+landmarks, not display zoom, ROI crop coordinates or output-scale pixels.
+See [measuring boundaries](../observation/measuring-boundaries.md) for
+the explicit comparison example and limits. No new authoring path.
+
 ## Current-state operations
 
 The public session supports the stage-free workflow used by the skill: inspect the current
