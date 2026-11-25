@@ -73,8 +73,15 @@ python dev/benchmarks/constructive_qa/campaign.py verify-replay sealed-case.json
 
 Run the verification with the pinned arm's installed runtime. It validates actual session resume,
 canvas/intent, action count and log identity, canonical independent final pixels, sample cursors,
-GIF bytes and actual decoded first/last frame tolerance. It does not check every intermediate
-frame or prove independent model execution. Use the existing full-history replay tests and a
+GIF bytes and actual decoded first/last frame tolerance. By default it does not check intermediate
+frames. For a strict sample audit, add `--sample-audit-budget N` (explicit supersampled pixel-work
+budget) to `verify-replay`. The evaluator regenerates each declared cursor using the pinned
+backend, checks each unquantized hash and compares each decoded GIF frame to the regenerated
+RGB pixels using the pinned final-frame tolerance as a stricter per-frame diagnostic. The strict
+audit requires an opaque profile and one decoded GIF frame per sample; coalesced sequences fail
+closed. If a sampled frame exceeds tolerance, the report records `SAMPLE_TOLERANCE_FAILED`
+and the command exits nonzero. This is not a separate renderer comparison or verification of unsampled actions, and
+neither mode proves independent model execution. Use the existing full-history replay tests and a
 separate visual reviewer; no auto-PASS. The prior S00 protocol remains the metadata authority.
 
 The current campaign's independent six-class execution is NOT_RUN. Controlled shared-stroke

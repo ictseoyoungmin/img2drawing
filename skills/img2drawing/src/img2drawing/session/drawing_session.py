@@ -15,6 +15,7 @@ sessions written by earlier releases.
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import shutil
@@ -1373,6 +1374,71 @@ class DrawingSession:
             lock_boundaries=bool(lock_boundaries),
         )
         return str(self._commit(action))
+
+    def soft_lift_segment(
+        self,
+        target_stroke_id: str,
+        start_index: int,
+        end_index: int,
+        *,
+        reason: str,
+        observation_id: str,
+        strength: float | None = None,
+        feather_points: int = 1,
+        action_id: str | None = None,
+        tool: str | Mapping[str, Any] = "soft_eraser",
+        grade: str | None = None,
+        tool_overrides: Mapping[str, Any] | None = None,
+        source_observation: str | None = None,
+        expected_cursor: int | None = None,
+        expected_state_hash: str | None = None,
+    ) -> str:
+        """Attenuate an inclusive, explicitly chosen range on a current stroke.
+
+        Point coordinates, material, layer and semantic identity are preserved.
+        The original stroke remains; this is pressure attenuation, not a spatial
+        raster eraser. Adjacent samples receive deterministic linear feathering.
+        Choose the range from the current path, not from an older revision.
+        Optional cursor/hash guards reject stale inspected state before mutation.
+        """
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError("segment soft lift requires a correction reason")
+        if not isinstance(observation_id, str) or not observation_id.strip():
+            raise ValueError("segment soft lift requires explicit observation_id")
+        if type(start_index) is not int or type(end_index) is not int or not 0 <= start_index < end_index:
+            raise ValueError("segment range requires increasing integer indices")
+        if type(feather_points) is not int or feather_points < 0:
+            raise ValueError("feather_points must be a nonnegative integer")
+        if strength is not None and (isinstance(strength, bool) or not math.isfinite(float(strength)) or not 0 <= float(strength) <= 1):
+            raise ValueError("strength must be finite and in [0,1]")
+        with self._lock:
+            if expected_cursor is not None and self.history_cursor != expected_cursor:
+                raise ValueError("stale segment edit cursor")
+            if expected_state_hash is not None and self.drawing_state_hash() != expected_state_hash:
+                raise ValueError("stale segment edit state")
+            # Do not follow ancestry silently: the selected indices belong to a
+            # particular current path, not a superseded stroke revision.
+            current = self.current_stroke(target_stroke_id)
+            if current.stroke_id != target_stroke_id:
+                raise ValueError("segment soft lift requires the current stroke ID")
+            if end_index >= len(current.points) or feather_points > len(current.points):
+                raise ValueError("segment range or feather exceeds current stroke samples")
+            oid, source, why = self._provenance(
+                observation_id=observation_id, source_observation=source_observation,
+                reason=reason.strip(),
+            )
+            action = DrawingAction(
+                action_id=_action_id(self._agent.history, action_id),
+                kind="soft_lift_segment", stage=_COMPAT_STAGE,
+                target_stroke_id=target_stroke_id,
+                tool=_tool_payload(tool, grade, tool_overrides),
+                observation_id=oid, source_observation=source, reason=why,
+                revision_of=target_stroke_id, segment_start=start_index,
+                segment_end=end_index, strength=None if strength is None else float(strength),
+                feather_points=feather_points,
+            )
+            self._commit(action)
+            return action.action_id
 
     def soft_lift(
         self,

@@ -7,6 +7,7 @@ award artistic acceptance. The evaluator uses the pinned arm's installed runtime
 from __future__ import annotations
 
 import argparse
+import hashlib
 from io import BytesIO
 import json
 from pathlib import Path, PurePosixPath
@@ -111,11 +112,93 @@ def _rgb_error(a,b):
     return {"max":int(diff.max()),"mean":float(diff.mean())}
 
 
-def verify_submitted_replay(case,reference,run,evidence_root,replay_manifest):
+def verify_sampled_frames(session, manifest, gif_path, *, max_pixel_work):
+    """Rebuild every declared sample from history; do not trust submitted frame packs.
+
+    The selected backend is independently executed, not an independent renderer.
+    Strict audit additionally applies final-frame GIF tolerances to every sample.
+    This is intentionally limited to opaque profiles and one decoded GIF frame
+    per sample; collapsed or otherwise ambiguous sequences fail closed.
+    """
+    from img2drawing.render.artifact import action_log_sha256
+    from img2drawing.timelapse import sample_cursors
+    from img2drawing.timelapse.export import _FAST_GIF_TOLERANCE, _CANONICAL_GIF_TOLERANCE
+    from img2drawing.timelapse.frames import FastFrameSource, CanonicalFrameSource
+
+    if type(max_pixel_work) is not int or max_pixel_work <= 0:
+        raise ValueError("positive explicit sample audit pixel budget required")
+    profile = session.render_profile
+    if profile.background_rgba[3] != 255:
+        raise ValueError("strict sampled GIF audit requires an opaque render profile")
+    history = session._agent.history  # evaluator-only, never worker authoring
+    cursor = session.history_cursor
+    if (manifest["session_id"] != session.session_id
+            or manifest["history"]["latest_cursor"] != cursor
+            or manifest["history"]["action_count"] != len(history.actions)
+            or manifest["history"]["action_log_sha256"] != action_log_sha256(history)
+            or manifest["render_profile"] != profile.to_dict()
+            or manifest["render_profile_digest"] != profile.digest()):
+        raise ValueError("sample audit history/profile binding mismatch")
+    sampling = manifest["sampling"]
+    step = 1 if sampling["mode"] == "action" else sampling["every_n"]
+    cursors = sample_cursors(cursor, sampling["mode"], step)
+    rows = manifest["frames"]
+    if ([r["cursor"] for r in rows] != cursors or not sampling["action_zero_included"]
+            or not sampling["latest_included"]):
+        raise ValueError("sample audit cursor coverage mismatch")
+    work = len(cursors) * profile.canvas_width * profile.canvas_height * profile.supersample**2 * profile.output_scale**2
+    if work > max_pixel_work:
+        raise ValueError("sample audit pixel-work budget exceeded")
+    backend = manifest["backend"]["selected"]
+    if backend not in ("fast", "canonical"):
+        raise ValueError("unknown sample audit backend")
+    mode = "RGB" if backend == "fast" else "RGBA"
+    tolerance = _FAST_GIF_TOLERANCE if backend == "fast" else _CANONICAL_GIF_TOLERANCE
+    gif_path = Path(gif_path)
+    if file_digest(gif_path) != manifest["gif"]["sha256"] or gif_path.stat().st_size != manifest["gif"]["bytes"]:
+        raise ValueError("GIF hash/size mismatch")
+    before = action_log_sha256(history)
+    peak_max = 0
+    peak_mean = 0.0
+    errors = []
+    with Image.open(gif_path) as gif:
+        if gif.format != "GIF" or gif.n_frames != len(cursors):
+            raise ValueError("strict sample audit requires one decoded GIF frame per sample")
+        source = FastFrameSource(history, profile) if backend == "fast" else CanonicalFrameSource(history, profile)
+        try:
+            for index, (at, row) in enumerate(zip(cursors, rows)):
+                action = None if at == 0 else history.actions[at - 1]
+                if (row["frame_index"] != index or row["pixel_hash_mode"] != mode
+                        or row["action_seq"] != (None if action is None else action.seq)
+                        or row["action"] != (None if action is None else action.action)):
+                    raise ValueError(f"sample metadata mismatch at cursor {at}")
+                source.advance_to(at)
+                with source.image() as expected:
+                    with expected.convert(mode) as pixels:
+                        if hashlib.sha256(pixels.tobytes()).hexdigest() != row["pixel_sha256"]:
+                            raise ValueError(f"regenerated sample hash mismatch at cursor {at}")
+                    gif.seek(index)
+                    error = _rgb_error(np.asarray(gif.convert("RGB")), np.asarray(expected.convert("RGB")))
+                peak_max = max(peak_max, error["max"])
+                peak_mean = max(peak_mean, error["mean"])
+                if error["max"] > tolerance["max_channel_error"] or error["mean"] > tolerance["mean_channel_error"]:
+                    errors.append({"cursor": at, **error})
+        finally:
+            source.close()
+    if session.history_cursor != cursor or action_log_sha256(history) != before:
+        raise RuntimeError("sample verification mutated history")
+    return {"status": "ALL_SAMPLES_VERIFIED" if not errors else "SAMPLE_TOLERANCE_FAILED",
+            "sample_count": len(cursors), "sampled_hashes_matched": len(cursors),
+            "max_channel_error": peak_max, "max_mean_channel_error": peak_mean,
+            "pixel_work": work, "backend": backend, "out_of_tolerance": errors,
+            "visual_verdict": "NOT_EVALUATED"}
+
+
+def verify_submitted_replay(case,reference,run,evidence_root,replay_manifest, *, sample_audit_budget=None):
     """Check actual checkpoint/PNG/GIF endpoints and sampling metadata.
 
-    This is intentionally NOT an all-frame audit, worker isolation attestation,
-    or visual quality verdict. The coordinator must select the correct pinned
+    Optional sample_audit_budget adds strict sampled-frame verification. This is
+    not worker isolation attestation or a visual quality verdict. The coordinator must select the correct pinned
     runtime separately, with trusted worker and evaluator provenance.
     """
     from img2drawing import DrawingSession, __version__
@@ -201,14 +284,18 @@ def verify_submitted_replay(case,reference,run,evidence_root,replay_manifest):
                 _rgb_error(last_frame,_rgba(final.path)[:,:,:3])]
         if any(e["max"]>tolerance["max_channel_error"] or e["mean"]>tolerance["mean_channel_error"] for e in errors):
             raise ValueError("actual GIF endpoint fidelity exceeds pinned runtime tolerance")
+        audit = (None if sample_audit_budget is None else
+                 verify_sampled_frames(session, manifest, paths["timelapse_gif"], max_pixel_work=sample_audit_budget))
     if file_digest(paths["session"])!=before:
         raise RuntimeError("verification modified submitted checkpoint")
-    return {"status":"ENDPOINTS_VERIFIED","case_digest":case["case_digest"],
+    return {"status":"ENDPOINTS_VERIFIED" if audit is None else audit["status"],
+            "case_digest":case["case_digest"],
             "arm":run["arm"],"commit":run["commit"],"runtime_version":__version__,
             "cursor":cursor,"manifest_sample_count":len(cursors),"decoded_gif_frames":frames,
             "first_frame_error":errors[0],"last_frame_error":errors[1],
             "freshness_attestation":run["freshness"]["status"],
-            "all_intermediate_frames":"NOT_VERIFIED","visual_verdict":"NOT_EVALUATED",
+            "all_intermediate_frames":"NOT_VERIFIED" if audit is None else audit["status"],
+            "sample_audit":audit,"visual_verdict":"NOT_EVALUATED",
             "replay_manifest_sha256":file_digest(mp)}
 
 
@@ -221,14 +308,18 @@ def main():
     replay=sub.add_parser("verify-replay")
     for name in ("case","reference","run","evidence_root","replay_manifest","report"):
         replay.add_argument(name)
+    replay.add_argument("--sample-audit-budget", type=int, default=None,
+                        help="explicit pixel-work budget for strict regenerated sample audit")
     a=p.parse_args()
     if a.command=="packet":
         result=prepare_worker_packet(a.repository,read_json(a.case),a.reference,a.arm,a.commit,a.worker_run_id,a.output)
         _write_json(a.receipt,result)
     else:
-        result=verify_submitted_replay(read_json(a.case),a.reference,read_json(a.run),a.evidence_root,a.replay_manifest)
+        result=verify_submitted_replay(read_json(a.case),a.reference,read_json(a.run),a.evidence_root,a.replay_manifest, sample_audit_budget=a.sample_audit_budget)
         _write_json(a.report,result)
     print(json.dumps(result,indent=2))
+    if result["status"] == "SAMPLE_TOLERANCE_FAILED":
+        raise SystemExit(1)
 
 
 if __name__=="__main__":
