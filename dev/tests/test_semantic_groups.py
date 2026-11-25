@@ -23,7 +23,7 @@ def declaration(s):
 
 
 def read(s):
-    s.inspect(supersample=1)
+    s.inspect(supersample=2)
     iid=s.inspection_history[-1]["inspection_id"]
     s.record_evidence_read(iid)
     return iid
