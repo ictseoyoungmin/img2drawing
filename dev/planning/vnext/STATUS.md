@@ -8,7 +8,7 @@ RELEASE TAG:        v1.2.1 · manifest-driven publish authority
 CURRENT SOURCE:     1.2.1 · tonal authoring and provenance maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  v1.3.0 S00 independent baseline remains open; S01–S04 integrated; S05 NEXT
+ACTIVE BOTTLENECK:  v1.3.0 S01–S06 integrated; S00/S07 independent comparison remains open
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -49,8 +49,11 @@ Scope: `dev/v1.3.0-constructive-drawing`, not the published v1.2.1 package/tag.
 - S02 construction (#81, fb8babc): projected ellipses, explicit asymmetric sections and guide paths through existing ConstructionMark; 293 active tests passed. Local guide addition and retirement restored exact canonical pixels.
 - S03 stroke authoring (#82, 1a2582f): Bezier, arc-length pressure and bounded deformation, atomic replacement/split/transform and exact prospective preview; 298 active tests passed. Real local 14-stroke group edit preview/commit exact pixel equality; split may change contact/compositing and is not pixel-equivalent by contract.
 - S04 tonal inspection (#83, 4f0201a): shared runtime/CLI diagnosis, direction and centerline evidence, protected coverage and separation, explicit pressure proposals, verified cached canonical renders; 303 active tests passed, v11 golden and package boundary passed. Local 325-action portrait exploration retained geometry/material, lowered protected mean darkness modestly but coverage remained high; overall likeness/hair quality NOT PASS. Cached 3-area historical inspection took ~0.99 s locally with prior coverage reproduced exactly; full re-render timed out in the same local run. No general speed guarantee.
-- S01–S04 feature implementation and regression gates CLOSED (60% of weighted plan); S00/S05–S08 open. S00 independent baseline has not been waived, but implementation was deliberately parallelized per continuation request. S07 owns independent quality proof and residual portrait/clump work. No private images, coordinates or large outputs committed.
-- Next: S05 semantic groups, dependent review and guide retirement; keep one action history and use the atomic editing path from S03. Then S06/S07/S08.
+- S05 semantic groups (#84, a9f8067): explicit membership/dependency review, atomic transforms and guide retirement on existing history. 308 active tests passed. Non-blind real portrait copy: 5 groups / 124 members; 325→327 actions invalidated face/eye/nose-mouth/hair dependent reviews while unrelated sweater review stayed current; source checkpoint unchanged. No artistic PASS.
+- S06 cleanup (#85, a2cb747): 310 active tests passed. Archived 253 unchanged retired artifacts (29,211,911 bytes) from checkout with immutable v1.2.1 blob recovery records, retaining required checkpoint. Tracked tree 161,993,315→132,951,388 bytes at S06; not a reduction of historical Git object size. API guide 22,720→20,502 bytes; CI enforces attention and repository-growth budgets.
+- S07 tooling (#86, dea9557): isolated worker packets and submitted replay verification merged; PR CI 45702953436 PASS (312 active, 44 runtime tests and package/historical/archive gates). Fixed resume of submitted inspection artifacts. Local shared-path still-life diagnostic across pinned v1.2.0, v1.2.1 and S05 candidate: 33 actions, 29 surviving strokes, ten samples, independently rendered canonical PNG and decoded GIF endpoints pass; v1.2.1 and S05 candidate state/final pixels match. Not fresh-worker performance, intermediate-frame fidelity, or visual PASS. Five local reference candidates prepared, hand-object contact reference still needed; independent worker/model and equal-budget runs not sealed or executed.
+- S01–S06 feature implementation and regression gates CLOSED (75% of weighted plan, six of nine slices). S00/S07 WIP; S08 OPEN. No private images, answer coordinates or large outputs committed.
+- Next: complete S00 sealed baseline and S07 independent visual comparison, review residuals and long-session erasure, then S08 release validation. No promotion to v1.3.0 stable.
 
 ## Current truth
 

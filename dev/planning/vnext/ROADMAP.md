@@ -54,8 +54,9 @@ M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 publi
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
 V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
-V13-S01–S04 native toolkits                               CLOSED (feature scope; no visual PASS)
-V13-S05 semantic group editing                            NEXT
+V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
+V13-S07 independent comparison                            WIP · tooling merged; independent runs NOT_RUN
+V13-S08 release validation                                OPEN · independent evidence and release decision pending
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
