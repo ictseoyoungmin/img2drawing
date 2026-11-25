@@ -82,6 +82,32 @@ def test_actual_replay_verification_and_tampering(tmp_path):
     assert report["status"]=="ENDPOINTS_VERIFIED"
     assert report["visual_verdict"]=="NOT_EVALUATED"
     assert report["freshness_attestation"]=="not_fresh"
+    audited=campaign.verify_submitted_replay(case_record,ref,run,evidence,replay.manifest_path,
+                                             sample_audit_budget=1_000_000)
+    assert audited["all_intermediate_frames"]=="ALL_SAMPLES_VERIFIED"
+    assert audited["sample_audit"]["sample_count"]==3
+    assert audited["sample_audit"]["sampled_hashes_matched"]==3
+    manifest=json.loads(replay.manifest_path.read_text())
+    with pytest.raises(ValueError,match="pixel-work budget"):
+        campaign.verify_sampled_frames(s,manifest,replay.gif_path,max_pixel_work=1)
+    from copy import deepcopy
+    corrupted=deepcopy(manifest)
+    corrupted["frames"][1]["pixel_sha256"]="0"*64
+    with pytest.raises(ValueError,match="regenerated sample hash mismatch"):
+        campaign.verify_sampled_frames(s,corrupted,replay.gif_path,max_pixel_work=1_000_000)
+    # A forged GIF may retain valid endpoints and an updated file hash, but its
+    # wrong middle frame must fail strict sampled-frame verification.
+    forged=evidence/"forged.gif"
+    with Image.open(replay.gif_path) as image:
+        image.seek(0); first=image.convert("RGB")
+        image.seek(image.n_frames-1); last=image.convert("RGB")
+    with first,last,Image.new("RGB",first.size,"black") as bad:
+        first.save(forged,save_all=True,append_images=[bad,last],duration=100,loop=0)
+    corrupted=deepcopy(manifest)
+    corrupted["gif"].update(sha256=protocol.file_digest(forged),bytes=forged.stat().st_size)
+    result=campaign.verify_sampled_frames(s,corrupted,forged,max_pixel_work=1_000_000)
+    assert result["status"]=="SAMPLE_TOLERANCE_FAILED"
+    assert any(row["cursor"]==2 for row in result["out_of_tolerance"])
     m=json.loads(replay.manifest_path.read_text());m["frames"][0]["cursor"]=1
     replay.manifest_path.write_text(json.dumps(m))
     with pytest.raises(ValueError,match="sampling"):

@@ -36,6 +36,8 @@ class RuntimeCapabilities:
         "replace-stroke",
         "soft-lift",
         "delete-stroke",
+        "replace-segment",
+        "soft-lift-segment",
     )
     output_operations: tuple[str, ...] = (
         "inspect",
@@ -55,6 +57,8 @@ class RuntimeCapabilities:
         "DrawingSession.replace_stroke",
         "DrawingSession.soft_lift",
         "DrawingSession.delete_stroke",
+        "DrawingSession.replace_segment",
+        "DrawingSession.soft_lift_segment",
     )
     authoring_helpers: tuple[str, ...] = (
         "img2drawing.authoring.SemanticGroup",

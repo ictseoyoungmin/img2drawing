@@ -115,7 +115,9 @@ the residual, and finish from current evidence.
 Use public authored-element lookup when a later correction must locate an existing stroke.
 Use the exact public edit methods `replace_stroke()`, `soft_lift()`, and `delete_stroke()`
 rather than guessing a `soften_stroke()` alias or raster-editing the rendered PNG. The runtime
-capability manifest exposes these exact callables through `authoring_entrypoints`.
+capability manifest exposes these exact callables through `authoring_entrypoints`. For an
+explicit range, use `replace_segment()` or `soft_lift_segment()`; see
+[local stroke dynamics](../markmaking/stroke-dynamics.md).
 
 When only stroke material is wrong and the path is already correct, prefer:
 
@@ -132,8 +134,8 @@ retune_stroke(
 
 `retune_stroke()` resolves the current replacement descendant and emits the existing
 `replace_stroke` history action while preserving points, role, part, confidence, layer, stable
-stroke identity, and explicitly authored pressure. Derived pressure is regenerated so a taper or
-pressure retune can actually change the rendered material. It does not create a new persistence
+stroke identity, explicit or locally erased pressure, and globally lifted opacity unless
+explicitly overridden. Unedited derived pressure is regenerated for taper/pressure retunes. It does not create a new persistence
 schema.
 
 When several strokes share one coherent material residual, use `retune_strokes()` rather than

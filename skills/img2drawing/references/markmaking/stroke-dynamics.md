@@ -63,3 +63,15 @@ Pass its base_cursor and base_state_hash as expected_cursor and expected_state_h
 on apply; stale evidence fails closed. Split with an explicit interior point index
 and new stroke ID. The appended fragment can alter overlap/contact and is not
 promised to render pixel-identically; compare before accepting.
+
+## Explicit local attenuation
+
+When only part of a correct path is too dark, inspect its current stroke samples and use
+`session.soft_lift_segment(stroke_id, start_index, end_index, strength=..., feather_points=...,
+reason=..., observation_id=...)`. The zero-based range is inclusive, with at least two samples.
+Strength is in [0,1]; feathering linearly reduces attenuation on neighboring samples. The method
+records a normal history action and retains geometry/material/ownership. This is local pressure
+attenuation, not a freeform pixel eraser; the rendered mark may still be visible. Use current
+stroke IDs, and optionally pass `expected_cursor` and `expected_state_hash` to reject stale edits.
+`retune_stroke` and `reshape_stroke` preserve a locally erased pressure curve; if a replacement
+profile is needed, choose it explicitly rather than accidentally restoring a removed mark.

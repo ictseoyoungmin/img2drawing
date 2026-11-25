@@ -38,8 +38,9 @@ def retune_stroke(
 
     The current replacement descendant is resolved first. Points, semantic part/role,
     confidence, layer, stable stroke identity, and authored pressure (when explicitly supplied)
-    are inherited. Derived pressure is deliberately regenerated from the retuned tool state so
-    taper/pressure changes can actually take effect.
+    are inherited. Locally erased pressure and globally reduced opacity are also
+    preserved unless opacity is explicitly overridden. Derived pressure without local edits
+    is regenerated so taper/pressure changes can take effect.
 
     This helper emits the existing ``replace_stroke`` action; it does not add a persistence
     schema or a second editing path.
@@ -60,6 +61,13 @@ def retune_stroke(
     for name in _TOOL_OVERRIDE_FIELDS:
         if name in tool_state:
             inherited_overrides[name] = float(tool_state[name])
+    # A global soft lift changes replayed opacity rather than its original tool state.
+    if current.opacity != float(tool_state.get("opacity", current.opacity)):
+        inherited_overrides["opacity"] = float(current.opacity)
+    local_lift = any(
+        isinstance(edit, Mapping) and edit.get("kind") == "segment_soft_lift"
+        for edit in (tool_state.get("local_edits") or ())
+    )
     for name, value in dict(tool_overrides or {}).items():
         if name not in _TOOL_OVERRIDE_FIELDS:
             raise ValueError(f"unsupported stroke retune field: {name}")
@@ -88,7 +96,7 @@ def retune_stroke(
         layer=current.layer,
         pressure=(
             list(current.pressure)
-            if current.pressure_authored and current.pressure is not None
+            if (current.pressure_authored or local_lift) and current.pressure is not None
             else None
         ),
         tool=preset,
