@@ -41,8 +41,11 @@ from .markmaking import (
 )
 from .retune import reshape_stroke, retune_stroke, retune_strokes
 from .tonal_area import TONAL_AREA_SCHEMA, TonalAreaPlan
+from .tonal_correction import TonalPressureAdjustment, prepare_tonal_pressure_edits
 
 __all__ = [
+    "TonalPressureAdjustment",
+    "prepare_tonal_pressure_edits",
     "resample_polyline",
     "sample_cubic_bezier",
     "pressure_along_path",

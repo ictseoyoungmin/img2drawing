@@ -31,6 +31,7 @@ from .model import (
     Size,
 )
 from .sheet import InspectionSheet
+from .tonal import inspect_tonal_interval
 from .wip import (
     DEFAULT_WIP_GUIDE_COLOR,
     WIP_GUIDE_STYLE_SCHEMA,
@@ -41,6 +42,7 @@ from .wip import (
 )
 
 __all__ = [
+    "inspect_tonal_interval",
     "Box",
     "DEFAULT_WIP_GUIDE_COLOR",
     "GroundGuide",
