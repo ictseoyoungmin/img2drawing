@@ -61,6 +61,16 @@ class RuntimeCapabilities:
         "img2drawing.authoring.retune_stroke",
         "img2drawing.authoring.retune_strokes",
     )
+    observation_helpers: tuple[str, ...] = (
+        "img2drawing.observation.Landmark",
+        "img2drawing.observation.LandmarkSet",
+        "img2drawing.observation.compare_landmarks",
+        "img2drawing.observation.compare_ratios",
+        "img2drawing.observation.compare_axes",
+        "img2drawing.observation.cross_section",
+        "img2drawing.observation.compare_negative_space",
+        "img2drawing.observation.occlusion_relation",
+    )
     output_entrypoints: tuple[str, ...] = (
         "DrawingSession.inspect",
         "DrawingSession.render_final",
@@ -92,6 +102,7 @@ class RuntimeCapabilities:
             "authoring_entrypoints": list(self.authoring_entrypoints),
             "authoring_helpers": list(self.authoring_helpers),
             "output_entrypoints": list(self.output_entrypoints),
+            "observation_helpers": list(self.observation_helpers),
             "markmaking_contract": self.markmaking_contract,
             "prohibited_final_authoring_bypasses": list(self.prohibited_final_authoring_bypasses),
         }

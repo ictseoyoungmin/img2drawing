@@ -1,10 +1,14 @@
-"""Current observation-side material sampling helpers.
+"""Agent-selected material and projected-geometry observation helpers.
 
-Historical R23 observation contracts, lock records, uncertainty records, and view helpers were
-retired with the R23 orchestration runtime. Subject/material palette sampling remains a documented
-specialized capability and is intentionally independent of drawing-session orchestration.
+No automatic detection, correspondence, hidden geometry or drawing mutation.
 """
 
 from .palette import MaterialSample, SubjectPalette
+from .landmarks import LANDMARK_SCHEMA, Landmark, LandmarkSet, compare_landmarks, compare_ratios
+from .spatial import compare_axes, cross_section, compare_negative_space, occlusion_relation
 
-__all__ = ["MaterialSample", "SubjectPalette"]
+__all__ = [
+    "MaterialSample", "SubjectPalette", "LANDMARK_SCHEMA", "Landmark", "LandmarkSet",
+    "compare_landmarks", "compare_ratios", "compare_axes", "cross_section",
+    "compare_negative_space", "occlusion_relation",
+]
