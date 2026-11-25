@@ -53,3 +53,13 @@ normalized path positions 0 to 1 to preserve an observed pressure rhythm even
 with uneven sampling. Inspect endpoint gap and tangent change with
 `curve_join`, and apply endpoint-locked local displacement with
 `deform_interval`. No automatic beautification or smoothing of actual cusps.
+
+To apply geometry edits, import `StrokeEdit` and `apply_stroke_edits` from
+`img2drawing.authoring`. The latter takes a session, explicit edit records,
+reason and observation_id. `transform_strokes(session, stroke_ids, matrix)`
+prepares affine geometry only, retaining material. `preview_stroke_edits`
+renders the prospective history using the same profile without committing it.
+Pass its base_cursor and base_state_hash as expected_cursor and expected_state_hash
+on apply; stale evidence fails closed. Split with an explicit interior point index
+and new stroke ID. The appended fragment can alter overlap/contact and is not
+promised to render pixel-identically; compare before accepting.

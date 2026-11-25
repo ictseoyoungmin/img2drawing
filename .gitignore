@@ -100,3 +100,9 @@ dev/archives
 /dev/dogfood/s03-quality-gates/*/runs/
 # Superseded image_gen figure references are local pilot inputs.
 /dev/dogfood/s03-quality-gates/references/
+
+# v1.3 local QA output and private references; never add generated run packs.
+/qa-results/
+/private-qa/
+/dev/benchmarks/constructive_qa/runs/
+/dev/benchmarks/tonal_qa/runs/

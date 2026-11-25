@@ -21,6 +21,7 @@ CONTROL_PLANE_PATH = re.compile(r"(?:^|[\s`(])(?:\.\./)*dev/|(?:^|[\s`(])(?:\.\.
 # prevent the router/map from silently regrowing into textbooks.
 MAX_SKILL_BYTES = 12_000
 MAX_INDEX_BYTES = 10_000
+MAX_PUBLIC_SURFACE_BYTES = 21_000
 MAX_ROOT_DIRECT_LEAF_ROUTES = 16
 
 CANONICAL_OWNER_LEAVES = {
@@ -224,6 +225,8 @@ def verify_attention_budgets() -> None:
 
     skill_bytes = len(SKILL.read_bytes())
     index_bytes = len(INDEX.read_bytes())
+    api_bytes = len((REFERENCES / 'api/public-surface.md').read_bytes())
+    assert api_bytes <= MAX_PUBLIC_SURFACE_BYTES, f'public API route exceeds attention budget: {api_bytes}'
     assert skill_bytes <= MAX_SKILL_BYTES, (
         f"SKILL.md exceeds attention budget: {skill_bytes} > {MAX_SKILL_BYTES} bytes"
     )
