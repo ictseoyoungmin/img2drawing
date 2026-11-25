@@ -82,3 +82,24 @@ def test_measurement_does_not_reuse_target_density_as_luminance():
     m=measure_plan(paper,paper,after,plan())
     assert m["target_after"]["mean_darkness"]==pytest.approx(.8)
     assert m["protected_after"]["coverage"]==1
+
+
+def test_verified_cached_renders_reuse_history_prefix_and_reject_tampering(tmp_path):
+    s,oid,ref=make(tmp_path)
+    blank=s.render_at(0,tmp_path/"blank.png")
+    add(s,oid,plan(),[(10,10),(10,40)],[.7,.7])
+    first=s.render_final(tmp_path/"first.png")
+    add(s,oid,plan(),[(16,10),(16,40)],[.7,.7])
+    last=s.render_final(tmp_path/"last.png")
+    expected=inspect_tonal_interval(s,1,2)
+    actual=inspect_tonal_interval(s,1,2,cached_renders={0:blank.path,1:first.path,2:last.path})
+    assert expected["areas"]==actual["areas"]
+    assert [v["source"] for v in actual["render_inputs"]]==["verified_cached_artifact"]*3
+    with pytest.raises(ValueError,match="invalid cached canonical render"):
+        inspect_tonal_interval(s,1,2,cached_renders={1:last.path})
+    with Image.open(first.path) as img:
+        corrupted=img.copy()
+    corrupted.putpixel((0,0),(0,0,0,255))
+    corrupted.save(first.path)
+    with pytest.raises(ValueError,match="invalid cached canonical render"):
+        inspect_tonal_interval(s,1,2,cached_renders={1:first.path})

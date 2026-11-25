@@ -99,6 +99,9 @@ live tonal plans. It also reports current stroke centerline exposure, axial
 direction and pressure diagnostics. Optional disjoint `separation_pairs` compare
 mean darkness; no automatic artistic verdict or per-stroke raster attribution.
 Use isolated intervals for leakage claims; current plans are not historical ones.
+Optional `cached_renders={cursor: png_path}` reuses trusted local canonical PNGs
+with matching render manifests, profile, history prefix, cursor state and pixel
+hashes. Missing cursors render normally; invalid provided evidence fails closed.
 Prepare selected pressure-only corrections with `TonalPressureAdjustment` and
 `prepare_tonal_pressure_edits`; preview and commit via the normal stroke-edit API.
 See [broad graphite](../markmaking/broad-graphite.md).

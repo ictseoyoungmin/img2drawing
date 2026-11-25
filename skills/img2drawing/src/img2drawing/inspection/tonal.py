@@ -208,8 +208,73 @@ def _separation(arrays,plans,pairs,scale):
     return output
 
 
+def _prefix_hashes(history, wanted):
+    """Find matching canonical action-list prefixes in one streaming pass."""
+    import hashlib
+    from ..core.digest import canonical_json_bytes
+
+    found={}
+    h=hashlib.sha256(b"[")
+    for n in range(len(history.actions)+1):
+        digest=h.copy()
+        digest.update(b"]")
+        value=digest.hexdigest()
+        if value in wanted:
+            found[value]=n
+            if len(found)==len(wanted):
+                break
+        if n<len(history.actions):
+            if n:
+                h.update(b",")
+            h.update(canonical_json_bytes(history.actions[n].to_dict()))
+    return found
+
+
+def _verified_cached_renders(session, profile, cached, requested):
+    """Validate locally trusted canonical render artifacts against current history.
+
+    Hash consistency is not independent proof of origin: callers must supply
+    artifacts produced by canonical rendering in their trusted workspace.
+    """
+    import json
+    from collections.abc import Mapping
+    from ..core.digest import sha256_file
+    from ..render.artifact import RENDER_ARTIFACT_SCHEMA, pixel_sha256
+    from .measure import drawing_state_hash
+
+    if cached is None:
+        return {}
+    if not isinstance(cached,Mapping) or any(type(k) is not int or k not in requested for k in cached):
+        raise ValueError("cached_renders keys must be requested integer cursors")
+    prepared={}
+    for n,value in cached.items():
+        p=Path(value)
+        try:
+            m=json.loads(p.with_suffix(".render.json").read_text(encoding="utf-8"))
+            artifact=m["artifact"]
+            if (p.suffix.lower()!=".png" or m["schema"]!=RENDER_ARTIFACT_SCHEMA or m["cursor"]!=n
+                    or m["render_profile_digest"]!=profile.digest() or m["render_profile"]!=profile.to_dict()
+                    or artifact["file"]!=p.name or sha256_file(p)!=artifact["png_sha256"]
+                    or pixel_sha256(p)!=artifact["pixel_sha256"]
+                    or drawing_state_hash(session._agent.history.state_at(n))!=m["drawing_state_hash"]):
+                raise ValueError("canonical render metadata or pixel hash mismatch")
+            with Image.open(p) as im:
+                if im.mode!=profile.png_mode or im.size!=(profile.canvas_width*profile.output_scale,
+                                                          profile.canvas_height*profile.output_scale):
+                    raise ValueError("cached render dimensions or mode mismatch")
+        except (OSError,KeyError,TypeError,ValueError) as exc:
+            raise ValueError(f"invalid cached canonical render at cursor {n}: {exc}") from exc
+        prepared[n]=(p,m)
+    prefixes=_prefix_hashes(session._agent.history,{m["action_log_sha256"] for _,m in prepared.values()})
+    for n,(p,m) in prepared.items():
+        if prefixes.get(m["action_log_sha256"],-1)<n:
+            raise ValueError(f"cached render history prefix mismatch at cursor {n}")
+    return {n:p for n,(p,_) in prepared.items()}
+
+
 def inspect_tonal_interval(session,before_cursor,after_cursor,area_ids=None,*,
-                           separation_pairs=(),coverage_threshold=8/255,saturation_threshold=.65):
+                           separation_pairs=(),coverage_threshold=8/255,saturation_threshold=.65,
+                           cached_renders=None):
     """Non-mutating diagnostic of canonical interval and current explicit plans.
 
     The plans/stroke IDs are from the current IR, not historical ownership.
@@ -227,10 +292,12 @@ def inspect_tonal_interval(session,before_cursor,after_cursor,area_ids=None,*,
         selected=list(area_ids) if area_ids is not None else sorted(plans)
         if not selected or any(k not in plans for k in selected) or len(set(selected))!=len(selected):
             raise ValueError("unique requested live tonal plans required")
+        requested=(0,before_cursor,after_cursor)
+        cached=_verified_cached_renders(session,profile,cached_renders,set(requested))
         with TemporaryDirectory() as folder:
-            paths=[Path(folder)/f"{n}.png" for n in (0,before_cursor,after_cursor)]
-            for n,path in zip((0,before_cursor,after_cursor),paths):
-                if not path.exists():
+            paths=[cached.get(n,Path(folder)/f"{n}.png") for n in requested]
+            for n,path in zip(requested,paths):
+                if n not in cached and not path.exists():
                     session.render_at(n,path)
             paper,before,after=(gray(p) for p in paths)
         arrays=_delta_arrays(paper,before,after,profile.output_scale,coverage_threshold,saturation_threshold)
@@ -250,6 +317,7 @@ def inspect_tonal_interval(session,before_cursor,after_cursor,area_ids=None,*,
                 "coverage_threshold":coverage_threshold,"saturation_threshold":saturation_threshold,
                 "attribution_warning":"outside change includes all interval edits; use isolated group intervals; centerline samples are approximate, not raster contribution; plan targets are intent, not calibrated luminance",
                 "centerline_sample_spacing_canvas":2.0,
+                "render_inputs":[{"cursor":n,"source":"verified_cached_artifact" if n in cached else "rendered"} for n in dict.fromkeys(requested)],
                 "areas":results,"separation":separation,"artistic_verdict":"NOT_EVALUATED"}
 
 
