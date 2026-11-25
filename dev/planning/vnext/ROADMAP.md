@@ -53,7 +53,9 @@ S08 choose next package version / release candidate     CLOSED → v1.1.0 publis
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
-V13-S00 comparison baseline and evaluation protocol       NEXT → v1.3.0
+V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
+V13-S01–S04 native toolkits                               CLOSED (feature scope; no visual PASS)
+V13-S05 semantic group editing                            NEXT
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -301,4 +303,4 @@ Work OS WK-110 is the linked execution record. These slices use independent evid
 | S07 | 10 | Independent fresh-worker comparison on six subject classes, including the private portrait; original 511-action evidence if available, real long-session segment erasure, no leaked answer strokes. Report unresolved likeness/tonal defects. |
 | S08 | 5 | Package/contract, v11 golden, replay, CI and release decision; visual gate must be supported or explicitly limited. |
 
-Progress is the sum of weights for fully verified closed slices. No slice is complete at the v1.2.1 promotion. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.
+Progress is the sum of weights for fully verified closed slices. At the v1.2.1 promotion no v1.3 slice was complete; the current development branch checkpoint is recorded in STATUS.md. Implementation can proceed in parallel with the open S00 independent baseline, but no comparison or artistic claim can use missing baseline evidence. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.

@@ -8,7 +8,7 @@ RELEASE TAG:        v1.2.1 · manifest-driven publish authority
 CURRENT SOURCE:     1.2.1 · tonal authoring and provenance maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
 RENDERER POLICY:    no additive v12 for this quality cycle
-ACTIVE BOTTLENECK:  v1.3.0 constructive drawing quality and independent validation · S00 NEXT
+ACTIVE BOTTLENECK:  v1.3.0 S00 independent baseline remains open; S01–S04 integrated; S05 NEXT
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -39,6 +39,18 @@ Authority is intentionally split by purpose:
 4. release tags, freezes, manifests, and release notes — immutable historical release authority.
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
+
+## Current v1.3.0 development branch checkpoint
+
+Scope: `dev/v1.3.0-constructive-drawing`, not the published v1.2.1 package/tag.
+
+- S00 tooling merged (#79), independent six-class matched baseline NOT_RUN; remains open.
+- S01 observation (#80, 69147b8): explicit landmarks/ratios/axes/sections/negative spaces/occlusion; 289 active tests passed. Real local 300-action landmark evidence; no visual PASS.
+- S02 construction (#81, fb8babc): projected ellipses, explicit asymmetric sections and guide paths through existing ConstructionMark; 293 active tests passed. Local guide addition and retirement restored exact canonical pixels.
+- S03 stroke authoring (#82, 1a2582f): Bezier, arc-length pressure and bounded deformation, atomic replacement/split/transform and exact prospective preview; 298 active tests passed. Real local 14-stroke group edit preview/commit exact pixel equality; split may change contact/compositing and is not pixel-equivalent by contract.
+- S04 tonal inspection (#83, 4f0201a): shared runtime/CLI diagnosis, direction and centerline evidence, protected coverage and separation, explicit pressure proposals, verified cached canonical renders; 303 active tests passed, v11 golden and package boundary passed. Local 325-action portrait exploration retained geometry/material, lowered protected mean darkness modestly but coverage remained high; overall likeness/hair quality NOT PASS. Cached 3-area historical inspection took ~0.99 s locally with prior coverage reproduced exactly; full re-render timed out in the same local run. No general speed guarantee.
+- S01–S04 feature implementation and regression gates CLOSED (60% of weighted plan); S00/S05–S08 open. S00 independent baseline has not been waived, but implementation was deliberately parallelized per continuation request. S07 owns independent quality proof and residual portrait/clump work. No private images, coordinates or large outputs committed.
+- Next: S05 semantic groups, dependent review and guide retirement; keep one action history and use the atomic editing path from S03. Then S06/S07/S08.
 
 ## Current truth
 
