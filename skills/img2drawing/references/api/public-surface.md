@@ -91,6 +91,15 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
+## Explicit projection scaffolds
+
+Use `projected_ellipse`, `ProjectedSection`, `projected_envelope` and
+`author_projection_guides` from `img2drawing.authoring` for explicitly chosen
+projected arcs, section widths and taper. Convert each selected path into a
+normal `ConstructionMark`; commit via the existing batch with an observation ID
+and registration. Never infer unseen edges or add all guides automatically.
+See [gesture and masses](../construction/gesture-and-masses.md).
+
 ## Explicit projected-geometry observation
 
 Use `img2drawing.observation.Landmark`, `LandmarkSet` and the read-only

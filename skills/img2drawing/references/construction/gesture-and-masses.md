@@ -64,3 +64,15 @@ through an occluder merely to make construction feel anatomically complete.
 
 A successful construction already reads as this subject's pose at a glance. If it does not,
 repair the premise before adding contour, identity accents, or broad value.
+
+## Optional projected construction helpers
+
+When a projected volume needs a readable scaffold, specify the center and two
+conjugate radius vectors for `projected_ellipse`; select the actual arc interval.
+Use `ProjectedSection.from_widths(center, transverse, left_width=..., right_width=...)`
+for explicitly unequal half-widths. `projected_envelope` returns two side paths
+and optional axis/section paths from the caller's ordered sections; it inserts no
+terminal caps or hidden edges. These are provisional projected hypotheses, not
+anatomy templates. Select only useful paths, create ordinary `ConstructionMark`
+records, and call `author_projection_guides` with a known observation and existing
+`Registration`. Compare to the subject and retire each guide once replaced.
