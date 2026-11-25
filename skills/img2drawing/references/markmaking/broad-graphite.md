@@ -45,7 +45,7 @@ material structure to resolve. That is not a reason to avoid broad marks when th
 them. Reuse the supported runtime and persistent cache rather than replacing the effect with a
 hand-built raster shortcut.
 
-## Tonal-area authorship is not line thickening (v1.2.1 development)
+## Tonal-area authorship is not line thickening (v1.2.1)
 
 For hair masses, broad dark garments, deep folds or other *areas*, distinguish
 the **spatial area** from the **contact footprint of a single stroke**:

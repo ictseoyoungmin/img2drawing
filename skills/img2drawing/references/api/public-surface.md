@@ -204,7 +204,7 @@ they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
 Resolve semantic intent first, then pass the returned public draw kwargs to the session:
 For a width/pressure/opacity adjustment, prefer `modifiers={...}` at
-`resolve_mark_for_intent()`. From v1.2.1 development, per-call
+`resolve_mark_for_intent()`. Since v1.2.1, per-call
 `tool_overrides={...}` also **merges selectively** with the resolved tool
 mapping instead of discarding untouched grain/hardness; the recorded
 markmaking metadata is reconciled against the executed ToolState and
@@ -236,7 +236,7 @@ If the runtime cannot express the requested line language through the public res
 stroke/tool arguments, or retune helpers, record that as a capability gap for framework work rather
 than importing a private renderer helper or inventing unsupported keyword arguments.
 
-## Tonal-area evidence without raster filling (v1.2.1 development)
+## Tonal-area evidence without raster filling (v1.2.1)
 
 Use the optional `TonalAreaPlan` when dark hair or garment value must be built
 from several authored pencil marks rather than an oversized solid stripe.

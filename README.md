@@ -2,7 +2,7 @@
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
   <p>
-    <a href="docs/releases/v1.2.0.md"><img src="https://img.shields.io/badge/version-v1.2.0-6f5a46" alt="Version v1.2.0"></a>
+    <a href="docs/releases/v1.2.1.md"><img src="https://img.shields.io/badge/version-v1.2.1-6f5a46" alt="Version v1.2.1"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
@@ -10,9 +10,9 @@
   </p>
 </div>
 
-**Current stable: v1.2.0**
+**Current stable: v1.2.1**
 
-> v1.2.0 improves portrait-authoring guidance, geometry-only stroke reshape and memory-bounded GIF fidelity recovery. Renderer identity remains `img2drawing-pencil / 11`; independent portrait likeness and high-resolution peak-RSS benchmarks remain unverified. See [the v1.2.0 release notes](docs/releases/v1.2.0.md) and [CHANGELOG.md](CHANGELOG.md).
+> v1.2.1 fixes partial markmaking overrides and executed-state provenance, adds explicit tonal-area planning and developer-only tonal/replay diagnostics. Renderer `img2drawing-pencil / 11` is unchanged. Synthetic high-resolution replay passed; independent portrait quality remains unverified. See [the v1.2.1 release notes](docs/releases/v1.2.1.md) and [CHANGELOG.md](CHANGELOG.md).
 
 An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
 **actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
@@ -37,6 +37,12 @@ Three hand line studies progressing from early authored lines to finished line w
 
 Each panel advances through explicit drawing actions; this lightweight preview shows the process
 rather than only the final image.
+
+## v1.2.1 — Tonal authoring and provenance maintenance
+
+Partial tool overrides retain untouched resolved material properties. `TonalAreaPlan` records intended tonal boundaries, density and reserved highlights without generating marks. Developer-only diagnostics measure canonical rendered sessions and high-resolution replay. Remaining artistic quality gaps are carried into v1.3.0.
+
+[Read the v1.2.1 release notes](docs/releases/v1.2.1.md) · [Changelog](CHANGELOG.md)
 
 ## v1.2.0 — Portrait authoring and replay recovery
 

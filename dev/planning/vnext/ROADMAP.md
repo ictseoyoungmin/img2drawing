@@ -1,9 +1,9 @@
 # img2drawing roadmap
 
-Updated: 2026-10-28
+Updated: 2026-11-26
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 begins a separately evidenced markmaking override/provenance and tonal-area authoring slice.
+The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 selects the bounded markmaking override/provenance and tonal-area QA maintenance release. The maintainer deferred unresolved visual quality to v1.3.0.
 
 ## Authority and precedence
 
@@ -52,7 +52,8 @@ S07 mechanical release validation                       CLOSED · main CI 363274
 S08 choose next package version / release candidate     CLOSED → v1.1.0 published
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
-M03 broad tonal overdraw / resolver provenance             NEXT → v1.2.1 branch
+M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
+V13-S00 comparison baseline and evaluation protocol       NEXT → v1.3.0
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -70,7 +71,7 @@ Slice E attention-architecture QA + structural CI         CLOSED
 S07 mechanical release validation                       CLOSED
 ```
 
-The instruction graph A–E and S07/S08/M01 scopes remain CLOSED. The new M03 authoring bottleneck is independent; its observed failure is not a renderer-v12 authorization.
+The instruction graph A–E and S07/S08/M01 scopes remain CLOSED. M03 maintenance closes the runtime/QA implementation scope; its unresolved artistic failure is not a renderer-v12 authorization.
 
 ## S01 — v11 quality-control redesign — CLOSED
 
@@ -262,8 +263,8 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- current published stable: Git tag / GitHub Release `v1.2.0`, `../../release/publish/v1.2.0.json`, and `../../../docs/releases/v1.2.0.md`;
-- previous published stable: v1.1.1, unchanged manifest and freeze;
+- selected stable: Git tag / GitHub Release `v1.2.1` (publication gated), `../../release/publish/v1.2.1.json`, and `../../../docs/releases/v1.2.1.md`;
+- previous published stable: v1.2.0 and v1.1.1, unchanged manifests and freezes;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `../../release/publish/v1.1.0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
@@ -276,8 +277,28 @@ This historical statement does not require future current source to keep increme
 
 PR #75 delivers portrait identity-oriented dual-scale comparisons, geometry-only `reshape_stroke` preserving edited material and residual action identity, and bounded-frame GIF palette recovery. The renderer v11 and persisted schema contract do not change. 264 active and 44 package-boundary tests passed on the implementation commit, with PR-head CI green; independent portrait and long-frame peak RSS remain NOT_RUN.
 
-## M03 — v1.2.1 broad markmaking and tonal area — NEXT
+## M03 — v1.2.1 broad markmaking and tonal area — CLOSED (bounded maintenance scope)
 
 The author-reported 511-action drawing included 125 `broad-graphite` marks (58 hair values); widths up to 32 for hair and 82 for clothing. Partial `tool_overrides` passed alongside resolver kwargs may discard `hardness` and `grain` while the stored markmaking provenance claims the original material. This is an authored-action/runtime API defect first, not proof of a graphite renderer material defect.
 
 Required gates: (1) merge intentional partial overrides into resolved material with explicit precedence and reject ambiguous conflicting channels; (2) replay provenance must match effective executed `ToolState` with regression tests; (3) observed tonal area boundaries, direction, layering, reserved highlights and density must precede use of broad strokes; (4) compare controlled swatches and fresh drawing results, preserve action history and end-to-end GIF. Do not replace the stroke architecture with unaudited raster fills, or invent universal hard width caps. This work must not silently modify the v1.2.0 published contract.
+
+Implementation gates (1)–(3) and controlled QA in (4) are verified. PR #77 measured synthetic 2048×2048/511-action replay; PR #78 verified actual-session diagnostics, including five additional tests. The maintainer approved promotion of the bounded maintenance/QA scope on 2026-11-26; this is not an independent visual-quality pass. Real portrait exploration found striped dark masses, excessive highlight coverage and likeness errors. Independent fresh-worker likeness, the original 511-action reproduction and real long-session segment erasure remain open for v1.3.0.
+
+## v1.3.0 — Constructive Drawing Engine
+
+Work OS WK-110 is the linked execution record. These slices use independent evidence and the existing action history. No new renderer generation, automatic tracing, raster fills, reference-derived answer geometry or artistic verdict automation.
+
+| Slice | Weight | Scope and closure evidence |
+|---|---:|---|
+| S00 | 10 | Freeze subject fingerprints, reference scope, prompts, model/runtime versions, equal budgets, evaluation protocol and baseline measurements. User-provided portrait is private/local. |
+| S01 | 15 | Observation: explicit landmarks, relative proportions, axes, section/negative-space and occlusion relations; deterministic geometry tests and reference comparison. |
+| S02 | 15 | Construction: agent-specified projected masses, section axes and taper as ordinary authored strokes; guide removal/replay tests. |
+| S03 | 15 | Stroke authoring: explicit curves, pressure and local/group editing, preview, continuity; preserve existing action and material authority. |
+| S04 | 15 | Tonal inspection/authoring: actual coverage, reserved light, saturation, direction, leakage and correction; extend PR #78 evidence, test real portrait improvement. |
+| S05 | 10 | Semantic group editing and dependent review; no forced runtime stages. |
+| S06 | 5 | Skill/discovery attention budget, repo cleanup, frozen evidence preservation. |
+| S07 | 10 | Independent fresh-worker comparison on six subject classes, including the private portrait; original 511-action evidence if available, real long-session segment erasure, no leaked answer strokes. Report unresolved likeness/tonal defects. |
+| S08 | 5 | Package/contract, v11 golden, replay, CI and release decision; visual gate must be supported or explicitly limited. |
+
+Progress is the sum of weights for fully verified closed slices. No slice is complete at the v1.2.1 promotion. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.

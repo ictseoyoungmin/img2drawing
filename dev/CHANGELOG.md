@@ -1,6 +1,10 @@
 # img2drawing changelog
 
-## 2026-10-28 — v1.2.1 tonal authoring dev, first corrective slice (unreleased)
+## 2026-11-26 — v1.2.1 bounded maintenance promotion
+
+PR #77 synthetic QA and PR #78 real-session diagnostics are integrated into PR #76. PR #78 CI passed 276 active tests and the existing package boundary. Synthetic 2048×2048 replay passed at 511 actions (33/129-frame recovery, 129-frame fast path), and the controlled swatch passed. The local developer-authored 300-action portrait exposed unresolved tonal and likeness defects. The maintainer approved promotion of the bounded maintenance/QA scope on 2026-11-26; this is not an independent visual-quality pass. Real portrait exploration found striped dark masses, excessive highlight coverage and likeness errors. Independent fresh-worker likeness, the original 511-action reproduction and real long-session segment erasure remain open for v1.3.0.
+
+## 2026-10-28 — v1.2.1 tonal authoring dev, first corrective slice (historical)
 
 The reported 511-action hair/garment overdraw exposed a pair of concerns:
 resolver-provided material overrides could be replaced by a narrower
