@@ -57,6 +57,12 @@ class RuntimeCapabilities:
         "DrawingSession.delete_stroke",
     )
     authoring_helpers: tuple[str, ...] = (
+        "img2drawing.authoring.SemanticGroup",
+        "img2drawing.authoring.record_semantic_groups",
+        "img2drawing.authoring.inspect_semantic_groups",
+        "img2drawing.authoring.review_semantic_group",
+        "img2drawing.authoring.prepare_group_transform",
+        "img2drawing.authoring.retire_group_guides",
         "img2drawing.authoring.TonalPressureAdjustment",
         "img2drawing.authoring.prepare_tonal_pressure_edits",
         "img2drawing.authoring.resample_polyline",
