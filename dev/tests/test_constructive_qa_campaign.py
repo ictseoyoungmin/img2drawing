@@ -65,10 +65,12 @@ def test_actual_replay_verification_and_tampering(tmp_path):
     s.draw([(10,10),(25,20),(40,14)],observation_id=oid)
     s.draw([(10,30),(25,37),(40,28)],observation_id=oid)
     s.soft_lift("h0001",strength=.4,reason="correct",observation_id=oid)
+    s.inspect(supersample=2)
+    s.record_evidence_read(s.inspection_history[-1]["inspection_id"])
     replay=s.export_timelapse(evidence/"replay",backend="canonical",every_n=2)
     final=s.render_final(evidence/"final.png")
-    for name in ("comparison.png","review.md"):
-        (evidence/name).write_text("fixture metadata, not visual proof")
+    Image.new("RGB",(64,64),"white").save(evidence/"comparison.png")
+    (evidence/"review.md").write_text("fixture metadata, not visual proof")
     paths={"session":s.checkpoint_path,"final_png":final.path,"timelapse_gif":replay.gif_path,
            "comparison":evidence/"comparison.png","review":evidence/"review.md"}
     run={"schema":protocol.RUN_SCHEMA,"case_digest":case_record["case_digest"],

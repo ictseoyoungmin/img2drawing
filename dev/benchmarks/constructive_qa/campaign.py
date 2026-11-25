@@ -138,9 +138,13 @@ def verify_submitted_replay(case,reference,run,evidence_root,replay_manifest):
     if manifest["schema"]!=REPLAY_EXPORT_SCHEMA:
         raise ValueError("unsupported replay manifest schema")
     before=file_digest(paths["session"])
+    artifact_root=Path(str((checkpoint.get("artifacts") or {}).get("inspection_root",".")))
+    if artifact_root.is_absolute() or not (paths["session"].parent/artifact_root).resolve().is_relative_to(Path(evidence_root).resolve()):
+        raise ValueError("checkpoint inspection root escapes evidence root")
     with TemporaryDirectory() as folder:
-        # Resume in an isolated scratch output; never write into worker evidence.
-        session=DrawingSession.resume(paths["session"],subject=reference,output_dir=folder)
+        # Resume reads the original, confined inspection evidence. Render only
+        # into scratch; changing output_dir would hide the submitted inspections.
+        session=DrawingSession.resume(paths["session"],subject=reference)
         cursor=session.history_cursor
         spec=case["spec"]
         if cursor!=run["usage"]["actions"] or len(checkpoint["history"]["actions"])!=cursor:
