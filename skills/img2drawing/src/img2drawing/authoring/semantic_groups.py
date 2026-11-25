@@ -5,7 +5,7 @@ retirements are derived from authoritative actions, never a second edit history.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Sequence
 
 from ..core import DrawingAction
@@ -137,7 +137,7 @@ def _derive(session, groups, records=(), plan_id=None):
             current.append(cid)
             if sid in g.guide_ids:
                 guides.append(cid)
-            versions.append([sid, element.to_dict(), sha256_obj(ir[cid].to_dict())])
+            versions.append([sid, element.to_dict(), sha256_obj(asdict(ir[cid]))])
         parents = [output[p] for p in g.depends_on]
         signature = sha256_obj({"definition":g.to_dict(), "members":versions,
                                 "parents":[p["signature"] for p in parents]})
@@ -159,8 +159,12 @@ def _derive(session, groups, records=(), plan_id=None):
                        "unassigned_split_ids":[]}
     # A split creates a new explicit stroke. Do not silently inherit membership.
     # Flag unassigned fragments of grouped strokes until the agent redeclares them.
+    actions_by_seq = {a.seq:a for a in session._agent.history.actions[:session.history_cursor]}
     for cid, stroke in ir.items():
-        metadata = ((stroke.tool_state or {}).get("provenance") or {}).get("metadata") or {}
+        # Use creation provenance, not the latest mutable tool metadata. A split
+        # fragment can itself be edited without losing its original declaration.
+        creation = actions_by_seq[index[cid].created_seq]
+        metadata = (creation.provenance or {}).get("metadata") or {}
         if cid in owner or metadata.get("split_fragment") != "second":
             continue
         source = metadata.get("geometry_edited_from")
@@ -240,6 +244,7 @@ def review_semantic_group(session, plan_id, group_id, *, inspection_id, evidence
                 or inspections[-1]["history_cursor"] != report["cursor"]):
             raise ValueError("group review requires current inspection")
         if not any(e.inspection_id == str(inspection_id) and not e.stale
+                   and e.artifact not in {"measurements", "manifest", "inspection_json", "measurements.json", "inspection.json"}
                    for e in session.evidence_telemetry.read_events):
             raise ValueError("group review requires recorded current evidence read")
         return session.observe({"schema":GROUP_REVIEW_SCHEMA, "plan_id":plan_id,

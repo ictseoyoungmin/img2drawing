@@ -98,6 +98,8 @@ def test_replacement_descendants_and_split_are_not_silent_members(tmp_path):
     assert row["unassigned_split_ids"]==["tail"]
     with pytest.raises(ValueError,match="redeclare"):
         prepare_group_transform(s,plan,"head",(1,0,0,1,1,0))
+    s.replace_segment("tail",0,1,[tuple(s.current_stroke("tail").points[0]),(27,11),tuple(s.current_stroke("tail").points[-1])],observation_id=oid,reason="edit tail")
+    assert inspect_semantic_groups(s,plan)["groups"]["head"]["unassigned_split_ids"]==["tail"]
     new=record_semantic_groups(s,[SemanticGroup("head",("head-v2","guide","tail"),guide_ids=("guide",)),
         SemanticGroup("eye",("eye",),depends_on=("head",))],evidence="explicit membership after split")
     assert not inspect_semantic_groups(s,new)["groups"]["head"]["unassigned_split_ids"]
