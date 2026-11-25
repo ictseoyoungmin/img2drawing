@@ -91,6 +91,21 @@ Historical R23 orchestration is different: the post-v1.0.2 source tree no longer
 resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
 that retired compatibility namespace.
 
+## Explicit curve sampling and atomic geometry editing
+
+`sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`,
+`curve_join` and `deform_interval` are pure path helpers; see
+[stroke dynamics](../markmaking/stroke-dynamics.md). Use `StrokeEdit` and
+`apply_stroke_edits(session, edits, reason=..., observation_id=...)` to
+replace selected current strokes atomically, retaining material and pressure.
+`transform_strokes` prepares an affine edit list without changing material.
+`preview_stroke_edits` renders a detached prospective history using the same
+profile. Supply its base_cursor and base_state_hash as expected_cursor and
+expected_state_hash on apply to reject stale evidence. Preview output is not
+a committed drawing. Split at an explicit interior sample with a new ID;
+the second fragment is appended and may affect overlap/contact rendering.
+Compare a preview before accepting; no split pixel-equivalence promise.
+
 ## Explicit projection scaffolds
 
 Use `projected_ellipse`, `ProjectedSection`, `projected_envelope` and

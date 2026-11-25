@@ -43,3 +43,13 @@ authority. Historical output must not change merely because a newer preset defin
 When geometry is correct but the mark reads wrong because of weight, taper, opacity, pressure, or
 material contact, keep the authored points and retune the material through the public runtime.
 Do not redraw a different path to compensate for a material defect.
+
+## Explicit curve and pressure helpers
+
+Sample an agent-chosen smooth cubic Bezier interval or resample a smooth
+polyline by approximate arc length. Split at real corners; the resampler can
+cut across corners and is not a topology detector. Use pressure knots from
+normalized path positions 0 to 1 to preserve an observed pressure rhythm even
+with uneven sampling. Inspect endpoint gap and tangent change with
+`curve_join`, and apply endpoint-locked local displacement with
+`deform_interval`. No automatic beautification or smoothing of actual cusps.

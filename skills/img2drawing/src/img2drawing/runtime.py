@@ -57,6 +57,15 @@ class RuntimeCapabilities:
         "DrawingSession.delete_stroke",
     )
     authoring_helpers: tuple[str, ...] = (
+        "img2drawing.authoring.resample_polyline",
+        "img2drawing.authoring.sample_cubic_bezier",
+        "img2drawing.authoring.pressure_along_path",
+        "img2drawing.authoring.curve_join",
+        "img2drawing.authoring.deform_interval",
+        "img2drawing.authoring.StrokeEdit",
+        "img2drawing.authoring.transform_strokes",
+        "img2drawing.authoring.apply_stroke_edits",
+        "img2drawing.authoring.preview_stroke_edits",
         "img2drawing.authoring.ProjectedSection",
         "img2drawing.authoring.projected_ellipse",
         "img2drawing.authoring.projected_envelope",
