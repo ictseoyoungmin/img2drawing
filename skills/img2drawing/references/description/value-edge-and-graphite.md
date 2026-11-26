@@ -154,3 +154,15 @@ highlight. Treat the quantities as diagnostic evidence, not a loss to minimize, 
 review the actual image before committing a replacement family. Do not erase real
 folds merely to flatten the measured signal. For oblique or curving planes choose
 explicit TonalPatch chains instead of an axis-aligned strip probe.
+
+## Inspect selected contact overlap
+
+When strip evidence suggests a false rail or gap, use `inspect_contact_overlap` from
+`img2drawing.inspection` with 2–12 **current graphite stroke IDs**, a canvas box,
+`axis="x"` or `"y"` and 4–64 bins. Match the box and strip direction to the existing
+TonalBandProbe. The runtime builds isolated canonical supersampled deposit patches
+with the persisted profile; reports coverage, multiple-contact fractions, pair overlap
+and analytical alpha union. It ignores unselected strokes and ordered lifts; it is
+not final color, inferred causal attribution, or an overlap target. Preserve observed
+folds, compare the whole form, and preview an explicitly authored replacement before
+accepting a change. An optional raster-work budget bounds inspection size.

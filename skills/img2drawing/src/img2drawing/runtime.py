@@ -101,6 +101,7 @@ class RuntimeCapabilities:
     )
     observation_helpers: tuple[str, ...] = (
         "img2drawing.inspection.inspect_tonal_interval",
+        "img2drawing.inspection.inspect_contact_overlap",
         "img2drawing.inspection.TonalBandProbe",
         "img2drawing.inspection.inspect_tonal_bands",
         "img2drawing.inspection.compare_tonal_bands",

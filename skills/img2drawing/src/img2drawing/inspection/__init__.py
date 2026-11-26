@@ -33,6 +33,7 @@ from .model import (
 from .sheet import InspectionSheet
 from .tonal import inspect_tonal_interval
 from .tonal_patches import TonalPatch, compare_tonal_patches, inspect_tonal_patches
+from .contact_overlap import inspect_contact_overlap
 from .tonal_bands import TonalBandProbe, inspect_tonal_bands, compare_tonal_bands
 from .wip import (
     DEFAULT_WIP_GUIDE_COLOR,
@@ -44,6 +45,7 @@ from .wip import (
 )
 
 __all__ = [
+    "inspect_contact_overlap",
     "TonalBandProbe",
     "inspect_tonal_bands",
     "compare_tonal_bands",
