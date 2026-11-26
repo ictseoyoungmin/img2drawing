@@ -101,7 +101,7 @@ Open only the leaf that owns the current problem; use the listed public names.
 | Author projected scaffold | `ProjectedVolume`, `VolumeStation`, `ProjectionCamera`; explicit guide/edit helpers | [Gesture and masses](../construction/gesture-and-masses.md) |
 | Sample or edit explicit strokes | `sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`, `curve_join`, `deform_interval`, `StrokeEdit`, `apply_stroke_edits`, `transform_strokes`, `preview_stroke_edits` | [Stroke dynamics](../markmaking/stroke-dynamics.md) |
 | Inspect tonal deposits and correct selected pressure | `inspect_tonal_interval`, `TonalPressureAdjustment`, `prepare_tonal_pressure_edits`, `ContactWidthProfile` | [Broad graphite](../markmaking/broad-graphite.md) |
-| Inspect spatial tonal continuity | `TonalPatch`, `inspect_tonal_patches`, `inspect_tonal_proposals`, `TonalBandProbe` | [Value and edge](../description/value-edge-and-graphite.md) |
+| Inspect spatial tonal continuity | `TonalPatch`, `inspect_tonal_proposals`, `TonalBandProbe`, `inspect_contact_overlap` | [Value and edge](../description/value-edge-and-graphite.md) |
 | Edit meaningful stroke groups and recheck dependencies | `SemanticGroup`, `record_semantic_groups`, `inspect_semantic_groups`, `review_semantic_group`, `prepare_group_transform`, `retire_group_guides` | [Authored element navigation](../review/authored-element-navigation.md) |
 
 These optional helpers never replace DrawingSession, determine subject semantics, or
