@@ -1,0 +1,85 @@
+{
+  "schema": "img2drawing.retired_evidence.v1",
+  "source_commit": "1895e0b1ff5d38e27cb66a7fb5e5e25e36bc412b",
+  "archive_count": 430,
+  "archive_bytes": 112959292,
+  "entries": [
+    {
+      "path": "dev/dogfood/croquis-sniper-girl",
+      "kind": "tree",
+      "git_sha": "c006e16a13dc904470fcf7d573de7fcb8ba07835",
+      "files": 215,
+      "bytes": 34838855
+    },
+    {
+      "path": "dev/dogfood/target-subject",
+      "kind": "tree",
+      "git_sha": "a24b49c0076f867a1524dc6a5b008a5170f07aaa",
+      "files": 5,
+      "bytes": 7031671
+    },
+    {
+      "path": "dev/dogfood/vnext-b05",
+      "kind": "tree",
+      "git_sha": "731856179523fe5b0cfb1a00bfb9a184e78e1fa4",
+      "files": 3,
+      "bytes": 3017673
+    },
+    {
+      "path": "dev/evidence/fresh-worker",
+      "kind": "tree",
+      "git_sha": "891ba4ec8346c9868f0bbae5f79124924fe49aec",
+      "files": 94,
+      "bytes": 10101016
+    },
+    {
+      "path": "dev/evidence/material-integration",
+      "kind": "tree",
+      "git_sha": "92269954d28282b59d5a581ed54590cca2bdd983",
+      "files": 76,
+      "bytes": 45555155
+    },
+    {
+      "path": "dev/evidence/vnext",
+      "kind": "tree",
+      "git_sha": "1d28fcc6e87d7fd6993e4c99bae83b8baf1469d8",
+      "files": 23,
+      "bytes": 7121718
+    },
+    {
+      "path": "dev/release/r23",
+      "kind": "tree",
+      "git_sha": "7d65b0b62c7b7eb680a73006e98be5e2013728ef",
+      "files": 10,
+      "bytes": 5248864
+    },
+    {
+      "path": "dev/release/validate_r22_release.py",
+      "kind": "blob",
+      "git_sha": "15ce3da52b67a3e317dab8e6d5d1735d972aa3a5",
+      "files": 1,
+      "bytes": 2837
+    },
+    {
+      "path": "dev/tools/build_material_quality_run.py",
+      "kind": "blob",
+      "git_sha": "ff358ed9dedf08e458ad820308ea4a8de9e73010",
+      "files": 1,
+      "bytes": 20375
+    },
+    {
+      "path": "dev/tools/build_r23_release.py",
+      "kind": "blob",
+      "git_sha": "f0ecbfd96aac4d91ae9bd3e15c8118b553c74d84",
+      "files": 1,
+      "bytes": 2662
+    },
+    {
+      "path": "dev/tools/run_fresh_worker_generalization.py",
+      "kind": "blob",
+      "git_sha": "73b33a668948863bb94bf2979d39827b3298113f",
+      "files": 1,
+      "bytes": 18466
+    }
+  ]
+}

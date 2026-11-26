@@ -16,6 +16,7 @@ def test_deployable_skill_root_is_attention_clean() -> None:
     assert {path.name for path in SKILL.iterdir()} == {
         "LICENSE",
         "MANIFEST.in",
+        "README.txt",  # Packaging metadata only; SKILL.md remains the sole router.
         "SKILL.md",
         "assets",
         "pyproject.toml",
@@ -57,6 +58,10 @@ def test_reference_surface_is_the_instruction_graph() -> None:
     }
     assert {path.name for path in (SKILL / "references" / "figure").iterdir()} == {
         "clothing-folds.md",
+        "facial-construction.md",
+        "facial-expression.md",
+        "facial-features.md",
+        "facial-values.md",
         "hands-and-grip.md",
         "head-face-hair.md",
         "legs-feet.md",
@@ -66,6 +71,7 @@ def test_reference_surface_is_the_instruction_graph() -> None:
         "authored-element-navigation.md",
         "completion.md",
         "markmaking-residuals.md",
+        "portrait-likeness.md",
         "residual-correction.md",
         "residual-routing.md",
         "stroke-retirement.md",

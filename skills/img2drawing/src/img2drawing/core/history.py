@@ -187,6 +187,11 @@ def _replay_segment_soft_lift(stroke: Stroke, action: CanvasAction) -> Stroke:
     return out.cleaned()
 
 
+def _require_editable_graphite(stroke: Stroke) -> None:
+    if (stroke.tool_state or {}).get("path_lift_contract") in {"ordered-graphite-lift-v1", "ordered-graphite-pressure-lift-v1"}:
+        raise ValueError("retire and re-author a path eraser instead of editing it as graphite")
+
+
 def unsupported_action_error(action: str) -> ValueError:
     if str(action).startswith("region."):
         return ValueError(
@@ -285,7 +290,7 @@ class CanvasHistory:
         new_stroke_id: str | None = None,
         provenance: dict[str, Any] | None = None,
     ) -> str:
-        self._current_stroke(stroke_id)
+        _require_editable_graphite(self._current_stroke(stroke_id))
         s = deepcopy(replacement).cleaned()
         sid = new_stroke_id or s.stroke_id or f"h{self._next_id:04d}"
         if sid != stroke_id and self._stroke_identity_exists(sid):
@@ -316,6 +321,7 @@ class CanvasHistory:
         provenance: dict[str, Any] | None = None,
     ) -> str:
         current = self._current_stroke(stroke_id)
+        _require_editable_graphite(current)
         start, end = _segment_bounds(current, start_index, end_index)
         replacement = [(float(x), float(y)) for x, y in points]
         if len(replacement) < 2:
@@ -351,7 +357,7 @@ class CanvasHistory:
                   stage: str = "A2_eraser_history", provenance: dict[str, Any] | None = None) -> None:
         if eraser.mode != "erase":
             raise ValueError("soft_lift requires an erase-mode tool")
-        self._current_stroke(stroke_id)
+        _require_editable_graphite(self._current_stroke(stroke_id))
         k = eraser.erase_strength if strength is None else float(strength)
         if not 0.0 <= k <= 1.0:
             raise ValueError("erase strength must be in [0,1]")
@@ -379,6 +385,7 @@ class CanvasHistory:
         if eraser.mode != "erase":
             raise ValueError("soft_lift_segment requires an erase-mode tool")
         current = self._current_stroke(stroke_id)
+        _require_editable_graphite(current)
         start, end = _segment_bounds(current, start_index, end_index)
         if current.pressure is None or len(current.pressure) != len(current.points):
             raise ValueError("segment soft lift requires explicit point-aligned pressure")

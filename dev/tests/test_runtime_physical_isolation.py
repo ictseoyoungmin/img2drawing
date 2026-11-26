@@ -77,22 +77,35 @@ print(json.dumps({root: importlib.util.find_spec(root) is not None for root in r
     assert not any(payload.values())
 
 
-def test_current_observation_namespace_is_palette_only() -> None:
+def test_current_observation_namespace_is_explicit_read_only_surface() -> None:
     payload = _fresh_python(
         """
 import json
 import img2drawing.observation as observation
-from img2drawing.observation import MaterialSample, SubjectPalette
+from img2drawing.observation import MaterialSample, SubjectPalette, Landmark, LandmarkSet
 print(json.dumps({
     'exports': sorted(observation.__all__),
     'material_module': MaterialSample.__module__,
     'palette_module': SubjectPalette.__module__,
+    'landmark_module': Landmark.__module__,
+    'landmark_set_module': LandmarkSet.__module__,
+    'spatial_modules': {
+        name: getattr(observation, name).__module__
+        for name in ('compare_axes', 'cross_section', 'compare_negative_space', 'occlusion_relation')
+    },
 }))
 """
     )
-    assert payload["exports"] == ["MaterialSample", "SubjectPalette"]
+    assert payload["exports"] == sorted([
+        "MaterialSample", "SubjectPalette", "LANDMARK_SCHEMA", "Landmark",
+        "LandmarkSet", "compare_landmarks", "compare_ratios", "compare_axes",
+        "cross_section", "compare_negative_space", "occlusion_relation",
+        "compare_portrait_landmarks", "portrait_likeness_packet",
+    ])
     assert payload["material_module"] == "img2drawing.observation.palette"
     assert payload["palette_module"] == "img2drawing.observation.palette"
+    assert payload["landmark_module"] == payload["landmark_set_module"] == "img2drawing.observation.landmarks"
+    assert set(payload["spatial_modules"].values()) == {"img2drawing.observation.spatial"}
 
 
 def test_canonical_root_and_drawing_session_do_not_activate_retired_cluster() -> None:

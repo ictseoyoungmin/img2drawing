@@ -1,6 +1,6 @@
 # img2drawing roadmap
 
-Updated: 2026-11-26
+Updated: 2026-11-27
 Workflow: Bottleneck · one highest-impact open problem at a time
 
 The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 selects the bounded markmaking override/provenance and tonal-area QA maintenance release. The maintainer deferred unresolved visual quality to v1.3.0.
@@ -53,7 +53,10 @@ S08 choose next package version / release candidate     CLOSED → v1.1.0 publis
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
-V13-S00 comparison baseline and evaluation protocol       NEXT → v1.3.0
+V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
+V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
+V13-S07 independent comparison                            WIP · tooling/327-action audit and opt-in material contract merged; independent runs NOT_RUN
+V13-S08 release validation                                ACTIVE · bounded promotion selected; main CI pending
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -287,7 +290,7 @@ Implementation gates (1)–(3) and controlled QA in (4) are verified. PR #77 mea
 
 ## v1.3.0 — Constructive Drawing Engine
 
-Work OS WK-110 is the linked execution record. These slices use independent evidence and the existing action history. No new renderer generation, automatic tracing, raster fills, reference-derived answer geometry or artistic verdict automation.
+Work OS WK-110 is the linked execution record. These slices use independent evidence and the existing action history. The maintainer approved the optional opacity-normalized material contract after controlled renderer-owned defect reproduction; it uses the same engine, retains legacy v11 as default, and requires explicit selection and a distinct digest. No new renderer generation, automatic tracing, raster fills, reference-derived answer geometry or artistic verdict automation.
 
 | Slice | Weight | Scope and closure evidence |
 |---|---:|---|
@@ -301,4 +304,6 @@ Work OS WK-110 is the linked execution record. These slices use independent evid
 | S07 | 10 | Independent fresh-worker comparison on six subject classes, including the private portrait; original 511-action evidence if available, real long-session segment erasure, no leaked answer strokes. Report unresolved likeness/tonal defects. |
 | S08 | 5 | Package/contract, v11 golden, replay, CI and release decision; visual gate must be supported or explicitly limited. |
 
-Progress is the sum of weights for fully verified closed slices. No slice is complete at the v1.2.1 promotion. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.
+Maintainer decision (2026-11-27): publish the bounded v1.3.0 implementation after green main CI. S00 and S07 independent artistic comparison and extended high-resolution performance remain deferred, not passed; no broad artistic-quality claim. S08 requires successful publication validation.
+
+Progress is the sum of weights for fully verified closed slices. At the v1.2.1 promotion no v1.3 slice was complete; the current development branch checkpoint is recorded in STATUS.md. Implementation can proceed in parallel with the open S00 independent baseline, but no comparison or artistic claim can use missing baseline evidence. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.

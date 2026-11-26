@@ -38,7 +38,8 @@ result.manifest_path     # replay_manifest.json (backend, sampling, frame hashes
 Do not look for, import, or write another replay/timelapse exporter. `export_timelapse()` picks the
 exact incremental backend when the history supports it and ffmpeg is available, and otherwise
 renders every frame canonically for the whole export; both consume the bound `RenderProfile`, and
-the export fails unless its last frame matches `canonical_final.png` exactly. `backend="canonical"`
+the export checks lossless endpoint pixels against `canonical_final.png` and the decoded GIF
+against its documented color tolerance. `backend="canonical"`
 forces full per-frame PNG rendering; `materialize_frames=True` also writes PNG frames on the fast
 backend. Persistent patch and palette caches under the output directory are disposable acceleration
 state, never drawing authority.
@@ -46,12 +47,62 @@ state, never drawing authority.
 Replay is end-to-end: sampling always includes cursor 0 and the latest authored cursor. Coarser
 `every_n` sampling is allowed; removing the beginning or final state is not.
 
+### GIF display policy
+
+GIF is a display artifact, not the lossless PNG authority. The encoder and final
+color check composite alpha over white; PNG keeps its original RGBA pixels.
+With transparent paper, `auto` uses canonical RGBA frame staging and explicit
+`fast` fails with the reason rather than dropping alpha in its RGB delta pack.
+
+Both encoders honor the bound `gif_palette_colors`, `gif_loop`, and
+`gif_disposal`. New profiles default to disposal 1, which permits compact rectangle
+encoding. Disposal 2 or 3 requires independent full opaque GIF frames and can
+materially increase file size. Existing profiles retain their stored disposal and
+digest, including legacy default 2. For those sessions increase `every_n` or explicitly
+raise `max_gif_bytes` if needed. The color-fidelity budget still applies.
+
 ## Renderer identity
 
 A session's `RenderProfile` binds the renderer identity and its contract digest. A checkpoint bound
 to a renderer this package cannot reproduce exactly (for example a pre-1.1 `v9`/`v10` profile, or a
 history containing retired region-fill actions) fails closed instead of being silently re-rendered;
 replay it with the release that produced it.
+
+## Explicit opacity-normalized contact profile
+
+`RenderProfile.canonical(width, height)` retains exact Pencil v11 behavior.
+For a **new** session that needs controllable light graphite deposits, an explicit
+opt-in is available:
+
+```python
+from img2drawing import DrawingSession, RenderProfile
+profile = RenderProfile.opacity_normalized(width, height)
+session = DrawingSession.create(subject=subject, output_dir=output_dir,
+                                render_profile=profile)
+```
+
+The variant `11-opacity-normalized-v1` uses the same pencil engine but integrates
+authored contact alpha over traveled distance, constrains continuity floors to
+local alpha, and deposits nothing at zero opacity. Intentional overlapping
+passes still accumulate. It is not a universal linear opacity guarantee:
+pressure, grade, geometry, grain, overlap and sampling all affect the result.
+It has a separate immutable renderer contract digest, checked on resume; existing
+v11 checkpoints are **not** silently migrated, and v11 remains the default.
+Use the same bound variant for inspection, preview, final and GIF replay.
+Do not use profile switching as a correction to a finished drawing.
+
+| Profile selection for a new session | Capability |
+|---|---|
+| `canonical(w, h)` | Default legacy v11 graphite and exact replay |
+| `opacity_normalized(w, h)` | Normalized contact alpha, constant ordered lift (v1) |
+| `opacity_normalized(w, h, pressure_lift=True)` | Also explicit pressure-shaped lift (v2) |
+| `opacity_normalized(w, h, contact_width=True)` | Also independently authored arc contact width; includes v2 lift (v3) |
+
+All normalized options are explicit, digest-bound contracts, not automatic quality
+improvements. Choose only the capabilities needed for the task. See the
+[stroke-dynamics](../markmaking/stroke-dynamics.md) and
+[broad-graphite](../markmaking/broad-graphite.md) leaves for authoring limits.
+
 
 ## Agent-facing handoff and recovery
 
@@ -72,7 +123,7 @@ frames. Callbacks execute synchronously while the session is locked; use them fo
 not session mutation. Exceptions in the callback abort the export.
 
 
-## Memory-bounded palette recovery (v1.2.0 development)
+## Memory-bounded palette recovery
 
 If FFmpeg's global-palette fast GIF fails final-frame fidelity, the exporter
 re-reads the exact delta pack and encodes each frame with its own local palette.
@@ -90,3 +141,12 @@ included in final encoding and pipeline performance figures.
 Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
 necessary, retry frames 0→N. A completed retry frame count is not an
 all-phases-complete signal; the final verify event closes the operation.
+
+Explicit ordered path-lift marks are eligible for Fast replay. The append path
+uses the canonical graphite-lifting function; non-append or out-of-layer-order
+changes with an active/retired lift conservatively recomposite the full canvas
+from cached graphite patches in canonical order. This preserves pixels but can
+increase editing/replay cost. Legacy unmarked raw erasers remain ineligible.
+
+Pressure-shaped lift and contact-width variants have not completed independent visual
+acceptance or large-session performance gates.

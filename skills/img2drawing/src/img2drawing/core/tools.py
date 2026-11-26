@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
+import math
 
 # Persisted in session checkpoints; bump only when tool preset semantics change.
 TOOLSET_ID = "atelier-core-a2"
@@ -23,8 +24,8 @@ class ToolState:
         return asdict(self)
 
     def validated(self) -> "ToolState":
-        if self.width <= 0:
-            raise ValueError("tool width must be positive")
+        if not math.isfinite(self.width) or self.width <= 0:
+            raise ValueError("tool width must be finite and positive")
         for name in ("pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter", "erase_strength"):
             v = getattr(self, name)
             if not 0.0 <= v <= 1.0:

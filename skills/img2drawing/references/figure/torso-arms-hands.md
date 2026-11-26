@@ -17,6 +17,31 @@ and near/far asymmetry where the reference supports them.
 If both sides become generic parallel/rounded boundaries and the torso could fit many unrelated
 subjects, reopen orientation/width-depth structure before adding seams, pockets, or hatch marks.
 
+## Ribcage, chest, abdomen, and pelvis beneath clothing
+
+Read the upper torso as a turning volume, not a shoulder-to-waist outline.
+Locate the visible sternum/front-plane direction, ribcage breadth and depth,
+chest projection, side plane and waist transition; relate them to pelvis tilt
+and support. Use only relations supported by the subject and mark uncertainty
+where fabric hides structure. A front or three-quarter view may reveal chest
+volume through highlights, a broad plane turn, the fall of the garment and
+under-form shadow even when the outer silhouette barely changes.
+
+- Compare chest depth and vertical placement with the neck, shoulder insertions
+  and armpits. Do not invent a uniform sphere, hard seam, or anatomical outline
+  across cloth.
+- Read the chest-to-upper-abdomen change in surface direction and compression;
+  continue it into the softer abdominal volume and pelvis. Preserve observed
+  asymmetry, foreshortening and garment ease rather than idealizing body shape.
+- Separate volume evidence (turning planes and broad values) from folds,
+  neckline, seams and cast/contact shadows. A crease or dark stripe alone is
+  not evidence of anatomical volume.
+
+Use provisional cross-sections or projected guides from
+`../construction/gesture-and-masses.md` if the visible plane turn is unclear.
+Compare the whole torso and a local chest/waist crop before accepting the value
+family. Retire guides once the actual surface description carries their meaning.
+
 ## Arm-chain ownership
 
 Hands are terminals of an arm chain. Establish shoulder → elbow → wrist before treating a

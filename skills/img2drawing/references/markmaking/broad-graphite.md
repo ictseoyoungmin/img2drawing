@@ -45,7 +45,7 @@ material structure to resolve. That is not a reason to avoid broad marks when th
 them. Reuse the supported runtime and persistent cache rather than replacing the effect with a
 hand-built raster shortcut.
 
-## Tonal-area authorship is not line thickening (v1.2.1)
+## Tonal-area authorship is not line thickening
 
 For hair masses, broad dark garments, deep folds or other *areas*, distinguish
 the **spatial area** from the **contact footprint of a single stroke**:
@@ -75,6 +75,31 @@ it does not derive any marks, authorize raster fills or certify accurate
 coverage. Inspect every resulting mark family at the current canvas scale.
 Do not replace authored marks with pixel tracing.
 
+### Explicit tonal-area metadata
+
+```python
+from img2drawing.authoring import TonalAreaPlan, resolve_mark_for_intent
+
+area = TonalAreaPlan(
+    area_id="hair-left-dark", part="hair",
+    reference_evidence="observed left clump with retained highlight",
+    boundary=((10, 10), (50, 12), (47, 68), (12, 65)),
+    direction_degrees=74,
+    target_density=0.48, target_value=0.58, pressure_range=(0.22, 0.55),
+    highlight_reserves=(((24, 20), (32, 24), (29, 52)),),
+)
+mark = resolve_mark_for_intent(session.intent, "value",
+                               tool_preset="broad-graphite",
+                               modifiers={"width": 6.0, "pressure": 0.4, "opacity": 0.45})
+session.draw(
+    observed_stroke_points, part="hair",
+    **mark.draw_kwargs(metadata=area.stroke_metadata(stroke_family="clump-flow")),
+)
+```
+
+The numbers are a schematic recipe, not reference-derived answer geometry or a
+universal setting. Set them from the current observed area.
+
 ### Override consistency
 
 `broad-graphite` is a semantic resolver preset: it maps to the runtime
@@ -84,3 +109,64 @@ settled before drawing. If a supported `tool_overrides` modifier is supplied
 at `DrawingSession.draw()` time, it selectively updates the resolved map
 while inherited grain/hardness remain intact. The stored markmaking
 provenance must identify that **executed** material, not the earlier snapshot.
+
+## Inspect and correct actual deposits
+
+Use `inspect_tonal_interval` on canonical before/after cursors and selected
+live `TonalAreaPlan` IDs. Read protected coverage, saturation and darkness
+change relative to blank paper. Outside-area additions include all edits in
+the interval, so isolate the responsible mark family before attributing leakage.
+Current-stroke centerline exposure and direction/pressure reports are approximate
+diagnostics, not the raster contribution of a stroke. Explicit disjoint area
+pairs can report signed tonal separation; they do not rank artistic quality.
+Select the responsible stroke and point interval yourself, prepare an explicit
+`TonalPressureAdjustment`, then preview and apply via the existing edit path.
+A pressure reduction may fail to recover the clump: reopen geometry and mark
+placement instead of repeatedly darkening or weakening unrelated areas.
+
+The inspection helper lives in `img2drawing.inspection` and accepts
+`inspect_tonal_interval(session, before_cursor, after_cursor, area_ids=...)`.
+Optional disjoint separation_pairs compare mean darkness. Optional cached_renders
+maps requested cursor integers to trusted canonical PNG paths. Manifests, profile,
+history prefix, cursor state and pixel hashes must match; invalid supplied evidence
+fails closed. Missing cursors render normally. The correction proposal is an
+explicit authoring helper, not an area-to-stroke generator.
+
+When mean value improves but alternating bands remain on a continuous observed plane, use
+`../description/value-edge-and-graphite.md` for explicit local value-continuity evidence before
+repeating wider or darker strokes. The chain is diagnostic, not a smoothing or automatic fill tool.
+
+On the optional normalized contract, retune explicit width/opacity and local pressure
+together when a value family is too pale or its contact footprints separate into
+stripes. Read actual overlap and soft turns first; a stronger midpoint with an abrupt
+terminal may make the band more obvious. Use the existing prospective stroke-edit
+preview and value-continuity checks; no preset is a universal exposure conversion.
+
+## Explicit contact width along a stroke
+
+For a new session choose `RenderProfile.opacity_normalized(w, h, contact_width=True)`
+when a single continuous authored graphite mark needs independently controlled contact
+width. This opt-in contract also supports pressure-shaped erasure. Old sessions are
+not migrated. The nominal tool width remains the maximum; pressure, grade and hand
+response resolve the usual diameter, then explicit arc-length factors in [.15, 1]
+narrow that diameter without changing the authored pressure samples.
+
+```python
+from img2drawing.authoring import ContactWidthProfile, StrokeEdit
+width = ContactWidthProfile(((0., .25), (.28, 1.), (.72, .82), (1., .2)))
+# Supply width.metadata(existing_metadata) to ordinary session.draw or draw_many.
+# To revise a chosen current mark without re-authoring its pressure:
+current = session.current_stroke(stroke_id)
+edit = StrokeEdit(stroke_id, tuple(current.points), contact_width_profile=width)
+```
+
+The width recipe is persisted material metadata, relative to the normalized rendered
+path; the stroke remains an explicit authored path. `read_contact_width_profile`
+recovers it. Whole-path geometry changes remap relative arc positions; split edits
+restrict and renormalize the two subintervals. For a parametric curve edit combine
+`CurveDefinition.draw_kwargs(metadata=width.metadata(...))` on creation, or preserve
+its existing recipe with `StrokeEdit`. Width factors of one retain ordinary pixels.
+The renderer still models graphite deposition; a narrower footprint can change
+actual overlap and apparent density, so compare real renders rather than assuming
+constant luminance. Do not infer a brush footprint from reference pixels or substitute
+one wide stroke for observed overlap and form. Keep only visibly justified contacts.

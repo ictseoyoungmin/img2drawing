@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 
 from PIL import Image
 
 from ..core.ir import Stroke, StrokeIR
 from .contact_profile import PencilContactProfile, load_pencil_contact_profile
+from .contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION, contract_for_identity
 from .deposit import build_patch
 from .eraser import erase, is_eraser
 from .grades import get_pencil_preset, prepare_grade
@@ -20,10 +22,13 @@ DEFAULT_GRAPHITE = (36, 34, 32)
 DEFAULT_BACKGROUND = (255, 255, 255, 255)
 
 
-def load_contact_profile() -> PencilContactProfile:
-    """The built-in pencil contact profile bound to the renderer contract."""
-
-    return load_pencil_contact_profile(None)
+def load_contact_profile(renderer_version: str = RENDERER_VERSION) -> PencilContactProfile:
+    """Resolve immutable contact behavior without changing global renderer state."""
+    contract = contract_for_identity(RENDERER_ID, renderer_version)
+    profile = load_pencil_contact_profile(None)
+    if contract is CONTACT_WIDTH_CONTRACT:
+        return replace(profile, opacity_normalized=True, contact_width_control=True)
+    return replace(profile, opacity_normalized=True) if contract in (OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT) else profile
 
 
 def prepare_stroke(stroke: Stroke, grade: str | None, profile: PencilContactProfile) -> Stroke:
@@ -40,6 +45,7 @@ def render_image(
     supersample: int = DEFAULT_SUPERSAMPLE,
     graphite=DEFAULT_GRAPHITE,
     grade: str | None = None,
+    renderer_version: str = RENDERER_VERSION,
 ) -> Image.Image:
     """Render ``ir`` and return the RGBA image at ``scale`` x canvas size."""
 
@@ -49,7 +55,7 @@ def render_image(
         raise ValueError("supersample must be an integer >= 2")
     if grade is not None:
         get_pencil_preset(grade)
-    profile = load_contact_profile()
+    profile = load_contact_profile(renderer_version)
     factor = float(int(scale) * int(supersample))
     hi_size = (int(ir.width * factor), int(ir.height * factor))
     out_size = (int(ir.width * int(scale)), int(ir.height * int(scale)))
@@ -61,6 +67,7 @@ def render_image(
             erase(
                 graphite_canvas, stroke, factor=factor, hi_size=hi_size,
                 tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed,
+                allow_pressure_lift=renderer_version in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version),
             )
             continue
         bounds, layer = build_patch(
@@ -83,10 +90,12 @@ def render(
     supersample: int = DEFAULT_SUPERSAMPLE,
     graphite=DEFAULT_GRAPHITE,
     grade: str | None = None,
+    renderer_version: str = RENDERER_VERSION,
 ) -> None:
     """Render ``ir`` to ``path`` (PNG keeps RGBA; JPEG is flattened to RGB)."""
 
-    final = render_image(ir, background=background, scale=scale, supersample=supersample, graphite=graphite, grade=grade)
+    final = render_image(ir, background=background, scale=scale, supersample=supersample, graphite=graphite, grade=grade,
+                         renderer_version=renderer_version)
     output = str(path)
     if output.lower().endswith((".jpg", ".jpeg")):
         final.convert("RGB").save(output, quality=95)

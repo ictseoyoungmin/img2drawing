@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import math
 from dataclasses import dataclass, replace
 from typing import Any, Iterable
 
@@ -13,7 +14,7 @@ from .tools import ToolState, get_tool
 
 DRAW_KINDS = {
     "draw_stroke", "replace_stroke", "soft_lift", "delete_stroke", "marker",
-    "replace_segment", "soft_lift_segment",
+    "replace_segment", "soft_lift_segment", "erase_path",
 }
 TOOL_OVERRIDE_FIELDS = {
     "width", "pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter",
@@ -55,7 +56,7 @@ class DrawingAction:
         if not action_id:
             raise ValueError("drawing action requires non-empty action_id")
         stage = str(raw.get("stage", "unspecified"))
-        pts = tuple((float(p[0]), float(p[1])) for p in raw.get("points", ()))
+        pts = tuple(tuple(float(v) for v in p) for p in raw.get("points", ()))
         pressure_raw = raw.get("pressure")
         pressure = None if pressure_raw is None else tuple(float(v) for v in pressure_raw)
         confidence = float(raw.get("confidence", 1.0))
@@ -89,10 +90,27 @@ class DrawingAction:
         return action
 
     def validate(self) -> None:
-        if self.kind in {"draw_stroke", "replace_stroke"}:
+        """Validate a newly authored action, not an already persisted history record."""
+        if self.kind not in DRAW_KINDS:
+            raise ValueError(f"unknown drawing action kind: {self.kind!r}")
+        if not isinstance(self.action_id, str) or not self.action_id.strip():
+            raise ValueError("drawing action requires non-empty action_id")
+        if not math.isfinite(self.confidence) or not 0.0 <= self.confidence <= 1.0:
+            raise ValueError("action confidence must be finite and in [0,1]")
+        if any(len(p) != 2 or not all(math.isfinite(v) for v in p) for p in self.points):
+            raise ValueError("drawing action points must be finite xy pairs")
+        if self.kind in {"draw_stroke", "replace_stroke", "replace_segment", "erase_path"}:
+            if len({tuple(p) for p in self.points}) < 2:
+                raise ValueError(f"{self.kind} requires at least 2 distinct points")
+        if self.pressure is not None:
+            if len(self.pressure) != len(self.points):
+                raise ValueError("explicit pressure sample count must match points")
+            if any(not math.isfinite(v) or not 0.0 <= v <= 1.0 for v in self.pressure):
+                raise ValueError("explicit pressure must be finite and in [0,1]")
+        if self.kind in {"draw_stroke", "replace_stroke", "erase_path"}:
             if len(self.points) < 2:
                 raise ValueError(f"{self.kind} requires at least 2 points")
-            if not self.role:
+            if not isinstance(self.role, str) or not self.role.strip():
                 raise ValueError(f"{self.kind} requires role")
             if not isinstance(self.tool, dict):
                 raise ValueError(f"{self.kind} requires explicit tool selection")
@@ -103,10 +121,24 @@ class DrawingAction:
             get_pencil_preset(str(self.tool["grade"]))
             if not self.observation_id or not self.source_observation:
                 raise ValueError(f"{self.kind} requires observation_id and source_observation provenance")
+            if self.kind == "erase_path":
+                if (self.role != "highlight_lift" or not self.stroke_id or not self.reason
+                        or self.target_stroke_id is not None or self.revision_of is not None
+                        or self.tool["preset"] not in {"soft_eraser", "hard_eraser"}
+                        or len(set(self.points)) < 2
+                        or any(not math.isfinite(v) for p in self.points for v in p)
+                        or self.pressure is None or len(self.pressure) != len(self.points)
+                        or any(not math.isfinite(p) or not 0 <= p <= 1 for p in self.pressure)
+                        or not any(p > 0 for p in self.pressure)):
+                    raise ValueError("erase_path requires an explicit eraser, fresh ID, path and correction provenance")
+                if any(p != 1.0 for p in self.pressure):
+                    samples = sum(max(1, math.ceil(math.dist(a,b)/.5)) for a,b in zip(self.points,self.points[1:])) + 1
+                    if samples > 100000:
+                        raise ValueError("pressure-lift sample budget exceeded")
             if self.kind == "replace_stroke":
                 if not self.target_stroke_id:
                     raise ValueError("replace_stroke requires target_stroke_id")
-                if not self.reason:
+                if not isinstance(self.reason, str) or not self.reason.strip():
                     raise ValueError("replace_stroke requires correction reason")
                 if self.revision_of != self.target_stroke_id:
                     raise ValueError("replace_stroke revision_of must match target_stroke_id")
@@ -125,7 +157,7 @@ class DrawingAction:
                 raise ValueError("replace_segment requires at least 2 replacement points")
             if self.tool is not None:
                 raise ValueError("replace_segment preserves the existing stroke material; tool override is not allowed")
-            if not self.observation_id or not self.source_observation or not self.reason:
+            if not self.observation_id or not self.source_observation or not isinstance(self.reason, str) or not self.reason.strip():
                 raise ValueError("replace_segment requires observation and correction provenance")
             if self.revision_of != self.target_stroke_id:
                 raise ValueError("replace_segment revision_of must match target_stroke_id")
@@ -146,7 +178,7 @@ class DrawingAction:
                 raise ValueError("soft_lift_segment strength must be in [0,1]")
             if int(self.feather_points) < 0:
                 raise ValueError("soft_lift_segment feather_points must be >= 0")
-            if not self.observation_id or not self.source_observation or not self.reason:
+            if not self.observation_id or not self.source_observation or not isinstance(self.reason, str) or not self.reason.strip():
                 raise ValueError("soft_lift_segment requires observation and correction provenance")
             if self.revision_of != self.target_stroke_id:
                 raise ValueError("soft_lift_segment revision_of must match target_stroke_id")
@@ -155,8 +187,6 @@ class DrawingAction:
                 raise ValueError(f"{self.kind} requires target_stroke_id")
             if not isinstance(self.tool, dict) or not str(self.tool.get("preset", "")).strip():
                 raise ValueError(f"{self.kind} requires explicit eraser tool preset")
-        if self.pressure is not None and len(self.pressure) != len(self.points):
-            raise ValueError("explicit pressure sample count must match points")
 
     def provenance(self) -> dict[str, Any]:
         out = {
@@ -194,7 +224,12 @@ def _resolve_tool(raw: dict[str, Any]) -> tuple[ToolState, str | None]:
 def _stroke_from_action(action: DrawingAction) -> Stroke:
     assert action.tool is not None
     tool, grade = _resolve_tool(action.tool)
-    if tool.mode != "draw":
+    path_lift = action.kind == "erase_path"
+    if path_lift:
+        action.validate()
+        if tool.mode != "erase" or not math.isfinite(tool.width) or tool.width <= 0:
+            raise ValueError("erase_path requires a finite positive eraser width")
+    elif tool.mode != "draw":
         raise ValueError(
             f"draw action cannot use erase-mode tool: {tool.tool}. "
             "Use a draw-mode tool for authored marks; to retire an existing mark use "
@@ -214,6 +249,9 @@ def _stroke_from_action(action: DrawingAction) -> Stroke:
     # Only an explicitly supplied curve is provenance; the tool's own taper is derived.
     stroke.pressure_authored = action.pressure is not None
     ts = deepcopy(stroke.tool_state) if isinstance(stroke.tool_state, dict) else {}
+    if path_lift:
+        ts["path_lift_contract"] = ("ordered-graphite-pressure-lift-v1"
+            if any(p != 1.0 for p in action.pressure) else "ordered-graphite-lift-v1")
     ts["pencil_grade"] = grade
     ts["action_id"] = action.action_id
     ts["provenance"] = action.provenance()
@@ -305,6 +343,10 @@ class AgentDrawingSession:
     def execute(self, action: DrawingAction | dict[str, Any]) -> str | None:
         if not isinstance(action, DrawingAction):
             action = DrawingAction.from_dict(action)
+        else:
+            # Public DrawingSession builds objects directly; use the same validation
+            # as the dictionary input route before touching authoritative history.
+            action.validate()
         if action.action_id in self.executed_action_ids:
             raise ValueError(f"duplicate action_id: {action.action_id}")
         for x, y in action.points:
@@ -312,7 +354,7 @@ class AgentDrawingSession:
                 raise ValueError(f"drawing action point out of canvas bounds: {(x, y)}")
         result: str | None = None
         provenance = action.provenance()
-        if action.kind == "draw_stroke":
+        if action.kind in {"draw_stroke", "erase_path"}:
             stroke = _stroke_from_action(action)
             result = self.history.add_stroke(stroke, stroke_id=action.stroke_id, provenance=provenance)
         elif action.kind == "replace_stroke":

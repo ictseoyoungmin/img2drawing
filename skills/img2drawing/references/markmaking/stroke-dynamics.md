@@ -43,3 +43,141 @@ authority. Historical output must not change merely because a newer preset defin
 When geometry is correct but the mark reads wrong because of weight, taper, opacity, pressure, or
 material contact, keep the authored points and retune the material through the public runtime.
 Do not redraw a different path to compensate for a material defect.
+
+## Explicit curve and pressure helpers
+
+Sample an agent-chosen smooth cubic Bezier interval or resample a smooth
+polyline by approximate arc length. Split at real corners; the resampler can
+cut across corners and is not a topology detector. Use pressure knots from
+normalized path positions 0 to 1 to preserve an observed pressure rhythm even
+with uneven sampling. Inspect endpoint gap and tangent change with
+`curve_join`, and apply endpoint-locked local displacement with
+`deform_interval`. No automatic beautification or smoothing of actual cusps.
+
+To apply geometry edits, import `StrokeEdit` and `apply_stroke_edits` from
+`img2drawing.authoring`. The latter takes a session, explicit edit records,
+reason and observation_id. `transform_strokes(session, stroke_ids, matrix)`
+prepares affine geometry only, retaining material. `preview_stroke_edits`
+renders the prospective history using the same profile without committing it.
+Pass its base_cursor and base_state_hash as expected_cursor and expected_state_hash
+on apply; stale evidence fails closed. Split with an explicit interior point index
+and new stroke ID. The appended fragment can alter overlap/contact and is not
+promised to render pixel-identically; compare before accepting.
+
+## Explicit local attenuation
+
+When only part of a correct path is too dark, inspect its current stroke samples and use
+`session.soft_lift_segment(stroke_id, start_index, end_index, strength=..., feather_points=...,
+reason=..., observation_id=...)`. The zero-based range is inclusive, with at least two samples.
+Strength is in [0,1]; feathering linearly reduces attenuation on neighboring samples. The method
+records a normal history action and retains geometry/material/ownership. This is local pressure
+attenuation, not a freeform pixel eraser; the rendered mark may still be visible. Use current
+stroke IDs, and optionally pass `expected_cursor` and `expected_state_hash` to reject stale edits.
+`retune_stroke` and `reshape_stroke` preserve a locally erased pressure curve; if a replacement
+profile is needed, choose it explicitly rather than accidentally restoring a removed mark.
+
+## Preview heterogeneous material corrections
+
+An existing `StrokeEdit` can include optional `material_overrides` for explicit
+`width`, `opacity`, `hardness` and `grain` edits. Each stroke can carry different
+values in the same atomic preview/apply batch. The overrides are copied and validated;
+width must be finite and positive, and the other values finite in [0,1]. The current
+pressure curve (including local soft lift), visible opacity and other material fields
+remain unchanged unless explicitly replaced. For a pressure change supply the separate
+`pressure` samples; this path does not regenerate pressure from taper or grade.
+
+```python
+# current is the explicitly selected current stroke, obtained from the session.
+edit = StrokeEdit(current.stroke_id, tuple(current.points),
+                  material_overrides={"opacity": chosen_opacity, "width": chosen_width})
+preview = preview_stroke_edits(session, [edit], preview_path,
+                              reason=reason, observation_id=observation_id)
+# Read the preview and choose whether to accept it. Re-preview any changed subset.
+apply_stroke_edits(session, [edit], reason=reason, observation_id=observation_id,
+                   expected_cursor=preview["base_cursor"],
+                   expected_state_hash=preview["base_state_hash"])
+```
+
+Use the same explicit edits and provenance for apply. A rejected preview changes no
+actions. It is not a canonical render until committed and checked. Re-open the geometry
+or material premise when the preview reveals wrong overlap or an invented tonal band.
+
+## Preview an explicit stroke-family rewrite
+
+For a wrong value family, editing the old strokes alone may preserve the wrong premise.
+The existing preview/apply helpers also accept `retire_ids` and `additions` in the same
+atomic batch as ordinary StrokeEdit records. Choose current IDs to retire and author each
+new mark as an ordinary draw-kwargs mapping with explicit fresh stroke_id, points, role,
+and tool. Edits run first, then retirements, then additions. New strokes append in the
+ordinary history/layer order; inspect the resulting overlaps. These are existing replace,
+delete and draw actions, not a mask, a raster eraser or automatic hatch generation.
+
+```python
+batch = dict(reason=reason, observation_id=observation_id,
+             retire_ids=selected_current_ids, additions=explicit_new_marks)
+preview = preview_stroke_edits(session, edits, preview_path, **batch)
+# Review the candidate visually; reject or re-preview any changed proposal.
+apply_stroke_edits(session, edits, **batch,
+                   expected_cursor=preview["base_cursor"],
+                   expected_state_hash=preview["base_state_hash"],
+                   expected_action_digest=preview["action_digest"])
+````
+
+The additional digest binds the ordered resolved actions, including material, IDs,
+points and provenance. Cursor/state guard against stale drawing evidence; the action
+digest rejects changes to the reviewed proposal even on the same drawing state. Supply
+all three when committing a reviewed candidate. A rejected preview modifies no drawing
+history. Invalid/conflicting IDs or an invalid new mark roll back the entire batch.
+
+## Explicit ordered graphite lift
+
+With the opt-in `RenderProfile.opacity_normalized` only, use
+`session.erase_path(points, stroke_id=..., width=..., strength=..., tool="hard_eraser",
+layer=0, reason=..., observation_id=...)` for an observed narrow light interval
+across deposited graphite. Use an explicit fresh ID, path, width and strength
+(0,1], with hard or soft eraser. This is a reversible, ordered compositing mark:
+it lifts graphite, never paints white or modifies the reference. Lower layers
+are underneath even if added later; same-layer marks follow their history order.
+A later mark at the same or higher layer may deposit graphite again. Do not
+continue a path through an occluder. Retire the eraser with delete_stroke and
+re-author it if wrong; do not retune it as graphite or change its local pressure.
+
+The existing mixed preview/apply batch accepts optional `erasures` after its
+edits, retirements and additions. Each is a mapping of points, fresh stroke_id,
+width, optional strength/tool/layer/part. Supply the preview's cursor, state and
+action digest on apply. The eraser is stored as an explicit ordered stroke.add
+with its own material/provenance, not a separate image or drawing history.
+Raw legacy eraser history still follows existing canonical fallback rules.
+
+## Experimental pressure-shaped graphite lift
+
+Select a normalized profile that supports pressure lift:
+`RenderProfile.opacity_normalized(width, height, pressure_lift=True)` or
+`RenderProfile.opacity_normalized(width, height, contact_width=True)`.
+See `../output/render-profile-and-replay.md` for the profile selection table.
+Supply `pressure` to `erase_path` or to an explicit erasure in the existing
+mixed preview/apply batch. One finite pressure sample in [0,1] per point,
+with at least one positive sample, is required. A rising and falling pressure
+curve can produce soft approaches and departures on an observed curved
+reflection. Zero pressure means no contact; contact radius scales with the
+square root of pressure and local lift with pressure. The footprint uses
+max-union within one pass, not repeated accumulation of every sample.
+Separate intentional passes may accumulate. A missing or all-one pressure
+curve retains the old constant-path semantics exactly. The v1 normalized
+profile rejects varying eraser pressure. This is an optional experimental
+contract, not a new default, automatic highlight or substitute for observing
+hair clumps and continuous form. Use actual preview, ownership checks and
+re-author rejected paths. The path has a bounded sample budget; wide paths
+and high-resolution performance still require further verification.
+
+### Editable authored curve controls
+
+`CurveDefinition(kind, controls, pressure_knots, spacing=..., tolerance=...)` stores explicit
+Bézier (`"bezier"`, four controls) or Catmull–Rom (`"spline"`, 2–128 controls) parameters and
+independent normalized arc-pressure knots. Tolerance applies to Bézier subdivision; spacing
+applies to both. Use `session.draw(stroke_id=..., role=..., tool=..., **curve.draw_kwargs())`.
+`read_parametric_curve(session, stroke_id)` returns the current definition only when its
+samples and pressure exactly reproduce the current stroke. Use `dataclasses.replace` on the
+record, then `revised.edit(stroke_id)` with the existing preview/apply batch. Unrelated geometry
+or pressure edits invalidate the definition; no curve is fitted automatically to an arbitrary
+stroke. Sampled explicit points and pressure remain the sole rendering/replay authority.

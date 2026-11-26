@@ -1,7 +1,7 @@
 # img2drawing architecture contract
 
 Status: **CURRENT MAIN INVARIANTS**
-Updated: 2026-11-26
+Updated: 2026-11-27
 
 This document describes durable architecture invariants for current `main`. It is not a release
 freeze. Immutable released snapshots remain version-specific:
@@ -11,7 +11,8 @@ freeze. Immutable released snapshots remain version-specific:
 - v1.1.0 / R1: `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
 - v1.1.1 / M01: `dev/release/vnext/CONTRACT_FREEZE_V1_1_1.json`;
 - v1.2.0 / M02: `dev/release/vnext/CONTRACT_FREEZE_V1_2_0.json`;
-- v1.2.1 / M03: `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`.
+- v1.2.1 / M03: `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`;
+- v1.3.0 / constructive drawing: `dev/release/vnext/CONTRACT_FREEZE_V1_3_0.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
 
@@ -93,15 +94,23 @@ Current main requires:
 ## 7. Render / replay contract
 
 Final PNG, inspection, canonical replay, and eligible fast timelapse derive from one persisted
-`RenderProfile` family and one registered renderer identity. Replay remains end-to-end from action 0
-through the latest action with a declared sampling policy.
+`RenderProfile` and its explicitly registered renderer identity/digest. The same pencil engine may
+host multiple immutable material contracts; every session selects exactly one. Replay remains
+end-to-end from action 0 through the latest action with a declared sampling policy.
 
 The inspection/final seed-parity defect identified during the v1.0.3 RC cycle is closed: v10
 normalizes the private compatibility `Stroke.stage` field out of render seed identity, and the
 active suite verifies inspect/final parity plus canonical-final ↔ fast-final exactness where that
 contract applies. Historical v9 seed semantics remain frozen for explicit v9 replay.
 
-Current v1.2.1 sessions select `img2drawing-pencil / 11` and persist the same renderer contract digest as v1.1.0. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
+Default v1.3.0 sessions select `img2drawing-pencil / 11` and persist the same renderer contract digest as v1.1.0. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
+
+v1.3.0 adds `RenderProfile.opacity_normalized(width, height)` for new
+sessions. `11-opacity-normalized-v1`, `11-opacity-normalized-v2`, and `11-opacity-normalized-v3` each have a required contract digest and cache identity;
+`RenderProfile.canonical()` and historical v11 behavior are unchanged. The same contract follows
+inspection, preview, PNG, Fast/Canonical and GIF output. Unknown identities, cross-digest profiles
+and a missing normalized digest fail closed. Never silently migrate existing sessions to the new
+material model or infer artistic quality from a material regression.
 
 ## 8. Instruction graph contract
 
@@ -121,7 +130,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-After the manifest-driven publication gate, v1.2.1 is the latest published stable and preserves renderer v11 and the existing session schema. Its manifest, tag and additive freeze are authoritative. v1.2.0 and earlier release authorities remain immutable. Explicit tonal-area metadata supports planning without auto-generated geometry. The maintenance release does not certify independent portrait likeness; the unresolved quality scope belongs to v1.3.0.
+After the manifest-driven publication gate, v1.3.0 is the latest published stable. Its manifest, tag and additive freeze are authoritative; earlier release authorities remain immutable. New sessions default to legacy v11; optional material contracts and authored metadata extend the existing history without automatic tracing or geometry generation. Independent artistic quality remains unverified.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 

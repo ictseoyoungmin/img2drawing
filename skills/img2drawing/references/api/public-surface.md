@@ -86,10 +86,24 @@ debugging work. Low-level stroke/history types live under `img2drawing.core`. Th
 alternative orchestration routes and ordinary drawing workers should not start there. Names that
 are not exported from the root or from one of these namespaces are not public.
 
-Historical R23 orchestration is different: the post-v1.0.2 source tree no longer ships
-`img2drawing.legacy.r23`, and R23-only root names such as `DrawingRun` and `StageContract` no longer
-resolve through a hidden fallback. The immutable v1.0.2 release remains the reference point for
-that retired compatibility namespace.
+Retired orchestration namespaces and root names (including `DrawingRun` and
+`StageContract`) are not supported. Use the producing release for historical sessions.
+
+## Optional task-specific toolkits
+
+Open only the leaf that owns the current problem; use the listed public names.
+
+| Need | Public helper entrypoints | Detailed operation and limits |
+|---|---|---|
+| Observe geometry and likeness | `LandmarkSet`, comparisons, `portrait_likeness_packet` | [Measurements](../observation/measuring-boundaries.md), [portrait](../review/portrait-likeness.md) |
+| Author projected scaffold | `ProjectedVolume`, `VolumeStation`, `ProjectionCamera`; explicit guide/edit helpers | [Gesture and masses](../construction/gesture-and-masses.md) |
+| Sample or edit explicit strokes | `sample_cubic_bezier`, `resample_polyline`, `pressure_along_path`, `curve_join`, `deform_interval`, `StrokeEdit`, `apply_stroke_edits`, `transform_strokes`, `preview_stroke_edits` | [Stroke dynamics](../markmaking/stroke-dynamics.md) |
+| Inspect tonal deposits and correct selected pressure | `inspect_tonal_interval`, `TonalPressureAdjustment`, `prepare_tonal_pressure_edits`, `ContactWidthProfile` | [Broad graphite](../markmaking/broad-graphite.md) |
+| Inspect tone/overlap | `TonalPatch`, `inspect_tonal_patches`, `inspect_tonal_proposals`, `TonalBandProbe`, `inspect_contact_overlap` | [Value and edge](../description/value-edge-and-graphite.md) |
+| Edit meaningful stroke groups and recheck dependencies | `SemanticGroup`, `record_semantic_groups`, `inspect_semantic_groups`, `review_semantic_group`, `prepare_group_transform`, `retire_group_guides` | [Authored element navigation](../review/authored-element-navigation.md) |
+
+These optional helpers never replace DrawingSession, determine subject semantics, or
+turn a diagnostic into artistic acceptance.
 
 ## Current-state operations
 
@@ -100,7 +114,10 @@ the residual, and finish from current evidence.
 Use public authored-element lookup when a later correction must locate an existing stroke.
 Use the exact public edit methods `replace_stroke()`, `soft_lift()`, and `delete_stroke()`
 rather than guessing a `soften_stroke()` alias or raster-editing the rendered PNG. The runtime
-capability manifest exposes these exact callables through `authoring_entrypoints`.
+capability manifest exposes these exact callables through `authoring_entrypoints`. For an
+explicit range, use `replace_segment()` or `soft_lift_segment()`; see
+[local stroke dynamics](../markmaking/stroke-dynamics.md). The normalized profile supports
+`erase_path()` to lift graphite in stable layer order; see the same leaf for limits.
 
 When only stroke material is wrong and the path is already correct, prefer:
 
@@ -117,8 +134,8 @@ retune_stroke(
 
 `retune_stroke()` resolves the current replacement descendant and emits the existing
 `replace_stroke` history action while preserving points, role, part, confidence, layer, stable
-stroke identity, and explicitly authored pressure. Derived pressure is regenerated so a taper or
-pressure retune can actually change the rendered material. It does not create a new persistence
+stroke identity, explicit or locally erased pressure, and globally lifted opacity unless
+explicitly overridden. Unedited derived pressure is regenerated for taper/pressure retunes. It does not create a new persistence
 schema.
 
 When several strokes share one coherent material residual, use `retune_strokes()` rather than
@@ -204,7 +221,7 @@ they are **not automatically literal `DrawingSession.draw(tool=...)` values**.
 
 Resolve semantic intent first, then pass the returned public draw kwargs to the session:
 For a width/pressure/opacity adjustment, prefer `modifiers={...}` at
-`resolve_mark_for_intent()`. Since v1.2.1, per-call
+`resolve_mark_for_intent()`. Per-call
 `tool_overrides={...}` also **merges selectively** with the resolved tool
 mapping instead of discarding untouched grain/hardness; the recorded
 markmaking metadata is reconciled against the executed ToolState and
@@ -236,37 +253,12 @@ If the runtime cannot express the requested line language through the public res
 stroke/tool arguments, or retune helpers, record that as a capability gap for framework work rather
 than importing a private renderer helper or inventing unsupported keyword arguments.
 
-## Tonal-area evidence without raster filling (v1.2.1)
+## Tonal-area evidence without raster filling
 
-Use the optional `TonalAreaPlan` when dark hair or garment value must be built
-from several authored pencil marks rather than an oversized solid stripe.
-The plan is evidence for the region and stroke family; it performs **no
-automatic fill, shape inference, or pixel copying**. Individual strokes stay
-in the same canonical history and are evaluated using fresh renders:
-
-```python
-from img2drawing.authoring import TonalAreaPlan, resolve_mark_for_intent
-
-area = TonalAreaPlan(
-    area_id="hair-left-dark", part="hair",
-    reference_evidence="observed left clump with retained highlight",
-    boundary=((10, 10), (50, 12), (47, 68), (12, 65)),
-    direction_degrees=74,
-    target_density=0.48, target_value=0.58, pressure_range=(0.22, 0.55),
-    highlight_reserves=(((24, 20), (32, 24), (29, 52)),),
-)
-mark = resolve_mark_for_intent(session.intent, "value",
-                               tool_preset="broad-graphite",
-                               modifiers={"width": 6.0, "pressure": 0.4, "opacity": 0.45})
-session.draw(
-    observed_stroke_points, part="hair",
-    **mark.draw_kwargs(metadata=area.stroke_metadata(stroke_family="clump-flow")),
-)
-```
-
-The plan's target density/value and highlight polygons are *observation
-intent*, not renderer-verified fill constraints. Compare actual coverage,
-preserved light and pencil grain with the reference before accepting a group.
+Use optional `TonalAreaPlan` to record observed boundaries, density, flow, and
+reserved lights for explicitly authored value strokes. It generates no marks
+and verifies no fill coverage. See [Broad graphite](../markmaking/broad-graphite.md)
+for the public recipe and deposit inspection.
 
 ## Geometry-only correction and action identity
 
@@ -289,6 +281,10 @@ fix_action_id = reshape_stroke(session, jaw_stroke_id, corrected_jaw_points,
 When authoring a related group, `draw_many()` accepts a list of point sequences or per-stroke
 mappings and commits them together. Use this to reduce repeated checkpoint work while keeping
 each stroke addressable; it does not decide geometry or replace fresh visual inspection.
+New draw/edit actions require finite xy pairs, at least two distinct points, nonempty
+roles where applicable, finite confidence and explicit point-aligned pressure in [0,1],
+and required correction provenance. Invalid actions fail before committing the batch;
+this does not rewrite existing history.
 
 ## Residual provenance
 

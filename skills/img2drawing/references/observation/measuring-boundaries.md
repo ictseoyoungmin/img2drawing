@@ -45,3 +45,43 @@ The Agent may still infer enough parent continuity to keep the visible structure
 exact hidden terminal should remain unspecified unless additional evidence supports it.
 
 See `../foundation/occlusion-inference.md` for the full inference/rendering boundary.
+
+## Explicit landmark and relationship comparison
+
+Use these optional tools to test a specific visual hypothesis, not to replace visual
+observation. Select visible landmarks in the original subject and the current drawing
+**independently**. Use full subject/canvas coordinates, even when reading a zoomed crop.
+Record uncertain or inferred points as such; geometry measurements refuse them.
+
+```python
+from img2drawing.inspection import Registration
+from img2drawing.observation import Landmark, LandmarkSet, compare_landmarks
+
+# Analytic illustrative coordinates only; author actual points from the task.
+reference = LandmarkSet("subject", (100, 100), (
+    Landmark("a", (20, 20), "observed visible anchor"),
+    Landmark("b", (60, 20), "observed adjacent anchor"),
+))
+drawing = LandmarkSet("canvas", (100, 100), (
+    Landmark("a", (22, 19), "current rendered anchor"),
+    Landmark("b", (60, 20), "current rendered adjacent anchor"),
+))
+report = compare_landmarks(reference, drawing,
+    registration=Registration.identity((100, 100)),
+    labels=("a", "b"), normalizer=("a", "b"))
+```
+
+`compare_ratios` compares named spans; `compare_axes` compares projected tilt
+(positive y downward; optional directed axes); `cross_section` reports transverse
+width and longitudinal offset of visible edges about an explicit axis.
+`compare_negative_space` compares explicit corresponding polygon vertices, area,
+centroid and bounds. It is an approximation, not automatically extracted silhouette IoU.
+`occlusion_relation` records declared foreground ownership and local visible entry/
+reappearance directions. It never estimates hidden distance or contour. The comparison
+normalizer must be a nonzero observed reference span. Nonuniform registration is applied
+before computing angles or ratios. No metric certifies anatomy, artistic quality or identity.
+
+Measurement reports can be stored with `session.observe(report.to_dict())` or
+included in the current sheet using
+`session.inspect(measurements=(report,), escalation_reason="check landmark discrepancy")`.
+Use canvas-pixel coordinates (not output-scale pixels or cropped display coordinates).

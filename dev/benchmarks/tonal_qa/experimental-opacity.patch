@@ -1,0 +1,119 @@
+--- a/skills/img2drawing/src/img2drawing/render/deposit.py
++++ b/skills/img2drawing/src/img2drawing/render/deposit.py
+@@ -10,6 +10,7 @@
+ from __future__ import annotations
+ 
+ import numpy as np
++import math
+ from PIL import Image, ImageChops, ImageDraw, ImageFilter
+ 
+ from ..core.ir import Stroke
+@@ -434,11 +435,17 @@
+     tooth = pixel_hash_tooth(lx, ly, 7).astype(np.float32)
+     policy = stroke_material_policy(stroke)
+     broad_grain = np.float32(_policy_broad_grain(policy, b))
+-    flow_base = np.float32(0.041 + 0.05 * b)
+-    flow_policy = np.float32(_policy_flow_multiplier(policy, b))
++    # Experimental optical depth normalized to projected radial contact length.
++    # Integrating a straight constant-pressure pass gives approximately its
++    # authored opacity instead of saturating from overlapping low-flow dabs.
++    radial_integral = math.sqrt(math.pi) * math.gamma(radial_exp + 1) / math.gamma(radial_exp + 1.5)
++    sample_xy = np.asarray([(q[0], q[1]) for q in chosen], dtype=np.float64)
++    sample_ds = np.linalg.norm(np.diff(sample_xy, axis=0), axis=1)
++    lengths = np.zeros(len(chosen), dtype=np.float64)
++    lengths[:-1] += .5 * sample_ds
++    lengths[1:] += .5 * sample_ds
+     seed = hand_seed(stroke)
+     local_variability = _local_deposition_field(chosen, seed, b, variation_scale=_policy_variation_scale(policy))
+-    authored_contrast = _authored_contrast_field(chosen, b)
+     for idx, (cx, cy, diameter, alpha, pressure) in enumerate(chosen):
+         if alpha <= 1:
+             continue
+@@ -456,11 +463,10 @@
+         dist = np.sqrt((xs - lx0) ** 2 + (ys - ly0) ** 2) / np.float32(r)
+         contact = np.clip(1.0 - dist * dist, 0.0, 1.0) ** np.float32(radial_exp)
+         authored = np.float32(alpha / 255.0)
+-        p = np.float32(_clamp01(pressure))
+-        local_flow = flow_base * np.float32(_BROAD_FLOW_GAIN) * flow_policy * (np.float32(0.62) + np.float32(0.48) * authored) * (np.float32(0.86) + np.float32(0.24) * p) * local_variability[idx] * authored_contrast[idx]
+         t = tooth[ya:yb, xa:xb]
+         dry = np.float32(1.0) - broad_grain + broad_grain * t
+-        dab = np.clip(contact * local_flow * dry, 0.0, 0.15)
++        depth = -math.log1p(-min(float(authored), .999)) * lengths[idx] / max(r * radial_integral, 1e-6)
++        dab = -np.expm1(-contact * np.float32(depth) * dry * local_variability[idx])
+         trans[ya:yb, xa:xb] *= np.float32(1.0) - dab
+     ink = np.clip(np.float32(1.0) - trans, 0.0, 1.0)
+     ink = np.minimum(ink, np.float32(0.92))
+@@ -551,7 +557,7 @@
+         width = max(1, int(round(width_src * width_ratio)))
+         legacy_floor = max(coverage_floor, int(round(alpha_src * material.continuity_floor_ratio)))
+         authored_floor = int(round(alpha_src * alpha_retention))
+-        alpha = max(1, legacy_floor, authored_floor)
++        alpha = min(int(round(alpha_src)), max(1, legacy_floor, authored_floor))
+         draw.line([a, b], fill=alpha, width=width, joint="curve")
+ 
+     # Preserve a graphite core rather than a flat digital band; this modulation is subtle
+@@ -613,7 +619,7 @@
+         width = max(1, int(round(width_src * width_ratio)))
+         legacy_floor = max(coverage_floor, int(round(alpha_src * material.continuity_floor_ratio)))
+         authored_floor = int(round(alpha_src * alpha_retention))
+-        alpha = max(1, legacy_floor, authored_floor)
++        alpha = min(int(round(alpha_src)), max(1, legacy_floor, authored_floor))
+         draw.line([a, b], fill=alpha, width=width, joint="curve")
+ 
+     for index in (0, -1):
+@@ -626,6 +632,7 @@
+             int(round(alpha_src * material.continuity_floor_ratio)),
+             int(round(alpha_src * alpha_retention)),
+         )
++        alpha = min(alpha, alpha_src)
+         radius = max(0.5, 0.5 * float(width))
+         draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill=alpha)
+     return mask
+@@ -785,6 +792,9 @@
+         soft_grain = max(0.0, float(grain) * (0.7 - broadness) / 0.35)
+         if soft_grain > 1e-06:
+             mask = _grain_modulate(mask, stroke=stroke, grain=soft_grain, hardness=hardness, factor=factor, global_origin=origin, seed=grain_seed(stroke), profile=profile)
++    # A continuity floor cannot deposit more than the authored opacity budget.
++    limit = int(round(stroke.opacity * 255))
++    continuity = continuity.point([min(i, limit) for i in range(256)])
+     mask = ImageChops.lighter(mask, continuity)
+     layer = _graphite_layer(mask.size, mask, _pigment(graphite, stroke_material_policy(stroke), broadness))
+     mask.close()
+@@ -795,6 +805,8 @@
+ def build_patch(stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile):
+     """Return ``(bounds, rgba_layer)`` for one grade- and hand-prepared stroke."""
+ 
++    if stroke.opacity <= 0.0:
++        return ((0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0)))
+     grain, hardness = stroke_material(stroke)
+     broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+     if broadness <= 1e-08:
+--- a/skills/img2drawing/src/img2drawing/render/contract.py
++++ b/skills/img2drawing/src/img2drawing/render/contract.py
+@@ -55,7 +55,7 @@
+ 
+ PENCIL_CONTRACT = RendererContract(
+     renderer_id="img2drawing-pencil",
+-    renderer_version="11",
++    renderer_version="11-experimental-opacity",
+     parameters=(
+         ("authored_contrast_gamma", 0.42),
+         ("broad_core_model", "round-terminal-authored-core-v1"),
+@@ -75,7 +75,7 @@
+         ("deposition_variability_coarse", 7.5),
+         ("deposition_variability_fine", 3.6),
+         ("deposition_variability_fine_mix", 0.32),
+-        ("material_model", "radial-contact-shoulder-authored-core"),
++        ("material_model", "experimental-opacity-normalized-contact"),
+         ("material_policy_model", "resolved-markmaking-v1"),
+         ("policy_core_floor_model", "authored-core-shoulder-v2"),
+         ("policy_core_texture_model", "page-fixed-subtle-core-v1"),
+@@ -92,7 +92,7 @@
+ 
+ # v1.0.3 persisted this renderer under its pre-1.1 identity. The pixels are identical
+ # (pinned by the v11 golden tests), so those sessions resume under the current contract.
+-_EQUIVALENT_IDENTITIES = frozenset({("pillow-pencil-contact-v11", "1")})
++_EQUIVALENT_IDENTITIES = frozenset()
+ 
+ REPLAY_RELEASE_HINT = (
+     "replay it with the published img2drawing release that shipped that renderer "

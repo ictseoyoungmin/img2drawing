@@ -15,6 +15,7 @@ sessions written by earlier releases.
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import shutil
@@ -35,6 +36,8 @@ from ..core.tools import TOOLSET_ID
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render import UnsupportedRendererError, canonical_identity, default_grade_name, render
 from ..render.artifact import RenderArtifact, render_history_at
+from ..render.contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT
+from ..core.contact_width import profile_from_metadata
 from ..render.profile import SEED_DOMAIN, RenderProfile
 from ..timelapse import ReplayExport, export_timelapse
 from .correction import CorrectionRecord, ResidualRecord
@@ -107,6 +110,8 @@ def _tool_payload(tool: str | Mapping[str, Any], grade: str | None, overrides: M
             raise ValueError("tool mapping requires a preset")
         if grade is not None:
             payload["grade"] = str(grade)
+        elif "grade" not in payload:
+            payload["grade"] = default_grade_name()
         if overrides is not None:
             inherited = payload.get("overrides") or {}
             if not isinstance(inherited, Mapping):
@@ -1174,6 +1179,9 @@ class DrawingSession:
         if not actions:
             return []
         with self._lock:
+            for item in actions:
+                if item.kind == "erase_path":
+                    self._require_path_eraser_profile(item.pressure)
             with self._agent.transaction(label="vnext-mutation"):
                 results = [self._agent.execute(item) for item in actions]
                 self._write_checkpoint(self._checkpoint_path)
@@ -1223,14 +1231,22 @@ class DrawingSession:
             source_observation=source_observation,
             reason=reason,
         )
+        if not isinstance(role, str) or not role.strip():
+            raise ValueError("drawing action requires role")
         selected_tool = _tool_payload(tool, grade, tool_overrides)
+        width_profile = profile_from_metadata(metadata)
+        if width_profile is not None:
+            if self._require_render_profile().renderer_version != CONTACT_WIDTH_CONTRACT.renderer_version:
+                raise ValueError("contact width profile requires opacity_normalized(..., contact_width=True)")
+            if kind == "erase_path" or str(selected_tool["preset"]).endswith("eraser"):
+                raise ValueError("contact width profile supports graphite drawing only")
         return DrawingAction(
             action_id=_action_id(self._agent.history, action_id),
             kind=kind,
             stage=_COMPAT_STAGE,
             role=str(role),
             part=None if part is None else str(part),
-            points=tuple((float(point[0]), float(point[1])) for point in points),
+            points=tuple(tuple(float(v) for v in point) for point in points),
             target_stroke_id=target_stroke_id,
             stroke_id=stroke_id,
             confidence=float(confidence),
@@ -1293,6 +1309,64 @@ class DrawingSession:
                 values["action_id"] = f"vnext-{len(self._agent.history.actions) + len(actions) + 1:06d}"
             actions.append(self._draw_action(points, **values))
         return list(self._commit(actions))
+
+    def _require_path_eraser_profile(self, pressure=None) -> None:
+        version = self._require_render_profile().renderer_version
+        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+            raise ValueError("path eraser requires the opacity-normalized render profile")
+        if pressure is not None and any(p != 1.0 for p in pressure) and version not in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+            raise ValueError("varying eraser pressure requires opacity_normalized(..., pressure_lift=True)")
+
+    def _erase_path_action(self, points, *, stroke_id, width, strength=1.0,
+                           tool="hard_eraser", layer=0, part=None, reason,
+                           observation_id, action_id=None, pressure=None):
+        self._require_path_eraser_profile()
+        if not isinstance(stroke_id, str) or not stroke_id.strip():
+            raise ValueError("path eraser requires an explicit fresh stroke ID")
+        if not isinstance(reason, str) or not reason.strip() or not isinstance(observation_id, str) or not observation_id.strip():
+            raise ValueError("path eraser requires observation and correction reason")
+        if tool not in ("soft_eraser", "hard_eraser") or type(layer) is not int:
+            raise ValueError("path eraser requires an eraser preset and integer layer")
+        if (isinstance(width, bool) or isinstance(strength, bool)
+                or not math.isfinite(float(width)) or not 0 < float(width) <= max(self.width, self.height)
+                or not math.isfinite(float(strength)) or not 0 < float(strength) <= 1):
+            raise ValueError("path eraser width must be positive and bounded; strength in (0,1]")
+        pts = tuple(tuple(map(float, p)) for p in points)
+        if (not 2 <= len(pts) <= 16384 or any(len(p) != 2 or not all(math.isfinite(v) for v in p) for p in pts)
+                or any(a == b for a, b in zip(pts, pts[1:]))):
+            raise ValueError("path eraser requires distinct consecutive finite points")
+        if pressure is None:
+            pressure = (1.0,) * len(pts)
+        else:
+            pressure = tuple(pressure)
+            if (len(pressure) != len(pts) or any(isinstance(p, bool) or not math.isfinite(float(p)) or not 0 <= float(p) <= 1 for p in pressure)
+                    or not any(float(p) > 0 for p in pressure)):
+                raise ValueError("eraser pressure must match path samples and lie in [0,1], with positive contact")
+            pressure = tuple(float(p) for p in pressure)
+        self._require_path_eraser_profile(pressure)
+        return self._draw_action(pts, action_id=action_id, stroke_id=stroke_id,
+            role="highlight_lift", part=part, layer=layer, pressure=pressure,
+            tool=tool, tool_overrides={"width":float(width), "erase_strength":float(strength), "pressure":1.0},
+            observation_id=observation_id, source_observation="explicit ordered graphite lift",
+            reason=reason, kind="erase_path")
+
+    def erase_path(self, points, *, stroke_id, width, strength=1.0, tool="hard_eraser",
+                   layer=0, part=None, reason, observation_id,
+                   expected_cursor=None, expected_state_hash=None, pressure=None):
+        """Lift deposited graphite along an explicit path in stable layer order.
+
+        This is a non-destructive compositing mark, not a pixel edit or white pencil.
+        It affects preceding marks at this or lower layers, not subsequent marks at
+        the same/higher layers. Retire the eraser by ID to restore underlying graphite.
+        """
+        with self._lock:
+            if expected_cursor is not None and self.history_cursor != expected_cursor:
+                raise ValueError("stale path eraser cursor")
+            if expected_state_hash is not None and self.drawing_state_hash() != expected_state_hash:
+                raise ValueError("stale path eraser state")
+            return str(self._commit(self._erase_path_action(points, stroke_id=stroke_id,
+                width=width, strength=strength, tool=tool, layer=layer, part=part,
+                reason=reason, observation_id=observation_id, pressure=pressure)))
 
     def replace_stroke(
         self,
@@ -1360,7 +1434,7 @@ class DrawingSession:
             action_id=_action_id(self._agent.history, action_id),
             kind="replace_segment",
             stage=_COMPAT_STAGE,
-            points=tuple((float(point[0]), float(point[1])) for point in points),
+            points=tuple(tuple(float(v) for v in point) for point in points),
             target_stroke_id=str(target_stroke_id),
             pressure=None if pressure is None else tuple(float(value) for value in pressure),
             observation_id=oid,
@@ -1373,6 +1447,71 @@ class DrawingSession:
             lock_boundaries=bool(lock_boundaries),
         )
         return str(self._commit(action))
+
+    def soft_lift_segment(
+        self,
+        target_stroke_id: str,
+        start_index: int,
+        end_index: int,
+        *,
+        reason: str,
+        observation_id: str,
+        strength: float | None = None,
+        feather_points: int = 1,
+        action_id: str | None = None,
+        tool: str | Mapping[str, Any] = "soft_eraser",
+        grade: str | None = None,
+        tool_overrides: Mapping[str, Any] | None = None,
+        source_observation: str | None = None,
+        expected_cursor: int | None = None,
+        expected_state_hash: str | None = None,
+    ) -> str:
+        """Attenuate an inclusive, explicitly chosen range on a current stroke.
+
+        Point coordinates, material, layer and semantic identity are preserved.
+        The original stroke remains; this is pressure attenuation, not a spatial
+        raster eraser. Adjacent samples receive deterministic linear feathering.
+        Choose the range from the current path, not from an older revision.
+        Optional cursor/hash guards reject stale inspected state before mutation.
+        """
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError("segment soft lift requires a correction reason")
+        if not isinstance(observation_id, str) or not observation_id.strip():
+            raise ValueError("segment soft lift requires explicit observation_id")
+        if type(start_index) is not int or type(end_index) is not int or not 0 <= start_index < end_index:
+            raise ValueError("segment range requires increasing integer indices")
+        if type(feather_points) is not int or feather_points < 0:
+            raise ValueError("feather_points must be a nonnegative integer")
+        if strength is not None and (isinstance(strength, bool) or not math.isfinite(float(strength)) or not 0 <= float(strength) <= 1):
+            raise ValueError("strength must be finite and in [0,1]")
+        with self._lock:
+            if expected_cursor is not None and self.history_cursor != expected_cursor:
+                raise ValueError("stale segment edit cursor")
+            if expected_state_hash is not None and self.drawing_state_hash() != expected_state_hash:
+                raise ValueError("stale segment edit state")
+            # Do not follow ancestry silently: the selected indices belong to a
+            # particular current path, not a superseded stroke revision.
+            current = self.current_stroke(target_stroke_id)
+            if current.stroke_id != target_stroke_id:
+                raise ValueError("segment soft lift requires the current stroke ID")
+            if end_index >= len(current.points) or feather_points > len(current.points):
+                raise ValueError("segment range or feather exceeds current stroke samples")
+            oid, source, why = self._provenance(
+                observation_id=observation_id, source_observation=source_observation,
+                reason=reason.strip(),
+            )
+            action = DrawingAction(
+                action_id=_action_id(self._agent.history, action_id),
+                kind="soft_lift_segment", stage=_COMPAT_STAGE,
+                target_stroke_id=target_stroke_id,
+                tool=_tool_payload(tool, grade, tool_overrides),
+                observation_id=oid, source_observation=source, reason=why,
+                revision_of=target_stroke_id, segment_start=start_index,
+                segment_end=end_index, strength=None if strength is None else float(strength),
+                feather_points=feather_points,
+            )
+            self._commit(action)
+            return action.action_id
 
     def soft_lift(
         self,

@@ -126,3 +126,24 @@ def test_builder_rejects_output_inside_package_tree(tmp_path: Path) -> None:
     assert result.returncode != 0
     assert "outside the package directory" in result.stderr
     assert not (package / "dist" / "self.zip").exists()
+
+
+def test_skill_zip_contains_only_deployable_source(tmp_path: Path) -> None:
+    package = _package_copy(tmp_path)
+    junk = {
+        "out/final.png": b"private drawing",
+        "out/session.checkpoint.json": b"private session",
+        "private-reference.png": b"private reference",
+        "references/local-preview.gif": b"private preview",
+        "src/img2drawing/local-session.json": b"private run",
+        "dev/test.py": b"developer-only",
+    }
+    for relative, payload in junk.items():
+        path = package / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(payload)
+    output = tmp_path / "skill.zip"
+    names = _build(package, output)
+    assert all(f"img2drawing/{name}" not in names for name in junk)
+    assert {"img2drawing/SKILL.md", "img2drawing/README.txt",
+            "img2drawing/assets/icon.svg", "img2drawing/references/INDEX.md"} <= set(names)
