@@ -12,7 +12,8 @@ freeze. Immutable released snapshots remain version-specific:
 - v1.1.1 / M01: `dev/release/vnext/CONTRACT_FREEZE_V1_1_1.json`;
 - v1.2.0 / M02: `dev/release/vnext/CONTRACT_FREEZE_V1_2_0.json`;
 - v1.2.1 / M03: `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`;
-- v1.3.0 / constructive drawing: `dev/release/vnext/CONTRACT_FREEZE_V1_3_0.json`.
+- v1.3.0 / constructive drawing: `dev/release/vnext/CONTRACT_FREEZE_V1_3_0.json`;
+- v1.3.1 / maintenance: `dev/release/vnext/CONTRACT_FREEZE_V1_3_1.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
 
@@ -130,7 +131,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-After the manifest-driven publication gate, v1.3.0 is the latest published stable. Its manifest, tag and additive freeze are authoritative; earlier release authorities remain immutable. New sessions default to legacy v11; optional material contracts and authored metadata extend the existing history without automatic tracing or geometry generation. Independent artistic quality remains unverified.
+After the manifest-driven publication gate, v1.3.1 is the latest published stable. Its runtime behavior is identical to v1.3.0; only release metadata and verification change. Its manifest, tag and additive freeze are authoritative; earlier release authorities remain immutable. New sessions default to legacy v11; optional material contracts and authored metadata extend the existing history without automatic tracing or geometry generation. Independent artistic quality remains unverified.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 

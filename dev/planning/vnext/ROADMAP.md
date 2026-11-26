@@ -53,10 +53,11 @@ S08 choose next package version / release candidate     CLOSED → v1.1.0 publis
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
-V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
+V13-S00 comparison baseline and evaluation protocol       CLOSED / USER_ACCEPTED · independent baseline NOT_RUN
 V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
-V13-S07 independent comparison                            WIP · tooling/327-action audit and opt-in material contract merged; independent runs NOT_RUN
-V13-S08 release validation                                ACTIVE · bounded promotion selected; main CI pending
+V13-S07 independent comparison                            CLOSED / USER_ACCEPTED · independent runs NOT_RUN
+V13-S08 release validation                                CLOSED · v1.3.0 main CI + publish SUCCESS
+M04 v1.3.1 release maintenance and branch consolidation   See STATUS.md
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -304,6 +305,10 @@ Work OS WK-110 is the linked execution record. These slices use independent evid
 | S07 | 10 | Independent fresh-worker comparison on six subject classes, including the private portrait; original 511-action evidence if available, real long-session segment erasure, no leaked answer strokes. Report unresolved likeness/tonal defects. |
 | S08 | 5 | Package/contract, v11 golden, replay, CI and release decision; visual gate must be supported or explicitly limited. |
 
-Maintainer decision (2026-11-27): publish the bounded v1.3.0 implementation after green main CI. S00 and S07 independent artistic comparison and extended high-resolution performance remain deferred, not passed; no broad artistic-quality claim. S08 requires successful publication validation.
+Maintainer decision (2026-11-27): v1.3.0 published after green main CI. All nine slices CLOSED; S00 and S07 USER_ACCEPTED without independent artistic comparison or extended high-resolution performance PASS. Measured plan completion 80%; task closure 100%. No further mandatory v1.3 gate.
 
-Progress is the sum of weights for fully verified closed slices. At the v1.2.1 promotion no v1.3 slice was complete; the current development branch checkpoint is recorded in STATUS.md. Implementation can proceed in parallel with the open S00 independent baseline, but no comparison or artistic claim can use missing baseline evidence. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.
+Measured progress is the sum of fully verified slice weights, not user-waived gates. Closure decisions and actual evidence are distinct. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.
+
+## v1.3.1 — Release maintenance
+
+Close superseded branch work without importing unproven material changes; retain release and research evidence; validate the current freeze against live runtime. Existing pencil contracts, APIs, session hashes and skill routing are unchanged. Publish after main CI and confirm release assets; synchronize the v1.4 development line before retiring old refs. [Disposition](../../docs/v131-branch-disposition.md).

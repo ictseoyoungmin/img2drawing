@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-Prior releases through v1.2.1 remain immutable. **GitHub Release v1.3.0** is selected for constructive drawing, gated by green main CI and manifest-driven publication. Independent visual comparison remains deferred, not passed; see `STATUS.md` and `ROADMAP.md`.
+**GitHub Release v1.3.1** is selected for release maintenance; v1.3.0 and earlier releases are immutable. The next product line is [v1.4.0 Multi-Medium Drawing](https://github.com/ictseoyoungmin/img2drawing/tree/dev/v1.4.0-multi-medium-drawing). The prior independent visual gates were closed by user acceptance without a new measured visual PASS.
 
 ## Historical evidence and repository size
 

@@ -3,27 +3,27 @@
   <h1>img2drawing</h1>
   <p><strong>From observation to explicit, editable pencil strokes.</strong></p>
   <p>
-    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.3.0-6f5a46" alt="Version v1.3.0"></a>
+    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.3.1-6f5a46" alt="Version v1.3.1"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache 2.0"></a>
   </p>
 </div>
 
-**Current stable: v1.3.0** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
+**Current stable: v1.3.1** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
 
 An Agent Skill and Python drawing runtime for Claude Code, Codex, and other skill-capable agents.
 Rather than requesting a finished image from an image generator, the agent observes a subject,
 authors explicit strokes, inspects its drawing, and corrects visible problems.
 
-**What's new in v1.3.0**
+**What's new in v1.3**
 
 - Explicit landmark, proportion, occlusion and projected-volume tools for observation and construction.
 - Editable curves, pressure/contact-width control, local erasure and atomic stroke/group corrections with previews.
 - More focused portrait, hair, anatomy and fabric guidance, plus tonal/overlap inspection.
 - Optional normalized graphite profiles, safer action validation, compact GIF export and a standalone skill ZIP.
 
-Independent artistic-quality comparison remains open. [Release notes](docs/releases/v1.3.0.md).
+v1.3.1 strengthens release-contract validation and consolidates development history without changing drawing behavior. Independent artistic-quality comparison was closed by maintainer acceptance, not measured PASS. [Release notes](docs/releases/v1.3.1.md).
 
 ## Drawing in action
 
