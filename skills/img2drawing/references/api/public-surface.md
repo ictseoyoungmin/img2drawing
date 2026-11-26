@@ -118,9 +118,8 @@ Use the exact public edit methods `replace_stroke()`, `soft_lift()`, and `delete
 rather than guessing a `soften_stroke()` alias or raster-editing the rendered PNG. The runtime
 capability manifest exposes these exact callables through `authoring_entrypoints`. For an
 explicit range, use `replace_segment()` or `soft_lift_segment()`; see
-[local stroke dynamics](../markmaking/stroke-dynamics.md). The opt-in normalized
-profile also supports `erase_path()` for a visible path that lifts deposited graphite
-across marks in stable layer order. See the same leaf for its limits.
+[local stroke dynamics](../markmaking/stroke-dynamics.md). The normalized profile supports
+`erase_path()` to lift graphite in stable layer order; see the same leaf for limits.
 
 When only stroke material is wrong and the path is already correct, prefer:
 
