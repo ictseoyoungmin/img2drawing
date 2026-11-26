@@ -119,3 +119,11 @@ uses the canonical graphite-lifting function; non-append or out-of-layer-order
 changes with an active/retired lift conservatively recomposite the full canvas
 from cached graphite patches in canonical order. This preserves pixels but can
 increase editing/replay cost. Legacy unmarked raw erasers remain ineligible.
+
+Research option: `opacity_normalized(..., pressure_lift=True)` selects
+`11-opacity-normalized-v2`, a distinct immutable renderer contract with an
+explicit pressure-shaped graphite lift. Existing v11 and normalized v1
+identities/digests remain unchanged. No automatic migration. Constant lifts
+and ordinary graphite remain unchanged; the new pressure-shaped lift requires
+the new profile in both canonical and Fast replay. The research option has
+not passed independent visual acceptance or large-session performance gates.

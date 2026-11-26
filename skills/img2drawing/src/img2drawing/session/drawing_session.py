@@ -36,7 +36,7 @@ from ..core.tools import TOOLSET_ID
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render import UnsupportedRendererError, canonical_identity, default_grade_name, render
 from ..render.artifact import RenderArtifact, render_history_at
-from ..render.contract import OPACITY_NORMALIZED_CONTRACT
+from ..render.contract import OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT
 from ..render.profile import SEED_DOMAIN, RenderProfile
 from ..timelapse import ReplayExport, export_timelapse
 from .correction import CorrectionRecord, ResidualRecord
@@ -1176,8 +1176,9 @@ class DrawingSession:
         if not actions:
             return []
         with self._lock:
-            if any(item.kind == "erase_path" for item in actions):
-                self._require_path_eraser_profile()
+            for item in actions:
+                if item.kind == "erase_path":
+                    self._require_path_eraser_profile(item.pressure)
             with self._agent.transaction(label="vnext-mutation"):
                 results = [self._agent.execute(item) for item in actions]
                 self._write_checkpoint(self._checkpoint_path)
@@ -1298,13 +1299,16 @@ class DrawingSession:
             actions.append(self._draw_action(points, **values))
         return list(self._commit(actions))
 
-    def _require_path_eraser_profile(self) -> None:
-        if self._require_render_profile().renderer_version != OPACITY_NORMALIZED_CONTRACT.renderer_version:
+    def _require_path_eraser_profile(self, pressure=None) -> None:
+        version = self._require_render_profile().renderer_version
+        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version):
             raise ValueError("path eraser requires the opacity-normalized render profile")
+        if pressure is not None and any(p != 1.0 for p in pressure) and version != PRESSURE_LIFT_CONTRACT.renderer_version:
+            raise ValueError("varying eraser pressure requires opacity_normalized(..., pressure_lift=True)")
 
     def _erase_path_action(self, points, *, stroke_id, width, strength=1.0,
                            tool="hard_eraser", layer=0, part=None, reason,
-                           observation_id, action_id=None):
+                           observation_id, action_id=None, pressure=None):
         self._require_path_eraser_profile()
         if not isinstance(stroke_id, str) or not stroke_id.strip():
             raise ValueError("path eraser requires an explicit fresh stroke ID")
@@ -1320,15 +1324,24 @@ class DrawingSession:
         if (not 2 <= len(pts) <= 16384 or any(len(p) != 2 or not all(math.isfinite(v) for v in p) for p in pts)
                 or any(a == b for a, b in zip(pts, pts[1:]))):
             raise ValueError("path eraser requires distinct consecutive finite points")
+        if pressure is None:
+            pressure = (1.0,) * len(pts)
+        else:
+            pressure = tuple(pressure)
+            if (len(pressure) != len(pts) or any(isinstance(p, bool) or not math.isfinite(float(p)) or not 0 <= float(p) <= 1 for p in pressure)
+                    or not any(float(p) > 0 for p in pressure)):
+                raise ValueError("eraser pressure must match path samples and lie in [0,1], with positive contact")
+            pressure = tuple(float(p) for p in pressure)
+        self._require_path_eraser_profile(pressure)
         return self._draw_action(pts, action_id=action_id, stroke_id=stroke_id,
-            role="highlight_lift", part=part, layer=layer, pressure=(1.0,) * len(pts),
+            role="highlight_lift", part=part, layer=layer, pressure=pressure,
             tool=tool, tool_overrides={"width":float(width), "erase_strength":float(strength), "pressure":1.0},
             observation_id=observation_id, source_observation="explicit ordered graphite lift",
             reason=reason, kind="erase_path")
 
     def erase_path(self, points, *, stroke_id, width, strength=1.0, tool="hard_eraser",
                    layer=0, part=None, reason, observation_id,
-                   expected_cursor=None, expected_state_hash=None):
+                   expected_cursor=None, expected_state_hash=None, pressure=None):
         """Lift deposited graphite along an explicit path in stable layer order.
 
         This is a non-destructive compositing mark, not a pixel edit or white pencil.
@@ -1342,7 +1355,7 @@ class DrawingSession:
                 raise ValueError("stale path eraser state")
             return str(self._commit(self._erase_path_action(points, stroke_id=stroke_id,
                 width=width, strength=strength, tool=tool, layer=layer, part=part,
-                reason=reason, observation_id=observation_id)))
+                reason=reason, observation_id=observation_id, pressure=pressure)))
 
     def replace_stroke(
         self,

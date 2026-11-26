@@ -148,3 +148,22 @@ width, optional strength/tool/layer/part. Supply the preview's cursor, state and
 action digest on apply. The eraser is stored as an explicit ordered stroke.add
 with its own material/provenance, not a separate image or drawing history.
 Raw legacy eraser history still follows existing canonical fallback rules.
+
+## Experimental pressure-shaped graphite lift
+
+On the research profile only, explicitly select
+`RenderProfile.opacity_normalized(width, height, pressure_lift=True)`.
+Supply `pressure` to `erase_path` or to an explicit erasure in the existing
+mixed preview/apply batch. One finite pressure sample in [0,1] per point,
+with at least one positive sample, is required. A rising and falling pressure
+curve can produce soft approaches and departures on an observed curved
+reflection. Zero pressure means no contact; contact radius scales with the
+square root of pressure and local lift with pressure. The footprint uses
+max-union within one pass, not repeated accumulation of every sample.
+Separate intentional passes may accumulate. A missing or all-one pressure
+curve retains the old constant-path semantics exactly. The v1 normalized
+profile rejects varying eraser pressure. This is an optional experimental
+contract, not a new default, automatic highlight or substitute for observing
+hair clumps and continuous form. Use actual preview, ownership checks and
+re-author rejected paths. The path has a bounded sample budget; wide paths
+and high-resolution performance still require further verification.

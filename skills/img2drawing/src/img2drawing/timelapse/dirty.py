@@ -55,7 +55,8 @@ def apply_additions(renderer, canvas: Image.Image, strokes):
     for stroke in strokes:
         if is_eraser(stroke):
             box = erase(canvas, stroke, factor=renderer.factor, hi_size=renderer.hi_size,
-                        tooth=renderer.tooth, paper_scale=renderer.paper_scale, paper_seed=renderer.paper_seed)
+                        tooth=renderer.tooth, paper_scale=renderer.paper_scale, paper_seed=renderer.paper_seed,
+                        allow_pressure_lift=renderer.allow_pressure_lift)
             if box is not None:
                 boxes.append(box)
             continue

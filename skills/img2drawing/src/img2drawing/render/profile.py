@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
-from .contract import (OPACITY_NORMALIZED_CONTRACT, RENDERER_ID, RENDERER_VERSION,
+from .contract import (OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
                        canonical_identity, verify_contract_digest)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
@@ -166,11 +166,13 @@ class RenderProfile:
         )
 
     @classmethod
-    def opacity_normalized(cls, width: int, height: int) -> "RenderProfile":
-        """Opt into the improved contact model for a new session; never migrate old pixels."""
-        contract = OPACITY_NORMALIZED_CONTRACT
+    def opacity_normalized(cls, width: int, height: int, *, pressure_lift: bool = False) -> "RenderProfile":
+        """Opt into normalized contact; optionally select the distinct pressure-lift contract."""
+        if type(pressure_lift) is not bool:
+            raise ValueError("pressure_lift must be boolean")
+        contract = PRESSURE_LIFT_CONTRACT if pressure_lift else OPACITY_NORMALIZED_CONTRACT
         return cls(
-            profile_id="pencil-contact-opacity-normalized-v1",
+            profile_id="pencil-contact-opacity-normalized-v2" if pressure_lift else "pencil-contact-opacity-normalized-v1",
             renderer_id=contract.renderer_id,
             renderer_version=contract.renderer_version,
             renderer_contract_digest=contract.digest(),

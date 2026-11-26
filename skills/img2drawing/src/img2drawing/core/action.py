@@ -110,8 +110,14 @@ class DrawingAction:
                         or self.tool["preset"] not in {"soft_eraser", "hard_eraser"}
                         or len(set(self.points)) < 2
                         or any(not math.isfinite(v) for p in self.points for v in p)
-                        or self.pressure is None or any(p != 1.0 for p in self.pressure)):
+                        or self.pressure is None or len(self.pressure) != len(self.points)
+                        or any(not math.isfinite(p) or not 0 <= p <= 1 for p in self.pressure)
+                        or not any(p > 0 for p in self.pressure)):
                     raise ValueError("erase_path requires an explicit eraser, fresh ID, path and correction provenance")
+                if any(p != 1.0 for p in self.pressure):
+                    samples = sum(max(1, math.ceil(math.dist(a,b)/.5)) for a,b in zip(self.points,self.points[1:])) + 1
+                    if samples > 100000:
+                        raise ValueError("pressure-lift sample budget exceeded")
             if self.kind == "replace_stroke":
                 if not self.target_stroke_id:
                     raise ValueError("replace_stroke requires target_stroke_id")
@@ -229,7 +235,8 @@ def _stroke_from_action(action: DrawingAction) -> Stroke:
     stroke.pressure_authored = action.pressure is not None
     ts = deepcopy(stroke.tool_state) if isinstance(stroke.tool_state, dict) else {}
     if path_lift:
-        ts["path_lift_contract"] = "ordered-graphite-lift-v1"
+        ts["path_lift_contract"] = ("ordered-graphite-pressure-lift-v1"
+            if any(p != 1.0 for p in action.pressure) else "ordered-graphite-lift-v1")
     ts["pencil_grade"] = grade
     ts["action_id"] = action.action_id
     ts["provenance"] = action.provenance()

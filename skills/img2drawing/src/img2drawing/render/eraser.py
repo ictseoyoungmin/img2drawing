@@ -28,7 +28,7 @@ def is_eraser(stroke: Stroke) -> bool:
 
 def is_explicit_path_eraser(stroke: Stroke) -> bool:
     ts = _tool_state(stroke)
-    return (is_eraser(stroke) and ts.get("path_lift_contract") == "ordered-graphite-lift-v1"
+    return (is_eraser(stroke) and ts.get("path_lift_contract") in {"ordered-graphite-lift-v1", "ordered-graphite-pressure-lift-v1"}
             and ts.get("tool") in {"hard_eraser", "soft_eraser"})
 
 
@@ -111,9 +111,64 @@ def _eraser_footprint(stroke: Stroke, factor: float, bounds: tuple[int, int, int
     return mask
 
 
+def _profiled_footprint(stroke: Stroke, factor: float, bounds: tuple[int, int, int, int], hardness: float) -> np.ndarray:
+    """Union of radial pressure-weighted contacts; no per-sample optical accumulation.
+
+    Explicit path and pressure remain authoritative (no automatic hand jitter).
+    The contact radius scales with sqrt(pressure), pickup amplitude with pressure.
+    Each pass is a max-union, so denser sampling does not multiply lift.
+    """
+    pts = stroke.points
+    pressure = stroke.pressure
+    if (pressure is None or len(pressure) != len(pts)
+            or any(not np.isfinite(p) or not 0 <= p <= 1 for p in pressure)):
+        raise ValueError("invalid profiled eraser pressure")
+    steps = [max(1, int(ceil(hypot(b[0]-a[0], b[1]-a[1]) / .5))) for a,b in zip(pts, pts[1:])]
+    if sum(steps) + 1 > 100000:
+        raise ValueError("pressure-lift sample budget exceeded")
+    ox, oy, x1, y1 = bounds
+    mask = np.zeros((y1-oy,x1-ox),dtype=np.float32)
+    exponent = np.float32(.35 + 1.65*(1-hardness))
+    def stamp(x,y,p):
+        if p <= 0:
+            return
+        cx,cy = x*factor-ox,y*factor-oy
+        radius = .5*float(stroke.width)*factor*np.sqrt(p)
+        if radius <= 0:
+            return
+        xa,xb=max(0,int(np.floor(cx-radius))),min(mask.shape[1],int(np.ceil(cx+radius))+1)
+        ya,yb=max(0,int(np.floor(cy-radius))),min(mask.shape[0],int(np.ceil(cy+radius))+1)
+        if xa>=xb or ya>=yb:
+            return
+        # Preserve the scalar expression and dtype/order of the original
+        # contact kernel, but reuse its scratch arrays within bounded row slabs.
+        # The mask itself remains the exact max-union of all authored contacts.
+        x2 = (np.arange(xa, xb)[None, :] + .5 - cx)**2
+        rows = max(1, 262144 // (xb - xa))
+        for lo in range(ya, yb, rows):
+            hi = min(yb, lo + rows)
+            y2 = (np.arange(lo, hi)[:, None] + .5 - cy)**2
+            d = x2 + y2
+            np.divide(d, radius*radius, out=d)
+            np.subtract(1, d, out=d)
+            np.maximum(d, 0, out=d)
+            contact = d.astype(np.float32)
+            np.power(contact, exponent, out=contact)
+            np.multiply(np.float32(p), contact, out=contact)
+            dst = mask[lo:hi, xa:xb]
+            np.maximum(dst, contact, out=dst)
+    for i,n in enumerate(steps):
+        a,b=pts[i],pts[i+1]
+        for j in range(n):
+            t=j/n
+            stamp(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,pressure[i]+(pressure[i+1]-pressure[i])*t)
+    stamp(*pts[-1],pressure[-1])
+    return np.rint(np.clip(mask,0,1)*255).astype(np.uint8)
+
+
 def _lift_alpha(alpha: np.ndarray, footprint: np.ndarray, *, stroke: Stroke,
                 factor: float, origin: tuple[int, int], tooth: float,
-                paper_scale: float, paper_seed: int) -> np.ndarray:
+                paper_scale: float, paper_seed: int, profiled: bool = False) -> np.ndarray:
     """Lift deposited graphite only.
 
     Soft erasers mostly pick material from exposed paper peaks and leave graphite in
@@ -157,7 +212,7 @@ def _lift_alpha(alpha: np.ndarray, footprint: np.ndarray, *, stroke: Stroke,
     contact = np.float32(1.0) + irregularity * (pickup - np.float32(0.5)) * np.float32(2.0)
     contact = np.clip(contact, np.float32(0.62), np.float32(1.28))
 
-    pressure_gain = np.float32(0.72 + 0.28 * pressure)
+    pressure_gain = np.float32(1.0 if profiled else 0.72 + 0.28 * pressure)
     lift = f * np.float32(strength) * pressure_gain * access_tooth * contact
     lift = np.clip(lift, 0.0, 0.985)
     return np.clip(alpha.astype(np.float32) * (np.float32(1.0) - lift), 0.0, 255.0).astype(np.uint8)
@@ -165,21 +220,28 @@ def _lift_alpha(alpha: np.ndarray, footprint: np.ndarray, *, stroke: Stroke,
 
 def erase(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float,
           hi_size: tuple[int, int], tooth: float, paper_scale: float,
-          paper_seed: int) -> tuple[int, int, int, int] | None:
+          paper_seed: int, allow_pressure_lift: bool = False) -> tuple[int, int, int, int] | None:
     """Apply one ordered pass in place and return its supersampled bounds."""
 
     if len(stroke.points) < 2:
         return
-    dynamic = eraser_hand_dynamics(stroke)
+    marker = _tool_state(stroke).get("path_lift_contract")
+    if marker not in (None, "ordered-graphite-lift-v1", "ordered-graphite-pressure-lift-v1"):
+        raise ValueError("unsupported path-lift contract")
+    profiled = marker == "ordered-graphite-pressure-lift-v1"
+    if profiled and not allow_pressure_lift:
+        raise ValueError("pressure-lift stroke requires its explicit renderer contract")
+    dynamic = stroke if profiled else eraser_hand_dynamics(stroke)
     _, hardness, _ = _eraser_material(dynamic)
     bounds = _eraser_bounds(dynamic, factor, hi_size, hardness)
-    footprint = _eraser_footprint(dynamic, factor, bounds, hardness)
+    footprint = (Image.fromarray(_profiled_footprint(dynamic, factor, bounds, hardness), mode="L")
+                 if profiled else _eraser_footprint(dynamic, factor, bounds, hardness))
     region = graphite_canvas.crop(bounds)
     alpha = np.asarray(region.getchannel("A"), dtype=np.uint8)
     lifted = _lift_alpha(
         alpha, np.asarray(footprint, dtype=np.uint8), stroke=dynamic, factor=factor,
         origin=(bounds[0], bounds[1]), tooth=tooth, paper_scale=paper_scale,
-        paper_seed=paper_seed,
+        paper_seed=paper_seed, profiled=profiled,
     )
     region.putalpha(Image.fromarray(lifted, mode="L"))
     graphite_canvas.paste(region, (bounds[0], bounds[1]))
