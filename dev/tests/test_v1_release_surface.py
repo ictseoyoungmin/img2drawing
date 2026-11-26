@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 
 import img2drawing
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -103,3 +105,16 @@ def test_retired_s09_streaming_test_is_not_active_ci_surface() -> None:
     legacy = ROOT / "dev" / "legacy" / "post_1_0_1" / "s09_streaming"
     assert (legacy / "streaming.py").is_file()
     assert (legacy / "test_streaming_timelapse_resume.py").is_file()
+
+
+def test_readme_does_not_reaccumulate_release_history() -> None:
+    path = ROOT / "dev/tools/verify_current_documentation.py"
+    spec = importlib.util.spec_from_file_location("readme_policy", path)
+    policy = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(policy)
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    policy.verify_readme_scope(readme)
+    with pytest.raises(AssertionError, match="version-specific"):
+        policy.verify_readme_scope(readme + "\n## v1.0.0 — Old release\n")
+    with pytest.raises(AssertionError, match="budget"):
+        policy.verify_readme_scope(readme + "x" * 6501)
