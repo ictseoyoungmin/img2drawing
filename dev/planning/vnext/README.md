@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-Prior releases through v1.2.1 remain immutable. **GitHub Release v1.3.0** is selected for constructive drawing, gated by green main CI and manifest-driven publication. Independent visual comparison remains deferred, not passed; see `STATUS.md` and `ROADMAP.md`.
+**GitHub Release v1.3.0** is published and immutable. The next development branch targets [v1.4.0 Multi-Medium Drawing](V14_MULTI_MEDIUM_DRAWING_PLAN.md). See STATUS.md and ROADMAP.md. Existing v1.3.0 independent visual gates were closed by user acceptance without a new measured visual PASS.
 
 ## Historical evidence and repository size
 

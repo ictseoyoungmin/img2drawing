@@ -53,10 +53,11 @@ S08 choose next package version / release candidate     CLOSED → v1.1.0 publis
 M01 public-contract / release-hygiene maintenance        CLOSED → v1.1.1 published
 M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 promotion
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
-V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
+V13-S00 comparison baseline and evaluation protocol       CLOSED / USER_ACCEPTED · independent baseline NOT_RUN
 V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
-V13-S07 independent comparison                            WIP · tooling/327-action audit and opt-in material contract merged; independent runs NOT_RUN
-V13-S08 release validation                                ACTIVE · bounded promotion selected; main CI pending
+V13-S07 independent comparison                            CLOSED / USER_ACCEPTED · independent runs NOT_RUN
+V13-S08 release validation                                CLOSED · v1.3.0 main CI + publish SUCCESS
+V14-S01–S07 multi-medium drawing                           See STATUS.md; design and execution sequence below
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -307,3 +308,19 @@ Work OS WK-110 is the linked execution record. These slices use independent evid
 Maintainer decision (2026-11-27): publish the bounded v1.3.0 implementation after green main CI. S00 and S07 independent artistic comparison and extended high-resolution performance remain deferred, not passed; no broad artistic-quality claim. S08 requires successful publication validation.
 
 Progress is the sum of weights for fully verified closed slices. At the v1.2.1 promotion no v1.3 slice was complete; the current development branch checkpoint is recorded in STATUS.md. Implementation can proceed in parallel with the open S00 independent baseline, but no comparison or artistic claim can use missing baseline evidence. The legacy S01–S08 labels above are historical; these v1.3 slices are distinct.
+
+## v1.4.0 — Multi-Medium Drawing
+
+Maintainer-authorized design after v1.3.0 publication. See [V14_MULTI_MEDIUM_DRAWING_PLAN.md](V14_MULTI_MEDIUM_DRAWING_PLAN.md) for requirements, boundaries, implementation ownership and detailed acceptance criteria. Existing graphite default, single history and replay are retained; new media opt-in only. Manual closed-contour ink and authored analytic screentone are explicit, versioned geometry operations, not automatic/reference-derived fills. No retired region.* contract revival.
+
+| Slice | Weight | Scope and closure evidence | Dependency |
+|---|---:|---|---|
+| S01 | 20 | Typed media/element/action contract, opt-in profile digest, single history, bounded validation, vertical render/preview/resume proof; v1.3 golden exact | stable v1.3.0 |
+| S02 | 15 | G-pen and fineliner: pressure-width vs constant-width, opaque ink, authored curves, tip/join/overlap tests | S01 |
+| S03 | 15 | Ink brush, explicit closed-contour ink/hole semantics and white ink; edit/retire/preview, selective graphite lift | S01, S02 |
+| S04 | 20 | Editable explicit dot screentone + linear gradient, phase/coverage/clipping/holes; bounded deterministic pattern evaluation | S01, S03 |
+| S05 | 10 | Mixed-media conditional skill routing, public discovery and executable example, no automatic masks/tracing | S01–S04 |
+| S06 | 10 | Integration: exact legacy replay, mixed canonical/eligible Fast parity and safe fallback, GIF, stress and installed packages | S01–S05 |
+| S07 | 10 | Controlled material comparison, fresh drawing review, transparent limits and explicit release decision; main publication gate | S06 |
+
+Weights total 100. Feature PRs target the v1.4 development branch. STATUS.md owns present progress; no package promotion or new release manifest until S07. Earlier v1.3.0 release and user-accepted gate closures are immutable history.

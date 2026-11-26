@@ -3,12 +3,12 @@
 Updated: 2026-11-27
 
 ```text
-PUBLISHED STABLE:   v1.3.0 · selected constructive release (publication gated by main CI)
-RELEASE TAG:        v1.3.0 · manifest-driven publish authority (pending)
+PUBLISHED STABLE:   v1.3.0 · published; main/tag fdaf6b1
+RELEASE TAG:        v1.3.0 · immutable published release
 CURRENT SOURCE:     1.3.0 · constructive drawing
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.3.0 promotion CI; S00/S07 independent comparison deferred, not passed
+ACTIVE BOTTLENECK:  v1.4.0 S01 mixed-media authoring/replay contract (READY; design only)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -24,7 +24,7 @@ HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
 MAIN RELEASE CI:    required green before manifest-driven publish
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      v1.3.0 selected via main CI + publish manifest; v1.2.1 remains published until successful workflow
+PUBLISH STATE:      v1.3.0 published (CI 45870744957; publish 45871125462); no v1.4.0 manifest
 ```
 
 ## Authority contract
@@ -39,6 +39,14 @@ Authority is intentionally split by purpose:
 4. release tags, freezes, manifests, and release notes — immutable historical release authority.
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
+
+## Current v1.4.0 development checkpoint
+
+- Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` from stable `fdaf6b1`.
+- [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
+- S01 READY; S02–S07 OPEN (dependency order in ROADMAP); weighted implementation/verification 0% (0/7). No production runtime or package changes, no new quality PASS.
+- v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
+- Next: S01 explicit typed material/action contract and minimum vertical proof; validate legacy golden and exact replay before adding G-pen/fineliner, ink areas and tones.
 
 ## v1.3.0 development checkpoint (historical)
 
