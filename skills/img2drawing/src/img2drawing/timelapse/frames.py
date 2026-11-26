@@ -89,6 +89,7 @@ class FastFrameSource:
             graphite=profile.graphite_rgb, tooth=profile.paper_tooth,
             paper_scale=profile.paper_scale, paper_seed=profile.paper_seed,
             cache_contract=_cache_contract(profile), persistent_cache_dir=persistent_cache_dir,
+            renderer_version=profile.renderer_version, renderer_contract_digest=profile.renderer_contract_digest,
         )
         self.replay = ForwardHistoryReplay(history)
         self.hi_canvas = Image.new("RGBA", self.renderer.hi_size, (*self.renderer.graphite, 0))

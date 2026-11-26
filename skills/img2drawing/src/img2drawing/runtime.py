@@ -100,6 +100,10 @@ class RuntimeCapabilities:
         "img2drawing.observation.compare_negative_space",
         "img2drawing.observation.occlusion_relation",
     )
+    render_profile_entrypoints: tuple[str, ...] = (
+        "RenderProfile.canonical",
+        "RenderProfile.opacity_normalized",
+    )
     output_entrypoints: tuple[str, ...] = (
         "DrawingSession.inspect",
         "DrawingSession.render_final",
@@ -131,6 +135,7 @@ class RuntimeCapabilities:
             "authoring_entrypoints": list(self.authoring_entrypoints),
             "authoring_helpers": list(self.authoring_helpers),
             "output_entrypoints": list(self.output_entrypoints),
+            "render_profile_entrypoints": list(self.render_profile_entrypoints),
             "observation_helpers": list(self.observation_helpers),
             "markmaking_contract": self.markmaking_contract,
             "prohibited_final_authoring_bypasses": list(self.prohibited_final_authoring_bypasses),

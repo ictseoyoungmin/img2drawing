@@ -19,7 +19,8 @@ from typing import Any
 
 from PIL import Image
 
-from ..render import PENCIL_CONTRACT, RENDERER_CONTRACT_DIGEST, build_patch, is_eraser, load_contact_profile, prepare_stroke
+from ..render import RENDERER_ID, RENDERER_VERSION, build_patch, is_eraser, load_contact_profile, prepare_stroke
+from ..render.contract import contract_for_identity, verify_contract_digest
 
 CACHE_SCHEMA = "img2drawing.local.patch-cache.v3"
 _DISK_MAGIC = b"IPC1"
@@ -32,7 +33,8 @@ class PatchCache:
     def __init__(self, *, width: int, height: int, background, scale: int, supersample: int,
                  graphite, tooth: float, paper_scale: float, paper_seed: int,
                  cache_contract: dict[str, Any] | None = None,
-                 persistent_cache_dir: str | Path | None = None):
+                 persistent_cache_dir: str | Path | None = None,
+                 renderer_version: str = RENDERER_VERSION, renderer_contract_digest: str | None = None):
         self.width = int(width)
         self.height = int(height)
         self.background = tuple(int(x) for x in background)
@@ -45,7 +47,13 @@ class PatchCache:
         self.tooth = float(tooth)
         self.paper_scale = float(paper_scale)
         self.paper_seed = int(paper_seed)
-        self.profile = load_contact_profile()
+        contract = contract_for_identity(RENDERER_ID, renderer_version)
+        digest = verify_contract_digest(renderer_contract_digest, renderer_version=renderer_version)
+        self.profile = load_contact_profile(contract.renderer_version)
+        profile_payload = asdict(self.profile)
+        # Preserve the v11 cache key for the unchanged legacy contact profile.
+        if not self.profile.opacity_normalized:
+            profile_payload.pop("opacity_normalized")
         self.cache_contract = dict(cache_contract or {})
         self._meta = {
             "schema": CACHE_SCHEMA,
@@ -55,9 +63,9 @@ class PatchCache:
             "tooth": self.tooth,
             "paper_scale": self.paper_scale,
             "paper_seed": self.paper_seed,
-            "contact_profile": asdict(self.profile),
-            "renderer_identity": list(PENCIL_CONTRACT.identity),
-            "renderer_contract_digest": RENDERER_CONTRACT_DIGEST,
+            "contact_profile": profile_payload,
+            "renderer_identity": list(contract.identity),
+            "renderer_contract_digest": digest,
             "session_contract": self.cache_contract,
         }
         self.patch_cache: dict[str, tuple[tuple[int, int], Image.Image]] = {}

@@ -53,6 +53,29 @@ to a renderer this package cannot reproduce exactly (for example a pre-1.1 `v9`/
 history containing retired region-fill actions) fails closed instead of being silently re-rendered;
 replay it with the release that produced it.
 
+## Explicit opacity-normalized contact profile
+
+`RenderProfile.canonical(width, height)` retains exact Pencil v11 behavior.
+For a **new** session that needs controllable light graphite deposits, an explicit
+opt-in is available:
+
+```python
+from img2drawing import DrawingSession, RenderProfile
+profile = RenderProfile.opacity_normalized(width, height)
+session = DrawingSession.create(subject=subject, output_dir=output_dir,
+                                render_profile=profile)
+```
+
+The variant `11-opacity-normalized-v1` uses the same pencil engine but integrates
+authored contact alpha over traveled distance, constrains continuity floors to
+local alpha, and deposits nothing at zero opacity. Intentional overlapping
+passes still accumulate. It is not a universal linear opacity guarantee:
+pressure, grade, geometry, grain, overlap and sampling all affect the result.
+It has a separate immutable renderer contract digest, checked on resume; existing
+v11 checkpoints are **not** silently migrated, and v11 remains the default.
+Use the same bound variant for inspection, preview, final and GIF replay.
+Do not use profile switching as a correction to a finished drawing.
+
 ## Agent-facing handoff and recovery
 
 When the user needs the project, put the authored script(s), session checkpoint, reference
