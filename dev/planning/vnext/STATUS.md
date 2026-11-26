@@ -3,12 +3,12 @@
 Updated: 2026-11-27
 
 ```text
-PUBLISHED STABLE:   v1.3.0 · selected constructive release (publication gated by main CI)
-RELEASE TAG:        v1.3.0 · manifest-driven publish authority (pending)
-CURRENT SOURCE:     1.3.0 · constructive drawing
+PUBLISHED STABLE:   v1.3.1 · selected maintenance release; main CI/publish gated
+RELEASE TAG:        v1.3.1 · pending manifest-driven publication
+CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.3.0 promotion CI; S00/S07 independent comparison deferred, not passed
+ACTIVE BOTTLENECK:  v1.3.1 release validation and branch consolidation; v1.4.0 separately planned
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.3.0 constructive drawing
+PACKAGE VERSION:    1.3.1 release maintenance
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -24,7 +24,7 @@ HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
 MAIN RELEASE CI:    required green before manifest-driven publish
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      v1.3.0 selected via main CI + publish manifest; v1.2.1 remains published until successful workflow
+PUBLISH STATE:      v1.3.0 published at fdaf6b1; v1.3.1 selected pending main CI + publish
 ```
 
 ## Authority contract
@@ -39,6 +39,14 @@ Authority is intentionally split by purpose:
 4. release tags, freezes, manifests, and release notes — immutable historical release authority.
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
+
+## Current v1.3.1 maintenance
+
+- v1.3.0 was published from `fdaf6b1`; main CI `45870744957` passed 473 active + 44 runtime tests, publish `45871125462` succeeded with 4/4 release assets.
+- Maintainer closed all 9 v1.3.0 slices: S01–S06/S08 verified (80% weight); S00/S07 USER_ACCEPTED (20%, independent six-class comparison and extended high-resolution performance NOT_RUN/uncertified). No remaining mandatory v1.3.0 research gate.
+- PR #98 closed without merge; normalized-v4 is NOT shipped. Existing v11/default and normalized v1/v2/v3, contact-width, selective lift and overlap diagnostics remain. The one-off portrait handoff branch is not a product feature; its pinned runtime is already in main. See [branch disposition](../../docs/v131-branch-disposition.md).
+- v1.3.1 only synchronizes release authority, strengthens freeze validation and retains manual tonal QA. No runtime change besides version. Main promotion remains CI-gated.
+- Next product line: [v1.4.0 development](https://github.com/ictseoyoungmin/img2drawing/tree/dev/v1.4.0-multi-medium-drawing), design only, 0% implementation. No v1.4 release manifest.
 
 ## v1.3.0 development checkpoint (historical)
 
@@ -75,7 +83,7 @@ Scope: development evidence before the v1.3.0 promotion; not the v1.2.1 release.
 
 ## Current truth
 
-- `v1.3.0` is the selected bounded constructive drawing release; publication requires successful main CI and manifest-driven workflow. v1.2.1 and earlier tags are immutable. Default renderer v11 is pixel-compatible, with explicit opt-in material contracts. Independent visual proof remains open.
+- `v1.3.1` is the selected maintenance release, gated by successful main CI and manifest-driven publication. v1.3.0 and earlier tags are immutable. Default renderer v11 and all shipped opt-in material contracts are unchanged. Independent artistic improvement was not measured; the prior tasks were closed by maintainer acceptance.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.

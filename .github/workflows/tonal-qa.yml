@@ -1,10 +1,5 @@
 name: img2drawing-opt-in-tonal-qa
 on:
-  push:
-    branches: [qa/v1.2.1-tonal-evidence]
-    paths:
-      - 'dev/benchmarks/tonal_qa/**'
-      - '.github/workflows/tonal-qa.yml'
   workflow_dispatch:
 jobs:
   swatch:
