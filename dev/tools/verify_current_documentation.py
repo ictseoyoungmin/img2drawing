@@ -54,12 +54,27 @@ def _validate_publish_manifest(path: Path) -> dict:
     return manifest
 
 
+def verify_readme_scope(text: str) -> None:
+    """Keep the public entry page separate from the release ledger."""
+    assert len(text.encode("utf-8")) <= 6500, "README exceeds the public introduction budget"
+    headings = re.findall(r"^#{1,6}\s+([^\n]+)", text, flags=re.MULTILINE)
+    version_heading = re.compile(r"\bv?\d+\.\d+\.\d+(?:[a-z]+\d*)?\b", re.IGNORECASE)
+    assert not any(version_heading.search(h) for h in headings), (
+        "move version-specific README sections to CHANGELOG.md or docs/releases/"
+    )
+    assert "[Changelog](CHANGELOG.md)" in text, "README must link to the release ledger"
+    assert "(https://github.com/ictseoyoungmin/img2drawing/releases)" in text, (
+        "README must link to the release index"
+    )
+
+
 def main() -> None:
     assert not (ROOT / "GATES.md").exists(), "retired root GATES.md reappeared"
     assert not (ROOT / "HANDOFF.md").exists(), "retired root HANDOFF.md reappeared"
 
     version = _package_version()
     root_readme = _text(ROOT / "README.md")
+    verify_readme_scope(root_readme)
     changelog = _text(ROOT / "CHANGELOG.md")
     planning_readme = _text(PLANNING / "README.md")
     status = _text(PLANNING / "STATUS.md")
