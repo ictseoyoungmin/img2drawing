@@ -105,6 +105,11 @@ head + hair outer mass
 ```
 
 Do not use repeated strand lines to carry an unresolved silhouette, jaw/neck handoff, parting, or clump overlap. If removing the strand accents destroys the hair read, the mass/clump solution is not finished.
+For visibly turning clumps, inspect whether the major masses still read as overlapping
+volumes without relying on isolated bright accents. Reject identical dark lobes or bright
+ribbons that invent a repeated clump pattern. The specialist clump-volume route is
+`../figure/head-face-hair.md`; reopen the responsible silhouette, overlap, or value family
+before accepting more strands or lifts.
 
 ## Limb gate
 

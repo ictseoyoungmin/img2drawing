@@ -59,6 +59,23 @@ only where an observed boundary warrants it; render and reassess both the local 
 whole form. Route material defects through the existing markmaking residual path only if
 correctly placed explicit strokes still fail the intended contact.
 
+## Inspect a turning value family in two directions
+
+When a broad turning surface reads flat or tubular, inspect an across-form patch chain at a
+representative visible section and a separate along-form chain through successive visible
+sections. Choose corresponding patches yourself; include a light-facing plane, turn and
+shadow only where actually visible, and distinguish a contact shadow at an overlap from a
+soft form turn. Do not force a symmetric or fixed number of bands. Use the existing
+`inspect_tonal_patches` separately on each chain at the same before/after cursors. Check
+relative value order and unexpected reversals in both directions; also inspect the boundary
+ownership and whole-form read at the requested output scale. A smooth single chain or a
+stronger highlight does not compensate for a missing turn or an invented overlap.
+
+If the wide dark family fails, preview retirement and replacement of that family with
+explicit strokes of controlled width, density and pressure. Reserve the larger light plane
+first; add a local lift only for an observed narrow residual light. Do not repair a flat
+volume by adding more bright marks to its center.
+
 ## Recalibrate value when changing material contract
 
 When creating a session with the optional opacity-normalized profile, do not reuse a
