@@ -93,6 +93,15 @@ For each important connected chain, verify where evidence allows:
 
 A convincing enlarged near head does not prove the whole perspective solution. If torso, pelvis, limbs, or props remain flat/diagrammatic, reopen the parent depth hypothesis.
 
+## Face-local fidelity gate
+
+For a likeness-bearing readable face, including a full figure, use
+[portrait likeness review](portrait-likeness.md) before accepting facial detail. Full-figure RMS
+cannot close face-local residuals. Compare the actual rendered eye envelopes, nose/mouth relations,
+expression and facial value turns at head and final output scales. If the remaining identity
+mismatch dominates the face, reopen the responsible structure or explicitly leave it unresolved;
+recognition and a smaller landmark error alone are not a pass.
+
 ## Hair gate
 
 Use the order:

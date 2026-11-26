@@ -54,6 +54,10 @@ Open this branch only when geometry is justified and the remaining problem conce
 ## Figure
 
 - `figure/head-face-hair.md` — open when: head orientation, feature placement, identity, or hair mass/clumps are limiting; owns: head, face, and hair description.
+- `figure/facial-construction.md` — open when: face volume, orbit or feature seats are limiting; owns: face-specific construction.
+- `figure/facial-features.md` — open when: specific eyes, nose, mouth or ears remain generic; owns: descriptive feature geometry.
+- `figure/facial-expression.md` — open when: expression differs despite feature placement; owns: linked facial deformation.
+- `figure/facial-values.md` — open when: skin planes or feature shadow edges read flat; owns: facial value and edge description.
 - `figure/torso-arms-hands.md` — open when: torso-to-arm or upper-body relations are limiting; owns: torso/arm relationship description.
 - `figure/hands-and-grip.md` — open when: hand projection, finger grouping, grip, or hand/prop contact is limiting; owns: hands and grip.
 - `figure/legs-feet.md` — open when: lower-limb taper, transitions, foot orientation, footwear, stance, or grounding is limiting; owns: legs and feet.
@@ -67,6 +71,7 @@ Open this branch only when geometry is justified and the remaining problem conce
 ## Review
 
 - `review/visual-quality-gates.md` — open when: observed finished/substantially-resolved work is about to accept a descriptive semantic group; owns: semantic-group evidence acceptance gates.
+- `review/portrait-likeness.md` — open when: a readable face must resemble the reference, including in a full figure; owns: face-local fidelity review and correction evidence.
 - `review/residual-correction.md` — open when: a visible mismatch needs a correction decision; owns: residual description, prioritization, correction, and re-inspection logic.
 - `review/residual-routing.md` — open when: the visible symptom may not identify its causal owner; owns: cause-based local/upstream routing.
 - `review/markmaking-residuals.md` — open when: geometry may be correct but role, dynamics, style, or material reads wrong; owns: geometry-versus-markmaking residual routing.

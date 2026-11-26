@@ -24,35 +24,20 @@ shape, feature spacing, hair silhouette/parting, visible accessories, and stylin
 explicitly requests a transformation. If identity evidence is uncertain, reopen observation rather
 than substituting a canonical model-sheet version.
 
-## Face
+## Face and likeness routing
 
-Place features by relation: eye line/orientation, brow, nose direction and length, mouth
-placement, chin distance, and visible side-plane width. Draw only the feature lines that
-are visible and informative, but place those lines precisely. A few accurate marks are
-better than many generic eye/nose/mouth ticks.
+When likeness is important, including a readable face in a full-figure drawing, open
+[portrait likeness review](../review/portrait-likeness.md) before accepting facial description or
+finishing. Use its local-scale evidence instead of full-figure normalization. Open the specialist
+owner for the actual residual:
 
-A face cross-axis is an orientation aid, not a substitute for head volume. It should agree with the
-crown, jaw/chin direction, and visible side-plane width rather than floating inside a generic circle.
+- [Facial construction](facial-construction.md): face plane, orbit, cheek, jaw and feature seats.
+- [Facial features](facial-features.md): instance-specific lids, iris visibility, nose, lips and ear.
+- [Facial expression](facial-expression.md): linked changes in lids, cheeks, mouth and jaw.
+- [Facial values](facial-values.md): skin planes, occlusion accents and soft transitions.
 
-Before accepting facial detail, check that feature placement still agrees with the outer cranial/jaw
-shape and visible side plane. If the face reads as eye/nose/mouth symbols pasted into a generic head,
-reopen head volume/orientation instead of refining the symbols.
-
-## Portrait comparison before detail and finish
-
-For a likeness-bearing face, inspect the reference and current drawing at the same useful
-whole-head and enlarged-face scales. Use visible landmarks rather than a standard face template:
-compare each eye envelope and iris-to-lid overlap, eye spacing and tilt, nose base, mouth width
-and position, cheek-to-jaw transitions, chin width and height, and the head/neck/hair handoffs.
-Compare landmarks as relationships (for example eye spacing against face width and mouth-to-chin
-distance against nose-to-mouth distance); do not assume symmetry or infer hidden boundaries.
-
-Identify the largest mismatch and its owner before adding detail. A broad or misplaced jaw is a
-face-silhouette problem, not a reason to add eyelashes. Reopen that parent contour first; inspect
-again at both scales. Check whether an apparent line is an actual edge or a soft value transition:
-do not turn a shaded nose bridge into a hard contour merely to name the nose. A recognizable face
-is not evidence that the portrait likeness is resolved. If it remains materially different,
-continue correction or explicitly report the limitation instead of claiming a faithful finish.
+Inspect the current face and whole head before refining feature symbols. Reopen the underlying
+volume or orientation when feature geometry cannot explain the observed likeness.
 
 ## Hair
 
