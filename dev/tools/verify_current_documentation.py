@@ -128,12 +128,16 @@ def main() -> None:
         assert str(freeze["canonical_render_profile"]["renderer_version"]) == "11"
         assert len(freeze["renderer_authority"]["current_contract_digest"]) == 64
         runtime = freeze.get("runtime_capabilities")
+        from img2drawing.runtime import runtime_capabilities
+
+        capabilities = runtime_capabilities()
         assert runtime == {
-            "schema": "img2drawing.runtime.capabilities.v2",
-            "authoring_operations": ["draw", "replace-stroke", "soft-lift", "delete-stroke"],
-            "output_operations": ["inspect", "render", "replay", "timelapse"],
+            "schema": capabilities.schema,
+            "authoring_operations": list(capabilities.authoring_operations),
+            "output_operations": list(capabilities.output_operations),
             "compatibility_alias": "supported_authoring_operations -> supported_operations",
         }
+        assert capabilities.supported_authoring_operations == capabilities.supported_operations
 
     # Historical release authority remains present and version-specific.
     for required in (

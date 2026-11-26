@@ -2,6 +2,17 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## v1.3.0 — Constructive drawing
+
+Selected 2026-11-27; publication requires green main CI.
+
+- Explicit landmark, proportion, occlusion and projected-volume tools for observation and construction.
+- Editable curves, pressure/contact-width control, local erasure and atomic stroke/group corrections with previews.
+- More focused portrait, hair, anatomy and fabric guidance, plus tonal/overlap inspection.
+- Optional normalized graphite profiles, safer action validation, compact GIF export and a standalone skill ZIP.
+
+Legacy v11 pixel replay is preserved. Independent six-class visual comparison and extended high-resolution performance remain follow-up work. See [release notes](docs/releases/v1.3.0.md).
+
 ## v1.2.1 — Tonal authoring and provenance maintenance
 
 Release scope approved 2026-11-26; publication requires green main CI.

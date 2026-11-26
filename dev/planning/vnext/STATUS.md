@@ -1,14 +1,14 @@
 # img2drawing current status
 
-Updated: 2026-11-26
+Updated: 2026-11-27
 
 ```text
-PUBLISHED STABLE:   v1.2.1 · selected maintenance release (publication gated by main CI)
-RELEASE TAG:        v1.2.1 · manifest-driven publish authority
-CURRENT SOURCE:     1.2.1 · tonal authoring and provenance maintenance
-CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; v1.3 development opt-in 11-opacity-normalized-v1
+PUBLISHED STABLE:   v1.3.0 · selected constructive release (publication gated by main CI)
+RELEASE TAG:        v1.3.0 · manifest-driven publish authority (pending)
+CURRENT SOURCE:     1.3.0 · constructive drawing
+CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.3.0 S01–S06 integrated; S00/S07 independent comparison remains open
+ACTIVE BOTTLENECK:  v1.3.0 promotion CI; S00/S07 independent comparison deferred, not passed
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.2.1 tonal authoring/provenance maintenance
+PACKAGE VERSION:    1.3.0 constructive drawing
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -24,7 +24,7 @@ HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
 MAIN RELEASE CI:    required green before manifest-driven publish
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      GitHub Release v1.2.1 selected via main CI + publish manifest; v1.2.0 remains published until successful workflow
+PUBLISH STATE:      v1.3.0 selected via main CI + publish manifest; v1.2.1 remains published until successful workflow
 ```
 
 ## Authority contract
@@ -40,9 +40,9 @@ Authority is intentionally split by purpose:
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
 
-## Current v1.3.0 development branch checkpoint
+## v1.3.0 development checkpoint (historical)
 
-Scope: `dev/v1.3.0-constructive-drawing`, not the published v1.2.1 package/tag.
+Scope: development evidence before the v1.3.0 promotion; not the v1.2.1 release.
 
 - S00 tooling merged (#79), independent six-class matched baseline NOT_RUN; remains open.
 - S01 observation (#80, 69147b8): explicit landmarks/ratios/axes/sections/negative spaces/occlusion; 289 active tests passed. Real local 300-action landmark evidence; no visual PASS.
@@ -71,11 +71,11 @@ Scope: `dev/v1.3.0-constructive-drawing`, not the published v1.2.1 package/tag.
 - #100 integrated `1bc7df3` after both CI runs on `e356376` passed (`45845134490`, `45845118134`). The follow-up restored the original face-cross-axis orientation rule and explicitly registered the new instruction leaves in the existing boundary tests; it did not weaken the tests. Merge-head CI `45845821755` was in progress at observation. Private 787-action face follow-up: a broad prospective batch (45 retire, 15 material edits, 52 additions) softened some cheek/lip contacts but lost pupil definition; rejected. A narrower prospective batch (23 retire, 17 material edits, 32 additions) retained dark eye contacts and reduced some hard lip/jaw edges but still failed the reference expression and whole-head likeness; not applied. One intermediate alternative timed out. Original action log, state hash, render profile and 787 final pixels verified unchanged; only observation metadata was added in the private copy. No new final/GIF or independent visual pass. Do not mistake additional low-resolution feature edits for a solved head; revisit the cranial/hair envelope and visible eye aperture, midface planes, tooth-plane silhouette at matched crop and whole-figure scales. #98/#99 unchanged; S00/S07 WIP, S08 OPEN, 6/9 (75%).
 - #99 integrated `2f88931` after synchronizing its branch with `cdfd4f9` in `4ee2ce7`. Resolved overlapping public-surface and runtime discovery edits, retaining #100 portrait and #99 contact-overlap APIs. Public surface 20,957 bytes within 21,000-byte budget. Prior #99 PR/push and development CI passed; combined local focused overlap 8/8 PASS. At merge, fresh combined CI `45854269291`/`45854258972` and merge-head CI `45854507478` in progress; do not claim final integration CI success yet. #98 remains research Draft due mixed tonal evidence. Private drawing follow-up 787→849 eye-local correction, then 879-action derivative with 30 authored lettering strokes before the original 849 actions; neither changes skill source or renderer. No private drawing data committed. Independent S00/S07 and long-session high-resolution performance remain open, S08 OPEN, 6/9 (75%).
 - S01–S06 feature implementation and regression gates CLOSED (75% of weighted plan, six of nine slices). S00/S07 WIP; S08 OPEN. No private images, answer coordinates or large outputs committed.
-- Next: complete S00 sealed baseline and S07 independent visual comparison, review independent visual residuals; real long-session erasure/replay audit has passed and optional opacity model is integrated. Then S08 release validation. No promotion to v1.3.0 stable.
+- Release decision (2026-11-27): maintainer authorized bounded v1.3.0 publication after CI. #104 merged at `7856946`; CI `45868789654` passed 473 active and 44 focused tests. S01–S06 retain their verified 75% weight; S08 promotion validation is pending main CI. S00/S07 independent artistic comparisons and extended high-resolution performance are deferred, not PASS. #98 remains separate research.
 
 ## Current truth
 
-- `v1.2.1` is the selected bounded maintenance release. Actual publication follows successful main CI and the manifest-driven workflow; v1.2.0 is immutable. Renderer v11 and the persisted history contract are unchanged. Synthetic high-resolution replay is measured; independent portrait-quality proof remains open.
+- `v1.3.0` is the selected bounded constructive drawing release; publication requires successful main CI and manifest-driven workflow. v1.2.1 and earlier tags are immutable. Default renderer v11 is pixel-compatible, with explicit opt-in material contracts. Independent visual proof remains open.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.
@@ -145,7 +145,7 @@ Replay rule in current source:
 
 - supported identity + matching contract digest → exact under the verified renderer environment;
 - v1.0.3 `pillow-pencil-contact-v11 / 1` profiles (no digest) → accepted as legacy v11 only; the v11 golden proves pixel identity;
-- v1.3 development opt-in `11-opacity-normalized-v1` → explicit new RenderProfile, distinct digest required; no legacy automatic migration;
+- v1.3 opt-in `11-opacity-normalized-v1`/`v2`/`v3` → explicit new RenderProfile, distinct digest required; no legacy automatic migration;
 - foreign digest, `v9`/`v10`, unknown identity, or retired `region.*` history → fail closed with a pointer to `img2drawing==1.0.3`;
 - profile-less checkpoints resume and render only after an explicit `migrate_render_profile()`;
 - published `v1.0.3` package/tag/freeze remains canonical authority for its original behavior.

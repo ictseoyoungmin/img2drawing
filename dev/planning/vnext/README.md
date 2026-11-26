@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-The release cycles through v1.2.0 remain immutable. M03 selects **GitHub Release v1.2.1** for bounded markmaking provenance, tonal authoring and QA maintenance, gated by green main CI and manifest-driven publication. v1.3.0 constructive drawing quality and independent validation are next; see `STATUS.md` and `ROADMAP.md`.
+Prior releases through v1.2.1 remain immutable. **GitHub Release v1.3.0** is selected for constructive drawing, gated by green main CI and manifest-driven publication. Independent visual comparison remains deferred, not passed; see `STATUS.md` and `ROADMAP.md`.
 
 ## Historical evidence and repository size
 
