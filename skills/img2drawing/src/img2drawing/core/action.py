@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import math
 from dataclasses import dataclass, replace
 from typing import Any, Iterable
 
@@ -13,7 +14,7 @@ from .tools import ToolState, get_tool
 
 DRAW_KINDS = {
     "draw_stroke", "replace_stroke", "soft_lift", "delete_stroke", "marker",
-    "replace_segment", "soft_lift_segment",
+    "replace_segment", "soft_lift_segment", "erase_path",
 }
 TOOL_OVERRIDE_FIELDS = {
     "width", "pressure", "opacity", "hardness", "grain", "taper_in", "taper_out", "jitter",
@@ -89,7 +90,7 @@ class DrawingAction:
         return action
 
     def validate(self) -> None:
-        if self.kind in {"draw_stroke", "replace_stroke"}:
+        if self.kind in {"draw_stroke", "replace_stroke", "erase_path"}:
             if len(self.points) < 2:
                 raise ValueError(f"{self.kind} requires at least 2 points")
             if not self.role:
@@ -103,6 +104,14 @@ class DrawingAction:
             get_pencil_preset(str(self.tool["grade"]))
             if not self.observation_id or not self.source_observation:
                 raise ValueError(f"{self.kind} requires observation_id and source_observation provenance")
+            if self.kind == "erase_path":
+                if (self.role != "highlight_lift" or not self.stroke_id or not self.reason
+                        or self.target_stroke_id is not None or self.revision_of is not None
+                        or self.tool["preset"] not in {"soft_eraser", "hard_eraser"}
+                        or len(set(self.points)) < 2
+                        or any(not math.isfinite(v) for p in self.points for v in p)
+                        or self.pressure is None or any(p != 1.0 for p in self.pressure)):
+                    raise ValueError("erase_path requires an explicit eraser, fresh ID, path and correction provenance")
             if self.kind == "replace_stroke":
                 if not self.target_stroke_id:
                     raise ValueError("replace_stroke requires target_stroke_id")
@@ -194,7 +203,12 @@ def _resolve_tool(raw: dict[str, Any]) -> tuple[ToolState, str | None]:
 def _stroke_from_action(action: DrawingAction) -> Stroke:
     assert action.tool is not None
     tool, grade = _resolve_tool(action.tool)
-    if tool.mode != "draw":
+    path_lift = action.kind == "erase_path"
+    if path_lift:
+        action.validate()
+        if tool.mode != "erase" or not math.isfinite(tool.width) or tool.width <= 0:
+            raise ValueError("erase_path requires a finite positive eraser width")
+    elif tool.mode != "draw":
         raise ValueError(
             f"draw action cannot use erase-mode tool: {tool.tool}. "
             "Use a draw-mode tool for authored marks; to retire an existing mark use "
@@ -214,6 +228,8 @@ def _stroke_from_action(action: DrawingAction) -> Stroke:
     # Only an explicitly supplied curve is provenance; the tool's own taper is derived.
     stroke.pressure_authored = action.pressure is not None
     ts = deepcopy(stroke.tool_state) if isinstance(stroke.tool_state, dict) else {}
+    if path_lift:
+        ts["path_lift_contract"] = "ordered-graphite-lift-v1"
     ts["pencil_grade"] = grade
     ts["action_id"] = action.action_id
     ts["provenance"] = action.provenance()
@@ -312,7 +328,7 @@ class AgentDrawingSession:
                 raise ValueError(f"drawing action point out of canvas bounds: {(x, y)}")
         result: str | None = None
         provenance = action.provenance()
-        if action.kind == "draw_stroke":
+        if action.kind in {"draw_stroke", "erase_path"}:
             stroke = _stroke_from_action(action)
             result = self.history.add_stroke(stroke, stroke_id=action.stroke_id, provenance=provenance)
         elif action.kind == "replace_stroke":

@@ -128,3 +128,23 @@ points and provenance. Cursor/state guard against stale drawing evidence; the ac
 digest rejects changes to the reviewed proposal even on the same drawing state. Supply
 all three when committing a reviewed candidate. A rejected preview modifies no drawing
 history. Invalid/conflicting IDs or an invalid new mark roll back the entire batch.
+
+## Explicit ordered graphite lift
+
+With the opt-in `RenderProfile.opacity_normalized` only, use
+`session.erase_path(points, stroke_id=..., width=..., strength=..., tool="hard_eraser",
+layer=0, reason=..., observation_id=...)` for an observed narrow light interval
+across deposited graphite. Use an explicit fresh ID, path, width and strength
+(0,1], with hard or soft eraser. This is a reversible, ordered compositing mark:
+it lifts graphite, never paints white or modifies the reference. Lower layers
+are underneath even if added later; same-layer marks follow their history order.
+A later mark at the same or higher layer may deposit graphite again. Do not
+continue a path through an occluder. Retire the eraser with delete_stroke and
+re-author it if wrong; do not retune it as graphite or change its local pressure.
+
+The existing mixed preview/apply batch accepts optional `erasures` after its
+edits, retirements and additions. Each is a mapping of points, fresh stroke_id,
+width, optional strength/tool/layer/part. Supply the preview's cursor, state and
+action digest on apply. The eraser is stored as an explicit ordered stroke.add
+with its own material/provenance, not a separate image or drawing history.
+Raw legacy eraser history still follows existing canonical fallback rules.

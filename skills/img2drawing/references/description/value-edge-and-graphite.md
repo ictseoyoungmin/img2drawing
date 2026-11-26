@@ -88,3 +88,14 @@ adjacent dark shoulders) plus a whole-plane reading; high contrast alone is not 
 If changing the family, preview retirement and explicit new marks together using the
 mixed stroke-edit batch. Reject candidates that erase ownership edges, cross occluders,
 create false bright gaps, or replace continuous dark tone with mechanical striping.
+
+For thin light hardware or reflected hair highlights, an alternative to leaving
+white gaps between graphite strokes is an explicitly observed ordered lift
+through the opt-in normalized profile. Construct a coherent dark mass with
+strokes aligned to the material/form, then use small reviewed eraser paths
+(see stroke dynamics). Prefer a restrained value family over a repetitive
+cross-grain hatch; do not infer an unobserved line, treat the whole plane as a
+uniform raster fill, or use strong lifts as a substitute for correct geometry.
+Inspect both contact ends and surviving marks. If rounded ends create scallops,
+reconsider the contact paths and soften their contribution rather than outlining
+every endpoint. A bright highlight alone does not certify natural form.

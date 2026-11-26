@@ -70,7 +70,7 @@ def _current(session):
     return {s.stroke_id:s for s in session.current_ir().strokes}
 
 
-def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions=()):
+def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions=(), erasures=()):
     if not isinstance(reason,str) or not reason.strip():
         raise ValueError("edit reason required")
     if not isinstance(observation_id,str) or not observation_id.strip():
@@ -82,7 +82,8 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         raise ValueError("retire_ids must be a sequence of current stroke IDs")
     retire_ids=tuple(retire_ids)
     additions=tuple(additions)
-    if not (edits or retire_ids or additions):
+    erasures=tuple(erasures)
+    if not (edits or retire_ids or additions or erasures):
         raise ValueError("nonempty explicit stroke edit batch required")
     if any(not isinstance(i,str) or not i.strip() for i in retire_ids):
         raise ValueError("retire_ids must contain current stroke IDs")
@@ -164,6 +165,16 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         occupied.add(sid)
         actions.append(session._draw_action(action_id=aid(),observation_id=oid,
             source_observation=source,reason=why,**values))
+    allowed_erase={"points","stroke_id","width","strength","tool","layer","part"}
+    for spec in erasures:
+        if not isinstance(spec,Mapping) or set(spec)-allowed_erase or not {"points","stroke_id","width"}<=set(spec):
+            raise ValueError("erasure requires explicit path, ID and width")
+        values=deepcopy(dict(spec))
+        sid=values["stroke_id"]
+        if not isinstance(sid,str) or not sid.strip() or sid in occupied:
+            raise ValueError("erasure requires a distinct fresh stroke ID")
+        occupied.add(sid)
+        actions.append(session._erase_path_action(action_id=aid(),observation_id=oid,reason=why,**values))
     return actions
 
 
@@ -180,11 +191,11 @@ def _guard(session, expected_cursor, expected_state_hash):
 
 def apply_stroke_edits(session, edits: Sequence[StrokeEdit], *, reason,
                        observation_id, expected_cursor=None, expected_state_hash=None,
-                       retire_ids=(), additions=(), expected_action_digest=None):
+                       retire_ids=(), additions=(), erasures=(), expected_action_digest=None):
     """Atomically apply explicit replacements, retirements and new authored marks."""
     with session._lock:
         _guard(session,expected_cursor,expected_state_hash)
-        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions)
+        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions,erasures=erasures)
         if expected_action_digest is not None and _action_digest(actions)!=expected_action_digest:
             raise ValueError("stroke edit proposal differs from preview")
         session._commit(actions)
@@ -192,7 +203,7 @@ def apply_stroke_edits(session, edits: Sequence[StrokeEdit], *, reason,
 
 
 def preview_stroke_edits(session, edits: Sequence[StrokeEdit], out, *, reason, observation_id,
-                         retire_ids=(), additions=()):
+                         retire_ids=(), additions=(), erasures=()):
     """Render the exact prospective action batch on a detached history clone.
 
     No observations, session history or checkpoint are modified. The preview is
@@ -205,7 +216,7 @@ def preview_stroke_edits(session, edits: Sequence[StrokeEdit], out, *, reason, o
         cursor=session.history_cursor
         state=session.drawing_state_hash()
         profile=session._require_render_profile()
-        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions)
+        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions,erasures=erasures)
         clone=AgentDrawingSession.from_dict(session._agent.to_dict())
         clone.execute_many_atomic(actions,label="prospective stroke edit")
         artifact=render_history_at(clone.history,clone.history.cursor,path,profile)
