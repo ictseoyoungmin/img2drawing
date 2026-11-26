@@ -88,6 +88,9 @@ class RuntimeCapabilities:
     )
     observation_helpers: tuple[str, ...] = (
         "img2drawing.inspection.inspect_tonal_interval",
+        "img2drawing.inspection.TonalPatch",
+        "img2drawing.inspection.compare_tonal_patches",
+        "img2drawing.inspection.inspect_tonal_patches",
         "img2drawing.observation.Landmark",
         "img2drawing.observation.LandmarkSet",
         "img2drawing.observation.compare_landmarks",
