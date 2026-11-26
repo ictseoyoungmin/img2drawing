@@ -106,3 +106,7 @@ maps requested cursor integers to trusted canonical PNG paths. Manifests, profil
 history prefix, cursor state and pixel hashes must match; invalid supplied evidence
 fails closed. Missing cursors render normally. The correction proposal is an
 explicit authoring helper, not an area-to-stroke generator.
+
+When mean value improves but alternating bands remain on a continuous observed plane, use
+`../description/value-edge-and-graphite.md` for explicit local value-continuity evidence before
+repeating wider or darker strokes. The chain is diagnostic, not a smoothing or automatic fill tool.

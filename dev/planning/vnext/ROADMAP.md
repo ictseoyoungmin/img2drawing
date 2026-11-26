@@ -55,7 +55,7 @@ M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 prom
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
 V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
 V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
-V13-S07 independent comparison                            WIP · tooling merged; independent runs NOT_RUN
+V13-S07 independent comparison                            WIP · tooling/327-action replay audit merged; independent runs NOT_RUN
 V13-S08 release validation                                OPEN · independent evidence and release decision pending
 ```
 
