@@ -4,7 +4,7 @@
 cached patches, edits recomposite only the dirty rectangles, and only changed output regions
 are resampled. It is pixel-exact with a full canonical render at every cursor.
 ``CanonicalFrameSource`` re-renders the whole drawing per frame and is used when a history
-contains semantics the incremental path does not support (ordered spatial erasers).
+contains unsupported semantics. Explicit path lifts use the same eraser in both sources.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from PIL import Image
 
 from ..core.history import _stroke_from_dict
 from ..render import is_eraser, render_image
+from ..render.eraser import is_explicit_path_eraser
 from ..render.profile import RenderProfile
 from .dirty import apply_additions, clip_box, finalize_full, merge_regions, patch_box, recomposite_regions, union_box, update_output_regions
 from .patch_cache import PatchCache
@@ -55,7 +56,7 @@ def inspect_fast_path_eligibility(history) -> FastPathEligibility:
         except Exception as exc:
             reasons.append(f"cannot decode stroke action seq={item.seq}: {exc}")
             continue
-        if is_eraser(stroke):
+        if is_eraser(stroke) and not is_explicit_path_eraser(stroke):
             raw_eraser = True
             reasons.append(f"raw spatial eraser stroke at seq={item.seq}")
             break
@@ -161,6 +162,7 @@ class FastFrameSource:
         self.replay.advance_to(target)
         snapshot = self.replay.snapshot()
         non_snapshot = [item for item in delta if item.action != "snapshot"]
+        ordered_lift = any(is_eraser(s) for s in snapshot.strokes) or any(is_eraser(s) for s in prev_state.values())
         if non_snapshot and all(item.action == "stroke.add" for item in non_snapshot):
             strokes = [self.replay.state[str(item.payload["stroke"]["stroke_id"])] for item in non_snapshot]
             if self._append_order_safe(prev_state, strokes):
@@ -168,7 +170,7 @@ class FastFrameSource:
                 mode = "append"
                 self.stats["append_advances"] += 1
             else:
-                changed_regions = merge_regions([
+                changed_regions = [(0, 0, *self.renderer.hi_size)] if ordered_lift else merge_regions([
                     clip_box(patch_box(self.renderer, stroke), self.renderer.hi_size)
                     for stroke in strokes
                 ])
@@ -181,7 +183,7 @@ class FastFrameSource:
             mode = "metadata-only"
             self.stats["metadata_advances"] += 1
         else:
-            changed_regions = self._semantic_dirty_regions(non_snapshot, prev_state)
+            changed_regions = [(0, 0, *self.renderer.hi_size)] if ordered_lift else self._semantic_dirty_regions(non_snapshot, prev_state)
             recomposited = recomposite_regions(self.renderer, self.hi_canvas, snapshot.strokes, changed_regions)
             self.stats["recomposited_strokes"] += recomposited
             self.stats["dirty_advances"] += 1

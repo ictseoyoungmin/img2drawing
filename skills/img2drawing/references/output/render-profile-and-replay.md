@@ -113,3 +113,9 @@ included in final encoding and pipeline performance figures.
 Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
 necessary, retry frames 0→N. A completed retry frame count is not an
 all-phases-complete signal; the final verify event closes the operation.
+
+Explicit ordered path-lift marks are eligible for Fast replay. The append path
+uses the canonical graphite-lifting function; non-append or out-of-layer-order
+changes with an active/retired lift conservatively recomposite the full canvas
+from cached graphite patches in canonical order. This preserves pixels but can
+increase editing/replay cost. Legacy unmarked raw erasers remain ineligible.

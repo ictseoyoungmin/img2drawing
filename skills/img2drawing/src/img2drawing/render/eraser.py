@@ -26,6 +26,12 @@ def is_eraser(stroke: Stroke) -> bool:
     return str(ts.get("mode", "draw")).lower() == "erase" or tool.endswith("eraser")
 
 
+def is_explicit_path_eraser(stroke: Stroke) -> bool:
+    ts = _tool_state(stroke)
+    return (is_eraser(stroke) and ts.get("path_lift_contract") == "ordered-graphite-lift-v1"
+            and ts.get("tool") in {"hard_eraser", "soft_eraser"})
+
+
 def _eraser_material(stroke: Stroke) -> tuple[float, float, float]:
     ts = _tool_state(stroke)
     strength = _clamp01(ts.get("erase_strength", stroke.opacity))
@@ -159,8 +165,8 @@ def _lift_alpha(alpha: np.ndarray, footprint: np.ndarray, *, stroke: Stroke,
 
 def erase(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float,
           hi_size: tuple[int, int], tooth: float, paper_scale: float,
-          paper_seed: int) -> None:
-    """Apply one ordered eraser pass to the supersampled graphite canvas in place."""
+          paper_seed: int) -> tuple[int, int, int, int] | None:
+    """Apply one ordered pass in place and return its supersampled bounds."""
 
     if len(stroke.points) < 2:
         return
@@ -177,6 +183,9 @@ def erase(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float,
     )
     region.putalpha(Image.fromarray(lifted, mode="L"))
     graphite_canvas.paste(region, (bounds[0], bounds[1]))
+    region.close()
+    footprint.close()
+    return bounds
 
 
-__all__ = ["erase", "is_eraser"]
+__all__ = ["erase", "is_eraser", "is_explicit_path_eraser"]

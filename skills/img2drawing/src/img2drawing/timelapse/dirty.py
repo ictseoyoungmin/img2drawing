@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from PIL import Image
 
+from ..render.eraser import erase, is_eraser
+
 
 def union_box(a, b):
     if a is None:
@@ -51,6 +53,12 @@ def merge_regions(regions):
 def apply_additions(renderer, canvas: Image.Image, strokes):
     boxes = []
     for stroke in strokes:
+        if is_eraser(stroke):
+            box = erase(canvas, stroke, factor=renderer.factor, hi_size=renderer.hi_size,
+                        tooth=renderer.tooth, paper_scale=renderer.paper_scale, paper_seed=renderer.paper_seed)
+            if box is not None:
+                boxes.append(box)
+            continue
         (x, y), layer = renderer.patch_for_fast(stroke)
         canvas.alpha_composite(layer, dest=(x, y))
         boxes.append((x, y, x + layer.size[0], y + layer.size[1]))
@@ -58,6 +66,16 @@ def apply_additions(renderer, canvas: Image.Image, strokes):
 
 
 def recomposite_regions(renderer, canvas: Image.Image, strokes, regions):
+    # An ordered eraser depends on the composite below it. Conservative full
+    # recomposition reuses cached graphite patches and the canonical eraser;
+    # never approximate erasure by composing a transparent RGBA source patch.
+    if any(is_eraser(stroke) for stroke in strokes):
+        full = (0, 0, *renderer.hi_size)
+        if list(regions) != [full]:
+            raise ValueError("ordered eraser recomposition requires the full canvas")
+        canvas.paste((*renderer.graphite, 0), full)
+        apply_additions(renderer, canvas, sorted(strokes, key=lambda z: z.layer))
+        return len(strokes)
     count = 0
     patch_meta = []
     for stroke in sorted(strokes, key=lambda z: z.layer):

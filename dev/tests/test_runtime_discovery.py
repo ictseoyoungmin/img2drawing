@@ -28,6 +28,7 @@ def test_manifest_exposes_public_authoring_not_private_implementation() -> None:
         "delete-stroke",
         "replace-segment",
         "soft-lift-segment",
+        "erase-path",
     )
     assert caps.output_operations == ("inspect", "render", "replay", "timelapse")
     assert caps.supported_operations == caps.authoring_operations + caps.output_operations
@@ -40,6 +41,7 @@ def test_manifest_exposes_public_authoring_not_private_implementation() -> None:
         "DrawingSession.delete_stroke",
         "DrawingSession.replace_segment",
         "DrawingSession.soft_lift_segment",
+        "DrawingSession.erase_path",
     )
     assert "img2drawing.authoring" in caps.public_namespaces
     assert "img2drawing.session" in caps.public_namespaces
