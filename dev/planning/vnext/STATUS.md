@@ -6,8 +6,8 @@ Updated: 2026-11-26
 PUBLISHED STABLE:   v1.2.1 · selected maintenance release (publication gated by main CI)
 RELEASE TAG:        v1.2.1 · manifest-driven publish authority
 CURRENT SOURCE:     1.2.1 · tonal authoring and provenance maintenance
-CURRENT RENDERER:   img2drawing-pencil/11 · pixel-identical to v1.0.3 pillow-pencil-contact-v11/1
-RENDERER POLICY:    no additive v12 for this quality cycle
+CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; v1.3 development opt-in 11-opacity-normalized-v1
+RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
 ACTIVE BOTTLENECK:  v1.3.0 S01–S06 integrated; S00/S07 independent comparison remains open
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
@@ -54,8 +54,9 @@ Scope: `dev/v1.3.0-constructive-drawing`, not the published v1.2.1 package/tag.
 - S07 tooling (#86, dea9557): isolated worker packets and submitted replay verification merged; PR CI 45702953436 PASS (312 active, 44 runtime tests and package/historical/archive gates). Fixed resume of submitted inspection artifacts. Local shared-path still-life diagnostic across pinned v1.2.0, v1.2.1 and S05 candidate: 33 actions, 29 surviving strokes, ten samples, independently rendered canonical PNG and decoded GIF endpoints pass; v1.2.1 and S05 candidate state/final pixels match. Not fresh-worker performance, intermediate-frame fidelity, or visual PASS. Five local reference candidates prepared, hand-object contact reference still needed; independent worker/model and equal-budget runs not sealed or executed.
 - S07 public local erase/replay audit (#87, fe6ffde): 325 active tests, 44 runtime checks and package/historical/archive gates passed. Existing portrait copy 327 actions / 83 sampled frames passed strict regenerated sample and GIF tolerance audit; independent visual evaluation remains NOT_RUN.
 - S07 tonal continuity follow-up: saved portrait PNGs show that matching average darkness can conceal abrupt invented value bands. Added optional explicitly corresponding tonal patches and read-only canonical cursor comparisons. External images are marked unverified; no renderer or history-schema change. Local focused tests passed on the available S07 source; final candidate CI is the integration gate. Interrupted portrait's latest checkpoint was not recovered, so no claim of resuming it.
+- S07 renderer-owned follow-up: #89 investigation merged d11ec24 after portable-path correction and CI 45783806782 PASS. #90 optional normalized contact contract merged a91df5c; exact candidate 28e8eac push CI 45784089581 PASS (343 active, 44 runtime; v11 golden, archive and package gates). Legacy v11 default/digest retained. New sessions may explicitly choose RenderProfile.opacity_normalized; contract identity/digest and patch caches separated, unknown/foreign identity or digest fails closed. Local same-environment before/after v11 comparison: all 16 hashes equal (NumPy 2.3.5, Pillow 12.3.0); recorded golden fixture not rewritten. Separate local identical 32-action neck studies have equal action-log and state hashes; mean darkness across seven patches .788277 vs .279505, both Fast GIFs pass all nine sampled hashes and tolerance. These are controlled material diagnostics, not independent portrait acceptance. No private images, coordinates or large outputs committed. Combined-head CI remains a separate gate.
 - S01–S06 feature implementation and regression gates CLOSED (75% of weighted plan, six of nine slices). S00/S07 WIP; S08 OPEN. No private images, answer coordinates or large outputs committed.
-- Next: complete S00 sealed baseline and S07 independent visual comparison, review residuals (including local tonal continuity); real long-session erasure/replay audit has passed. Then S08 release validation. No promotion to v1.3.0 stable.
+- Next: complete S00 sealed baseline and S07 independent visual comparison, review independent visual residuals; real long-session erasure/replay audit has passed and optional opacity model is integrated. Then S08 release validation. No promotion to v1.3.0 stable.
 
 ## Current truth
 
@@ -127,8 +128,9 @@ renderer_contract_digest RenderProfile v2 field; exact pixel-behavior identity
 
 Replay rule in current source:
 
-- identity + digest match → exact;
-- v1.0.3 `pillow-pencil-contact-v11 / 1` profiles (no digest) → accepted as the current contract; the v11 golden proves pixel identity;
+- supported identity + matching contract digest → exact under the verified renderer environment;
+- v1.0.3 `pillow-pencil-contact-v11 / 1` profiles (no digest) → accepted as legacy v11 only; the v11 golden proves pixel identity;
+- v1.3 development opt-in `11-opacity-normalized-v1` → explicit new RenderProfile, distinct digest required; no legacy automatic migration;
 - foreign digest, `v9`/`v10`, unknown identity, or retired `region.*` history → fail closed with a pointer to `img2drawing==1.0.3`;
 - profile-less checkpoints resume and render only after an explicit `migrate_render_profile()`;
 - published `v1.0.3` package/tag/freeze remains canonical authority for its original behavior.

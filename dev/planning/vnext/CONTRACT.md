@@ -93,8 +93,9 @@ Current main requires:
 ## 7. Render / replay contract
 
 Final PNG, inspection, canonical replay, and eligible fast timelapse derive from one persisted
-`RenderProfile` family and one registered renderer identity. Replay remains end-to-end from action 0
-through the latest action with a declared sampling policy.
+`RenderProfile` and its explicitly registered renderer identity/digest. The same pencil engine may
+host multiple immutable material contracts; every session selects exactly one. Replay remains
+end-to-end from action 0 through the latest action with a declared sampling policy.
 
 The inspection/final seed-parity defect identified during the v1.0.3 RC cycle is closed: v10
 normalizes the private compatibility `Stroke.stage` field out of render seed identity, and the
@@ -102,6 +103,13 @@ active suite verifies inspect/final parity plus canonical-final ↔ fast-final e
 contract applies. Historical v9 seed semantics remain frozen for explicit v9 replay.
 
 Current v1.2.1 sessions select `img2drawing-pencil / 11` and persist the same renderer contract digest as v1.1.0. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
+
+The v1.3 development branch adds `RenderProfile.opacity_normalized(width, height)` for new
+sessions. `11-opacity-normalized-v1` has its own required contract digest and cache identity;
+`RenderProfile.canonical()` and historical v11 behavior are unchanged. The same contract follows
+inspection, preview, PNG, Fast/Canonical and GIF output. Unknown identities, cross-digest profiles
+and a missing normalized digest fail closed. Never silently migrate existing sessions to the new
+material model or infer artistic quality from a material regression.
 
 ## 8. Instruction graph contract
 

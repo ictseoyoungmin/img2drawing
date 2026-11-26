@@ -55,7 +55,7 @@ M02 portrait/reshape/replay recovery                      CLOSED → v1.2.0 prom
 M03 markmaking override/provenance and tonal QA            CLOSED (bounded scope) → v1.2.1 promotion
 V13-S00 comparison baseline and evaluation protocol       WIP · contract integrated; independent baseline NOT_RUN
 V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
-V13-S07 independent comparison                            WIP · tooling/327-action replay audit merged; independent runs NOT_RUN
+V13-S07 independent comparison                            WIP · tooling/327-action audit and opt-in material contract merged; independent runs NOT_RUN
 V13-S08 release validation                                OPEN · independent evidence and release decision pending
 ```
 
@@ -290,7 +290,7 @@ Implementation gates (1)–(3) and controlled QA in (4) are verified. PR #77 mea
 
 ## v1.3.0 — Constructive Drawing Engine
 
-Work OS WK-110 is the linked execution record. These slices use independent evidence and the existing action history. No new renderer generation, automatic tracing, raster fills, reference-derived answer geometry or artistic verdict automation.
+Work OS WK-110 is the linked execution record. These slices use independent evidence and the existing action history. The maintainer approved the optional opacity-normalized material contract after controlled renderer-owned defect reproduction; it uses the same engine, retains legacy v11 as default, and requires explicit selection and a distinct digest. No new renderer generation, automatic tracing, raster fills, reference-derived answer geometry or artistic verdict automation.
 
 | Slice | Weight | Scope and closure evidence |
 |---|---:|---|

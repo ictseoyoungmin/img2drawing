@@ -81,3 +81,27 @@ universal monotonicity for arbitrary geometry, seed variation or pressure.
 Do not promote this patch, change a release tag, or claim independent S00/S07
 closure based on this experiment. No private references, answer paths, sessions,
 generated rasters or GIFs are included.
+
+## Integrated candidate follow-up
+
+PR #90 (candidate `28e8eac`, merged `a91df5c`) implements the material model as
+an explicitly selectable contract in the shared pencil engine rather than applying
+this historical research patch. Use `RenderProfile.opacity_normalized(width, height)`
+when creating a new session. The experimental patch above remains archival and is
+not the active implementation. The default and legacy v11 contract are unchanged.
+
+The candidate push CI 45784089581 passed 343 active tests and 44 runtime checks,
+including the existing v11 golden and package boundaries. In a separate local
+same-environment comparison (NumPy 2.3.5, Pillow 12.3.0), all 16 legacy golden hashes
+matched between the pre-change and candidate sources; recorded golden files were
+not changed. The initial local historical-golden mismatch reflects a different
+dependency environment and is not a license to relax the expected hashes.
+
+Two newly authored-by-script 32-action crop sessions used identical explicitly
+authored action logs/state hashes, with the same subject bytes and supersampling.
+The seven-patch mean darkness was .7882773 for v11 and .2795046 for the normalized
+contract. Each Fast GIF sampled action 0 through 32 every four actions: all nine
+sample hashes matched when regenerated, maximum channel error 10 for both,
+maximum per-frame mean channel errors 2.73173 and 2.77767 respectively (allowed
+32 / 4.0). This is a controlled material test, not an independent visual verdict.
+Independent S00/S07 evidence and the final release decision remain open.
