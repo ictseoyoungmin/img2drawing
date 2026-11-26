@@ -70,6 +70,8 @@ class RuntimeCapabilities:
         "img2drawing.authoring.prepare_group_transform",
         "img2drawing.authoring.retire_group_guides",
         "img2drawing.authoring.inspect_tonal_proposals",
+        "img2drawing.authoring.SurfaceContactProfile",
+        "img2drawing.authoring.read_surface_contact_profile",
         "img2drawing.authoring.ContactWidthProfile",
         "img2drawing.authoring.read_contact_width_profile",
         "img2drawing.authoring.TonalPressureAdjustment",

@@ -16,8 +16,9 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 from ..core.ir import Stroke
 from ..core.contact_width import profile_from_stroke
+from ..core.surface_contact import surface_from_stroke
 from .contact_profile import PencilContactProfile
-from .contract import PENCIL_CONTRACT
+from .contract import PENCIL_CONTRACT, SURFACE_CONTACT_CONTRACT
 from .hand import grain_seed, hand_seed, stroke_material
 from .paper import mean_stroke_pressure, paper_field, pixel_hash_tooth, value_noise
 
@@ -831,16 +832,97 @@ def _thin_patch(stroke: Stroke, *, factor: float, hi_size, tooth: float, paper_s
     return (bounds, layer)
 
 
+def _surface_patch(stroke, *, factor, hi_size, hardness, tooth, paper_scale, paper_seed, graphite, profile, surface):
+    """Sweep a compact tangent-aligned side contact using normalized optical depth.
+
+    No dark line-floor is composited over this contact. A single straight pass has
+    a broad central interval and a complementary smoothstep edge. The support is
+    a local contact footprint only; no area mask or reference image is consumed.
+    """
+    samples = _pressure_samples(stroke, factor, hardness, profile.trajectory_spacing, profile)
+    if len(samples) < 2:
+        return (0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0))
+    xy = np.asarray([(q[0], q[1]) for q in samples], dtype=np.float64)
+    seg = np.diff(xy, axis=0)
+    lengths = np.linalg.norm(seg, axis=1)
+    weights = np.zeros(len(samples), dtype=np.float64)
+    weights[:-1] += .5 * lengths
+    weights[1:] += .5 * lengths
+    tangent = np.gradient(xy, axis=0)
+    for i in range(len(samples)):
+        if np.linalg.norm(tangent[i]) < 1e-9:
+            tangent[i] = seg[min(i, len(seg)-1)]
+        if np.linalg.norm(tangent[i]) < 1e-9 and i:
+            tangent[i] = seg[i-1]
+    norms = np.linalg.norm(tangent, axis=1)
+    tangent /= np.maximum(norms[:,None], 1e-9)
+    ratio = SURFACE_CONTACT_CONTRACT.value("surface_longitudinal_ratio")
+    integral = SURFACE_CONTACT_CONTRACT.value("surface_longitudinal_integral")
+    radii = np.maximum(.5, np.asarray([q[2] for q in samples]) * .5 * _BROAD_DIAMETER_SCALE)
+    margin = float(np.max(radii)) * math.hypot(1., ratio) + 2
+    x0, y0 = np.maximum(0, np.floor(xy.min(axis=0)-margin)).astype(int)
+    x1, y1 = np.minimum(hi_size, np.ceil(xy.max(axis=0)+margin)+1).astype(int)
+    if x1 <= x0 or y1 <= y0:
+        return (0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0))
+    hh, ww = y1-y0, x1-x0
+    depth = np.zeros((hh, ww), dtype=np.float32)
+    for i, (cx, cy, _, alpha, _) in enumerate(samples):
+        if alpha <= 0 or weights[i] <= 0 or norms[i] < 1e-9:
+            continue
+        r = float(radii[i]); long = ratio*r
+        tx, ty = tangent[i]
+        # Tight axis-aligned bounds of the rotated contact rectangle.
+        rx, ry = abs(tx)*long+abs(ty)*r, abs(ty)*long+abs(tx)*r
+        cx-=x0; cy-=y0
+        xa,xb=max(0,int(math.floor(cx-rx))),min(ww,int(math.ceil(cx+rx))+1)
+        ya,yb=max(0,int(math.floor(cy-ry))),min(hh,int(math.ceil(cy+ry))+1)
+        if xa>=xb or ya>=yb:
+            continue
+        alpha_depth = np.float32(-math.log1p(-min(alpha/255., .999))*weights[i]/(long*integral))
+        xs = np.arange(xa,xb,dtype=np.float32)[None,:]-cx
+        rows=max(1,262144//(xb-xa))
+        for lo in range(ya,yb,rows):
+            hi=min(yb,lo+rows)
+            ys=np.arange(lo,hi,dtype=np.float32)[:,None]-cy
+            u=(xs*tx+ys*ty)/long
+            v=np.abs(-xs*ty+ys*tx)/r
+            longitudinal=np.maximum(1-u*u,0)**2
+            edge=np.clip((1-v)/surface.shoulder,0,1)
+            cross=edge*edge*(3-2*edge)
+            depth[lo:hi,xa:xb] += alpha_depth*longitudinal*cross
+    # Page-fixed dry contact rather than independent per-stroke density noise.
+    broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+    policy=stroke_material_policy(stroke)
+    grain=np.float32(_policy_broad_grain(policy,broadness))
+    yy,xx=np.ogrid[y0:y1,x0:x1]
+    dry=np.float32(1)-grain+grain*pixel_hash_tooth(xx/factor,yy/factor,7).astype(np.float32)
+    ink=np.minimum(-np.expm1(-depth*dry),np.float32(.92))
+    mask=Image.fromarray(np.clip(ink*255,0,255).astype(np.uint8),mode="L")
+    textured=_broad_graphite_modulate(mask,stroke=stroke,broadness=broadness,factor=factor,
+        global_origin=(int(x0),int(y0)),paper_scale=paper_scale,paper_seed=paper_seed)
+    layer=_graphite_layer(textured.size,textured,_pigment(graphite,policy,broadness))
+    if textured is not mask:
+        textured.close()
+    mask.close()
+    return (int(x0),int(y0),int(x1),int(y1)),layer
+
+
 def build_patch(stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile):
     """Return ``(bounds, rgba_layer)`` for one grade- and hand-prepared stroke."""
 
     width_profile = profile_from_stroke(stroke)
     if width_profile is not None and not profile.contact_width_control:
         raise ValueError("contact width profile requires its explicit renderer contract")
+    surface = surface_from_stroke(stroke)
+    if surface is not None and not profile.surface_contact_control:
+        raise ValueError("surface contact requires its explicit renderer contract")
     if profile.opacity_normalized and stroke.opacity <= 0.0:
         return ((0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0)))
     grain, hardness = stroke_material(stroke)
     broadness = _broadness(_mean_contact_width(stroke, hardness, profile))
+    if surface is not None and broadness > 1e-8:
+        return _surface_patch(stroke,factor=factor,hi_size=hi_size,hardness=hardness,tooth=tooth,
+            paper_scale=paper_scale,paper_seed=paper_seed,graphite=graphite,profile=profile,surface=surface)
     if broadness <= 1e-08:
         return _thin_patch(stroke, factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed, graphite=graphite, profile=profile)
 

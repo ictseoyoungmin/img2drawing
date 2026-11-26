@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
-from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
+from .contract import (SURFACE_CONTACT_CONTRACT, CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
                        canonical_identity, verify_contract_digest)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
@@ -167,14 +167,15 @@ class RenderProfile:
 
     @classmethod
     def opacity_normalized(cls, width: int, height: int, *, pressure_lift: bool = False,
-                           contact_width: bool = False) -> "RenderProfile":
-        """Opt into normalized contact; width control also supports pressure lift."""
-        if type(pressure_lift) is not bool or type(contact_width) is not bool:
-            raise ValueError("pressure_lift and contact_width must be boolean")
-        contract = (CONTACT_WIDTH_CONTRACT if contact_width else
+                           contact_width: bool = False, surface_contact: bool = False) -> "RenderProfile":
+        """Opt into normalized contact; later contracts include prior optional controls."""
+        if any(type(x) is not bool for x in (pressure_lift, contact_width, surface_contact)):
+            raise ValueError("pressure_lift, contact_width and surface_contact must be boolean")
+        contract = (SURFACE_CONTACT_CONTRACT if surface_contact else CONTACT_WIDTH_CONTRACT if contact_width else
                     PRESSURE_LIFT_CONTRACT if pressure_lift else OPACITY_NORMALIZED_CONTRACT)
         return cls(
-            profile_id="pencil-contact-opacity-normalized-v3" if contact_width else
+            profile_id="pencil-contact-opacity-normalized-v4" if surface_contact else
+                       "pencil-contact-opacity-normalized-v3" if contact_width else
                        "pencil-contact-opacity-normalized-v2" if pressure_lift else "pencil-contact-opacity-normalized-v1",
             renderer_id=contract.renderer_id,
             renderer_version=contract.renderer_version,

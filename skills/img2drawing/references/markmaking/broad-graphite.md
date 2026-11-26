@@ -145,3 +145,35 @@ The renderer still models graphite deposition; a narrower footprint can change
 actual overlap and apparent density, so compare real renders rather than assuming
 constant luminance. Do not infer a brush footprint from reference pixels or substitute
 one wide stroke for observed overlap and form. Keep only visibly justified contacts.
+
+
+## Optional side-of-pencil surface contact
+
+Use `RenderProfile.opacity_normalized(w, h, surface_contact=True)` for a **new** session
+only when the conventional narrow core on broad graphite makes observed soft planes read
+as stripes. The opt-in contract includes width control and pressure-shaped lift; unmarked
+strokes use the same v3 contact. Never migrate a finished session for this purpose.
+
+```python
+from img2drawing.authoring import SurfaceContactProfile, StrokeEdit
+side = SurfaceContactProfile(shoulder=.85)
+# Combine with existing explicit material/curve/width metadata on draw.
+# Or compare a material-only candidate on a current stroke:
+edit = StrokeEdit(stroke_id, tuple(session.current_stroke(stroke_id).points),
+                  surface_contact_profile=side)
+```
+
+The tangent-oriented contact has a broad central interval and smooth transverse shoulder;
+`shoulder` is the fraction of transverse radius used for that transition (.35–.85).
+Longitudinal optical depth is integrated by traveled distance. Broad side marks do not
+receive a separate narrow dark core; paper-fixed texture remains. Thin contacts retain
+ordinary behavior. This changes footprint physics, not geometry or underlying pressure.
+The persisted recipe is recoverable with `read_surface_contact_profile`; a `StrokeEdit`
+with `clear_surface_contact=True` returns to ordinary contact in the same v4 session.
+
+This is not a universal softening preset. Overlap depends on actual neighboring stroke
+spacing, pressure, width and turns. Too much overlap produces dark rails; too little
+produces gaps. Compare the same paths and values first, then calibrate tone and overlap
+with explicitly chosen edits. Use matched strip-chain evidence and inspect the whole
+plane; a smaller ripple achieved by making the entire plane pale is not a quality pass.
+Do not fill reference-derived areas or generate automatic hatch paths.

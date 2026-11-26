@@ -127,6 +127,22 @@ CONTACT_WIDTH_CONTRACT = RendererContract(
     }.items())),
 )
 
+# Explicit side-contact model only for strokes that opt in via persisted metadata.
+SURFACE_CONTACT_CONTRACT = RendererContract(
+    renderer_id=PENCIL_CONTRACT.renderer_id,
+    renderer_version="11-opacity-normalized-v4",
+    parameters=tuple(sorted({
+        **dict(CONTACT_WIDTH_CONTRACT.parameters),
+        "surface_contact_model": "tangent-separable-optical-sweep-v1",
+        "surface_longitudinal_ratio": .65,
+        "surface_shoulder_range": (.35, .85),
+        "surface_longitudinal_integral": 16 / 15,
+        "surface_min_radius": .5,
+        "surface_texture": "page-fixed-dry-and-existing-graphite-tooth-v1",
+        "surface_core_floor": "none",
+    }.items())),
+)
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -151,7 +167,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, SURFACE_CONTACT_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -164,6 +180,8 @@ def contract_for_identity(renderer_id: str, renderer_version: str | int) -> Rend
     key = canonical_identity(renderer_id, renderer_version)
     if key == PENCIL_CONTRACT.identity:
         return PENCIL_CONTRACT
+    if key == SURFACE_CONTACT_CONTRACT.identity:
+        return SURFACE_CONTACT_CONTRACT
     if key == CONTACT_WIDTH_CONTRACT.identity:
         return CONTACT_WIDTH_CONTRACT
     return PRESSURE_LIFT_CONTRACT if key == PRESSURE_LIFT_CONTRACT.identity else OPACITY_NORMALIZED_CONTRACT
@@ -191,6 +209,7 @@ __all__ = [
     "OPACITY_NORMALIZED_CONTRACT",
     "PRESSURE_LIFT_CONTRACT",
     "CONTACT_WIDTH_CONTRACT",
+    "SURFACE_CONTACT_CONTRACT",
     "contract_for_identity",
     "RENDERER_CONTRACT_DIGEST",
     "RENDERER_ID",

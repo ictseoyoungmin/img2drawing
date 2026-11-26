@@ -36,8 +36,9 @@ from ..core.tools import TOOLSET_ID
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render import UnsupportedRendererError, canonical_identity, default_grade_name, render
 from ..render.artifact import RenderArtifact, render_history_at
-from ..render.contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT
+from ..render.contract import SURFACE_CONTACT_CONTRACT, CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT
 from ..core.contact_width import profile_from_metadata
+from ..core.surface_contact import surface_from_metadata
 from ..render.profile import SEED_DOMAIN, RenderProfile
 from ..timelapse import ReplayExport, export_timelapse
 from .correction import CorrectionRecord, ResidualRecord
@@ -1232,10 +1233,16 @@ class DrawingSession:
         selected_tool = _tool_payload(tool, grade, tool_overrides)
         width_profile = profile_from_metadata(metadata)
         if width_profile is not None:
-            if self._require_render_profile().renderer_version != CONTACT_WIDTH_CONTRACT.renderer_version:
+            if self._require_render_profile().renderer_version not in (CONTACT_WIDTH_CONTRACT.renderer_version, SURFACE_CONTACT_CONTRACT.renderer_version):
                 raise ValueError("contact width profile requires opacity_normalized(..., contact_width=True)")
             if kind == "erase_path" or str(selected_tool["preset"]).endswith("eraser"):
                 raise ValueError("contact width profile supports graphite drawing only")
+        surface = surface_from_metadata(metadata)
+        if surface is not None:
+            if self._require_render_profile().renderer_version != SURFACE_CONTACT_CONTRACT.renderer_version:
+                raise ValueError("surface contact requires opacity_normalized(..., surface_contact=True)")
+            if kind == "erase_path" or str(selected_tool["preset"]).endswith("eraser"):
+                raise ValueError("surface contact supports graphite drawing only")
         return DrawingAction(
             action_id=_action_id(self._agent.history, action_id),
             kind=kind,
@@ -1308,9 +1315,9 @@ class DrawingSession:
 
     def _require_path_eraser_profile(self, pressure=None) -> None:
         version = self._require_render_profile().renderer_version
-        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version, SURFACE_CONTACT_CONTRACT.renderer_version):
             raise ValueError("path eraser requires the opacity-normalized render profile")
-        if pressure is not None and any(p != 1.0 for p in pressure) and version not in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+        if pressure is not None and any(p != 1.0 for p in pressure) and version not in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version, SURFACE_CONTACT_CONTRACT.renderer_version):
             raise ValueError("varying eraser pressure requires opacity_normalized(..., pressure_lift=True)")
 
     def _erase_path_action(self, points, *, stroke_id, width, strength=1.0,

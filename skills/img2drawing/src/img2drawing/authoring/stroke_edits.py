@@ -12,6 +12,7 @@ from typing import Sequence
 from ..core.action import AgentDrawingSession, DrawingAction
 from ..core.digest import sha256_obj
 from ..core.contact_width import ContactWidthProfile, WIDTH_KEY, profile_from_metadata
+from ..core.surface_contact import SurfaceContactProfile, SURFACE_KEY
 from ..inspection import drawing_state_hash
 from ..render.artifact import render_history_at
 from .retune import _TOOL_OVERRIDE_FIELDS
@@ -28,6 +29,8 @@ class StrokeEdit:
     material_overrides: Mapping[str, float] | None = None
     curve_definition: "CurveDefinition | None" = None
     contact_width_profile: ContactWidthProfile | None = None
+    surface_contact_profile: SurfaceContactProfile | None = None
+    clear_surface_contact: bool = False
 
     def __post_init__(self):
         if not isinstance(self.stroke_id,str) or not self.stroke_id.strip():
@@ -62,6 +65,10 @@ class StrokeEdit:
             object.__setattr__(self, "material_overrides", MappingProxyType(material))
         if self.contact_width_profile is not None and not isinstance(self.contact_width_profile,ContactWidthProfile):
             raise ValueError("contact_width_profile requires ContactWidthProfile")
+        if self.surface_contact_profile is not None and not isinstance(self.surface_contact_profile, SurfaceContactProfile):
+            raise ValueError("surface_contact_profile requires SurfaceContactProfile")
+        if type(self.clear_surface_contact) is not bool or (self.clear_surface_contact and self.surface_contact_profile is not None):
+            raise ValueError("surface contact edit requires either set or clear")
         if self.curve_definition is not None:
             from .parametric_curve import CurveDefinition
             if not isinstance(self.curve_definition,CurveDefinition) or self.split_at is not None:
@@ -137,6 +144,10 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         meta["geometry_edited_from"]=e.stroke_id
         if e.contact_width_profile is not None:
             meta[WIDTH_KEY]=e.contact_width_profile.to_dict()
+        if e.clear_surface_contact:
+            meta.pop(SURFACE_KEY, None)
+        elif e.surface_contact_profile is not None:
+            meta[SURFACE_KEY]=e.surface_contact_profile.to_dict()
         width_profile=profile_from_metadata(meta)
         # Optional authoring metadata is not a second source of replay geometry.
         from .parametric_curve import CURVE_KEY

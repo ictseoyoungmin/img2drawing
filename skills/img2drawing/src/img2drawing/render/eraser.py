@@ -9,6 +9,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 from ..core.ir import Stroke
 from ..core.contact_width import profile_from_stroke
+from ..core.surface_contact import surface_from_stroke
 from .hand import eraser_hand_dynamics
 from .paper import mean_stroke_pressure, paper_field
 
@@ -224,6 +225,8 @@ def erase(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float,
           paper_seed: int, allow_pressure_lift: bool = False) -> tuple[int, int, int, int] | None:
     """Apply one ordered pass in place and return its supersampled bounds."""
 
+    if surface_from_stroke(stroke) is not None:
+        raise ValueError("surface contact supports graphite drawing only")
     if profile_from_stroke(stroke) is not None:
         raise ValueError("contact width profile supports graphite drawing only")
     if len(stroke.points) < 2:
