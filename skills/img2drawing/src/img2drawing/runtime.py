@@ -111,6 +111,8 @@ class RuntimeCapabilities:
         "img2drawing.observation.Landmark",
         "img2drawing.observation.LandmarkSet",
         "img2drawing.observation.compare_landmarks",
+        "img2drawing.observation.compare_portrait_landmarks",
+        "img2drawing.observation.portrait_likeness_packet",
         "img2drawing.observation.compare_ratios",
         "img2drawing.observation.compare_axes",
         "img2drawing.observation.cross_section",
