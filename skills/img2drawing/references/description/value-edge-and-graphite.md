@@ -58,3 +58,20 @@ light, controlled deposits and preserve actual soft turns. Use selective stronge
 only where an observed boundary warrants it; render and reassess both the local chain and
 whole form. Route material defects through the existing markmaking residual path only if
 correctly placed explicit strokes still fail the intended contact.
+
+## Recalibrate value when changing material contract
+
+When creating a session with the optional opacity-normalized profile, do not reuse a
+v11 shading recipe as a calibrated value target. Broad width alone does not determine
+value. Read a small actual stroke family, choose light/middle/dark relationships from
+visible form, then preview explicitly selected changes with the existing StrokeEdit
+batch (see `../markmaking/stroke-dynamics.md`). In a continuous plane, use gradual
+pressure approaches and departures and controlled overlapping deposits. Preserve real
+contact boundaries; do not stack stronger round-ended bands to raise an area mean.
+Compare a patch chain both to the original observation and to the previous render:
+reaching the right local mean while increasing false reversals is not closure.
+Reject an unhelpful preview and re-preview only the intended subset before committing.
+For bright thin hardware, preserve the visible interval during the surrounding value
+construction; broad along-path pressure troughs can make a dark plane into alternating
+cells, so they do not automatically express a narrow metallic highlight. Do not draw
+unseen hardware or manufacture white pixels with a separate raster path.

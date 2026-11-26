@@ -110,3 +110,9 @@ explicit authoring helper, not an area-to-stroke generator.
 When mean value improves but alternating bands remain on a continuous observed plane, use
 `../description/value-edge-and-graphite.md` for explicit local value-continuity evidence before
 repeating wider or darker strokes. The chain is diagnostic, not a smoothing or automatic fill tool.
+
+On the optional normalized contract, retune explicit width/opacity and local pressure
+together when a value family is too pale or its contact footprints separate into
+stripes. Read actual overlap and soft turns first; a stronger midpoint with an abrupt
+terminal may make the band more obvious. Use the existing prospective stroke-edit
+preview and value-continuity checks; no preset is a universal exposure conversion.

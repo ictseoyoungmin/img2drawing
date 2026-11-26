@@ -75,3 +75,29 @@ attenuation, not a freeform pixel eraser; the rendered mark may still be visible
 stroke IDs, and optionally pass `expected_cursor` and `expected_state_hash` to reject stale edits.
 `retune_stroke` and `reshape_stroke` preserve a locally erased pressure curve; if a replacement
 profile is needed, choose it explicitly rather than accidentally restoring a removed mark.
+
+## Preview heterogeneous material corrections
+
+An existing `StrokeEdit` can include optional `material_overrides` for explicit
+`width`, `opacity`, `hardness` and `grain` edits. Each stroke can carry different
+values in the same atomic preview/apply batch. The overrides are copied and validated;
+width must be finite and positive, and the other values finite in [0,1]. The current
+pressure curve (including local soft lift), visible opacity and other material fields
+remain unchanged unless explicitly replaced. For a pressure change supply the separate
+`pressure` samples; this path does not regenerate pressure from taper or grade.
+
+```python
+# current is the explicitly selected current stroke, obtained from the session.
+edit = StrokeEdit(current.stroke_id, tuple(current.points),
+                  material_overrides={"opacity": chosen_opacity, "width": chosen_width})
+preview = preview_stroke_edits(session, [edit], preview_path,
+                              reason=reason, observation_id=observation_id)
+# Read the preview and choose whether to accept it. Re-preview any changed subset.
+apply_stroke_edits(session, [edit], reason=reason, observation_id=observation_id,
+                   expected_cursor=preview["base_cursor"],
+                   expected_state_hash=preview["base_state_hash"])
+```
+
+Use the same explicit edits and provenance for apply. A rejected preview changes no
+actions. It is not a canonical render until committed and checked. Re-open the geometry
+or material premise when the preview reveals wrong overlap or an invented tonal band.
