@@ -9,7 +9,7 @@ from PIL import Image
 
 from ..core.ir import Stroke, StrokeIR
 from .contact_profile import PencilContactProfile, load_pencil_contact_profile
-from .contract import OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION, contract_for_identity
+from .contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION, contract_for_identity
 from .deposit import build_patch
 from .eraser import erase, is_eraser
 from .grades import get_pencil_preset, prepare_grade
@@ -26,6 +26,8 @@ def load_contact_profile(renderer_version: str = RENDERER_VERSION) -> PencilCont
     """Resolve immutable contact behavior without changing global renderer state."""
     contract = contract_for_identity(RENDERER_ID, renderer_version)
     profile = load_pencil_contact_profile(None)
+    if contract is CONTACT_WIDTH_CONTRACT:
+        return replace(profile, opacity_normalized=True, contact_width_control=True)
     return replace(profile, opacity_normalized=True) if contract in (OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT) else profile
 
 
@@ -65,7 +67,7 @@ def render_image(
             erase(
                 graphite_canvas, stroke, factor=factor, hi_size=hi_size,
                 tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed,
-                allow_pressure_lift=renderer_version == PRESSURE_LIFT_CONTRACT.renderer_version,
+                allow_pressure_lift=renderer_version in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version),
             )
             continue
         bounds, layer = build_patch(

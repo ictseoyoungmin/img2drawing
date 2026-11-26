@@ -15,6 +15,7 @@ import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 from ..core.ir import Stroke
+from ..core.contact_width import profile_from_stroke
 from .contact_profile import PencilContactProfile
 from .contract import PENCIL_CONTRACT
 from .hand import grain_seed, hand_seed, stroke_material
@@ -311,6 +312,13 @@ def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: f
         ts = stroke.tool_state if isinstance(stroke.tool_state, dict) else {}
         src_p = np.full(len(stroke.points), _clamp01(ts.get("pressure", 0.55)), dtype=np.float64)
     p = np.interp(sdist, cumulative, src_p)
+    width_profile = profile_from_stroke(stroke) if profile.contact_width_control else None
+    def with_width(samples):
+        if width_profile is None or all(w==1 for _,w in width_profile.knots):
+            return samples
+        knots = np.asarray(width_profile.knots, dtype=np.float64)
+        factors = np.interp(sdist / total, knots[:,0], knots[:,1])
+        return [(x,y,w*float(m),a,p) for (x,y,w,a,p),m in zip(samples,factors)]
     mean_p = float(np.mean(p)) if len(p) else 0.55
     nominal_width = _contact_width(stroke.width, mean_p, hardness, profile)
     b = _broadness(nominal_width)
@@ -324,7 +332,7 @@ def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: f
         for xx, yy, pp in zip(x, y, p):
             pp = _clamp01(pp)
             out.append((float(xx) * factor, float(yy) * factor, _contact_width(stroke.width, pp, hardness, profile) * factor, int(round(_contact_deposition(stroke.opacity, pp, hardness, profile) * 255.0)), pp))
-        return out
+        return with_width(out)
     dynamic_gate = max(broad_gate, 0.75 * thin_flick)
     pvar = _pressure_variability(p)
     dx = np.gradient(x)
@@ -390,7 +398,7 @@ def _pressure_samples(stroke: Stroke, factor: float, hardness: float, spacing: f
         else:
             alpha = int(round(_clamp01(alpha_base) * 255.0))
         out.append((float(xx) * factor, float(yy) * factor, width * factor, alpha, pp))
-    return out
+    return with_width(out)
 
 
 # ---------------------------------------------------------------------------
@@ -826,6 +834,9 @@ def _thin_patch(stroke: Stroke, *, factor: float, hi_size, tooth: float, paper_s
 def build_patch(stroke: Stroke, *, factor: float, hi_size: tuple[int, int], tooth: float, paper_scale: float, paper_seed: int, graphite: tuple[int, int, int], profile: PencilContactProfile):
     """Return ``(bounds, rgba_layer)`` for one grade- and hand-prepared stroke."""
 
+    width_profile = profile_from_stroke(stroke)
+    if width_profile is not None and not profile.contact_width_control:
+        raise ValueError("contact width profile requires its explicit renderer contract")
     if profile.opacity_normalized and stroke.opacity <= 0.0:
         return ((0, 0, 0, 0), Image.new("RGBA", (1, 1), (0, 0, 0, 0)))
     grain, hardness = stroke_material(stroke)

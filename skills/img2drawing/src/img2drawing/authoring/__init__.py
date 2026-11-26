@@ -10,6 +10,7 @@
 None of these encode subject-specific geometry; the Agent still observes and authors it.
 """
 
+from ..core.contact_width import ContactWidthProfile, read_contact_width_profile
 from .construction import (
     CONSTRUCTION_PHASES,
     ConstructionMark,
@@ -48,6 +49,8 @@ from .tonal_preview import inspect_tonal_proposals
 from .tonal_correction import TonalPressureAdjustment, prepare_tonal_pressure_edits
 
 __all__ = [
+    "ContactWidthProfile",
+    "read_contact_width_profile",
     "ProjectionCamera", "VolumeStation", "ProjectedVolume", "inspect_attachment", "align_attachment",
     "prepare_volume_edits", "CurveDefinition", "read_parametric_curve",
     "SemanticGroup",
