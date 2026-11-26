@@ -36,6 +36,7 @@ owner for the actual residual:
 - [Facial expression](facial-expression.md): linked changes in lids, cheeks, mouth and jaw.
 - [Facial values](facial-values.md): skin planes, occlusion accents and soft transitions.
 
+A face cross-axis is an orientation aid, not a substitute for head volume.
 Inspect the current face and whole head before refining feature symbols. Reopen the underlying
 volume or orientation when feature geometry cannot explain the observed likeness.
 
