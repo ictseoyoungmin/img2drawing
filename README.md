@@ -1,224 +1,127 @@
 <div align="center">
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
+  <p><strong>From observation to explicit, editable pencil strokes.</strong></p>
   <p>
-    <a href="docs/releases/v1.2.1.md"><img src="https://img.shields.io/badge/version-v1.2.1-6f5a46" alt="Version v1.2.1"></a>
+    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.2.1-6f5a46" alt="Version v1.2.1"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
-    <img src="https://img.shields.io/badge/Agent%20Skill-Explicit%20Strokes-b06f47" alt="Agent Skill: Explicit Strokes">
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache-2.0 License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache 2.0"></a>
   </p>
 </div>
 
-**Current stable: v1.2.1**
+**Current stable: v1.2.1** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
 
-> v1.2.1 fixes partial markmaking overrides and executed-state provenance, adds explicit tonal-area planning and developer-only tonal/replay diagnostics. Renderer `img2drawing-pencil / 11` is unchanged. Synthetic high-resolution replay passed; independent portrait quality remains unverified. See [the v1.2.1 release notes](docs/releases/v1.2.1.md) and [CHANGELOG.md](CHANGELOG.md).
+An Agent Skill and Python drawing runtime for Claude Code, Codex, and other skill-capable agents.
+Rather than requesting a finished image from an image generator, the agent observes a subject,
+authors explicit strokes, inspects its drawing, and corrects visible problems.
 
-An Agent Skill that makes Claude, GPT-class coding agents, or other skill-capable coding agents
-**actually draw** — with explicit, inspectable pencil strokes — instead of generating a finished
-image.
-
-With a readable reference, the agent observes the subject and authors explicit spatial
-relationships before resolving contour, form, value, and identity. Without a reference, it uses
-declared imaginative goals and drawing-only evidence—never a fabricated subject or fake overlay.
-Both routes render and inspect the current drawing before correction.
-
-The action history keeps every revision inspectable, resumable, and replayable. Curated
-human-facing results live in the [showcase](showcase/README.md); the deployable skill does not ship
-an `examples/` tree until there are genuinely representative instructional examples.
-
-## Drawing process
-
-Three hand line studies progressing from early authored lines to finished line work:
+## Drawing in action
 
 <p align="center">
-  <img src="docs/media/hand-line-studies.gif" width="560" alt="Three hand line studies progressing from early lines to finished line work">
+  <img src="docs/media/hand-line-studies.gif" width="560" alt="Hand studies drawn through explicit actions">
 </p>
 
-Each panel advances through explicit drawing actions; this lightweight preview shows the process
-rather than only the final image.
+[![Observed croquis: reference and drawing](showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.jpg)](showcase/entries/croquis-sniper-girl-astra-v1/README.md)
 
-## v1.2.1 — Tonal authoring and provenance maintenance
+[Full drawing timelapse](showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif) · [Showcase](showcase/README.md)
 
-Partial tool overrides retain untouched resolved material properties. `TonalAreaPlan` records intended tonal boundaries, density and reserved highlights without generating marks. Developer-only diagnostics measure canonical rendered sessions and high-resolution replay. Remaining artistic quality gaps are carried into v1.3.0.
+Curated stroke-authoring examples, not a guarantee of quality across all subjects or agents.
 
-[Read the v1.2.1 release notes](docs/releases/v1.2.1.md) · [Changelog](CHANGELOG.md)
+## What it does
 
-## v1.2.0 — Portrait authoring and replay recovery
+- **Observation and construction:** establish proportions, orientation, silhouette, and form from
+  a reference or declared imaginative goals.
+- **Pencil authoring:** create explicit lines, curves, and tonal strokes with controllable pressure,
+  width, grade, and opacity. Tonal plans guide marks without automatic fills.
+- **Inspection and correction:** compare the drawing with its reference, locate and revise strokes,
+  and retire unnecessary construction marks.
+- **Persistent history:** retain drawing actions and the render profile for inspection, resumption,
+  and replay.
+- **Output:** render PNGs and export end-to-end GIF timelapses from actual drawing actions.
 
-Whole-head/enlarged-face comparison guides likeness-bearing authoring. `reshape_stroke()` preserves material, erasure and correction action provenance through geometry changes. GIF export reports work budgets and progress, and recovers palette-fidelity failures with streaming, one-frame-at-a-time local palette encoding. No all-frame pixel accumulation or temporary PNG fallback spool is used.
-
-[Read the v1.2.0 release notes](docs/releases/v1.2.0.md) · [Changelog](CHANGELOG.md)
-
-## v1.1.1 — Public contract coherence
-
-v1.1.1 closes post-v1.1.0 contract and release-hygiene drift: plugin metadata follows the package version, runtime discovery distinguishes authoring from output operations, residual eraser corrections require explicit provenance, semantic value strokes and complete construction serialization are supported, and release verification no longer hard-codes the v1.0.3→v1.1.0 transition. Renderer identity and pixels remain `img2drawing-pencil / 11`.
-
-[Read the v1.1.1 release notes](docs/releases/v1.1.1.md) · [Changelog](CHANGELOG.md)
-
-## v1.1.0 — Structural release
-
-The public package root remains the entry point for `DrawingSession`. Specialized APIs now live in `img2drawing.session`, `img2drawing.authoring`, `img2drawing.render`, and `img2drawing.timelapse`. The v11 renderer is pixel-identical to v1.0.3; the new `RenderProfile` digest makes exact replay identity explicit. See [the v1.1.0 release notes](docs/releases/v1.1.0.md) for removed imports and replay compatibility.
-
-## v1.0.3 — Gesture + renderer quality
-
-v1.0.3 closed the post-v1.0.2 integration cycle.
-
-- `DrawingIntent(drawing_mode="gesture")` is a public runtime mode; unqualified gesture work uses the constructive-gesture default while explicit pure/quick gesture remains available as a finish-level choice.
-- New sessions use renderer identity `pillow-pencil-contact-v11 / 1`, with more physical broad-pencil terminals and stronger page-fixed graphite/tooth variation.
-- Ordinary thin v11 strokes remain pixel-exact with v10, and canonical-final / fast-final rendering stay exact under the active renderer regression gates.
-- Explicit v9/1 and v10/1 renderer identities remain available for historical replay; persisted sessions are not silently migrated.
-- The retired R23 runtime/legacy namespace and orchestration cluster are physically absent from current `src`.
-- Renderer implementation modules use semantic Python filenames rather than generation-tagged names; CI rejects future generation-tagged `src/**/*.py` basenames.
-
-[Read the v1.0.3 release notes](docs/releases/v1.0.3.md) · [Changelog](CHANGELOG.md)
-
-## v1.0.2 — Local-first exact timelapse export
-
-v1.0.2 promotes the validated local-first incremental timelapse engine to the normal
-`DrawingSession.export_timelapse()` path for eligible stroke histories while preserving the v1.0.1
-canonical exporter as a whole-export fail-closed fallback.
-
-- persistent content-addressed stroke-patch reuse;
-- edit-aware dirty-region recomposition and resampling;
-- atomic lossless delta-frame staging instead of mandatory full PNG spooling;
-- persistent GIF palette reuse;
-- RenderProfile-owned paper/material parameters remain authoritative;
-- unsupported semantics or unavailable FFmpeg fall back to the canonical exporter for the whole run;
-- public session method signature and persisted schemas remain unchanged from v1.0.1.
-
-Post-release validation on the repository exemplar `dev/exemplar-sources/p2_axes_v2.json` produced
-canonical/fast RGB pixel-exact final frames. Warm internal pipeline time measured **0.231–0.246 s**
-across `every_n=4/2/1` on the GitHub-hosted benchmark runner; the larger 1,272-action window-study
-remains the real-session scale reference. Performance is environment-sensitive and is evidence,
-not an API guarantee.
-
-[Read the v1.0.2 release notes](docs/releases/v1.0.2.md) · [Changelog](CHANGELOG.md) ·
-[Post-release benchmark](dev/benchmarks/timelapse_perf/V1_0_2_POST_RELEASE_EXEMPLAR.md)
-
-## v1.0.1 — Astra-derived authoring ergonomics
-
-v1.0.1 absorbs reusable mechanics exposed by the successful Astra run without copying its
-subject-specific coordinates, scripts, control-point tables, or answer geometry:
-
-- `retune_stroke()` changes stroke material while preserving authored geometry;
-- `sample_catmull_rom()` provides deterministic shared smooth-curve sampling (both in
-  `img2drawing.authoring` since 1.1.0);
-- `continuous_pencil` provides a low-taper option for boundaries whose endpoints should read as
-  continuous, while `form_pencil` remains unchanged;
-- guidance now separates geometry residuals from material residuals and groups related edits by
-  coherent visible/structural problems rather than arbitrary stroke counts;
-- curve smoothness follows observed topology: real cusps, corners, joins, and tangency breaks are
-  authored explicitly rather than rounded away.
-
-The patch adds no persisted action kind or schema, does not widen the canonical package-root API,
-and does not introduce a new drawing lifecycle. [Read the v1.0.1 release notes](docs/releases/v1.0.1.md).
-
-## Featured v1.0.0 demonstration
-
-GPT-6 Astra completed a detailed observed croquis using explicit authored strokes only; the release
-baseline adds no subject-specific answer geometry from that run. The session contains 490 actions:
-358 stroke additions, 120 replacements, 12 deletions, and **0 fill actions**, with a canonical
-replay final frame that exactly matches the final PNG. This is a curated capability result, not a
-claim that formal cross-agent/cross-subject validation is complete.
-
-<a href="showcase/entries/croquis-sniper-girl-astra-v1/README.md"><img src="showcase/entries/croquis-sniper-girl-astra-v1/timelapse.gif" alt="End-to-end timelapse" width="320"></a>
-
-[![Reference versus Astra drawing](showcase/entries/croquis-sniper-girl-astra-v1/ref-vs-drawing.jpg)](showcase/entries/croquis-sniper-girl-astra-v1/README.md)
-
-[Read the v1.0.0 release notes](docs/releases/v1.0.0.md)
-
-## Why this exists
-
-Image generation models produce a finished image in one shot with no inspectable drawing process.
-img2drawing does the opposite: the agent observes, places real strokes, renders what it actually
-authored, compares the result against its reference authority, and corrects the highest-impact
-mismatch. The runtime records and replays those authored changes; it does not decide pose, anatomy,
-identity, or artistic correctness for the agent.
-
-## Core drawing principle
-
-**Croquis economizes marks, not observed geometry.**
-
-Fewer lines must come from better line selection, not from replacing the subject with a circle
-head, tube limbs, box feet, generic hair strands, or symbolic zigzag folds. The instruction graph
-under `skills/img2drawing/references/` separates observation, construction, descriptive geometry,
-figure-specific knowledge, review, output, and public API usage so a worker can load only the
-guidance needed for the current residual.
-
-## Requirements
-
-- Python 3.10+
-- `numpy`, `Pillow` (installed automatically); `pytest`, `jsonschema`, `build` for the development
-  test suite
-- FFmpeg for the v1.0.2 fast GIF path; when unavailable, normal session export fails closed to the
-  canonical exporter rather than partially mixing backends
-- A coding agent that supports Agent Skills
+**Croquis economizes marks, not observed geometry.** The agent makes artistic decisions;
+the runtime supplies authoring, editing, and evidence tools.
 
 ## Install
 
-**With the Skills CLI (recommended)**:
+Python 3.10+ is required. FFmpeg is optional for fast timelapse export.
+
+### Agent Skill
+
+Choose your agent:
 
 ```bash
 npx skills add ictseoyoungmin/img2drawing --skill img2drawing --agent claude-code
 npx skills add ictseoyoungmin/img2drawing --skill img2drawing --agent codex
 ```
 
-Use the matching `--agent` value for another supported agent.
+For manual installation, copy only [skills/img2drawing/](skills/img2drawing/) into your agent's
+skills directory. Developer test data and historical drawing runs are not needed.
 
-**Manual skill install** — copy the skill folder into wherever your agent loads skills from:
+### Python runtime
 
-```bash
-cp -r skills/img2drawing /path/to/your/skills/
-```
-
-**As a Python library**:
+From a source checkout:
 
 ```bash
-pip install skills/img2drawing/
+python -m pip install skills/img2drawing/
 ```
+
+Packaged Python releases are available on [GitHub Releases](https://github.com/ictseoyoungmin/img2drawing/releases/latest).
+On Windows, prefer a short extraction path.
 
 ## Quickstart
+
+Give your agent a reference and a drawing goal:
+
+> Read the img2drawing skill. Draw the attached reference with explicit pencil strokes.
+> Establish the pose and major forms first, inspect and correct the drawing, and export
+> the final PNG and full drawing timelapse. Do not use image generation or tracing.
+
+For programmatic use:
 
 ```python
 from img2drawing import DrawingIntent, DrawingSession
 
 intent = DrawingIntent(drawing_mode="croquis", finish_intent="subject")
-session = DrawingSession.create(subject="subject.png", output_dir="out", intent=intent)
+session = DrawingSession.create(
+    subject="subject.png", output_dir="out", intent=intent
+)
+
+# Observe the reference and author strokes through the session.
+# After authoring and inspection:
+# session.render_final("out/final.png")
+# session.export_timelapse("out/timelapse", every_n=4)
 ```
 
-The agent then observes the subject, authors its own geometry, inspects the current render, and
-corrects explicit residuals. See [`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) for
-the operating route and [`skills/img2drawing/references/INDEX.md`](skills/img2drawing/references/INDEX.md)
-for the instruction graph.
+Start with [SKILL.md](skills/img2drawing/SKILL.md).
+The [public API](skills/img2drawing/references/api/public-surface.md) documents runtime usage;
+the [instruction graph](skills/img2drawing/references/INDEX.md) routes drawing knowledge.
 
-## How it's organized
+## Project structure
 
 ```text
-.
-├── CHANGELOG.md       # public release history
-├── showcase/          # curated, human-facing results and comparison pages
-├── docs/releases/     # detailed human-facing release notes
-├── skills/
-│   └── img2drawing/   # deployable skill, runtime, and canonical instruction graph
-├── dev/               # tests, benchmarks, dogfood runs, planning, tooling, and release records
-└── temp/              # ignored scratch space for unpromoted runs
+skills/img2drawing/    Deployable skill, runtime, drawing guidance
+showcase/             Curated results
+docs/releases/        Detailed release notes
+dev/                  Tests, benchmarks, development tooling
+CHANGELOG.md          Version history
 ```
 
-`skills/img2drawing/` is self-contained and independently packageable. Drawing knowledge and
-public usage contracts live in the skill; development and compatibility machinery stay outside
-that attention route or inside the runtime implementation.
-For installation, package only `skills/img2drawing/`. Retired developer runs and obsolete
-release packages are recoverable from Git history; see the [retention policy](dev/docs/historical-evidence.md).
-Use a short extraction destination on Windows if your full source ZIP path is long.
+The skill is self-contained. Development artifacts are kept separate.
 
-## Contributing
+## Development
 
-Issues and pull requests are welcome. For drawing behavior, start with
-[`skills/img2drawing/SKILL.md`](skills/img2drawing/SKILL.md) and follow the smallest leaf in the
-instruction graph that owns the problem you are changing.
+The [v1.3.0 development branch](https://github.com/ictseoyoungmin/img2drawing/tree/dev/v1.3.0-constructive-drawing)
+extends observation, constructive geometry, editable curves, tonal diagnostics, and portrait review.
+These capabilities are unreleased; independent artistic quality evaluation remains open.
+
+- [Status](https://github.com/ictseoyoungmin/img2drawing/blob/dev/v1.3.0-constructive-drawing/dev/planning/vnext/STATUS.md) · [Roadmap](https://github.com/ictseoyoungmin/img2drawing/blob/dev/v1.3.0-constructive-drawing/dev/planning/vnext/ROADMAP.md)
+- [Release notes](docs/releases/) · [Evidence retention policy](https://github.com/ictseoyoungmin/img2drawing/blob/dev/v1.3.0-constructive-drawing/dev/docs/historical-evidence.md)
+
+Contributions are welcome. Keep private references and generated run outputs outside the
+repository; prefer small, reproducible tests.
 
 ## License
 
-Copyright 2026 ictseoyoungmin. Licensed under the Apache License, Version 2.0 — see
-[LICENSE](LICENSE).
+[Apache License 2.0](LICENSE).
