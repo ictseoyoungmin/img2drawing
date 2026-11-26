@@ -145,3 +145,68 @@ def test_pressure_footprint_matches_original_expression(factor, width, hardness,
     actual = _profiled_footprint(stroke, factor, bounds, hardness)
     assert actual.dtype == np.uint8
     assert np.array_equal(actual, expected)
+
+
+def test_wide_pressure_lift_4k_working_raster_and_replay(tmp_path):
+    """Public session, 1920x1080 output and 3840x2160 working raster.
+    
+    Synthetic fixture only; no private subject, no visual quality verdict.
+    """
+    from time import perf_counter
+    ref = tmp_path / "reference.png"
+    Image.new("RGB", (1920, 1080), "white").save(ref)
+    profile = replace(RenderProfile.opacity_normalized(1920, 1080, pressure_lift=True),
+                      supersample=2, background_rgba=(240, 228, 213, 255))
+    s = DrawingSession.create(subject=ref, output_dir=tmp_path / "run",
+                              render_profile=profile, session_id="wide-pressure-lift")
+    oid = s.observe({"fixture": "analytic broad graphite and curved reflected contact"})
+    s.draw([(800, 540), (960, 540), (1120, 540)], stroke_id="mass",
+           role="value", tool="continuous_pencil", grade="4B",
+           tool_overrides={"width": 70, "opacity": .85},
+           pressure=[.8, .8, .8], observation_id=oid)
+    initial = rgba(s, tmp_path / "before.png")
+    assert initial.shape == (1080, 1920, 4)
+    before_cursor = s.history_cursor
+    start = perf_counter()
+    s.erase_path([(908, 520), (960, 540), (1012, 528)],
+                 stroke_id="wide-lift", width=140, strength=.8,
+                 pressure=[0, 1, 0], tool="soft_eraser",
+                 reason="synthetic wide turning contact", observation_id=oid)
+    lifted = rgba(s, tmp_path / "lifted.png")
+    assert lifted[540, 960, :3].mean() > initial[540, 960, :3].mean() + 8
+    assert np.array_equal(lifted[0:300], initial[0:300])
+    assert np.array_equal(lifted[:, :400], initial[:, :400])
+    assert np.all(lifted[:, :, 3] == 255)
+    print(f"wide pressure-lift commit + canonical PNG: {perf_counter()-start:.3f}s")
+    s.soft_lift("mass", strength=.2, reason="edit deposit beneath lift",
+                observation_id=oid)
+    s.draw([(920, 552), (1000, 552)], stroke_id="later-mark", role="value",
+           layer=1, tool="continuous_pencil", tool_overrides={"width": 3},
+           observation_id=oid)
+    s.delete_stroke("wide-lift", reason="retire the reflected contact",
+                    observation_id=oid)
+    resumed = DrawingSession.resume(s.checkpoint(), subject=ref)
+    assert resumed.drawing_state_hash() == s.drawing_state_hash()
+    a = FastFrameSource(resumed._agent.history, resumed.render_profile)
+    b = CanonicalFrameSource(resumed._agent.history, resumed.render_profile)
+    try:
+        for cursor in range(resumed.history_cursor + 1):
+            a.advance_to(cursor)
+            b.advance_to(cursor)
+            with a.image() as x, b.image() as y:
+                assert x.size == y.size == (1920, 1080)
+                assert x.tobytes() == y.tobytes(), cursor
+    finally:
+        a.close()
+        b.close()
+    # Earlier authored state survives resume/edit/retirement.
+    previous = resumed.render_at(before_cursor, tmp_path / "earlier.png")
+    with Image.open(previous.path) as image:
+        assert np.array_equal(np.asarray(image, dtype=np.int16), initial)
+    replay = resumed.export_timelapse(tmp_path / "replay", every_n=2,
+                                      backend="fast", max_pixel_work=100_000_000)
+    cursors = [frame["cursor"] for frame in replay.manifest["frames"]]
+    assert cursors[0] == 0 and cursors[-1] == resumed.history_cursor
+    assert replay.manifest["backend"]["selected"] == "fast"
+    assert replay.manifest["final"]["last_frame_pixel_match"] is True
+    assert replay.gif_path.is_file()
