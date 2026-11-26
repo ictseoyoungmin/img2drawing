@@ -25,6 +25,7 @@ class StrokeEdit:
     split_at: int | None = None
     new_stroke_id: str | None = None
     material_overrides: Mapping[str, float] | None = None
+    curve_definition: "CurveDefinition | None" = None
 
     def __post_init__(self):
         if not isinstance(self.stroke_id,str) or not self.stroke_id.strip():
@@ -57,6 +58,13 @@ class StrokeEdit:
                     raise ValueError(f"invalid material edit: {key}")
                 material[key] = v
             object.__setattr__(self, "material_overrides", MappingProxyType(material))
+        if self.curve_definition is not None:
+            from .parametric_curve import CurveDefinition
+            if not isinstance(self.curve_definition,CurveDefinition) or self.split_at is not None:
+                raise ValueError("curve definition requires a whole-stroke parametric edit")
+            points,pressure=self.curve_definition.sample()
+            if points!=self.points or pressure!=self.pressure:
+                raise ValueError("curve definition must reproduce explicit edit geometry and pressure")
         if self.split_at is None:
             if self.new_stroke_id is not None:
                 raise ValueError("new stroke id requires split_at")
@@ -123,6 +131,12 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         overrides.update(e.material_overrides or {})
         meta=deepcopy((state.get("provenance") or {}).get("metadata") or {})
         meta["geometry_edited_from"]=e.stroke_id
+        # Optional authoring metadata is not a second source of replay geometry.
+        from .parametric_curve import CURVE_KEY
+        if e.curve_definition is not None:
+            meta[CURVE_KEY]=e.curve_definition.to_dict()
+        elif e.split_at is not None or tuple(map(tuple,s.points))!=e.points or tuple(s.pressure or ())!=pressure:
+            meta.pop(CURVE_KEY,None)
         if e.material_overrides:
             meta["explicit_material_edit_fields"] = sorted(e.material_overrides)
         common=dict(role=s.role,part=s.part,confidence=s.confidence,layer=s.layer,
