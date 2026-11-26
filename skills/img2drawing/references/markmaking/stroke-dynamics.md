@@ -167,3 +167,15 @@ contract, not a new default, automatic highlight or substitute for observing
 hair clumps and continuous form. Use actual preview, ownership checks and
 re-author rejected paths. The path has a bounded sample budget; wide paths
 and high-resolution performance still require further verification.
+
+### Editable authored curve controls
+
+`CurveDefinition(kind, controls, pressure_knots, spacing=..., tolerance=...)` stores explicit
+Bézier (`"bezier"`, four controls) or Catmull–Rom (`"spline"`, 2–128 controls) parameters and
+independent normalized arc-pressure knots. Tolerance applies to Bézier subdivision; spacing
+applies to both. Use `session.draw(stroke_id=..., role=..., tool=..., **curve.draw_kwargs())`.
+`read_parametric_curve(session, stroke_id)` returns the current definition only when its
+samples and pressure exactly reproduce the current stroke. Use `dataclasses.replace` on the
+record, then `revised.edit(stroke_id)` with the existing preview/apply batch. Unrelated geometry
+or pressure edits invalidate the definition; no curve is fitted automatically to an arbitrary
+stroke. Sampled explicit points and pressure remain the sole rendering/replay authority.

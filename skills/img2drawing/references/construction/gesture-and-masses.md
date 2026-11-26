@@ -76,3 +76,42 @@ terminal caps or hidden edges. These are provisional projected hypotheses, not
 anatomy templates. Select only useful paths, create ordinary `ConstructionMark`
 records, and call `author_projection_guides` with a known observation and existing
 `Registration`. Compare to the subject and retire each guide once replaced.
+
+### Editable projected volumes and attachments
+
+Use `VolumeStation(t, center, angle_degrees, left_width, right_width)` at explicitly
+observed/provisional sections (`t` increases from 0 to 1). `ProjectedVolume(stations)`
+interpolates center, directed transverse angle and independent half-widths with shape-preserving
+scalar Hermite interpolation; the original stations remain exact. It is a 2D projected
+hypothesis, not a recovered mesh. Smooth scalar parameters do not prove silhouette or prevent
+projected overlap. Check both sides and the actual visible relationship before accepting.
+
+```python
+from img2drawing.authoring import (
+    VolumeStation, ProjectedVolume, inspect_attachment, align_attachment,
+    prepare_volume_edits, author_projection_guides,
+)
+# All input values and visible arc intervals are chosen from observation.
+form = ProjectedVolume(tuple(VolumeStation(*row) for row in observed_sections))
+marks = form.guide_marks("mass", "observed-form", selected=("axis", "left", "right"))
+author_projection_guides(session, marks, observation_id=oid, registration=registration)
+# Optional: section_arcs={station_index: {"depth_axis": vector,
+#     "start_degrees": start, "sweep_degrees": sweep}}; explicitly select its section_N path.
+# Store form.to_dict() with observation/evidence; recover via ProjectedVolume.from_dict().
+# Compare chosen parent/child stations; align only the agent-authorized parameters.
+relation = inspect_attachment(parent_station, form.stations[0])
+revised = align_attachment(parent_station, form, child_index=0, rotate=False, match_widths=False)
+edits = prepare_volume_edits(session, revised, {"axis": "mass-axis", "left": "mass-left",
+    "right": "mass-right"}, registration=registration)
+# Preview/apply edits through the existing stroke-edit route, then inspect.
+```
+
+`align_attachment` returns a new hypothesis: translation of the selected child station,
+optional whole-child rotation, optional width match at that station only. It never moves
+committed strokes or descriptive features implicitly. Explicitly reconsider dependent groups.
+`ProjectionCamera(origin, scale, perspective=True)` projects agent-declared camera-space
+3D points (+z forward, +y down); scale is focal length in pixels for perspective, pixels per
+unit for orthographic. `section_arc(center, u, v, start_degrees=..., sweep_degrees=...)`
+projects a selected spatial ellipse arc pointwise, rejects a near-plane crossing, and does
+not infer visibility, 3D depth, camera pose or hidden contours. Use it only when those
+parameters are justified. Retire every superseded construction mark individually.

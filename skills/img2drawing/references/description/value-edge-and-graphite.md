@@ -116,3 +116,24 @@ uniform raster fill, or use strong lifts as a substitute for correct geometry.
 Inspect both contact ends and surviving marks. If rounded ends create scallops,
 reconsider the contact paths and soften their contribution rather than outlining
 every endpoint. A bright highlight alone does not certify natural form.
+
+### Compare explicit tonal alternatives without applying them
+
+Use `inspect_tonal_proposals` from `img2drawing.authoring` when two or more reviewed stroke
+edits compete. Supply named proposals (`edits`, `retire_ids`, `additions`, `erasures`), named
+ordered chains of `TonalPatch`, and optional explicit `TonalAreaPlan` objects. All alternatives
+share the same blank paper, canonical starting render and reference. The helper returns each
+preview's existing action digest/state/pixel binding, chain relations and area changes; it
+never commits or ranks the candidates. Example:
+
+```python
+report = inspect_tonal_proposals(session, {"gentle": {"edits": gentle_edits},
+    "rebuild": {"retire_ids": retired_ids, "additions": replacement_marks}},
+    {"across": across_patches, "along": along_patches}, "new-preview-dir",
+    reason=reason, observation_id=oid, plans=(plan,))
+```
+
+Use 1–4 alternatives, 1–8 chains and at most eight area plans; adjust the explicit
+`max_pixel_work` budget only when warranted. A fresh directory is required. Compare actual
+preview images and evidence, then apply only the chosen exact batch with its base cursor,
+state and action digest. Measurements diagnose, not select artistic correctness.
