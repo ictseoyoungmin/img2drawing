@@ -13,7 +13,8 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
-from .contract import RENDERER_ID, RENDERER_VERSION, canonical_identity, verify_contract_digest
+from .contract import (OPACITY_NORMALIZED_CONTRACT, RENDERER_ID, RENDERER_VERSION,
+                       canonical_identity, verify_contract_digest)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
 
@@ -101,7 +102,8 @@ class RenderProfile:
         object.__setattr__(self, "renderer_id", renderer_id)
         object.__setattr__(self, "renderer_version", renderer_version)
         object.__setattr__(
-            self, "renderer_contract_digest", verify_contract_digest(self.renderer_contract_digest)
+            self, "renderer_contract_digest", verify_contract_digest(self.renderer_contract_digest,
+                renderer_id=renderer_id, renderer_version=renderer_version)
         )
         width, height = int(self.canvas_width), int(self.canvas_height)
         if width <= 0 or height <= 0:
@@ -159,6 +161,19 @@ class RenderProfile:
             profile_id="pencil-contact-canonical-v1",
             renderer_id=RENDERER_ID,
             renderer_version=RENDERER_VERSION,
+            canvas_width=int(width),
+            canvas_height=int(height),
+        )
+
+    @classmethod
+    def opacity_normalized(cls, width: int, height: int) -> "RenderProfile":
+        """Opt into the improved contact model for a new session; never migrate old pixels."""
+        contract = OPACITY_NORMALIZED_CONTRACT
+        return cls(
+            profile_id="pencil-contact-opacity-normalized-v1",
+            renderer_id=contract.renderer_id,
+            renderer_version=contract.renderer_version,
+            renderer_contract_digest=contract.digest(),
             canvas_width=int(width),
             canvas_height=int(height),
         )
@@ -229,6 +244,7 @@ class RenderProfile:
             "scale": self.output_scale,
             "supersample": self.supersample,
             "graphite": self.graphite_rgb,
+            "renderer_version": self.renderer_version,
         }
 
 

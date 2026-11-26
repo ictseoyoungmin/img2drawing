@@ -1,9 +1,8 @@
 """Renderer identity and the parameter contract that binds persisted sessions to pixels.
 
-The package ships exactly one renderer. Its identity and contract digest are persisted in
-every ``RenderProfile`` so a session can prove which renderer produced its pixels. Sessions
-bound to an identity this package cannot reproduce exactly fail closed; they must be replayed
-with the published release that shipped that renderer.
+The package ships one pencil engine with explicit immutable material contracts.
+Identity and digest are persisted in every RenderProfile. Legacy v11 remains the
+default and exact replay authority. Unavailable identities/digests fail closed.
 """
 
 from __future__ import annotations
@@ -86,6 +85,23 @@ PENCIL_CONTRACT = RendererContract(
     ),
 )
 
+# An additive, opt-in material contract. Do not modify PENCIL_CONTRACT's parameters:
+# historical v11 profiles and cache identities rely on its exact digest.
+OPACITY_NORMALIZED_CONTRACT = RendererContract(
+    renderer_id=PENCIL_CONTRACT.renderer_id,
+    renderer_version="11-opacity-normalized-v1",
+    parameters=tuple(sorted({
+        **dict(PENCIL_CONTRACT.parameters),
+        "material_model": "arc-length-normalized-optical-contact-v1",
+        "opacity_model": "authored-alpha-log-transmittance-v1",
+        "continuity_opacity": "local-authored-alpha-cap-v1",
+        "zero_opacity": "empty-patch-v1",
+        "radial_integration": "trapezoidal-sample-distance-v1",
+        "contact_alpha_minimum": 0,
+        "optical_alpha_cap": 0.999,
+    }.items())),
+)
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -105,35 +121,48 @@ class UnsupportedRendererError(ValueError):
 
 
 def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[str, str]:
-    """Return the current identity for a persisted one, or fail closed."""
+    """Return a supported exact identity, or fail closed."""
 
     key = (str(renderer_id).strip(), str(renderer_version).strip())
-    if key == PENCIL_CONTRACT.identity or key in _EQUIVALENT_IDENTITIES:
+    if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity):
+        return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
-        f"current renderer is {RENDERER_ID}/{RENDERER_VERSION}. To reproduce the session exactly, "
+        f"default renderer is {RENDERER_ID}/{RENDERER_VERSION}. To reproduce the session exactly, "
         + REPLAY_RELEASE_HINT
     )
 
 
-def verify_contract_digest(digest: str | None) -> str:
-    """Accept only the current contract digest; ``None`` means a pre-digest v1.0.3 profile."""
+def contract_for_identity(renderer_id: str, renderer_version: str | int) -> RendererContract:
+    key = canonical_identity(renderer_id, renderer_version)
+    if key == PENCIL_CONTRACT.identity:
+        return PENCIL_CONTRACT
+    return OPACITY_NORMALIZED_CONTRACT
 
-    if digest is None:
-        return RENDERER_CONTRACT_DIGEST
-    if str(digest) != RENDERER_CONTRACT_DIGEST:
+
+def verify_contract_digest(digest: str | None, *, renderer_id: str = RENDERER_ID,
+                           renderer_version: str | int = RENDERER_VERSION) -> str:
+    """Validate against the selected identity; only legacy v11 accepts a missing digest."""
+    contract = contract_for_identity(renderer_id, renderer_version)
+    expected = contract.digest()
+    if digest is None and contract is PENCIL_CONTRACT:
+        return expected
+    if digest is None or str(digest) != expected:
         raise UnsupportedRendererError(
             "render profile was bound to a different renderer contract "
-            f"({str(digest)[:12]}…, current {RENDERER_CONTRACT_DIGEST[:12]}…); exact replay is not "
+            f"({str(digest)[:12]}…, selected {expected[:12]}…); exact replay is not "
             "possible with this package. " + REPLAY_RELEASE_HINT
         )
-    return RENDERER_CONTRACT_DIGEST
+    return expected
 
 
 __all__ = [
     "CONTRACT_SCHEMA",
     "PENCIL_CONTRACT",
+    "OPACITY_NORMALIZED_CONTRACT",
+    "contract_for_identity",
     "RENDERER_CONTRACT_DIGEST",
     "RENDERER_ID",
     "RENDERER_VERSION",
