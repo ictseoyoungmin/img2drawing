@@ -118,3 +118,10 @@ def test_readme_does_not_reaccumulate_release_history() -> None:
         policy.verify_readme_scope(readme + "\n## v1.0.0 — Old release\n")
     with pytest.raises(AssertionError, match="budget"):
         policy.verify_readme_scope(readme + "x" * 6501)
+
+
+def test_release_publisher_builds_separate_skill_zip() -> None:
+    workflow = (ROOT / ".github/workflows/publish-release.yml").read_text(encoding="utf-8")
+    assert 'python dev/tools/build_skill_zip.py --package-dir "$package_dir"' in workflow
+    assert 'img2drawing-skill-$version.zip' in workflow
+    assert workflow.index('python dev/tools/build_skill_zip.py') < workflow.index('assets=(dist/*)')

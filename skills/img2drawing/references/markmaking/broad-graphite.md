@@ -45,7 +45,7 @@ material structure to resolve. That is not a reason to avoid broad marks when th
 them. Reuse the supported runtime and persistent cache rather than replacing the effect with a
 hand-built raster shortcut.
 
-## Tonal-area authorship is not line thickening (v1.2.1)
+## Tonal-area authorship is not line thickening
 
 For hair masses, broad dark garments, deep folds or other *areas*, distinguish
 the **spatial area** from the **contact footprint of a single stroke**:
@@ -74,6 +74,31 @@ attaches only validated **planning metadata** to individual authored strokes;
 it does not derive any marks, authorize raster fills or certify accurate
 coverage. Inspect every resulting mark family at the current canvas scale.
 Do not replace authored marks with pixel tracing.
+
+### Explicit tonal-area metadata
+
+```python
+from img2drawing.authoring import TonalAreaPlan, resolve_mark_for_intent
+
+area = TonalAreaPlan(
+    area_id="hair-left-dark", part="hair",
+    reference_evidence="observed left clump with retained highlight",
+    boundary=((10, 10), (50, 12), (47, 68), (12, 65)),
+    direction_degrees=74,
+    target_density=0.48, target_value=0.58, pressure_range=(0.22, 0.55),
+    highlight_reserves=(((24, 20), (32, 24), (29, 52)),),
+)
+mark = resolve_mark_for_intent(session.intent, "value",
+                               tool_preset="broad-graphite",
+                               modifiers={"width": 6.0, "pressure": 0.4, "opacity": 0.45})
+session.draw(
+    observed_stroke_points, part="hair",
+    **mark.draw_kwargs(metadata=area.stroke_metadata(stroke_family="clump-flow")),
+)
+```
+
+The numbers are a schematic recipe, not reference-derived answer geometry or a
+universal setting. Set them from the current observed area.
 
 ### Override consistency
 

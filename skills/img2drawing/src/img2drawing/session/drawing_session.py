@@ -110,6 +110,8 @@ def _tool_payload(tool: str | Mapping[str, Any], grade: str | None, overrides: M
             raise ValueError("tool mapping requires a preset")
         if grade is not None:
             payload["grade"] = str(grade)
+        elif "grade" not in payload:
+            payload["grade"] = default_grade_name()
         if overrides is not None:
             inherited = payload.get("overrides") or {}
             if not isinstance(inherited, Mapping):
@@ -1229,6 +1231,8 @@ class DrawingSession:
             source_observation=source_observation,
             reason=reason,
         )
+        if not isinstance(role, str) or not role.strip():
+            raise ValueError("drawing action requires role")
         selected_tool = _tool_payload(tool, grade, tool_overrides)
         width_profile = profile_from_metadata(metadata)
         if width_profile is not None:
@@ -1242,7 +1246,7 @@ class DrawingSession:
             stage=_COMPAT_STAGE,
             role=str(role),
             part=None if part is None else str(part),
-            points=tuple((float(point[0]), float(point[1])) for point in points),
+            points=tuple(tuple(float(v) for v in point) for point in points),
             target_stroke_id=target_stroke_id,
             stroke_id=stroke_id,
             confidence=float(confidence),
@@ -1430,7 +1434,7 @@ class DrawingSession:
             action_id=_action_id(self._agent.history, action_id),
             kind="replace_segment",
             stage=_COMPAT_STAGE,
-            points=tuple((float(point[0]), float(point[1])) for point in points),
+            points=tuple(tuple(float(v) for v in point) for point in points),
             target_stroke_id=str(target_stroke_id),
             pressure=None if pressure is None else tuple(float(value) for value in pressure),
             observation_id=oid,

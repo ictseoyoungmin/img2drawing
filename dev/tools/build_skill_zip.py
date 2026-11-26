@@ -43,6 +43,21 @@ def _is_excluded(relative: Path) -> bool:
     return relative.suffix.lower() in _EXCLUDED_SUFFIXES
 
 
+def _is_skill_source(relative: Path) -> bool:
+    """Allow only the deployable source surface, not arbitrary local run outputs."""
+    parts = relative.parts
+    if len(parts) == 1:
+        return relative.name in {"LICENSE", "MANIFEST.in", "README.txt", "SKILL.md", "pyproject.toml"}
+    if parts[0] == "assets":
+        return relative.suffix.lower() == ".svg"
+    if parts[0] == "references":
+        return relative.suffix.lower() == ".md"
+    if parts[:2] == ("src", "img2drawing"):
+        return (relative.suffix == ".py" or
+                (parts[:3] == ("src", "img2drawing", "data") and relative.suffix == ".json"))
+    return False
+
+
 def build_skill_zip(package_dir: Path, out_path: Path) -> Path:
     package_dir = Path(package_dir).resolve()
     out_path = Path(out_path).resolve()
@@ -62,8 +77,10 @@ def build_skill_zip(package_dir: Path, out_path: Path) -> Path:
                 continue
             archive_path = path.relative_to(package_dir.parent)
             package_relative = path.relative_to(package_dir)
-            if _is_excluded(package_relative):
+            if _is_excluded(package_relative) or not _is_skill_source(package_relative):
                 continue
+            if path.is_symlink() or not path.resolve().is_relative_to(package_dir):
+                raise ValueError("skill source must not contain symlink escapes")
             zf.write(path, archive_path.as_posix())
     return out_path
 
