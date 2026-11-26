@@ -71,6 +71,22 @@ forehead, temple, cheek/jaw, ear, neck, shoulder, and garment handoffs that are 
 Then add only the major parting and clump boundaries needed to explain overlap/direction/identity.
 Only after that may a small number of strand accents clarify flow or material.
 
+### Clump volume before shine
+
+For curls, waves, or other visibly turning clumps, compare a few actual major overlaps:
+where the clump starts or emerges, its direction changes, its visible width, the next clump
+that covers it, and where it disappears. Use temporary centerlines or asymmetric cross-sections
+only where they help test the observed volume; do not invent closed tubes or hidden curls.
+
+Read the broad light-facing surface, the turning halftone, and the darker side/contact shadow
+as related value families. Follow their changes along the clump and across its visible width
+(see [value continuity](../description/value-edge-and-graphite.md)). Preserve the broad light
+reserve during deposition, with darker marks owned by actual turns or overlap. Avoid giving
+each curl the same black outline, bright central ribbon, or rounded light ends. A narrow lift
+or fine strand is a subordinate material accent, not the construction of a clump. Inspect the
+whole head with major values alone before accepting such accents; if separate overlapping
+volumes do not read, retire the obstructing marks and correct the parent clump geometry/value.
+
 Do not fill the head with parallel strand lines. If removing the strand accents destroys the hair
 read, the mass/clump solution was never closed. Delete or retire the strand field and reopen the
 outer mass/parting/clump relation.

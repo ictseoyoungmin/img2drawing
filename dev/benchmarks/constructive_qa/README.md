@@ -84,5 +84,19 @@ and the command exits nonzero. This is not a separate renderer comparison or ver
 neither mode proves independent model execution. Use the existing full-history replay tests and a
 separate visual reviewer; no auto-PASS. The prior S00 protocol remains the metadata authority.
 
+## Hair/portrait visual comparison — separate from replay
+
+For the sealed hair and portrait cases, keep the developer's existing comparison boards out
+of worker packets. After both independent arms submit their own session and final image,
+compare them at matched whole-head scale and local face/hair scales. A reviewer should see
+anonymized arm labels and the same reference, not prior developer verdicts. Record separately
+(1) outer head/hair mass and face landmark fidelity, (2) visible major clump direction and
+overlap ownership, (3) broad turning value families, including across/along continuity,
+(4) restrained accents, absence of invented repeated ribbons or stripe ends, and (5) neck/face
+value transitions. For each substantive mismatch identify its owner and whether it blocks
+the intended finish. Choose a preferred arm or explicitly record a tie/uncertain result.
+Keep diagnostic patch values and action/time budgets distinct from the visual verdict.
+This rubric is evaluator-only; it adds no new worker input, geometry authority, or automatic PASS.
+
 The current campaign's independent six-class execution is NOT_RUN. Controlled shared-stroke
 replays and local development studies are diagnostic only, not worker or quality comparisons.
