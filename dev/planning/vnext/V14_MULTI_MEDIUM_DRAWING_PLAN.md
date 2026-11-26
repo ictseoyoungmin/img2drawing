@@ -1,7 +1,8 @@
 # v1.4.0 — Multi-Medium Drawing design
 
 Approved direction: 2026-11-27. Implementation contract proposal, not an implemented API.
-Stable baseline: v1.3.0 / `fdaf6b15d3ce563789712be9206e6572dee812bd`.
+Original design and comparison baseline: v1.3.0 / `fdaf6b15d3ce563789712be9206e6572dee812bd`.
+Current implementation base: v1.3.1 maintenance main `820c88c5192f9425132386a7a64a78036776a647`; no drawing contract change.
 Development integration: `dev/v1.4.0-multi-medium-drawing`. Work OS: [v1.4.0](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
 State authority: [STATUS.md](STATUS.md); sequencing and weights: [ROADMAP.md](ROADMAP.md).
 Do not modify released tags, freezes, manifests or historical renderer outputs.

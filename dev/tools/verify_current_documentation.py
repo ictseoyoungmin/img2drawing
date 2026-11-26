@@ -68,6 +68,24 @@ def verify_readme_scope(text: str) -> None:
     )
 
 
+def verify_runtime_freeze(freeze: dict) -> None:
+    """Check the current freeze against live public authority, not a plausible-looking hash."""
+    import img2drawing
+    from img2drawing import RenderProfile
+
+    frozen = freeze["canonical_render_profile"]
+    live = RenderProfile.canonical(frozen["canvas_width"], frozen["canvas_height"]).to_dict()
+    assert frozen == live, "canonical render profile drift"
+    authority = freeze["renderer_authority"]
+    assert authority["current"] == f'{live["renderer_id"]}/{live["renderer_version"]}', (
+        "renderer identity drift"
+    )
+    assert authority["current_contract_digest"] == live["renderer_contract_digest"], (
+        "renderer digest drift"
+    )
+    assert sorted(freeze["root_exports"]) == sorted(img2drawing.__all__), "root export drift"
+
+
 def main() -> None:
     assert not (ROOT / "GATES.md").exists(), "retired root GATES.md reappeared"
     assert not (ROOT / "HANDOFF.md").exists(), "retired root HANDOFF.md reappeared"
@@ -126,7 +144,7 @@ def main() -> None:
         assert freeze["package_version"] == version
         assert freeze["canonical_render_profile"]["renderer_id"] == "img2drawing-pencil"
         assert str(freeze["canonical_render_profile"]["renderer_version"]) == "11"
-        assert len(freeze["renderer_authority"]["current_contract_digest"]) == 64
+        verify_runtime_freeze(freeze)
         runtime = freeze.get("runtime_capabilities")
         from img2drawing.runtime import runtime_capabilities
 

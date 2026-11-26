@@ -1,0 +1,11 @@
+# v1.3.1 branch consolidation
+
+Reviewed 2026-11-27 against stable `fdaf6b15d3ce563789712be9206e6572dee812bd` and next development `07b034c0cd62a2b4425509838549ccc846194c51`. The maintainer requests only main and dev/v1.4.0-multi-medium-drawing as ongoing branch refs.
+
+- 51 obsolete branch tips were either ancestors of main or at the exact merged PR head. In the latter case the merge result is reachable from main, directly or via the v1.2.1 promotion (#66, #72, #73, #74, #76, #77, #78, #79, #59). Retiring refs preserves published tags and reachable history.
+- The v1.3.0 development tip `785694652ba57d1277d09688b78300b475246907` is included in main and was the base of the last open research PR. After its closure the branch can be retired.
+- [#98](https://github.com/ictseoyoungmin/img2drawing/pull/98), head `85b12edd9d9d3e8d318c34fcbb578f1ab6a880d0`, closed without merge. Its normalized-v4 side-contact kernel and API are not adopted. Reported 35 focused tests; relative strip variation at 18 px .077→.167 (worse), 24 px .149→.028 (better); selected knit candidate total adjacent variation .232127→.279405, added darkness outside .055795→.061704. The reduction of local second differences is insufficient to establish better drawing quality. No new material contract or tests referring to that unsupported API. Existing #99 read-only overlap inspector and #97 contact-width contract already ship.
+- `qa/portrait-runtime-20261126` (`50a7bdd05dc24b8f70a3c0982045d70052a4c8f5`): unique file .github/workflows/portrait-handoff.yml is a one-off handoff packaging the pinned `28e8eac34b49afe93b529631a47d680840526596` runtime, now merged. No production or reusable QA feature to port. Retire the branch without copying the temporary workflow. The ordinary tonal QA workflow remains manual.
+- Keep release tags/assets, all earlier freezes, historical evidence SHA pins, and PR history intact. Do not rewrite history. v1.4 design remains on its own branch. The actual ref deletion is a separate operation after successful promotion and integration; this record is an audit, not evidence that deletion already occurred.
+
+The source branch comparisons and research observations are not independent quality measurements or new drawing evidence. No private reference, answer geometry, session, or large binary is added.

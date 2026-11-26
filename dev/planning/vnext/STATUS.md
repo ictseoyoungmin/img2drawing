@@ -3,9 +3,9 @@
 Updated: 2026-11-27
 
 ```text
-PUBLISHED STABLE:   v1.3.0 · published; main/tag fdaf6b1
-RELEASE TAG:        v1.3.0 · immutable published release
-CURRENT SOURCE:     1.3.0 · constructive drawing
+PUBLISHED STABLE:   v1.3.1 · selected maintenance main 820c88c (publication authority: GitHub Release)
+RELEASE TAG:        v1.3.1 · pending manifest-driven publication
+CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
 ACTIVE BOTTLENECK:  v1.4.0 S01 mixed-media authoring/replay contract (READY; design only)
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect wa
 R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
 S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.3.0 constructive drawing
+PACKAGE VERSION:    1.3.1 release maintenance
 HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
 G01 GESTURE:        PASS/CLOSED
 G02 BROAD PENCIL:   PASS/CLOSED
@@ -24,7 +24,7 @@ HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc
 STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
 MAIN RELEASE CI:    required green before manifest-driven publish
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      v1.3.0 published (CI 45870744957; publish 45871125462); no v1.4.0 manifest
+PUBLISH STATE:      v1.3.1 main 820c88c; publication governed by main CI + manifest; no v1.4.0 manifest
 ```
 
 ## Authority contract
@@ -42,11 +42,19 @@ Authority is intentionally split by purpose:
 
 ## Current v1.4.0 development checkpoint
 
-- Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` from stable `fdaf6b1`.
+- Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
 - [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
-- S01 READY; S02–S07 OPEN (dependency order in ROADMAP); weighted implementation/verification 0% (0/7). No production runtime or package changes, no new quality PASS.
+- S01 READY; S02–S07 OPEN (dependency order in ROADMAP); weighted implementation/verification 0% (0/7). No v1.4 production feature or new quality PASS; only inherited v1.3.1 maintenance metadata and release QA.
 - v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
 - Next: S01 explicit typed material/action contract and minimum vertical proof; validate legacy golden and exact replay before adding G-pen/fineliner, ink areas and tones.
+
+## Current v1.3.1 maintenance (inherited release checkpoint)
+
+- v1.3.0 was published from `fdaf6b1`; main CI `45870744957` passed 473 active + 44 runtime tests, publish `45871125462` succeeded with 4/4 release assets.
+- Maintainer closed all 9 v1.3.0 slices: S01–S06/S08 verified (80% weight); S00/S07 USER_ACCEPTED (20%, independent six-class comparison and extended high-resolution performance NOT_RUN/uncertified). No remaining mandatory v1.3.0 research gate.
+- PR #98 closed without merge; normalized-v4 is NOT shipped. Existing v11/default and normalized v1/v2/v3, contact-width, selective lift and overlap diagnostics remain. The one-off portrait handoff branch is not a product feature; its pinned runtime is already in main. See [branch disposition](../../docs/v131-branch-disposition.md).
+- v1.3.1 only synchronizes release authority, strengthens freeze validation and retains manual tonal QA. No runtime change besides version. Main promotion remains CI-gated.
+- Next product line: [v1.4.0 development](https://github.com/ictseoyoungmin/img2drawing/tree/dev/v1.4.0-multi-medium-drawing), design only, 0% implementation. No v1.4 release manifest.
 
 ## v1.3.0 development checkpoint (historical)
 
@@ -83,7 +91,7 @@ Scope: development evidence before the v1.3.0 promotion; not the v1.2.1 release.
 
 ## Current truth
 
-- `v1.3.0` is the selected bounded constructive drawing release; publication requires successful main CI and manifest-driven workflow. v1.2.1 and earlier tags are immutable. Default renderer v11 is pixel-compatible, with explicit opt-in material contracts. Independent visual proof remains open.
+- `v1.3.1` is the selected maintenance release, gated by successful main CI and manifest-driven publication. v1.3.0 and earlier tags are immutable. Default renderer v11 and all shipped opt-in material contracts are unchanged. Independent artistic improvement was not measured; the prior tasks were closed by maintainer acceptance.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
 - **S01 design closure is complete.** The quality failure taxonomy, reversible evidence-gate model, and renderer-family/replay policy agree on one architecture.
 - **S02 instruction implementation is CLOSED again after the bounded S03.1 reopen.** The anti-normalization/reference-authority patch is merged. This does **not** mean the behavioral defect is proven closed: that proof was not completed; the user accepted the S03 release gate with this limit recorded.

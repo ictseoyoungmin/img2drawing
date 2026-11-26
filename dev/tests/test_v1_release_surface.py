@@ -125,3 +125,30 @@ def test_release_publisher_builds_separate_skill_zip() -> None:
     assert 'python dev/tools/build_skill_zip.py --package-dir "$package_dir"' in workflow
     assert 'img2drawing-skill-$version.zip' in workflow
     assert workflow.index('python dev/tools/build_skill_zip.py') < workflow.index('assets=(dist/*)')
+
+
+def test_current_runtime_freeze_matches_live_authority_and_rejects_drift():
+    path = ROOT / "dev/tools/verify_current_documentation.py"
+    spec = importlib.util.spec_from_file_location("current_release_policy", path)
+    policy = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(policy)
+    manifest = _manifest(img2drawing.__version__)
+    freeze_path = next(ROOT / asset for asset in manifest["assets"] if Path(asset).name.startswith("CONTRACT_FREEZE"))
+    frozen = json.loads(freeze_path.read_text(encoding="utf-8"))
+    policy.verify_runtime_freeze(frozen)
+    for key, value, match in (
+        ("gif_disposal", 2 if frozen["canonical_render_profile"]["gif_disposal"] == 1 else 1, "profile drift"),
+        ("renderer_contract_digest", "0" * 64, "profile drift"),
+    ):
+        modified = json.loads(json.dumps(frozen))
+        modified["canonical_render_profile"][key] = value
+        with pytest.raises(AssertionError, match=match):
+            policy.verify_runtime_freeze(modified)
+    modified = json.loads(json.dumps(frozen))
+    modified["renderer_authority"]["current_contract_digest"] = "0" * 64
+    with pytest.raises(AssertionError, match="digest drift"):
+        policy.verify_runtime_freeze(modified)
+    modified = json.loads(json.dumps(frozen))
+    modified["root_exports"].append("nonexistent_export")
+    with pytest.raises(AssertionError, match="export drift"):
+        policy.verify_runtime_freeze(modified)

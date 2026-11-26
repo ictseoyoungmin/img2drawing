@@ -36,7 +36,7 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-**GitHub Release v1.3.0** is published and immutable. The next development branch targets [v1.4.0 Multi-Medium Drawing](V14_MULTI_MEDIUM_DRAWING_PLAN.md). See STATUS.md and ROADMAP.md. Existing v1.3.0 independent visual gates were closed by user acceptance without a new measured visual PASS.
+**GitHub Release v1.3.1** is selected for release maintenance; v1.3.0 and earlier releases are immutable. The next product line is [v1.4.0 Multi-Medium Drawing](V14_MULTI_MEDIUM_DRAWING_PLAN.md), synchronized to the v1.3.1 maintenance baseline. The prior independent visual gates were closed by user acceptance without a new measured visual PASS.
 
 ## Historical evidence and repository size
 

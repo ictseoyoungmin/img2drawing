@@ -2,6 +2,13 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## v1.3.1 — Release maintenance
+
+- Reconcile published v1.3.0, accepted visual gates and branch-retirement decisions; retain immutable releases and experimental evidence without shipping normalized-v4.
+- Compare the current release freeze against actual canonical profile, renderer digest and public exports; test stale/tampered metadata.
+- Keep tonal QA as manual opt-in, removing its obsolete branch-only trigger.
+- No drawing API, renderer pixel, session schema or skill guidance change. See [release notes](docs/releases/v1.3.1.md).
+
 ## v1.3.0 — Constructive drawing
 
 Selected 2026-11-27; publication requires green main CI.
