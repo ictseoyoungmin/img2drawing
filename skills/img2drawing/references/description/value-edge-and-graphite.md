@@ -75,3 +75,16 @@ For bright thin hardware, preserve the visible interval during the surrounding v
 construction; broad along-path pressure troughs can make a dark plane into alternating
 cells, so they do not automatically express a narrow metallic highlight. Do not draw
 unseen hardware or manufacture white pixels with a separate raster path.
+
+## Reserve narrow light intervals before rebuilding dark marks
+
+For a narrow light edge on a dark plane, explicitly decide which visible light interval
+belongs to the object, and where the surrounding graphite contacts must stop. Work in
+small reviewed value families rather than cutting broad pressure troughs at every detail.
+Wide rounded strokes across adjacent bays may produce isolated oval shadows; fine adjacent
+marks can retain a brighter seam but may introduce coarse repetitive texture. Neither is
+a universal material recipe. Use a local three-patch comparison (light center and the two
+adjacent dark shoulders) plus a whole-plane reading; high contrast alone is not a pass.
+If changing the family, preview retirement and explicit new marks together using the
+mixed stroke-edit batch. Reject candidates that erase ownership edges, cross occluders,
+create false bright gaps, or replace continuous dark tone with mechanical striping.

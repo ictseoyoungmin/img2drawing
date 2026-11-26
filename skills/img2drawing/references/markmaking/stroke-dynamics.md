@@ -101,3 +101,30 @@ apply_stroke_edits(session, [edit], reason=reason, observation_id=observation_id
 Use the same explicit edits and provenance for apply. A rejected preview changes no
 actions. It is not a canonical render until committed and checked. Re-open the geometry
 or material premise when the preview reveals wrong overlap or an invented tonal band.
+
+## Preview an explicit stroke-family rewrite
+
+For a wrong value family, editing the old strokes alone may preserve the wrong premise.
+The existing preview/apply helpers also accept `retire_ids` and `additions` in the same
+atomic batch as ordinary StrokeEdit records. Choose current IDs to retire and author each
+new mark as an ordinary draw-kwargs mapping with explicit fresh stroke_id, points, role,
+and tool. Edits run first, then retirements, then additions. New strokes append in the
+ordinary history/layer order; inspect the resulting overlaps. These are existing replace,
+delete and draw actions, not a mask, a raster eraser or automatic hatch generation.
+
+```python
+batch = dict(reason=reason, observation_id=observation_id,
+             retire_ids=selected_current_ids, additions=explicit_new_marks)
+preview = preview_stroke_edits(session, edits, preview_path, **batch)
+# Review the candidate visually; reject or re-preview any changed proposal.
+apply_stroke_edits(session, edits, **batch,
+                   expected_cursor=preview["base_cursor"],
+                   expected_state_hash=preview["base_state_hash"],
+                   expected_action_digest=preview["action_digest"])
+````
+
+The additional digest binds the ordered resolved actions, including material, IDs,
+points and provenance. Cursor/state guard against stale drawing evidence; the action
+digest rejects changes to the reviewed proposal even on the same drawing state. Supply
+all three when committing a reviewed candidate. A rejected preview modifies no drawing
+history. Invalid/conflicting IDs or an invalid new mark roll back the entire batch.

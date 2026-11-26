@@ -2,14 +2,15 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 import math
 from pathlib import Path
 from collections.abc import Mapping
 from types import MappingProxyType
 from typing import Sequence
 
-from ..core.action import AgentDrawingSession
+from ..core.action import AgentDrawingSession, DrawingAction
+from ..core.digest import sha256_obj
 from ..inspection import drawing_state_hash
 from ..render.artifact import render_history_at
 from .retune import _TOOL_OVERRIDE_FIELDS
@@ -69,20 +70,32 @@ def _current(session):
     return {s.stroke_id:s for s in session.current_ir().strokes}
 
 
-def _actions(session, edits, reason, observation_id):
+def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions=()):
     if not isinstance(reason,str) or not reason.strip():
         raise ValueError("edit reason required")
     if not isinstance(observation_id,str) or not observation_id.strip():
         raise ValueError("explicit observation_id required")
     edits=tuple(edits)
-    if not edits or any(not isinstance(e,StrokeEdit) for e in edits):
-        raise ValueError("nonempty StrokeEdit sequence required")
+    if any(not isinstance(e,StrokeEdit) for e in edits):
+        raise ValueError("StrokeEdit sequence required")
+    if isinstance(retire_ids, str):
+        raise ValueError("retire_ids must be a sequence of current stroke IDs")
+    retire_ids=tuple(retire_ids)
+    additions=tuple(additions)
+    if not (edits or retire_ids or additions):
+        raise ValueError("nonempty explicit stroke edit batch required")
+    if any(not isinstance(i,str) or not i.strip() for i in retire_ids):
+        raise ValueError("retire_ids must contain current stroke IDs")
+    if len(set(retire_ids))!=len(retire_ids):
+        raise ValueError("duplicate retirement ID")
     current=_current(session)
     ids=[e.stroke_id for e in edits]
     if len(set(ids))!=len(ids):
         raise ValueError("duplicate current stroke edit")
-    if any(i not in current for i in ids):
-        raise ValueError("edit requires current stroke IDs")
+    if any(i not in current for i in (*ids,*retire_ids)):
+        raise ValueError("edit or retirement requires current stroke IDs")
+    if set(ids)&set(retire_ids):
+        raise ValueError("a stroke cannot be edited and retired in the same batch")
     new_ids=[e.new_stroke_id for e in edits if e.split_at is not None]
     if len(set(new_ids))!=len(new_ids) or any(i in current for i in new_ids):
         raise ValueError("duplicate or existing split stroke ID")
@@ -129,7 +142,33 @@ def _actions(session, edits, reason, observation_id):
             second_meta["split_fragment"]="second"
             actions.append(session._draw_action(e.points[i:],action_id=aid(),
                 stroke_id=e.new_stroke_id,pressure=pressure[i:],metadata=second_meta,**common))
+    from ..session.drawing_session import _COMPAT_STAGE, _tool_payload
+    oid, source, why = session._provenance(observation_id=observation_id,
+        source_observation="explicit stroke family rewrite", reason=reason)
+    for sid in retire_ids:
+        actions.append(DrawingAction(action_id=aid(),kind="delete_stroke",stage=_COMPAT_STAGE,
+            target_stroke_id=sid,tool=_tool_payload("hard_eraser",None,None),
+            observation_id=oid,source_observation=source,reason=why))
+    # Only the ordinary draw kwargs are accepted, not arbitrary action kinds,
+    # provenance overrides or implicit identity assignment.
+    allowed={"points","stroke_id","role","part","confidence","layer","pressure",
+             "tool","grade","tool_overrides","metadata"}
+    occupied=set(current)|set(new_ids)
+    for spec in additions:
+        if not isinstance(spec,Mapping) or set(spec)-allowed or not {"points","stroke_id","role","tool"}<=set(spec):
+            raise ValueError("addition requires explicit draw kwargs, ID, role and tool")
+        values=deepcopy(dict(spec))
+        sid=values["stroke_id"]
+        if not isinstance(sid,str) or not sid.strip() or sid in occupied:
+            raise ValueError("addition requires a distinct new stroke ID")
+        occupied.add(sid)
+        actions.append(session._draw_action(action_id=aid(),observation_id=oid,
+            source_observation=source,reason=why,**values))
     return actions
+
+
+def _action_digest(actions):
+    return sha256_obj([asdict(a) for a in actions])
 
 
 def _guard(session, expected_cursor, expected_state_hash):
@@ -140,16 +179,20 @@ def _guard(session, expected_cursor, expected_state_hash):
 
 
 def apply_stroke_edits(session, edits: Sequence[StrokeEdit], *, reason,
-                       observation_id, expected_cursor=None, expected_state_hash=None):
-    """Commit one atomic batch of ordinary replacements and optional additions."""
+                       observation_id, expected_cursor=None, expected_state_hash=None,
+                       retire_ids=(), additions=(), expected_action_digest=None):
+    """Atomically apply explicit replacements, retirements and new authored marks."""
     with session._lock:
         _guard(session,expected_cursor,expected_state_hash)
-        actions=_actions(session,edits,reason,observation_id)
+        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions)
+        if expected_action_digest is not None and _action_digest(actions)!=expected_action_digest:
+            raise ValueError("stroke edit proposal differs from preview")
         session._commit(actions)
         return tuple(a.action_id for a in actions)
 
 
-def preview_stroke_edits(session, edits: Sequence[StrokeEdit], out, *, reason, observation_id):
+def preview_stroke_edits(session, edits: Sequence[StrokeEdit], out, *, reason, observation_id,
+                         retire_ids=(), additions=()):
     """Render the exact prospective action batch on a detached history clone.
 
     No observations, session history or checkpoint are modified. The preview is
@@ -162,13 +205,14 @@ def preview_stroke_edits(session, edits: Sequence[StrokeEdit], out, *, reason, o
         cursor=session.history_cursor
         state=session.drawing_state_hash()
         profile=session._require_render_profile()
-        actions=_actions(session,edits,reason,observation_id)
+        actions=_actions(session,edits,reason,observation_id,retire_ids=retire_ids,additions=additions)
         clone=AgentDrawingSession.from_dict(session._agent.to_dict())
         clone.execute_many_atomic(actions,label="prospective stroke edit")
         artifact=render_history_at(clone.history,clone.history.cursor,path,profile)
         return {"preview_only":True,"base_cursor":cursor,"base_state_hash":state,
                 "prospective_state_hash":artifact.drawing_state_hash,
-                "pixel_sha256":artifact.pixel_sha256,"action_ids":[a.action_id for a in actions]}
+                "pixel_sha256":artifact.pixel_sha256,"action_ids":[a.action_id for a in actions],
+                "action_digest":_action_digest(actions)}
 
 
 def transform_strokes(session, stroke_ids, matrix):
