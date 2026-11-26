@@ -165,7 +165,7 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         occupied.add(sid)
         actions.append(session._draw_action(action_id=aid(),observation_id=oid,
             source_observation=source,reason=why,**values))
-    allowed_erase={"points","stroke_id","width","strength","tool","layer","part"}
+    allowed_erase={"points","stroke_id","width","strength","tool","layer","part","pressure"}
     for spec in erasures:
         if not isinstance(spec,Mapping) or set(spec)-allowed_erase or not {"points","stroke_id","width"}<=set(spec):
             raise ValueError("erasure requires explicit path, ID and width")

@@ -102,6 +102,20 @@ OPACITY_NORMALIZED_CONTRACT = RendererContract(
     }.items())),
 )
 
+# New contact semantics require a distinct identity so older packages fail closed.
+PRESSURE_LIFT_CONTRACT = RendererContract(
+    renderer_id=PENCIL_CONTRACT.renderer_id,
+    renderer_version="11-opacity-normalized-v2",
+    parameters=tuple(sorted({
+        **dict(OPACITY_NORMALIZED_CONTRACT.parameters),
+        "path_lift_model": "explicit-pressure-max-radial-contact-v1",
+        "path_lift_sample_spacing": 0.5,
+        "path_lift_radius": "sqrt-pressure-v1",
+        "path_lift_edge_exponent": "hardness-linear-v1",
+        "path_lift_max_samples": 100000,
+    }.items())),
+)
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -126,7 +140,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -139,7 +153,7 @@ def contract_for_identity(renderer_id: str, renderer_version: str | int) -> Rend
     key = canonical_identity(renderer_id, renderer_version)
     if key == PENCIL_CONTRACT.identity:
         return PENCIL_CONTRACT
-    return OPACITY_NORMALIZED_CONTRACT
+    return PRESSURE_LIFT_CONTRACT if key == PRESSURE_LIFT_CONTRACT.identity else OPACITY_NORMALIZED_CONTRACT
 
 
 def verify_contract_digest(digest: str | None, *, renderer_id: str = RENDERER_ID,
@@ -162,6 +176,7 @@ __all__ = [
     "CONTRACT_SCHEMA",
     "PENCIL_CONTRACT",
     "OPACITY_NORMALIZED_CONTRACT",
+    "PRESSURE_LIFT_CONTRACT",
     "contract_for_identity",
     "RENDERER_CONTRACT_DIGEST",
     "RENDERER_ID",

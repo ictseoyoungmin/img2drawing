@@ -188,7 +188,7 @@ def _replay_segment_soft_lift(stroke: Stroke, action: CanvasAction) -> Stroke:
 
 
 def _require_editable_graphite(stroke: Stroke) -> None:
-    if (stroke.tool_state or {}).get("path_lift_contract") == "ordered-graphite-lift-v1":
+    if (stroke.tool_state or {}).get("path_lift_contract") in {"ordered-graphite-lift-v1", "ordered-graphite-pressure-lift-v1"}:
         raise ValueError("retire and re-author a path eraser instead of editing it as graphite")
 
 

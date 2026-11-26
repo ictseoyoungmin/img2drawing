@@ -20,7 +20,7 @@ from typing import Any
 from PIL import Image
 
 from ..render import RENDERER_ID, RENDERER_VERSION, build_patch, is_eraser, load_contact_profile, prepare_stroke
-from ..render.contract import contract_for_identity, verify_contract_digest
+from ..render.contract import PRESSURE_LIFT_CONTRACT, contract_for_identity, verify_contract_digest
 
 CACHE_SCHEMA = "img2drawing.local.patch-cache.v3"
 _DISK_MAGIC = b"IPC1"
@@ -50,6 +50,7 @@ class PatchCache:
         contract = contract_for_identity(RENDERER_ID, renderer_version)
         digest = verify_contract_digest(renderer_contract_digest, renderer_version=renderer_version)
         self.profile = load_contact_profile(contract.renderer_version)
+        self.allow_pressure_lift = contract is PRESSURE_LIFT_CONTRACT
         profile_payload = asdict(self.profile)
         # Preserve the v11 cache key for the unchanged legacy contact profile.
         if not self.profile.opacity_normalized:
