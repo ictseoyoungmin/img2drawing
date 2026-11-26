@@ -54,11 +54,12 @@ applying the experiment.
 
 ```sh
 ROOT="$(pwd)"
+EXPERIMENT="$(mktemp -d)/checkout"
 python dev/benchmarks/tonal_qa/opacity_response.py --out qa-results/opacity-v11
-git worktree add --detach /tmp/img2drawing-opacity-experiment acfe452e4013cdb939ee14e8ce7fd84cd6150bbc
-git -C /tmp/img2drawing-opacity-experiment apply --check "$ROOT/dev/benchmarks/tonal_qa/experimental-opacity.patch"
-git -C /tmp/img2drawing-opacity-experiment apply "$ROOT/dev/benchmarks/tonal_qa/experimental-opacity.patch"
-PYTHONPATH=/tmp/img2drawing-opacity-experiment/skills/img2drawing/src \
+git worktree add --detach "$EXPERIMENT" acfe452e4013cdb939ee14e8ce7fd84cd6150bbc
+git -C "$EXPERIMENT" apply --check "$ROOT/dev/benchmarks/tonal_qa/experimental-opacity.patch"
+git -C "$EXPERIMENT" apply "$ROOT/dev/benchmarks/tonal_qa/experimental-opacity.patch"
+PYTHONPATH="$EXPERIMENT/skills/img2drawing/src" \
   python "$ROOT/dev/benchmarks/tonal_qa/opacity_response.py" --experimental --out "$ROOT/qa-results/opacity-experimental"
 ```
 
