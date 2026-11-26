@@ -8,6 +8,7 @@ namespace.
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import subprocess
 import sys
@@ -15,8 +16,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "skills/img2drawing/src"))
+sys.path.insert(0, str(ROOT / "dev/tools"))
 
 import img2drawing
+from historical_evidence import read_archived_blob
 
 
 if not hasattr(img2drawing, "DrawingSession"):
@@ -33,15 +36,13 @@ for module_name in (
     if importlib.util.find_spec(module_name) is not None:
         raise SystemExit(f"retired R23 runtime unexpectedly remains installable: {module_name}")
 
-compatibility_root = ROOT / "dev/release/r23/compatibility/stages"
+compatibility_root = "dev/release/r23/compatibility/stages"
 for filename in (
     "p4-structural-connections.md",
     "p5-clean-blockin.md",
     "p6-identity-finish.md",
 ):
-    path = compatibility_root / filename
-    if not path.is_file():
-        raise SystemExit(f"missing preserved R23 compatibility asset: {path.relative_to(ROOT)}")
+    read_archived_blob(f"{compatibility_root}/{filename}")
 
 historical_path = "skills/img2drawing/src/img2drawing/legacy/r23.py"
 expected_blob = "e8f4ce234bddc5e5481c41fefe4c356c478fd1cb"
@@ -56,14 +57,13 @@ if result.returncode != 0:
 if result.stdout.strip() != expected_blob:
     raise SystemExit("historical R23 compatibility blob identity drift")
 
-manifest = ROOT / "dev/release/r23/release_manifest.json"
-data = json.loads(manifest.read_text(encoding="utf-8"))
+data = json.loads(read_archived_blob("dev/release/r23/release_manifest.json"))
 if data.get("version") != "0.5.2.dev23" or data.get("revision") != "R23":
     raise SystemExit("frozen R23 manifest identity mismatch")
 for item in data.get("artifacts", []):
-    path = ROOT / item["path"]
-    if not path.is_file():
-        raise SystemExit(f"missing release artifact: {path}")
+    raw = read_archived_blob(item["path"])
+    if len(raw) != item["bytes"] or hashlib.sha256(raw).hexdigest() != item["sha256"]:
+        raise SystemExit(f"archived release artifact hash mismatch: {item['path']}")
 
 print(
     f"R23_HISTORICAL_RELEASE_VALIDATION_PASS {data['version']} under "

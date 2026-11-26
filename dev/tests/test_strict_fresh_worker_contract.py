@@ -64,7 +64,9 @@ def test_strict_worker_schemas_are_valid_and_accept_prepared_envelope(tmp_path: 
 
 def test_scripted_fixture_audit_is_mechanical_and_not_visual_authority():
     audit_tool = _load_tool("audit_fresh_worker")
-    result = audit_tool.audit(PROJECT / "dev/evidence/fresh-worker")
+    from historical_evidence import archived_snapshot
+    with archived_snapshot("dev/evidence/fresh-worker") as snapshot:
+        result = audit_tool.audit(snapshot / "dev/evidence/fresh-worker")
     assert result["complete"] is True
     assert result["stage_registry"] == "full_body_croquis_with_p6"
     assert result["semantic_visual_audit_required"] is True
@@ -73,5 +75,7 @@ def test_scripted_fixture_audit_is_mechanical_and_not_visual_authority():
 
 def test_strict_verifier_does_not_promote_scripted_fixture():
     verifier = _load_tool("verify_strict_fresh_worker")
-    with pytest.raises(AssertionError, match="strict fresh-worker artifact"):
-        verifier.verify(PROJECT / "dev/evidence/fresh-worker")
+    from historical_evidence import archived_snapshot
+    with archived_snapshot("dev/evidence/fresh-worker") as snapshot:
+        with pytest.raises(AssertionError, match="strict fresh-worker artifact"):
+            verifier.verify(snapshot / "dev/evidence/fresh-worker")

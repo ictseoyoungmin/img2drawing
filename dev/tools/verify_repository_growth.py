@@ -7,7 +7,10 @@ import json
 import subprocess
 from pathlib import Path, PurePosixPath
 
+from historical_evidence import RETIRED_SOURCE, RETIRED_PATHS, RETIRED_TREES, is_retired
+
 ROOT=Path(__file__).resolve().parents[2]
+MAX_RELATIVE_PATH=100
 BASE="1127e673e05799040e802e9fd3a887d7781f2941"
 MAX_NEW_BLOB=1024*1024
 MAX_DEV_BINARY=512*1024
@@ -46,6 +49,9 @@ def policy_violations(before,after):
     violations=[]
     new_dev_binary=0
     for path,(sha,size) in sorted(after.items()):
+        # Count UTF-16 code units, as Windows paths do; the extraction prefix is user-dependent.
+        if len(path.encode("utf-16-le"))//2>MAX_RELATIVE_PATH:
+            violations.append(f"relative path exceeds {MAX_RELATIVE_PATH}: {path}")
         if before.get(path)==(sha,size):
             continue
         if generated(path):
@@ -79,16 +85,48 @@ def archive_violations(manifest,before,after):
     return errors
 
 
+def retired_violations(manifest, before, after, object_ids):
+    """Check exact retired subtree identities, totals and absence at HEAD."""
+    if (manifest.get("schema") != "img2drawing.retired_evidence.v1"
+            or manifest.get("source_commit") != RETIRED_SOURCE):
+        return ["invalid retired evidence authority"]
+    entries = manifest.get("entries", [])
+    if tuple(sorted(x["path"] for x in entries)) != RETIRED_PATHS:
+        return ["retired evidence path set mismatch"]
+    errors = []
+    total_files = total_bytes = 0
+    for entry in entries:
+        path = entry["path"]
+        kind = "tree" if path in RETIRED_TREES else "blob"
+        files = {p:v for p,v in before.items() if p==path or p.startswith(path+"/")}
+        count, size = len(files), sum(v[1] for v in files.values())
+        total_files += count
+        total_bytes += size
+        if (not files or entry["kind"] != kind or entry["git_sha"] != object_ids.get(path)
+                or entry["files"] != count or entry["bytes"] != size):
+            errors.append(f"retired evidence identity mismatch: {path}")
+    if (manifest.get("archive_count"), manifest.get("archive_bytes")) != (total_files,total_bytes):
+        errors.append("retired evidence totals mismatch")
+    errors.extend(f"retired path reintroduced: {path}" for path in sorted(after) if is_retired(path))
+    return errors
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json",action="store_true")
     args=parser.parse_args()
     before,after=read_tree(ROOT,BASE),read_tree(ROOT,"HEAD")
     manifest=json.loads((ROOT/"dev/docs/historical-evidence-archive.json").read_text())
-    errors=policy_violations(before,after)+archive_violations(manifest,before,after)
+    retired=json.loads((ROOT/"dev/docs/retired-evidence.json").read_text())
+    retired_before=read_tree(ROOT,RETIRED_SOURCE)
+    ids={path:subprocess.check_output(["git","rev-parse",f"{RETIRED_SOURCE}:{path}"],cwd=ROOT,text=True).strip() for path in RETIRED_PATHS}
+    errors=(policy_violations(before,after)+archive_violations(manifest,before,after)
+            +retired_violations(retired,retired_before,after,ids))
     summary={"baseline_bytes":sum(v[1] for v in before.values()),
              "current_bytes":sum(v[1] for v in after.values()),
-             "archived_files":manifest["archive_count"],"archived_bytes":manifest["archive_bytes"],
+             "archived_files":manifest["archive_count"]+retired["archive_count"],
+             "archived_bytes":manifest["archive_bytes"]+retired["archive_bytes"],
+             "max_relative_path":max((len(p.encode("utf-16-le"))//2 for p in after),default=0),
              "violations":errors}
     if args.json or errors:
         print(json.dumps(summary,indent=2))

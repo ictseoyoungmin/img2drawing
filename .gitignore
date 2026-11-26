@@ -106,3 +106,12 @@ dev/archives
 /private-qa/
 /dev/benchmarks/constructive_qa/runs/
 /dev/benchmarks/tonal_qa/runs/
+
+# Retired historical evidence; recover from Git into a separate location.
+/dev/dogfood/croquis-sniper-girl/
+/dev/dogfood/target-subject/
+/dev/dogfood/vnext-b05/
+/dev/evidence/material-integration/
+/dev/evidence/fresh-worker/
+/dev/evidence/vnext/
+/dev/release/r23/

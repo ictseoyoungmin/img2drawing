@@ -12,7 +12,8 @@ from pathlib import Path
 
 from PIL import Image, ImageChops
 
-from verify_repository_paths import find_machine_path_leaks
+from verify_repository_paths import MACHINE_PATH
+from historical_evidence import archived_snapshot
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -21,7 +22,7 @@ R23_PRE_RETIREMENT_COMMIT = "4074a2080ad739acdf179bb0784869a8831c5ef0"
 
 def _load(path: Path):
     if not path.is_file():
-        raise AssertionError(f"missing evidence: {path.relative_to(ROOT)}")
+        raise AssertionError(f"missing evidence: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -55,14 +56,30 @@ def _nonblank(path: Path) -> None:
 
 
 def _relative_text_scan(root: Path) -> None:
-    leaks = find_machine_path_leaks(root)
-    if leaks:
-        path, line_number = leaks[0]
-        raise AssertionError(f"non-portable absolute path in {path}:{line_number}")
+    # Historical evidence lives in a temporary, non-Git directory.
+    # Use the same portability rule and binary detection as the live-tree check.
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        raw = path.read_bytes()
+        if b"\x00" in raw[:4096]:
+            continue
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError:
+            continue
+        for line_number, line in enumerate(text.splitlines(), 1):
+            if MACHINE_PATH.search(line):
+                raise AssertionError(f"non-portable absolute path in {path.relative_to(root)}:{line_number}")
 
 
 def check_s10() -> None:
-    base = ROOT / "dev/evidence/material-integration"
+    with archived_snapshot("dev/evidence/material-integration") as root:
+        _check_s10(root)
+
+
+def _check_s10(root: Path) -> None:
+    base = root / "dev/evidence/material-integration"
     report = _load(base / "s10-quality-run/quality_run_report.json")
     if report.get("status") != "closed" or report.get("current_stage") is not None:
         raise AssertionError("S10 quality run is not closed")
@@ -114,11 +131,16 @@ def check_s11_s12() -> None:
 
 
 def check_s14() -> None:
-    report_path = ROOT / "dev/evidence/fresh-worker/generalization_report.json"
+    with archived_snapshot("dev/evidence/fresh-worker") as root:
+        _check_s14(root)
+
+
+def _check_s14(root: Path) -> None:
+    report_path = root / "dev/evidence/fresh-worker/generalization_report.json"
     report = _load(report_path)
     if report.get("status") != "closed" or report.get("mechanical_artistic_separation") is not True:
         raise AssertionError("fresh-worker report is not closed or conflates mechanical/artistic PASS")
-    final = ROOT / report["final_drawing"]
+    final = root / report["final_drawing"]
     _nonblank(final)
     if report.get("prohibited_coordinate_or_action_ids"):
         raise AssertionError("fresh-worker report contains prohibited material coordinates/action IDs")
@@ -141,14 +163,19 @@ def check_s14b(evidence_dir: Path | None = None) -> None:
 
 
 def check_s15() -> None:
-    report = _load(ROOT / "dev/release/r23/release_manifest.json")
+    with archived_snapshot("dev/release/r23") as root:
+        _check_s15(root)
+
+
+def _check_s15(root: Path) -> None:
+    report = _load(root / "dev/release/r23/release_manifest.json")
     if report.get("version") != "0.5.2.dev23" or report.get("revision") != "R23":
         raise AssertionError("release identity is not R23")
     for item in report.get("artifacts", []):
-        path = ROOT / item["path"]
+        path = root / item["path"]
         if not path.is_file() or _sha(path) != item["sha256"]:
             raise AssertionError(f"release artifact hash mismatch: {path}")
-    _relative_text_scan(ROOT / "dev/release/r23")
+    _relative_text_scan(root / "dev/release/r23")
 
 
 def main() -> int:

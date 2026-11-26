@@ -208,6 +208,9 @@ for the instruction graph.
 `skills/img2drawing/` is self-contained and independently packageable. Drawing knowledge and
 public usage contracts live in the skill; development and compatibility machinery stay outside
 that attention route or inside the runtime implementation.
+For installation, package only `skills/img2drawing/`. Retired developer runs and obsolete
+release packages are recoverable from Git history; see the [retention policy](dev/docs/historical-evidence.md).
+Use a short extraction destination on Windows if your full source ZIP path is long.
 
 ## Contributing
 

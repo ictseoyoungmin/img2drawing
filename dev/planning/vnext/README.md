@@ -40,7 +40,7 @@ The release cycles through v1.2.0 remain immutable. M03 selects **GitHub Release
 
 ## Historical evidence and repository size
 
-[Historical evidence retention policy](../../docs/historical-evidence.md) records archived stage-era runs and the new generated-artifact gate. The v1.2.1 commit remains immutable; historical manifests and files can be recovered from it. Current runtime and active fixtures stay in the working tree.
+[Historical evidence retention policy](../../docs/historical-evidence.md) records archived stage-era runs and the new generated-artifact gate. The v1.2.1 archive and the second pre-cleanup commit are immutable; historical paths resolve via their pinned Git trees. Current runtime, active fixtures, and curated showcase stay in the working tree.
 
 ## Authority order
 
