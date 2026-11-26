@@ -100,6 +100,7 @@ print(json.dumps({
         "MaterialSample", "SubjectPalette", "LANDMARK_SCHEMA", "Landmark",
         "LandmarkSet", "compare_landmarks", "compare_ratios", "compare_axes",
         "cross_section", "compare_negative_space", "occlusion_relation",
+        "compare_portrait_landmarks", "portrait_likeness_packet",
     ])
     assert payload["material_module"] == "img2drawing.observation.palette"
     assert payload["palette_module"] == "img2drawing.observation.palette"

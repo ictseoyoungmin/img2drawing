@@ -103,8 +103,8 @@ For a new task:
    this gate through another leaf.
 6. Use `references/INDEX.md` to open only the specialist construction, description, figure, prop,
    environment, or markmaking leaves that own the current relationship. For a likeness-bearing
-   portrait, open `references/figure/head-face-hair.md` and compare the reference and current
-   drawing at whole-head and face scales before accepting facial detail or finishing. Do not preload every branch.
+   face, including a readable face in a full figure, open `references/figure/head-face-hair.md` and
+   follow its local portrait-review route before accepting facial detail or finishing. Do not preload every branch.
 7. After meaningful mutations, inspect a fresh render and route mismatches through
    [`references/review/residual-correction.md`](references/review/residual-correction.md). When the
    visible part may only be a symptom, use
