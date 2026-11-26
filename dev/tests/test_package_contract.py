@@ -60,7 +60,7 @@ def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examp
     manifest = (PACKAGE / "MANIFEST.in").read_text(encoding="utf-8")
     for required in (
         "LICENSE",
-        "README.md",
+        "README.txt",
         "SKILL.md",
         "recursive-include references *.md",
     ):
@@ -82,6 +82,9 @@ def test_manifest_selects_instruction_graph_and_excludes_control_plane_and_examp
         assert forbidden not in manifest
 
     assert not (PACKAGE / "examples").exists()
+    assert not (PACKAGE / "README.md").exists()
+    assert (PACKAGE / "README.txt").is_file()
+    assert "include assets/icon.svg" in manifest
     for removed in (
         "NOTICE",
         "NOTICE.md",

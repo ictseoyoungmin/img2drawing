@@ -91,7 +91,9 @@ class RenderProfile:
     png_mode: str = "RGBA"
     gif_palette_colors: int = 256
     gif_loop: int = 0
-    gif_disposal: int = 2
+    # New profiles use retain-previous, which permits compact rectangle GIFs.
+    # from_dict always reads the explicit persisted value.
+    gif_disposal: int = 1
     renderer_contract_digest: str | None = None
 
     def __post_init__(self) -> None:

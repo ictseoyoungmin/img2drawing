@@ -151,8 +151,10 @@ Raw legacy eraser history still follows existing canonical fallback rules.
 
 ## Experimental pressure-shaped graphite lift
 
-On the research profile only, explicitly select
-`RenderProfile.opacity_normalized(width, height, pressure_lift=True)`.
+Select a normalized profile that supports pressure lift:
+`RenderProfile.opacity_normalized(width, height, pressure_lift=True)` or
+`RenderProfile.opacity_normalized(width, height, contact_width=True)`.
+See `../output/render-profile-and-replay.md` for the profile selection table.
 Supply `pressure` to `erase_path` or to an explicit erasure in the existing
 mixed preview/apply batch. One finite pressure sample in [0,1] per point,
 with at least one positive sample, is required. A rising and falling pressure

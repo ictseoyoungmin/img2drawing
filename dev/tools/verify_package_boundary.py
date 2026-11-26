@@ -173,6 +173,7 @@ def check_artifacts(work: Path) -> tuple[Path, Path]:
         metadata_name = next(name for name in names if name.endswith(".dist-info/METADATA"))
         metadata = email.parser.Parser().parsestr(archive.read(metadata_name).decode())
         assert metadata["Version"] == VERSION
+        assert metadata["License-Expression"] == "Apache-2.0"
         runtime_requires = [v for v in metadata.get_all("Requires-Dist", []) if "extra ==" not in v]
         assert any(v.lower().startswith("numpy>=") for v in runtime_requires)
         assert any(v.lower().startswith("pillow>=") for v in runtime_requires)
@@ -195,7 +196,30 @@ def check_artifacts(work: Path) -> tuple[Path, Path]:
                 assert stream is not None
                 _scan_text(member.name, stream.read())
         assert REQUIRED_GRAPH_FILES.issubset(relative_names), sorted(REQUIRED_GRAPH_FILES - relative_names)
+        assert {"assets/icon.svg", "README.txt"}.issubset(relative_names)
         assert not any(name.startswith("examples/") for name in relative_names)
+    # The skill archive is a separate agent-installable product, not the wheel.
+    # Every member must be the exact tracked source, including the icon and guidance.
+    skill_zip = dist / f"img2drawing-skill-{VERSION}.zip"
+    _run([sys.executable, str(ROOT / "dev/tools/build_skill_zip.py"),
+          "--package-dir", str(PACKAGE), "--out", str(skill_zip)], cwd=ROOT)
+    tracked = subprocess.check_output(
+        ["git", "ls-files", "-z", "--", "skills/img2drawing"], cwd=ROOT
+    ).decode("utf-8").split("\0")
+    expected = {
+        str(PurePosixPath("img2drawing") / PurePosixPath(name).relative_to("skills/img2drawing")): ROOT / name
+        for name in tracked if name
+    }
+    with zipfile.ZipFile(skill_zip) as archive:
+        names = archive.namelist()
+        assert len(names) == len(expected) and set(names) == set(expected)
+        assert archive.testzip() is None
+        for name, source in expected.items():
+            path = _safe_member(name)
+            assert not FORBIDDEN_ARCHIVE_PARTS.intersection(path.parts), name
+            data = archive.read(name)
+            assert data == source.read_bytes(), f"skill ZIP source mismatch: {name}"
+            _scan_text(name, data)
     return wheel, sdist
 
 

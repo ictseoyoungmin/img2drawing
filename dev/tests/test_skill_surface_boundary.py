@@ -16,6 +16,7 @@ def test_deployable_skill_root_is_attention_clean() -> None:
     assert {path.name for path in SKILL.iterdir()} == {
         "LICENSE",
         "MANIFEST.in",
+        "README.txt",  # Packaging metadata only; SKILL.md remains the sole router.
         "SKILL.md",
         "assets",
         "pyproject.toml",

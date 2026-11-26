@@ -100,7 +100,8 @@ class GifFidelityError(RuntimeError):
 def _check_gif(gif_path: Path, final_path: Path, tolerance: dict, max_gif_bytes: int) -> dict[str, Any]:
     gif_bytes = gif_path.stat().st_size
     if gif_bytes > int(max_gif_bytes):
-        raise ValueError("replay GIF size budget exceeded")
+        raise ValueError(f"replay GIF size budget exceeded: {gif_bytes:,} bytes, limit {int(max_gif_bytes):,}. "
+                         "Increase every_n or explicitly raise max_gif_bytes; disposal 2/3 requires full frames.")
     max_error, mean_error = gif_final_frame_error(gif_path, final_path)
     within = max_error <= tolerance["max_channel_error"] and mean_error <= tolerance["mean_channel_error"]
     if not within:
@@ -184,7 +185,9 @@ def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[in
 
     if progress is not None:
         progress({"phase": "encode", "completed": 0, "total": 1})
-    encode = encode_gif(pack_path, output, int(fps), palette_cache_dir=cache_dir / "palettes", rectangle=bool(rectangle))
+    encode = encode_gif(pack_path, output, int(fps), palette_cache_dir=cache_dir / "palettes",
+                        rectangle=bool(rectangle), colors=profile.gif_palette_colors,
+                        loop=profile.gif_loop, disposal=profile.gif_disposal)
     if progress is not None:
         progress({"phase": "encode", "completed": 1, "total": 1})
 
@@ -287,6 +290,8 @@ def export_timelapse(
     if int(max_gif_bytes) < 1:
         raise ValueError("max_gif_bytes must be >= 1")
     profile.validate_canvas(history.width, history.height)
+    if profile.gif_loop > 65535:
+        raise ValueError("GIF loop must be in [0,65535]")
     cursors = sample_cursors(history.cursor, mode, every_n)
     pixel_work = _pixel_work(profile, len(cursors))
     if pixel_work > int(max_pixel_work):
@@ -302,6 +307,10 @@ def export_timelapse(
         eligibility = inspect_fast_path_eligibility(history)
         if not eligibility.eligible:
             fallback_reason = "; ".join(eligibility.reasons)
+        elif profile.background_rgba[3] != 255:
+            # IDP1 stores RGB, not RGBA. Do not claim exact native-frame staging
+            # for transparent paper; canonical PNG frames preserve the alpha channel.
+            fallback_reason = "transparent background requires canonical RGBA frame staging"
         elif shutil.which("ffmpeg") is None:
             fallback_reason = "ffmpeg is unavailable"
         if fallback_reason is not None and backend == "fast":
@@ -423,7 +432,9 @@ def export_timelapse(
             "rgb_sha256": final_rgb,
             "last_frame_pixel_match": last_match,
         },
-        "gif": gif,
+        "gif": {**gif, "display_compositing": "source-over-white",
+                "loop": profile.gif_loop, "disposal": profile.gif_disposal,
+                "palette_colors_max": profile.gif_palette_colors},
     }
     if fast_summary is not None:
         manifest["fast"] = fast_summary
