@@ -116,3 +116,32 @@ together when a value family is too pale or its contact footprints separate into
 stripes. Read actual overlap and soft turns first; a stronger midpoint with an abrupt
 terminal may make the band more obvious. Use the existing prospective stroke-edit
 preview and value-continuity checks; no preset is a universal exposure conversion.
+
+## Explicit contact width along a stroke
+
+For a new session choose `RenderProfile.opacity_normalized(w, h, contact_width=True)`
+when a single continuous authored graphite mark needs independently controlled contact
+width. This opt-in contract also supports pressure-shaped erasure. Old sessions are
+not migrated. The nominal tool width remains the maximum; pressure, grade and hand
+response resolve the usual diameter, then explicit arc-length factors in [.15, 1]
+narrow that diameter without changing the authored pressure samples.
+
+```python
+from img2drawing.authoring import ContactWidthProfile, StrokeEdit
+width = ContactWidthProfile(((0., .25), (.28, 1.), (.72, .82), (1., .2)))
+# Supply width.metadata(existing_metadata) to ordinary session.draw or draw_many.
+# To revise a chosen current mark without re-authoring its pressure:
+current = session.current_stroke(stroke_id)
+edit = StrokeEdit(stroke_id, tuple(current.points), contact_width_profile=width)
+```
+
+The width recipe is persisted material metadata, relative to the normalized rendered
+path; the stroke remains an explicit authored path. `read_contact_width_profile`
+recovers it. Whole-path geometry changes remap relative arc positions; split edits
+restrict and renormalize the two subintervals. For a parametric curve edit combine
+`CurveDefinition.draw_kwargs(metadata=width.metadata(...))` on creation, or preserve
+its existing recipe with `StrokeEdit`. Width factors of one retain ordinary pixels.
+The renderer still models graphite deposition; a narrower footprint can change
+actual overlap and apparent density, so compare real renders rather than assuming
+constant luminance. Do not infer a brush footprint from reference pixels or substitute
+one wide stroke for observed overlap and form. Keep only visibly justified contacts.

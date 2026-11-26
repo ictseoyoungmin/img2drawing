@@ -11,6 +11,7 @@ from typing import Sequence
 
 from ..core.action import AgentDrawingSession, DrawingAction
 from ..core.digest import sha256_obj
+from ..core.contact_width import ContactWidthProfile, WIDTH_KEY, profile_from_metadata
 from ..inspection import drawing_state_hash
 from ..render.artifact import render_history_at
 from .retune import _TOOL_OVERRIDE_FIELDS
@@ -26,6 +27,7 @@ class StrokeEdit:
     new_stroke_id: str | None = None
     material_overrides: Mapping[str, float] | None = None
     curve_definition: "CurveDefinition | None" = None
+    contact_width_profile: ContactWidthProfile | None = None
 
     def __post_init__(self):
         if not isinstance(self.stroke_id,str) or not self.stroke_id.strip():
@@ -58,6 +60,8 @@ class StrokeEdit:
                     raise ValueError(f"invalid material edit: {key}")
                 material[key] = v
             object.__setattr__(self, "material_overrides", MappingProxyType(material))
+        if self.contact_width_profile is not None and not isinstance(self.contact_width_profile,ContactWidthProfile):
+            raise ValueError("contact_width_profile requires ContactWidthProfile")
         if self.curve_definition is not None:
             from .parametric_curve import CurveDefinition
             if not isinstance(self.curve_definition,CurveDefinition) or self.split_at is not None:
@@ -131,6 +135,9 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         overrides.update(e.material_overrides or {})
         meta=deepcopy((state.get("provenance") or {}).get("metadata") or {})
         meta["geometry_edited_from"]=e.stroke_id
+        if e.contact_width_profile is not None:
+            meta[WIDTH_KEY]=e.contact_width_profile.to_dict()
+        width_profile=profile_from_metadata(meta)
         # Optional authoring metadata is not a second source of replay geometry.
         from .parametric_curve import CURVE_KEY
         if e.curve_definition is not None:
@@ -149,12 +156,18 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         first_meta=deepcopy(meta)
         if i is not None:
             first_meta["split_fragment"]="first"
+            if width_profile is not None:
+                lengths=[math.dist(a,b) for a,b in zip(e.points,e.points[1:])]
+                split=math.fsum(lengths[:i])/math.fsum(lengths)
+                first_meta[WIDTH_KEY]=width_profile.interval(0.,split).to_dict()
         actions.append(session._draw_action(points,action_id=aid(),stroke_id=e.stroke_id,
             target_stroke_id=e.stroke_id,revision_of=e.stroke_id,kind="replace_stroke",
             pressure=pressures,metadata=first_meta,**common))
         if i is not None:
             second_meta=deepcopy(meta)
             second_meta["split_fragment"]="second"
+            if width_profile is not None:
+                second_meta[WIDTH_KEY]=width_profile.interval(split,1.).to_dict()
             actions.append(session._draw_action(e.points[i:],action_id=aid(),
                 stroke_id=e.new_stroke_id,pressure=pressure[i:],metadata=second_meta,**common))
     from ..session.drawing_session import _COMPAT_STAGE, _tool_payload

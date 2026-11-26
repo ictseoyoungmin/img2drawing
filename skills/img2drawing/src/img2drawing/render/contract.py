@@ -116,6 +116,17 @@ PRESSURE_LIFT_CONTRACT = RendererContract(
     }.items())),
 )
 
+CONTACT_WIDTH_CONTRACT = RendererContract(
+    renderer_id=PENCIL_CONTRACT.renderer_id,
+    renderer_version="11-opacity-normalized-v3",
+    parameters=tuple(sorted({
+        **dict(PRESSURE_LIFT_CONTRACT.parameters),
+        "contact_width_model": "explicit-resolved-diameter-arc-knots-v1",
+        "contact_width_range": (0.15, 1.0),
+        "contact_width_max_knots": 64,
+    }.items())),
+)
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -140,7 +151,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -153,6 +164,8 @@ def contract_for_identity(renderer_id: str, renderer_version: str | int) -> Rend
     key = canonical_identity(renderer_id, renderer_version)
     if key == PENCIL_CONTRACT.identity:
         return PENCIL_CONTRACT
+    if key == CONTACT_WIDTH_CONTRACT.identity:
+        return CONTACT_WIDTH_CONTRACT
     return PRESSURE_LIFT_CONTRACT if key == PRESSURE_LIFT_CONTRACT.identity else OPACITY_NORMALIZED_CONTRACT
 
 
@@ -177,6 +190,7 @@ __all__ = [
     "PENCIL_CONTRACT",
     "OPACITY_NORMALIZED_CONTRACT",
     "PRESSURE_LIFT_CONTRACT",
+    "CONTACT_WIDTH_CONTRACT",
     "contract_for_identity",
     "RENDERER_CONTRACT_DIGEST",
     "RENDERER_ID",

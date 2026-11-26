@@ -137,3 +137,20 @@ Use 1–4 alternatives, 1–8 chains and at most eight area plans; adjust the ex
 `max_pixel_work` budget only when warranted. A fresh directory is required. Compare actual
 preview images and evidence, then apply only the chosen exact batch with its base cursor,
 state and action digest. Measurements diagnose, not select artistic correctness.
+
+## Strip inspection of repeated tonal bands
+
+When stripes or abrupt stroke shoulders recur within one visibly continuous plane,
+choose matching subject and canvas rectangles spanning that plane, excluding true
+boundaries. `TonalBandProbe(label, subject_box, canvas_box, axis="x", bins=16)` divides
+them into explicit equal-width vertical strips (use `axis="y"` for horizontal strips).
+`inspect_tonal_bands(session, probe, cursors=..., cached_renders=...)` uses the same
+canonical patch inspection and validated cached renders. `probe.patches()` can also
+be passed as a chain to `inspect_tonal_proposals`; `probe.summarize(chain_result)`
+then reports local turns, absolute second differences and unmatched turn positions.
+This avoids hand-defining dozens of adjacent boxes, not the duty to identify a form.
+An unmatched turn may reflect incorrect registration, a true fold, or a misplaced
+highlight. Treat the quantities as diagnostic evidence, not a loss to minimize, and
+review the actual image before committing a replacement family. Do not erase real
+folds merely to flatten the measured signal. For oblique or curving planes choose
+explicit TonalPatch chains instead of an axis-aligned strip probe.

@@ -70,6 +70,8 @@ class RuntimeCapabilities:
         "img2drawing.authoring.prepare_group_transform",
         "img2drawing.authoring.retire_group_guides",
         "img2drawing.authoring.inspect_tonal_proposals",
+        "img2drawing.authoring.ContactWidthProfile",
+        "img2drawing.authoring.read_contact_width_profile",
         "img2drawing.authoring.TonalPressureAdjustment",
         "img2drawing.authoring.prepare_tonal_pressure_edits",
         "img2drawing.authoring.resample_polyline",
@@ -99,6 +101,9 @@ class RuntimeCapabilities:
     )
     observation_helpers: tuple[str, ...] = (
         "img2drawing.inspection.inspect_tonal_interval",
+        "img2drawing.inspection.TonalBandProbe",
+        "img2drawing.inspection.inspect_tonal_bands",
+        "img2drawing.inspection.compare_tonal_bands",
         "img2drawing.inspection.TonalPatch",
         "img2drawing.inspection.compare_tonal_patches",
         "img2drawing.inspection.inspect_tonal_patches",

@@ -68,6 +68,7 @@ class PencilContactProfile:
     hand: HandProfile
     edge: EdgeProfile
     opacity_normalized: bool = False
+    contact_width_control: bool = False
 
 
 def _positive(name: str, value: float) -> float:
