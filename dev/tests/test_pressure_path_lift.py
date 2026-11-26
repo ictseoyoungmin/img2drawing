@@ -92,3 +92,56 @@ def test_old_profile_rejects_varying_pressure(tmp_path):
     s,oid,_=make(tmp_path,False);before=snap(s)
     with pytest.raises(ValueError,match='pressure_lift=True'):path(s,oid,[0,.4,1,.3,0])
     assert snap(s)==before
+
+
+# Frozen pre-optimization footprint expression: protects the experimental v2
+# pixel contract independently of the slab implementation and its boundaries.
+def _reference_pressure_footprint(stroke, factor, bounds, hardness):
+    from math import ceil, hypot
+    pts, pressure = stroke.points, stroke.pressure
+    steps = [max(1, int(ceil(hypot(b[0]-a[0], b[1]-a[1]) / .5)))
+             for a, b in zip(pts, pts[1:])]
+    ox, oy, x1, y1 = bounds
+    mask = np.zeros((y1-oy, x1-ox), dtype=np.float32)
+    exponent = np.float32(.35 + 1.65*(1-hardness))
+
+    def stamp(x, y, p):
+        if p <= 0:
+            return
+        cx, cy = x*factor-ox, y*factor-oy
+        radius = .5*float(stroke.width)*factor*np.sqrt(p)
+        xa, xb = max(0, int(np.floor(cx-radius))), min(mask.shape[1], int(np.ceil(cx+radius))+1)
+        ya, yb = max(0, int(np.floor(cy-radius))), min(mask.shape[0], int(np.ceil(cy+radius))+1)
+        if xa >= xb or ya >= yb:
+            return
+        yy, xx = np.ogrid[ya:yb, xa:xb]
+        d = ((xx+.5-cx)**2+(yy+.5-cy)**2)/(radius*radius)
+        contact = np.float32(p)*np.maximum(1-d, 0).astype(np.float32)**exponent
+        dst = mask[ya:yb, xa:xb]
+        np.maximum(dst, contact, out=dst)
+
+    for i, n in enumerate(steps):
+        a, b = pts[i], pts[i+1]
+        for j in range(n):
+            u = j/n
+            stamp(a[0]+(b[0]-a[0])*u, a[1]+(b[1]-a[1])*u,
+                  pressure[i]+(pressure[i+1]-pressure[i])*u)
+    stamp(*pts[-1], pressure[-1])
+    return np.rint(np.clip(mask, 0, 1)*255).astype(np.uint8)
+
+
+@pytest.mark.parametrize("factor,width,hardness,points,pressure,bounds", [
+    (1, 1.2, .0, [(0., 1.), (3.1, 2.7), (6., 1.)], [0., .9, .1], (0, 0, 8, 8)),
+    (2, 12., .65, [(4.1, 8.2), (9.7, 3.2), (4.1, 8.2)], [.2, 1., .4], (0, 0, 37, 31)),
+    (3, 260., .35, [(300.25, 301.5), (302., 300.), (304.5, 302.)], [0., 1., .25], (350, 400, 1450, 1430)),
+    (3, 260., 1., [(5.2, 6.3), (7.2, 8.1), (9.2, 6.3)], [.7, 1., 0.], (0, 0, 800, 800)),
+    (4, 130., .5, [(500., 500.), (502.1, 499.7)], [1., .1], (1900, 1880, 2200, 2220)),
+])
+def test_pressure_footprint_matches_original_expression(factor, width, hardness, points, pressure, bounds):
+    from types import SimpleNamespace
+    from img2drawing.render.eraser import _profiled_footprint
+    stroke = SimpleNamespace(points=points, pressure=pressure, width=width)
+    expected = _reference_pressure_footprint(stroke, factor, bounds, hardness)
+    actual = _profiled_footprint(stroke, factor, bounds, hardness)
+    assert actual.dtype == np.uint8
+    assert np.array_equal(actual, expected)

@@ -140,11 +140,23 @@ def _profiled_footprint(stroke: Stroke, factor: float, bounds: tuple[int, int, i
         ya,yb=max(0,int(np.floor(cy-radius))),min(mask.shape[0],int(np.ceil(cy+radius))+1)
         if xa>=xb or ya>=yb:
             return
-        yy,xx=np.ogrid[ya:yb,xa:xb]
-        d=((xx+.5-cx)**2+(yy+.5-cy)**2)/(radius*radius)
-        contact=np.float32(p)*np.maximum(1-d,0).astype(np.float32)**exponent
-        dst=mask[ya:yb,xa:xb]
-        np.maximum(dst,contact,out=dst)
+        # Preserve the scalar expression and dtype/order of the original
+        # contact kernel, but reuse its scratch arrays within bounded row slabs.
+        # The mask itself remains the exact max-union of all authored contacts.
+        x2 = (np.arange(xa, xb)[None, :] + .5 - cx)**2
+        rows = max(1, 262144 // (xb - xa))
+        for lo in range(ya, yb, rows):
+            hi = min(yb, lo + rows)
+            y2 = (np.arange(lo, hi)[:, None] + .5 - cy)**2
+            d = x2 + y2
+            np.divide(d, radius*radius, out=d)
+            np.subtract(1, d, out=d)
+            np.maximum(d, 0, out=d)
+            contact = d.astype(np.float32)
+            np.power(contact, exponent, out=contact)
+            np.multiply(np.float32(p), contact, out=contact)
+            dst = mask[lo:hi, xa:xb]
+            np.maximum(dst, contact, out=dst)
     for i,n in enumerate(steps):
         a,b=pts[i],pts[i+1]
         for j in range(n):
