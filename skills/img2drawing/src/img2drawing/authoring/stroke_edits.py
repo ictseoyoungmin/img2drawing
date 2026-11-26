@@ -5,6 +5,8 @@ from copy import deepcopy
 from dataclasses import dataclass
 import math
 from pathlib import Path
+from collections.abc import Mapping
+from types import MappingProxyType
 from typing import Sequence
 
 from ..core.action import AgentDrawingSession
@@ -15,12 +17,13 @@ from .retune import _TOOL_OVERRIDE_FIELDS
 
 @dataclass(frozen=True)
 class StrokeEdit:
-    """One current stroke's new explicit points and optional pressure/split."""
+    """One current stroke's explicit points and optional pressure/split/material."""
     stroke_id: str
     points: tuple[tuple[float,float],...]
     pressure: tuple[float,...] | None = None
     split_at: int | None = None
     new_stroke_id: str | None = None
+    material_overrides: Mapping[str, float] | None = None
 
     def __post_init__(self):
         if not isinstance(self.stroke_id,str) or not self.stroke_id.strip():
@@ -36,6 +39,23 @@ class StrokeEdit:
             if len(q)!=len(points) or any(not math.isfinite(v) or not 0<=v<=1 for v in q):
                 raise ValueError("pressure must align with points and lie in [0,1]")
             object.__setattr__(self,"pressure",q)
+        if self.material_overrides is not None:
+            if not isinstance(self.material_overrides, Mapping):
+                raise ValueError("material_overrides requires a mapping")
+            material = {}
+            for key, value in self.material_overrides.items():
+                if key not in {"width", "opacity", "hardness", "grain"}:
+                    raise ValueError(f"unsupported material edit field: {key}")
+                if isinstance(value, bool):
+                    raise ValueError(f"invalid material edit: {key}")
+                try:
+                    v = float(value)
+                except (TypeError, ValueError) as exc:
+                    raise ValueError(f"invalid material edit: {key}") from exc
+                if not math.isfinite(v) or (v <= 0 if key == "width" else not 0 <= v <= 1):
+                    raise ValueError(f"invalid material edit: {key}")
+                material[key] = v
+            object.__setattr__(self, "material_overrides", MappingProxyType(material))
         if self.split_at is None:
             if self.new_stroke_id is not None:
                 raise ValueError("new stroke id requires split_at")
@@ -86,8 +106,11 @@ def _actions(session, edits, reason, observation_id):
         # Preserve visible material, including global soft-lift and local pressure.
         overrides["opacity"]=float(s.opacity)
         overrides["width"]=float(s.width)
+        overrides.update(e.material_overrides or {})
         meta=deepcopy((state.get("provenance") or {}).get("metadata") or {})
         meta["geometry_edited_from"]=e.stroke_id
+        if e.material_overrides:
+            meta["explicit_material_edit_fields"] = sorted(e.material_overrides)
         common=dict(role=s.role,part=s.part,confidence=s.confidence,layer=s.layer,
                     tool=state["tool"],grade=state.get("pencil_grade"),
                     tool_overrides=overrides,observation_id=observation_id,
