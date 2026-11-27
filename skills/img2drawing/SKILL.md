@@ -87,7 +87,8 @@ For a new task:
 
 1. Establish reference/declaration authority, requested drawing mode, finish intent, and explicit
    style intent. If style is unspecified, use the canonical pencil default rather than inventing a
-   decorative style.
+   decorative style. For explicitly requested ink/manga or mixed-media finishes, use the
+   conditional mixed-media route in the index; do not change the default pencil path.
 2. If final marks will be authored programmatically, read
    [`references/api/public-surface.md`](references/api/public-surface.md) before the first mutation.
 3. Read [`references/foundation/line-economy.md`](references/foundation/line-economy.md),

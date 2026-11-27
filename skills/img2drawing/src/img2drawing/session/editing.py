@@ -147,9 +147,11 @@ class AuthoringSummary:
     elements: tuple[AuthoredElement, ...]
     total_matching_elements: int
     truncated: bool
+    current_ink: int | None = None
+    deleted_ink: int | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "schema": AUTHORING_SUMMARY_SCHEMA,
             "history_cursor": self.history_cursor,
             "drawing_state_hash": self.drawing_state_hash,
@@ -164,6 +166,10 @@ class AuthoringSummary:
             "total_matching_elements": self.total_matching_elements,
             "truncated": self.truncated,
         }
+        # Derived, mixed-only counts; do not change legacy summary serialization.
+        if self.current_ink is not None:
+            result["counts"].update(current_ink=self.current_ink,deleted_ink=self.deleted_ink)
+        return result
 
 
 def _action_facts(action: CanvasAction) -> tuple[str | None, str | None, str | None]:

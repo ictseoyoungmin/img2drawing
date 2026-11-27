@@ -1036,6 +1036,10 @@ class DrawingSession:
                 elements=matching[:selected_limit],
                 total_matching_elements=len(matching),
                 truncated=len(matching) > selected_limit,
+                current_ink=(sum(e.element_type=="ink" and e.status=="current" for e in all_elements)
+                             if self._agent.history.media_contract is not None else None),
+                deleted_ink=(sum(e.element_type=="ink" and e.status=="deleted" for e in all_elements)
+                             if self._agent.history.media_contract is not None else None),
             )
 
     def _renderer_header(self) -> dict[str, str]:
@@ -2154,7 +2158,7 @@ class DrawingSession:
                 raise ValueError("final inspection predates the current intent")
             # Rendered state, not the action counter: a drawing whose marks were all erased
             # has a non-zero history cursor and an empty canvas.
-            if not snapshot.strokes:
+            if not snapshot.strokes and not snapshot.ink_elements:
                 raise ValueError("finish requires authored marks on the canvas; the canvas is blank")
             if not any(
                 event.inspection_id == inspection["inspection_id"] and not event.stale

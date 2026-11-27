@@ -44,6 +44,7 @@ Paths here are relative to `references/`; `SKILL.md` uses the `references/...` p
 Open this branch only when geometry is justified and the remaining problem concerns mark language or material behavior.
 
 - `markmaking/style-policy.md` — open when: selecting or reconciling whole-drawing material/style policy; owns: canonical, manga-light, and expressive-graphite style policy.
+- `markmaking/mixed-media.md` — open when: explicit ink, manga, solid masses, white highlights, or screentone is requested; owns: mixed-media mark selection and visual decisions.
 - `markmaking/stroke-role-vocabulary.md` — open when: a mark needs a semantic role; owns: semantic stroke roles.
 - `markmaking/tool-preset-selection.md` — open when: choosing a reusable public tool preset; owns: preset selection boundary.
 - `markmaking/stroke-dynamics.md` — open when: pressure, width, opacity, or stroke dynamics need adjustment; owns: stroke dynamics.
@@ -87,3 +88,4 @@ Open this branch only when geometry is justified and the remaining problem conce
 
 - `api/public-surface.md` — open when: programmatic marks, edits, inspection, provenance, finish, or export must be performed; owns: supported worker-facing runtime operations.
 - `api/runtime-discovery.md` — open when: runtime capabilities must be inspected without private implementation; owns: public capability discovery and report-not-bypass behavior.
+- `api/mixed-media.md` — open when: authoring or correcting explicit ink paths, areas, or tones; owns: profile-scoped mixed-media API and executable example.

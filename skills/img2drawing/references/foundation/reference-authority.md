@@ -8,6 +8,11 @@ A readable subject is the sole geometry authority. Crops, overlays, edge views, 
 measurements, and material samples are derived evidence only. They may clarify the subject
 but may not overrule visible geometry.
 
+Ink and screentone do not relax this boundary. Author their closed contours, holes, pressure
+and pattern parameters explicitly from observation or declared intent. Reference pixels,
+automatically traced boundaries, inferred segmentation masks, flood filling and transferred
+tone maps are not authored marks. Measurement and visual comparison remain evidence only.
+
 Do not copy coordinates, forms, or stylistic solutions from unrelated drawings. Do not
 infer a hidden hand, foot, jaw, garment edge, or prop ending merely because such a part is
 usually present.

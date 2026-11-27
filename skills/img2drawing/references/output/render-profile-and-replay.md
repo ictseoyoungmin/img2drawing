@@ -44,6 +44,10 @@ forces full per-frame PNG rendering; `materialize_frames=True` also writes PNG f
 backend. Persistent patch and palette caches under the output directory are disposable acceleration
 state, never drawing authority.
 
+Mixed-media history currently uses canonical replay; explicit `backend="fast"` is rejected.
+Use `auto` or `canonical` without switching the persisted profile. See the
+[mixed-media API](../api/mixed-media.md) for profile and material constraints.
+
 Replay is end-to-end: sampling always includes cursor 0 and the latest authored cursor. Coarser
 `every_n` sampling is allowed; removing the beginning or final state is not.
 
@@ -142,7 +146,7 @@ Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
 necessary, retry frames 0→N. A completed retry frame count is not an
 all-phases-complete signal; the final verify event closes the operation.
 
-Explicit ordered path-lift marks are eligible for Fast replay. The append path
+In supported pencil histories, explicit ordered path-lift marks are eligible for Fast replay. The append path
 uses the canonical graphite-lifting function; non-append or out-of-layer-order
 changes with an active/retired lift conservatively recomposite the full canvas
 from cached graphite patches in canonical order. This preserves pixels but can
