@@ -118,7 +118,12 @@ def __main__(args):
   assert not hidden.visible()
   assert any(bytes(hidden.pixelData(0,0,w,h))[3::4]),'hidden raster content missing'
   assert [n.name() for n in inner.childNodes()]==['Ink 선화 & black','White highlights']
-  hidden.setVisible(True);outer.setOpacity(153);inner.setName('Renamed 중첩 그룹 & <edited>');guide.move(guide.position().x()+7,guide.position().y()+3)
+  guide_origin=(guide.position().x(),guide.position().y())
+  hidden.setVisible(True);outer.setOpacity(153);inner.setName('Renamed 중첩 그룹 & <edited>');guide.move(guide_origin[0]+7,guide_origin[1]+3)
+  assert hidden.visible(), 'show-hidden edit did not take effect'
+  assert outer.opacity()==153, 'opacity edit did not take effect'
+  assert inner.name()=='Renamed 중첩 그룹 & <edited>', 'rename edit did not take effect'
+  assert (guide.position().x(),guide.position().y())==(guide_origin[0]+7,guide_origin[1]+3), 'translation edit did not take effect'
   report['edits']=['show hidden paint layer','outer group opacity 204 -> 153','rename nested group','translate guide layer +7,+3']
   export(doc,out/'edited.png');report['edited_tree']=tree(doc.rootNode(),w,h)
   save(doc,out/'edited.kra');export(doc,out/'edited.ora')
@@ -196,6 +201,7 @@ checks={
 native_unchanged=sha(probe/'native/session.checkpoint.json')==expected['checkpoint_sha256']
 sidecar_unchanged=sha(probe/'baseline.checkpoint.json')==expected['manifest']['native_checkpoint']['sha256']
 assert native_unchanged and sidecar_unchanged
+assert not checks['edits_applied']['rgba_equal'], 'external edits did not change the visible drawing'
 assert checks['edited_kra_reopen']['rgba_equal']
 assert checks['edited_ora_reopen']['max_channel_error']<=1
 assert checks['krita_baseline_to_krita_ora_reopen']['max_channel_error']<=1
