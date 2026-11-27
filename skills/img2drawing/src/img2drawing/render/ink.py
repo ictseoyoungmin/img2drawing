@@ -159,6 +159,17 @@ def _area_mask(bounds, starts, ends):
     return mask
 
 
+def validate_ink_work(mark: InkPath | InkArea, *, factor, hi_size):
+    """Check the exact local geometry plan before any mask allocation or mutation."""
+    factor, size = _grid(factor, hi_size)
+    if isinstance(mark, InkPath):
+        _path_plan(mark, factor, size)
+    elif isinstance(mark, InkArea):
+        _area_plan(mark, factor, size)
+    else:
+        raise ValueError("unsupported ink geometry")
+
+
 def build_ink_patch(mark: InkPath | InkArea, *, factor, hi_size):
     """Return clipped (x0,y0,x1,y1), RGBA patch on the working-resolution grid.
 

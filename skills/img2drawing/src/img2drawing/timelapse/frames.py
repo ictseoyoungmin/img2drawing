@@ -81,6 +81,7 @@ class FastFrameSource:
 
     def __init__(self, history, profile: RenderProfile, *, supersample: int | None = None,
                  persistent_cache_dir: str | Path | None = None):
+        profile.validate_history(history)
         self.history = history
         self.eligibility = inspect_fast_path_eligibility(history)
         if not self.eligibility.eligible:
@@ -214,6 +215,7 @@ class CanonicalFrameSource:
 
     def __init__(self, history, profile: RenderProfile, *, supersample: int | None = None,
                  reasons: tuple[str, ...] = ()):
+        profile.validate_history(history)
         self.history = history
         self.profile = profile
         self.supersample = int(profile.supersample if supersample is None else supersample)

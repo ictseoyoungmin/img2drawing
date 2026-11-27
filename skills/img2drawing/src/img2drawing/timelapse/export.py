@@ -289,7 +289,7 @@ def export_timelapse(
         raise ValueError("fps must be a positive integer")
     if int(max_gif_bytes) < 1:
         raise ValueError("max_gif_bytes must be >= 1")
-    profile.validate_canvas(history.width, history.height)
+    profile.validate_history(history)
     if profile.gif_loop > 65535:
         raise ValueError("GIF loop must be in [0,65535]")
     cursors = sample_cursors(history.cursor, mode, every_n)

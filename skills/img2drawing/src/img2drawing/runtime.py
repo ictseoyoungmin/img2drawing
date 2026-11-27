@@ -7,7 +7,7 @@ boundaries, not renderer classes, cache internals, module paths, or persistence 
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 
 RUNTIME_CAPABILITY_SCHEMA = "img2drawing.runtime.capabilities.v2"
@@ -164,7 +164,7 @@ class RuntimeCapabilities:
 _RUNTIME_CAPABILITIES = RuntimeCapabilities()
 
 
-def runtime_capabilities() -> RuntimeCapabilities:
+def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
     """Return the stable worker-facing capability/boundary manifest.
 
     The result is deliberately sufficient for capability discovery while remaining opaque to
@@ -172,7 +172,23 @@ def runtime_capabilities() -> RuntimeCapabilities:
     gap rather than inspect private modules and invent a replacement authoring path.
     """
 
-    return _RUNTIME_CAPABILITIES
+    # Keep the stable default manifest exact; new operations are profile-scoped.
+    if render_profile is None:
+        return _RUNTIME_CAPABILITIES
+    from .render.profile import RenderProfile
+    if not isinstance(render_profile, RenderProfile):
+        raise ValueError("runtime discovery requires a RenderProfile")
+    if not render_profile.is_mixed_media:
+        return _RUNTIME_CAPABILITIES
+    caps = _RUNTIME_CAPABILITIES
+    ops = caps.authoring_operations + ("ink-add", "ink-replace", "ink-delete")
+    return replace(caps, authoring_operations=ops, supported_operations=ops + caps.output_operations,
+                   authoring_entrypoints=caps.authoring_entrypoints + ("img2drawing.authoring.apply_ink_actions",),
+                   authoring_helpers=caps.authoring_helpers + (
+                       "img2drawing.authoring.InkAction", "img2drawing.authoring.InkElement",
+                       "img2drawing.authoring.InkPath", "img2drawing.authoring.InkArea",
+                       "img2drawing.authoring.preview_ink_actions"),
+                   render_profile_entrypoints=caps.render_profile_entrypoints + ("RenderProfile.mixed_media",))
 
 
 __all__ = [

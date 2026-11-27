@@ -29,14 +29,15 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from PIL import Image
 
-from ..core.action import AgentDrawingSession, DrawingAction, _resolve_tool
+from ..core.action import AgentDrawingSession, DrawingAction, _resolve_tool, _stroke_from_action
+from ..core.material import InkAction, InkElement, MIXED_HISTORY_CONTRACT
 from ..core.digest import sha256_file, sha256_obj
 from ..core.ir import Stroke, StrokeIR
 from ..core.tools import TOOLSET_ID
 from ..inspection import InspectionSheet, Registration, drawing_state_hash
 from ..render import UnsupportedRendererError, canonical_identity, default_grade_name, render
 from ..render.artifact import RenderArtifact, render_history_at
-from ..render.contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT
+from ..render.contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, MIXED_MEDIA_CONTRACT
 from ..core.contact_width import profile_from_metadata
 from ..render.profile import SEED_DOMAIN, RenderProfile
 from ..timelapse import ReplayExport, export_timelapse
@@ -195,8 +196,6 @@ class DrawingSession:
         self.subject = None if subject is None else Path(subject)
         self.output_dir = Path(output_dir)
         self._agent = agent_session
-        if self._agent.history.media_contract is not None:
-            raise ValueError("mixed history is not enabled in DrawingSession until its rendering contract is integrated")
         self.metadata = deepcopy(metadata or {})
         self._observations = deepcopy(observations or [])
         self._inspection_history = deepcopy(inspection_history or [])
@@ -230,7 +229,17 @@ class DrawingSession:
             else RenderProfile.from_dict(render_profile)
         )
         if self._render_profile is not None:
-            self._render_profile.validate_canvas(self._agent.width, self._agent.height)
+            self._render_profile.validate_history(self._agent.history)
+            if self._render_profile.is_mixed_media:
+                from ..render.ink import validate_ink_work
+                factor = self._render_profile.supersample * self._render_profile.output_scale
+                size = (self._agent.width * factor, self._agent.height * factor)
+                for item in self._agent.history.actions:
+                    if item.action in {"ink.add", "ink.replace"}:
+                        element = InkElement.from_dict(item.payload["element"])
+                        validate_ink_work(element.mark, factor=factor, hi_size=size)
+        elif self._agent.history.media_contract is not None:
+            raise ValueError("mixed history requires a persisted mixed-media RenderProfile")
         self._lock = threading.RLock()
         actual_subject_sha256 = (
             None
@@ -308,7 +317,8 @@ class DrawingSession:
             session_id=session_id or f"session-{uuid.uuid4().hex[:12]}",
             subject=subject_path,
             output_dir=output,
-            agent_session=AgentDrawingSession(width, height, metadata={"vnext": True}),
+            agent_session=AgentDrawingSession(width, height, metadata={"vnext": True},
+                media_contract=MIXED_HISTORY_CONTRACT if selected_profile.is_mixed_media else None),
             metadata=deepcopy(dict(metadata or {})),
             intent=selected_intent,
             render_profile=selected_profile,
@@ -393,7 +403,9 @@ class DrawingSession:
         if agent.width != int(canvas.get("width", -1)) or agent.height != int(canvas.get("height", -1)):
             raise ValueError("checkpoint canvas dimensions do not match history")
         if render_profile is not None:
-            render_profile.validate_canvas(agent.width, agent.height)
+            render_profile.validate_history(agent.history)
+        elif agent.history.media_contract is not None:
+            raise ValueError("mixed history requires a persisted mixed-media RenderProfile")
         expected = payload.get("digests") or {}
         state = cls._stage_free_projection(agent.current_ir())
         if expected.get("drawing_state_hash") != drawing_state_hash(state):
@@ -1176,18 +1188,39 @@ class DrawingSession:
                 progress=progress,
             )
 
-    def _commit(self, action: DrawingAction | Iterable[DrawingAction]) -> Any:
-        actions = [action] if isinstance(action, DrawingAction) else list(action)
+    def _validate_ink_action(self, action: InkAction) -> None:
+        profile = self._require_render_profile()
+        if not profile.is_mixed_media:
+            raise ValueError("ink actions require RenderProfile.mixed_media")
+        if action.observation_id not in {r["observation_id"] for r in self._observations}:
+            raise ValueError("ink action requires a recorded observation_id")
+        if action.element is not None:
+            from ..render.ink import validate_ink_work
+            factor = profile.supersample * profile.output_scale
+            validate_ink_work(action.element.mark, factor=factor,
+                              hi_size=(self.width * factor, self.height * factor))
+
+    def _commit(self, action: DrawingAction | InkAction | Iterable[DrawingAction | InkAction]) -> Any:
+        single = isinstance(action, (DrawingAction, InkAction))
+        actions = [action] if single else list(action)
         if not actions:
             return []
         with self._lock:
             for item in actions:
-                if item.kind == "erase_path":
+                if isinstance(item, InkAction):
+                    self._validate_ink_action(item)
+                elif item.kind == "erase_path":
                     self._require_path_eraser_profile(item.pressure)
+                if (self._render_profile is not None and self._render_profile.is_mixed_media
+                        and isinstance(item, DrawingAction)
+                        and item.kind in {"draw_stroke", "replace_stroke", "erase_path"}):
+                    from ..render.mixed import validate_mixed_stroke
+                    item.validate()
+                    validate_mixed_stroke(_stroke_from_action(item))
             with self._agent.transaction(label="vnext-mutation"):
                 results = [self._agent.execute(item) for item in actions]
                 self._write_checkpoint(self._checkpoint_path)
-            return results[0] if isinstance(action, DrawingAction) else results
+            return results[0] if single else results
 
     def _provenance(
         self,
@@ -1238,7 +1271,7 @@ class DrawingSession:
         selected_tool = _tool_payload(tool, grade, tool_overrides)
         width_profile = profile_from_metadata(metadata)
         if width_profile is not None:
-            if self._require_render_profile().renderer_version != CONTACT_WIDTH_CONTRACT.renderer_version:
+            if self._require_render_profile().renderer_version not in (CONTACT_WIDTH_CONTRACT.renderer_version, MIXED_MEDIA_CONTRACT.renderer_version):
                 raise ValueError("contact width profile requires opacity_normalized(..., contact_width=True)")
             if kind == "erase_path" or str(selected_tool["preset"]).endswith("eraser"):
                 raise ValueError("contact width profile supports graphite drawing only")
@@ -1314,9 +1347,9 @@ class DrawingSession:
 
     def _require_path_eraser_profile(self, pressure=None) -> None:
         version = self._require_render_profile().renderer_version
-        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+        if version not in (OPACITY_NORMALIZED_CONTRACT.renderer_version, PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version, MIXED_MEDIA_CONTRACT.renderer_version):
             raise ValueError("path eraser requires the opacity-normalized render profile")
-        if pressure is not None and any(p != 1.0 for p in pressure) and version not in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version):
+        if pressure is not None and any(p != 1.0 for p in pressure) and version not in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version, MIXED_MEDIA_CONTRACT.renderer_version):
             raise ValueError("varying eraser pressure requires opacity_normalized(..., pressure_lift=True)")
 
     def _erase_path_action(self, points, *, stroke_id, width, strength=1.0,
@@ -1753,6 +1786,9 @@ class DrawingSession:
                 payload_stroke_id = action.payload.get("stroke_id")
                 if payload_stroke_id is not None:
                     stroke_ids.append(payload_stroke_id)
+                element_id = action.payload.get("element_id")
+                if element_id is not None:
+                    stroke_ids.append(element_id)
                 stroke = action.payload.get("stroke") or {}
                 nested_stroke_id = stroke.get("stroke_id")
                 if nested_stroke_id is not None:

@@ -13,8 +13,9 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
+from ..core.material import MIXED_HISTORY_CONTRACT
 from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
-                       canonical_identity, verify_contract_digest)
+                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, validate_mixed_raster_budget)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
 
@@ -113,8 +114,9 @@ class RenderProfile:
         object.__setattr__(self, "canvas_width", width)
         object.__setattr__(self, "canvas_height", height)
         material = _text(self.material_profile, "material_profile")
-        if material != "builtin:pencil-contact":
-            raise ValueError("unsupported material_profile; custom file paths are not portable")
+        expected_material = "builtin:mixed-media" if self.is_mixed_media else "builtin:pencil-contact"
+        if material != expected_material:
+            raise ValueError("unsupported material_profile for the selected renderer identity")
         object.__setattr__(self, "material_profile", material)
         tooth = float(self.paper_tooth)
         scale = float(self.paper_scale)
@@ -135,6 +137,8 @@ class RenderProfile:
             raise ValueError("output_scale must be >= 1")
         object.__setattr__(self, "supersample", supersample)
         object.__setattr__(self, "output_scale", output_scale)
+        if self.is_mixed_media:
+            validate_mixed_raster_budget(width, height, supersample, output_scale)
         object.__setattr__(self, "background_rgba", _channels(self.background_rgba, 4, "background_rgba"))
         object.__setattr__(self, "graphite_rgb", _channels(self.graphite_rgb, 3, "graphite_rgb"))
         if _text(self.seed_domain, "seed_domain") != SEED_DOMAIN:
@@ -184,6 +188,28 @@ class RenderProfile:
             canvas_width=int(width),
             canvas_height=int(height),
         )
+
+    @property
+    def is_mixed_media(self) -> bool:
+        return (self.renderer_id, self.renderer_version) == MIXED_MEDIA_CONTRACT.identity
+
+    @classmethod
+    def mixed_media(cls, width: int, height: int, *, supersample: int = 4,
+                    output_scale: int = 1, background_rgba=(255, 255, 255, 255)) -> "RenderProfile":
+        """Explicit mixed-media profile; no implicit migration of pencil sessions."""
+        validate_mixed_raster_budget(width, height, supersample, output_scale)
+        return cls(profile_id="mixed-media-v1", renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
+                   renderer_version=MIXED_MEDIA_CONTRACT.renderer_version,
+                   renderer_contract_digest=MIXED_MEDIA_CONTRACT.digest(),
+                   canvas_width=width, canvas_height=height,
+                   material_profile="builtin:mixed-media", supersample=supersample,
+                   output_scale=output_scale, background_rgba=background_rgba)
+
+    def validate_history(self, history) -> None:
+        self.validate_canvas(history.width, history.height)
+        expected = MIXED_HISTORY_CONTRACT if self.is_mixed_media else None
+        if history.media_contract != expected:
+            raise ValueError("history and render profile media contracts do not match")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -235,6 +261,10 @@ class RenderProfile:
         """Return a render-only view whose paper state comes from this profile."""
 
         self.validate_canvas(ir.width, ir.height)
+        expected = MIXED_HISTORY_CONTRACT if self.is_mixed_media else None
+        if ir.media_contract != expected:
+            raise ValueError("IR and render profile media contracts do not match")
+        ir.ordered_elements()
         prepared = deepcopy(ir)
         metadata = deepcopy(prepared.metadata if isinstance(prepared.metadata, dict) else {})
         metadata["paper"] = {

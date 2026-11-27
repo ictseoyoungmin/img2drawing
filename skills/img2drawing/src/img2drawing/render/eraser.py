@@ -254,3 +254,42 @@ def erase(graphite_canvas: Image.Image, stroke: Stroke, *, factor: float,
 
 
 __all__ = ["erase", "is_eraser", "is_explicit_path_eraser"]
+
+
+def erase_local(graphite_canvas: Image.Image, stroke: Stroke, *, origin, factor,
+                hi_size, tooth, paper_scale, paper_seed, reserve_work) -> None:
+    """Lift an isolated graphite run in page coordinates, never the ink canvas.
+
+    The footprint uses the original global bounds/blur; only its intersecting
+    crop is applied to this run. The legacy erase() path remains unchanged.
+    """
+    if not is_explicit_path_eraser(stroke) or profile_from_stroke(stroke) is not None:
+        raise ValueError("mixed-media lift requires an explicit graphite path eraser")
+    profiled = _tool_state(stroke).get("path_lift_contract") == "ordered-graphite-pressure-lift-v1"
+    dynamic = stroke if profiled else eraser_hand_dynamics(stroke)
+    _, hardness, _ = _eraser_material(dynamic)
+    bounds = _eraser_bounds(dynamic, factor, hi_size, hardness)
+    ox, oy = origin
+    x0, y0 = max(ox, bounds[0]), max(oy, bounds[1])
+    x1, y1 = min(ox + graphite_canvas.width, bounds[2]), min(oy + graphite_canvas.height, bounds[3])
+    if x0 >= x1 or y0 >= y1:
+        return
+    reserve_work((bounds[2] - bounds[0]) * (bounds[3] - bounds[1]) +
+                 (x1 - x0) * (y1 - y0))
+    footprint = (Image.fromarray(_profiled_footprint(dynamic, factor, bounds, hardness), mode="L")
+                 if profiled else _eraser_footprint(dynamic, factor, bounds, hardness))
+    local_box = (x0 - ox, y0 - oy, x1 - ox, y1 - oy)
+    try:
+        with footprint.crop((x0 - bounds[0], y0 - bounds[1], x1 - bounds[0], y1 - bounds[1])) as mask:
+            with graphite_canvas.crop(local_box) as region:
+                with region.getchannel("A") as channel:
+                    lifted = _lift_alpha(np.asarray(channel, dtype=np.uint8),
+                                         np.asarray(mask, dtype=np.uint8), stroke=dynamic,
+                                         factor=factor, origin=(x0, y0), tooth=tooth,
+                                         paper_scale=paper_scale, paper_seed=paper_seed,
+                                         profiled=profiled)
+                with Image.fromarray(lifted, mode="L") as alpha:
+                    region.putalpha(alpha)
+                graphite_canvas.paste(region, (local_box[0], local_box[1]))
+    finally:
+        footprint.close()
