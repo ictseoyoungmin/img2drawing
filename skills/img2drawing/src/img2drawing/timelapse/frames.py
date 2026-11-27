@@ -40,6 +40,8 @@ class FastPathEligibility:
 
 def inspect_fast_path_eligibility(history) -> FastPathEligibility:
     reasons: list[str] = []
+    if history.media_contract is not None:
+        reasons.append("mixed-media history requires canonical replay")
     action_types = sorted({item.action for item in history.actions[:history.cursor]})
     unsupported = sorted(set(action_types) - SUPPORTED_ACTIONS)
     if unsupported:

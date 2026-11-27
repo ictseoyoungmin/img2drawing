@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S01a typed ink geometry/local patch implementation (WIP; candidate verification)
+ACTIVE BOTTLENECK:  v1.4.0 S01b typed mixed history/IR and replay (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -44,9 +44,9 @@ Authority is intentionally split by purpose:
 
 - Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
 - [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
-- S01 WIP: S01a candidate implements strict internal path/area descriptors and bounded deterministic opaque-ink local patches. No public ink authoring or mixed profile yet. S02–S07 OPEN; weighted verified completion 0% (0/7).
+- S01 WIP: S01a merged a6ba6a4 (501 active + 44 runtime tests; post-merge CI 45973463319 SUCCESS). S01b candidate adds typed ink elements/actions, explicit mixed history opt-in, common ordered replay, identity/provenance validation and detached mixed snapshots. S02–S07 OPEN; weighted verified completion 0% (0/7).
 - v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
-- Next: S01a primitive tests and legacy regression, then S01b typed action/history/profile and common compositor integration, session preview/commit/resume and selective lift. S01 remains incomplete until a full vertical proof. New media are not advertised.
+- Next: S01b regression/merge, then mixed RenderProfile + canonical compositor, public preview/commit/resume and selective lift. Public DrawingSession and legacy renderers reject mixed history until that integration. S01 remains incomplete until a full vertical proof. No SciPy dependency needed for typed history.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 

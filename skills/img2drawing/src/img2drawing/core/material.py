@@ -207,3 +207,99 @@ def decode_ink_mark(raw):
     if set(raw) != fields | {"schema", "kind"}:
         raise ValueError("invalid ink mark fields")
     return cls(**{key: raw[key] for key in fields})
+
+
+MIXED_HISTORY_CONTRACT = "img2drawing.mixed_history.v1"
+INK_ELEMENT_SCHEMA = "img2drawing.ink_element.v1"
+INK_ACTION_SCHEMA = "img2drawing.ink_action.v1"
+INK_ACTION_KINDS = frozenset({"ink.add", "ink.replace", "ink.delete"})
+
+
+def _identity_text(value, field, *, maximum=128):
+    if not isinstance(value, str) or not value.strip() or len(value) > maximum or value != value.strip():
+        raise ValueError(f"{field} requires a nonempty, bounded, canonical string")
+    return value
+
+
+@dataclass(frozen=True)
+class InkElement:
+    """One authored path or area; immutable geometry and stable identity."""
+    element_id: str
+    mark: InkPath | InkArea
+    role: str
+    part: str | None = None
+    layer: int = 0
+
+    def __post_init__(self):
+        _identity_text(self.element_id, "element_id")
+        _identity_text(self.role, "role")
+        if self.part is not None:
+            _identity_text(self.part, "part")
+        if type(self.layer) is not int or not -(2**31) <= self.layer < 2**31:
+            raise ValueError("layer must be a bounded integer")
+        if not isinstance(self.mark, (InkPath, InkArea)):
+            raise ValueError("element requires explicit ink geometry")
+
+    def to_dict(self):
+        return {"schema": INK_ELEMENT_SCHEMA, "element_id": self.element_id,
+                "mark": self.mark.to_dict(), "role": self.role,
+                "part": self.part, "layer": self.layer}
+
+    @classmethod
+    def from_dict(cls, raw):
+        fields = {"schema", "element_id", "mark", "role", "part", "layer"}
+        if not isinstance(raw, Mapping) or set(raw) != fields or raw["schema"] != INK_ELEMENT_SCHEMA:
+            raise ValueError("unsupported ink element schema or fields")
+        return cls(raw["element_id"], decode_ink_mark(raw["mark"]),
+                   raw["role"], raw["part"], raw["layer"])
+
+    def digest(self):
+        return sha256_obj(self.to_dict())
+
+
+@dataclass(frozen=True)
+class InkAction:
+    """Typed addition, same-ID replacement or retirement in CanvasHistory."""
+    action_id: str
+    kind: str
+    element_id: str
+    element: InkElement | None
+    observation_id: str
+    source_observation: str
+    reason: str
+
+    def __post_init__(self):
+        _identity_text(self.action_id, "action_id")
+        _identity_text(self.element_id, "element_id")
+        _identity_text(self.observation_id, "observation_id")
+        _identity_text(self.source_observation, "source_observation", maximum=2048)
+        _identity_text(self.reason, "reason", maximum=2048)
+        if not isinstance(self.kind, str) or self.kind not in INK_ACTION_KINDS:
+            raise ValueError("unsupported ink action")
+        if self.kind == "ink.delete":
+            if self.element is not None:
+                raise ValueError("ink deletion cannot include replacement geometry")
+        elif not isinstance(self.element, InkElement) or self.element.element_id != self.element_id:
+            raise ValueError("ink action requires an element with the same identity")
+
+    def provenance(self):
+        return {"action_id": self.action_id, "observation_id": self.observation_id,
+                "source_observation": self.source_observation, "reason": self.reason}
+
+    def payload(self):
+        return {"element_id": self.element_id,
+                "element": None if self.element is None else self.element.to_dict()}
+
+    def to_dict(self):
+        return {"schema": INK_ACTION_SCHEMA, "kind": self.kind,
+                **self.payload(), **self.provenance()}
+
+    @classmethod
+    def from_dict(cls, raw):
+        fields = {"schema", "kind", "element_id", "element", "action_id",
+                  "observation_id", "source_observation", "reason"}
+        if not isinstance(raw, Mapping) or set(raw) != fields or raw["schema"] != INK_ACTION_SCHEMA:
+            raise ValueError("unsupported ink action schema or fields")
+        return cls(raw["action_id"], raw["kind"], raw["element_id"],
+                   None if raw["element"] is None else InkElement.from_dict(raw["element"]),
+                   raw["observation_id"], raw["source_observation"], raw["reason"])

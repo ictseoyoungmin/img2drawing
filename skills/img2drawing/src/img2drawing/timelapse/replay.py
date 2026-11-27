@@ -7,6 +7,7 @@ from typing import Iterator, Sequence
 from ..core.history import (
     CanvasAction,
     CanvasHistory,
+    MixedReplayState,
     unsupported_action_error,
     _replay_segment_replace,
     _replay_segment_soft_lift,
@@ -40,8 +41,13 @@ class ForwardHistoryReplay:
         self.order: list[str] = []
         self.state: dict[str, Stroke] = {}
         self.stats = ForwardReplayStats()
+        self._mixed = MixedReplayState() if history.media_contract is not None else None
 
     def _apply(self, item: CanvasAction) -> None:
+        if self._mixed is not None:
+            self._mixed.apply(item)
+            self.stats.actions_applied += 1
+            return
         p = item.payload
         action = item.action
         if action == "stroke.add":
@@ -97,6 +103,11 @@ class ForwardHistoryReplay:
             self.cursor += 1
 
     def snapshot(self) -> StrokeIR:
+        if self._mixed is not None:
+            self.stats.snapshots_emitted += 1
+            return self._mixed.snapshot(
+                self.width, self.height, self.metadata, self.cursor,
+                legacy_inline_pressure=getattr(self.history, "_legacy_inline_pressure", False))
         ir = StrokeIR(self.width, self.height, metadata={**self.metadata, "history_cursor": self.cursor})
         if getattr(self.history, "_legacy_inline_pressure", False):
             setattr(ir, "_legacy_inline_pressure", True)
