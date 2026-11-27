@@ -292,9 +292,12 @@ Rollback copies the log's sealed references rather than serializing geometry.
 Checkpoint digests and file format remain unchanged; serialization itself still
 costs O(total authored data) per commit. Preserve legacy mutable record behavior.
 Test operation counts (64 appended ink actions decode 64, not a triangular count)
-before claiming performance improvement. S06b will address remaining geometry,
-replay/cache and registration costs; full stress/installed evidence remains
-required. No private example coordinates, reference pixels or session artifacts
+before claiming performance improvement. S06b uses a conservative epsilon-expanded edge AABB sweep with the unchanged
+intersection predicate, no shape repair or geometry alteration. Self-contact
+errors identify authored edge indices. Explicit Registration.fit maps whole
+image rectangles (contain/cover/stretch) without automatic feature alignment
+or changing drawing geometry. Mixed replay/cache and full stress/installed
+evidence remain required. No private example coordinates, reference pixels or session artifacts
 are added to Git. Audit all actual consumers: canonical render, inspection, preview,
 completion/residual provenance, semantic groups, CanvasHistory state_at,
 ForwardHistoryReplay, patch cache, dirty rectangles, exporter and manifest.

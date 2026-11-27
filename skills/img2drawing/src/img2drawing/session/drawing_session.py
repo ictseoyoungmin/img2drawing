@@ -1957,7 +1957,9 @@ class DrawingSession:
                 subject_path = self.require_reference("inspection registration")
                 if (self.width, self.height) != _subject_size(subject_path):
                     shutil.rmtree(temporary_dir)
-                    raise ValueError("registration is required when subject and canvas sizes differ")
+                    raise ValueError("registration is required when subject and canvas sizes differ; "
+                                     "use Registration.fit(subject_size, canvas_size, mode='contain') "
+                                     "or an explicit observed mapping")
                 registration = Registration.identity((self.width, self.height))
             try:
                 profile = self._require_render_profile()

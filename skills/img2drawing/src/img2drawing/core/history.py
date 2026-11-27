@@ -77,6 +77,12 @@ class _MixedCanvasAction(CanvasAction):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # A sealed record must not retain mutable values in scalar fields.
+        if (type(self.seq) is not int or self.seq<1 or type(self.action) is not str
+                or type(self.stage) is not str
+                or any(v is not None and type(v) is not str for v in (self.part,self.role))
+                or (self.logical_time is not None and type(self.logical_time) not in (int,float))):
+            raise ValueError("invalid mixed action scalar fields")
         for name in ("payload", "tool_state", "provenance"):
             object.__setattr__(self, name, _readonly_json(getattr(self, name)))
         object.__setattr__(self, "_sealed", True)

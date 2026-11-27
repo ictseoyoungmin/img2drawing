@@ -75,6 +75,42 @@ def _intersects(a, b, c, d):
             or (v == 0 and _on_segment(c, d, b)))
 
 
+def _edge_candidates(first, second=None):
+    """Sweep epsilon-expanded edge AABBs, then retain the existing predicate.
+
+    For one ring skip adjacent edges (including its closing seam). For two
+    rings consider only cross-ring pairs. O(n) working memory, typical
+    sparse candidates; worst case remains quadratic and ring budgets remain.
+    No approximation, repair, or coordinate change is performed.
+    """
+    def boxes(edges, group):
+        for i,(a,b) in enumerate(edges):
+            yield (min(a[0],b[0]),max(a[0],b[0]),
+                   min(a[1],b[1]),max(a[1],b[1]),group,i,(a,b))
+    n=len(first)
+    ordered=list(boxes(first,0))
+    if second is not None:
+        ordered.extend(boxes(second,1))
+    ordered.sort(key=lambda e:(e[0],e[4],e[5]))
+    active=[]
+    for lo,hi,ylo,yhi,g,i,edge in ordered:
+        active=[entry for entry in active if entry[1]+_ORIENT_EPS>=lo]
+        for _,_,other_ylo,other_yhi,other_g,j,other in active:
+            if second is None:
+                if abs(i-j) in (1,n-1):
+                    continue
+            elif g==other_g:
+                continue
+            if other_yhi+_ORIENT_EPS<ylo or yhi+_ORIENT_EPS<other_ylo:
+                continue
+            # Preserve original ring/index ordering for diagnostic identities.
+            if (g,i)<(other_g,j):
+                yield i,j,edge,other
+            else:
+                yield j,i,other,edge
+        active.append((lo,hi,ylo,yhi,g,i,edge))
+
+
 def _ring(raw, name):
     pts = _points(raw, name, MAX_RING_POINTS, 4)
     if pts[0] != pts[-1]:
@@ -90,12 +126,9 @@ def _ring(raw, name):
                 and (a[0] - b[0]) * (c[0] - b[0]) + (a[1] - b[1]) * (c[1] - b[1]) > 0):
             raise ValueError(f"{name} has a reversing edge")
     edges = tuple(zip(pts, pts[1:]))
-    for i, (a, b) in enumerate(edges):
-        for j in range(i + 2, n):
-            if i == 0 and j == n - 1:
-                continue
-            if _intersects(a, b, *edges[j]):
-                raise ValueError(f"{name} self-intersects or touches")
+    for i,j,first,second in _edge_candidates(edges):
+        if _intersects(*first,*second):
+            raise ValueError(f"{name} self-intersects or touches at edges {i} and {j} (zero-based)")
     area2 = math.fsum(a[0] * b[1] - b[0] * a[1] for a, b in edges)
     if abs(area2) <= _ORIENT_EPS:
         raise ValueError(f"{name} encloses no area")
@@ -116,8 +149,8 @@ def _inside(point, ring):
 
 
 def _rings_touch(a, b):
-    return any(_intersects(p, q, u, v)
-               for p, q in zip(a, a[1:]) for u, v in zip(b, b[1:]))
+    return any(_intersects(*first,*second)
+               for _,_,first,second in _edge_candidates(tuple(zip(a,a[1:])),tuple(zip(b,b[1:]))))
 
 
 @dataclass(frozen=True)

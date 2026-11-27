@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S06a mixed history incremental validation and rollback (WIP)
+ACTIVE BOTTLENECK:  v1.4.0 S06b geometry validation and explicit registration fit (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -50,7 +50,8 @@ Authority is intentionally split by purpose:
 - S03 CLOSED: #112 merged 77e8ca0, PR CI 45983056787 and merge CI 45983382282 SUCCESS (572 active + 44 runtime). Wet brush, explicit cubic/solid contour, white paint and guarded ink transforms. Existing profile pixels preserved.
 - S04 CLOSED: #113 merged 1e178b1; PR CI 45984215468 and merge CI 45984670001 SUCCESS (606 active + 44 runtime). Typed calibrated dot screen, page-fixed phase and gradient, bounded tile evaluation, mixed-media-v3. Older contracts unchanged.
 - S05 #114 merged 46180ad; PR CI 45986027734 and merge CI 45986307849 SUCCESS (611 active + 44 runtime), installed guide example PASS. A maintainer-supplied independent Agent session contains 563 explicit ink additions (287 areas, 213 paths, 63 screens), 30,704 geometry samples, no inspection, correction or finish record. Private diagnostic rerender matched its final RGBA hash; no GIF provided or full installed resume verified in that review. Partial independent-use evidence, S05 REVIEW remains (not complete worker loop or artistic PASS). No private source/session assets retained in Git.
-- S06a candidate: seal owned mixed history records, reuse one validated reducer prefix, detect replaced/reordered/unsealed records, shallow sealed-record rollback snapshot, reuse serialized action log for checkpoint digest, avoid copying immutable ink geometry in prepared render views. Preserve exact legacy serialization/renderer/profile and strict redo-tail/recipe validation. Full Fast, registration convenience, synthetic large-session stress and actual private-session end-to-end timing remain pending.
+- S06a #115 merged 68f9b8f; PR CI 45992266141 SUCCESS (616 active + 44 runtime). Validated incremental prefix, sealed rollback references and serialization reuse; exact 64 decode calls for 64 append actions tested. Private 563-action single-commit model predicts 317,532 -> 563 decode calls, not an elapsed-time claim.
+- S06b candidate: epsilon-inclusive edge AABB sweep before unchanged narrow predicate, zero-based offending edge indices, explicit centered Registration.fit contain/cover/stretch, sealed scalar-field hardening. Private local diagnostic (350 rings, no holes): 2,409,247 -> 752 narrow-phase calls, 2.0344s -> 0.01636s for pair testing only, same zero intersections. No private coordinates or artifacts retained. Full runtime performance and mixed Fast/stress remain unverified.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 

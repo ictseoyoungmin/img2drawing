@@ -46,6 +46,18 @@ exact hidden terminal should remain unspecified unless additional evidence suppo
 
 See `../foundation/occlusion-inference.md` for the full inference/rendering boundary.
 
+## Whole-image registration
+
+When subject and canvas sizes differ, select an explicit coordinate mapping before
+inspection. For a known whole-image correspondence, use
+`Registration.fit(subject_size, canvas_size, mode="contain")`: uniform scale and
+centered margins. Choose `"cover"` for a known centered crop, or `"stretch"` only
+when the intended correspondence scales the two axes independently.
+These modes map rectangles, not features. For an offset crop or other actual
+correspondence supply explicit scale/offset. Confirm the comparison visually;
+never use alignment to disguise incorrect geometry. Registration is inspection
+evidence only and cannot change authored marks or the persisted render profile.
+
 ## Explicit landmark and relationship comparison
 
 Use these optional tools to test a specific visual hypothesis, not to replace visual
