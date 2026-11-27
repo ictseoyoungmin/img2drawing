@@ -116,6 +116,22 @@ runtime does not silently erase evidence to make branching succeed. If undo move
 the current intent was selected, redo or explicitly call `set_intent` at the current cursor
 before making a new inspection under that intent.
 
+## Choose a supported working size
+
+The current document contract permits 256 paint/group nodes and 32 hierarchy levels.
+Its working raster is `width * height * (output_scale * supersample) ** 2`, limited to
+16,777,216 pixels with a combined scale factor at most 16. A 1024×1536 page at scale 1
+and supersample 2 uses 6,291,456 working pixels. Simultaneously live surfaces are bounded
+at 100,663,296 pixels, and material/composition work at 268,435,456 cumulative working-pixel
+operations per render. These guards have no public override argument. Choose dimensions
+and supersampling when creating the session; retain its profile throughout replay.
+
+Layer mutations preflight membership and surface dimensions. Actual material/composition
+work is checked while rendering, and a work-limit error reports the consumed work and cap.
+Sparse layers composite their occupied alpha regions while retaining full native membership
+and exact source-over pixels. Timelapse has additional whole-export limits described in
+[render profile and replay](../output/render-profile-and-replay.md).
+
 ## Deliver editable layers and the native session
 
 ```python
@@ -140,6 +156,14 @@ downsampled separately, so recompositing them may differ from the canonical merg
 The manifest measures that difference using this runtime's compositor; another editor's
 rounding or color handling can differ further. Do not claim identical external flattening
 unless it has been checked in that application.
+
+For ongoing raster work in Krita, save a native `.kra` project and retain the original ORA
+delivery and img2drawing checkpoint. In the measured Krita 5.2.9 document-engine check,
+layer edits survived KRA save/reopen with identical properties and pixels. Krita's own ORA
+save/reopen rounded one fractional group opacity from 127/255 to 126/255; other tested
+structure and raw layer pixels were retained. This is a version-specific observation, not
+a universal error bound. Keep native working projects when repeated exchange saves would
+make such rounding significant.
 
 Raster exchange preserves editable raster layers. Points, pressure, tools, procedural tone
 parameters and action replay remain in the native checkpoint. External raster modifications

@@ -361,3 +361,79 @@ def test_empty_group_subtrees_need_no_working_surfaces(monkeypatch, empty_leaf):
     deep = replace(simple, layer_document=LayerDocument(nodes, members, "main"))
     validate_document_work(deep, profile)
     assert np.array_equal(_render(deep, profile), _render(simple, profile))
+
+
+class _FullSurfaceDocumentReference(_DocumentRenderer):
+    """The previous full-surface source-over path, independent of alpha cropping."""
+
+    def _children(self, canvas, parent=None):
+        for node in self.document.children(parent):
+            if not node.visible or node.opacity == 0.0 or node.layer_id not in self._content_nodes:
+                continue
+            with self._node_surface(node) as image:
+                self.budget.reserve(self.pixels)
+                canvas.alpha_composite(image)
+
+
+@pytest.mark.parametrize("profile", [_profiles()[i] for i in (0, 3, 6)],
+                         ids=lambda p: p.renderer_version)
+@pytest.mark.parametrize("background", [(237, 224, 205, 255), (49, 68, 83, 0)])
+def test_sparse_nested_composition_matches_full_surface_reference(profile, background):
+    profile = replace(profile, supersample=2, background_rgba=background)
+    ir = _fixture_ir(profile)
+    # This layer owns a real mark but has no occupied alpha on the canvas.
+    ir.strokes.append(Stroke([(80, 80), (90, 90)], width=2, stroke_id="outside"))
+    if ir.media_contract is not None:
+        ir.element_order.append("outside")
+    nodes = (
+        LayerNode("under", "Under"),
+        LayerNode("outer", "Outer", kind="group", order=1, opacity=.63),
+        LayerNode("inner", "Inner", kind="group", parent_id="outer", opacity=.71),
+        LayerNode("over", "Over", parent_id="inner", opacity=.43),
+        LayerNode("outside", "Outside", order=2),
+    )
+    over = ("g2", "ink", "erase") if ir.media_contract is not None else ("g2", "erase")
+    ir.layer_document = LayerDocument(nodes,
+        {"under": ("g1",), "over": over, "outside": ("outside",)}, "over")
+    original = ir.to_dict()
+    prepared = profile.prepared_ir(ir)
+    with _FullSurfaceDocumentReference(prepared, **profile.renderer_kwargs()).image() as expected:
+        assert _render(ir, profile).tobytes() == expected.tobytes()
+    assert ir.to_dict() == original
+
+
+def test_sparse_page_keeps_editable_layers_within_unchanged_work_limit(monkeypatch):
+    from img2drawing.render import document as compositor
+
+    nodes, members, elements = [], {}, []
+    for panel in range(6):
+        group = f"panel-{panel}"
+        nodes.append(LayerNode(group, group, kind="group", order=panel))
+        for part in range(3):
+            sid = f"part-{panel}-{part}"
+            x, y = 12 + part * 29, 8 + panel * 58
+            nodes.append(LayerNode(sid, sid, parent_id=group, order=part))
+            members[sid] = (sid,)
+            elements.append(InkElement(sid, InkArea(rect(x, y, x + 18, y + 27)),
+                                       "value", "sparse panel", 0))
+    ir = StrokeIR(256, 384, media_contract=MIXED_HISTORY_CONTRACT,
+                  ink_elements=elements, element_order=[e.element_id for e in elements],
+                  layer_document=LayerDocument(tuple(nodes), members, "part-0-0"))
+    original = ir.to_dict()
+    profile = RenderProfile.mixed_media(256, 384, supersample=2)
+    prepared = profile.prepared_ir(ir)
+    with _FullSurfaceDocumentReference(prepared, **profile.renderer_kwargs()).image() as image:
+        expected = image.tobytes()
+    parameters = dict(compositor.DOCUMENT_COMPOSITING_CONTRACT.parameters)
+    limit = parameters["max_composite_work"] = 12 * 1024 * 1024
+    monkeypatch.setattr(compositor, "DOCUMENT_COMPOSITING_CONTRACT", replace(
+        compositor.DOCUMENT_COMPOSITING_CONTRACT, parameters=tuple(sorted(parameters.items()))))
+    renderer = _DocumentRenderer(prepared, **profile.renderer_kwargs())
+    with renderer.image() as image:
+        assert image.tobytes() == expected
+    assert renderer.budget.work <= limit
+    assert compositor.DOCUMENT_COMPOSITING_CONTRACT.value("max_composite_work") == limit
+    assert ir.to_dict() == original
+    assert len(ir.layer_document.layers) == 24
+    with pytest.raises(ValueError, match=f"composite work budget exceeded: .* exceeds {limit}"):
+        _FullSurfaceDocumentReference(prepared, **profile.renderer_kwargs()).image()
