@@ -36,7 +36,14 @@ Historical records may describe a state that was true at the time they closed. T
 
 ## Current work
 
-**GitHub Release v1.4.0** is the publication authority for [Multi-Medium Drawing](V14_MULTI_MEDIUM_DRAWING_PLAN.md). The selected release adds explicit opt-in ink and screentone while preserving default graphite contracts, one history and one replay/export path. `STATUS.md` and the [release notes](../../../docs/releases/v1.4.0.md) separate mechanical evidence, controlled material review, figure assessment and limits. Main CI gates manifest-driven publication; the actual release records the published commit and assets. v1.3.1 and earlier releases remain immutable.
+**GitHub Release v1.5.0** will be the publication authority for the selected
+[optional layered-editing release](V15_LAYERED_EDITING_PLAN.md). S01–S06 are complete:
+the real manga, portable native/replay and actual Krita checks have scoped results and limits.
+Final candidate/main CI and observed publication remain pending.
+[Release notes](../../../docs/releases/v1.5.0.md) and `STATUS.md` separate observed evidence
+from remaining gates. Published v1.4.0 and earlier release records remain immutable.
+Successful promoted-main CI gates manifest-driven publication; only the actual release,
+tag, target commit and uploaded assets establish that publication occurred.
 
 ## Historical evidence and repository size
 

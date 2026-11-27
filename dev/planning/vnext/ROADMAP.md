@@ -3,7 +3,8 @@
 Updated: 2026-11-28
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-Current development scope: v1.5.0 optional layered editing and exchange from published v1.4.0.
+Current selected scope: v1.5.0 optional layered editing and exchange from published v1.4.0.
+S01–S06 are complete with measured exchange/artwork limits; S07 final CI and publication remain.
 The [bounded design and S01–S07 acceptance criteria](V15_LAYERED_EDITING_PLAN.md) preserve the
 simple drawing path and add optional native editing and exchange. `STATUS.md` records current
 progress and the separate published-release authority; earlier release-cycle decisions below
@@ -65,7 +66,9 @@ V13-S07 independent comparison                            CLOSED / USER_ACCEPTED
 V13-S08 release validation                                CLOSED · v1.3.0 main CI + publish SUCCESS
 M04 v1.3.1 release maintenance and branch consolidation   CLOSED · published maintenance release
 V14-S01–S07 multi-medium drawing                           See STATUS.md for measured release closure and review limits
-V15-S01–S07 optional layered editing and exchange          See STATUS.md and V15_LAYERED_EDITING_PLAN.md
+V15-S01–S05 optional layers, mixed edits and exchange       CLOSED · PR #124 integration and CI
+V15-S06 practical manga and external-editor validation     CLOSED · native/replay exact, Krita limits measured
+V15-S07 stable metadata, final CI and publication           REVIEW · selected 1.5.0, final CI/publication pending
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -275,7 +278,8 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- selected release: Git tag / [GitHub Release `v1.4.0`](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.4.0), `../../release/publish/v1.4.0.json`, and `../../../docs/releases/v1.4.0.md`; actual publication is established by the release and its assets;
+- selected release: `../../release/publish/v1.5.0.json` and `../../../docs/releases/v1.5.0.md`; S06 evidence complete, final CI and publication remain pending;
+- observed published stable: [GitHub Release `v1.4.0`](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.4.0); actual publication is established by the release and its assets;
 - previous published stable: v1.3.1, v1.3.0 and earlier releases, unchanged manifests and freezes;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `../../release/publish/v1.1.0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
