@@ -281,14 +281,14 @@ def test_pattern_edits_white_over_tone_transforms_and_replay(tmp_path):
     forward=ForwardHistoryReplay(revived._agent.history)
     for cursor in range(6):
         assert forward.state_at(cursor).to_dict()==revived._agent.history.state_at(cursor).to_dict()
-    tl=revived.export_timelapse(tmp_path/"gif",every_n=2,backend="auto")
+    tl=revived.export_timelapse(tmp_path/"gif",every_n=2,backend="canonical")
     assert [f["cursor"] for f in tl.manifest["frames"]]==[0,2,4,5]
     assert tl.manifest["final"]["pixel_sha256"]==final.pixel_sha256
     assert tl.manifest["gif"]["within_tolerance"]
     for frame in tl.manifest["frames"]:
         assert revived.render_at(frame["cursor"],tmp_path/f"check-{frame['cursor']}.png").pixel_sha256==frame["pixel_sha256"]
-    with pytest.raises(ValueError,match="fast timelapse backend unavailable"):
-        revived.export_timelapse(tmp_path/"fast",backend="fast")
+    # This fixture intentionally checks canonical RGBA hashes. The ink-only
+    # incremental path has its own all-cursor and delta-pack parity suite.
     apply_ink_actions(revived,[action(oid,"f","tone",kind="ink.delete")])
     with Image.open(revived.render_final(tmp_path/"empty.png").path) as im:
         assert np.all(np.asarray(im)==255)

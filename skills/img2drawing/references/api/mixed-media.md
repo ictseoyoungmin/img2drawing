@@ -156,9 +156,10 @@ by that helper. Re-author explicit replacement geometry when a transform is insu
 
 Existing profile work limits apply: factor = supersample times output_scale, at most
 16,777,216 working pixels and factor at most 16. Choose a supported canvas/profile
-before authoring; do not switch a persisted profile to hide a limit. Mixed Fast replay
-is not yet eligible; use auto or canonical. PNG retains RGBA; GIF displays alpha over
-white. See [render and replay](../output/render-profile-and-replay.md).
+before authoring; do not switch a persisted profile to hide a limit. Fast replay is eligible
+for opaque-background ink-only history; graphite/eraser actions or transparency require
+canonical. Use auto; PNG retains RGBA and GIF displays alpha over white. See
+[render and replay](../output/render-profile-and-replay.md).
 For differing subject and canvas sizes, explicitly choose whole-image
 `Registration.fit(subject_size, canvas_size, mode="contain")` (or a justified
 cover/stretch/explicit mapping); see [measurement and registration](../observation/measuring-boundaries.md).

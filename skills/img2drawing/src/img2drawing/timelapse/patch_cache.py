@@ -13,6 +13,8 @@ import os
 import struct
 import time
 import zlib
+from collections import OrderedDict
+from contextlib import contextmanager
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -203,4 +205,88 @@ class PatchCache:
         self.object_cache.clear()
 
 
-__all__ = ["CACHE_SCHEMA", "PatchCache"]
+# Mixed ink uses an isolated, bounded in-memory cache. It has no on-disk
+# patches and cannot accidentally reuse a graphite or another profile's entry.
+class InkPatchCache:
+    DEFAULT_MAX_BYTES = 32 * 1024 * 1024
+    MAX_ENTRIES = 256
+
+    def __init__(self, profile, *, supersample=None, max_bytes=DEFAULT_MAX_BYTES):
+        from ..render.contract import validate_mixed_raster_budget
+        if not profile.is_mixed_media:
+            raise ValueError("ink patch cache requires a mixed profile")
+        if type(max_bytes) is not int or not 0 <= max_bytes <= self.DEFAULT_MAX_BYTES:
+            raise ValueError("invalid ink patch cache byte budget")
+        self.profile = profile
+        self.supersample = profile.supersample if supersample is None else supersample
+        self.factor = validate_mixed_raster_budget(
+            profile.canvas_width,profile.canvas_height,self.supersample,profile.output_scale)
+        self.hi_size = (profile.canvas_width*self.factor,profile.canvas_height*self.factor)
+        self.out_size = (profile.canvas_width*profile.output_scale,profile.canvas_height*profile.output_scale)
+        self.background = profile.background_rgba
+        self.max_bytes = max_bytes
+        self._entries = OrderedDict()
+        self._bytes = 0
+        self._closed = False
+        self._scope = (profile.digest(),self.factor,self.hi_size)
+        self.stats = {"cache_hits":0,"cache_misses":0,"patch_build_wall_sec":0.,
+                      "evictions":0,"oversize_uncached":0,"cache_bytes":0,
+                      "peak_cache_bytes":0,"max_cache_bytes":max_bytes}
+        self.persistent = {"mode":"memory-only","disk_hits":0,"disk_misses":0,
+                           "disk_corrupt":0,"read_sec":0.,"write_sec":0.,
+                           "bytes_read":0,"bytes_written":0}
+
+    def key(self, mark):
+        return (self._scope,mark.digest())
+
+    @contextmanager
+    def patch(self, mark, *, key=None):
+        from ..render.ink import build_ink_patch
+        if self._closed:
+            raise ValueError("ink patch cache is closed")
+        self.profile.validate_ink_mark(mark)
+        # Caller may reuse a key derived from the same immutable mark in this
+        # source. Never accept a key from a different rendering scope.
+        key = self.key(mark) if key is None else key
+        if key[0] != self._scope:
+            raise ValueError("ink patch key belongs to another profile")
+        hit=self._entries.get(key)
+        if hit is not None:
+            self._entries.move_to_end(key)
+            self.stats["cache_hits"]+=1
+            yield hit[:2]
+            return
+        start=time.perf_counter()
+        bounds,layer=build_ink_patch(mark,factor=self.factor,hi_size=self.hi_size)
+        self.stats["patch_build_wall_sec"]+=time.perf_counter()-start
+        self.stats["cache_misses"]+=1
+        size=layer.width*layer.height*4
+        if size>self.max_bytes:
+            self.stats["oversize_uncached"]+=1
+            try:
+                yield bounds,layer
+            finally:
+                layer.close()
+            return
+        while self._entries and (self._bytes+size>self.max_bytes or
+                                len(self._entries)>=self.MAX_ENTRIES):
+            _,(_,image,n)=self._entries.popitem(last=False)
+            image.close()
+            self._bytes-=n
+            self.stats["evictions"]+=1
+        self._entries[key]=(bounds,layer,size)
+        self._bytes+=size
+        self.stats["cache_bytes"]=self._bytes
+        self.stats["peak_cache_bytes"]=max(self.stats["peak_cache_bytes"],self._bytes)
+        yield bounds,layer
+
+    def close(self):
+        for _,image,_ in self._entries.values():
+            image.close()
+        self._entries.clear()
+        self._bytes=0
+        self.stats["cache_bytes"]=0
+        self._closed=True
+
+
+__all__ = ["CACHE_SCHEMA", "PatchCache", "InkPatchCache"]

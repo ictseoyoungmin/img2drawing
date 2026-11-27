@@ -374,3 +374,14 @@ Out of scope: color painting suites, arbitrary brushes/textures, full manga
 editor/page layout/speech bubbles, new general raster layer editor, model-based
 segmentation/tracing, automatic lighting/line extraction, new independent
 renderer/session/exporter. These would require separate authorization.
+
+S06c implementation scope: ink-only opaque-background histories use exact
+incremental native ink patch composition, stable layer order, old/new dirty
+bounds and guarded local Lanczos downsampling. Use the existing RGB delta pack
+and GIF encoder; no frame PNGs unless requested. Per-source patch cache is
+memory-only (32 MiB, 256 entries; oversized patches ephemeral), keyed by full
+profile, effective sampling and mark digest. Preserve canonical composite work
+limits, final PNG verification and profile-specific GIF policy. Histories with
+any graphite/eraser action (even retired), unsealed mixed records or transparent
+backgrounds remain canonical-only. No claims of full mixed acceleration or
+large-session performance until stress evidence. Legacy graphite Fast unchanged.
