@@ -110,3 +110,14 @@ def test_reject_invalid_png_and_unsafe_zip(tmp_path):
     with pytest.raises(ValueError, match="unsafe path"):
         module.prepare(**args)
     assert not args["out_dir"].exists()
+
+
+@pytest.mark.parametrize("key,value", [("worker_model", ""), ("max_tokens", True), ("max_tokens", 0)])
+def test_reject_unequal_or_invalid_worker_budget(tmp_path, key, value):
+    args = fixture(tmp_path)
+    budget = json.loads(args["budget_file"].read_text())
+    budget[key] = value
+    args["budget_file"].write_text(json.dumps(budget))
+    with pytest.raises(ValueError, match=key):
+        module.prepare(**args)
+    assert not args["out_dir"].exists()
