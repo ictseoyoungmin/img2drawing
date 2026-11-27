@@ -63,8 +63,8 @@ def checked_archive(path: Path, suffix: str) -> None:
 
 def checked_budget(path: Path) -> dict:
     value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict) or set(value) != {"canvas", "supersample", "max_actions", "max_wall_sec"}:
-        raise ValueError("budget needs canvas, supersample, max_actions, max_wall_sec")
+    if not isinstance(value, dict) or set(value) != {"canvas", "supersample", "max_actions", "max_wall_sec", "worker_model", "max_tokens"}:
+        raise ValueError("budget needs canvas, supersample, max_actions, max_wall_sec, worker_model, max_tokens")
     canvas = value["canvas"]
     if not isinstance(canvas, list) or len(canvas) != 2 or any(type(x) is not int or not 64 <= x <= 8192 for x in canvas):
         raise ValueError("invalid canvas budget")
@@ -74,6 +74,10 @@ def checked_budget(path: Path) -> dict:
         raise ValueError("invalid max_actions")
     if type(value["max_wall_sec"]) is not int or not 1 <= value["max_wall_sec"] <= 86400:
         raise ValueError("invalid max_wall_sec")
+    if not isinstance(value["worker_model"], str) or not value["worker_model"].strip() or len(value["worker_model"]) > 128:
+        raise ValueError("invalid worker_model")
+    if type(value["max_tokens"]) is not int or not 1 <= value["max_tokens"] <= 10_000_000:
+        raise ValueError("invalid max_tokens")
     return value
 
 

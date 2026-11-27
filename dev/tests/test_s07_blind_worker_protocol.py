@@ -19,7 +19,7 @@ def fixture(tmp_path):
     goal.write_text("Draw faithfully using direct authored marks.\n", encoding="utf-8")
     budget = tmp_path / "budget.json"
     budget.write_text(json.dumps({"canvas": [2048, 2048], "supersample": 2,
-                                  "max_actions": 1358, "max_wall_sec": 14400}))
+                                  "max_actions": 1358, "max_wall_sec": 14400, "worker_model": "gpt-6", "max_tokens": 100000}))
     archives = []
     for tag in ("a", "b"):
         skill = tmp_path / f"{tag}-skill.zip"
@@ -82,7 +82,7 @@ def test_mismatched_pin_fails_without_outputs(tmp_path):
 def test_invalid_budget_fails_before_output(tmp_path):
     args = fixture(tmp_path)
     args["budget_file"].write_text(json.dumps({"canvas": [2048, 2048], "supersample": 2,
-                                               "max_actions": True, "max_wall_sec": 1000}))
+                                               "max_actions": True, "max_wall_sec": 1000, "worker_model": "gpt-6", "max_tokens": 100000}))
     with pytest.raises(ValueError, match="max_actions"):
         module.prepare(**args)
     assert not args["out_dir"].exists()
