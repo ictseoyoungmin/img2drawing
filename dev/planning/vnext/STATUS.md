@@ -3,13 +3,13 @@
 Updated: 2026-11-28
 
 ```text
-PUBLISHED STABLE:   v1.4.0 · observed publication; earlier release records remain immutable
-SELECTED RELEASE:   v1.5.0 · practical validation complete; publication pending
-RELEASE TAG:        v1.5.0 · pending successful main CI and observed tag/assets
+PUBLISHED STABLE:   v1.5.0 · actual tag and four uploaded assets observed
+SELECTED RELEASE:   v1.5.0 · published; earlier release records remain immutable
+RELEASE TAG:        v1.5.0 · 94770798cee2838d4378fe9eb77f96f18085fa72
 CURRENT SOURCE:     1.5.0 · optional layered editing and exchange
 CURRENT RENDERER:   img2drawing-pencil/11 default · normalized graphite v1/v2/v3 and opt-in mixed-media v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-CURRENT WORK:      v1.5.0 S01–S06 CLOSED; S07 final candidate CI and publication
+CURRENT WORK:      v1.5.0 S01–S07 CLOSED · practical evidence and actual publication recorded
 S01 DESIGN:         CLOSED · historical v11 quality-control design
 S02 INSTRUCTIONS:   CLOSED · historical anti-normalization implementation; further proof was user-accepted
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; historical gate, not v1.4 comparison
@@ -19,9 +19,9 @@ S05 REPLAY BOUNDARY: CLOSED by R1 · historical v9/v10 exact authority: img2draw
 GRAPH CLEANUP:      Slice A–E CLOSED; conditional mixed-media leaves are governed by the same graph checks
 PACKAGE VERSION:    1.5.0
 HISTORICAL REPLAY:  existing release tags/freezes remain immutable pixel authority
-MAIN RELEASE CI:    successful push CI at the promoted main SHA is required for publication
+MAIN RELEASE CI:    SUCCESS · run 46061608993 at the tagged main SHA
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      PENDING · S06 complete; final candidate/main CI and actual publication remain gates
+PUBLISH STATE:      PUBLISHED · workflow 46061846831 SUCCESS · four assets uploaded
 ```
 
 ## Authority contract
@@ -37,7 +37,7 @@ Authority is intentionally split by purpose:
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
 
-## Current v1.5.0 candidate checkpoint
+## Published v1.5.0 release checkpoint
 
 - User selected optional layered editing for casual line art, hand-drawn studies and professional
   revision/exchange on 2026-11-28. [Design](V15_LAYERED_EDITING_PLAN.md) ·
@@ -70,9 +70,16 @@ Authority is intentionally split by purpose:
   mean RGBA8 0.98724270, including mild broad tone brightening. This is not pixel-exact external
   interchange or GUI verification. [Release notes](../../../docs/releases/v1.5.0.md) give the
   complete scoped comparison and working-file guidance.
-- S07 is REVIEW: source/plugin versions, stable freeze, release notes, public guide and publish
-  manifest select `1.5.0`. Final candidate validation, promoted-main CI and observed release,
-  tag target and four assets remain gates. A source declaration alone is not publication.
+- S07 is CLOSED. Stable selection [PR #126](https://github.com/ictseoyoungmin/img2drawing/pull/126)
+  and main promotion [PR #127](https://github.com/ictseoyoungmin/img2drawing/pull/127) passed
+  exact-head CI. Main `94770798cee2838d4378fe9eb77f96f18085fa72` passed
+  [push CI 46061608993](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46061608993),
+  including 851 active, 49 runtime and 45 Pillow 13 replay checks and package/repository gates.
+  [Publisher 46061846831](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46061846831)
+  succeeded. The actual [v1.5.0 Release](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.5.0)
+  is neither draft nor prerelease; its tag targets that tested SHA, and wheel, sdist, standalone
+  skill ZIP and contract freeze are all uploaded. Publication was observed at 2026-11-28
+  05:11:23 Asia/Seoul. The uploaded freeze digest matches the selected source file.
 - Normal is the initial blend mode. Additional modes need separate P1 verification; PSD and a
   visual editor remain P2. Raster edits do not become native strokes. Existing simple drawing,
   material contracts, development metadata and historical release records remain available.

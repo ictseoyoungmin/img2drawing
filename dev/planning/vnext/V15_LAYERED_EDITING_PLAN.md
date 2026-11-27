@@ -243,3 +243,16 @@ separate gates recorded in `STATUS.md`.
 Stable source/plugin versions, additive freeze and publish manifest select 1.5.0. Prior
 development and release records remain unchanged. Successful final/main CI and observation
 of the tag plus four release assets are required to close S07.
+
+## Observed stable publication — 2026-11-28
+
+S07 is CLOSED. [PR #126](https://github.com/ictseoyoungmin/img2drawing/pull/126) selected
+the stable version after green exact-head CI; [PR #127](https://github.com/ictseoyoungmin/img2drawing/pull/127)
+promoted it to main `94770798cee2838d4378fe9eb77f96f18085fa72` after its own green CI.
+[Main push CI 46061608993](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46061608993)
+and [publisher 46061846831](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46061846831)
+both succeeded. The [actual v1.5.0 Release](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.5.0)
+was published at 05:11:23 Asia/Seoul with a tag at that tested SHA and four uploaded assets:
+wheel, sdist, standalone skill ZIP and contract freeze. The uploaded freeze digest matches
+the selected source. This observation closes publication without rewriting tagged release
+notes, manifests, freezes or earlier development evidence.
