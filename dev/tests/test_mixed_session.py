@@ -41,7 +41,7 @@ def _pixels(s, path):
 
 
 def test_mixed_profile_distinct_pinned_and_scoped():
-    profile = RenderProfile.mixed_media(96,72,supersample=2)
+    profile = RenderProfile.mixed_media(96,72,supersample=2,styled_paths=False)
     assert profile.renderer_contract_digest == MIXED_MEDIA_CONTRACT.digest()
     assert MIXED_MEDIA_CONTRACT.value("graphite_contract_digest") == CONTACT_WIDTH_CONTRACT.digest()
     assert RenderProfile.from_dict(profile.to_dict()) == profile

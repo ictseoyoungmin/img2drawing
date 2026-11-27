@@ -13,9 +13,9 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
-from ..core.material import MIXED_HISTORY_CONTRACT
+from ..core.material import MIXED_HISTORY_CONTRACT, StyledInkPath
 from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
-                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, validate_mixed_raster_budget)
+                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, validate_mixed_raster_budget)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
 
@@ -191,16 +191,30 @@ class RenderProfile:
 
     @property
     def is_mixed_media(self) -> bool:
-        return (self.renderer_id, self.renderer_version) == MIXED_MEDIA_CONTRACT.identity
+        return (self.renderer_id,self.renderer_version) in (MIXED_MEDIA_CONTRACT.identity,STYLED_INK_CONTRACT.identity)
+
+    @property
+    def supports_styled_ink(self) -> bool:
+        return (self.renderer_id,self.renderer_version)==STYLED_INK_CONTRACT.identity
+
+    def validate_ink_mark(self, mark) -> None:
+        if not self.is_mixed_media:
+            raise ValueError("ink requires mixed-media profile")
+        if isinstance(mark,StyledInkPath) and not self.supports_styled_ink:
+            raise ValueError("styled ink requires RenderProfile.mixed_media(..., styled_paths=True)")
 
     @classmethod
     def mixed_media(cls, width: int, height: int, *, supersample: int = 4,
-                    output_scale: int = 1, background_rgba=(255, 255, 255, 255)) -> "RenderProfile":
-        """Explicit mixed-media profile; no implicit migration of pencil sessions."""
+                    output_scale: int = 1, background_rgba=(255, 255, 255, 255),
+                    styled_paths: bool = True) -> "RenderProfile":
+        """New mixed sessions support styled paths; select False for exact v1 contract."""
+        if type(styled_paths) is not bool:
+            raise ValueError("styled_paths must be boolean")
         validate_mixed_raster_budget(width, height, supersample, output_scale)
-        return cls(profile_id="mixed-media-v1", renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
-                   renderer_version=MIXED_MEDIA_CONTRACT.renderer_version,
-                   renderer_contract_digest=MIXED_MEDIA_CONTRACT.digest(),
+        contract=STYLED_INK_CONTRACT if styled_paths else MIXED_MEDIA_CONTRACT
+        return cls(profile_id=contract.renderer_version, renderer_id=contract.renderer_id,
+                   renderer_version=contract.renderer_version,
+                   renderer_contract_digest=contract.digest(),
                    canvas_width=width, canvas_height=height,
                    material_profile="builtin:mixed-media", supersample=supersample,
                    output_scale=output_scale, background_rgba=background_rgba)
@@ -265,6 +279,8 @@ class RenderProfile:
         if ir.media_contract != expected:
             raise ValueError("IR and render profile media contracts do not match")
         ir.ordered_elements()
+        for element in ir.ink_elements:
+            self.validate_ink_mark(element.mark)
         prepared = deepcopy(ir)
         metadata = deepcopy(prepared.metadata if isinstance(prepared.metadata, dict) else {})
         metadata["paper"] = {

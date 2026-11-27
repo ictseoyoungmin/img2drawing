@@ -152,11 +152,15 @@ on same-black overlap; exact repeat/render/preview/resume on supported environme
 Compare same geometry using v1.3.0 graphite, separately label artistic judgment.
 
 S02 implementation choice: keep the S01 opaque swept-disk kernel and its pixel
-contract. G-pen supports explicitly authored round or zero-radius point terminals,
-round joins, and bounded curvature/diameter approximation; fineliner has a fixed
-diameter with round terminals/joins. Unsupported butt/square caps and miter/bevel
-joins fail explicitly rather than being approximated. Point tapers that are too
-steep for the adjacent disk envelope are rejected. Agent-authored polyline
+contract for original round/point paths. Maintainer-approved extension: miter,
+bevel, butt and square are explicit styled-path geometry using normal strips,
+local tapered-offset edge intersection and convex wedge unions. Round joins
+in a styled path are local disk unions. Miter limit 1–16 (default 4) with
+bevel fallback; reversal is flat for bevel/miter. Closed paths have a joined
+seam and require matching endpoint width, default round cap declarations.
+Styled paths are bound to additive mixed-media-v2, default for newly created
+mixed sessions; styled_paths=False selects the unchanged v1 contract. Point
+tapers retain the conservative original anti-swallow validation. Agent-authored polyline
 corners and cubic-chain junctions are retained; pressure knots are inserted at
 normalized arc positions. Straight constant-width paths do not need dense uniform
 sampling. The optional versioned pen recipe is action provenance, validated

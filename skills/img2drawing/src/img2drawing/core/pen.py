@@ -11,9 +11,10 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 import math
 
-from .material import InkPath, MAX_PATH_POINTS, MAX_WIDTH, _number, _points, _sequence, _paint
+from .material import InkPath, StyledInkPath, MAX_PATH_POINTS, MAX_WIDTH, _number, _points, _sequence, _paint
 
 PEN_DEFINITION_SCHEMA = "img2drawing.pen_definition.v1"
+STYLED_PEN_SCHEMA = "img2drawing.pen_definition.v2"
 MAX_CONTROLS = 1024
 MAX_PRESSURE_KNOTS = 256
 MAX_RECURSION = 24
@@ -90,9 +91,9 @@ def _diameter_error(p0, p1, gamma, span):
 class PenDefinition:
     """An explicitly authored centerline, pressure knots and resolved pen settings.
 
-    Round disk joins are the supported join model. Pointed G-pen terminals
-    require a zero-width endpoint and a non-overwhelming first/last radius.
-    Fineliner is constant-width with round terminals and ignores no hidden pressure.
+    Legacy round strokes retain the swept-disk kernel. Explicit miter/bevel
+    joins or butt/square caps use the separate normal-strip path geometry.
+    Pointed terminals require zero endpoint width; fineliner is constant-width.
     """
     tool: str
     geometry: str
@@ -107,6 +108,7 @@ class PenDefinition:
     paint: str = "black"
     curve_tolerance: float = .05
     width_tolerance: float = .05
+    miter_limit: float = 4.
 
     def __post_init__(self):
         if self.tool not in ("g-pen","fineliner"):
@@ -129,18 +131,23 @@ class PenDefinition:
         gamma = _number(self.gamma,"gamma",.25,4.)
         if not high:
             raise ValueError("max_width must be positive")
-        if self.start_cap not in ("round","point") or self.end_cap not in ("round","point") or self.join != "round":
-            raise ValueError("supported pen terminals: round/point; supported join: round")
+        caps = ("round","point","butt","square")
+        if self.start_cap not in caps or self.end_cap not in caps or self.join not in ("round","miter","bevel"):
+            raise ValueError("unsupported pen terminal or join")
+        limit = _number(self.miter_limit,"miter_limit",1.,16.)
+        if self.join!="miter" and limit!=4.:
+            raise ValueError("non-default miter_limit requires miter join")
+        object.__setattr__(self,"miter_limit",limit)
         if self.tool == "fineliner":
-            if low != high or gamma != 1. or knots != ((0.,1.),(1.,1.)) or (self.start_cap,self.end_cap)!=("round","round"):
-                raise ValueError("fineliner requires constant diameter, constant pressure and round terminals")
+            if low != high or gamma != 1. or knots != ((0.,1.),(1.,1.)) or "point" in (self.start_cap,self.end_cap):
+                raise ValueError("fineliner requires constant diameter, constant pressure and non-point caps")
         else:
             for cap,p in ((self.start_cap,knots[0][1]),(self.end_cap,knots[-1][1])):
                 width=low+(high-low)*p**gamma
                 if cap=="point" and width != 0.:
                     raise ValueError("point terminal requires zero endpoint pressure and min_width=0")
-                if cap=="round" and width == 0.:
-                    raise ValueError("round terminal requires positive endpoint diameter")
+                if cap!="point" and width == 0.:
+                    raise ValueError("non-point terminal requires positive endpoint diameter")
             if not low and not any(k[1]>0 for k in knots):
                 raise ValueError("G-pen requires nonzero authored diameter")
         object.__setattr__(self,"controls",controls)
@@ -210,7 +217,12 @@ class PenDefinition:
                 raise ValueError("pen path sample budget exceeded")
         for a,b in zip(breaks,breaks[1:]):
             emit(a,b,pressure(a),pressure(b),0)
-        mark=InkPath(tuple(out),tuple(values),self.min_width,self.max_width,self.gamma,self.paint)
+        if self.uses_styled_path:
+            mark=StyledInkPath(tuple(out),tuple(values),self.min_width,self.max_width,
+                               self.gamma,self.paint,self.start_cap,self.end_cap,
+                               self.join,self.miter_limit)
+        else:
+            mark=InkPath(tuple(out),tuple(values),self.min_width,self.max_width,self.gamma,self.paint)
         # A zero-radius end is not a visible sharp point if the next disk
         # swallows it. Refuse too-steep local tapers rather than invent geometry.
         radii=[w*.5 for w in mark.diameters()]
@@ -241,22 +253,39 @@ class PenDefinition:
                     raise ValueError("point terminal is covered by another contact; revise the pressure transition or path")
         return mark
 
+    @property
+    def uses_styled_path(self):
+        return self.join!="round" or self.start_cap in ("butt","square") or self.end_cap in ("butt","square")
+
     def to_dict(self):
-        return {"schema":PEN_DEFINITION_SCHEMA,"tool":self.tool,"geometry":self.geometry,
+        raw = {"schema":PEN_DEFINITION_SCHEMA,"tool":self.tool,"geometry":self.geometry,
                 "controls":[list(p) for p in self.controls],
                 "pressure_knots":[list(k) for k in self.pressure_knots],
                 "min_width":self.min_width,"max_width":self.max_width,"gamma":self.gamma,
                 "start_cap":self.start_cap,"end_cap":self.end_cap,"join":self.join,
                 "paint":self.paint,"curve_tolerance":self.curve_tolerance,
                 "width_tolerance":self.width_tolerance}
+        if self.uses_styled_path:
+            raw.update(schema=STYLED_PEN_SCHEMA,miter_limit=self.miter_limit)
+        return raw
 
     @classmethod
     def from_dict(cls,raw):
         fields={"schema","tool","geometry","controls","pressure_knots","min_width","max_width",
                 "gamma","start_cap","end_cap","join","paint","curve_tolerance","width_tolerance"}
-        if not isinstance(raw,Mapping) or set(raw)!=fields or raw["schema"]!=PEN_DEFINITION_SCHEMA:
+        if not isinstance(raw,Mapping):
             raise ValueError("unsupported pen definition schema or fields")
-        return cls(**{k:raw[k] for k in fields-{"schema"}})
+        schema=raw.get("schema")
+        if schema==STYLED_PEN_SCHEMA:
+            fields=fields|{"miter_limit"}
+        elif schema!=PEN_DEFINITION_SCHEMA:
+            raise ValueError("unsupported pen definition schema or fields")
+        if set(raw)!=fields:
+            raise ValueError("unsupported pen definition schema or fields")
+        result=cls(**{k:raw[k] for k in fields-{"schema"}})
+        if result.uses_styled_path != (schema==STYLED_PEN_SCHEMA):
+            raise ValueError("pen definition schema does not match selected geometry")
+        return result
 
     def action(self, *, action_id, element_id, observation_id, source_observation, reason,
                role, part=None, layer=0, kind="ink.add"):

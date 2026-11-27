@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 from .digest import sha256_obj
 
 INK_MARK_SCHEMA = "img2drawing.ink_mark.v1"
+STYLED_INK_SCHEMA = "img2drawing.styled_ink_path.v1"
 MAX_PATH_POINTS = 16384
 MAX_RING_POINTS = 1024  # total including the explicitly repeated closing vertices
 MAX_COORDINATE = 32768.0
@@ -160,6 +161,43 @@ class InkPath:
 
 
 @dataclass(frozen=True)
+class StyledInkPath(InkPath):
+    """Explicit normal-strip stroke geometry with local joins and caps.
+
+    A separate kind preserves the original swept-disk InkPath exactly.
+    """
+    start_cap: str = "round"
+    end_cap: str = "round"
+    join: str = "round"
+    miter_limit: float = 4.
+
+    def __post_init__(self):
+        super().__post_init__()
+        caps = ("round", "point", "butt", "square")
+        if self.start_cap not in caps or self.end_cap not in caps:
+            raise ValueError("unsupported styled ink cap")
+        if self.join not in ("round", "miter", "bevel"):
+            raise ValueError("unsupported styled ink join")
+        object.__setattr__(self, "miter_limit", _number(self.miter_limit, "miter_limit", 1., 16.))
+        widths = self.diameters()
+        if not any(widths):
+            raise ValueError("styled path requires nonzero authored diameter")
+        for cap, width in ((self.start_cap, widths[0]), (self.end_cap, widths[-1])):
+            if (cap == "point") != (width == 0.):
+                raise ValueError("point caps require zero endpoint diameter; other caps require positive diameter")
+        if self.points[0] == self.points[-1]:
+            if widths[0] != widths[-1] or (self.start_cap,self.end_cap) != ("round","round"):
+                raise ValueError("closed styled path requires matching endpoint widths and no explicit end caps")
+
+    def to_dict(self):
+        raw = super().to_dict()
+        raw.update(schema=STYLED_INK_SCHEMA, kind="styled-path",
+                   start_cap=self.start_cap, end_cap=self.end_cap,
+                   join=self.join, miter_limit=self.miter_limit)
+        return raw
+
+
+@dataclass(frozen=True)
 class InkArea:
     """Explicit authored closed boundary plus optional disjoint interior holes."""
 
@@ -197,7 +235,15 @@ class InkArea:
 
 def decode_ink_mark(raw):
     """Strict discriminated payload. Unknown fields/revisions fail closed."""
-    if not isinstance(raw, Mapping) or raw.get("schema") != INK_MARK_SCHEMA:
+    if not isinstance(raw, Mapping):
+        raise ValueError("unsupported ink mark schema")
+    if raw.get("schema") == STYLED_INK_SCHEMA:
+        fields = {"points", "pressure", "min_width", "max_width", "gamma", "paint",
+                  "start_cap", "end_cap", "join", "miter_limit"}
+        if raw.get("kind") != "styled-path" or set(raw) != fields | {"schema", "kind"}:
+            raise ValueError("invalid styled ink path fields")
+        return StyledInkPath(**{key: raw[key] for key in fields})
+    if raw.get("schema") != INK_MARK_SCHEMA:
         raise ValueError("unsupported ink mark schema")
     kind = raw.get("kind")
     if kind == "path":

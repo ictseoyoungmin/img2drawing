@@ -6,17 +6,17 @@ from ..core.pen import PenDefinition
 
 def g_pen(controls, *, pressure_knots, max_width, min_width=0., gamma=1.3,
           geometry="polyline", start_cap="round", end_cap="round", join="round",
-          paint="black", curve_tolerance=.05, width_tolerance=.05):
+          paint="black", curve_tolerance=.05, width_tolerance=.05, miter_limit=4.):
     """Author pressure-driven opaque ink; width is in logical canvas pixels."""
     return PenDefinition("g-pen",geometry,controls,pressure_knots,min_width,max_width,gamma,
-                         start_cap,end_cap,join,paint,curve_tolerance,width_tolerance)
+                         start_cap,end_cap,join,paint,curve_tolerance,width_tolerance,miter_limit)
 
 
 def fineliner(controls, *, width, geometry="polyline", paint="black",
-              curve_tolerance=.05, cap="round", join="round"):
-    """Author a constant-width, round-contact fineliner."""
+              curve_tolerance=.05, cap="round", join="round", miter_limit=4.):
+    """Author a constant-width fineliner with explicit join and cap."""
     return PenDefinition("fineliner",geometry,controls,((0.,1.),(1.,1.)),width,width,
-                         1.,cap,cap,join,paint,curve_tolerance,.05)
+                         1.,cap,cap,join,paint,curve_tolerance,.05,miter_limit)
 
 
 def read_pen_definition(session, element_id):

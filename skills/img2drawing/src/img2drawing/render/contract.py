@@ -149,6 +149,24 @@ MIXED_MEDIA_CONTRACT = RendererContract(
 )
 
 
+# Additive development contract: v1 sessions keep their exact old digest and pixels.
+STYLED_INK_CONTRACT = RendererContract(
+    renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
+    renderer_version="mixed-media-v2",
+    parameters=tuple(sorted({
+        **dict(MIXED_MEDIA_CONTRACT.parameters),
+        "base_mixed_contract_digest": MIXED_MEDIA_CONTRACT.digest(),
+        "styled_ink_geometry": "img2drawing.styled_ink_path.v1",
+        "styled_ink_kernel": "normal-strip-local-join-cap-union-v1",
+        "miter_limit": (1.,16.),
+        "miter_fallback": "bevel",
+        "styled_join_reversal": "flat-for-bevel-miter",
+        "styled_work": "sum-bbox-pixels-times-convex-edge-count-v1",
+    }.items())),
+)
+MIXED_RENDERER_VERSIONS = (MIXED_MEDIA_CONTRACT.renderer_version, STYLED_INK_CONTRACT.renderer_version)
+
+
 def validate_mixed_raster_budget(width, height, supersample, scale):
     factor = supersample * scale
     if (type(width) is not int or type(height) is not int or width <= 0 or height <= 0
@@ -184,7 +202,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity, STYLED_INK_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -195,6 +213,8 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
 
 def contract_for_identity(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = canonical_identity(renderer_id, renderer_version)
+    if key == STYLED_INK_CONTRACT.identity:
+        return STYLED_INK_CONTRACT
     if key == MIXED_MEDIA_CONTRACT.identity:
         return MIXED_MEDIA_CONTRACT
     if key == PENCIL_CONTRACT.identity:

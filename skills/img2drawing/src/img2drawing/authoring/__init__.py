@@ -11,7 +11,7 @@ None of these encode subject-specific geometry; the Agent still observes and aut
 """
 
 from ..core.contact_width import ContactWidthProfile, read_contact_width_profile
-from ..core.material import InkAction, InkElement, InkPath, InkArea
+from ..core.material import InkAction, InkElement, InkPath, InkArea, StyledInkPath
 from .ink_edits import apply_ink_actions, preview_ink_actions
 from .ink_pen import PenDefinition, g_pen, fineliner, read_pen_definition
 from .construction import (
@@ -52,7 +52,7 @@ from .tonal_preview import inspect_tonal_proposals
 from .tonal_correction import TonalPressureAdjustment, prepare_tonal_pressure_edits
 
 __all__ = [
-    "InkAction", "InkElement", "InkPath", "InkArea", "apply_ink_actions", "preview_ink_actions",
+    "InkAction", "InkElement", "InkPath", "InkArea", "StyledInkPath", "apply_ink_actions", "preview_ink_actions",
     "PenDefinition", "g_pen", "fineliner", "read_pen_definition",
     "ContactWidthProfile",
     "read_contact_width_profile",
