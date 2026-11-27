@@ -1,0 +1,44 @@
+{
+  "schema": "img2drawing.mixed_media_stress.v1",
+  "canvas": [
+    2048,
+    2048
+  ],
+  "supersample": 2,
+  "actions": 1358,
+  "adds": 1320,
+  "every_n": 2,
+  "expected_frames": 680,
+  "max_pixel_work": 12000000000,
+  "max_gif_bytes": 80000000,
+  "max_ink_cache_bytes": 33554432,
+  "canonical_sample_cursors": [
+    0,
+    2,
+    128,
+    400,
+    800,
+    1320,
+    1352,
+    1358
+  ],
+  "fixture": "deterministic local explicit geometry: 1160 path, 100 area, 60 tone; 32 replacements and 6 deletes; graphite renders area outlines only",
+  "gates": [
+    "exact sampled canonical RGB and available state hashes",
+    "independent final RGBA parity and GIF fidelity",
+    "all lossless staged frame hashes and exact frame count",
+    "retained ink cache <=32MiB; no persistent ink patch writes",
+    "same-profile graphite v1.3.0 vs candidate exact state/action/profile/final/frame parity"
+  ],
+  "timing_policy": "report elapsed/CPU/RSS without arbitrary absolute performance thresholds; same environment sequential runs, cold outputs; no equal-appearance or artistic comparison",
+  "baseline": {
+    "version": "1.3.0",
+    "tag": "v1.3.0",
+    "wheel": "img2drawing-1.3.0-py3-none-any.whl",
+    "sha256": "0cdcb1c657e340e40f68757c6997e97904bc5d0711f49900302992df9cba210e"
+  },
+  "dependencies": {
+    "numpy": "2.2.6",
+    "Pillow": "11.3.0"
+  }
+}
