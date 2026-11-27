@@ -35,8 +35,9 @@ def _session(tmp_path: Path) -> tuple[DrawingSession, str]:
     return session, oid
 
 
-def test_authoring_element_model_is_stroke_only():
-    assert ELEMENT_TYPES == ("stroke",)
+def test_authoring_element_model_allows_only_strokes_and_explicit_typed_ink():
+    assert ELEMENT_TYPES == ("stroke", "ink")
+    assert "region" not in ELEMENT_TYPES
 
 
 def test_removed_fill_names_are_not_lazy_compatibility_shims():

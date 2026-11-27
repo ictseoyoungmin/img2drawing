@@ -8,13 +8,16 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+import PIL
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession, RenderProfile
 from img2drawing.core.history import CanvasHistory
 from img2drawing.core.ir import Stroke
 from img2drawing.core.tools import get_tool
-from img2drawing.render import render
+from img2drawing.inspection import drawing_state_hash
+from img2drawing.render import render, render_image
+from img2drawing.render.artifact import rgb_sha256
 from img2drawing.timelapse import export_timelapse, sample_cursors
 from img2drawing.timelapse.delta_pack import DeltaPackWriter, iter_frames, read_info
 from img2drawing.timelapse.frames import (
@@ -144,6 +147,82 @@ def test_every_edit_kind_is_pixel_exact(tmp_path: Path) -> None:
             got = source.image()
             assert _rgba_hash(got) == _canonical(history, cursor, profile, tmp_path / f"{label}.png"), (label, info)
             got.close()
+    finally:
+        source.close()
+
+
+def _narrow_graphite_session(tmp_path: Path, size, points) -> DrawingSession:
+    subject = tmp_path / "synthetic.png"
+    Image.new("RGB", size, "white").save(subject)
+    session = DrawingSession.create(
+        subject=subject,
+        output_dir=tmp_path / "session",
+        intent=DrawingIntent(finish_intent="form_light"),
+        render_profile=_profile(*size),
+    )
+    session.draw(points, part="synthetic line", pressure=(0.35, 0.85),
+                 tool="form_pencil", tool_overrides={"width": 1.3})
+    return session
+
+
+@pytest.mark.parametrize("size,points", [
+    ((128, 192), ((24, 8), (40, 184))),
+    ((96, 256), ((8, 100), (88, 116))),
+])
+def test_narrow_graphite_dirty_resample_matches_full_page(tmp_path: Path, monkeypatch, size, points) -> None:
+    # Public synthetic geometry makes the guarded crop and full page choose
+    # opposite separable-filter pass orders in Pillow 13.
+    session = _narrow_graphite_session(tmp_path, size, points)
+    history, profile = session._agent.history, _profile(*size)
+    source = FastFrameSource(history, profile)
+    previous = source.image()
+    resize_calls = []
+    original_resize = Image.Image.resize
+
+    def record_resize(image, output_size, *args, **kwargs):
+        resize_calls.append((image.size, output_size))
+        return original_resize(image, output_size, *args, **kwargs)
+
+    monkeypatch.setattr(Image.Image, "resize", record_resize)
+    try:
+        info = source.advance_to(history.cursor)
+        assert info["mode"] == "append"
+        assert info["output_regions"] != [(0, 0, *size)]
+        full_resize = (source.renderer.hi_size, source.renderer.out_size)
+        if int(PIL.__version__.split(".", 1)[0]) < 13:
+            assert full_resize not in resize_calls
+            assert 0 < source.stats["dirty_output_pixels"] < size[0] * size[1]
+        else:
+            assert full_resize in resize_calls
+            assert source.stats["dirty_output_pixels"] == size[0] * size[1]
+        assert drawing_state_hash(source.replay.snapshot()) == drawing_state_hash(history.state_at())
+        with source.image() as got, render_image(
+            profile.prepared_ir(history.state_at()), **profile.renderer_kwargs()
+        ) as want:
+            assert got.tobytes() == want.tobytes()
+            for box in info["output_regions"]:
+                with got.crop(box) as crop:
+                    previous.paste(crop, box[:2])
+            assert previous.tobytes() == want.tobytes()
+    finally:
+        previous.close()
+        source.close()
+
+
+@pytest.mark.parametrize("version", ["unknown", None])
+def test_unknown_pillow_version_uses_exact_full_page_resampling(tmp_path: Path, monkeypatch, version) -> None:
+    size = (128, 192)
+    session = _narrow_graphite_session(tmp_path, size, ((24, 8), (40, 184)))
+    history, profile = session._agent.history, _profile(*size)
+    monkeypatch.setattr(PIL, "__version__", version)
+    source = FastFrameSource(history, profile)
+    try:
+        source.advance_to(history.cursor)
+        assert source.stats["dirty_output_pixels"] == size[0] * size[1]
+        with source.image() as got, render_image(
+            profile.prepared_ir(history.state_at()), **profile.renderer_kwargs()
+        ) as want:
+            assert got.tobytes() == want.tobytes()
     finally:
         source.close()
 
@@ -301,6 +380,20 @@ def test_fast_and_canonical_backends_agree_on_every_frame(tmp_path: Path) -> Non
         with Image.open(tmp_path / "canonical" / frame["file"]) as image:
             rgb.append(hashlib.sha256(image.convert("RGB").tobytes()).hexdigest())
     assert [frame["pixel_sha256"] for frame in fast.manifest["frames"]] == rgb
+
+
+@needs_ffmpeg
+def test_narrow_graphite_fast_export_lossless_pack_and_independent_final(tmp_path: Path) -> None:
+    session = _narrow_graphite_session(tmp_path, (128, 192), ((24, 8), (40, 184)))
+    history, profile = session._agent.history, _profile(128, 192)
+    result = session.export_timelapse(tmp_path / "fast", mode="action", max_pixel_work=10**9)
+    assert result.manifest["backend"]["selected"] == "fast"
+    assert result.manifest["final"]["last_frame_pixel_match"] is True
+    assert result.manifest["gif"]["within_tolerance"] is True
+    for record, decoded in zip(result.manifest["frames"], iter_frames(tmp_path / "fast" / "frames.idp"), strict=True):
+        state = history.state_at(record["cursor"])
+        with decoded, render_image(profile.prepared_ir(state), **profile.renderer_kwargs()) as want:
+            assert rgb_sha256(decoded) == rgb_sha256(want) == record["pixel_sha256"]
 
 
 def test_ineligible_history_falls_back_to_canonical_for_the_whole_export(tmp_path: Path) -> None:

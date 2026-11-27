@@ -1,0 +1,61 @@
+name: Mixed media stress evidence
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'dev/benchmarks/mixed_media_stress/**'
+      - '.github/workflows/mixed-media-stress.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - name: Prepare isolated pinned wheels
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/mixed-stress"
+          mkdir -p "$root/wheels"
+          curl --fail --location --retry 2 'https://github.com/ictseoyoungmin/img2drawing/releases/download/v1.3.0/img2drawing-1.3.0-py3-none-any.whl' -o "$root/wheels/img2drawing-1.3.0-py3-none-any.whl"
+          echo "0cdcb1c657e340e40f68757c6997e97904bc5d0711f49900302992df9cba210e  $root/wheels/img2drawing-1.3.0-py3-none-any.whl" | sha256sum -c -
+          python -m pip wheel --no-deps --wheel-dir "$root/wheels" skills/img2drawing
+          candidate_version="$(python -c 'import runpy; print(runpy.run_path("skills/img2drawing/src/img2drawing/_version.py")["__version__"])')"
+          echo "CANDIDATE_VERSION=$candidate_version" >> "$GITHUB_ENV"
+          for version in 1.3.0 "$candidate_version"; do
+            python -m venv "$root/$version"
+            "$root/$version/bin/python" -m pip install 'numpy==2.2.6' 'Pillow==11.3.0'
+            "$root/$version/bin/python" -m pip install --no-deps "$root/wheels/img2drawing-$version-py3-none-any.whl"
+          done
+      - name: Execute sealed synthetic workload in isolated environments
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/mixed-stress"
+          cp -r dev/benchmarks/mixed_media_stress "$root/benchmark"
+          cd "$root"
+          unset PYTHONPATH
+          sha256sum benchmark/protocol.json benchmark/run.py
+          /usr/bin/time -v "$root/1.3.0/bin/python" benchmark/run.py --mode graphite --out legacy --expected-version 1.3.0
+          /usr/bin/time -v "$root/$CANDIDATE_VERSION/bin/python" benchmark/run.py --mode graphite --out current-graphite --expected-version "$CANDIDATE_VERSION"
+          /usr/bin/time -v "$root/$CANDIDATE_VERSION/bin/python" benchmark/run.py --mode ink --out current-ink --expected-version "$CANDIDATE_VERSION"
+          python benchmark/compare.py legacy/metrics.json current-graphite/metrics.json current-ink/metrics.json --expected-candidate-version "$CANDIDATE_VERSION"
+      - name: Retain only benchmark metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-stress-metrics
+          path: |
+            ${{ runner.temp }}/mixed-stress/legacy/metrics.json
+            ${{ runner.temp }}/mixed-stress/current-graphite/metrics.json
+            ${{ runner.temp }}/mixed-stress/current-ink/metrics.json
+            ${{ runner.temp }}/mixed-stress/*/seal.json
+          if-no-files-found: ignore
+          retention-days: 7

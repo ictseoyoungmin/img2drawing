@@ -10,6 +10,7 @@ from typing import Sequence
 
 from ..core import DrawingAction
 from ..core.digest import sha256_obj
+from ..core.material import InkAction, InkElement
 from .stroke_edits import transform_strokes, _guard
 
 GROUP_PLAN_SCHEMA = "img2drawing.observation.semantic_groups.v1"
@@ -108,9 +109,11 @@ def _plan(session, plan_id):
 
 def _derive(session, groups, records=(), plan_id=None):
     by_id, order = _validate_graph(groups)
-    elements = session.authored_elements(element_type="stroke", status=None)
+    elements = session.authored_elements(status=None)
     index = {e.element_id:e for e in elements}
-    ir = {s.stroke_id:s for s in session.current_ir().strokes}
+    snapshot = session.current_ir()
+    ir = {s.stroke_id:s for s in snapshot.strokes}
+    ir.update({e.element_id:e for e in snapshot.ink_elements})
     reviews = {}
     for rec in records:
         raw = rec["payload"]
@@ -137,7 +140,9 @@ def _derive(session, groups, records=(), plan_id=None):
             current.append(cid)
             if sid in g.guide_ids:
                 guides.append(cid)
-            versions.append([sid, element.to_dict(), sha256_obj(asdict(ir[cid]))])
+            current_mark = ir[cid]
+            payload = current_mark.to_dict() if isinstance(current_mark, InkElement) else asdict(current_mark)
+            versions.append([sid, element.to_dict(), sha256_obj(payload)])
         parents = [output[p] for p in g.depends_on]
         signature = sha256_obj({"definition":g.to_dict(), "members":versions,
                                 "parents":[p["signature"] for p in parents]})
@@ -161,6 +166,8 @@ def _derive(session, groups, records=(), plan_id=None):
     # Flag unassigned fragments of grouped strokes until the agent redeclares them.
     actions_by_seq = {a.seq:a for a in session._agent.history.actions[:session.history_cursor]}
     for cid, stroke in ir.items():
+        if isinstance(stroke, InkElement):
+            continue
         # Use creation provenance, not the latest mutable tool metadata. A split
         # fragment can itself be edited without losing its original declaration.
         creation = actions_by_seq[index[cid].created_seq]
@@ -259,6 +266,8 @@ def prepare_group_transform(session, plan_id, group_id, matrix):
         row = _row(report, group_id)
         if row["missing_ids"] or row["unassigned_split_ids"]:
             raise ValueError("redeclare group membership before editing")
+        if set(row["current_ids"]) & {e.element_id for e in session.current_ir().ink_elements}:
+            raise ValueError("mixed group transforms require explicit per-element ink edits")
         return {"edits":transform_strokes(session, row["current_ids"], matrix),
                 "base_cursor":report["cursor"], "base_state_hash":report["drawing_state_hash"]}
 
@@ -282,12 +291,18 @@ def retire_group_guides(session, plan_id, group_id, guide_ids, *, reason, observ
                          source_observation="explicit semantic group guide retirement", reason=reason)
         from ..session.drawing_session import _COMPAT_STAGE, _tool_payload
         start = len(session._agent.history.actions)
-        actions = [DrawingAction(action_id=f"vnext-{start+i+1:06d}", kind="delete_stroke",
+        ink_ids = {e.element_id for e in session.current_ir().ink_elements}
+        actions = []
+        for i, sid in enumerate(selected):
+            aid = f"vnext-{start+i+1:06d}"
+            if sid in ink_ids:
+                actions.append(InkAction(aid, "ink.delete", sid, None, oid, source, why))
+            else:
+                actions.append(DrawingAction(action_id=aid, kind="delete_stroke",
                     stage=_COMPAT_STAGE, target_stroke_id=sid,
                     tool=_tool_payload("hard_eraser",None,None), observation_id=oid,
                     source_observation=source, reason=why,
-                    metadata={"semantic_group_plan":plan_id,"semantic_group_id":group_id})
-                   for i,sid in enumerate(selected)]
+                    metadata={"semantic_group_plan":plan_id,"semantic_group_id":group_id}))
         session._commit(actions)
         return tuple(a.action_id for a in actions)
 

@@ -44,6 +44,16 @@ forces full per-frame PNG rendering; `materialize_frames=True` also writes PNG f
 backend. Persistent patch and palette caches under the output directory are disposable acceleration
 state, never drawing authority.
 
+Opaque-background ink-only mixed histories (including areas, white paint, tones and edits)
+are eligible for incremental replay. A bounded memory-only ink patch cache reuses the
+canonical kernels with lossless bit-packed binary alpha (32 MiB retained payload, 2048
+entries; live build/decode memory is separate). The exact RGB delta pack avoids a PNG
+sequence unless requested.
+Any graphite/eraser action, including retired graphite, requires canonical mixed replay;
+transparent backgrounds also require canonical staging. Explicit `fast` rejects these
+cases. Use `auto` or `canonical` without changing the persisted profile. The existing
+pixel-work and GIF byte budgets still apply. See [mixed-media API](../api/mixed-media.md).
+
 Replay is end-to-end: sampling always includes cursor 0 and the latest authored cursor. Coarser
 `every_n` sampling is allowed; removing the beginning or final state is not.
 
@@ -142,7 +152,7 @@ Progress callbacks report render frames, encode 0→1, verify 0→1 and, when
 necessary, retry frames 0→N. A completed retry frame count is not an
 all-phases-complete signal; the final verify event closes the operation.
 
-Explicit ordered path-lift marks are eligible for Fast replay. The append path
+In supported pencil histories, explicit ordered path-lift marks are eligible for Fast replay. The append path
 uses the canonical graphite-lifting function; non-append or out-of-layer-order
 changes with an active/retired lift conservatively recomposite the full canvas
 from cached graphite patches in canonical order. This preserves pixels but can

@@ -74,6 +74,26 @@ class Registration:
         size = _size(size)
         return cls(subject_size=size, canvas_size=size)
 
+    @classmethod
+    def fit(cls, subject_size: Sequence[int], canvas_size: Sequence[int], *,
+            mode: str = "contain") -> "Registration":
+        """Explicit whole-image rectangle mapping, not image alignment.
+
+        contain preserves aspect ratio with centered margins; cover preserves
+        aspect ratio with centered crop; stretch maps both axes independently.
+        No image pixels, feature inference, or mutation of drawing geometry.
+        """
+        sw,sh=_size(subject_size)
+        cw,ch=_size(canvas_size)
+        if mode not in ("contain","cover","stretch"):
+            raise ValueError("registration fit mode must be contain, cover or stretch")
+        sx,sy=cw/sw,ch/sh
+        if mode=="stretch":
+            return cls((sw,sh),(cw,ch),(sx,sy),(0.,0.))
+        scale=min(sx,sy) if mode=="contain" else max(sx,sy)
+        return cls((sw,sh),(cw,ch),(scale,scale),
+                   ((cw-sw*scale)/2.,(ch-sh*scale)/2.))
+
     def map_subject_to_canvas(self, point: Sequence[float]) -> Point:
         x, y = _point(point)
         return self.offset[0] + x * self.scale[0], self.offset[1] + y * self.scale[1]

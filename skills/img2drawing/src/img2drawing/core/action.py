@@ -6,6 +6,7 @@ from dataclasses import dataclass, replace
 from typing import Any, Iterable
 
 from .history import CanvasHistory
+from .material import InkAction, INK_ACTION_SCHEMA
 from .ir import Stroke, StrokeIR
 from ..render.grades import get_pencil_preset
 from .stroke import tool_stroke
@@ -265,7 +266,9 @@ class _DrawingTransaction:
     def __init__(self, session: "AgentDrawingSession", *, label: str | None = None):
         self.session = session
         self.label = None if label is None else str(label)
-        self._history_snapshot = deepcopy(session.history.to_dict())
+        self._sealed_snapshot = session.history._sealed_transaction_copy()
+        self._history_snapshot = (None if self._sealed_snapshot is not None
+                                  else deepcopy(session.history.to_dict()))
         self._executed_snapshot = set(session.executed_action_ids)
         self._rolled_back = False
         self._committed = False
@@ -279,7 +282,8 @@ class _DrawingTransaction:
         return self._committed
 
     def _restore(self) -> None:
-        self.session.history = CanvasHistory.from_dict(deepcopy(self._history_snapshot))
+        self.session.history = (self._sealed_snapshot if self._sealed_snapshot is not None
+                                else CanvasHistory.from_dict(deepcopy(self._history_snapshot)))
         self.session.executed_action_ids = set(self._executed_snapshot)
         self._rolled_back = True
         self._committed = False
@@ -318,8 +322,10 @@ class AgentDrawingSession:
     the sole drawing-state authority; presentation runtimes consume snapshots from it.
     """
 
-    def __init__(self, width: int, height: int, *, metadata: dict[str, Any] | None = None):
-        self.history = CanvasHistory(width, height, metadata={**(metadata or {}), "drawing_authority": "agent_actions"})
+    def __init__(self, width: int, height: int, *, metadata: dict[str, Any] | None = None,
+                 media_contract: str | None = None):
+        self.history = CanvasHistory(width, height, metadata={**(metadata or {}), "drawing_authority": "agent_actions"},
+                                     media_contract=media_contract)
         self.executed_action_ids: set[str] = set()
 
     @classmethod
@@ -330,6 +336,10 @@ class AgentDrawingSession:
         obj=cls(history.width,history.height,metadata=deepcopy(history.metadata))
         obj.history=history
         obj.executed_action_ids=set(map(str,data.get("executed_action_ids",())))
+        if history.media_contract is not None:
+            authored_ids = {(a.provenance or {}).get("action_id") for a in history.actions}
+            if not (authored_ids - {None}) <= obj.executed_action_ids:
+                raise ValueError("mixed history has unregistered action identities")
         return obj
 
     @property
@@ -340,7 +350,15 @@ class AgentDrawingSession:
     def height(self) -> int:
         return self.history.height
 
-    def execute(self, action: DrawingAction | dict[str, Any]) -> str | None:
+    def execute(self, action: DrawingAction | InkAction | dict[str, Any]) -> str | None:
+        if isinstance(action, dict) and action.get("schema") == INK_ACTION_SCHEMA:
+            action = InkAction.from_dict(action)
+        if isinstance(action, InkAction):
+            if action.action_id in self.executed_action_ids:
+                raise ValueError(f"duplicate action_id: {action.action_id}")
+            result = self.history.apply_ink_action(action)
+            self.executed_action_ids.add(action.action_id)
+            return result
         if not isinstance(action, DrawingAction):
             action = DrawingAction.from_dict(action)
         else:
@@ -401,11 +419,11 @@ class AgentDrawingSession:
     def transaction(self, label: str | None = None):
         return _DrawingTransaction(self, label=label)
 
-    def execute_many(self, actions: Iterable[DrawingAction | dict[str, Any]]) -> list[str | None]:
+    def execute_many(self, actions: Iterable[DrawingAction | InkAction | dict[str, Any]]) -> list[str | None]:
         return [self.execute(a) for a in actions]
 
     def execute_many_atomic(
-        self, actions: Iterable[DrawingAction | dict[str, Any]], *, label: str | None = None
+        self, actions: Iterable[DrawingAction | InkAction | dict[str, Any]], *, label: str | None = None
     ) -> list[str | None]:
         with self.transaction(label=label):
             return self.execute_many(actions)

@@ -3,28 +3,24 @@
 Updated: 2026-11-27
 
 ```text
-PUBLISHED STABLE:   v1.3.1 · selected maintenance release; main CI/publish gated
-RELEASE TAG:        v1.3.1 · pending manifest-driven publication
-CURRENT SOURCE:     1.3.1 · release and contract maintenance
-CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
+SELECTED RELEASE:   v1.4.0 · publication authority: actual GitHub Release and immutable tag
+RELEASE TAG:        v1.4.0 · target commit and assets are recorded by GitHub Release
+CURRENT SOURCE:     1.4.0 · Multi-Medium Drawing
+CURRENT RENDERER:   img2drawing-pencil/11 default · normalized graphite v1/v2/v3 and opt-in mixed-media v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.3.1 release validation and branch consolidation; v1.4.0 separately planned
-S01 DESIGN:         CLOSED
-S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
-S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
-S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · no current material defect was proven
-R1 REFACTOR:        CLOSED · vnext→session/authoring, one render package, one timelapse export; v11 golden identical
-S05 REPLAY BOUNDARY: CLOSED by R1 · RenderProfile v2 persists contract digest; v9/v10 fail closed → img2drawing==1.0.3
-GRAPH CLEANUP:      Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D ownership cleanup CLOSED · Slice E structural QA CLOSED
-PACKAGE VERSION:    1.3.1 release maintenance
-HISTORICAL REPLAY:  v1.0.3 package/tag remains immutable pixel authority
-G01 GESTURE:        PASS/CLOSED
-G02 BROAD PENCIL:   PASS/CLOSED
-HISTORICAL V1.0.3 SOURCE: release/1.0.3-stable @ 0de885e6d3f2ed6ac857c46e60875cc8c5c9f727
-STABLE WHEEL GATE:  CI 34749311565 · package tree 5758c5efa60d80a0d483bcb3573258e34d609055
-MAIN RELEASE CI:    required green before manifest-driven publish
+CURRENT WORK:      release evidence and maintenance; no next feature line selected
+S01 DESIGN:         CLOSED · historical v11 quality-control design
+S02 INSTRUCTIONS:   CLOSED · historical anti-normalization implementation; further proof was user-accepted
+S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; historical gate, not v1.4 comparison
+S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · historical v11 campaign
+R1 REFACTOR:        CLOSED · one session/render/timelapse architecture; v11 golden preserved
+S05 REPLAY BOUNDARY: CLOSED by R1 · historical v9/v10 exact authority: img2drawing==1.0.3
+GRAPH CLEANUP:      Slice A–E CLOSED; conditional mixed-media leaves are governed by the same graph checks
+PACKAGE VERSION:    1.4.0
+HISTORICAL REPLAY:  existing release tags/freezes remain immutable pixel authority
+MAIN RELEASE CI:    successful push CI at the promoted main SHA is required for publication
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
-PUBLISH STATE:      v1.3.0 published at fdaf6b1; v1.3.1 selected pending main CI + publish
+PUBLISH STATE:      manifest-driven; observe v1.4.0 tag, target SHA and four actual assets on GitHub Release
 ```
 
 ## Authority contract
@@ -40,13 +36,44 @@ Authority is intentionally split by purpose:
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
 
-## Current v1.3.1 maintenance
+## Current v1.4.0 release checkpoint
+
+- Selected scope: Multi-Medium Drawing, developed from v1.3.1 maintenance main `820c88c` on `dev/v1.4.0-multi-medium-drawing`. [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1) · [release notes](../../../docs/releases/v1.4.0.md).
+- S01–S04 are CLOSED (70% weight): shared mixed contract, G-pen/fineliner, brush/solid contours/white ink, and editable dot screentone. Default graphite v11 and older opt-in contracts retain their pixel semantics.
+- S06 final integration includes S06e [PR #121](https://github.com/ictseoyoungmin/img2drawing/pull/121), which fixes observed Pillow 13 Fast parity failures for both ink and graphite using canonical-dimension downsampling on Pillow 13+ or unknown versions, while retaining the verified guarded crop path before 13. Incremental composition/cache and dirty delta output remain. merged as `5f91bbe6ff47609e6457618081e368b019a14d99`; exact-head [PR CI 46017430613](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46017430613) and push CI 46017419474 passed **679 active + 49 runtime checks**, with **45** additional Pillow 13 replay tests. [Stress 46017430538](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46017430538) passed all 680 lossless frame checks, eight independent canonical sample cursors, final/GIF checks, and exact official-v1.3.0/candidate graphite comparison across all 680 frame hashes with identical GIF bytes. Mixed actual 654-action/165-sample replay is canonical RGB/state exact with original final preserved; graphite **216/216** decoded RGB and independent state matches against the official v1.3.0 installed canonical export, with original checkpoint/final unchanged. The separate parent canonical export completed all 216 samples after the worker budget. Earlier #118 and private 904/563-action measurements below remain historical evidence, not timings of the final resampling implementation.
+- S05 is CLOSED (10% weight): fresh mixed worker completed 654 actions, 13 observations, 8 inspections, 3 corrections, current finish, resume PNG equality and all 165 canonical GIF samples within its recorded budget. Parent independently checked installed wheel bytes, retained evidence, resume/final, sample hashes and GIF.
+- S07 comparison and release review are complete: mixed candidate received qualified acceptance and overall preference; the official v1.3.0 graphite drawing was rejected for uneven value development. Pose/hair tie and a modest local graphite face advantage are retained. Geometry/material/uncertain residuals remain explicit in the [review ledger](../../benchmarks/s07_worker_protocol/REVIEW_2026_11_27.md). Graphite completed 859-action drawing/finish/resume within budget, but its GIF required post-budget parent verification after the runtime failure; this is not worker-budget GIF success. Token usage is unmetered. Final release closure is established by successful main CI and the actual four-asset GitHub Release, not this source declaration alone.
+- S07 material comparison is measured: eight authored paths / 328 points retained exact geometry; novel area/tone operations assessed separately. Independent blinded material review accepted the bounded demonstration without an overall preference. This does not certify likeness, figure construction or general artistic improvement.
+- #119 sealed-input preparation merged `1e34ecb`; #120 hardened installable wheel names, provenance/no-overwrite behavior and mixed freeze validation, and added the material probe. #120 merged `6617b6189a9e2ef224f78ab96341184d4931522d`; exact-head PR/push CI `46008369576` / `46008361133` passed 672 active + 44 runtime checks and package/docs/graph/history gates.
+- Reproducibility boundary: the local Pillow 13 / NumPy 2.3 environment showed five historical golden differences. The unchanged code and fixtures passed 46 focused golden/release/packet checks under Pillow 12.3 / NumPy 2.2.6, with hosted Python 3.10 CI passing in the verified environment. Do not extend exact hash claims to untested library versions.
+- Maintainer authorization on 2026-11-27 covers completion and release, without a research waiver. The v1.4.0 manifest selects publication after green main push CI; the actual [GitHub Release](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.4.0), tag, target SHA and uploaded wheel/sdist/skill ZIP/freeze are publication authority. Development CI and metadata preparation alone do not establish that publication occurred.
+- Existing releases/freezes remain untouched. Private references, authored coordinates, sessions and large outputs remain outside Git. Release closure binds the measured comparison and S06e replay correction to the new version; no second drawing runtime or automatic geometry generation is introduced.
+
+## Historical v1.4.0 implementation checkpoints
+
+The following dated implementation observations retain their original measurements and provisional labels. The release checkpoint above owns current S05–S07 state.
+
+- Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
+- [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
+- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02–S04 CLOSED; S05 REVIEW; S06 WIP; S07 OPEN. Weighted closed gates 70% (4/7); implemented/mechanically verified S01–S05 80%.
+- v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
+- S02 CLOSED: #110 and #111 merged; latest integration 684ca8a, PR CI 45979974212 and merge CI 45980250961 SUCCESS (554 active + 44 runtime on #111). G-pen/fineliner, adaptive recipes and explicit miter/bevel, butt/square, point tapers. Mixed-media-v2 defaults for new mixed sessions; v1 and legacy exact contracts preserved.
+- S03 CLOSED: #112 merged 77e8ca0, PR CI 45983056787 and merge CI 45983382282 SUCCESS (572 active + 44 runtime). Wet brush, explicit cubic/solid contour, white paint and guarded ink transforms. Existing profile pixels preserved.
+- S04 CLOSED: #113 merged 1e178b1; PR CI 45984215468 and merge CI 45984670001 SUCCESS (606 active + 44 runtime). Typed calibrated dot screen, page-fixed phase and gradient, bounded tile evaluation, mixed-media-v3. Older contracts unchanged.
+- S05 #114 merged 46180ad; PR CI 45986027734 and merge CI 45986307849 SUCCESS (611 active + 44 runtime), installed guide example PASS. A maintainer-supplied independent Agent session contains 563 explicit ink additions (287 areas, 213 paths, 63 screens), 30,704 geometry samples, no inspection, correction or finish record. Private diagnostic rerender matched its final RGBA hash; no GIF provided or full installed resume verified in that review. Partial independent-use evidence, S05 REVIEW remains (not complete worker loop or artistic PASS). No private source/session assets retained in Git.
+- S06a #115 merged 68f9b8f; PR CI 45992266141 SUCCESS (616 active + 44 runtime). Validated incremental prefix, sealed rollback references and serialization reuse; exact 64 decode calls for 64 append actions tested. Private 563-action single-commit model predicts 317,532 -> 563 decode calls, not an elapsed-time claim.
+- S06b #116 merged 05ce36b, PR CI 45992848433 and merge CI 45993275822 SUCCESS (626 active + 44 runtime). Conservative edge sweep, diagnostic indices, explicit Registration.fit, sealed scalar validation. Private pair-test evidence unchanged: 2,409,247 -> 752 predicate calls, 2.0344s -> 0.01636s; not whole-runtime speed.
+- S06c #117 merged b34b63c, PR CI 45994768035 and merge CI 45995137892 SUCCESS (637 active + 44 runtime). Exact incremental opaque ink-only replay, independent final PNG, state/RGB frame hashes. Mixed graphite/eraser and transparent histories retain canonical fallback.
+- S06d local evidence from the supplied development ZIP: a 904-action authored portrait, 2048² SS2, 227 frames, 6 inspections, 2 corrections, current finish and resume parity; synthetic 1358 actions/680 frames each for ink and graphite-v3 control, same environment. Ink vs graphite: author 1.175/18.532s, full Fast export 53.284/48.116s, whole measured execution 63.943/113.730s, peak RSS 446784/481668 KiB. The graphite control uses explicit area outlines, not equal appearance or separately installed v1.3.0. These are local measurements, not universal speed guarantees. Private old 563-action session restored with actual development runtime: 142/142 lossless delta hashes, final original RGBA digest and GIF tolerance passed. No private coordinates/assets committed.
+- S06d candidate: packed one-bit native alpha patch cache (32 MiB retained payload, 2048 entries), allocation-free bounds preflight and mark-major dirty recomposition. All renderer/profile/session digests unchanged; preserve exact pixels and existing resource gates. Private candidate parity: actual 904-action/227-frame and 563-action/142-frame full runtime replays, every RGB/state hash and encoded GIF SHA-256 equal before/after; final RGBA hashes unchanged. Portrait export 46.281 -> 35.925s, patch misses 6416 -> 772, evictions 6403 -> 0, retained cache peak 33553976 -> 18815792 bytes, parent peak RSS 334788 -> 338668 KiB (not a universal RSS reduction). Old 563 export 11.320 -> 11.100s, misses 571 -> 563, evictions 463 -> 0. Local source-runtime measurements only. Reproducible public synthetic stress harness and pinned v1.3.0 wheel comparison added; run outcomes and candidate CI pending.
+
+## Historical v1.3.1 maintenance checkpoint
 
 - v1.3.0 was published from `fdaf6b1`; main CI `45870744957` passed 473 active + 44 runtime tests, publish `45871125462` succeeded with 4/4 release assets.
 - Maintainer closed all 9 v1.3.0 slices: S01–S06/S08 verified (80% weight); S00/S07 USER_ACCEPTED (20%, independent six-class comparison and extended high-resolution performance NOT_RUN/uncertified). No remaining mandatory v1.3.0 research gate.
 - PR #98 closed without merge; normalized-v4 is NOT shipped. Existing v11/default and normalized v1/v2/v3, contact-width, selective lift and overlap diagnostics remain. The one-off portrait handoff branch is not a product feature; its pinned runtime is already in main. See [branch disposition](../../docs/v131-branch-disposition.md).
 - v1.3.1 only synchronizes release authority, strengthens freeze validation and retains manual tonal QA. No runtime change besides version. Main promotion remains CI-gated.
-- Next product line: [v1.4.0 development](https://github.com/ictseoyoungmin/img2drawing/tree/dev/v1.4.0-multi-medium-drawing), design only, 0% implementation. No v1.4 release manifest.
+- At this maintenance checkpoint v1.4.0 was still a future design. Current implementation and release evidence are recorded in the v1.4.0 checkpoint above.
 
 ## v1.3.0 development checkpoint (historical)
 
@@ -81,7 +108,9 @@ Scope: development evidence before the v1.3.0 promotion; not the v1.2.1 release.
 - S01–S06 feature implementation and regression gates CLOSED (75% of weighted plan, six of nine slices). S00/S07 WIP; S08 OPEN. No private images, answer coordinates or large outputs committed.
 - Release decision (2026-11-27): maintainer authorized bounded v1.3.0 publication after CI. #104 merged at `7856946`; CI `45868789654` passed 473 active and 44 focused tests. S01–S06 retain their verified 75% weight; S08 promotion validation is pending main CI. S00/S07 independent artistic comparisons and extended high-resolution performance are deferred, not PASS. #98 remains separate research.
 
-## Current truth
+## Historical quality and release decisions through v1.3.1
+
+These earlier decisions remain historical; the v1.4.0 release checkpoint above owns current status.
 
 - `v1.3.1` is the selected maintenance release, gated by successful main CI and manifest-driven publication. v1.3.0 and earlier tags are immutable. Default renderer v11 and all shipped opt-in material contracts are unchanged. Independent artistic improvement was not measured; the prior tasks were closed by maintainer acceptance.
 - PR #48's additive `v12` experiment was abandoned without merge. Renderer generation numbers are not a feature counter.
@@ -249,8 +278,8 @@ At the B18 implementation freeze, the product foundation was **frozen through B1
 - instruction-graph attention cleanup slices A–E: `INSTRUCTION_GRAPH_ATTENTION_ARCHITECTURE_PLAN.md`;
 - v11 quality execution plan: `V11_QUALITY_CONTROL_SLICE_PLAN.md`;
 - v11 redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
-- selected stable: Git tag / GitHub Release `v1.2.1` (publication gated), `dev/release/publish/v1.2.1.json`, `docs/releases/v1.2.1.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`;
-- previous published stable: v1.2.0 and v1.1.1 remain frozen at their existing tags, manifests and contract freezes;
+- selected stable: Git tag / [GitHub Release `v1.4.0`](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.4.0), `dev/release/publish/v1.4.0.json`, `docs/releases/v1.4.0.md`, and `dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json`; the actual release records publication;
+- previous published stable: v1.3.1, v1.3.0 and earlier releases remain frozen at their existing tags, manifests and contract freezes;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `dev/release/vnext/CONTRACT_FREEZE_V1_1_0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `docs/releases/v1.0.3.md`;
 - exact stable candidate: `dev/release/vnext/V1_0_3_STABLE_PROMOTION.json`;

@@ -13,8 +13,10 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
+from ..core.ir import StrokeIR
+from ..core.material import MIXED_HISTORY_CONTRACT, StyledInkPath, Screentone
 from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
-                       canonical_identity, verify_contract_digest)
+                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, SCREENTONE_CONTRACT, validate_mixed_raster_budget)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
 
@@ -113,8 +115,9 @@ class RenderProfile:
         object.__setattr__(self, "canvas_width", width)
         object.__setattr__(self, "canvas_height", height)
         material = _text(self.material_profile, "material_profile")
-        if material != "builtin:pencil-contact":
-            raise ValueError("unsupported material_profile; custom file paths are not portable")
+        expected_material = "builtin:mixed-media" if self.is_mixed_media else "builtin:pencil-contact"
+        if material != expected_material:
+            raise ValueError("unsupported material_profile for the selected renderer identity; custom file paths are not portable")
         object.__setattr__(self, "material_profile", material)
         tooth = float(self.paper_tooth)
         scale = float(self.paper_scale)
@@ -135,6 +138,8 @@ class RenderProfile:
             raise ValueError("output_scale must be >= 1")
         object.__setattr__(self, "supersample", supersample)
         object.__setattr__(self, "output_scale", output_scale)
+        if self.is_mixed_media:
+            validate_mixed_raster_budget(width, height, supersample, output_scale)
         object.__setattr__(self, "background_rgba", _channels(self.background_rgba, 4, "background_rgba"))
         object.__setattr__(self, "graphite_rgb", _channels(self.graphite_rgb, 3, "graphite_rgb"))
         if _text(self.seed_domain, "seed_domain") != SEED_DOMAIN:
@@ -184,6 +189,59 @@ class RenderProfile:
             canvas_width=int(width),
             canvas_height=int(height),
         )
+
+    @property
+    def is_mixed_media(self) -> bool:
+        return (self.renderer_id,self.renderer_version) in (
+            MIXED_MEDIA_CONTRACT.identity,STYLED_INK_CONTRACT.identity,SCREENTONE_CONTRACT.identity)
+
+    @property
+    def supports_styled_ink(self) -> bool:
+        return (self.renderer_id,self.renderer_version) in (
+            STYLED_INK_CONTRACT.identity,SCREENTONE_CONTRACT.identity)
+
+    @property
+    def supports_screentone(self) -> bool:
+        return (self.renderer_id,self.renderer_version)==SCREENTONE_CONTRACT.identity
+
+    def validate_ink_mark(self, mark) -> None:
+        if not self.is_mixed_media:
+            raise ValueError("ink requires mixed-media profile")
+        if isinstance(mark,Screentone) and not self.supports_screentone:
+            raise ValueError("screentone requires RenderProfile.mixed_media(..., screentones=True)")
+        if isinstance(mark,StyledInkPath) and not self.supports_styled_ink:
+            raise ValueError("styled ink requires RenderProfile.mixed_media(..., styled_paths=True)")
+
+    @classmethod
+    def mixed_media(cls, width: int, height: int, *, supersample: int = 4,
+                    output_scale: int = 1, background_rgba=(255, 255, 255, 255),
+                    styled_paths: bool = True, screentones: bool | None = None) -> "RenderProfile":
+        """Default mixed v3; screentones=False selects v2, styled_paths=False selects v1.
+
+        The None default follows styled_paths for backward-compatible v1 selection.
+        Explicitly enabling screentones requires styled_paths=True.
+        """
+        if type(styled_paths) is not bool:
+            raise ValueError("styled_paths must be boolean")
+        if screentones is None:
+            screentones=styled_paths
+        if type(screentones) is not bool or (screentones and not styled_paths):
+            raise ValueError("screentones must be boolean and require styled_paths")
+        validate_mixed_raster_budget(width, height, supersample, output_scale)
+        contract=(SCREENTONE_CONTRACT if screentones else
+                  STYLED_INK_CONTRACT if styled_paths else MIXED_MEDIA_CONTRACT)
+        return cls(profile_id=contract.renderer_version, renderer_id=contract.renderer_id,
+                   renderer_version=contract.renderer_version,
+                   renderer_contract_digest=contract.digest(),
+                   canvas_width=width, canvas_height=height,
+                   material_profile="builtin:mixed-media", supersample=supersample,
+                   output_scale=output_scale, background_rgba=background_rgba)
+
+    def validate_history(self, history) -> None:
+        self.validate_canvas(history.width, history.height)
+        expected = MIXED_HISTORY_CONTRACT if self.is_mixed_media else None
+        if history.media_contract != expected:
+            raise ValueError("history and render profile media contracts do not match")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -235,7 +293,22 @@ class RenderProfile:
         """Return a render-only view whose paper state comes from this profile."""
 
         self.validate_canvas(ir.width, ir.height)
-        prepared = deepcopy(ir)
+        expected = MIXED_HISTORY_CONTRACT if self.is_mixed_media else None
+        if ir.media_contract != expected:
+            raise ValueError("IR and render profile media contracts do not match")
+        ir.ordered_elements()
+        for element in ir.ink_elements:
+            self.validate_ink_mark(element.mark)
+        if self.is_mixed_media:
+            # InkElement and its decoded mark are frozen value objects; copy the
+            # lists and mutable graphite/metadata, not every immutable point.
+            prepared = StrokeIR(ir.width, ir.height, deepcopy(ir.strokes), deepcopy(ir.metadata),
+                                media_contract=ir.media_contract, ink_elements=list(ir.ink_elements),
+                                element_order=list(ir.element_order))
+            if getattr(ir,"_legacy_inline_pressure",False):
+                setattr(prepared,"_legacy_inline_pressure",True)
+        else:
+            prepared = deepcopy(ir)
         metadata = deepcopy(prepared.metadata if isinstance(prepared.metadata, dict) else {})
         metadata["paper"] = {
             "tooth": self.paper_tooth,

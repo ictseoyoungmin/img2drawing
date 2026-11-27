@@ -13,7 +13,8 @@ freeze. Immutable released snapshots remain version-specific:
 - v1.2.0 / M02: `dev/release/vnext/CONTRACT_FREEZE_V1_2_0.json`;
 - v1.2.1 / M03: `dev/release/vnext/CONTRACT_FREEZE_V1_2_1.json`;
 - v1.3.0 / constructive drawing: `dev/release/vnext/CONTRACT_FREEZE_V1_3_0.json`;
-- v1.3.1 / maintenance: `dev/release/vnext/CONTRACT_FREEZE_V1_3_1.json`.
+- v1.3.1 / maintenance: `dev/release/vnext/CONTRACT_FREEZE_V1_3_1.json`;
+- v1.4.0 / mixed media: `dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
 
@@ -104,7 +105,7 @@ normalizes the private compatibility `Stroke.stage` field out of render seed ide
 active suite verifies inspect/final parity plus canonical-final ↔ fast-final exactness where that
 contract applies. Historical v9 seed semantics remain frozen for explicit v9 replay.
 
-Default v1.3.0 sessions select `img2drawing-pencil / 11` and persist the same renderer contract digest as v1.1.0. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
+Default sessions select `img2drawing-pencil / 11` and persist the same renderer contract digest as v1.1.0. The v1.0.3 v11 profile is accepted as pixel-equivalent; v9/1, v10/1, foreign digests, and retired region-fill histories fail closed in current source. Use `img2drawing==1.0.3` for their exact historical replay.
 
 v1.3.0 adds `RenderProfile.opacity_normalized(width, height)` for new
 sessions. `11-opacity-normalized-v1`, `11-opacity-normalized-v2`, and `11-opacity-normalized-v3` each have a required contract digest and cache identity;
@@ -112,6 +113,21 @@ sessions. `11-opacity-normalized-v1`, `11-opacity-normalized-v2`, and `11-opacit
 inspection, preview, PNG, Fast/Canonical and GIF output. Unknown identities, cross-digest profiles
 and a missing normalized digest fail closed. Never silently migrate existing sessions to the new
 material model or infer artistic quality from a material regression.
+
+v1.4.0 adds explicit opt-in `RenderProfile.mixed_media(width, height)` contracts.
+The default mixed selection is `mixed-media-v3`; `screentones=False` selects v2,
+and `styled_paths=False` selects v1. Their distinct digests bind explicit ink paths,
+closed contours, white paint and supported analytic screentone to the same ordered
+history. The Agent owns path and boundary geometry, holes, shadow selection and
+pattern settings; no reference-derived masks, automatic fills or geometry extraction.
+Graphite lifts remain graphite-selective, while white ink is covering paint.
+
+Eligible opaque ink-only histories share exact canonical kernels with incremental
+Fast replay and bounded packed patch caching. Mixed-media histories containing
+graphite/eraser actions, transparent backgrounds and unsupported combinations use
+canonical replay. Pure legacy graphite Fast remains supported.
+Profile identity does not certify pixel equality across untested NumPy/Pillow versions;
+release evidence names its measured environment without rewriting historical fixtures.
 
 ## 8. Instruction graph contract
 
@@ -131,7 +147,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-After the manifest-driven publication gate, v1.3.1 is the latest published stable. Its runtime behavior is identical to v1.3.0; only release metadata and verification change. Its manifest, tag and additive freeze are authoritative; earlier release authorities remain immutable. New sessions default to legacy v11; optional material contracts and authored metadata extend the existing history without automatic tracing or geometry generation. Independent artistic quality remains unverified.
+After successful main CI and manifest-driven publication, v1.4.0 is the latest published stable. Its manifest and additive freeze declare the selected contract; the actual GitHub Release, tag, target commit and uploaded assets establish publication. Earlier release authorities remain immutable. New sessions default to legacy v11; optional mixed-media contracts extend the existing history without tracing or automatic geometry generation. Release notes and `STATUS.md` record the bounded mechanical, material and figure evidence; those observations do not certify general artistic improvement.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 

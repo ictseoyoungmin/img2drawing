@@ -62,6 +62,8 @@ REQUIRED_GRAPH_FILES = {
     "references/markmaking/broad-graphite.md",
     "references/markmaking/stroke-dynamics.md",
     "references/markmaking/style-policy.md",
+    "references/markmaking/mixed-media.md",
+    "references/api/mixed-media.md",
 }
 
 
@@ -252,6 +254,21 @@ def check_clean_install(work: Path, wheel: Path) -> None:
     assert installed["version"] == VERSION
     assert str(installed["file"]).startswith(str(environment)), installed["file"]
     assert "DrawingSession" in installed["exports"] and "DrawingRun" not in installed["exports"]
+
+    # Run the exact shipped guide's smoke example from the verified skill ZIP,
+    # with the installed wheel, outside the repository. No private-source reads
+    # in the worker program. The probe is mechanical, not an independent Agent.
+    with zipfile.ZipFile(work / "dist" / f"img2drawing-skill-{VERSION}.zip") as archive:
+        guide = archive.read("img2drawing/references/api/mixed-media.md").decode("utf-8")
+    snippets = re.findall(r"```python\n(# mixed-media-smoke\n.*?)\n```",guide,flags=re.S)
+    assert len(snippets)==1, "expected one shipped mixed-media smoke example"
+    isolated=work/"public-example"
+    isolated.mkdir()
+    script=isolated/"run.py"
+    script.write_text(snippets[0],encoding="utf-8")
+    result=_run([str(python),str(script)],cwd=isolated,env=clean_env)
+    assert "MIXED_MEDIA_PUBLIC_EXAMPLE_PASS" in result
+    print("MIXED_MEDIA_INSTALLED_GUIDE_EXAMPLE_PASS")
 
 
 def main() -> None:

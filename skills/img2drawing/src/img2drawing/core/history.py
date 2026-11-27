@@ -5,6 +5,8 @@ from dataclasses import asdict, dataclass
 from typing import Any, Sequence
 
 from .ir import Stroke, StrokeIR
+from .material import (INK_ACTION_SCHEMA, INK_ACTION_KINDS, MIXED_HISTORY_CONTRACT,
+                       InkAction, InkElement)
 from .stroke import shaped_pressure_profile
 from .tools import ToolState
 
@@ -37,6 +39,76 @@ class CanvasAction:
         if data.get("provenance") is None:
             data.pop("provenance", None)
         return _json_native(data)
+
+
+# Mixed history records are owned, read-only JSON values. Legacy CanvasAction
+# remains mutable for historical low-level callers. The sealed mixed record
+# allows identity-based prefix validation without trusting mutable nested data.
+def _immutable_error(*args, **kwargs):
+    raise TypeError("mixed history records are read-only; author a replacement action")
+
+
+class _ReadOnlyDict(dict):
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = __ior__ = _immutable_error
+
+    def __deepcopy__(self, memo):
+        return {deepcopy(k, memo): deepcopy(v, memo) for k,v in self.items()}
+
+
+class _ReadOnlyList(list):
+    __setitem__ = __delitem__ = __iadd__ = __imul__ = append = clear = extend = insert = pop = remove = reverse = sort = _immutable_error
+
+    def __deepcopy__(self, memo):
+        return [deepcopy(v, memo) for v in self]
+
+
+def _readonly_json(value):
+    if isinstance(value, dict):
+        return _ReadOnlyDict((str(k), _readonly_json(v)) for k,v in value.items())
+    if isinstance(value, (list, tuple)):
+        return _ReadOnlyList(_readonly_json(v) for v in value)
+    if value is None or type(value) in (str, bool, int, float):
+        return value
+    raise TypeError("mixed history requires JSON-native action records")
+
+
+class _MixedCanvasAction(CanvasAction):
+    """Internal immutable record; serialization always returns detached values."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # A sealed record must not retain mutable values in scalar fields.
+        if (type(self.seq) is not int or self.seq<1 or type(self.action) is not str
+                or type(self.stage) is not str
+                or any(v is not None and type(v) is not str for v in (self.part,self.role))
+                or (self.logical_time is not None and type(self.logical_time) not in (int,float))):
+            raise ValueError("invalid mixed action scalar fields")
+        for name in ("payload", "tool_state", "provenance"):
+            object.__setattr__(self, name, _readonly_json(getattr(self, name)))
+        object.__setattr__(self, "_sealed", True)
+
+    def __setattr__(self, name, value):
+        if getattr(self, "_sealed", False):
+            _immutable_error()
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name):
+        if getattr(self, "_sealed", False):
+            _immutable_error()
+        object.__delattr__(self, name)
+
+    def to_dict(self):
+        result = {name: _json_native(getattr(self, name))
+                  for name in ("seq","action","stage","payload","logical_time",
+                               "part","role","tool_state","provenance")}
+        if self.provenance is None:
+            result.pop("provenance")
+        return result
+
+    def __deepcopy__(self, memo):
+        # Explicit copies are editable detached CanvasAction records, not aliases
+        # to the authority. Rollback itself shares sealed records by reference.
+        return CanvasAction(**self.to_dict())
 
 
 def _persisted_stroke(stroke: Stroke) -> dict[str, Any]:
@@ -201,6 +273,130 @@ def unsupported_action_error(action: str) -> ValueError:
     return ValueError(f"unsupported replay action: {action}")
 
 
+class MixedReplayState:
+    """Strict shared reducer for mixed random and forward replay.
+
+    The legacy replay route is unchanged. All mixed elements share an identity
+    space, including retired identities; neither medium can edit the other.
+    """
+
+    def __init__(self):
+        self.order: list[str] = []
+        self.state: dict[str, Stroke | InkElement] = {}
+        self.seen: set[str] = set()
+        self.action_ids: set[str] = set()
+        self.count = 0
+
+    def _add(self, sid, element):
+        if not isinstance(sid, str) or not sid.strip() or sid in self.seen:
+            raise ValueError(f"duplicate or invalid mixed element identity: {sid}")
+        self.seen.add(sid)
+        self.order.append(sid)
+        self.state[sid] = element
+
+    def _target(self, sid, cls):
+        value = self.state.get(sid)
+        if not isinstance(value, cls):
+            raise ValueError(f"mixed action targets missing or wrong-media element: {sid}")
+        return value
+
+    def apply(self, item: CanvasAction, *, validate_recipe=False):
+        if item.seq != self.count + 1:
+            raise ValueError("mixed action seq must be contiguous and 1-based")
+        aid = (item.provenance or {}).get("action_id")
+        if aid is not None and (not isinstance(aid,str) or not aid.strip() or aid in self.action_ids):
+            raise ValueError("invalid or duplicate mixed action identity")
+        self._apply(item, validate_recipe=validate_recipe)
+        if aid is not None:
+            self.action_ids.add(aid)
+        self.count += 1
+
+    def _apply(self, item: CanvasAction, *, validate_recipe=False):
+        kind, p = item.action, item.payload
+        if kind in INK_ACTION_KINDS:
+            provenance = item.provenance
+            fields = {"action_id", "observation_id", "source_observation", "reason"}
+            if (not isinstance(provenance, dict) or
+                    set(provenance) not in (fields,fields|{"pen_definition"})
+                    or not isinstance(p, dict) or set(p) != {"element_id", "element"}
+                    or item.tool_state is not None):
+                raise ValueError("invalid typed ink history record")
+            ink = InkAction.from_dict({"schema": INK_ACTION_SCHEMA, "kind": kind,
+                                       **p, **provenance})
+            if validate_recipe:
+                ink.validate_pen_definition()
+            sid, element = ink.element_id, ink.element
+            if kind == "ink.delete":
+                old = self._target(sid, InkElement)
+                if (item.role, item.part) != (old.role, old.part):
+                    raise ValueError("ink deletion semantic provenance mismatch")
+                del self.state[sid]
+                self.order.remove(sid)
+            else:
+                if (item.role, item.part) != (element.role, element.part):
+                    raise ValueError("ink element semantic provenance mismatch")
+                if kind == "ink.add":
+                    self._add(sid, element)
+                else:
+                    self._target(sid, InkElement)
+                    self.state[sid] = element
+            return
+        if kind == "stroke.add":
+            stroke = _stroke_from_dict(p["stroke"], item.tool_state)
+            self._add(stroke.stroke_id, stroke)
+        elif kind == "stroke.replace":
+            old_sid = str(p["stroke_id"])
+            _require_editable_graphite(self._target(old_sid, Stroke))
+            stroke = _stroke_from_dict(p["stroke"], item.tool_state)
+            sid = stroke.stroke_id
+            if not isinstance(sid, str) or not sid.strip():
+                raise ValueError("invalid replacement stroke identity")
+            if sid != old_sid:
+                if sid in self.seen:
+                    raise ValueError(f"duplicate replacement identity: {sid}")
+                self.seen.add(sid)
+                self.order[self.order.index(old_sid)] = sid
+                del self.state[old_sid]
+            self.state[sid] = stroke
+        elif kind in {"stroke.segment_replace", "stroke.soft_lift", "stroke.segment_soft_lift"}:
+            sid = str(p["stroke_id"])
+            old = self._target(sid, Stroke)
+            _require_editable_graphite(old)
+            if kind == "stroke.segment_replace":
+                self.state[sid] = _replay_segment_replace(old, item)
+            elif kind == "stroke.segment_soft_lift":
+                self.state[sid] = _replay_segment_soft_lift(old, item)
+            else:
+                strength = float(p["strength"])
+                if not 0.0 <= strength <= 1.0:
+                    raise ValueError("invalid mixed graphite lift strength")
+                stroke = deepcopy(old)
+                stroke.opacity = max(0.0, min(1.0, stroke.opacity * (1.0 - strength)))
+                self.state[sid] = stroke
+        elif kind == "stroke.delete":
+            sid = str(p["stroke_id"])
+            self._target(sid, Stroke)
+            del self.state[sid]
+            self.order.remove(sid)
+        elif kind != "snapshot":
+            raise unsupported_action_error(kind)
+
+    def snapshot(self, width, height, metadata, cursor, *, legacy_inline_pressure=False):
+        ir = StrokeIR(width, height, metadata={**metadata, "history_cursor": cursor},
+                      media_contract=MIXED_HISTORY_CONTRACT)
+        if legacy_inline_pressure:
+            setattr(ir, "_legacy_inline_pressure", True)
+        for sid in self.order:
+            element = self.state[sid]
+            if isinstance(element, Stroke):
+                ir.add(deepcopy(element))
+            else:
+                ir.ink_elements.append(element)
+            ir.element_order.append(sid)
+        ir.ordered_elements()
+        return ir
+
+
 class CanvasHistory:
     """Replayable authoritative drawing history.
 
@@ -208,7 +404,11 @@ class CanvasHistory:
     add/replace/erase semantics and action hashes for sessions that do not use C9 actions.
     """
 
-    def __init__(self, width: int, height: int, metadata: dict | None = None):
+    def __init__(self, width: int, height: int, metadata: dict | None = None, *,
+                 media_contract: str | None = None):
+        if media_contract not in (None, MIXED_HISTORY_CONTRACT):
+            raise ValueError("unsupported mixed history contract")
+        self.media_contract = media_contract
         self.width = int(width)
         self.height = int(height)
         self.metadata = dict(metadata or {})
@@ -217,6 +417,26 @@ class CanvasHistory:
         self._next_id = 1
         # Transient loader evidence only. It is never persisted into history metadata.
         self._legacy_inline_pressure = False
+        # A derived one-prefix cache, never persisted and never exposed as IR.
+        self._mixed_cached = MixedReplayState() if media_contract is not None else None
+        self._mixed_prefix: list[CanvasAction] = []
+
+    def _reset_mixed_cache(self):
+        self._mixed_cached = MixedReplayState()
+        self._mixed_prefix = []
+
+    def _sealed_transaction_copy(self):
+        """Cheap exact rollback snapshot for owned mixed actions only."""
+        if self.media_contract != MIXED_HISTORY_CONTRACT or not all(
+                type(a) is _MixedCanvasAction for a in self.actions):
+            return None
+        backup=CanvasHistory(self.width,self.height,deepcopy(self.metadata),
+                             media_contract=self.media_contract)
+        backup.actions=list(self.actions)
+        backup.cursor=self.cursor
+        backup._next_id=self._next_id
+        backup._legacy_inline_pressure=self._legacy_inline_pressure
+        return backup
 
     def _append(
         self,
@@ -229,6 +449,27 @@ class CanvasHistory:
         tool_state: dict[str, Any] | None = None,
         provenance: dict[str, Any] | None = None,
     ) -> CanvasAction:
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            seq=self.cursor+1
+            item=_MixedCanvasAction(seq,action,stage,payload,float(seq-1),part,role,
+                                    tool_state,provenance)
+            replay=self._mixed_replay_at(self.cursor)
+            # Validate the new record before truncating the redo tail or changing
+            # the authoritative log. Invalidate a possibly partial derived state
+            # on failure; the log itself is still unchanged.
+            try:
+                replay.apply(item,validate_recipe=True)
+            except Exception:
+                self._reset_mixed_cache()
+                raise
+            if self.cursor < len(self.actions):
+                self.actions=self.actions[:self.cursor]
+            self.actions.append(item)
+            self.cursor=len(self.actions)
+            if replay is self._mixed_cached:
+                self._mixed_prefix.append(item)
+            return item
+
         if self.cursor < len(self.actions):
             self.actions = self.actions[: self.cursor]
         seq = len(self.actions) + 1
@@ -255,6 +496,8 @@ class CanvasHistory:
 
     def _stroke_identity_exists(self, stroke_id: str) -> bool:
         requested = str(stroke_id)
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            return requested in self._mixed_replay_at(self.cursor).seen
         for item in self.actions[: self.cursor]:
             if item.action == "stroke.add":
                 if str((item.payload.get("stroke") or {}).get("stroke_id")) == requested:
@@ -262,7 +505,55 @@ class CanvasHistory:
             elif item.action == "stroke.replace":
                 if str((item.payload.get("stroke") or {}).get("stroke_id")) == requested:
                     return True
+            elif item.action in INK_ACTION_KINDS and item.payload.get("element_id") == requested:
+                return True
         return False
+
+    def _mixed_replay_at(self, limit: int, *, validate_recipes=False) -> MixedReplayState:
+        # Cache only owned immutable records. A low-level caller may replace or
+        # reorder the public action list; identity comparison detects that even
+        # when length/cursor stay the same. Unsealed records are never trusted.
+        if limit < len(self._mixed_prefix) or self._mixed_cached is None or not all(
+                a is b for a,b in zip(self.actions,self._mixed_prefix)):
+            self._reset_mixed_cache()
+        start=len(self._mixed_prefix)
+        suffix=self.actions[start:limit]
+        if not all(type(a) is _MixedCanvasAction for a in suffix):
+            self._reset_mixed_cache()
+            replay=MixedReplayState()
+            for item in self.actions[:limit]:
+                replay.apply(item,validate_recipe=True)
+            return replay
+        replay=self._mixed_cached
+        try:
+            for item in suffix:
+                # Newly decoded records, including loaded redo tails, are
+                # validated exactly once. No geometry check is skipped for
+                # mutable/untrusted input.
+                replay.apply(item,validate_recipe=True)
+                self._mixed_prefix.append(item)
+        except Exception:
+            self._reset_mixed_cache()
+            raise
+        return replay
+
+    def apply_ink_action(self, action: InkAction) -> str:
+        if self.media_contract != MIXED_HISTORY_CONTRACT:
+            raise ValueError("ink actions require an explicit mixed history contract")
+        if not isinstance(action, InkAction):
+            raise ValueError("typed InkAction required")
+        replay = self._mixed_replay_at(self.cursor)
+        if action.action_id in replay.action_ids:
+            raise ValueError("duplicate ink action identity")
+        element = action.element
+        if action.kind == "ink.delete":
+            element = replay._target(action.element_id, InkElement)
+        record = CanvasAction(self.cursor + 1, action.kind, "unspecified", action.payload(),
+                              float(self.cursor), element.part, element.role,
+                              provenance=action.provenance())
+        self._append(action.kind, record.payload, stage=record.stage, part=record.part,
+                     role=record.role, provenance=record.provenance)
+        return action.element_id
 
     def add_stroke(self, stroke: Stroke, *, stroke_id: str | None = None, provenance: dict[str, Any] | None = None) -> str:
         s = deepcopy(stroke).cleaned()
@@ -442,6 +733,10 @@ class CanvasHistory:
 
     def state_at(self, cursor: int | None = None) -> StrokeIR:
         limit = self.cursor if cursor is None else max(0, min(int(cursor), len(self.actions)))
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            return self._mixed_replay_at(limit).snapshot(
+                self.width, self.height, self.metadata, limit,
+                legacy_inline_pressure=self._legacy_inline_pressure)
         order: list[str] = []
         state: dict[str, Stroke] = {}
         for item in self.actions[:limit]:
@@ -500,17 +795,21 @@ class CanvasHistory:
         return ir
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "width": self.width,
             "height": self.height,
             "metadata": deepcopy(self.metadata),
             "cursor": self.cursor,
             "actions": [a.to_dict() for a in self.actions],
         }
+        if self.media_contract is not None:
+            result["media_contract"] = self.media_contract
+        return result
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "CanvasHistory":
-        h = cls(data["width"], data["height"], data.get("metadata"))
+        h = cls(data["width"], data["height"], data.get("metadata"),
+                media_contract=data.get("media_contract"))
         actions = []
         legacy_inline_pressure = False
         for raw in data.get("actions", []):
@@ -522,8 +821,9 @@ class CanvasHistory:
                     # Pre-B07-R1 sessions persisted both derived pressure and tool state
                     # inline. Keep this only as transient compatibility evidence.
                     legacy_inline_pressure = True
+            record_cls=_MixedCanvasAction if h.media_contract is not None else CanvasAction
             actions.append(
-                CanvasAction(
+                record_cls(
                     seq=int(raw["seq"]),
                     action=str(raw["action"]),
                     stage=stage,
@@ -548,4 +848,17 @@ class CanvasHistory:
                 if sid:
                     ids.append(sid)
         h._next_id = len(ids) + 1
+        if h.media_contract is None:
+            if any(a.action.startswith("ink.") for a in actions):
+                raise ValueError("ink actions require an explicit mixed history contract")
+        else:
+            raw_cursor = data.get("cursor", len(actions))
+            if type(raw_cursor) is not int or not 0 <= raw_cursor <= len(actions):
+                raise ValueError("invalid mixed history cursor")
+            # Validate even the redo tail, not just the active snapshot.
+            h._mixed_replay_at(len(actions),validate_recipes=True)
+            action_ids = [(a.provenance or {}).get("action_id") for a in actions]
+            named = [v for v in action_ids if v is not None]
+            if any(not isinstance(v, str) or not v.strip() for v in named) or len(named) != len(set(named)):
+                raise ValueError("invalid or duplicate mixed action identity")
         return h

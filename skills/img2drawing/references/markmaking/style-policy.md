@@ -15,6 +15,10 @@ Do not infer a decorative style merely because one renderer behavior happens to 
 Choose a non-canonical style only when the user explicitly requests it or when the declared drawing
 intent clearly depends on that material language.
 
+A style label does not select a renderer. `manga-light` is still a graphite material policy.
+If the requested finish needs actual opaque ink or screentone, use the conditional
+[mixed-media](mixed-media.md) leaf and the explicit new-session render profile.
+
 ## Initial policy families
 
 ### `canonical-pencil`

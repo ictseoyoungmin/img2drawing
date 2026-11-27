@@ -1,8 +1,10 @@
 """Forward-only frame sources for timelapse export.
 
 ``FastFrameSource`` advances through history incrementally: appended strokes composite their
-cached patches, edits recomposite only the dirty rectangles, and only changed output regions
-are resampled. It is pixel-exact with a full canonical render at every cursor.
+cached patches and edits recomposite only the dirty rectangles. Guarded dirty resampling is
+used on Pillow before 13; newer or unknown versions downsample at canonical page dimensions
+to preserve filter order. Only changed output regions enter the delta pack.
+It is pixel-exact with a full canonical render at every cursor.
 ``CanonicalFrameSource`` re-renders the whole drawing per frame and is used when a history
 contains unsupported semantics. Explicit path lifts use the same eraser in both sources.
 """
@@ -10,17 +12,21 @@ contains unsupported semantics. Explicit path lifts use the same eraser in both 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from copy import deepcopy
 from pathlib import Path
 from typing import Iterable
 
 from PIL import Image
 
-from ..core.history import _stroke_from_dict
+from ..core.history import _stroke_from_dict, _MixedCanvasAction
+from ..core.material import INK_ACTION_KINDS, MIXED_HISTORY_CONTRACT
+from ..inspection import drawing_state_hash
+from ..render.contract import MIXED_MEDIA_CONTRACT
 from ..render import is_eraser, render_image
 from ..render.eraser import is_explicit_path_eraser
 from ..render.profile import RenderProfile
-from .dirty import apply_additions, clip_box, finalize_full, merge_regions, patch_box, recomposite_regions, union_box, update_output_regions
-from .patch_cache import PatchCache
+from .dirty import apply_additions, clip_box, finalize_full, intersects, merge_regions, patch_box, recomposite_regions, union_box, update_output_regions
+from .patch_cache import PatchCache, InkPatchCache
 from .replay import ForwardHistoryReplay
 
 SUPPORTED_ACTIONS = {
@@ -41,6 +47,16 @@ class FastPathEligibility:
 def inspect_fast_path_eligibility(history) -> FastPathEligibility:
     reasons: list[str] = []
     action_types = sorted({item.action for item in history.actions[:history.cursor]})
+    if history.media_contract is not None:
+        if history.media_contract!=MIXED_HISTORY_CONTRACT:
+            reasons.append("unknown mixed history contract")
+        if set(action_types)-INK_ACTION_KINDS-{"snapshot"}:
+            reasons.append("mixed graphite/eraser history requires canonical replay")
+        if not set(action_types)&INK_ACTION_KINDS:
+            reasons.append("mixed history has no ink actions")
+        if not all(type(item) is _MixedCanvasAction for item in history.actions[:history.cursor]):
+            reasons.append("unsealed mixed history requires canonical replay")
+        return FastPathEligibility(not reasons,tuple(reasons),tuple(action_types),False)
     unsupported = sorted(set(action_types) - SUPPORTED_ACTIONS)
     if unsupported:
         reasons.append("unsupported actions: " + ", ".join(unsupported))
@@ -79,6 +95,9 @@ class FastFrameSource:
 
     def __init__(self, history, profile: RenderProfile, *, supersample: int | None = None,
                  persistent_cache_dir: str | Path | None = None):
+        profile.validate_history(history)
+        if profile.is_mixed_media:
+            raise ValueError("use InkFrameSource or open_frame_source for mixed histories")
         self.history = history
         self.eligibility = inspect_fast_path_eligibility(history)
         if not self.eligibility.eligible:
@@ -207,11 +226,190 @@ class FastFrameSource:
         self.renderer.close()
 
 
+@dataclass(frozen=True)
+class _InkFrameEntry:
+    element: object
+    key: tuple
+    bounds: tuple[int,int,int,int]
+
+
+def _box_area(box):
+    return max(0,box[2]-box[0])*max(0,box[3]-box[1])
+
+
+def _bounded_regions(boxes):
+    boxes=[b for b in boxes if _box_area(b)]
+    # Bound quadratic rectangle merging and delta pack patch count. A larger
+    # enclosing rectangle is conservative, never a smaller affected region.
+    if len(boxes)>128:
+        return [(min(b[0] for b in boxes),min(b[1] for b in boxes),
+                 max(b[2] for b in boxes),max(b[3] for b in boxes))]
+    return merge_regions(boxes)
+
+
+class InkFrameSource:
+    """Exact incremental opaque-paper ink-only frames.
+
+    Same native ink kernel and stable layer ordering as canonical mixed
+    composition. Old/new patch bounds select dirty regions; replacement or
+    deletion reconstructs those regions from all intersecting current marks.
+    Graphite/eraser histories and transparent RGB staging are out of scope.
+    """
+    def __init__(self,history,profile:RenderProfile,*,supersample=None,
+                 cache_bytes=InkPatchCache.DEFAULT_MAX_BYTES):
+        profile.validate_history(history)
+        eligible=inspect_fast_path_eligibility(history)
+        if not profile.is_mixed_media or not eligible.eligible:
+            raise ValueError("ink fast frame source is ineligible: "+"; ".join(eligible.reasons))
+        if profile.background_rgba[3]!=255:
+            raise ValueError("ink fast frame source requires opaque background")
+        self.history=history
+        self.profile=profile
+        self.renderer=InkPatchCache(profile,supersample=supersample,max_bytes=cache_bytes)
+        self.replay=ForwardHistoryReplay(history)
+        self._records=tuple(history.actions[:history.cursor])
+        self._metadata=deepcopy(history.metadata)
+        self._entries={}
+        self.cursor=0
+        self._failed=False
+        self._closed=False
+        self.hi_canvas=Image.new("RGBA",self.renderer.hi_size,profile.background_rgba)
+        self.out_canvas=self.hi_canvas.resize(self.renderer.out_size,Image.Resampling.LANCZOS)
+        self.state_hash=drawing_state_hash(self.replay.snapshot())
+        self.stats={"append_advances":0,"dirty_advances":0,"metadata_advances":0,
+                    "dirty_regions":0,"dirty_output_pixels":0,"recomposited_marks":0,
+                    "actions_applied":0}
+
+    def _check_history(self):
+        if (self.history.cursor!=len(self._records) or
+                self.history.media_contract!=MIXED_HISTORY_CONTRACT or
+                (self.history.width,self.history.height)!=(self.profile.canvas_width,self.profile.canvas_height) or
+                self.history.metadata!=self._metadata or
+                any(a is not b for a,b in zip(self._records,self.history.actions)) or
+                len(self.history.actions)<len(self._records)):
+            raise ValueError("history changed during ink fast replay; open a new frame source")
+
+    def _apply_entry(self,entry,regions=None):
+        if not _box_area(entry.bounds):
+            return
+        with self.renderer.patch(entry.element.mark,key=entry.key) as (box,patch):
+            if box!=entry.bounds:
+                raise RuntimeError("ink patch bounds changed within a fixed profile")
+            if regions is None:
+                self.hi_canvas.alpha_composite(patch,dest=box[:2])
+            else:
+                for dirty in regions:
+                    x0,y0=max(box[0],dirty[0]),max(box[1],dirty[1])
+                    x1,y1=min(box[2],dirty[2]),min(box[3],dirty[3])
+                    with patch.crop((x0-box[0],y0-box[1],x1-box[0],y1-box[1])) as crop:
+                        self.hi_canvas.alpha_composite(crop,dest=(x0,y0))
+
+    def advance_to(self,cursor:int)->dict:
+        if self._failed or self._closed:
+            raise RuntimeError("ink frame source is closed or failed; open a new source")
+        self._check_history()
+        target=max(0,min(int(cursor),len(self._records)))
+        if target<self.cursor:
+            raise ValueError("InkFrameSource is forward-only")
+        if target==self.cursor:
+            return {"cursor":target,"mode":"noop","regions":0,"output_regions":[]}
+        try:
+            return self._advance(target)
+        except Exception:
+            # A failed frame never becomes reusable partially composed state.
+            self._failed=True
+            raise
+
+    def _advance(self,target):
+        previous=self._entries
+        delta=[item for item in self._records[self.cursor:target] if item.action!="snapshot"]
+        self.replay.advance_to(target)
+        ir=self.replay.snapshot()
+        if ir.strokes:
+            raise ValueError("graphite reached ink-only frame source")
+        entries={}
+        for e in ir.ink_elements:
+            old=previous.get(e.element_id)
+            if old is not None and (old.element.mark is e.mark or old.element.mark==e.mark):
+                entries[e.element_id]=_InkFrameEntry(e,old.key,old.bounds)
+                continue
+            key=self.renderer.key(e.mark)
+            bounds=self.renderer.bounds(e.mark)
+            entries[e.element_id]=_InkFrameEntry(e,key,bounds)
+        # Canonical ink-only composite work is the page plus all current patch
+        # bounds. Preserve the same gate even when incremental work is small.
+        work=self.renderer.hi_size[0]*self.renderer.hi_size[1]+sum(
+            _box_area(entry.bounds) for entry in entries.values())
+        if work>MIXED_MEDIA_CONTRACT.value("max_composite_work"):
+            raise ValueError("mixed-media composite work budget exceeded")
+        ordered=sorted(entries.values(),key=lambda entry:entry.element.layer)
+        changed={item.payload["element_id"] for item in delta}
+        boxes=[mapping[sid].bounds for sid in changed for mapping in (previous,entries)
+               if sid in mapping]
+        regions=_bounded_regions(boxes)
+        if not delta:
+            mode="metadata-only"
+            self.stats["metadata_advances"]+=1
+        else:
+            append=all(item.action=="ink.add" for item in delta)
+            additions=[entries[item.payload["element_id"]] for item in delta] if append else []
+            layers=[entry.element.layer for entry in additions]
+            append=append and all(a<=b for a,b in zip(layers,layers[1:])) and (
+                not previous or layers[0]>=max(entry.element.layer for entry in previous.values()))
+            if append:
+                for entry in additions:
+                    self._apply_entry(entry)
+                mode="append"
+                self.stats["append_advances"]+=1
+            else:
+                for region in regions:
+                    self.hi_canvas.paste(self.profile.background_rgba,region)
+                # Regions are disjoint after merge. Preserve canonical order
+                # inside each while borrowing/decoding a mark only once per
+                # advance, even if it intersects many distant dirty regions.
+                for entry in ordered:
+                    if not _box_area(entry.bounds):
+                        continue
+                    hits=[region for region in regions if intersects(entry.bounds,region)]
+                    if hits:
+                        self._apply_entry(entry,hits)
+                        self.stats["recomposited_marks"]+=1
+                mode="dirty"
+                self.stats["dirty_advances"]+=1
+        output_regions=[]
+        if regions:
+            targets,area=update_output_regions(self.renderer,self.hi_canvas,self.out_canvas,
+                                               regions,precomposited=True)
+            ratio=self.renderer.supersample
+            output_regions=[tuple(v//ratio for v in box) for box in targets]
+            self.stats["dirty_output_pixels"]+=area
+        self._entries=entries
+        self.cursor=target
+        self.state_hash=drawing_state_hash(ir)
+        self.stats["dirty_regions"]+=len(regions)
+        self.stats["actions_applied"]=self.replay.stats.actions_applied
+        return {"cursor":target,"mode":mode,"regions":len(regions),"output_regions":output_regions}
+
+    def image(self):
+        if self._failed or self._closed:
+            raise RuntimeError("ink frame source is closed or failed")
+        return self.out_canvas.copy()
+
+    def close(self):
+        if not self._closed:
+            self.hi_canvas.close()
+            self.out_canvas.close()
+            self.renderer.close()
+            self._entries.clear()
+            self._closed=True
+
+
 class CanonicalFrameSource:
     """Forward-only full re-render of every requested cursor."""
 
     def __init__(self, history, profile: RenderProfile, *, supersample: int | None = None,
                  reasons: tuple[str, ...] = ()):
+        profile.validate_history(history)
         self.history = history
         self.profile = profile
         self.supersample = int(profile.supersample if supersample is None else supersample)
@@ -254,9 +452,15 @@ def open_frame_source(history, profile: RenderProfile, *, supersample: int | Non
     """Return the exact fast source when eligible, otherwise the canonical source."""
 
     eligibility = inspect_fast_path_eligibility(history)
+    reasons=eligibility.reasons
     if eligibility.eligible:
-        return FastFrameSource(history, profile, supersample=supersample, persistent_cache_dir=persistent_cache_dir)
-    return CanonicalFrameSource(history, profile, supersample=supersample, reasons=eligibility.reasons)
+        if profile.is_mixed_media:
+            if profile.background_rgba[3]==255:
+                return InkFrameSource(history,profile,supersample=supersample)
+            reasons=("transparent background requires canonical RGBA frame staging",)
+        else:
+            return FastFrameSource(history, profile, supersample=supersample, persistent_cache_dir=persistent_cache_dir)
+    return CanonicalFrameSource(history, profile, supersample=supersample, reasons=reasons)
 
 
 def iter_frames(source, cursors: Iterable[int]):
@@ -268,6 +472,7 @@ def iter_frames(source, cursors: Iterable[int]):
 __all__ = [
     "CanonicalFrameSource",
     "FastFrameSource",
+    "InkFrameSource",
     "FastPathEligibility",
     "inspect_fast_path_eligibility",
     "iter_frames",

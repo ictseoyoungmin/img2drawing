@@ -127,6 +127,77 @@ CONTACT_WIDTH_CONTRACT = RendererContract(
     }.items())),
 )
 
+# Distinct opt-in identity: earlier runtimes fail closed instead of treating ink as graphite.
+MIXED_MEDIA_CONTRACT = RendererContract(
+    renderer_id="img2drawing-mixed",
+    renderer_version="mixed-media-v1",
+    parameters=tuple(sorted({
+        "graphite_contract_digest": CONTACT_WIDTH_CONTRACT.digest(),
+        "history_contract": "img2drawing.mixed_history.v1",
+        "ink_geometry": "img2drawing.ink_mark.v1",
+        "ink_kernel": "opaque-swept-disks-even-odd-v1",
+        "composition": "ordered-local-graphite-runs-ink-v1",
+        "selective_lift": "all-prior-graphite-runs-v1",
+        "resampling": "supersampled-lanczos-v1",
+        "max_working_pixels": 16 * 1024 * 1024,
+        "max_factor": 16,
+        "max_patch_pixels": 16 * 1024 * 1024,
+        "max_ink_kernel_work": 64 * 1024 * 1024,
+        "max_composite_work": 256 * 1024 * 1024,
+        "max_lift_pairs": 4096,
+    }.items())),
+)
+
+
+# Additive development contract: v1 sessions keep their exact old digest and pixels.
+STYLED_INK_CONTRACT = RendererContract(
+    renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
+    renderer_version="mixed-media-v2",
+    parameters=tuple(sorted({
+        **dict(MIXED_MEDIA_CONTRACT.parameters),
+        "base_mixed_contract_digest": MIXED_MEDIA_CONTRACT.digest(),
+        "styled_ink_geometry": "img2drawing.styled_ink_path.v1",
+        "styled_ink_kernel": "normal-strip-local-join-cap-union-v1",
+        "miter_limit": (1.,16.),
+        "miter_fallback": "bevel",
+        "styled_join_reversal": "flat-for-bevel-miter",
+        "styled_work": "sum-bbox-pixels-times-convex-edge-count-v1",
+    }.items())),
+)
+# S04: additive pattern authority; never rewrite v1/v2 contract parameters.
+SCREENTONE_CONTRACT = RendererContract(
+    renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
+    renderer_version="mixed-media-v3",
+    parameters=tuple(sorted({
+        **dict(STYLED_INK_CONTRACT.parameters),
+        "base_styled_contract_digest":STYLED_INK_CONTRACT.digest(),
+        "screentone_geometry":"img2drawing.dot_screentone.v1",
+        "screentone_gradient":"img2drawing.tone_gradient.v1",
+        "screentone_kernel":"page-square-lattice-clipped-disk-area-rank-v1",
+        "screentone_pitch_range":(4.,512.),
+        "screentone_min_working_period":8.,
+        "screentone_inverse_steps":52,
+        "screentone_sampling":"global-working-pixel-centre-clockwise-degrees",
+        "screentone_gradient_sampling":"clamped-linear-page-sample",
+        "screentone_work":"edge-crossings-plus-bbox-pixels-times-constant2-gradient4",
+        "screentone_tile_pixels":262144,
+    }.items())),
+)
+MIXED_RENDERER_VERSIONS = (MIXED_MEDIA_CONTRACT.renderer_version, STYLED_INK_CONTRACT.renderer_version,
+                           SCREENTONE_CONTRACT.renderer_version)
+
+
+def validate_mixed_raster_budget(width, height, supersample, scale):
+    factor = supersample * scale
+    if (type(width) is not int or type(height) is not int or width <= 0 or height <= 0
+            or type(supersample) is not int or supersample < 2
+            or type(scale) is not int or scale < 1
+            or factor > MIXED_MEDIA_CONTRACT.value("max_factor")
+            or width * height * factor * factor > MIXED_MEDIA_CONTRACT.value("max_working_pixels")):
+        raise ValueError("mixed-media working raster budget exceeded; choose an explicit supported profile")
+    return factor
+
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -151,7 +222,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity, STYLED_INK_CONTRACT.identity, SCREENTONE_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -162,6 +233,12 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
 
 def contract_for_identity(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = canonical_identity(renderer_id, renderer_version)
+    if key == SCREENTONE_CONTRACT.identity:
+        return SCREENTONE_CONTRACT
+    if key == STYLED_INK_CONTRACT.identity:
+        return STYLED_INK_CONTRACT
+    if key == MIXED_MEDIA_CONTRACT.identity:
+        return MIXED_MEDIA_CONTRACT
     if key == PENCIL_CONTRACT.identity:
         return PENCIL_CONTRACT
     if key == CONTACT_WIDTH_CONTRACT.identity:

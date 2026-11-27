@@ -38,6 +38,8 @@ CANONICAL_OWNER_LEAVES = {
     "review/completion.md",
     "output/render-profile-and-replay.md",
     "api/public-surface.md",
+    "api/mixed-media.md",
+    "markmaking/mixed-media.md",
 }
 
 FORBIDDEN_RELEASE_CONTROL_FILENAMES = {
@@ -233,6 +235,13 @@ def verify_attention_budgets() -> None:
     assert index_bytes <= MAX_INDEX_BYTES, (
         f"references/INDEX.md exceeds attention budget: {index_bytes} > {MAX_INDEX_BYTES} bytes"
     )
+
+    # New specialist material routes may be read conditionally, never as a
+    # mandatory new textbook. Bound their own attention cost as well.
+    for relative, ceiling in (("markmaking/mixed-media.md", 5000),
+                              ("api/mixed-media.md", 10500)):
+        actual = len((REFERENCES / relative).read_bytes())
+        assert actual <= ceiling, f"mixed-media leaf exceeds attention budget: {relative}: {actual}"
 
     direct_leaf_routes = {
         token

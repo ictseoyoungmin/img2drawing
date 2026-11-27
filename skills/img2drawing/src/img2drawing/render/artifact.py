@@ -50,7 +50,7 @@ def render_history_at(history, cursor: int, path: str | Path, profile: RenderPro
     path = Path(path)
     if path.suffix.lower() != ".png":
         raise ValueError("canonical render output must use .png")
-    profile.validate_canvas(history.width, history.height)
+    profile.validate_history(history)
     before_history = history.to_dict()
     ir = history.state_at(requested)
     state_hash = drawing_state_hash(ir)
