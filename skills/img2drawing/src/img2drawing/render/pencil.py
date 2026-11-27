@@ -9,7 +9,7 @@ from PIL import Image
 
 from ..core.ir import Stroke, StrokeIR
 from .contact_profile import PencilContactProfile, load_pencil_contact_profile
-from .contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION, contract_for_identity
+from .contract import CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION, contract_for_identity, MIXED_MEDIA_CONTRACT
 from .deposit import build_patch
 from .eraser import erase, is_eraser
 from .grades import get_pencil_preset, prepare_grade
@@ -24,7 +24,8 @@ DEFAULT_BACKGROUND = (255, 255, 255, 255)
 
 def load_contact_profile(renderer_version: str = RENDERER_VERSION) -> PencilContactProfile:
     """Resolve immutable contact behavior without changing global renderer state."""
-    contract = contract_for_identity(RENDERER_ID, renderer_version)
+    contract = (CONTACT_WIDTH_CONTRACT if renderer_version == MIXED_MEDIA_CONTRACT.renderer_version
+                else contract_for_identity(RENDERER_ID, renderer_version))
     profile = load_pencil_contact_profile(None)
     if contract is CONTACT_WIDTH_CONTRACT:
         return replace(profile, opacity_normalized=True, contact_width_control=True)
@@ -49,8 +50,12 @@ def render_image(
 ) -> Image.Image:
     """Render ``ir`` and return the RGBA image at ``scale`` x canvas size."""
 
+    if renderer_version == MIXED_MEDIA_CONTRACT.renderer_version:
+        from .mixed import render_mixed_image
+        return render_mixed_image(ir, background=background, scale=scale, supersample=supersample,
+                                  graphite=graphite, grade=grade)
     if ir.media_contract is not None or ir.ink_elements or ir.element_order:
-        raise ValueError("mixed history requires an integrated mixed-media renderer")
+        raise ValueError("mixed history requires a mixed-media renderer")
     if int(scale) != scale or scale < 1:
         raise ValueError("scale must be a positive integer")
     if int(supersample) != supersample or supersample < 2:

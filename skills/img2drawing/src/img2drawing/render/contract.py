@@ -127,6 +127,39 @@ CONTACT_WIDTH_CONTRACT = RendererContract(
     }.items())),
 )
 
+# Distinct opt-in identity: earlier runtimes fail closed instead of treating ink as graphite.
+MIXED_MEDIA_CONTRACT = RendererContract(
+    renderer_id="img2drawing-mixed",
+    renderer_version="mixed-media-v1",
+    parameters=tuple(sorted({
+        "graphite_contract_digest": CONTACT_WIDTH_CONTRACT.digest(),
+        "history_contract": "img2drawing.mixed_history.v1",
+        "ink_geometry": "img2drawing.ink_mark.v1",
+        "ink_kernel": "opaque-swept-disks-even-odd-v1",
+        "composition": "ordered-local-graphite-runs-ink-v1",
+        "selective_lift": "all-prior-graphite-runs-v1",
+        "resampling": "supersampled-lanczos-v1",
+        "max_working_pixels": 16 * 1024 * 1024,
+        "max_factor": 16,
+        "max_patch_pixels": 16 * 1024 * 1024,
+        "max_ink_kernel_work": 64 * 1024 * 1024,
+        "max_composite_work": 256 * 1024 * 1024,
+        "max_lift_pairs": 4096,
+    }.items())),
+)
+
+
+def validate_mixed_raster_budget(width, height, supersample, scale):
+    factor = supersample * scale
+    if (type(width) is not int or type(height) is not int or width <= 0 or height <= 0
+            or type(supersample) is not int or supersample < 2
+            or type(scale) is not int or scale < 1
+            or factor > MIXED_MEDIA_CONTRACT.value("max_factor")
+            or width * height * factor * factor > MIXED_MEDIA_CONTRACT.value("max_working_pixels")):
+        raise ValueError("mixed-media working raster budget exceeded; choose an explicit supported profile")
+    return factor
+
+
 RENDERER_ID = PENCIL_CONTRACT.renderer_id
 RENDERER_VERSION = PENCIL_CONTRACT.renderer_version
 RENDERER_CONTRACT_DIGEST = PENCIL_CONTRACT.digest()
@@ -151,7 +184,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -162,6 +195,8 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
 
 def contract_for_identity(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = canonical_identity(renderer_id, renderer_version)
+    if key == MIXED_MEDIA_CONTRACT.identity:
+        return MIXED_MEDIA_CONTRACT
     if key == PENCIL_CONTRACT.identity:
         return PENCIL_CONTRACT
     if key == CONTACT_WIDTH_CONTRACT.identity:
