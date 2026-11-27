@@ -17,6 +17,7 @@ PEN_DEFINITION_SCHEMA = "img2drawing.pen_definition.v1"
 MAX_CONTROLS = 1024
 MAX_PRESSURE_KNOTS = 256
 MAX_RECURSION = 24
+MAX_WIDTH_RECURSION = 48  # gamma<1 may need fine intervals near zero pressure
 
 
 def _mid(a, b):
@@ -194,7 +195,7 @@ class PenDefinition:
             error=_diameter_error(p0,p1,self.gamma,self.max_width-self.min_width)
             if error>self.width_tolerance:
                 m=(a+b)*.5
-                if depth>=MAX_RECURSION or not a<m<b:
+                if depth>=MAX_WIDTH_RECURSION or not a<m<b:
                     raise ValueError("pen width tolerance requires too many samples")
                 pm=pressure(m)
                 emit(a,m,p0,pm,depth+1)
@@ -213,9 +214,31 @@ class PenDefinition:
         # A zero-radius end is not a visible sharp point if the next disk
         # swallows it. Refuse too-steep local tapers rather than invent geometry.
         radii=[w*.5 for w in mark.diameters()]
-        for cap,i,j in ((self.start_cap,0,1),(self.end_cap,-1,-2)):
-            if cap=="point" and radii[j]>=.95*math.dist(mark.points[i],mark.points[j]):
+        for cap,i,j,adjacent in ((self.start_cap,0,1,0),
+                                 (self.end_cap,-1,-2,len(mark.points)-2)):
+            if cap!="point":
+                continue
+            tip=mark.points[i]
+            if radii[j]>=.95*math.dist(tip,mark.points[j]):
                 raise ValueError("point terminal taper is too steep; extend the pressure transition")
+            # A later disk or swept segment must not swallow the endpoint,
+            # even when the immediately adjacent segment has a gentle taper.
+            for k,(a,b,r0,r1) in enumerate(zip(mark.points,mark.points[1:],radii,radii[1:])):
+                if k==adjacent or max(r0,r1)==0:
+                    continue
+                dx,dy=b[0]-a[0],b[1]-a[1]
+                ux,uy=a[0]-tip[0],a[1]-tip[1]
+                dr=r1-r0
+                qa=dx*dx+dy*dy-dr*dr
+                qb=2*(ux*dx+uy*dy-r0*dr)
+                qc=ux*ux+uy*uy-r0*r0
+                other=qa+qb+qc
+                minimum=min(qc,other)
+                if qa>0:
+                    t=max(0.,min(1.,-qb/(2*qa)))
+                    minimum=min(minimum,(qa*t+qb)*t+qc)
+                if minimum<=0:
+                    raise ValueError("point terminal is covered by another contact; revise the pressure transition or path")
         return mark
 
     def to_dict(self):

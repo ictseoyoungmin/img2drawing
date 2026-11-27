@@ -117,6 +117,10 @@ def test_point_tapers_have_no_overshoot_and_round_pen_caps_extend():
     with pytest.raises(ValueError,match="too steep"):
         g_pen(((20,35),(100,35)),pressure_knots=((0,0),(.01,1),(1,.5)),
               max_width=12,gamma=1,start_cap="point").resolve()
+    with pytest.raises(ValueError,match="covered by another contact"):
+        g_pen(((20,35),(22,35),(24,35),(100,35)),
+              pressure_knots=((0,0),(.025,.1),(.05,1),(1,.5)),
+              max_width=12,gamma=1,start_cap="point").resolve()
 
 
 def test_self_overlap_and_reverse_geometry_constant_ink():
