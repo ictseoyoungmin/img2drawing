@@ -187,7 +187,9 @@ def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
                    authoring_helpers=caps.authoring_helpers + (
                        "img2drawing.authoring.InkAction", "img2drawing.authoring.InkElement",
                        "img2drawing.authoring.InkPath", "img2drawing.authoring.InkArea",
-                       "img2drawing.authoring.preview_ink_actions"),
+                       "img2drawing.authoring.preview_ink_actions",
+                       "img2drawing.authoring.PenDefinition", "img2drawing.authoring.g_pen",
+                       "img2drawing.authoring.fineliner", "img2drawing.authoring.read_pen_definition"),
                    render_profile_entrypoints=caps.render_profile_entrypoints + ("RenderProfile.mixed_media",))
 
 

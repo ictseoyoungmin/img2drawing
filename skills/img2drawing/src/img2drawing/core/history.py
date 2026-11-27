@@ -228,17 +228,20 @@ class MixedReplayState:
             raise ValueError(f"mixed action targets missing or wrong-media element: {sid}")
         return value
 
-    def apply(self, item: CanvasAction):
+    def apply(self, item: CanvasAction, *, validate_recipe=False):
         kind, p = item.action, item.payload
         if kind in INK_ACTION_KINDS:
             provenance = item.provenance
+            fields = {"action_id", "observation_id", "source_observation", "reason"}
             if (not isinstance(provenance, dict) or
-                    set(provenance) != {"action_id", "observation_id", "source_observation", "reason"}
+                    set(provenance) not in (fields,fields|{"pen_definition"})
                     or not isinstance(p, dict) or set(p) != {"element_id", "element"}
                     or item.tool_state is not None):
                 raise ValueError("invalid typed ink history record")
             ink = InkAction.from_dict({"schema": INK_ACTION_SCHEMA, "kind": kind,
                                        **p, **provenance})
+            if validate_recipe:
+                ink.validate_pen_definition()
             sid, element = ink.element_id, ink.element
             if kind == "ink.delete":
                 old = self._target(sid, InkElement)
@@ -380,10 +383,10 @@ class CanvasHistory:
                 return True
         return False
 
-    def _mixed_replay_at(self, limit: int) -> MixedReplayState:
+    def _mixed_replay_at(self, limit: int, *, validate_recipes=False) -> MixedReplayState:
         replay = MixedReplayState()
         for item in self.actions[:limit]:
-            replay.apply(item)
+            replay.apply(item,validate_recipe=validate_recipes)
         return replay
 
     def apply_ink_action(self, action: InkAction) -> str:
@@ -401,7 +404,7 @@ class CanvasHistory:
         record = CanvasAction(self.cursor + 1, action.kind, "unspecified", action.payload(),
                               float(self.cursor), element.part, element.role,
                               provenance=action.provenance())
-        replay.apply(record)
+        replay.apply(record,validate_recipe=True)
         self._append(action.kind, record.payload, stage=record.stage, part=record.part,
                      role=record.role, provenance=record.provenance)
         return action.element_id
@@ -706,7 +709,7 @@ class CanvasHistory:
             if type(raw_cursor) is not int or not 0 <= raw_cursor <= len(actions):
                 raise ValueError("invalid mixed history cursor")
             # Validate even the redo tail, not just the active snapshot.
-            h._mixed_replay_at(len(actions))
+            h._mixed_replay_at(len(actions),validate_recipes=True)
             action_ids = [(a.provenance or {}).get("action_id") for a in actions]
             named = [v for v in action_ids if v is not None]
             if any(not isinstance(v, str) or not v.strip() for v in named) or len(named) != len(set(named)):

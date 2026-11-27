@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S01c mixed profile, canonical composition and session lifecycle (WIP)
+ACTIVE BOTTLENECK:  v1.4.0 S02 G-pen/fineliner authoring and swatch verification (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -44,9 +44,9 @@ Authority is intentionally split by purpose:
 
 - Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
 - [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
-- S01 WIP: S01a merged a6ba6a4 (501 active + 44 runtime tests; post-merge CI 45973463319 SUCCESS). S01b candidate adds typed ink elements/actions, explicit mixed history opt-in, common ordered replay, identity/provenance validation and detached mixed snapshots. S02–S07 OPEN; weighted verified completion 0% (0/7).
+- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02 WIP; S03–S07 OPEN. Weighted verified completion 20% (1/7).
 - v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
-- S01c candidate integrates the opt-in mixed profile, canonical local graphite runs/ink patches, selective graphite lifts, typed atomic preview/apply, checkpoint/resume, mixed group membership, and canonical replay fallback. Mixed Fast is deliberately ineligible; full-scale performance and specialized group transforms remain future work. S01 completion requires successful vertical regression; no visual PASS. No SciPy dependency needed yet.
+- S02 candidate adds public G-pen/fineliner authoring, adaptive cubic-chain flattening, exact arc-length pressure knots and bounded nonlinear diameter subdivision; round/point terminals and round joins. Optional versioned pen recipe is retained in action provenance; resolved InkPath and existing renderer contract remain authoritative. Mixed Fast, full-scale performance, specialist group transforms and independent visual PASS remain future work. No SciPy dependency needed.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 
