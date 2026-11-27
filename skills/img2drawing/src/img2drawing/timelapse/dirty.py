@@ -132,6 +132,14 @@ def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Im
         if tx1 > tx0 and ty1 > ty0:
             targets.append((tx0, ty0, tx1, ty1))
     targets = merge_regions(targets)
+    if precomposited and targets:
+        # Pillow may choose separable-filter pass order from image dimensions.
+        # A guarded crop can therefore round differently from the canonical
+        # full page. Keep incremental ink composition and dirty delta writes,
+        # but downsample that accumulated canvas with the canonical dimensions.
+        with hi_canvas.resize(renderer.out_size, Image.Resampling.LANCZOS) as image:
+            out_canvas.paste(image)
+        return targets, renderer.out_size[0] * renderer.out_size[1]
     guard = max(guard_px, 8 * ratio)
     total_out_area = 0
     for tx0, ty0, tx1, ty1 in targets:
@@ -140,12 +148,9 @@ def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Im
         sx1 = min(renderer.hi_size[0], _align_up(tx1 + guard, ratio))
         sy1 = min(renderer.hi_size[1], _align_up(ty1 + guard, ratio))
         crop = hi_canvas.crop((sx0, sy0, sx1, sy1))
-        if precomposited:
-            composited = crop
-        else:
-            base = Image.new("RGBA", crop.size, renderer.background)
-            composited = Image.alpha_composite(base, crop)
-            base.close(); crop.close()
+        base = Image.new("RGBA", crop.size, renderer.background)
+        composited = Image.alpha_composite(base, crop)
+        base.close(); crop.close()
         small = composited.resize(((sx1 - sx0) // ratio, (sy1 - sy0) // ratio), Image.Resampling.LANCZOS)
         composited.close()
         cx0, cy0 = (tx0 - sx0) // ratio, (ty0 - sy0) // ratio

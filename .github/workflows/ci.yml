@@ -62,3 +62,19 @@ jobs:
         run: python dev/tools/verify_package_boundary.py
       - name: Verify frozen v1.0.2 release history
         run: python dev/tools/verify_vnext_b18.py
+
+  pillow13-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ffmpeg for replay parity
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - name: Install the observed Pillow 13 environment
+        run: python -m pip install -e 'skills/img2drawing[dev]' 'numpy==2.3.5' 'Pillow==13.0.0'
+      - name: Verify ink Fast and Canonical replay parity
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: python -m pytest -q dev/tests/test_ink_fast_replay.py
