@@ -150,3 +150,102 @@ def test_legacy_authored_stroke_serialization_is_unchanged():
     assert set(old.history.to_dict()) == {"width", "height", "metadata", "cursor", "actions"}
     assert set(old.current_ir().to_dict()) == {"width", "height", "metadata", "strokes"}
     assert AgentDrawingSession.from_dict(old.to_dict()).to_dict() == old.to_dict()
+
+
+
+def test_sealed_mixed_records_and_detached_serialization():
+    s = _session()
+    s.execute(_ink("i1","a1",area=True))
+    record=s.history.actions[0]
+    with pytest.raises(TypeError,match="read-only"):
+        record.role="other"
+    with pytest.raises(TypeError,match="read-only"):
+        record.payload["element"]["mark"]["outer"][0][0]=99
+    with pytest.raises(TypeError,match="read-only"):
+        record.payload["element"]["mark"]["outer"].append([8,8])
+    raw=record.to_dict()
+    raw["payload"]["element"]["mark"]["paint"]="red"
+    detached=deepcopy(record)
+    detached.payload["element"]["mark"]["paint"]="white"
+    assert s.current_ir().ink_elements[0].mark.paint=="black"
+    assert record.to_dict()["payload"]["element"]["mark"]["paint"]=="black"
+
+
+def test_incremental_replay_decodes_only_new_records(monkeypatch):
+    from img2drawing.core import history
+    original=history.InkAction.from_dict.__func__
+    calls=0
+    def counted(cls,raw):
+        nonlocal calls
+        calls+=1
+        return original(cls,raw)
+    monkeypatch.setattr(history.InkAction,"from_dict",classmethod(counted))
+    s=_session()
+    for i in range(64):
+        s.execute(_ink(f"i{i}",f"a{i}",area=True))
+        assert len(s.current_ir().ink_elements)==i+1
+    assert calls==64
+    before=s.to_dict()
+    assert s.current_ir().to_dict()==s.current_ir().to_dict()
+    assert calls==64
+    # A valid loaded record is decoded once even when the loader validates a
+    # redo tail; later forward states reuse that exact prefix.
+    restored=AgentDrawingSession.from_dict(before)
+    assert calls==128
+    assert restored.current_ir().to_dict()==s.current_ir().to_dict()
+    assert calls==128
+
+
+def test_cache_invalidates_on_undo_branch_and_external_record_replacement():
+    s=_session()
+    s.execute_many_atomic([_ink("i1","a1",area=True),_ink("i2","a2",area=True),
+                           _ink("i1","a3","ink.replace",paint="white",area=True)])
+    assert s.current_ir().ink_elements[0].mark.paint=="white"
+    s.history.undo()
+    assert s.current_ir().ink_elements[0].mark.paint=="black"
+    s.history.redo()
+    assert s.current_ir().ink_elements[0].mark.paint=="white"
+    s.history.undo()
+    s.execute(_ink("i2","a4","ink.delete"))
+    assert _ids(s.current_ir())==["i1"]
+    assert len(s.history.actions)==3
+    # Even an external same-length replacement cannot reuse an old prefix.
+    altered=deepcopy(s.history.actions[0])
+    altered.payload["element"]["mark"]["paint"]="white"
+    s.history.actions[0]=altered
+    assert s.current_ir().ink_elements[0].mark.paint=="white"
+    altered.payload["element"]["mark"]["paint"]="red"
+    with pytest.raises(ValueError,match="ink paint"):
+        s.current_ir()
+
+
+def test_failed_mixed_transaction_restores_sealed_records_redo_tail_and_identity():
+    s=_session()
+    s.execute_many_atomic([_ink("i1","a1",area=True),_ink("i2","a2",area=True)])
+    s.history.undo()
+    before=s.to_dict()
+    old_records=tuple(s.history.actions)
+    with pytest.raises(ValueError,match="duplicate"):
+        s.execute_many_atomic([_ink("i3","a3",area=True),_ink("i1","a4",area=True)])
+    assert s.to_dict()==before
+    assert all(a is b for a,b in zip(old_records,s.history.actions))
+    s.history.redo()
+    assert _ids(s.current_ir())==["i1","i2"]
+    s.execute(_ink("i3","a3",area=True))
+    assert _ids(s.current_ir())==["i1","i2","i3"]
+
+
+def test_mixed_snapshot_graphite_is_detached_and_canonical_parity():
+    s=_session()
+    s.execute_many_atomic([_pencil("g","a1"),_ink("i","a2",area=True)])
+    before=s.current_ir().to_dict()
+    detached=s.current_ir()
+    detached.strokes[0].points[0]=(50.,50.)
+    detached.ink_elements.clear()
+    detached.element_order.clear()
+    assert s.current_ir().to_dict()==before
+    s.execute(_pencil("g2","a3",kind="replace_stroke",target="g"))
+    fresh=AgentDrawingSession.from_dict(s.to_dict())
+    forward=ForwardHistoryReplay(fresh.history)
+    for cursor in range(4):
+        assert forward.state_at(cursor).to_dict()==s.history.state_at(cursor).to_dict()

@@ -266,7 +266,9 @@ class _DrawingTransaction:
     def __init__(self, session: "AgentDrawingSession", *, label: str | None = None):
         self.session = session
         self.label = None if label is None else str(label)
-        self._history_snapshot = deepcopy(session.history.to_dict())
+        self._sealed_snapshot = session.history._sealed_transaction_copy()
+        self._history_snapshot = (None if self._sealed_snapshot is not None
+                                  else deepcopy(session.history.to_dict()))
         self._executed_snapshot = set(session.executed_action_ids)
         self._rolled_back = False
         self._committed = False
@@ -280,7 +282,8 @@ class _DrawingTransaction:
         return self._committed
 
     def _restore(self) -> None:
-        self.session.history = CanvasHistory.from_dict(deepcopy(self._history_snapshot))
+        self.session.history = (self._sealed_snapshot if self._sealed_snapshot is not None
+                                else CanvasHistory.from_dict(deepcopy(self._history_snapshot)))
         self.session.executed_action_ids = set(self._executed_snapshot)
         self._rolled_back = True
         self._committed = False
