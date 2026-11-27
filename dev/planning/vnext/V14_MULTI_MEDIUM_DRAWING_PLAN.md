@@ -186,6 +186,22 @@ distinct material/operation (explicit path or closed area), covering lower marks
 instead of destructively lifting them; white over ink, white over tone, overlap
 and later edits all obey history. Reserve paper holes intentionally when white
 ink is not desired. Keep provenance.
+
+S03 implementation choice: the wet brush uses the existing round swept-disk
+kernel with a separately versioned authoring recipe and explicit pressure,
+diameter, round/point tips and optional cubic chain. It is not a fluid or dry
+brush model. Sample explicitly closed cubic contours by bounded adaptive
+subdivision; sampled vertices are the editable area authority (no separate
+persisted curve recipe). Both media use the existing typed add/replace/delete
+history. Area transforms accept nonsingular affine maps; paths require similarity
+maps (uniform scale scales diameter; pressure is preserved). Transforms prepare
+guarded same-ID replacements of resolved geometry, retaining prior pen recipes
+in earlier actions rather than attaching stale controls to new geometry.
+Ink-only semantic groups can transform as an explicit atomic batch; mixed
+graphite/ink group transforms remain explicitly unsupported. White is paint on
+transparent/nonwhite paper, not alpha removal. Existing GIF display composites
+RGBA over white; native PNG/replay frame hashes retain RGBA. No new pixel
+contract, external dependency or generated asset.
 Acceptance: uniform RGB/alpha interior and no unintended seams on brush overlap,
 ring-with-holes with zero deposition outside coverage/holes away from AA edge,
 edge clips, concavity, degenerate/NaN/self-intersection/touching rejection, rejected

@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S02 follow-up styled joins/caps (REOPENED; candidate)
+ACTIVE BOTTLENECK:  v1.4.0 S03 wet brush, authored solid ink, white paint and transforms (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -44,9 +44,10 @@ Authority is intentionally split by purpose:
 
 - Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
 - [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
-- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02 WIP; S03–S07 OPEN. Weighted verified completion 20% (1/7).
+- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02 CLOSED (including extension); S03 WIP; S04–S07 OPEN. Weighted verified completion 35% (2/7).
 - v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
-- S02 initial implementation #110 merged 3dd0052; PR CI 45978762522 and merge CI 45979144519 SUCCESS (542 active + 44 runtime). Public G-pen/fineliner and adaptive pressure/curve recipes. Maintainer reopened S02 to add miter/bevel joins and butt/square caps. This candidate adds a distinct normal-strip styled path kind and mixed-media-v2 contract, retaining exact v1 and legacy pencil pixels. New mixed sessions select v2 by default; styled_paths=False retains v1. Weighted verified completion remains 20% until the extended S02 gate closes. Mixed Fast and stress/independent visual validation remain later work. No SciPy dependency.
+- S02 CLOSED: #110 and #111 merged; latest integration 684ca8a, PR CI 45979974212 and merge CI 45980250961 SUCCESS (554 active + 44 runtime on #111). G-pen/fineliner, adaptive recipes and explicit miter/bevel, butt/square, point tapers. Mixed-media-v2 defaults for new mixed sessions; v1 and legacy exact contracts preserved.
+- S03 candidate exposes explicit wet ink brush, cubic contour sampling and solid ink/holes, current element retrieval, same-ID affine area and similarity path transforms and ink-only group transforms, all through the existing typed history. White paint is opaque, not a lift or a hole. No new renderer contract or dependency; no source masks or automatic closure. Transparent RGBA PNG retains alpha; canonical GIF keeps its existing white-composited display policy. Mixed Fast/stress and independent visual quality remain later gates.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 

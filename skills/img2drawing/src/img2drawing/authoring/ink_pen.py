@@ -19,6 +19,19 @@ def fineliner(controls, *, width, geometry="polyline", paint="black",
                          1.,cap,cap,join,paint,curve_tolerance,.05,miter_limit)
 
 
+def ink_brush(controls, *, pressure_knots, max_width, min_width=0., gamma=1.,
+              geometry="polyline", start_cap="round", end_cap="round", paint="black",
+              curve_tolerance=.05, width_tolerance=.05):
+    """Continuous opaque wet-ink brush with authored contact diameter and tip.
+
+    Uses the same swept-disk kernel as round pens, not a dry-brush texture or
+    a simulated fluid. Pressure controls contact width only. Point tips require
+    explicit zero endpoint pressure and a sufficiently long taper.
+    """
+    return PenDefinition("ink-brush",geometry,controls,pressure_knots,min_width,max_width,
+                         gamma,start_cap,end_cap,"round",paint,curve_tolerance,width_tolerance)
+
+
 def read_pen_definition(session, element_id):
     """Recover the current authored recipe, never stale or inferred controls."""
     with session._lock:
@@ -37,4 +50,4 @@ def read_pen_definition(session, element_id):
         return recipe
 
 
-__all__=["PenDefinition","g_pen","fineliner","read_pen_definition"]
+__all__=["PenDefinition","g_pen","fineliner","ink_brush","read_pen_definition"]

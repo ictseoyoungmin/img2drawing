@@ -15,6 +15,7 @@ from .material import InkPath, StyledInkPath, MAX_PATH_POINTS, MAX_WIDTH, _numbe
 
 PEN_DEFINITION_SCHEMA = "img2drawing.pen_definition.v1"
 STYLED_PEN_SCHEMA = "img2drawing.pen_definition.v2"
+BRUSH_DEFINITION_SCHEMA = "img2drawing.ink_brush_definition.v1"
 MAX_CONTROLS = 1024
 MAX_PRESSURE_KNOTS = 256
 MAX_RECURSION = 24
@@ -25,7 +26,7 @@ def _mid(a, b):
     return ((a[0]+b[0])*.5, (a[1]+b[1])*.5)
 
 
-def _flatten_bezier(controls, tolerance):
+def _flatten_bezier(controls, tolerance, *, max_samples=MAX_PATH_POINTS):
     """Adaptive de Casteljau, retaining segment joins and original endpoints."""
     out = [controls[0]]
 
@@ -39,8 +40,8 @@ def _flatten_bezier(controls, tolerance):
             deviation = max(math.dist(a,v) for v in (b,c))
         if chord > 0 and length-chord <= tolerance and deviation <= tolerance:
             out.append(d)
-            if len(out) > MAX_PATH_POINTS:
-                raise ValueError("pen curve sample budget exceeded")
+            if len(out) > max_samples:
+                raise ValueError("curve sample budget exceeded")
             return
         if depth >= MAX_RECURSION or length == 0:
             raise ValueError("degenerate pen curve or subdivision budget exceeded")
@@ -111,7 +112,7 @@ class PenDefinition:
     miter_limit: float = 4.
 
     def __post_init__(self):
-        if self.tool not in ("g-pen","fineliner"):
+        if self.tool not in ("g-pen","fineliner","ink-brush"):
             raise ValueError("unsupported pen tool")
         if self.geometry not in ("polyline","bezier"):
             raise ValueError("geometry must be polyline or cubic Bezier chain")
@@ -138,6 +139,8 @@ class PenDefinition:
         if self.join!="miter" and limit!=4.:
             raise ValueError("non-default miter_limit requires miter join")
         object.__setattr__(self,"miter_limit",limit)
+        if self.tool == "ink-brush" and (self.join!="round" or self.start_cap not in ("round","point") or self.end_cap not in ("round","point")):
+            raise ValueError("wet ink brush requires round contact and round/point tips")
         if self.tool == "fineliner":
             if low != high or gamma != 1. or knots != ((0.,1.),(1.,1.)) or "point" in (self.start_cap,self.end_cap):
                 raise ValueError("fineliner requires constant diameter, constant pressure and non-point caps")
@@ -149,7 +152,7 @@ class PenDefinition:
                 if cap!="point" and width == 0.:
                     raise ValueError("non-point terminal requires positive endpoint diameter")
             if not low and not any(k[1]>0 for k in knots):
-                raise ValueError("G-pen requires nonzero authored diameter")
+                raise ValueError("pressure-driven ink requires nonzero authored diameter")
         object.__setattr__(self,"controls",controls)
         object.__setattr__(self,"pressure_knots",knots)
         object.__setattr__(self,"min_width",low)
@@ -265,7 +268,9 @@ class PenDefinition:
                 "start_cap":self.start_cap,"end_cap":self.end_cap,"join":self.join,
                 "paint":self.paint,"curve_tolerance":self.curve_tolerance,
                 "width_tolerance":self.width_tolerance}
-        if self.uses_styled_path:
+        if self.tool=="ink-brush":
+            raw.update(schema=BRUSH_DEFINITION_SCHEMA)
+        elif self.uses_styled_path:
             raw.update(schema=STYLED_PEN_SCHEMA,miter_limit=self.miter_limit)
         return raw
 
@@ -278,12 +283,13 @@ class PenDefinition:
         schema=raw.get("schema")
         if schema==STYLED_PEN_SCHEMA:
             fields=fields|{"miter_limit"}
-        elif schema!=PEN_DEFINITION_SCHEMA:
+        elif schema not in (PEN_DEFINITION_SCHEMA,BRUSH_DEFINITION_SCHEMA):
             raise ValueError("unsupported pen definition schema or fields")
         if set(raw)!=fields:
             raise ValueError("unsupported pen definition schema or fields")
         result=cls(**{k:raw[k] for k in fields-{"schema"}})
-        if result.uses_styled_path != (schema==STYLED_PEN_SCHEMA):
+        if (result.uses_styled_path != (schema==STYLED_PEN_SCHEMA)
+                or (result.tool=="ink-brush") != (schema==BRUSH_DEFINITION_SCHEMA)):
             raise ValueError("pen definition schema does not match selected geometry")
         return result
 
