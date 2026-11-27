@@ -287,19 +287,20 @@ class InkFrameSource:
                 len(self.history.actions)<len(self._records)):
             raise ValueError("history changed during ink fast replay; open a new frame source")
 
-    def _apply_entry(self,entry,dirty=None):
+    def _apply_entry(self,entry,regions=None):
         if not _box_area(entry.bounds):
             return
         with self.renderer.patch(entry.element.mark,key=entry.key) as (box,patch):
             if box!=entry.bounds:
                 raise RuntimeError("ink patch bounds changed within a fixed profile")
-            if dirty is None:
+            if regions is None:
                 self.hi_canvas.alpha_composite(patch,dest=box[:2])
             else:
-                x0,y0=max(box[0],dirty[0]),max(box[1],dirty[1])
-                x1,y1=min(box[2],dirty[2]),min(box[3],dirty[3])
-                with patch.crop((x0-box[0],y0-box[1],x1-box[0],y1-box[1])) as crop:
-                    self.hi_canvas.alpha_composite(crop,dest=(x0,y0))
+                for dirty in regions:
+                    x0,y0=max(box[0],dirty[0]),max(box[1],dirty[1])
+                    x1,y1=min(box[2],dirty[2]),min(box[3],dirty[3])
+                    with patch.crop((x0-box[0],y0-box[1],x1-box[0],y1-box[1])) as crop:
+                        self.hi_canvas.alpha_composite(crop,dest=(x0,y0))
 
     def advance_to(self,cursor:int)->dict:
         if self._failed or self._closed:
@@ -331,8 +332,8 @@ class InkFrameSource:
                 entries[e.element_id]=_InkFrameEntry(e,old.key,old.bounds)
                 continue
             key=self.renderer.key(e.mark)
-            with self.renderer.patch(e.mark,key=key) as (bounds,_):
-                entries[e.element_id]=_InkFrameEntry(e,key,bounds)
+            bounds=self.renderer.bounds(e.mark)
+            entries[e.element_id]=_InkFrameEntry(e,key,bounds)
         # Canonical ink-only composite work is the page plus all current patch
         # bounds. Preserve the same gate even when incremental work is small.
         work=self.renderer.hi_size[0]*self.renderer.hi_size[1]+sum(
@@ -361,10 +362,16 @@ class InkFrameSource:
             else:
                 for region in regions:
                     self.hi_canvas.paste(self.profile.background_rgba,region)
-                    for entry in ordered:
-                        if _box_area(entry.bounds) and intersects(entry.bounds,region):
-                            self._apply_entry(entry,region)
-                            self.stats["recomposited_marks"]+=1
+                # Regions are disjoint after merge. Preserve canonical order
+                # inside each while borrowing/decoding a mark only once per
+                # advance, even if it intersects many distant dirty regions.
+                for entry in ordered:
+                    if not _box_area(entry.bounds):
+                        continue
+                    hits=[region for region in regions if intersects(entry.bounds,region)]
+                    if hits:
+                        self._apply_entry(entry,hits)
+                        self.stats["recomposited_marks"]+=1
                 mode="dirty"
                 self.stats["dirty_advances"]+=1
         output_regions=[]

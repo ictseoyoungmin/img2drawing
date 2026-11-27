@@ -66,7 +66,7 @@ def test_ink_fast_matches_every_requested_cursor_and_dirty_regions(ss,scale,ever
     p=RenderProfile.mixed_media(128,96,supersample=ss,output_scale=scale,background_rgba=background)
     assert inspect_fast_path_eligibility(h).eligible
     # Tiny cache forces eviction and oversized-patch cleanup.
-    source=InkFrameSource(h,p,cache_bytes=32768)
+    source=InkFrameSource(h,p,cache_bytes=128)
     before=h.to_dict()
     previous=source.image()
     try:
@@ -82,7 +82,7 @@ def test_ink_fast_matches_every_requested_cursor_and_dirty_regions(ss,scale,ever
                         previous.paste(crop,box[:2])
                 assert previous.tobytes()==got.tobytes(),(cursor,info)
         assert source.stats["actions_applied"]==h.cursor
-        assert source.renderer.stats["peak_cache_bytes"]<=32768
+        assert source.renderer.stats["peak_cache_bytes"]<=128
         assert source.renderer.stats["oversize_uncached"]>0
         assert h.to_dict()==before
     finally:
@@ -114,7 +114,7 @@ def test_append_layer_reorder_delete_and_cache_reuse():
 def test_cache_isolation_and_eviction():
     mark=solid_ink(rect(1,1,11,11))
     p=RenderProfile.mixed_media(128,96,supersample=2)
-    a=InkPatchCache(p,max_bytes=2000)
+    a=InkPatchCache(p,max_bytes=80)
     b=InkPatchCache(replace(p,background_rgba=(200,200,200,255)))
     c=InkPatchCache(p,supersample=4)
     try:
@@ -136,7 +136,7 @@ def test_cache_isolation_and_eviction():
         assert a.stats["evictions"]==1
         with a.patch(mark) as (_,patch):
             assert patch.tobytes()==raw
-        assert a.stats["peak_cache_bytes"]<=2000
+        assert a.stats["peak_cache_bytes"]<=80
     finally:
         for cache in (a,b,c):
             cache.close()
@@ -234,3 +234,69 @@ def test_ink_fast_export_lossless_pack_and_independent_final(tmp_path,every_n):
             assert rgb_sha256(decoded)==rgb_sha256(want)==rec["pixel_sha256"]
             assert rec["drawing_state_hash"]==drawing_state_hash(h.state_at(rec["cursor"]))
     assert h.to_dict()==before
+
+
+@pytest.mark.parametrize("kind",["area","white","tone","zero","outside","styled","path"])
+def test_compact_cache_native_roundtrip_and_bounds(kind):
+    from img2drawing.render.ink import build_ink_patch
+    p=RenderProfile.mixed_media(128,96,supersample=2)
+    ring=rect(3.2,5.1,48.6,60.2)
+    mark={
+        "area":solid_ink(ring,holes=(rect(10,10,18,18),)),
+        "white":solid_ink(ring,paint="white"),
+        "tone":dot_screentone(ring,pitch=6,coverage=.44,angle_degrees=19),
+        "zero":dot_screentone(ring,coverage=0),
+        "outside":solid_ink(rect(160,160,180,180),paint="white"),
+        "styled":fineliner(((4,8),(28,17),(50,7)),width=3,join="miter",cap="square").resolve(),
+        "path":g_pen(((3,5),(50,30)),pressure_knots=((0,.2),(1,1)),min_width=.4,max_width=6).resolve(),
+    }[kind]
+    cache=InkPatchCache(p)
+    try:
+        bounds,native=build_ink_patch(mark,factor=2,hi_size=(256,192))
+        with native:
+            assert cache.bounds(mark)==bounds
+            for _ in range(2):
+                with cache.patch(mark) as (box,layer):
+                    assert box==bounds and layer.tobytes()==native.tobytes()
+            assert cache.stats["cache_misses"]==cache.stats["cache_hits"]==1
+            assert cache.stats["cache_bytes"]==((native.width+7)//8)*native.height
+    finally:
+        cache.close()
+
+
+def test_dirty_regions_borrow_each_mark_once_without_retained_pixels(monkeypatch):
+    h=AgentDrawingSession(128,96,media_contract=MIXED_HISTORY_CONTRACT).history
+    action(h,"a","base",solid_ink(rect(2,2,126,94)),layer=0)
+    action(h,"b","left",solid_ink(rect(5,10,15,20),paint="white"),layer=1)
+    action(h,"c","right",solid_ink(rect(100,70,110,80),paint="white"),layer=1)
+    action(h,"d","left",kind="ink.delete")
+    action(h,"e","right",kind="ink.delete")
+    p=RenderProfile.mixed_media(128,96,supersample=2)
+    src=InkFrameSource(h,p,cache_bytes=0)
+    try:
+        src.advance_to(3)
+        misses=src.renderer.stats["cache_misses"]
+        info=src.advance_to(5)
+        assert info["regions"]==2
+        assert src.renderer.stats["cache_misses"]-misses==1
+        assert src.renderer.stats["cache_bytes"]==0
+        with src.image() as got,canonical(h,p,5) as want:
+            assert got.tobytes()==want.tobytes()
+    finally:
+        src.close()
+
+
+def test_compact_cache_entry_limit_and_ephemeral_ownership(monkeypatch):
+    p=RenderProfile.mixed_media(128,96,supersample=2)
+    c=InkPatchCache(p)
+    monkeypatch.setattr(c,"MAX_ENTRIES",2)
+    try:
+        for i in range(3):
+            with c.patch(solid_ink(rect(1+i*10,1,8+i*10,8))) as (_,layer):
+                assert layer.width>0
+        assert len(c._entries)==2 and c.stats["evictions"]==1
+        assert all(isinstance(item[3],bytes) for item in c._entries.values())
+        with pytest.raises(ValueError,match="closed"):
+            layer.tobytes()
+    finally:
+        c.close()
