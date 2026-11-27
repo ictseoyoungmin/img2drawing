@@ -163,7 +163,7 @@ def test_same_geometry_graphite_ink_material_comparison():
 
 
 @pytest.mark.parametrize("overrides",[
-    {"join":"miter"},{"start_cap":"butt"},{"min_width":-1},{"gamma":float("nan")},
+    {"join":"unknown"},{"start_cap":"unknown"},{"min_width":-1},{"gamma":float("nan")},
     {"pressure_knots":((0,.1),(.5,True),(1,.2))},
     {"pressure_knots":((0,.1),(.5,.3),(.5,.4),(1,.2))},
     {"geometry":"bezier"},{"curve_tolerance":0},
