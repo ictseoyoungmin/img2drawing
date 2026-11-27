@@ -152,6 +152,8 @@ good.
 Before finish, inspect current pixels, ensure blocking residuals are closed or correctly reopened,
 and classify surviving construction/search marks through the retirement route when they damage the
 final read. Final PNG, replay, and timelapse must use the persisted render profile; replay is
-end-to-end from the initial state through the latest action. Export only through
-`session.render_final()` and `session.export_timelapse()`; there is no other exporter. Use
+end-to-end from the initial state through the latest action. Use `session.render_final()` and
+`session.export_timelapse()` as described in
 [`references/output/render-profile-and-replay.md`](references/output/render-profile-and-replay.md).
+For optional editable-layer PNG/OpenRaster delivery, use the session exporters in
+[`references/api/layers-and-exchange.md`](references/api/layers-and-exchange.md).

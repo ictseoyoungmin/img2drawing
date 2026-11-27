@@ -1,9 +1,13 @@
 # img2drawing roadmap
 
-Updated: 2026-11-27
+Updated: 2026-11-28
 Workflow: Bottleneck · one highest-impact open problem at a time
 
-Current release scope: v1.4.0 Multi-Medium Drawing. `STATUS.md` records its measured closure and publication authority; the earlier release-cycle decisions below remain historical.
+Current development scope: v1.5.0 optional layered editing and exchange from published v1.4.0.
+The [bounded design and S01–S07 acceptance criteria](V15_LAYERED_EDITING_PLAN.md) preserve the
+simple drawing path and add optional native editing and exchange. `STATUS.md` records current
+progress and the separate published-release authority; earlier release-cycle decisions below
+remain historical.
 
 The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 selects the bounded markmaking override/provenance and tonal-area QA maintenance release. The maintainer deferred unresolved visual quality to v1.3.0.
 
@@ -61,6 +65,7 @@ V13-S07 independent comparison                            CLOSED / USER_ACCEPTED
 V13-S08 release validation                                CLOSED · v1.3.0 main CI + publish SUCCESS
 M04 v1.3.1 release maintenance and branch consolidation   CLOSED · published maintenance release
 V14-S01–S07 multi-medium drawing                           See STATUS.md for measured release closure and review limits
+V15-S01–S07 optional layered editing and exchange          See STATUS.md and V15_LAYERED_EDITING_PLAN.md
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.

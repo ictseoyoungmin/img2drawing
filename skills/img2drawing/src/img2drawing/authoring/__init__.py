@@ -12,6 +12,10 @@ None of these encode subject-specific geometry; the Agent still observes and aut
 
 from ..core.contact_width import ContactWidthProfile, read_contact_width_profile
 from ..core.material import InkAction, InkElement, InkPath, InkArea, StyledInkPath
+from ..core.layers import LayerAction, LayerDocument, LayerNode
+from .element_edits import (ElementEditProposal, prepare_element_edits,
+    prepare_element_transform, prepare_element_group_transform,
+    preview_element_edits, apply_element_edits)
 from .ink_edits import (apply_ink_actions, preview_ink_actions, current_ink_element,
     prepare_ink_transform, prepare_ink_group_transform)
 from .ink_pen import PenDefinition, g_pen, fineliner, ink_brush, read_pen_definition
@@ -55,6 +59,9 @@ from .tonal_preview import inspect_tonal_proposals
 from .tonal_correction import TonalPressureAdjustment, prepare_tonal_pressure_edits
 
 __all__ = [
+    "LayerAction", "LayerDocument", "LayerNode", "ElementEditProposal",
+    "prepare_element_edits", "prepare_element_transform", "prepare_element_group_transform",
+    "preview_element_edits", "apply_element_edits",
     "InkAction", "InkElement", "InkPath", "InkArea", "StyledInkPath", "apply_ink_actions", "preview_ink_actions",
     "PenDefinition", "g_pen", "fineliner", "ink_brush", "read_pen_definition",
     "solid_ink", "sample_ink_contour", "current_ink_element",

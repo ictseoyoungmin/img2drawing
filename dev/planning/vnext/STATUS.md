@@ -1,14 +1,14 @@
 # img2drawing current status
 
-Updated: 2026-11-27
+Updated: 2026-11-28
 
 ```text
-SELECTED RELEASE:   v1.4.0 · publication authority: actual GitHub Release and immutable tag
+PUBLISHED STABLE:   v1.4.0 · publication authority: actual GitHub Release and immutable tag
 RELEASE TAG:        v1.4.0 · target commit and assets are recorded by GitHub Release
-CURRENT SOURCE:     1.4.0 · Multi-Medium Drawing
+CURRENT SOURCE:     1.5.0.dev0 · optional layered editing and exchange
 CURRENT RENDERER:   img2drawing-pencil/11 default · normalized graphite v1/v2/v3 and opt-in mixed-media v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-CURRENT WORK:      release evidence and maintenance; no next feature line selected
+CURRENT WORK:      v1.5.0 S01–S05 implemented; S06 practical exchange review and S07 development integration
 S01 DESIGN:         CLOSED · historical v11 quality-control design
 S02 INSTRUCTIONS:   CLOSED · historical anti-normalization implementation; further proof was user-accepted
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; historical gate, not v1.4 comparison
@@ -16,7 +16,7 @@ S04 CLASSIFICATION: CLOSED / NO RENDERER CHANGE · historical v11 campaign
 R1 REFACTOR:        CLOSED · one session/render/timelapse architecture; v11 golden preserved
 S05 REPLAY BOUNDARY: CLOSED by R1 · historical v9/v10 exact authority: img2drawing==1.0.3
 GRAPH CLEANUP:      Slice A–E CLOSED; conditional mixed-media leaves are governed by the same graph checks
-PACKAGE VERSION:    1.4.0
+PACKAGE VERSION:    1.5.0.dev0
 HISTORICAL REPLAY:  existing release tags/freezes remain immutable pixel authority
 MAIN RELEASE CI:    successful push CI at the promoted main SHA is required for publication
 PUBLISH WORKFLOW:   .github/workflows/publish-release.yml
@@ -36,7 +36,33 @@ Authority is intentionally split by purpose:
 
 `ROADMAP.md` may explain why a state exists, but it must not silently override this file's current-state label. If the two diverge, update them in the same bounded documentation slice; do not create a second current-state truth.
 
-## Current v1.4.0 release checkpoint
+## Current v1.5.0 development checkpoint
+
+- User selected optional layered editing for casual line art, hand-drawn studies and professional
+  revision/exchange on 2026-11-28. [Design](V15_LAYERED_EDITING_PLAN.md) ·
+  [Work OS](https://app.notion.com/p/425c6a3b5bf181c5a45dd7d037572ebb).
+- Development starts from published main `a3921fb` on `dev/v1.5.0-layered-editing`.
+  Source is `1.5.0.dev0`; no v1.5 publication is declared or selected for automatic publishing.
+- S01 design is complete. S02–S05 implementation and local regression are complete: native
+  layer actions, isolated composition with exact neutral conversion, guarded mixed transforms,
+  and PNG/ORA exchange. The full active suite passed **844 tests** in the pinned local QA
+  environment; package boundary, documentation and instruction-graph checks passed.
+- Real retained 859-action graphite and 654-action mixed-profile (ink-only) sessions preserve
+  original RGBA pixels under released 1.4.0, candidate unlayered, and candidate neutral conversion.
+  A separate installed public-API worker completed simple unlayered drawing and four-material
+  layered revision/export. Both native exchange checkpoints resumed with viewed inspection
+  evidence while the original output folder was absent. See the dated evidence in the design.
+- S06 remains REVIEW for broader practical exchange: external Krita opening/reflattening is
+  NOT_RUN, and the independent worker used small explicit geometry. S07 remains REVIEW for
+  development integration and eventual stable release selection. A development contract and
+  explicit prerelease publishing refusal are in place; no v1.5 release is declared.
+- Initial scope is Normal composition. Additional blend modes need separate P1 verification;
+  PSD and a visual editor remain P2. The existing simple drawing path remains available.
+- Current limits: layer PNG reflattening may differ from the exact merged image; manifests
+  measure the difference. Native checkpoints retain stroke editing. History cursor undo/redo
+  does not undo observations; a branch that would orphan retained audit evidence is rejected.
+
+## Published v1.4.0 release checkpoint
 
 - Selected scope: Multi-Medium Drawing, developed from v1.3.1 maintenance main `820c88c` on `dev/v1.4.0-multi-medium-drawing`. [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1) · [release notes](../../../docs/releases/v1.4.0.md).
 - S01–S04 are CLOSED (70% weight): shared mixed contract, G-pen/fineliner, brush/solid contours/white ink, and editable dot screentone. Default graphite v11 and older opt-in contracts retain their pixel semantics.

@@ -164,7 +164,7 @@ class RuntimeCapabilities:
 _RUNTIME_CAPABILITIES = RuntimeCapabilities()
 
 
-def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
+def _profile_capabilities(render_profile=None) -> RuntimeCapabilities:
     """Return the stable worker-facing capability/boundary manifest.
 
     The result is deliberately sufficient for capability discovery while remaining opaque to
@@ -198,6 +198,37 @@ def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
                    + (("img2drawing.authoring.Screentone","img2drawing.authoring.ToneGradient",
                        "img2drawing.authoring.dot_screentone") if render_profile.supports_screentone else ()),
                    render_profile_entrypoints=caps.render_profile_entrypoints + ("RenderProfile.mixed_media",))
+
+
+def runtime_capabilities(render_profile=None, *, layered=False) -> RuntimeCapabilities:
+    """Discover optional editing/exchange without changing the ordinary drawing surface.
+
+    ``layered=True`` includes document layers and unified element edits. It does not
+    enable layers or mutate a session. The default manifest remains backward compatible.
+    """
+    if type(layered) is not bool:
+        raise ValueError("layered capability selection must be boolean")
+    caps = _profile_capabilities(render_profile)
+    if not layered:
+        return caps
+    authoring = caps.authoring_operations + ("layer-enable", "layer-create", "layer-update",
+        "layer-move", "layer-assign", "layer-delete", "layer-active", "element-transform", "undo", "redo")
+    outputs = caps.output_operations + ("layer-png-export", "openraster-export")
+    return replace(caps, authoring_operations=authoring, output_operations=outputs,
+        supported_operations=authoring + outputs,
+        authoring_entrypoints=caps.authoring_entrypoints + (
+            "DrawingSession.enable_layers", "DrawingSession.create_layer", "DrawingSession.update_layer",
+            "DrawingSession.move_layer", "DrawingSession.assign_elements", "DrawingSession.delete_layer",
+            "DrawingSession.set_active_layer", "DrawingSession.apply_layer_actions",
+            "DrawingSession.undo", "DrawingSession.redo"),
+        output_entrypoints=caps.output_entrypoints + (
+            "DrawingSession.export_layer_pngs", "DrawingSession.export_openraster"),
+        authoring_helpers=caps.authoring_helpers + (
+            "img2drawing.authoring.LayerAction", "img2drawing.authoring.LayerNode",
+            "img2drawing.authoring.LayerDocument", "img2drawing.authoring.ElementEditProposal",
+            "img2drawing.authoring.prepare_element_edits", "img2drawing.authoring.prepare_element_transform",
+            "img2drawing.authoring.prepare_element_group_transform", "img2drawing.authoring.preview_element_edits",
+            "img2drawing.authoring.apply_element_edits"))
 
 
 __all__ = [

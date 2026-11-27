@@ -89,3 +89,4 @@ Open this branch only when geometry is justified and the remaining problem conce
 - `api/public-surface.md` — open when: programmatic marks, edits, inspection, provenance, finish, or export must be performed; owns: supported worker-facing runtime operations.
 - `api/runtime-discovery.md` — open when: runtime capabilities must be inspected without private implementation; owns: public capability discovery and report-not-bypass behavior.
 - `api/mixed-media.md` — open when: authoring or correcting explicit ink paths, areas, or tones; owns: profile-scoped mixed-media API and executable example.
+- `api/layers-and-exchange.md` — open when: organizing layers, transforming mixed selections, or delivering editable raster layers; owns: optional layer management, shared edits, cursor undo/redo and PNG/OpenRaster exchange.

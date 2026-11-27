@@ -142,7 +142,18 @@ def _derive(session, groups, records=(), plan_id=None):
                 guides.append(cid)
             current_mark = ir[cid]
             payload = current_mark.to_dict() if isinstance(current_mark, InkElement) else asdict(current_mark)
-            versions.append([sid, element.to_dict(), sha256_obj(payload)])
+            version = [sid, element.to_dict(), sha256_obj(payload)]
+            if snapshot.layer_document is not None:
+                document = snapshot.layer_document
+                layer_id = document.layer_for(cid)
+                context = {"member_index": document.members[layer_id].index(cid), "ancestors": []}
+                while layer_id is not None:
+                    node = document.node(layer_id)
+                    context["ancestors"].append({key: getattr(node, key) for key in (
+                        "layer_id", "parent_id", "order", "visible", "opacity", "blend_mode")})
+                    layer_id = node.parent_id
+                version.append(context)
+            versions.append(version)
         parents = [output[p] for p in g.depends_on]
         signature = sha256_obj({"definition":g.to_dict(), "members":versions,
                                 "parents":[p["signature"] for p in parents]})
@@ -289,12 +300,12 @@ def retire_group_guides(session, plan_id, group_id, guide_ids, *, reason, observ
             raise ValueError("retirement accepts only explicitly declared current guides")
         oid, source, why = session._provenance(observation_id=observation_id,
                          source_observation="explicit semantic group guide retirement", reason=reason)
-        from ..session.drawing_session import _COMPAT_STAGE, _tool_payload
-        start = len(session._agent.history.actions)
+        from ..session.drawing_session import _COMPAT_STAGE, _tool_payload, _action_id
         ink_ids = {e.element_id for e in session.current_ir().ink_elements}
         actions = []
-        for i, sid in enumerate(selected):
-            aid = f"vnext-{start+i+1:06d}"
+        for sid in selected:
+            aid = _action_id(session._agent.history, None,
+                             session._agent.executed_action_ids | {a.action_id for a in actions})
             if sid in ink_ids:
                 actions.append(InkAction(aid, "ink.delete", sid, None, oid, source, why))
             else:

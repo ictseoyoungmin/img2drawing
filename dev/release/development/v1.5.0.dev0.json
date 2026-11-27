@@ -1,0 +1,7 @@
+{
+  "schema": "img2drawing.development_target.v1",
+  "package_version": "1.5.0.dev0",
+  "published_stable": "1.4.0",
+  "runtime_freeze": "dev/release/development/CONTRACT_FREEZE_V1_5_0_DEV0.json",
+  "publish": false
+}

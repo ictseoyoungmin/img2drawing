@@ -50,10 +50,34 @@ def render_image(
 ) -> Image.Image:
     """Render ``ir`` and return the RGBA image at ``scale`` x canvas size."""
 
+    if getattr(ir, "layer_document", None) is not None:
+        from .document import render_document_image
+        return render_document_image(ir, background=background, scale=scale,
+                                     supersample=supersample, graphite=graphite,
+                                     grade=grade, renderer_version=renderer_version)
+    with _render_working_image(ir, background=background, scale=scale,
+                               supersample=supersample, graphite=graphite,
+                               grade=grade, renderer_version=renderer_version) as canvas:
+        return canvas.resize((int(ir.width * scale), int(ir.height * scale)),
+                             Image.Resampling.LANCZOS)
+
+
+def _render_working_image(
+    ir, *, background, scale, supersample, graphite, grade=None,
+    renderer_version=RENDERER_VERSION, ordered_elements=None, budget=None,
+):
+    """Render without resampling; document order never rewrites material fields.
+
+    The caller owns the returned image. ``ordered_elements`` and ``budget`` are
+    internal document hooks; the default retains the legacy composition order.
+    """
+
     if renderer_version in MIXED_RENDERER_VERSIONS:
-        from .mixed import render_mixed_image
-        return render_mixed_image(ir, background=background, scale=scale, supersample=supersample,
-                                  graphite=graphite, grade=grade,renderer_version=renderer_version)
+        from .mixed import _render_mixed_working
+        return _render_mixed_working(ir, background=background, scale=scale,
+                                     supersample=supersample, graphite=graphite,
+                                     grade=grade, renderer_version=renderer_version,
+                                     ordered_elements=ordered_elements, budget=budget)
     if ir.media_contract is not None or ir.ink_elements or ir.element_order:
         raise ValueError("mixed history requires a mixed-media renderer")
     if int(scale) != scale or scale < 1:
@@ -65,27 +89,35 @@ def render_image(
     profile = load_contact_profile(renderer_version)
     factor = float(int(scale) * int(supersample))
     hi_size = (int(ir.width * factor), int(ir.height * factor))
-    out_size = (int(ir.width * int(scale)), int(ir.height * int(scale)))
     tooth, paper_scale, paper_seed = paper_settings(ir)
     graphite_rgb = (int(graphite[0]), int(graphite[1]), int(graphite[2]))
-    graphite_canvas = Image.new("RGBA", hi_size, (*graphite_rgb, 0))
-    for stroke in sorted(ir.strokes, key=lambda item: item.layer):
-        if is_eraser(stroke):
-            erase(
-                graphite_canvas, stroke, factor=factor, hi_size=hi_size,
-                tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed,
-                allow_pressure_lift=renderer_version in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version),
+    ordered = (sorted(ir.strokes, key=lambda item: item.layer)
+               if ordered_elements is None else ordered_elements)
+    if budget is not None:
+        budget.reserve(hi_size[0] * hi_size[1])
+    with Image.new("RGBA", hi_size, (*graphite_rgb, 0)) as graphite_canvas:
+        for stroke in ordered:
+            if is_eraser(stroke):
+                if budget is not None:
+                    budget.reserve(hi_size[0] * hi_size[1])
+                    budget.lift()
+                erase(
+                    graphite_canvas, stroke, factor=factor, hi_size=hi_size,
+                    tooth=tooth, paper_scale=paper_scale, paper_seed=paper_seed,
+                    allow_pressure_lift=renderer_version in (PRESSURE_LIFT_CONTRACT.renderer_version, CONTACT_WIDTH_CONTRACT.renderer_version),
+                )
+                continue
+            bounds, layer = build_patch(
+                prepare_stroke(stroke, grade, profile),
+                factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale,
+                paper_seed=paper_seed, graphite=graphite_rgb, profile=profile,
             )
-            continue
-        bounds, layer = build_patch(
-            prepare_stroke(stroke, grade, profile),
-            factor=factor, hi_size=hi_size, tooth=tooth, paper_scale=paper_scale,
-            paper_seed=paper_seed, graphite=graphite_rgb, profile=profile,
-        )
-        graphite_canvas.alpha_composite(layer, dest=(bounds[0], bounds[1]))
-        layer.close()
-    base = Image.new("RGBA", hi_size, background)
-    return Image.alpha_composite(base, graphite_canvas).resize(out_size, Image.Resampling.LANCZOS)
+            with layer:
+                if budget is not None:
+                    budget.reserve(layer.width * layer.height)
+                graphite_canvas.alpha_composite(layer, dest=(bounds[0], bounds[1]))
+        with Image.new("RGBA", hi_size, background) as base:
+            return Image.alpha_composite(base, graphite_canvas)
 
 
 def render(
