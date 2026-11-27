@@ -127,8 +127,13 @@ class _DocumentBudget:
 
     def reserve(self, pixels):
         self.work += pixels
-        if self.work > DOCUMENT_COMPOSITING_CONTRACT.value("max_composite_work"):
-            raise ValueError("layer document composite work budget exceeded")
+        limit = DOCUMENT_COMPOSITING_CONTRACT.value("max_composite_work")
+        if self.work > limit:
+            raise ValueError(
+                "layer document composite work budget exceeded: "
+                f"{self.work} working pixels exceeds {limit} at this render operation; "
+                "reduce overlapping content or render a smaller document"
+            )
 
     def lift(self):
         self.lifts += 1
@@ -230,8 +235,16 @@ class _DocumentRenderer:
             if not node.visible or node.opacity == 0.0 or node.layer_id not in self._content_nodes:
                 continue
             with self._node_surface(node) as image:
-                self.budget.reserve(self.pixels)
-                canvas.alpha_composite(image)
+                # Source-over leaves the destination unchanged wherever source
+                # alpha is zero. Keep the material surface and its coordinates
+                # intact, but composite only its occupied working-pixel region.
+                # This also keeps the work charge proportional to the operation
+                # instead of charging every sparse panel as a full-page overlay.
+                with image.getchannel("A") as alpha:
+                    bounds = alpha.getbbox()
+                if bounds is not None:
+                    self.budget.reserve((bounds[2] - bounds[0]) * (bounds[3] - bounds[1]))
+                    canvas.alpha_composite(image, dest=bounds[:2], source=bounds)
 
     def image(self):
         from .pencil import _render_working_image
