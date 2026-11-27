@@ -1,29 +1,32 @@
 <div align="center">
   <img src="skills/img2drawing/assets/icon.svg" width="96" height="96" alt="img2drawing icon">
   <h1>img2drawing</h1>
-  <p><strong>From observation to explicit, editable pencil strokes.</strong></p>
+  <p><strong>From observation to explicit, editable pencil and ink marks.</strong></p>
   <p>
-    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.3.1-6f5a46" alt="Version v1.3.1"></a>
+    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.4.0-6f5a46" alt="Version v1.4.0"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache 2.0"></a>
   </p>
 </div>
 
-**Current stable: v1.3.1** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
+**Current stable: v1.4.0** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
 
 An Agent Skill and Python drawing runtime for Claude Code, Codex, and other skill-capable agents.
 Rather than requesting a finished image from an image generator, the agent observes a subject,
 authors explicit strokes, inspects its drawing, and corrects visible problems.
 
-**What's new in v1.3**
+**Mixed-media drawing**
 
-- Explicit landmark, proportion, occlusion and projected-volume tools for observation and construction.
-- Editable curves, pressure/contact-width control, local erasure and atomic stroke/group corrections with previews.
-- More focused portrait, hair, anatomy and fabric guidance, plus tonal/overlap inspection.
-- Optional normalized graphite profiles, safer action validation, compact GIF export and a standalone skill ZIP.
+- G-pen and fineliner paths with explicit width, pressure, tapers, caps and joins.
+- Wet ink brush, closed-contour black areas with authored holes, and white ink.
+- Editable dot screentone with explicit coverage, pitch, page phase and optional linear gradient.
+- One editable action history for graphite and ink, canonical PNG/replay, and eligible fast GIF export.
 
-v1.3.1 strengthens release-contract validation and consolidates development history without changing drawing behavior. Independent artistic-quality comparison was closed by maintainer acceptance, not measured PASS. [Release notes](docs/releases/v1.3.1.md).
+Pencil remains the default. New mixed sessions explicitly select a pinned material profile;
+existing graphite contracts and session pixels remain unchanged in verified environments.
+The agent chooses every path, boundary, shadow and highlight. See the
+[release notes](docs/releases/v1.4.0.md) for measured evidence and limits.
 
 ## Drawing in action
 
@@ -43,7 +46,9 @@ Curated stroke-authoring examples, not a guarantee of quality across all subject
   a reference or declared imaginative goals.
 - **Pencil authoring:** create explicit lines, curves, and tonal strokes with controllable pressure,
   width, grade, and opacity. Tonal plans guide marks without automatic fills.
-- **Inspection and correction:** compare the drawing with its reference, locate and revise strokes,
+- **Ink and tone authoring:** use an opt-in mixed profile for explicit paths, closed contours,
+  white paint and analytic dot tones; no tracing or automatic region selection.
+- **Inspection and correction:** compare the drawing with its reference, locate and revise marks,
   and retire unnecessary construction marks.
 - **Persistent history:** retain drawing actions and the render profile for inspection, resumption,
   and replay.
@@ -105,6 +110,7 @@ session = DrawingSession.create(
 
 Start with [SKILL.md](skills/img2drawing/SKILL.md).
 The [public API](skills/img2drawing/references/api/public-surface.md) documents runtime usage;
+the [mixed-media API](skills/img2drawing/references/api/mixed-media.md) covers ink and tone;
 the [instruction graph](skills/img2drawing/references/INDEX.md) routes drawing knowledge.
 
 ## Project structure

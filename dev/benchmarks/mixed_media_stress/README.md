@@ -19,4 +19,5 @@ Use the dedicated Mixed media stress evidence workflow (PR paths restricted to
 this harness, or manual dispatch after promotion). No full stress execution is
 added to the ordinary test suite. Store only small metrics/seals, not generated
 checkpoints, frame packs, GIFs or images in Git. Private session tests remain
-local. Development package version 1.3.1 is deliberately unchanged.
+local. The workflow derives the candidate package version from the checked-out
+source; the official v1.3.0 baseline wheel and sealed protocol remain fixed.

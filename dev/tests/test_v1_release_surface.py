@@ -157,6 +157,7 @@ def test_current_runtime_freeze_matches_live_authority_and_rejects_drift():
 @pytest.fixture
 def mixed_runtime_freeze():
     from img2drawing import DrawingSession, RenderProfile, authoring
+    from img2drawing.render.artifact import RENDER_ARTIFACT_SCHEMA
 
     path = ROOT / "dev/tools/verify_current_documentation.py"
     spec = importlib.util.spec_from_file_location("mixed_release_policy", path)
@@ -167,6 +168,7 @@ def mixed_runtime_freeze():
     policy.verify_runtime_freeze(historical)
     frozen = json.loads(json.dumps(historical))
     frozen["package_version"] = "1.4.0"
+    frozen["persisted_schemas"]["render_artifact"] = RENDER_ARTIFACT_SCHEMA
     canvas = frozen["canonical_render_profile"]
     width, height = canvas["canvas_width"], canvas["canvas_height"]
     frozen["mixed_media"] = {
@@ -185,6 +187,17 @@ def mixed_runtime_freeze():
 def test_mixed_freeze_matches_all_live_profile_selections(mixed_runtime_freeze):
     policy, frozen = mixed_runtime_freeze
     policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("schema", [None, "img2drawing.vnext.render_artifact.v1"])
+def test_mixed_freeze_rejects_missing_or_stale_render_artifact_schema(mixed_runtime_freeze, schema):
+    policy, frozen = mixed_runtime_freeze
+    if schema is None:
+        del frozen["persisted_schemas"]["render_artifact"]
+    else:
+        frozen["persisted_schemas"]["render_artifact"] = schema
+    with pytest.raises(AssertionError, match="render artifact schema drift"):
+        policy.verify_runtime_freeze(frozen)
 
 
 @pytest.mark.parametrize("version", ["1.4.0", "1.5.0", "2.0.0"])

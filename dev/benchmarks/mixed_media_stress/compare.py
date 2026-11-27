@@ -1,11 +1,17 @@
 """Compare the preserved graphite contract across two actually installed wheels."""
+import argparse
 import json
 from pathlib import Path
-import sys
 
-old,new,ink=[json.loads(Path(p).read_text()) for p in sys.argv[1:]]
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument("baseline",type=Path)
+parser.add_argument("candidate_graphite",type=Path)
+parser.add_argument("candidate_ink",type=Path)
+parser.add_argument("--expected-candidate-version",required=True)
+args=parser.parse_args()
+old,new,ink=[json.loads(p.read_text()) for p in (args.baseline,args.candidate_graphite,args.candidate_ink)]
 assert old["version"]=="1.3.0"
-assert new["version"]=="1.3.1" and ink["version"]=="1.3.1"
+assert new["version"]==ink["version"]==args.expected_candidate_version,"candidate version mismatch"
 assert old["mode"]==new["mode"]=="graphite" and ink["mode"]=="ink"
 for field in ("protocol_sha256","script_sha256","python","numpy","pillow","counts","actions","frames"):
     assert old[field]==new[field]==ink[field],field

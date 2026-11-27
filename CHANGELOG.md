@@ -2,6 +2,18 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## v1.4.0 — Multi-Medium Drawing
+
+- Add opt-in, immutable mixed-media profiles for G-pen, fineliner, wet ink brush, explicit closed-contour ink and white paint, and editable analytic dot screentone with gradients.
+- Keep one DrawingSession and authoritative action history, with guarded preview/apply, replacement, retirement, transforms and canonical replay. Default pencil v11 and existing normalized graphite contracts retain their pixel semantics.
+- Add conditional skill guidance and public capability discovery for manually authored ink geometry; preserve observation and correction ownership without tracing, automatic masks or region selection.
+- Reduce repeated mixed-history decoding and polygon checks; add lossless bounded ink patch caching and exact incremental replay for eligible opaque ink-only histories. Mixed graphite/eraser and transparent histories retain conservative canonical replay.
+- Validate mixed release profiles and public surfaces, seal independent worker inputs with installable wheel filenames, and retain compact material/replay evidence. Publication follows successful main CI and the new release manifest.
+
+Fast replay uses canonical page dimensions on Pillow 13+ or unknown versions to fix observed crop-order pixel mismatches for ink and graphite. Earlier Pillow versions retain the verified guarded crop optimization. Canonical renderer contracts and exactness checks remain unchanged.
+
+The controlled material comparison preserves eight authored paths and 328 points. Its independent review accepts the bounded demonstration without a general material preference; it does not prove artistic superiority. See [release notes](docs/releases/v1.4.0.md) for the separate figure comparison, environment limits and release evidence.
+
 ## v1.3.1 — Release maintenance
 
 - Reconcile published v1.3.0, accepted visual gates and branch-retirement decisions; retain immutable releases and experimental evidence without shipping normalized-v4.
