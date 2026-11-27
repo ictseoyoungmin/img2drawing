@@ -42,6 +42,7 @@ class ForwardHistoryReplay:
         self.state: dict[str, Stroke] = {}
         self.stats = ForwardReplayStats()
         self._mixed = MixedReplayState() if history.media_contract is not None else None
+        self._document_fallback = self._mixed is None and history.has_layer_actions
 
     def _apply(self, item: CanvasAction) -> None:
         if self._mixed is not None:
@@ -98,11 +99,24 @@ class ForwardHistoryReplay:
         target = max(0, min(int(cursor), self.limit))
         if target < self.cursor:
             raise ValueError("ForwardHistoryReplay cannot seek backward")
+        # A caller may explicitly extend the replay limit into a redo tail.
+        # Detect the first document event there without disabling incremental
+        # graphite replay for the still-unlayered active history prefix.
+        if self._mixed is None and not self._document_fallback:
+            self._document_fallback = any(item.action.startswith("layer.")
+                                          for item in self.actions[self.cursor:target])
+        if self._document_fallback:
+            self.stats.actions_applied += target - self.cursor
+            self.cursor = target
+            return
         while self.cursor < target:
             self._apply(self.actions[self.cursor])
             self.cursor += 1
 
     def snapshot(self) -> StrokeIR:
+        if self._document_fallback:
+            self.stats.snapshots_emitted += 1
+            return self.history.state_at(self.cursor)
         if self._mixed is not None:
             self.stats.snapshots_emitted += 1
             return self._mixed.snapshot(

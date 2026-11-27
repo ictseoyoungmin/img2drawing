@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
+import textwrap
 
 import img2drawing
 import pytest
@@ -15,6 +19,14 @@ PUBLISH = ROOT / "dev" / "release" / "publish"
 
 def _manifest(version: str) -> dict:
     return json.loads((PUBLISH / f"v{version}.json").read_text(encoding="utf-8"))
+
+
+def _policy():
+    path = ROOT / "dev/tools/verify_current_documentation.py"
+    spec = importlib.util.spec_from_file_location("release_surface_policy", path)
+    policy = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(policy)
+    return policy
 
 
 def test_v102_manifest_remains_historical_authority_as_v103_publish_intent_opens() -> None:
@@ -77,9 +89,11 @@ def test_release_publisher_reads_version_without_importing_runtime() -> None:
 
 
 def test_current_stable_version_has_matching_publish_manifest() -> None:
-    version = img2drawing.__version__
+    context = _policy().release_context()
+    assert context["package_version"] == img2drawing.__version__
+    version = context["published_stable"]
     manifest = PUBLISH / f"v{version}.json"
-    assert ".dev" not in version
+    assert _policy().STABLE_VERSION.fullmatch(version)
     payload = json.loads(manifest.read_text(encoding="utf-8"))
     assert payload["tag"] == f"v{version}"
     assert payload["title"] == f"img2drawing v{version}"
@@ -132,8 +146,7 @@ def test_current_runtime_freeze_matches_live_authority_and_rejects_drift():
     spec = importlib.util.spec_from_file_location("current_release_policy", path)
     policy = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(policy)
-    manifest = _manifest(img2drawing.__version__)
-    freeze_path = next(ROOT / asset for asset in manifest["assets"] if Path(asset).name.startswith("CONTRACT_FREEZE"))
+    freeze_path = policy.release_context()["runtime_freezes"][0]
     frozen = json.loads(freeze_path.read_text(encoding="utf-8"))
     policy.verify_runtime_freeze(frozen)
     for key, value, match in (
@@ -243,3 +256,169 @@ def test_mixed_freeze_rejects_stale_public_surface(mixed_runtime_freeze, surface
     frozen[surface].remove(member)
     with pytest.raises(AssertionError, match=match):
         policy.verify_runtime_freeze(frozen)
+
+
+@pytest.fixture
+def development_contract():
+    policy = _policy()
+    target = json.loads((policy.DEVELOPMENT / "v1.5.0.dev0.json").read_text())
+    frozen = json.loads((ROOT / target["runtime_freeze"]).read_text())
+    return policy, target, frozen
+
+
+def test_stable_and_development_authorities_stay_separate(development_contract):
+    policy, target, _ = development_contract
+    stable = policy.release_context("1.4.0")
+    assert stable["development"] is None
+    assert stable["package_version"] == stable["published_stable"] == "1.4.0"
+    assert stable["runtime_freezes"] == (ROOT / "dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json",)
+    current = policy.release_context("1.5.0.dev0")
+    assert current["published_stable"] == "1.4.0"
+    assert current["package_version"] == "1.5.0.dev0"
+    assert current["runtime_freezes"] == (ROOT / target["runtime_freeze"],)
+    assert current["manifest"] == stable["manifest"]
+    assert current["development"]["publish"] is False
+    with pytest.raises(AssertionError, match="stable package version 9.9.9"):
+        policy.release_context("9.9.9")
+
+
+@pytest.mark.parametrize("key,value,message", [
+    ("schema", "other", "target schema"),
+    ("package_version", "1.5.0.dev1", "package version mismatch"),
+    ("published_stable", "1.4.0rc1", "published stable must be stable"),
+    ("published_stable", "1.5.0", "must follow published stable"),
+    ("publish", True, "cannot authorize publication"),
+    ("publish", "false", "cannot authorize publication"),
+    ("runtime_freeze", "dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json", "separate from published"),
+    ("runtime_freeze", "../CONTRACT_FREEZE.json", "invalid development contract path"),
+    ("runtime_freeze", "/tmp/CONTRACT_FREEZE.json", "invalid development contract path"),
+    ("runtime_freeze", "dev/release/development/CONTRACT_FREEZE_MISSING.json", "contract is missing"),
+    ("extra", "unsupported", "target fields"),
+])
+def test_development_metadata_rejects_ambiguous_or_publishable_targets(
+        development_contract, key, value, message):
+    policy, target, _ = development_contract
+    target[key] = value
+    with pytest.raises(AssertionError, match=message):
+        policy.validate_development_target(target, "1.5.0.dev0")
+
+
+def test_nonstable_source_requires_explicit_metadata(tmp_path, monkeypatch):
+    policy = _policy()
+    monkeypatch.setattr(policy, "DEVELOPMENT", tmp_path)
+    for version in ("1.6.0.dev0", "1.6.0rc1", "1.6.0+local"):
+        with pytest.raises(AssertionError, match="requires explicit development metadata"):
+            policy.release_context(version)
+
+
+@pytest.mark.parametrize("key,value,message", [
+    ("schema", "img2drawing.contract_freeze.v2", "development contract schema"),
+    ("package_version", "1.4.0", "development contract version mismatch"),
+    ("publication_status", "published", "development contract publication status mismatch"),
+])
+def test_development_contract_cannot_relabel_a_published_freeze(
+        development_contract, tmp_path, monkeypatch, key, value, message):
+    policy, target, frozen = development_contract
+    monkeypatch.setattr(policy, "ROOT", tmp_path)
+    monkeypatch.setattr(policy, "DEVELOPMENT", tmp_path / "dev/release/development")
+    monkeypatch.setattr(policy, "PUBLISH", tmp_path / "dev/release/publish")
+    policy.DEVELOPMENT.mkdir(parents=True)
+    frozen[key] = value
+    (tmp_path / target["runtime_freeze"]).write_text(json.dumps(frozen))
+    with pytest.raises(AssertionError, match=message):
+        policy.validate_development_target(target, "1.5.0.dev0")
+
+
+def test_development_publish_manifest_is_rejected(development_contract, tmp_path, monkeypatch):
+    policy, target, _ = development_contract
+    monkeypatch.setattr(policy, "PUBLISH", tmp_path)
+    manifest = tmp_path / "v1.5.0.dev0.json"
+    manifest.write_text("{}")
+    with pytest.raises(AssertionError, match="cannot have a publish manifest"):
+        policy.validate_development_target(target, "1.5.0.dev0")
+    with pytest.raises(AssertionError, match="publish manifests require a stable"):
+        policy._validate_publish_manifest(manifest)
+
+
+@pytest.mark.parametrize("change,message", [
+    ("missing", "document layer authority missing"),
+    ("extra", "document layer authority fields drift"),
+    ("schema", "document layer schema drift"),
+    ("action", "document layer action drift"),
+    ("contract", "document compositing contract drift"),
+    ("digest", "document compositing digest drift"),
+    ("default_capability", "default runtime capability drift"),
+    ("layered_capability", "layered runtime capability drift"),
+    ("session_member", "session surface drift"),
+    ("authoring_export", "authoring export drift"),
+])
+def test_development_contract_rejects_incomplete_layer_authority(
+        development_contract, change, message):
+    policy, _, frozen = development_contract
+    layers = frozen["document_layers"]
+    if change == "missing":
+        del frozen["document_layers"]
+    elif change == "extra":
+        layers["unverified"] = True
+    elif change == "schema":
+        layers["schemas"]["layer_document"] = "img2drawing.layer_document.v0"
+    elif change == "action":
+        layers["action_kinds"].remove("layer.assign")
+    elif change == "contract":
+        layers["compositing_contract"]["renderer_id"] = "other"
+    elif change == "digest":
+        layers["compositing_contract_digest"] = "0" * 64
+    elif change == "default_capability":
+        frozen["runtime_capabilities"]["authoring_helpers"].remove("img2drawing.authoring.StrokeEdit")
+    elif change == "layered_capability":
+        layers["runtime_capabilities"]["authoring_helpers"].remove("img2drawing.authoring.prepare_element_transform")
+    elif change == "session_member":
+        frozen["drawing_session_members"].remove("enable_layers")
+    else:
+        frozen["authoring_exports"].remove("ElementEditProposal")
+    with pytest.raises(AssertionError, match=message):
+        policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("version", ["1.5.0.dev0", "1.5.0a1", "1.5.0b1", "1.5.0rc1",
+                                      "1.5.0+local", "1.5.0.post1", "01.5.0", "invalid"])
+def test_publisher_executes_no_release_or_build_command_for_nonstable_versions(tmp_path, version):
+    _run_publisher_fixture(tmp_path, version, stable=False)
+
+
+@pytest.mark.parametrize("version", ["1.4.0", "1.5.0", "2.0.0"])
+def test_publisher_stable_guard_allows_normal_manifest_detection(tmp_path, version):
+    _run_publisher_fixture(tmp_path, version, stable=True)
+
+
+def _run_publisher_fixture(tmp_path, version, *, stable):
+    """Execute the real workflow body with local sentinels, never release tools."""
+    workflow = (ROOT / ".github/workflows/publish-release.yml").read_text()
+    section = workflow.split("      - name: Publish new release manifests\n", 1)[1]
+    script = textwrap.dedent(section.split("        run: |\n", 1)[1])
+    package = tmp_path / "skills/img2drawing/src/img2drawing"
+    package.mkdir(parents=True)
+    (package / "_version.py").write_text(f"__version__ = {version!r}\n")
+    manifests = tmp_path / "dev/release/publish"
+    manifests.mkdir(parents=True)
+    if not stable:
+        # A manifest is present deliberately: removing/misplacing the guard
+        # would reach jq/gh instead of passing because there was no work.
+        (manifests / f"v{version}.json").write_text("{}")
+    binaries = tmp_path / "bin"
+    binaries.mkdir()
+    (binaries / "python").symlink_to(sys.executable)
+    sentinel = tmp_path / "release-command-called"
+    for name in ("gh", "jq"):
+        tool = binaries / name
+        tool.write_text('#!/bin/sh\nprintf called > "$PUBLISH_SENTINEL"\nexit 97\n')
+        tool.chmod(0o755)
+    env = {**os.environ, "PATH": f"{binaries}{os.pathsep}{os.environ.get('PATH', '')}",
+           "PUBLISH_SENTINEL": str(sentinel)}
+    result = subprocess.run(["bash", "-c", script], cwd=tmp_path, env=env,
+                            text=True, capture_output=True, check=False)
+    assert result.returncode == 0, result.stdout + result.stderr
+    expected = "No release manifests found." if stable else "Skipping publication for non-stable package version"
+    assert expected in result.stdout
+    assert not sentinel.exists()
+    assert not (tmp_path / "dist").exists()

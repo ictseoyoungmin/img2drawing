@@ -101,6 +101,7 @@ Open only the leaf that owns the current problem; use the listed public names.
 | Inspect tonal deposits and correct selected pressure | `inspect_tonal_interval`, `TonalPressureAdjustment`, `prepare_tonal_pressure_edits`, `ContactWidthProfile` | [Broad graphite](../markmaking/broad-graphite.md) |
 | Inspect tone/overlap | `TonalPatch`, `inspect_tonal_patches`, `inspect_tonal_proposals`, `TonalBandProbe`, `inspect_contact_overlap` | [Value and edge](../description/value-edge-and-graphite.md) |
 | Edit meaningful stroke groups and recheck dependencies | `SemanticGroup`, `record_semantic_groups`, `inspect_semantic_groups`, `review_semantic_group`, `prepare_group_transform`, `retire_group_guides` | [Authored element navigation](../review/authored-element-navigation.md) |
+| Organize layers, transform mixed selections, or exchange editable rasters | `DrawingSession.enable_layers`, `prepare_element_transform`, `preview_element_edits`, `apply_element_edits`, `export_layer_pngs`, `export_openraster` | [Layers and exchange](layers-and-exchange.md) |
 
 For requested ink/mixed-media marks, open [Mixed-media API](mixed-media.md) instead of
 guessing pencil presets. Select the profile before authoring; existing sessions keep theirs.

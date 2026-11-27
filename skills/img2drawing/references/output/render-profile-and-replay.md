@@ -7,6 +7,11 @@ Use the public session output operations for final PNG rendering, cursor renderi
 export. Do not switch pressure behavior, supersampling, paper/material parameters, or renderer
 identity merely to make one artifact look better.
 
+Optional editable-layer delivery is documented in [Layers and exchange](../api/layers-and-exchange.md).
+Its canonical merged image is exact; separately downsampled layer rasters have a measured
+recomposition difference. Preserve the native checkpoint and retained inspection evidence
+for continued stroke editing. Layer histories currently use canonical timelapse replay.
+
 ## Inspection shares the persisted profile
 
 `inspect()` uses the same persisted material authority as `render_final()`: paper tooth/scale/seed,

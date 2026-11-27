@@ -3,30 +3,32 @@
   <h1>img2drawing</h1>
   <p><strong>From observation to explicit, editable pencil and ink marks.</strong></p>
   <p>
-    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.4.0-6f5a46" alt="Version v1.4.0"></a>
+    <a href="https://github.com/ictseoyoungmin/img2drawing/releases/latest"><img src="https://img.shields.io/badge/version-v1.5.0-6f5a46" alt="Version v1.5.0"></a>
     <a href="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml"><img src="https://github.com/ictseoyoungmin/img2drawing/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB" alt="Python 3.10+">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-59636e" alt="Apache 2.0"></a>
   </p>
 </div>
 
-**Current stable: v1.4.0** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
+**Current stable: v1.5.0** · [Releases](https://github.com/ictseoyoungmin/img2drawing/releases) · [Changelog](CHANGELOG.md)
 
 An Agent Skill and Python drawing runtime for Claude Code, Codex, and other skill-capable agents.
 Rather than requesting a finished image from an image generator, the agent observes a subject,
 authors explicit strokes, inspects its drawing, and corrects visible problems.
 
-**Mixed-media drawing**
+**Drawing and optional editing**
 
-- G-pen and fineliner paths with explicit width, pressure, tapers, caps and joins.
-- Wet ink brush, closed-contour black areas with authored holes, and white ink.
-- Editable dot screentone with explicit coverage, pitch, page phase and optional linear gradient.
-- One editable action history for graphite and ink, canonical PNG/replay, and eligible fast GIF export.
+- Pencil, G-pen, fineliner, wet ink, authored black/white areas and editable dot screentone.
+- One action history, canonical PNG/replay and eligible fast GIF export.
+- Optional layer controls: names, visibility, inherited locks, opacity, order and isolated groups.
+- Shared graphite/ink/area/tone transforms; transparent PNG and OpenRaster with native checkpoints.
 
-Pencil remains the default. New mixed sessions explicitly select a pinned material profile;
-existing graphite contracts and session pixels remain unchanged in verified environments.
-The agent chooses every path, boundary, shadow and highlight. See the
-[release notes](docs/releases/v1.4.0.md) for measured evidence and limits.
+Pencil remains the default; enable layers and mixed tools when the task needs them. Normal is the
+initial blend mode. Raster edits stay separate from native strokes; PSD and a visual editor are
+future work. Existing material contracts remain unchanged in verified environments.
+The [release notes](docs/releases/v1.5.0.md) record the measured drawing, replay and Krita
+workflow, including raster recomposition and opacity limits. The actual release and its
+assets establish publication.
 
 ## Drawing in action
 
@@ -52,7 +54,7 @@ Curated stroke-authoring examples, not a guarantee of quality across all subject
   and retire unnecessary construction marks.
 - **Persistent history:** retain drawing actions and the render profile for inspection, resumption,
   and replay.
-- **Output:** render PNGs and export end-to-end GIF timelapses from actual drawing actions.
+- **Output:** PNG, end-to-end GIF, and optional editable-layer PNG/OpenRaster with native data.
 
 **Croquis economizes marks, not observed geometry.** The agent makes artistic decisions;
 the runtime supplies authoring, editing, and evidence tools.
@@ -110,7 +112,7 @@ session = DrawingSession.create(
 
 Start with [SKILL.md](skills/img2drawing/SKILL.md).
 The [public API](skills/img2drawing/references/api/public-surface.md) documents runtime usage;
-the [mixed-media API](skills/img2drawing/references/api/mixed-media.md) covers ink and tone;
+the [layer/exchange API](skills/img2drawing/references/api/layers-and-exchange.md) covers optional editing;
 the [instruction graph](skills/img2drawing/references/INDEX.md) routes drawing knowledge.
 
 ## Project structure

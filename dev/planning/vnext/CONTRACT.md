@@ -1,7 +1,7 @@
 # img2drawing architecture contract
 
 Status: **CURRENT MAIN INVARIANTS**
-Updated: 2026-11-27
+Updated: 2026-11-28
 
 This document describes durable architecture invariants for current `main`. It is not a release
 freeze. Immutable released snapshots remain version-specific:
@@ -17,6 +17,8 @@ freeze. Immutable released snapshots remain version-specific:
 - v1.4.0 / mixed media: `dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
+The selected v1.5.0 candidate has a separate `dev/release/vnext/CONTRACT_FREEZE_V1_5_0.json`;
+its preparation does not establish publication.
 
 ## 1. One canonical orchestration core
 
@@ -129,6 +131,18 @@ canonical replay. Pure legacy graphite Fast remains supported.
 Profile identity does not certify pixel equality across untested NumPy/Pillow versions;
 release evidence names its measured environment without rewriting historical fixtures.
 
+Optional v1.5.0 layers retain the same session and action history. Document membership and
+stacking do not rewrite native material-layer integers or geometry. Explicit conversion to one
+neutral layer preserves the legacy image; later organization uses the separately versioned
+Normal isolated-group contract. Inherited locks, opacity, ordered membership, mixed-edit guards
+and evidence-preserving undo/redo apply centrally. Layered histories use canonical replay.
+
+PNG/OpenRaster exchange contains raw transparent raster layers, the exact canonical merged
+image and measured runtime reflattening differences. Native checkpoints and retained inspection
+evidence remain the authority for continued stroke editing. External raster changes are not
+silently imported as native marks. PSD, masks, extra blend modes and a visual editor remain
+outside the initial layer contract.
+
 ## 8. Instruction graph contract
 
 `skills/img2drawing/SKILL.md` is the root router. It loads
@@ -147,7 +161,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-After successful main CI and manifest-driven publication, v1.4.0 is the latest published stable. Its manifest and additive freeze declare the selected contract; the actual GitHub Release, tag, target commit and uploaded assets establish publication. Earlier release authorities remain immutable. New sessions default to legacy v11; optional mixed-media contracts extend the existing history without tracing or automatic geometry generation. Release notes and `STATUS.md` record the bounded mechanical, material and figure evidence; those observations do not certify general artistic improvement.
+After successful main CI and manifest-driven publication, v1.5.0 is the latest published stable. This is a conditional promotion rule: the current observed publication remains v1.4.0 until the v1.5.0 release, tag and assets exist. The selected manifest and additive freeze define the release contract; the actual GitHub Release, tag, target commit and uploaded assets establish publication. Earlier release and development records remain immutable. New sessions default to legacy v11; optional mixed-media and layer contracts extend the existing history. Release notes and `STATUS.md` record bounded mechanical and practical evidence; those observations do not certify general artistic improvement.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 

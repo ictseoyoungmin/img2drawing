@@ -39,6 +39,10 @@ The scoped manifest lists ink actions and helpers available under that exact con
 Do not treat the absence of ink in the unscoped manifest as a runtime gap or silently
 change an older session's profile. See [Mixed-media API](mixed-media.md).
 
+For optional layer management, shared mixed-element edits, cursor undo/redo and PNG/ORA
+exchange, request `runtime_capabilities(session.render_profile, layered=True)`.
+Discovery does not enable layers or change the session. See [Layers and exchange](layers-and-exchange.md).
+
 The semantic operation labels are split into `authoring_operations` and `output_operations`;
 `supported_operations` is their combined worker-facing view. Exact callable names are listed in
 `authoring_entrypoints` and `output_entrypoints`. The old

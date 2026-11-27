@@ -100,22 +100,41 @@ class _GraphiteRun:
 
 def render_mixed_image(ir, *, background, scale, supersample, graphite, grade=None,
                        renderer_version=MIXED_MEDIA_CONTRACT.renderer_version):
-    from .pencil import render_image, load_contact_profile, prepare_stroke, build_patch
+    if getattr(ir, "layer_document", None) is not None:
+        from .document import render_document_image
+        return render_document_image(ir, background=background, scale=scale,
+                                     supersample=supersample, graphite=graphite,
+                                     grade=grade, renderer_version=renderer_version)
+    with _render_mixed_working(ir, background=background, scale=scale,
+                               supersample=supersample, graphite=graphite,
+                               grade=grade, renderer_version=renderer_version) as canvas:
+        return canvas.resize((ir.width * scale, ir.height * scale), Image.Resampling.LANCZOS)
+
+
+def _render_mixed_working(ir, *, background, scale, supersample, graphite, grade=None,
+                          renderer_version=MIXED_MEDIA_CONTRACT.renderer_version,
+                          ordered_elements=None, budget=None):
+    from .pencil import _render_working_image, load_contact_profile, prepare_stroke, build_patch
     if ir.media_contract != MIXED_HISTORY_CONTRACT:
         raise ValueError("mixed-media renderer requires an explicit mixed history")
     factor = validate_mixed_raster_budget(ir.width, ir.height, supersample, scale)
-    ordered = sorted(ir.ordered_elements(), key=lambda item: item.layer)
+    ordered = (sorted(ir.ordered_elements(), key=lambda item: item.layer)
+               if ordered_elements is None else tuple(ordered_elements))
     for item in ordered:
         if isinstance(item, Stroke):
             validate_mixed_stroke(item)
     # Preserve the exact normalized-v3 graphite-only rendering, including lifts.
-    if not ir.ink_elements:
-        legacy_view = StrokeIR(ir.width, ir.height, ir.strokes, ir.metadata)
-        return render_image(legacy_view, background=background, scale=scale,
-                            supersample=supersample, graphite=graphite, grade=grade,
-                            renderer_version=CONTACT_WIDTH_CONTRACT.renderer_version)
+    ink_elements = [item for item in ordered if isinstance(item, InkElement)]
+    if not ink_elements:
+        legacy_view = StrokeIR(ir.width, ir.height,
+                               ir.strokes if ordered_elements is None else list(ordered), ir.metadata)
+        return _render_working_image(legacy_view, background=background, scale=scale,
+                                     supersample=supersample, graphite=graphite, grade=grade,
+                                     renderer_version=CONTACT_WIDTH_CONTRACT.renderer_version,
+                                     ordered_elements=None if ordered_elements is None else ordered,
+                                     budget=budget)
     hi_size = (ir.width * factor, ir.height * factor)
-    for item in ir.ink_elements:
+    for item in ink_elements:
         if isinstance(item.mark,Screentone) and renderer_version!=SCREENTONE_CONTRACT.renderer_version:
             raise ValueError("screentone requires its explicit mixed-media renderer contract")
         if isinstance(item.mark,StyledInkPath) and renderer_version not in (
@@ -127,30 +146,33 @@ def render_mixed_image(ir, *, background, scale, supersample, graphite, grade=No
                   paper_scale=paper_scale, paper_seed=paper_seed)
     contact = load_contact_profile(CONTACT_WIDTH_CONTRACT.renderer_version)
     graphite = tuple(int(v) for v in graphite)
-    budget = _Budget()
+    budget = _Budget() if budget is None else budget
     budget.reserve(hi_size[0] * hi_size[1])
     lifts = [(i, item) for i, item in enumerate(ordered)
              if isinstance(item, Stroke) and is_eraser(item)]
     indices = [i for i, _ in lifts]
     run = _GraphiteRun(graphite, budget, kwargs)
-    with Image.new("RGBA", hi_size, background) as canvas:
-        try:
-            for i, item in enumerate(ordered):
-                if isinstance(item, InkElement):
-                    run.flush(canvas, (s for _, s in lifts[bisect_right(indices, i):]))
-                    bounds, patch = build_ink_patch(item.mark, factor=factor, hi_size=hi_size)
-                    with patch:
-                        if _area(bounds):
-                            budget.reserve(_area(bounds))
-                            canvas.alpha_composite(patch, dest=bounds[:2])
-                elif is_eraser(item):
-                    run.lift(item)
-                else:
-                    bounds, patch = build_patch(prepare_stroke(item, grade, contact),
-                                                graphite=graphite, profile=contact, **kwargs)
-                    with patch:
-                        run.deposit(bounds, patch)
-            run.flush(canvas, ())
-            return canvas.resize((ir.width * scale, ir.height * scale), Image.Resampling.LANCZOS)
-        finally:
-            run.close()
+    canvas = Image.new("RGBA", hi_size, background)
+    try:
+        for i, item in enumerate(ordered):
+            if isinstance(item, InkElement):
+                run.flush(canvas, (s for _, s in lifts[bisect_right(indices, i):]))
+                bounds, patch = build_ink_patch(item.mark, factor=factor, hi_size=hi_size)
+                with patch:
+                    if _area(bounds):
+                        budget.reserve(_area(bounds))
+                        canvas.alpha_composite(patch, dest=bounds[:2])
+            elif is_eraser(item):
+                run.lift(item)
+            else:
+                bounds, patch = build_patch(prepare_stroke(item, grade, contact),
+                                            graphite=graphite, profile=contact, **kwargs)
+                with patch:
+                    run.deposit(bounds, patch)
+        run.flush(canvas, ())
+        return canvas
+    except BaseException:
+        canvas.close()
+        raise
+    finally:
+        run.close()
