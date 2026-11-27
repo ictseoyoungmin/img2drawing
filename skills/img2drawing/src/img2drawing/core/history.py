@@ -7,6 +7,8 @@ from typing import Any, Sequence
 from .ir import Stroke, StrokeIR
 from .material import (INK_ACTION_SCHEMA, INK_ACTION_KINDS, MIXED_HISTORY_CONTRACT,
                        InkAction, InkElement)
+from .layers import (LAYER_ACTION_SCHEMA, LAYER_ACTION_KINDS, LayerAction,
+                     apply_layer_action as reduce_layer_action)
 from .stroke import shaped_pressure_profile
 from .tools import ToolState
 
@@ -273,6 +275,51 @@ def unsupported_action_error(action: str) -> ValueError:
     return ValueError(f"unsupported replay action: {action}")
 
 
+def _layer_action_from_record(item: CanvasAction) -> LayerAction:
+    provenance = item.provenance
+    fields = {"action_id", "observation_id", "source_observation", "reason"}
+    if (not isinstance(provenance, dict) or set(provenance) != fields
+            or item.tool_state is not None or item.part is not None or item.role is not None):
+        raise ValueError("invalid typed layer history record")
+    return LayerAction.from_dict({"schema": LAYER_ACTION_SCHEMA, "kind": item.action,
+                                  "data": item.payload, **provenance})
+
+
+def _reduce_layer_record(document, item, elements, seen_layer_ids):
+    action = _layer_action_from_record(item)
+    created = (action.data["layer_id"] if action.kind == "layer.enable" else
+               action.data["layer"]["layer_id"] if action.kind == "layer.create" else None)
+    if created is not None and created in seen_layer_ids:
+        raise ValueError(f"layer identity was already used in this history: {created}")
+    result = reduce_layer_action(document, action, elements)
+    if created is not None:
+        seen_layer_ids.add(created)
+    return result
+
+
+def _document_after_element(document, item: CanvasAction):
+    """Validate ownership/locks before geometry mutates; return immutable next state."""
+    kind, payload = item.action, item.payload
+    if document is None:
+        if "layer_id" in payload:
+            raise ValueError("element layer routing requires an enabled layer document")
+        return None
+    if kind in {"stroke.add", "ink.add"}:
+        if "layer_id" not in payload:
+            raise ValueError("layered additions require an explicit recorded layer_id")
+        sid = payload.get("element_id") if kind == "ink.add" else (payload.get("stroke") or {}).get("stroke_id")
+        return document.add_element(sid, payload["layer_id"])
+    if "layer_id" in payload:
+        raise ValueError("element layer routing is only valid on additions")
+    if kind == "stroke.replace":
+        return document.replace_element(payload["stroke_id"], payload["stroke"]["stroke_id"])
+    if kind in {"stroke.delete", "ink.delete"}:
+        return document.remove_element(payload["element_id"] if kind == "ink.delete" else payload["stroke_id"])
+    if kind in {"ink.replace", "stroke.segment_replace", "stroke.soft_lift", "stroke.segment_soft_lift"}:
+        document.assert_element_editable(payload["element_id"] if kind == "ink.replace" else payload["stroke_id"])
+    return document
+
+
 class MixedReplayState:
     """Strict shared reducer for mixed random and forward replay.
 
@@ -286,6 +333,8 @@ class MixedReplayState:
         self.seen: set[str] = set()
         self.action_ids: set[str] = set()
         self.count = 0
+        self.layer_document = None
+        self.seen_layer_ids: set[str] = set()
 
     def _add(self, sid, element):
         if not isinstance(sid, str) or not sid.strip() or sid in self.seen:
@@ -313,16 +362,23 @@ class MixedReplayState:
 
     def _apply(self, item: CanvasAction, *, validate_recipe=False):
         kind, p = item.action, item.payload
+        if kind in LAYER_ACTION_KINDS:
+            self.layer_document = _reduce_layer_record(self.layer_document, item,
+                (self.state[sid] for sid in self.order), self.seen_layer_ids)
+            return
+        next_document = _document_after_element(self.layer_document, item)
         if kind in INK_ACTION_KINDS:
             provenance = item.provenance
             fields = {"action_id", "observation_id", "source_observation", "reason"}
             if (not isinstance(provenance, dict) or
                     set(provenance) not in (fields,fields|{"pen_definition"})
-                    or not isinstance(p, dict) or set(p) != {"element_id", "element"}
+                    or not isinstance(p, dict) or set(p) != (
+                        {"element_id", "element", "layer_id"}
+                        if kind == "ink.add" and self.layer_document is not None else {"element_id", "element"})
                     or item.tool_state is not None):
                 raise ValueError("invalid typed ink history record")
             ink = InkAction.from_dict({"schema": INK_ACTION_SCHEMA, "kind": kind,
-                                       **p, **provenance})
+                                       "element_id": p["element_id"], "element": p["element"], **provenance})
             if validate_recipe:
                 ink.validate_pen_definition()
             sid, element = ink.element_id, ink.element
@@ -340,6 +396,7 @@ class MixedReplayState:
                 else:
                     self._target(sid, InkElement)
                     self.state[sid] = element
+            self.layer_document = next_document
             return
         if kind == "stroke.add":
             stroke = _stroke_from_dict(p["stroke"], item.tool_state)
@@ -380,10 +437,11 @@ class MixedReplayState:
             self.order.remove(sid)
         elif kind != "snapshot":
             raise unsupported_action_error(kind)
+        self.layer_document = next_document
 
     def snapshot(self, width, height, metadata, cursor, *, legacy_inline_pressure=False):
         ir = StrokeIR(width, height, metadata={**metadata, "history_cursor": cursor},
-                      media_contract=MIXED_HISTORY_CONTRACT)
+                      media_contract=MIXED_HISTORY_CONTRACT, layer_document=self.layer_document)
         if legacy_inline_pressure:
             setattr(ir, "_legacy_inline_pressure", True)
         for sid in self.order:
@@ -394,6 +452,8 @@ class MixedReplayState:
                 ir.ink_elements.append(element)
             ir.element_order.append(sid)
         ir.ordered_elements()
+        if self.layer_document is not None:
+            self.layer_document.validate_elements(ir.element_order)
         return ir
 
 
@@ -420,6 +480,36 @@ class CanvasHistory:
         # A derived one-prefix cache, never persisted and never exposed as IR.
         self._mixed_cached = MixedReplayState() if media_contract is not None else None
         self._mixed_prefix: list[CanvasAction] = []
+
+    @property
+    def has_layer_actions(self) -> bool:
+        """Cheap detection that also respects mutable legacy logs and undo cursors."""
+        return any(a.action.startswith("layer.") for a in self.actions[:self.cursor])
+
+    @property
+    def layer_document(self):
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            return self._mixed_replay_at(self.cursor).layer_document
+        if not self.has_layer_actions:
+            return None
+        return self.state_at().layer_document
+
+    def _addition_layer(self, layer_id, provenance=None):
+        document = self.layer_document
+        if document is None:
+            if layer_id is not None:
+                raise ValueError("element layer routing requires an enabled layer document")
+            return None
+        if layer_id is None:
+            metadata = (provenance or {}).get("metadata") or {}
+            if metadata.get("split_fragment") == "second":
+                layer_id = document.layer_for(metadata.get("geometry_edited_from"))
+            else:
+                layer_id = document.active_layer_id
+        if document.node(layer_id).kind != "paint":
+            raise ValueError("new elements require a paint layer")
+        document.assert_editable(layer_id)
+        return layer_id
 
     def _reset_mixed_cache(self):
         self._mixed_cached = MixedReplayState()
@@ -470,9 +560,7 @@ class CanvasHistory:
                 self._mixed_prefix.append(item)
             return item
 
-        if self.cursor < len(self.actions):
-            self.actions = self.actions[: self.cursor]
-        seq = len(self.actions) + 1
+        seq = self.cursor + 1
         item = CanvasAction(
             seq,
             action,
@@ -484,6 +572,16 @@ class CanvasHistory:
             deepcopy(tool_state),
             deepcopy(provenance),
         )
+        if action.startswith("layer.") or self.has_layer_actions:
+            # Legacy histories keep their original representation. Opted-in
+            # mutations validate the complete candidate prefix before changing
+            # the log or discarding an existing redo tail.
+            candidate = CanvasHistory(self.width, self.height, deepcopy(self.metadata))
+            candidate.actions = [*self.actions[:self.cursor], item]
+            candidate.cursor = len(candidate.actions)
+            candidate.state_at()
+        if self.cursor < len(self.actions):
+            self.actions = self.actions[: self.cursor]
         self.actions.append(item)
         self.cursor = len(self.actions)
         return item
@@ -537,7 +635,17 @@ class CanvasHistory:
             raise
         return replay
 
-    def apply_ink_action(self, action: InkAction) -> str:
+    def apply_layer_action(self, action: LayerAction) -> str:
+        if not isinstance(action, LayerAction):
+            raise ValueError("typed LayerAction required")
+        if any((a.provenance or {}).get("action_id") == action.action_id
+               for a in self.actions[:self.cursor]):
+            raise ValueError("duplicate layer action identity")
+        self._append(action.kind, action.payload(), provenance=action.provenance())
+        return (action.data["layer"]["layer_id"] if action.kind == "layer.create"
+                else action.data["layer_id"])
+
+    def apply_ink_action(self, action: InkAction, *, layer_id: str | None = None) -> str:
         if self.media_contract != MIXED_HISTORY_CONTRACT:
             raise ValueError("ink actions require an explicit mixed history contract")
         if not isinstance(action, InkAction):
@@ -546,31 +654,42 @@ class CanvasHistory:
         if action.action_id in replay.action_ids:
             raise ValueError("duplicate ink action identity")
         element = action.element
+        if layer_id is not None and action.kind != "ink.add":
+            raise ValueError("element layer routing is only valid on additions")
+        selected_layer = self._addition_layer(layer_id) if action.kind == "ink.add" else None
         if action.kind == "ink.delete":
             element = replay._target(action.element_id, InkElement)
-        record = CanvasAction(self.cursor + 1, action.kind, "unspecified", action.payload(),
+        payload = action.payload()
+        if selected_layer is not None:
+            payload["layer_id"] = selected_layer
+        record = CanvasAction(self.cursor + 1, action.kind, "unspecified", payload,
                               float(self.cursor), element.part, element.role,
                               provenance=action.provenance())
         self._append(action.kind, record.payload, stage=record.stage, part=record.part,
                      role=record.role, provenance=record.provenance)
         return action.element_id
 
-    def add_stroke(self, stroke: Stroke, *, stroke_id: str | None = None, provenance: dict[str, Any] | None = None) -> str:
+    def add_stroke(self, stroke: Stroke, *, stroke_id: str | None = None,
+                   provenance: dict[str, Any] | None = None, layer_id: str | None = None) -> str:
         s = deepcopy(stroke).cleaned()
         sid = stroke_id or s.stroke_id or f"h{self._next_id:04d}"
         if self._stroke_identity_exists(sid):
             raise ValueError(f"stroke_id already exists: {sid}")
-        self._next_id += 1
         s.stroke_id = sid
+        selected_layer = self._addition_layer(layer_id, provenance)
+        payload = {"stroke": _persisted_stroke(s)}
+        if selected_layer is not None:
+            payload["layer_id"] = selected_layer
         self._append(
             "stroke.add",
-            {"stroke": _persisted_stroke(s)},
+            payload,
             stage=s.stage or "unspecified",
             part=s.part,
             role=s.role,
             tool_state=deepcopy(s.tool_state),
             provenance=provenance,
         )
+        self._next_id += 1
         return sid
 
     def replace_stroke(
@@ -586,7 +705,6 @@ class CanvasHistory:
         sid = new_stroke_id or s.stroke_id or f"h{self._next_id:04d}"
         if sid != stroke_id and self._stroke_identity_exists(sid):
             raise ValueError(f"replacement stroke_id already exists: {sid}")
-        self._next_id += 1
         s.stroke_id = sid
         self._append(
             "stroke.replace",
@@ -597,6 +715,7 @@ class CanvasHistory:
             tool_state=deepcopy(s.tool_state),
             provenance=provenance,
         )
+        self._next_id += 1
         return sid
 
     def replace_segment(
@@ -739,13 +858,34 @@ class CanvasHistory:
                 legacy_inline_pressure=self._legacy_inline_pressure)
         order: list[str] = []
         state: dict[str, Stroke] = {}
-        for item in self.actions[:limit]:
+        document = None
+        seen_layer_ids: set[str] = set()
+        prefix = self.actions[:limit]
+        layered_prefix = any(item.action.startswith("layer.") for item in prefix)
+        seen_stroke_ids: set[str] = set()
+        seen_action_ids: set[str] = set()
+        for item in prefix:
             p = item.payload
+            if layered_prefix:
+                aid = (item.provenance or {}).get("action_id")
+                if aid is not None:
+                    if not isinstance(aid, str) or not aid.strip() or aid in seen_action_ids:
+                        raise ValueError("invalid or duplicate layered action identity")
+                    seen_action_ids.add(aid)
+            if item.action in LAYER_ACTION_KINDS:
+                document = _reduce_layer_record(document, item,
+                    (state[sid] for sid in order if sid in state), seen_layer_ids)
+                continue
+            next_document = _document_after_element(document, item)
             if item.action == "stroke.add":
                 s = _stroke_from_dict(p["stroke"], item.tool_state)
                 sid = s.stroke_id
                 if sid is None:
                     raise ValueError("history stroke.add missing stroke_id")
+                if layered_prefix:
+                    if sid in seen_stroke_ids:
+                        raise ValueError(f"duplicate layered stroke identity: {sid}")
+                    seen_stroke_ids.add(sid)
                 if sid not in state:
                     order.append(sid)
                 state[sid] = s
@@ -755,6 +895,12 @@ class CanvasHistory:
                 sid = s.stroke_id
                 if sid is None:
                     raise ValueError("history stroke.replace missing replacement stroke_id")
+                if layered_prefix:
+                    if old_sid not in state:
+                        raise ValueError(f"layered replacement targets missing stroke: {old_sid}")
+                    if sid != old_sid and sid in seen_stroke_ids:
+                        raise ValueError(f"duplicate layered replacement identity: {sid}")
+                    seen_stroke_ids.add(sid)
                 if old_sid in state:
                     state.pop(old_sid, None)
                 if sid not in state:
@@ -784,7 +930,9 @@ class CanvasHistory:
                 pass
             else:
                 raise unsupported_action_error(item.action)
-        ir = StrokeIR(self.width, self.height, metadata={**self.metadata, "history_cursor": limit})
+            document = next_document
+        ir = StrokeIR(self.width, self.height, metadata={**self.metadata, "history_cursor": limit},
+                      layer_document=document)
         if self._legacy_inline_pressure:
             # Inspection hashing uses this transient signal only to reproduce a genuine
             # pre-compaction digest. It is intentionally absent from ``ir.to_dict()``.
@@ -792,6 +940,8 @@ class CanvasHistory:
         for sid in order:
             if sid in state:
                 ir.add(deepcopy(state[sid]))
+        if document is not None:
+            document.validate_elements(s.stroke_id for s in ir.strokes)
         return ir
 
     def to_dict(self) -> dict[str, Any]:
@@ -851,6 +1001,13 @@ class CanvasHistory:
         if h.media_contract is None:
             if any(a.action.startswith("ink.") for a in actions):
                 raise ValueError("ink actions require an explicit mixed history contract")
+            if any(a.action.startswith("layer.") for a in actions):
+                raw_cursor = data.get("cursor", len(actions))
+                if type(raw_cursor) is not int or not 0 <= raw_cursor <= len(actions):
+                    raise ValueError("invalid layered history cursor")
+                # Validate the redo tail too; a later locked or invalid document
+                # mutation must not enter an otherwise valid resumed session.
+                h.state_at(len(actions))
         else:
             raw_cursor = data.get("cursor", len(actions))
             if type(raw_cursor) is not int or not 0 <= raw_cursor <= len(actions):

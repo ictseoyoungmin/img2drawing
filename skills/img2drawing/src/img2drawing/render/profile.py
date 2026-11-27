@@ -305,6 +305,8 @@ class RenderProfile:
             prepared = StrokeIR(ir.width, ir.height, deepcopy(ir.strokes), deepcopy(ir.metadata),
                                 media_contract=ir.media_contract, ink_elements=list(ir.ink_elements),
                                 element_order=list(ir.element_order))
+            if getattr(ir, "layer_document", None) is not None:
+                prepared.layer_document = ir.layer_document
             if getattr(ir,"_legacy_inline_pressure",False):
                 setattr(prepared,"_legacy_inline_pressure",True)
         else:

@@ -2,6 +2,23 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
+## Unreleased — v1.5.0
+
+- Add optional native paint layers and isolated groups with ordered membership, names,
+  visibility, inherited content locks, opacity and one existing action history.
+- Explicitly convert existing drawings into one layer with exact neutral-render compatibility;
+  preserve authored geometry, numeric material layers and graphite seeds.
+- Add guarded mixed graphite/ink/area/tone transforms with consistent width and pattern policies.
+- Export transparent layer PNGs and OpenRaster with the canonical merged image, measured
+  reflattening differences and native checkpoint sidecars for continued stroke editing.
+- Add public cursor undo/redo with atomic checkpointing; protect retained audit evidence from
+  orphaning when a new edit would discard redo history.
+- Keep source development identity separate from published stable metadata. This development
+  line is not a published release; v1.4.0 remains the current stable release.
+
+Normal is the initial blend mode. Additional blend modes, PSD and a visual layer editor are
+follow-up work; external raster edits are not converted back into native strokes.
+
 ## v1.4.0 — Multi-Medium Drawing
 
 - Add opt-in, immutable mixed-media profiles for G-pen, fineliner, wet ink brush, explicit closed-contour ink and white paint, and editable analytic dot screentone with gradients.

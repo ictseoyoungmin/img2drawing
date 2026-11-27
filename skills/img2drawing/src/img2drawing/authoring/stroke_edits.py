@@ -114,7 +114,9 @@ def _actions(session, edits, reason, observation_id, *, retire_ids=(), additions
         raise ValueError("duplicate or existing split stroke ID")
     actions=[]
     def aid():
-        return f"vnext-{len(session._agent.history.actions)+len(actions)+1:06d}"
+        from ..session.drawing_session import _action_id
+        return _action_id(session._agent.history, None,
+                          session._agent.executed_action_ids | {a.action_id for a in actions})
     for e in edits:
         s=current[e.stroke_id]
         state=s.tool_state or {}

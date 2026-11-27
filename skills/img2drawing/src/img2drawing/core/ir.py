@@ -4,6 +4,7 @@ from typing import Iterable
 import json
 
 from .material import InkElement, MIXED_HISTORY_CONTRACT
+from .layers import LayerDocument
 
 @dataclass
 class Stroke:
@@ -56,6 +57,7 @@ class StrokeIR:
     media_contract: str | None = None
     ink_elements: list[InkElement] = field(default_factory=list)
     element_order: list[str] = field(default_factory=list)
+    layer_document: LayerDocument | None = None
 
     def add(self, stroke: Stroke) -> None:
         stroke.cleaned()
@@ -96,6 +98,12 @@ class StrokeIR:
             result.update(media_contract=self.media_contract,
                           ink_elements=[e.to_dict() for e in self.ink_elements],
                           element_order=list(self.element_order))
+        if self.layer_document is not None:
+            if not isinstance(self.layer_document, LayerDocument):
+                raise ValueError("typed LayerDocument required")
+            self.layer_document.validate_elements(
+                [s.stroke_id for s in self.strokes] + [e.element_id for e in self.ink_elements])
+            result["layer_document"] = self.layer_document.to_dict()
         return result
 
     def to_json(self, path: str | None = None) -> str:

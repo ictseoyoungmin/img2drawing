@@ -20,12 +20,13 @@ def _validated(session, actions):
     return actions
 
 
-def _digest(actions):
-    return sha256_obj([a.to_dict() for a in actions])
+def _digest(actions, layer_id=None):
+    payload = [a.to_dict() for a in actions]
+    return sha256_obj(payload if layer_id is None else {"actions": payload, "layer_id": layer_id})
 
 
 def apply_ink_actions(session, actions, *, expected_cursor=None, expected_state_hash=None,
-                      expected_action_digest=None, expected_profile_digest=None):
+                      expected_action_digest=None, expected_profile_digest=None, layer_id=None):
     """Commit a typed batch atomically, optionally binding to an exact preview."""
     with session._lock:
         if expected_cursor is not None and session.history_cursor != expected_cursor:
@@ -35,13 +36,13 @@ def apply_ink_actions(session, actions, *, expected_cursor=None, expected_state_
         if expected_profile_digest is not None and session._require_render_profile().digest() != expected_profile_digest:
             raise ValueError("stale ink edit profile")
         actions = _validated(session, actions)
-        if expected_action_digest is not None and _digest(actions) != expected_action_digest:
+        if expected_action_digest is not None and _digest(actions, layer_id) != expected_action_digest:
             raise ValueError("ink action proposal differs from preview")
-        session._commit(actions)
+        session._commit(actions, layer_id=layer_id)
         return tuple(a.action_id for a in actions)
 
 
-def preview_ink_actions(session, actions, out):
+def preview_ink_actions(session, actions, out, *, layer_id=None):
     """Render prospective typed actions without mutating session or checkpoint."""
     path = Path(out)
     if path.suffix.lower() != ".png" or path.exists() or path.with_suffix(".render.json").exists():
@@ -52,10 +53,12 @@ def preview_ink_actions(session, actions, out):
         state = session.drawing_state_hash()
         profile = session._require_render_profile()
         clone = AgentDrawingSession.from_dict(session._agent.to_dict())
-        clone.execute_many_atomic(actions, label="prospective ink edit")
+        with clone.transaction(label="prospective ink edit"):
+            for action in actions:
+                clone.execute(action, layer_id=layer_id)
         artifact = render_history_at(clone.history, clone.history.cursor, path, profile)
         return {"preview_only": True, "base_cursor": cursor, "base_state_hash": state,
-                "profile_digest": profile.digest(), "action_digest": _digest(actions),
+                "profile_digest": profile.digest(), "action_digest": _digest(actions, layer_id),
                 "prospective_state_hash": artifact.drawing_state_hash,
                 "pixel_sha256": artifact.pixel_sha256,
                 "action_ids": [a.action_id for a in actions]}

@@ -7,6 +7,7 @@ from typing import Any, Iterable
 
 from .history import CanvasHistory
 from .material import InkAction, INK_ACTION_SCHEMA
+from .layers import LayerAction, LAYER_ACTION_SCHEMA
 from .ir import Stroke, StrokeIR
 from ..render.grades import get_pencil_preset
 from .stroke import tool_stroke
@@ -336,10 +337,10 @@ class AgentDrawingSession:
         obj=cls(history.width,history.height,metadata=deepcopy(history.metadata))
         obj.history=history
         obj.executed_action_ids=set(map(str,data.get("executed_action_ids",())))
-        if history.media_contract is not None:
+        if history.media_contract is not None or any(a.action.startswith("layer.") for a in history.actions):
             authored_ids = {(a.provenance or {}).get("action_id") for a in history.actions}
             if not (authored_ids - {None}) <= obj.executed_action_ids:
-                raise ValueError("mixed history has unregistered action identities")
+                raise ValueError("typed history has unregistered action identities")
         return obj
 
     @property
@@ -350,13 +351,26 @@ class AgentDrawingSession:
     def height(self) -> int:
         return self.history.height
 
-    def execute(self, action: DrawingAction | InkAction | dict[str, Any]) -> str | None:
+    def execute(self, action: DrawingAction | InkAction | LayerAction | dict[str, Any], *,
+                layer_id: str | None = None) -> str | None:
+        if isinstance(action, dict) and action.get("schema") == LAYER_ACTION_SCHEMA:
+            action = LayerAction.from_dict(action)
+        if isinstance(action, LayerAction):
+            if layer_id is not None:
+                raise ValueError("layer routing is only supported for added marks")
+            if action.action_id in self.executed_action_ids:
+                raise ValueError(f"duplicate action_id: {action.action_id}")
+            result = self.history.apply_layer_action(action)
+            self.executed_action_ids.add(action.action_id)
+            return result
         if isinstance(action, dict) and action.get("schema") == INK_ACTION_SCHEMA:
             action = InkAction.from_dict(action)
         if isinstance(action, InkAction):
+            if layer_id is not None and action.kind != "ink.add":
+                raise ValueError("layer routing is only supported for added marks")
             if action.action_id in self.executed_action_ids:
                 raise ValueError(f"duplicate action_id: {action.action_id}")
-            result = self.history.apply_ink_action(action)
+            result = self.history.apply_ink_action(action, layer_id=layer_id)
             self.executed_action_ids.add(action.action_id)
             return result
         if not isinstance(action, DrawingAction):
@@ -365,6 +379,8 @@ class AgentDrawingSession:
             # Public DrawingSession builds objects directly; use the same validation
             # as the dictionary input route before touching authoritative history.
             action.validate()
+        if layer_id is not None and action.kind not in {"draw_stroke", "erase_path"}:
+            raise ValueError("layer routing is only supported for added marks")
         if action.action_id in self.executed_action_ids:
             raise ValueError(f"duplicate action_id: {action.action_id}")
         for x, y in action.points:
@@ -374,7 +390,8 @@ class AgentDrawingSession:
         provenance = action.provenance()
         if action.kind in {"draw_stroke", "erase_path"}:
             stroke = _stroke_from_action(action)
-            result = self.history.add_stroke(stroke, stroke_id=action.stroke_id, provenance=provenance)
+            result = self.history.add_stroke(stroke, stroke_id=action.stroke_id,
+                                            provenance=provenance, layer_id=layer_id)
         elif action.kind == "replace_stroke":
             stroke = _stroke_from_action(action)
             result = self.history.replace_stroke(
@@ -419,11 +436,11 @@ class AgentDrawingSession:
     def transaction(self, label: str | None = None):
         return _DrawingTransaction(self, label=label)
 
-    def execute_many(self, actions: Iterable[DrawingAction | InkAction | dict[str, Any]]) -> list[str | None]:
+    def execute_many(self, actions: Iterable[DrawingAction | InkAction | LayerAction | dict[str, Any]]) -> list[str | None]:
         return [self.execute(a) for a in actions]
 
     def execute_many_atomic(
-        self, actions: Iterable[DrawingAction | InkAction | dict[str, Any]], *, label: str | None = None
+        self, actions: Iterable[DrawingAction | InkAction | LayerAction | dict[str, Any]], *, label: str | None = None
     ) -> list[str | None]:
         with self.transaction(label=label):
             return self.execute_many(actions)

@@ -31,6 +31,7 @@ from PIL import Image
 
 from ..core.action import AgentDrawingSession, DrawingAction, _resolve_tool, _stroke_from_action
 from ..core.material import InkAction, InkElement, MIXED_HISTORY_CONTRACT
+from ..core.layers import LayerAction, LayerDocument, LayerNode
 from ..core.digest import sha256_file, sha256_obj
 from ..core.ir import Stroke, StrokeIR
 from ..core.tools import TOOLSET_ID
@@ -94,13 +95,16 @@ def _portable(value: Any) -> Any:
     raise TypeError(f"value is not JSON portable: {type(value).__name__}")
 
 
-def _action_id(history: Any, requested: str | None) -> str:
+def _action_id(history: Any, requested: str | None, used_ids=()) -> str:
     if requested is not None:
         result = str(requested).strip()
         if not result:
             raise ValueError("action_id must be non-empty")
         return result
-    return f"vnext-{len(history.actions) + 1:06d}"
+    number = len(history.actions) + 1
+    while f"vnext-{number:06d}" in used_ids:
+        number += 1
+    return f"vnext-{number:06d}"
 
 
 def _tool_payload(tool: str | Mapping[str, Any], grade: str | None, overrides: Mapping[str, Any] | None) -> dict[str, Any]:
@@ -941,6 +945,53 @@ class DrawingSession:
         with self._lock:
             return drawing_state_hash(self._snapshot())
 
+    def _move_history_cursor(self, direction, steps, expected_cursor, expected_state_hash):
+        if type(steps) is not int or steps < 1:
+            raise ValueError("history steps must be a positive integer")
+        with self._lock:
+            if expected_cursor is not None and self.history_cursor != expected_cursor:
+                raise ValueError("stale history cursor")
+            if expected_state_hash is not None and self.drawing_state_hash() != expected_state_hash:
+                raise ValueError("stale history state")
+            target = self.history_cursor + direction * steps
+            if not 0 <= target <= len(self._agent.history.actions):
+                raise ValueError("history movement exceeds retained action range")
+            with self._agent.transaction(label="history cursor"):
+                self._agent.history.cursor = target
+                self._write_checkpoint(self._checkpoint_path)
+            return self.history_cursor
+
+    def undo(self, steps=1, *, expected_cursor=None, expected_state_hash=None) -> int:
+        """Rewind action cursors, retaining redo and audit evidence; persist atomically.
+
+        A mixed proposal has one history action per element. Pass its action count
+        to undo the complete edit together. This does not undo observations or intent.
+        """
+        return self._move_history_cursor(-1, steps, expected_cursor, expected_state_hash)
+
+    def redo(self, steps=1, *, expected_cursor=None, expected_state_hash=None) -> int:
+        """Advance through retained actions and persist the cursor atomically."""
+        return self._move_history_cursor(1, steps, expected_cursor, expected_state_hash)
+
+    def _assert_branchable_history(self):
+        cursor = self.history_cursor
+        if cursor == len(self._agent.history.actions):
+            return
+        future_ids = {(a.provenance or {}).get("action_id")
+                      for a in self._agent.history.actions[cursor:]}
+        anchored = (
+            any((r.get("cursor") or 0) > cursor for r in self._observations)
+            or any((r.get("history_cursor") or 0) > cursor for r in self._inspection_history)
+            or any(r.history_cursor > cursor for r in self._intent_history)
+            or any(r.get("before_history_cursor", 0) > cursor for r in self._residuals)
+            or any(r.get("before_history_cursor", 0) > cursor
+                   or future_ids.intersection(r.get("action_ids", ())) for r in self._corrections)
+            or (self._finish_record is not None and self._finish_record.history_cursor > cursor)
+        )
+        if anchored:
+            raise ValueError("cannot replace redo history referenced by retained audit evidence; "
+                             "redo to that evidence before authoring a new correction")
+
     def authored_elements(
         self,
         *,
@@ -1206,15 +1257,31 @@ class DrawingSession:
             validate_ink_work(action.element.mark, factor=factor,
                               hi_size=(self.width * factor, self.height * factor))
 
-    def _commit(self, action: DrawingAction | InkAction | Iterable[DrawingAction | InkAction]) -> Any:
-        single = isinstance(action, (DrawingAction, InkAction))
+    def _commit(self, action: DrawingAction | InkAction | LayerAction |
+                Iterable[DrawingAction | InkAction | LayerAction], *,
+                layer_id: str | None = None,
+                layer_ids: Sequence[str | None] | None = None) -> Any:
+        single = isinstance(action, (DrawingAction, InkAction, LayerAction))
         actions = [action] if single else list(action)
         if not actions:
             return []
+        if layer_ids is not None and layer_id is not None:
+            raise ValueError("use one layer routing form")
+        routes = [layer_id] * len(actions) if layer_ids is None else list(layer_ids)
+        if len(routes) != len(actions):
+            raise ValueError("layer routes must match the action count")
         with self._lock:
+            self._assert_branchable_history()
             for item in actions:
                 if isinstance(item, InkAction):
                     self._validate_ink_action(item)
+                elif isinstance(item, LayerAction):
+                    known = {r["observation_id"] for r in self._observations}
+                    if item.observation_id != "vnext-unobserved" and item.observation_id not in known:
+                        raise ValueError("layer action requires a recorded observation_id")
+                    self._require_render_profile()
+                elif not isinstance(item, DrawingAction):
+                    raise TypeError("expected typed drawing, ink, or layer actions")
                 elif item.kind == "erase_path":
                     self._require_path_eraser_profile(item.pressure)
                 if (self._render_profile is not None and self._render_profile.is_mixed_media
@@ -1224,7 +1291,11 @@ class DrawingSession:
                     item.validate()
                     validate_mixed_stroke(_stroke_from_action(item))
             with self._agent.transaction(label="vnext-mutation"):
-                results = [self._agent.execute(item) for item in actions]
+                results = [self._agent.execute(item, layer_id=route)
+                           for item, route in zip(actions, routes)]
+                if self._agent.history.has_layer_actions:
+                    from ..render.document import validate_document_work
+                    validate_document_work(self._agent.current_ir(), self._require_render_profile())
                 self._write_checkpoint(self._checkpoint_path)
             return results[0] if single else results
 
@@ -1282,7 +1353,7 @@ class DrawingSession:
             if kind == "erase_path" or str(selected_tool["preset"]).endswith("eraser"):
                 raise ValueError("contact width profile supports graphite drawing only")
         return DrawingAction(
-            action_id=_action_id(self._agent.history, action_id),
+            action_id=_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
             kind=kind,
             stage=_COMPAT_STAGE,
             role=str(role),
@@ -1311,6 +1382,7 @@ class DrawingSession:
         part: str | None = None,
         confidence: float = 1.0,
         layer: int = 0,
+        layer_id: str | None = None,
         pressure: Sequence[float] | None = None,
         tool: str | Mapping[str, Any] = "construction_pencil",
         grade: str | None = None,
@@ -1335,10 +1407,11 @@ class DrawingSession:
             source_observation=source_observation,
             metadata=metadata,
         )
-        return str(self._commit(action))
+        return str(self._commit(action, layer_id=layer_id))
 
     def draw_many(self, strokes: Iterable[Any], **defaults: Any) -> list[str | None]:
         actions: list[DrawingAction] = []
+        routes: list[str | None] = []
         for item in strokes:
             values = dict(defaults)
             if isinstance(item, Mapping):
@@ -1347,9 +1420,117 @@ class DrawingSession:
             else:
                 points = item
             if values.get("action_id") is None:
-                values["action_id"] = f"vnext-{len(self._agent.history.actions) + len(actions) + 1:06d}"
+                values["action_id"] = _action_id(self._agent.history, None,
+                    self._agent.executed_action_ids | {a.action_id for a in actions})
+            routes.append(values.pop("layer_id", None))
             actions.append(self._draw_action(points, **values))
-        return list(self._commit(actions))
+        return list(self._commit(actions, layer_ids=routes))
+
+    @property
+    def layer_document(self) -> LayerDocument | None:
+        """Detached optional layer state. Existing drawings remain unlayered until enabled."""
+        with self._lock:
+            return self.current_ir().layer_document
+
+    def _layer_action(self, kind, data, *, observation_id=None, reason=None, action_id=None):
+        oid, source, why = self._provenance(
+            observation_id=observation_id, source_observation="explicit document layer edit",
+            reason=reason or kind,
+        )
+        return LayerAction(_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
+                           kind, data, oid, source, why)
+
+    def apply_layer_actions(self, actions: Iterable[LayerAction], *, expected_cursor=None,
+                            expected_state_hash=None) -> tuple[str, ...]:
+        """Apply a typed layer batch atomically through the normal history and checkpoint."""
+        actions = tuple(actions)
+        if not 1 <= len(actions) <= 256 or any(not isinstance(a, LayerAction) for a in actions):
+            raise ValueError("expected 1–256 typed LayerAction records")
+        with self._lock:
+            if expected_cursor is not None and self.history_cursor != expected_cursor:
+                raise ValueError("stale layer edit cursor")
+            if expected_state_hash is not None and self.drawing_state_hash() != expected_state_hash:
+                raise ValueError("stale layer edit state")
+            self._commit(actions)
+            return tuple(a.action_id for a in actions)
+
+    def enable_layers(self, *, layer_id="drawing", name="Drawing", observation_id=None,
+                      reason="enable editable layers", action_id=None) -> str:
+        """Explicitly wrap existing marks in one layer, preserving their native draw order.
+
+        Neutral conversion preserves the old image exactly. Later splitting or grouping
+        uses the versioned isolated compositor; authored material/seed values are untouched.
+        """
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.enable", {
+                "layer_id": layer_id, "name": name,
+            }, observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def create_layer(self, layer_id, name, *, kind="paint", parent_id=None, index=None,
+                     observation_id=None, reason="create layer", action_id=None) -> str:
+        """Create an empty paint layer or isolated group; siblings paint bottom to top."""
+        with self._lock:
+            document = self.layer_document
+            if document is None:
+                raise ValueError("enable layers before creating a layer")
+            node = LayerNode(layer_id, name, kind=kind, parent_id=parent_id,
+                             order=len(document.children(parent_id)) if index is None else index)
+            return str(self._commit(self._layer_action("layer.create", {"layer": node.to_dict()},
+                observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def update_layer(self, layer_id, *, name=None, visible=None, locked=None, opacity=None,
+                     blend_mode=None, observation_id=None, reason="update layer", action_id=None) -> str:
+        """Edit layer properties. Locks protect content and structure, not display properties."""
+        changes = {key: value for key, value in {
+            "name": name, "visible": visible, "locked": locked,
+            "opacity": opacity, "blend_mode": blend_mode,
+        }.items() if value is not None}
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.update", {
+                "layer_id": layer_id, "changes": changes,
+            }, observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def move_layer(self, layer_id, *, parent_id=None, index=0, observation_id=None,
+                   reason="reorder layer", action_id=None) -> str:
+        """Move a node within the layer tree without changing any native mark fields."""
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.move", {
+                "layer_id": layer_id, "parent_id": parent_id, "index": index,
+            }, observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def assign_elements(self, element_ids, layer_id, *, index=None, observation_id=None,
+                        reason="assign elements to layer", action_id=None) -> str:
+        """Move an explicit ordered selection to one paint layer; preserve each mark verbatim."""
+        if isinstance(element_ids, str):
+            raise ValueError("element_ids must be an explicit sequence of identities")
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.assign", {
+                "element_ids": list(element_ids), "layer_id": layer_id, "index": index,
+            }, observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def delete_layer(self, layer_id, *, observation_id=None, reason="delete empty layer",
+                     action_id=None) -> str:
+        """Remove an empty inactive node. Delete or move its content explicitly first."""
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.delete", {"layer_id": layer_id},
+                observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def set_active_layer(self, layer_id, *, observation_id=None, reason="select drawing layer",
+                         action_id=None) -> str:
+        """Set the default destination for newly authored graphite, ink, and tone marks."""
+        with self._lock:
+            return str(self._commit(self._layer_action("layer.active", {"layer_id": layer_id},
+                observation_id=observation_id, reason=reason, action_id=action_id)))
+
+    def export_layer_pngs(self, out, *, include_native=True):
+        """Export editable transparent layers, canonical merge, and the native checkpoint."""
+        from .layer_output import export_session_layers
+        return export_session_layers(self, out, format="png", include_native=include_native)
+
+    def export_openraster(self, out, *, include_native=True):
+        """Export an .ora exchange file and retain native stroke editing in a sidecar."""
+        from .layer_output import export_session_layers
+        return export_session_layers(self, out, format="ora", include_native=include_native)
 
     def _require_path_eraser_profile(self, pressure=None) -> None:
         version = self._require_render_profile().renderer_version
@@ -1392,7 +1573,7 @@ class DrawingSession:
             reason=reason, kind="erase_path")
 
     def erase_path(self, points, *, stroke_id, width, strength=1.0, tool="hard_eraser",
-                   layer=0, part=None, reason, observation_id,
+                   layer=0, layer_id=None, part=None, reason, observation_id,
                    expected_cursor=None, expected_state_hash=None, pressure=None):
         """Lift deposited graphite along an explicit path in stable layer order.
 
@@ -1407,7 +1588,7 @@ class DrawingSession:
                 raise ValueError("stale path eraser state")
             return str(self._commit(self._erase_path_action(points, stroke_id=stroke_id,
                 width=width, strength=strength, tool=tool, layer=layer, part=part,
-                reason=reason, observation_id=observation_id, pressure=pressure)))
+                reason=reason, observation_id=observation_id, pressure=pressure), layer_id=layer_id))
 
     def replace_stroke(
         self,
@@ -1472,7 +1653,7 @@ class DrawingSession:
             reason=reason,
         )
         action = DrawingAction(
-            action_id=_action_id(self._agent.history, action_id),
+            action_id=_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
             kind="replace_segment",
             stage=_COMPAT_STAGE,
             points=tuple(tuple(float(v) for v in point) for point in points),
@@ -1542,7 +1723,7 @@ class DrawingSession:
                 reason=reason.strip(),
             )
             action = DrawingAction(
-                action_id=_action_id(self._agent.history, action_id),
+                action_id=_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
                 kind="soft_lift_segment", stage=_COMPAT_STAGE,
                 target_stroke_id=target_stroke_id,
                 tool=_tool_payload(tool, grade, tool_overrides),
@@ -1574,7 +1755,7 @@ class DrawingSession:
         )
         metadata = {} if strength is None else {"strength": float(strength)}
         action = DrawingAction(
-            action_id=_action_id(self._agent.history, action_id),
+            action_id=_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
             kind="soft_lift",
             stage=_COMPAT_STAGE,
             target_stroke_id=str(target_stroke_id),
@@ -1607,7 +1788,7 @@ class DrawingSession:
             reason=reason,
         )
         action = DrawingAction(
-            action_id=_action_id(self._agent.history, action_id),
+            action_id=_action_id(self._agent.history, action_id, self._agent.executed_action_ids),
             kind="delete_stroke",
             stage=_COMPAT_STAGE,
             target_stroke_id=str(target_stroke_id),
@@ -1915,6 +2096,11 @@ class DrawingSession:
 
         with self._lock:
             self._assert_subject_current()
+            if self._intent is not None and not any(
+                    record.history_cursor <= self.history_cursor
+                    and record.intent_digest == self._intent.digest() for record in self._intent_history):
+                raise ValueError("current intent was selected later in retained history; "
+                                 "redo or explicitly set_intent at this cursor before inspection")
             roi_values = tuple(rois)
             guide_values = tuple(guides)
             measurement_values = tuple(measurements)

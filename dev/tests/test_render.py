@@ -53,8 +53,8 @@ def test_src_modules_are_named_by_role_not_renderer_generation() -> None:
     assert offenders == []
     render_modules = sorted(p.stem for p in (SRC / "img2drawing" / "render").glob("*.py"))
     assert render_modules == [
-        "__init__", "artifact", "contact_profile", "contract", "deposit", "eraser",
-        "grades", "hand", "ink", "mixed", "paper", "pencil", "profile", "screentone",
+        "__init__", "artifact", "contact_profile", "contract", "deposit", "document", "eraser",
+        "grades", "hand", "ink", "layer_export", "mixed", "paper", "pencil", "profile", "screentone",
     ]
 
 

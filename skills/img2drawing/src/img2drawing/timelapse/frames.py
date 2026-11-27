@@ -47,6 +47,9 @@ class FastPathEligibility:
 def inspect_fast_path_eligibility(history) -> FastPathEligibility:
     reasons: list[str] = []
     action_types = sorted({item.action for item in history.actions[:history.cursor]})
+    if any(kind.startswith(("document.", "layer.")) for kind in action_types):
+        return FastPathEligibility(False, ("layer document requires canonical replay",),
+                                   tuple(action_types), False)
     if history.media_contract is not None:
         if history.media_contract!=MIXED_HISTORY_CONTRACT:
             reasons.append("unknown mixed history contract")

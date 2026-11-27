@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[2]
 PLANNING = ROOT / "dev" / "planning" / "vnext"
 RELEASE = ROOT / "dev" / "release" / "vnext"
 PUBLISH = ROOT / "dev" / "release" / "publish"
+DEVELOPMENT = ROOT / "dev" / "release" / "development"
 PACKAGE = ROOT / "skills" / "img2drawing"
+STABLE_VERSION = re.compile(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)")
 
 
 def _text(path: Path) -> str:
@@ -42,6 +44,7 @@ def _updated_date(text: str, name: str) -> str:
 def _validate_publish_manifest(path: Path) -> dict:
     manifest = _json(path)
     version = path.stem.removeprefix("v")
+    assert STABLE_VERSION.fullmatch(version), "publish manifests require a stable package version"
     assert manifest["schema"] == "img2drawing.release.publish.v1", path
     assert manifest["tag"] == f"v{version}", path
     assert manifest["title"] == f"img2drawing v{version}", path
@@ -52,6 +55,65 @@ def _validate_publish_manifest(path: Path) -> dict:
     for asset in manifest.get("assets", []):
         assert (ROOT / asset).is_file(), asset
     return manifest
+
+
+def validate_development_target(target: dict, version: str) -> Path:
+    """Resolve explicit development authority without implying publication."""
+    fields = {"schema", "package_version", "published_stable", "runtime_freeze", "publish"}
+    assert set(target) == fields, "invalid development target fields"
+    assert target["schema"] == "img2drawing.development_target.v1", "invalid development target schema"
+    match = re.fullmatch(r"(.+)\.dev(?:0|[1-9][0-9]*)", version)
+    assert match and STABLE_VERSION.fullmatch(match.group(1)), "explicit development version required"
+    assert target["package_version"] == version, "development package version mismatch"
+    stable = target["published_stable"]
+    assert isinstance(stable, str) and STABLE_VERSION.fullmatch(stable), "published stable must be stable"
+    assert tuple(map(int, stable.split("."))) < tuple(map(int, match.group(1).split("."))), (
+        "development target must follow published stable"
+    )
+    assert target["publish"] is False, "development target cannot authorize publication"
+    assert not (PUBLISH / f"v{version}.json").exists(), "development version cannot have a publish manifest"
+    relative = target["runtime_freeze"]
+    assert isinstance(relative, str), "development contract path required"
+    path = Path(relative)
+    assert not path.is_absolute() and ".." not in path.parts, "invalid development contract path"
+    path = (ROOT / path).resolve()
+    assert path.parent == DEVELOPMENT.resolve() and path.name.startswith("CONTRACT_FREEZE"), (
+        "development contract must be separate from published freezes"
+    )
+    assert path.suffix == ".json" and path.is_file(), "development contract is missing"
+    frozen = _json(path)
+    assert frozen.get("schema") == "img2drawing.development_contract.v1", "invalid development contract schema"
+    assert frozen.get("package_version") == version, "development contract version mismatch"
+    assert frozen.get("publication_status") == "development-only-not-published", (
+        "development contract publication status mismatch"
+    )
+    return path
+
+
+def release_context(version: str | None = None) -> dict:
+    """Select source and published authorities; only current contracts match live code."""
+    version = _package_version() if version is None else version
+    development = None
+    if STABLE_VERSION.fullmatch(version):
+        stable = version
+        runtime_freezes = None
+    else:
+        target_path = DEVELOPMENT / f"v{version}.json"
+        assert target_path.is_file(), f"nonstable package version {version} requires explicit development metadata"
+        development = _json(target_path)
+        runtime_freezes = (validate_development_target(development, version),)
+        stable = development["published_stable"]
+    manifest_path = PUBLISH / f"v{stable}.json"
+    assert manifest_path.is_file(), f"stable package version {stable} requires dev/release/publish/v{stable}.json"
+    manifest = _validate_publish_manifest(manifest_path)
+    stable_freezes = tuple(ROOT / asset for asset in manifest.get("assets", [])
+                          if Path(asset).name.startswith("CONTRACT_FREEZE"))
+    assert stable_freezes, "current stable release must attach a contract freeze"
+    for path in stable_freezes:
+        assert _json(path)["package_version"] == stable, "published freeze version mismatch"
+    return {"package_version": version, "published_stable": stable, "manifest": manifest,
+            "runtime_freezes": stable_freezes if runtime_freezes is None else runtime_freezes,
+            "development": development}
 
 
 def verify_readme_scope(text: str) -> None:
@@ -113,12 +175,46 @@ def verify_runtime_freeze(freeze: dict) -> None:
         members = sorted(name for name in dir(DrawingSession) if not name.startswith("_"))
         assert sorted(freeze["drawing_session_members"]) == members, "session surface drift"
 
+    if tuple(map(int, release.groups())) >= (1, 5):
+        from img2drawing.core.layers import LAYER_DOCUMENT_SCHEMA, LAYER_ACTION_SCHEMA, LAYER_ACTION_KINDS
+        from img2drawing.render.document import DOCUMENT_COMPOSITING_CONTRACT
+        from img2drawing.render.layer_export import LAYER_EXPORT_SCHEMA
+        from img2drawing.runtime import runtime_capabilities
+
+        assert "document_layers" in freeze, "document layer authority missing from current contract"
+        layers = freeze["document_layers"]
+        assert isinstance(layers, dict) and set(layers) == {
+            "schemas", "action_kinds", "compositing_contract", "compositing_contract_digest",
+            "runtime_capabilities",
+        }, "document layer authority fields drift"
+        assert layers.get("schemas") == {
+            "layer_document": LAYER_DOCUMENT_SCHEMA,
+            "layer_action": LAYER_ACTION_SCHEMA,
+            "layer_export": LAYER_EXPORT_SCHEMA,
+        }, "document layer schema drift"
+        assert layers.get("action_kinds") == sorted(LAYER_ACTION_KINDS), "document layer action drift"
+        assert layers.get("compositing_contract") == DOCUMENT_COMPOSITING_CONTRACT.to_dict(), (
+            "document compositing contract drift"
+        )
+        assert layers.get("compositing_contract_digest") == DOCUMENT_COMPOSITING_CONTRACT.digest(), (
+            "document compositing digest drift"
+        )
+        assert freeze.get("runtime_capabilities") == runtime_capabilities().to_dict(), (
+            "default runtime capability drift"
+        )
+        assert layers.get("runtime_capabilities") == runtime_capabilities(layered=True).to_dict(), (
+            "layered runtime capability drift"
+        )
+
 
 def main() -> None:
     assert not (ROOT / "GATES.md").exists(), "retired root GATES.md reappeared"
     assert not (ROOT / "HANDOFF.md").exists(), "retired root HANDOFF.md reappeared"
 
-    version = _package_version()
+    context = release_context()
+    version = context["package_version"]
+    stable = context["published_stable"]
+    current_manifest = context["manifest"]
     root_readme = _text(ROOT / "README.md")
     verify_readme_scope(root_readme)
     changelog = _text(ROOT / "CHANGELOG.md")
@@ -134,58 +230,51 @@ def main() -> None:
     assert "does not create a second current-state truth" in roadmap
     assert "Status: Slice A CLOSED · Slice B CLOSED · Slice C CLOSED · Slice D CLOSED · Slice E CLOSED" in attention_plan
 
-    current_manifest_path = PUBLISH / f"v{version}.json"
-    assert current_manifest_path.is_file(), (
-        f"stable package version {version} requires dev/release/publish/v{version}.json"
-    )
-    current_manifest = _validate_publish_manifest(current_manifest_path)
-
     # Every retained publish record is internally self-consistent and immutable by version.
     manifests = sorted(PUBLISH.glob("v*.json"))
     assert manifests, "no release publish manifests"
     for manifest_path in manifests:
         _validate_publish_manifest(manifest_path)
 
-    assert f"**Current stable: v{version}**" in root_readme
-    assert f"version-v{version}-" in root_readme
-    assert f"## v{version} —" in changelog
+    assert f"**Current stable: v{stable}**" in root_readme
+    assert f"version-v{stable}-" in root_readme
+    assert f"## v{stable} —" in changelog
     assert (
-        f"PUBLISHED STABLE:   v{version}" in status
-        or f"SELECTED RELEASE:   v{version}" in status
-    ), "STATUS.md release authority must match the current package version"
+        f"PUBLISHED STABLE:   v{stable}" in status
+        or (context["development"] is None and f"SELECTED RELEASE:   v{stable}" in status)
+    ), "STATUS.md release authority must match the published stable version"
     assert f"CURRENT SOURCE:     {version}" in status
     assert f"PACKAGE VERSION:    {version}" in status
-    assert f"v{version}" in roadmap
-    assert f"GitHub Release v{version}" in planning_readme
-    assert f"v{version} is the latest published stable" in contract
+    assert f"v{stable}" in roadmap
+    assert f"GitHub Release v{stable}" in planning_readme
+    assert f"v{stable} is the latest published stable" in contract
+    if context["development"] is not None:
+        target = version.split(".dev", 1)[0]
+        assert f"## Unreleased — v{target}" in changelog, "development changes require an unreleased section"
+        assert f"**Current stable: v{version}**" not in root_readme
+        assert f"v{target} is the latest published stable" not in contract
 
     codex = _json(ROOT / ".codex-plugin" / "plugin.json")
     claude = _json(ROOT / ".claude-plugin" / "plugin.json")
     assert codex["version"] == version
     assert claude["version"] == version
 
-    freeze_assets = [
-        ROOT / asset
-        for asset in current_manifest.get("assets", [])
-        if Path(asset).name.startswith("CONTRACT_FREEZE")
-    ]
-    assert freeze_assets, "current stable release must attach a contract freeze"
-    for freeze_path in freeze_assets:
+    for freeze_path in context["runtime_freezes"]:
         freeze = _json(freeze_path)
         assert freeze["package_version"] == version
         assert freeze["canonical_render_profile"]["renderer_id"] == "img2drawing-pencil"
         assert str(freeze["canonical_render_profile"]["renderer_version"]) == "11"
         verify_runtime_freeze(freeze)
-        runtime = freeze.get("runtime_capabilities")
         from img2drawing.runtime import runtime_capabilities
 
         capabilities = runtime_capabilities()
-        assert runtime == {
-            "schema": capabilities.schema,
-            "authoring_operations": list(capabilities.authoring_operations),
-            "output_operations": list(capabilities.output_operations),
-            "compatibility_alias": "supported_authoring_operations -> supported_operations",
-        }
+        if tuple(map(int, version.split(".")[:2])) < (1, 5):
+            assert freeze.get("runtime_capabilities") == {
+                "schema": capabilities.schema,
+                "authoring_operations": list(capabilities.authoring_operations),
+                "output_operations": list(capabilities.output_operations),
+                "compatibility_alias": "supported_authoring_operations -> supported_operations",
+            }
         assert capabilities.supported_authoring_operations == capabilities.supported_operations
 
     # Historical release authority remains present and version-specific.
@@ -227,7 +316,7 @@ def main() -> None:
     assert "img2drawing-pencil / 11" in notes
     assert "renderer pixels" in notes.lower() or "pixel" in notes.lower()
 
-    print(f"CURRENT_DOCUMENTATION_CONSISTENCY_PASS ({version})")
+    print(f"CURRENT_DOCUMENTATION_CONSISTENCY_PASS (source={version}, stable={stable})")
 
 
 if __name__ == "__main__":
