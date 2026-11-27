@@ -15,10 +15,9 @@ freeze. Immutable released snapshots remain version-specific:
 - v1.3.0 / constructive drawing: `dev/release/vnext/CONTRACT_FREEZE_V1_3_0.json`;
 - v1.3.1 / maintenance: `dev/release/vnext/CONTRACT_FREEZE_V1_3_1.json`;
 - v1.4.0 / mixed media: `dev/release/vnext/CONTRACT_FREEZE_V1_4_0.json`.
+- v1.5.0 / optional layers and exchange: `dev/release/vnext/CONTRACT_FREEZE_V1_5_0.json`.
 
 Those freezes may intentionally differ from later `main`; neither is rewritten to describe future work.
-The selected v1.5.0 candidate has a separate `dev/release/vnext/CONTRACT_FREEZE_V1_5_0.json`;
-its preparation does not establish publication.
 
 ## 1. One canonical orchestration core
 
@@ -161,7 +160,7 @@ larger requested drawing is not permission to end that larger task.
 
 ## 9. Compatibility and release boundary
 
-After successful main CI and manifest-driven publication, v1.5.0 is the latest published stable. This is a conditional promotion rule: the current observed publication remains v1.4.0 until the v1.5.0 release, tag and assets exist. The selected manifest and additive freeze define the release contract; the actual GitHub Release, tag, target commit and uploaded assets establish publication. Earlier release and development records remain immutable. New sessions default to legacy v11; optional mixed-media and layer contracts extend the existing history. Release notes and `STATUS.md` record bounded mechanical and practical evidence; those observations do not certify general artistic improvement.
+After successful main CI and observed manifest-driven publication, v1.5.0 is the latest published stable. Its tag targets the tested main commit and all four release assets are uploaded. The manifest and additive freeze define the release contract; the actual GitHub Release, tag, target commit and assets establish publication. Earlier release and development records remain immutable. New sessions default to legacy v11; optional mixed-media and layer contracts extend the existing history. Release notes and `STATUS.md` record bounded mechanical and practical evidence; those observations do not certify general artistic improvement.
 
 The deprecated pre-0.6.0rc2 root aliases, `img2drawing.vnext` and `img2drawing.provenance` import paths, and v9/v10 runtime renderer implementations are removed in v1.1.0. Exact historical replay of those renderer identities belongs to `img2drawing==1.0.3`.
 
