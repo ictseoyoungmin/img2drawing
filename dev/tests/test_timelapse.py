@@ -8,6 +8,7 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+import PIL
 from PIL import Image
 
 from img2drawing import DrawingIntent, DrawingSession, RenderProfile
@@ -168,17 +169,32 @@ def _narrow_graphite_session(tmp_path: Path, size, points) -> DrawingSession:
     ((128, 192), ((24, 8), (40, 184))),
     ((96, 256), ((8, 100), (88, 116))),
 ])
-def test_narrow_graphite_dirty_resample_matches_full_page(tmp_path: Path, size, points) -> None:
+def test_narrow_graphite_dirty_resample_matches_full_page(tmp_path: Path, monkeypatch, size, points) -> None:
     # Public synthetic geometry makes the guarded crop and full page choose
     # opposite separable-filter pass orders in Pillow 13.
     session = _narrow_graphite_session(tmp_path, size, points)
     history, profile = session._agent.history, _profile(*size)
     source = FastFrameSource(history, profile)
     previous = source.image()
+    resize_calls = []
+    original_resize = Image.Image.resize
+
+    def record_resize(image, output_size, *args, **kwargs):
+        resize_calls.append((image.size, output_size))
+        return original_resize(image, output_size, *args, **kwargs)
+
+    monkeypatch.setattr(Image.Image, "resize", record_resize)
     try:
         info = source.advance_to(history.cursor)
         assert info["mode"] == "append"
         assert info["output_regions"] != [(0, 0, *size)]
+        full_resize = (source.renderer.hi_size, source.renderer.out_size)
+        if int(PIL.__version__.split(".", 1)[0]) < 13:
+            assert full_resize not in resize_calls
+            assert 0 < source.stats["dirty_output_pixels"] < size[0] * size[1]
+        else:
+            assert full_resize in resize_calls
+            assert source.stats["dirty_output_pixels"] == size[0] * size[1]
         assert drawing_state_hash(source.replay.snapshot()) == drawing_state_hash(history.state_at())
         with source.image() as got, render_image(
             profile.prepared_ir(history.state_at()), **profile.renderer_kwargs()
@@ -190,6 +206,24 @@ def test_narrow_graphite_dirty_resample_matches_full_page(tmp_path: Path, size, 
             assert previous.tobytes() == want.tobytes()
     finally:
         previous.close()
+        source.close()
+
+
+@pytest.mark.parametrize("version", ["unknown", None])
+def test_unknown_pillow_version_uses_exact_full_page_resampling(tmp_path: Path, monkeypatch, version) -> None:
+    size = (128, 192)
+    session = _narrow_graphite_session(tmp_path, size, ((24, 8), (40, 184)))
+    history, profile = session._agent.history, _profile(*size)
+    monkeypatch.setattr(PIL, "__version__", version)
+    source = FastFrameSource(history, profile)
+    try:
+        source.advance_to(history.cursor)
+        assert source.stats["dirty_output_pixels"] == size[0] * size[1]
+        with source.image() as got, render_image(
+            profile.prepared_ir(history.state_at()), **profile.renderer_kwargs()
+        ) as want:
+            assert got.tobytes() == want.tobytes()
+    finally:
         source.close()
 
 

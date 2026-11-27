@@ -4,6 +4,7 @@ import hashlib
 import shutil
 
 import pytest
+import PIL
 from PIL import Image
 
 from img2drawing import RenderProfile
@@ -127,6 +128,10 @@ def test_narrow_ink_dirty_resample_matches_full_page(size,points):
         info=src.advance_to(1)
         assert info["mode"]=="append"
         assert info["output_regions"]!=[(0,0,*size)]
+        if int(PIL.__version__.split(".",1)[0])<13:
+            assert 0<src.stats["dirty_output_pixels"]<size[0]*size[1]
+        else:
+            assert src.stats["dirty_output_pixels"]==size[0]*size[1]
         with src.image() as got,canonical(h,p,1) as want:
             assert got.tobytes()==want.tobytes()
             for box in info["output_regions"]:

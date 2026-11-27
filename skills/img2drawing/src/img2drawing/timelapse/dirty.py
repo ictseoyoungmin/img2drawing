@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import PIL
 from PIL import Image
 
 from ..render.eraser import erase, is_eraser
@@ -115,8 +116,16 @@ def _align_up(v: int, m: int) -> int:
     return ((v + m - 1) // m) * m
 
 
+def _guarded_resample_supported() -> bool:
+    try:
+        major = int(PIL.__version__.split(".", 1)[0])
+    except (AttributeError, TypeError, ValueError):
+        return False
+    return 0 < major < 13
+
+
 def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Image, regions,
-                          influence_px: int = 12, *,
+                          influence_px: int = 12, guard_px: int = 24, *,
                           precomposited: bool = False):
     ratio = int(round(renderer.hi_size[0] / renderer.out_size[0]))
     if ratio < 1 or abs(renderer.hi_size[0] / renderer.out_size[0] - ratio) > 1e-9 \
@@ -134,12 +143,38 @@ def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Im
     targets = merge_regions(targets)
     if not targets:
         return targets, 0
-    # Pillow may choose separable-filter pass order from image dimensions.
-    # A guarded crop can therefore round differently from the canonical full
-    # page. Keep incremental composition and dirty delta writes, but downsample
-    # the accumulated ink or graphite canvas with the canonical dimensions.
-    image = (hi_canvas.resize(renderer.out_size, Image.Resampling.LANCZOS)
-             if precomposited else finalize_full(renderer, hi_canvas))
-    with image:
-        out_canvas.paste(image)
-    return targets, renderer.out_size[0] * renderer.out_size[1]
+    if not _guarded_resample_supported():
+        # Pillow 13 chooses separable-filter pass order from image dimensions.
+        # A guarded crop can therefore round differently from the canonical
+        # full page. Newer or unknown versions use the same conservative path.
+        image = (hi_canvas.resize(renderer.out_size, Image.Resampling.LANCZOS)
+                 if precomposited else finalize_full(renderer, hi_canvas))
+        with image:
+            out_canvas.paste(image)
+        return targets, renderer.out_size[0] * renderer.out_size[1]
+    # Older Pillow versions have fixed horizontal-first resampling. Retain the
+    # proven guarded-crop optimization without changing composition or pixels.
+    guard = max(guard_px, 8 * ratio)
+    total_out_area = 0
+    for tx0, ty0, tx1, ty1 in targets:
+        sx0 = max(0, _align_down(tx0 - guard, ratio))
+        sy0 = max(0, _align_down(ty0 - guard, ratio))
+        sx1 = min(renderer.hi_size[0], _align_up(tx1 + guard, ratio))
+        sy1 = min(renderer.hi_size[1], _align_up(ty1 + guard, ratio))
+        crop = hi_canvas.crop((sx0, sy0, sx1, sy1))
+        if precomposited:
+            composited = crop
+        else:
+            base = Image.new("RGBA", crop.size, renderer.background)
+            composited = Image.alpha_composite(base, crop)
+            base.close(); crop.close()
+        small = composited.resize(((sx1 - sx0) // ratio, (sy1 - sy0) // ratio), Image.Resampling.LANCZOS)
+        composited.close()
+        cx0, cy0 = (tx0 - sx0) // ratio, (ty0 - sy0) // ratio
+        cx1, cy1 = (tx1 - sx0) // ratio, (ty1 - sy0) // ratio
+        interior = small.crop((cx0, cy0, cx1, cy1))
+        small.close()
+        out_canvas.paste(interior, (tx0 // ratio, ty0 // ratio))
+        total_out_area += interior.size[0] * interior.size[1]
+        interior.close()
+    return targets, total_out_area
