@@ -189,7 +189,11 @@ def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
                        "img2drawing.authoring.InkPath", "img2drawing.authoring.InkArea",
                        "img2drawing.authoring.preview_ink_actions",
                        "img2drawing.authoring.PenDefinition", "img2drawing.authoring.g_pen",
-                       "img2drawing.authoring.fineliner", "img2drawing.authoring.read_pen_definition")
+                       "img2drawing.authoring.fineliner", "img2drawing.authoring.read_pen_definition",
+                       "img2drawing.authoring.ink_brush", "img2drawing.authoring.solid_ink",
+                       "img2drawing.authoring.sample_ink_contour", "img2drawing.authoring.current_ink_element",
+                       "img2drawing.authoring.prepare_ink_transform",
+                       "img2drawing.authoring.prepare_ink_group_transform")
                    + (("img2drawing.authoring.StyledInkPath",) if render_profile.supports_styled_ink else ()),
                    render_profile_entrypoints=caps.render_profile_entrypoints + ("RenderProfile.mixed_media",))
 
