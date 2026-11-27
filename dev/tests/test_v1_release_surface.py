@@ -152,3 +152,81 @@ def test_current_runtime_freeze_matches_live_authority_and_rejects_drift():
     modified["root_exports"].append("nonexistent_export")
     with pytest.raises(AssertionError, match="export drift"):
         policy.verify_runtime_freeze(modified)
+
+
+@pytest.fixture
+def mixed_runtime_freeze():
+    from img2drawing import DrawingSession, RenderProfile, authoring
+
+    path = ROOT / "dev/tools/verify_current_documentation.py"
+    spec = importlib.util.spec_from_file_location("mixed_release_policy", path)
+    policy = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(policy)
+    historical = json.loads((ROOT / "dev/release/vnext/CONTRACT_FREEZE_V1_3_1.json").read_text())
+    # The old published freeze stays valid without new mixed fields or exports.
+    policy.verify_runtime_freeze(historical)
+    frozen = json.loads(json.dumps(historical))
+    frozen["package_version"] = "1.4.0"
+    canvas = frozen["canonical_render_profile"]
+    width, height = canvas["canvas_width"], canvas["canvas_height"]
+    frozen["mixed_media"] = {
+        "default_profile": "mixed-media-v3",
+        "profiles": {
+            "mixed-media-v1": RenderProfile.mixed_media(width, height, styled_paths=False).to_dict(),
+            "mixed-media-v2": RenderProfile.mixed_media(width, height, screentones=False).to_dict(),
+            "mixed-media-v3": RenderProfile.mixed_media(width, height).to_dict(),
+        },
+    }
+    frozen["authoring_exports"] = sorted(authoring.__all__)
+    frozen["drawing_session_members"] = sorted(name for name in dir(DrawingSession) if not name.startswith("_"))
+    return policy, frozen
+
+
+def test_mixed_freeze_matches_all_live_profile_selections(mixed_runtime_freeze):
+    policy, frozen = mixed_runtime_freeze
+    policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("version", ["1.4.0", "1.5.0", "2.0.0"])
+def test_mixed_freeze_authority_cannot_be_omitted(mixed_runtime_freeze, version):
+    policy, frozen = mixed_runtime_freeze
+    frozen["package_version"] = version
+    del frozen["mixed_media"]
+    with pytest.raises(AssertionError, match="mixed-media authority missing"):
+        policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("version,key,value", [
+    ("mixed-media-v1", "renderer_contract_digest", "0" * 64),
+    ("mixed-media-v2", "renderer_id", "img2drawing-other"),
+    ("mixed-media-v3", "gif_disposal", 2),
+])
+def test_mixed_freeze_rejects_profile_drift(mixed_runtime_freeze, version, key, value):
+    policy, frozen = mixed_runtime_freeze
+    frozen["mixed_media"]["profiles"][version][key] = value
+    with pytest.raises(AssertionError, match="mixed render profile drift"):
+        policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("change", ["missing", "extra", "default"])
+def test_mixed_freeze_requires_complete_profile_set_and_default(mixed_runtime_freeze, change):
+    policy, frozen = mixed_runtime_freeze
+    if change == "missing":
+        del frozen["mixed_media"]["profiles"]["mixed-media-v2"]
+    elif change == "extra":
+        frozen["mixed_media"]["profiles"]["mixed-media-v4"] = {}
+    else:
+        frozen["mixed_media"]["default_profile"] = "mixed-media-v2"
+    with pytest.raises(AssertionError, match="mixed render profile drift"):
+        policy.verify_runtime_freeze(frozen)
+
+
+@pytest.mark.parametrize("surface,member,match", [
+    ("authoring_exports", "g_pen", "authoring export drift"),
+    ("drawing_session_members", "finish", "session surface drift"),
+])
+def test_mixed_freeze_rejects_stale_public_surface(mixed_runtime_freeze, surface, member, match):
+    policy, frozen = mixed_runtime_freeze
+    frozen[surface].remove(member)
+    with pytest.raises(AssertionError, match=match):
+        policy.verify_runtime_freeze(frozen)
