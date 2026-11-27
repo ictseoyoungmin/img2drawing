@@ -102,6 +102,9 @@ Open only the leaf that owns the current problem; use the listed public names.
 | Inspect tone/overlap | `TonalPatch`, `inspect_tonal_patches`, `inspect_tonal_proposals`, `TonalBandProbe`, `inspect_contact_overlap` | [Value and edge](../description/value-edge-and-graphite.md) |
 | Edit meaningful stroke groups and recheck dependencies | `SemanticGroup`, `record_semantic_groups`, `inspect_semantic_groups`, `review_semantic_group`, `prepare_group_transform`, `retire_group_guides` | [Authored element navigation](../review/authored-element-navigation.md) |
 
+For requested ink/mixed-media marks, open [Mixed-media API](mixed-media.md) instead of
+guessing pencil presets. Select the profile before authoring; existing sessions keep theirs.
+
 These optional helpers never replace DrawingSession, determine subject semantics, or
 turn a diagnostic into artistic acceptance.
 
@@ -358,8 +361,8 @@ session.record_evidence_read(inspection_id)
 `DrawingSession.finish()` then binds the Agent's completion decision to current evidence. It rejects
 finishing when:
 
-- the current drawing has no authored strokes, including a session whose earlier marks were all
-  erased again;
+- the current drawing has no current authored marks (graphite or, under a mixed profile, ink/tone),
+  including a session whose earlier marks were all retired;
 - the final inspection has not been explicitly recorded as read;
 - the inspection is stale, superseded, or predates the current intent;
 - any residual record remains open.

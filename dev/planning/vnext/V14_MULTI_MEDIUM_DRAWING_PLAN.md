@@ -272,6 +272,14 @@ Acceptance: graph reachability, no orphan/broken links, skill/package allowlists
 fresh worker can discover available profile and tools without implementation source,
 example actually executes/resumes and produces canonical final/GIF.
 
+Implementation: separate conditional markmaking and public API leaves with
+bounded attention budgets. Execute the exact shipped Markdown smoke block in
+a clean wheel environment using the verified skill ZIP. Correct completion for
+ink-only current marks and expose mixed-only ink counts in derived authoring
+summary. Keep historical schemas and default pencil discovery unchanged.
+The installed guide smoke is evidence of callable usability, not an independent
+fresh-worker run or artistic quality verdict; record that distinction explicitly.
+
 ## 5. S06 — Replay, regression, install and performance
 
 S01–S05 carry per-feature mechanical tests; S06 is final integration, not first

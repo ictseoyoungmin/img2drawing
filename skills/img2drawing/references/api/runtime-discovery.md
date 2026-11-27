@@ -32,6 +32,13 @@ caps.authoring_helpers     # geometry and material editing helpers
 caps.observation_helpers   # explicit landmarks and read-only projected geometry
 ```
 
+For explicitly requested mixed media, the unscoped manifest remains the legacy pencil view.
+Select `RenderProfile.mixed_media(w, h)` for a new session, then call
+`runtime_capabilities(profile)` (or `runtime_capabilities(session.render_profile)` on resume).
+The scoped manifest lists ink actions and helpers available under that exact contract.
+Do not treat the absence of ink in the unscoped manifest as a runtime gap or silently
+change an older session's profile. See [Mixed-media API](mixed-media.md).
+
 The semantic operation labels are split into `authoring_operations` and `output_operations`;
 `supported_operations` is their combined worker-facing view. Exact callable names are listed in
 `authoring_entrypoints` and `output_entrypoints`. The old
