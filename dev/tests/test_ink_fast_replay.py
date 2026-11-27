@@ -124,6 +124,9 @@ def test_cache_isolation_and_eviction():
         with pytest.raises(ValueError,match="another profile"):
             with b.patch(mark,key=key):
                 pass
+        with pytest.raises(ValueError,match="does not match mark"):
+            with a.patch(replace(mark,paint="white"),key=key):
+                pass
         with a.patch(mark) as (box,patch):
             raw=patch.tobytes()
         with a.patch(mark) as (_,patch):
@@ -150,6 +153,14 @@ def test_ink_source_rejects_changed_history_and_wrong_profile():
     finally:
         src.close()
     h.redo()
+    src=InkFrameSource(h,p)
+    try:
+        h.metadata["new-evidence"]="changed"
+        with pytest.raises(ValueError,match="history changed"):
+            src.advance_to(1)
+    finally:
+        src.close()
+    h.metadata.pop("new-evidence")
     old=RenderProfile.mixed_media(128,96,supersample=2,screentones=False)
     src=InkFrameSource(h,old)
     try:

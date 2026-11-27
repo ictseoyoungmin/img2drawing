@@ -245,11 +245,15 @@ class InkPatchCache:
         if self._closed:
             raise ValueError("ink patch cache is closed")
         self.profile.validate_ink_mark(mark)
-        # Caller may reuse a key derived from the same immutable mark in this
-        # source. Never accept a key from a different rendering scope.
-        key = self.key(mark) if key is None else key
-        if key[0] != self._scope:
-            raise ValueError("ink patch key belongs to another profile")
+        # Verify both the rendering scope and geometry. An incorrect supplied
+        # key must never return a different mark's cached pixels.
+        expected=self.key(mark)
+        if key is not None:
+            if not isinstance(key,tuple) or len(key)!=2 or key[0]!=self._scope:
+                raise ValueError("ink patch key belongs to another profile")
+            if key!=expected:
+                raise ValueError("ink patch key does not match mark geometry")
+        key=expected
         hit=self._entries.get(key)
         if hit is not None:
             self._entries.move_to_end(key)

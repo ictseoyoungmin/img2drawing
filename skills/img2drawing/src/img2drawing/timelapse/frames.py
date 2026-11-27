@@ -10,6 +10,7 @@ contains unsupported semantics. Explicit path lifts use the same eraser in both 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from copy import deepcopy
 from pathlib import Path
 from typing import Iterable
 
@@ -265,6 +266,7 @@ class InkFrameSource:
         self.renderer=InkPatchCache(profile,supersample=supersample,max_bytes=cache_bytes)
         self.replay=ForwardHistoryReplay(history)
         self._records=tuple(history.actions[:history.cursor])
+        self._metadata=deepcopy(history.metadata)
         self._entries={}
         self.cursor=0
         self._failed=False
@@ -278,6 +280,9 @@ class InkFrameSource:
 
     def _check_history(self):
         if (self.history.cursor!=len(self._records) or
+                self.history.media_contract!=MIXED_HISTORY_CONTRACT or
+                (self.history.width,self.history.height)!=(self.profile.canvas_width,self.profile.canvas_height) or
+                self.history.metadata!=self._metadata or
                 any(a is not b for a,b in zip(self._records,self.history.actions)) or
                 len(self.history.actions)<len(self._records)):
             raise ValueError("history changed during ink fast replay; open a new frame source")
