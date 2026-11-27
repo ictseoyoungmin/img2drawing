@@ -1,0 +1,169 @@
+{
+  "schema": "img2drawing.s07.fresh_figure_evidence.v1",
+  "date": "2026-11-27",
+  "scope": "One new reference-specific figure drawing per material; not reproduction of the unavailable original feedback session.",
+  "protocol": {
+    "canvas": [
+      1024,
+      1536
+    ],
+    "supersample": 2,
+    "same_reference_goal": true,
+    "max_actions": 1400,
+    "max_wall_sec": 2400,
+    "declared_max_tokens": 55000,
+    "token_usage": "not_metered",
+    "model": "same inherited session default, no override; backend model identity not independently attested",
+    "isolation": "fresh contexts, separate venvs, instruction-scoped reads on shared host; not OS-sandbox isolation",
+    "review": "random A/B identities; full images and six same-coordinate regions chosen before viewing outputs; visual media inferable"
+  },
+  "workers": {
+    "mixed_candidate": {
+      "comparison_package_version": "1.3.1",
+      "source_commit": "1e34ecb573cedbcdd1a7579442402252eaa691a6",
+      "wheel_sha256": "b9c04f3e7675ea2bee4e6aaf5337a7b66004b4ce5731d3ca8ca66be8f356f0f1",
+      "actions": 654,
+      "observations": 13,
+      "inspections": 8,
+      "corrections": 3,
+      "recorded_elapsed_sec": 1713.531,
+      "current_finish_resume_final_exact": true,
+      "worker_full_gif": "PASS via canonical; 165 every-4 samples including 0 and 654",
+      "auto_fast_result": "FAIL before S06e: independent final-frame mismatch on Pillow 13; no guard bypass",
+      "final_rgba_pixel_sha256": "3c3132d84eab9d29de3026c7d18c9c7ef4c68058a1a2251355ee25c2a9c86ac8"
+    },
+    "graphite_v1.3.0": {
+      "comparison_package_version": "1.3.0",
+      "wheel_sha256": "0cdcb1c657e340e40f68757c6997e97904bc5d0711f49900302992df9cba210e",
+      "actions": 859,
+      "observations": 12,
+      "inspections": 7,
+      "corrections": 3,
+      "recorded_elapsed_sec": 2382.378573656082,
+      "current_finish_resume_final_exact": true,
+      "worker_full_gif": "NOT COMPLETED: auto/Fast endpoint mismatch; canonical fallback stopped at worker wall-budget guard after 57/216 samples",
+      "post_worker_parent_export": "PASS: full canonical216 samples with original official1.3.0 wheel, samePillow13/NumPy2.3.5;1047.827sec post-budget verification, original checkpoint unchanged",
+      "final_rgba_pixel_sha256": "85c0bc4ec9d06ed2d39950403207e3db9f3789f65580330220b99a6085f07aa5"
+    }
+  },
+  "review": {
+    "overall_preference": "mixed_candidate",
+    "acceptance": {
+      "mixed_candidate": "qualified acceptance",
+      "graphite_v1.3.0": "reject"
+    },
+    "dimension_preferences": {
+      "whole composition and pose": "tie",
+      "face and expression": "graphite_v1.3.0",
+      "hair mass and clumps": "tie",
+      "hand/contact and occlusion": "mixed_candidate",
+      "line hierarchy": "mixed_candidate",
+      "dark boundaries and light reserves": "mixed_candidate",
+      "tone organization": "mixed_candidate",
+      "overall reference fidelity and aesthetic coherence": "mixed_candidate"
+    },
+    "geometry_residuals": [
+      "Both: generalized expression and pointed chin, regularized hair clumps, abbreviated glove/finger/contact geometry.",
+      "Both: simplified clothing folds and object overlaps; graphite control has weaker equipment/body depth separation."
+    ],
+    "material_residuals": [
+      "Mixed: repetitive conspicuous screens flatten some volume and compete with small detail; background is assertive.",
+      "Graphite control: pale jacket, shorts and boots remain unevenly resolved against dense stockings."
+    ],
+    "uncertain": [
+      "PNG review cannot attribute crowded small patterns to authoring, sampling or display separately.",
+      "Independent geometry/value decisions differ; the preference is not a causal material-quality result."
+    ]
+  },
+  "replay_correction": {
+    "pull_request": 121,
+    "head": "348342787f17ce0655cc1df3aec3b0f3c3ede1ed",
+    "cause": "Pillow13 crop/full-page separable resize pass-order rounding",
+    "fix": "Pillow13+ or unknown: canonical-dimension resampling; before13: retained verified guarded crop. Both keep incremental composition/cache/dirty delta writes and unchanged material kernels.",
+    "mixed_samples": "165/165 RGB and independent state exact; original final unchanged",
+    "graphite_samples": "216/216 decoded Fast RGB equals installed-baseline canonical PNGs; independent forward state equals history.state_at and canonical artifact state. Legacy manifest null state fields retained; original checkpoint/final unchanged.",
+    "remote_ci": "PR46017430613/push46017419474 SUCCESS at3483427:679 active+49 runtime, additionalPillow13 replay45 passed. Merge5f91bbe; finalmain/publication separately gated.",
+    "stress": {
+      "run_id": 46017430538,
+      "head": "348342787f17ce0655cc1df3aec3b0f3c3ede1ed",
+      "status": "PASS",
+      "actions": 1358,
+      "sampled_frames": 680,
+      "all_lossless_staged_frames_checked": 680,
+      "independent_canonical_sample_cursors": [
+        0,
+        2,
+        128,
+        400,
+        800,
+        1320,
+        1352,
+        1358
+      ],
+      "graphite_all680_baseline_candidate_hashes_exact": true,
+      "graphite_gif_byte_identity": true,
+      "environment": {
+        "python": "3.10.22",
+        "numpy": "2.2.6",
+        "pillow": "11.3.0"
+      },
+      "measurements": [
+        {
+          "mode": "graphite",
+          "version": "1.3.0",
+          "author_sec": 56.786062867,
+          "resume_sec": 1.7000272319999965,
+          "export_sec": 59.47139936100001,
+          "total_sec": 189.456176766,
+          "parent_peak_rss_kib": 423016,
+          "gif_bytes": 809613,
+          "gif_sha256": "7ec460d09458c7aff4c478f7048a8217f986e9d6c6228f7ec0ac43d2f5ea6564",
+          "final_pixel_sha256": "aa8358afa8618fee4d38b560247db54d47197125840267b60b801fc42c0b8645"
+        },
+        {
+          "mode": "graphite",
+          "version": "1.3.1",
+          "author_sec": 48.152999840999996,
+          "resume_sec": 1.4775086089999832,
+          "export_sec": 58.548897517,
+          "total_sec": 179.85213444099998,
+          "parent_peak_rss_kib": 423960,
+          "gif_bytes": 809613,
+          "gif_sha256": "7ec460d09458c7aff4c478f7048a8217f986e9d6c6228f7ec0ac43d2f5ea6564",
+          "final_pixel_sha256": "aa8358afa8618fee4d38b560247db54d47197125840267b60b801fc42c0b8645"
+        },
+        {
+          "mode": "ink",
+          "version": "1.3.1",
+          "author_sec": 2.4087600080000016,
+          "resume_sec": 0.7477560439999706,
+          "export_sec": 50.59134812899998,
+          "total_sec": 73.12300065400001,
+          "parent_peak_rss_kib": 411536,
+          "gif_bytes": 701600,
+          "gif_sha256": "0d69f0a6822fa038e507c3b67ebce0324c529484c8abb4de1bb3b6c41fc4538c",
+          "final_pixel_sha256": "fb60c7dcfb8fdf538ed260151aa851c23fd6ca3f65dbfa771438e7c4a8f2e815"
+        }
+      ],
+      "limits": "Graphite outlines are not appearance-equivalent to ink areas/tones; no cross-platform hash or universal speed/RSS promise."
+    },
+    "performance_iteration": "Unconditional full-page prototype passed parity but graphite export was59.385\u2192352.031sec in stress46013546265; final dispatch preserves older verified crop optimization. Final measured timings recorded in final stress evidence."
+  },
+  "limits": [
+    "One reference and one run per material; no general model, material, quality or speed superiority.",
+    "Reported wall time starts at the earliest retained worker artifact; initial packet reads preceded it briefly. Token use was not metered.",
+    "Graphite post-budget export is parent verification, not successful worker-budget GIF delivery.",
+    "The artistic preference is qualified; baseline rejection and all residuals remain recorded.",
+    "Comparison final geometry was frozen before fixes. Release installation must preserve its canonical final pixels.",
+    "Reference, answer coordinates, worker scripts, full sessions and rendered images remain private; only compact evidence is committed."
+  ],
+  "release_install": {
+    "version": "1.4.0",
+    "runtime_files_exact_to_wheel_and_source": 78,
+    "both_current_finish_and_final_png_exact": true,
+    "mixed_full_fast_samples": 165,
+    "graphite_full_fast_samples": 216,
+    "all_sampled_rgb_equal_audited_source": true,
+    "note": "Clean installed prepublication release wheel; final published asset bytes are verified after publication."
+  }
+}

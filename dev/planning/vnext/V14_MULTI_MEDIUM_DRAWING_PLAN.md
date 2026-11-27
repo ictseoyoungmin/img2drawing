@@ -377,7 +377,12 @@ renderer/session/exporter. These would require separate authorization.
 
 S06c implementation scope: ink-only opaque-background histories use exact
 incremental native ink patch composition, stable layer order, old/new dirty
-bounds and guarded local Lanczos downsampling. Use the existing RGB delta pack
+bounds and guarded local Lanczos downsampling on pre-13 Pillow. S06e uses
+canonical-dimension downsampling on Pillow 13+ or unknown versions after a
+pass-order defect was reproduced; retaining the earlier verified optimization
+avoids an observed performance regression on the pinned old environment. Keep
+incremental high-resolution composition and only dirty output delta writes.
+Use the existing RGB delta pack
 and GIF encoder; no frame PNGs unless requested. Per-source patch cache is memory-only, keyed by full profile, effective
 sampling and mark digest. S06d replaces retained RGBA images with exact
 bit-packed binary alpha masks and constant ink RGB (32 MiB packed payload,
@@ -388,4 +393,12 @@ is borrowed once per dirty advance across disjoint regions. Preserve canonical c
 limits, final PNG verification and profile-specific GIF policy. Histories with
 any graphite/eraser action (even retired), unsealed mixed records or transparent
 backgrounds remain canonical-only. No claims of full mixed acceleration or
-large-session performance until stress evidence. Legacy graphite Fast unchanged.
+large-session performance until stress evidence. At S06c, legacy graphite Fast
+was unchanged; S06e below records the later resampling correction.
+
+S06e extends that resampling correction to the legacy graphite Fast source after
+the same defect appeared in the independent official v1.3.0 control. Canonical
+pixels, per-session contracts, geometry and GIF/equality guards are unchanged.
+Full-page resampling is an explicit exactness/performance tradeoff; use the final
+S06e stress and actual-worker audit measurements, not prior timings as current
+performance. The private worker inputs and drawing geometry remain outside Git.

@@ -3,6 +3,8 @@
 Updated: 2026-11-27
 Workflow: Bottleneck · one highest-impact open problem at a time
 
+Current release scope: v1.4.0 Multi-Medium Drawing. `STATUS.md` records its measured closure and publication authority; the earlier release-cycle decisions below remain historical.
+
 The v1.1.1 maintenance baseline and all prior release tags/freezes remain immutable. v1.2.0 promotes portrait guidance, geometry reshape and memory-bounded GIF recovery without renderer v11 changes. M03/v1.2.1 selects the bounded markmaking override/provenance and tonal-area QA maintenance release. The maintainer deferred unresolved visual quality to v1.3.0.
 
 ## Authority and precedence
@@ -57,8 +59,8 @@ V13-S00 comparison baseline and evaluation protocol       CLOSED / USER_ACCEPTED
 V13-S01–S06 native toolkits / cleanup                     CLOSED (feature scope; no visual PASS)
 V13-S07 independent comparison                            CLOSED / USER_ACCEPTED · independent runs NOT_RUN
 V13-S08 release validation                                CLOSED · v1.3.0 main CI + publish SUCCESS
-M04 v1.3.1 release maintenance and branch consolidation   See STATUS.md
-V14-S01–S07 multi-medium drawing                           See STATUS.md; design and execution sequence below
+M04 v1.3.1 release maintenance and branch consolidation   CLOSED · published maintenance release
+V14-S01–S07 multi-medium drawing                           See STATUS.md for measured release closure and review limits
 ```
 
 **No renderer v12 is authorized by this roadmap.** The abandoned PR #48 demonstrated why treating renderer generations as a patch counter would accumulate v12/v13/... without closing the actual drawing-quality bottleneck.
@@ -268,8 +270,8 @@ This historical statement does not require future current source to keep increme
 - redesign rationale: `V11_QUALITY_CONTROL_REDESIGN.md`;
 - S03 harness + ledgers: `../../dogfood/s03-quality-gates/README.md`;
 - S04 residual classification: `../../dogfood/s04-residual-ownership/README.md`;
-- selected stable: Git tag / GitHub Release `v1.2.1` (publication gated), `../../release/publish/v1.2.1.json`, and `../../../docs/releases/v1.2.1.md`;
-- previous published stable: v1.2.0 and v1.1.1, unchanged manifests and freezes;
+- selected release: Git tag / [GitHub Release `v1.4.0`](https://github.com/ictseoyoungmin/img2drawing/releases/tag/v1.4.0), `../../release/publish/v1.4.0.json`, and `../../../docs/releases/v1.4.0.md`; actual publication is established by the release and its assets;
+- previous published stable: v1.3.1, v1.3.0 and earlier releases, unchanged manifests and freezes;
 - historical structural release: Git tag / GitHub Release `v1.1.0` + `../../release/publish/v1.1.0.json`;
 - historical published stable: Git tag / GitHub Release `v1.0.3` + `../../../docs/releases/v1.0.3.md`;
 - G01 behavioral evidence: `../../dogfood/g01-gesture-rc2/README.md`;
@@ -316,7 +318,7 @@ Close superseded branch work without importing unproven material changes; retain
 
 ## v1.4.0 — Multi-Medium Drawing
 
-Maintainer-authorized design after v1.3.0 publication. See [V14_MULTI_MEDIUM_DRAWING_PLAN.md](V14_MULTI_MEDIUM_DRAWING_PLAN.md) for requirements, boundaries, implementation ownership and detailed acceptance criteria. Existing graphite default, single history and replay are retained; new media opt-in only. Manual closed-contour ink and authored analytic screentone are explicit, versioned geometry operations, not automatic/reference-derived fills. No retired region.* contract revival.
+Maintainer-authorized implementation and release after v1.3.0 publication, synchronized to the v1.3.1 maintenance baseline. See [V14_MULTI_MEDIUM_DRAWING_PLAN.md](V14_MULTI_MEDIUM_DRAWING_PLAN.md) for requirements, boundaries, implementation ownership and detailed acceptance criteria. Existing graphite default, single history and replay are retained; new media opt-in only. Manual closed-contour ink and authored analytic screentone are explicit, versioned geometry operations, not automatic/reference-derived fills. No retired region.* contract revival.
 
 | Slice | Weight | Scope and closure evidence | Dependency |
 |---|---:|---|---|
@@ -328,4 +330,4 @@ Maintainer-authorized design after v1.3.0 publication. See [V14_MULTI_MEDIUM_DRA
 | S06 | 10 | Integration: exact legacy replay, mixed canonical/eligible Fast parity and safe fallback, GIF, stress and installed packages | S01–S05 |
 | S07 | 10 | Controlled material comparison, fresh drawing review, transparent limits and explicit release decision; main publication gate | S06 |
 
-Weights total 100. Feature PRs target the v1.4 development branch. STATUS.md owns present progress; no package promotion or new release manifest until S07. Earlier v1.3.0 release and user-accepted gate closures are immutable history.
+Weights total 100. Feature PRs integrated on the v1.4 development branch; S07 review and maintainer authorization govern separate main promotion. `STATUS.md` owns measured closure, residuals and publication evidence. The v1.4.0 manifest publishes only after successful main push CI. Earlier v1.3.0/v1.3.1 releases and user-accepted gate closures remain immutable history.

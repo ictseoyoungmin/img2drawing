@@ -91,6 +91,11 @@ def verify_runtime_freeze(freeze: dict) -> None:
     assert release, "invalid freeze package version"
     if tuple(map(int, release.groups())) >= (1, 4):
         assert "mixed_media" in freeze, "mixed-media authority missing from release freeze"
+        from img2drawing.render.artifact import RENDER_ARTIFACT_SCHEMA
+
+        assert freeze.get("persisted_schemas", {}).get("render_artifact") == RENDER_ARTIFACT_SCHEMA, (
+            "render artifact schema drift"
+        )
     if "mixed_media" in freeze:
         from img2drawing import DrawingSession, authoring
 
@@ -144,7 +149,10 @@ def main() -> None:
     assert f"**Current stable: v{version}**" in root_readme
     assert f"version-v{version}-" in root_readme
     assert f"## v{version} —" in changelog
-    assert f"PUBLISHED STABLE:   v{version}" in status
+    assert (
+        f"PUBLISHED STABLE:   v{version}" in status
+        or f"SELECTED RELEASE:   v{version}" in status
+    ), "STATUS.md release authority must match the current package version"
     assert f"CURRENT SOURCE:     {version}" in status
     assert f"PACKAGE VERSION:    {version}" in status
     assert f"v{version}" in roadmap
