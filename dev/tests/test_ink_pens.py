@@ -28,6 +28,14 @@ def _raster(mark, factor=4, size=(120,80)):
             return np.array(small.convert("RGB"))
 
 
+def _assert_opaque_core(mark, factor, samples, size=(120,80)):
+    # Inspect actual native coverage before the shared Lanczos reduction.
+    bounds,patch=build_ink_patch(mark,factor=factor,hi_size=(size[0]*factor,size[1]*factor))
+    with patch:
+        for x,y in samples:
+            assert patch.getpixel((x*factor-bounds[0],y*factor-bounds[1]))==(0,0,0,255)
+
+
 def _action(pen,oid,aid,sid,kind="ink.add"):
     return pen.action(action_id=aid,element_id=sid,observation_id=oid,
                       source_observation="explicit synthetic pen swatch",
@@ -99,7 +107,11 @@ def test_opaque_gpen_width_and_fineliner_width_across_scales():
         assert widths==sorted(widths)
         for got,want in zip(widths,(6,8,10)):
             assert abs(got-want)<.8
-        assert all(im[20,x,0]==0 for x in cols)
+        _assert_opaque_core(g.resolve(),factor,[(x,20) for x in cols])
+        # A fully opaque native patch is not necessarily RGB 0 after Lanczos:
+        # negative filter lobes produce a one-level residual on this fixture.
+        # Bound the final core residual separately, without relaxing opacity.
+        assert max(int(im[20,x,0]) for x in cols)<=2
         f=(255-_raster(p.resolve(),factor)[:,:,0].astype(float))/255
         assert np.max(np.abs(f[:,25:95].sum(axis=0)-5))<.75
 
@@ -133,7 +145,14 @@ def test_self_overlap_and_reverse_geometry_constant_ink():
 def test_same_geometry_graphite_ink_material_comparison():
     mark=fineliner(((12,40),(108,40)),width=8).resolve()
     im=_raster(mark)
-    assert np.all(im[38:42,24:96]==0)
+    _assert_opaque_core(mark,4,[(x,y) for x in (24,60,95) for y in (38,39,40,41)])
+    # Independent constant-width, opaque step-band reference. Endpoints are far
+    # outside this ROI, so the analytic band and actual swept pen must agree.
+    band=np.full((80*4,120*4,3),255,dtype=np.uint8)
+    band[36*4:44*4,:,:]=0
+    with Image.fromarray(band) as high, high.resize((120,80),Image.Resampling.LANCZOS) as ideal:
+        assert np.array_equal(im[38:42,24:96],np.asarray(ideal)[38:42,24:96])
+    assert im[38:42,24:96].max()<=2
     s=Stroke(list(mark.points),width=8.,opacity=.75,role="contour",pressure=[1.,1.],
              tool_state={"tool":"continuous_pencil","mode":"draw","pencil_grade":"HB",
                          "width":8.,"opacity":.75,"pressure":1.},stroke_id="g")
