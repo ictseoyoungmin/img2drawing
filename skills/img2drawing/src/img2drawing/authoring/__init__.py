@@ -16,6 +16,7 @@ from .ink_edits import (apply_ink_actions, preview_ink_actions, current_ink_elem
     prepare_ink_transform, prepare_ink_group_transform)
 from .ink_pen import PenDefinition, g_pen, fineliner, ink_brush, read_pen_definition
 from .ink_area import solid_ink, sample_ink_contour
+from .screentone import Screentone, ToneGradient, dot_screentone
 from .construction import (
     CONSTRUCTION_PHASES,
     ConstructionMark,
@@ -58,6 +59,7 @@ __all__ = [
     "PenDefinition", "g_pen", "fineliner", "ink_brush", "read_pen_definition",
     "solid_ink", "sample_ink_contour", "current_ink_element",
     "prepare_ink_transform", "prepare_ink_group_transform",
+    "Screentone", "ToneGradient", "dot_screentone",
     "ContactWidthProfile",
     "read_contact_width_profile",
     "ProjectionCamera", "VolumeStation", "ProjectedVolume", "inspect_attachment", "align_attachment",

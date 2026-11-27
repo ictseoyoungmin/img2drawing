@@ -164,7 +164,27 @@ STYLED_INK_CONTRACT = RendererContract(
         "styled_work": "sum-bbox-pixels-times-convex-edge-count-v1",
     }.items())),
 )
-MIXED_RENDERER_VERSIONS = (MIXED_MEDIA_CONTRACT.renderer_version, STYLED_INK_CONTRACT.renderer_version)
+# S04: additive pattern authority; never rewrite v1/v2 contract parameters.
+SCREENTONE_CONTRACT = RendererContract(
+    renderer_id=MIXED_MEDIA_CONTRACT.renderer_id,
+    renderer_version="mixed-media-v3",
+    parameters=tuple(sorted({
+        **dict(STYLED_INK_CONTRACT.parameters),
+        "base_styled_contract_digest":STYLED_INK_CONTRACT.digest(),
+        "screentone_geometry":"img2drawing.dot_screentone.v1",
+        "screentone_gradient":"img2drawing.tone_gradient.v1",
+        "screentone_kernel":"page-square-lattice-clipped-disk-area-rank-v1",
+        "screentone_pitch_range":(4.,512.),
+        "screentone_min_working_period":8.,
+        "screentone_inverse_steps":52,
+        "screentone_sampling":"global-working-pixel-centre-clockwise-degrees",
+        "screentone_gradient_sampling":"clamped-linear-page-sample",
+        "screentone_work":"edge-crossings-plus-bbox-pixels-times-constant2-gradient4",
+        "screentone_tile_pixels":262144,
+    }.items())),
+)
+MIXED_RENDERER_VERSIONS = (MIXED_MEDIA_CONTRACT.renderer_version, STYLED_INK_CONTRACT.renderer_version,
+                           SCREENTONE_CONTRACT.renderer_version)
 
 
 def validate_mixed_raster_budget(width, height, supersample, scale):
@@ -202,7 +222,7 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
     key = (str(renderer_id).strip(), str(renderer_version).strip())
     if key in _EQUIVALENT_IDENTITIES:
         return PENCIL_CONTRACT.identity
-    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity, STYLED_INK_CONTRACT.identity):
+    if key in (PENCIL_CONTRACT.identity, OPACITY_NORMALIZED_CONTRACT.identity, PRESSURE_LIFT_CONTRACT.identity, CONTACT_WIDTH_CONTRACT.identity, MIXED_MEDIA_CONTRACT.identity, STYLED_INK_CONTRACT.identity, SCREENTONE_CONTRACT.identity):
         return key
     raise UnsupportedRendererError(
         f"renderer {key[0]!r}/{key[1]!r} is not available in this package; "
@@ -213,6 +233,8 @@ def canonical_identity(renderer_id: str, renderer_version: str | int) -> tuple[s
 
 def contract_for_identity(renderer_id: str, renderer_version: str | int) -> RendererContract:
     key = canonical_identity(renderer_id, renderer_version)
+    if key == SCREENTONE_CONTRACT.identity:
+        return SCREENTONE_CONTRACT
     if key == STYLED_INK_CONTRACT.identity:
         return STYLED_INK_CONTRACT
     if key == MIXED_MEDIA_CONTRACT.identity:

@@ -17,6 +17,10 @@ from .digest import sha256_obj
 
 INK_MARK_SCHEMA = "img2drawing.ink_mark.v1"
 STYLED_INK_SCHEMA = "img2drawing.styled_ink_path.v1"
+SCREENTONE_SCHEMA = "img2drawing.dot_screentone.v1"
+TONE_GRADIENT_SCHEMA = "img2drawing.tone_gradient.v1"
+MIN_TONE_PITCH = 4.0
+MAX_TONE_PITCH = 512.0
 MAX_PATH_POINTS = 16384
 MAX_RING_POINTS = 1024  # total including the explicitly repeated closing vertices
 MAX_COORDINATE = 32768.0
@@ -233,10 +237,90 @@ class InkArea:
         return sha256_obj(self.to_dict())
 
 
+@dataclass(frozen=True)
+class ToneGradient:
+    """Explicit clamped linear coverage field anchored in page coordinates."""
+    start: tuple[float,float]
+    end: tuple[float,float]
+    start_coverage: float
+    end_coverage: float
+
+    def __post_init__(self):
+        start,end=_points((self.start,self.end),"gradient axis",2,2)
+        if math.dist(start,end)<1e-6:
+            raise ValueError("gradient axis length must be at least 1e-6 canvas pixels")
+        object.__setattr__(self,"start",start)
+        object.__setattr__(self,"end",end)
+        object.__setattr__(self,"start_coverage",_number(self.start_coverage,"start coverage",0.,1.))
+        object.__setattr__(self,"end_coverage",_number(self.end_coverage,"end coverage",0.,1.))
+
+    def to_dict(self):
+        return {"schema":TONE_GRADIENT_SCHEMA,"start":list(self.start),"end":list(self.end),
+                "start_coverage":self.start_coverage,"end_coverage":self.end_coverage}
+
+    @classmethod
+    def from_dict(cls,raw):
+        fields={"schema","start","end","start_coverage","end_coverage"}
+        if not isinstance(raw,Mapping) or set(raw)!=fields or raw.get("schema")!=TONE_GRADIENT_SCHEMA:
+            raise ValueError("invalid tone gradient schema or fields")
+        return cls(raw["start"],raw["end"],raw["start_coverage"],raw["end_coverage"])
+
+
+@dataclass(frozen=True)
+class Screentone(InkArea):
+    """One bounded authored dot-pattern area, not a list of individual dots.
+
+    Pitch, phase origin, angle and optional gradient are all page-space.
+    Exactly one of coverage or gradient is supplied. Coverage denotes an ideal
+    area fraction, not dot radius or an alpha value. Black only; the uncovered
+    area and holes reveal the underlying media.
+    """
+    pitch: float = 6.0
+    coverage: float | None = None
+    angle_degrees: float = 0.0
+    phase_origin: tuple[float,float] = (0.,0.)
+    gradient: ToneGradient | None = None
+
+    def __post_init__(self):
+        # Validate cheap scalar fields before the pairwise ring topology checks.
+        if self.paint!="black":
+            raise ValueError("dot screentone is black paint only")
+        if (self.coverage is None)==(self.gradient is None):
+            raise ValueError("specify exactly one of coverage or gradient")
+        if self.gradient is not None and not isinstance(self.gradient,ToneGradient):
+            raise ValueError("gradient requires an explicit ToneGradient")
+        object.__setattr__(self,"pitch",_number(self.pitch,"pitch",MIN_TONE_PITCH,MAX_TONE_PITCH))
+        if self.coverage is not None:
+            object.__setattr__(self,"coverage",_number(self.coverage,"coverage",0.,1.))
+        angle=_number(self.angle_degrees,"angle_degrees",-360.,360.)
+        object.__setattr__(self,"angle_degrees",angle%360.)
+        origin=tuple(_number(v,"phase origin",-MAX_COORDINATE,MAX_COORDINATE)
+                     for v in _sequence(self.phase_origin,"phase origin",2,2))
+        object.__setattr__(self,"phase_origin",origin)
+        super().__post_init__()
+
+    def to_dict(self):
+        raw=super().to_dict()
+        raw.update(schema=SCREENTONE_SCHEMA,kind="screentone",pattern="dot",anchor="page",
+                   pitch=self.pitch,coverage=self.coverage,angle_degrees=self.angle_degrees,
+                   phase_origin=list(self.phase_origin),
+                   gradient=None if self.gradient is None else self.gradient.to_dict())
+        return raw
+
+
 def decode_ink_mark(raw):
     """Strict discriminated payload. Unknown fields/revisions fail closed."""
     if not isinstance(raw, Mapping):
         raise ValueError("unsupported ink mark schema")
+    if raw.get("schema") == SCREENTONE_SCHEMA:
+        fields={"outer","holes","paint","pitch","coverage","angle_degrees","phase_origin","gradient"}
+        if (set(raw)!=fields|{"schema","kind","pattern","anchor"}
+                or raw.get("kind")!="screentone" or raw.get("pattern")!="dot" or raw.get("anchor")!="page"):
+            raise ValueError("invalid screentone fields or pattern/anchor")
+        data={key:raw[key] for key in fields}
+        if data["gradient"] is not None:
+            data["gradient"]=ToneGradient.from_dict(data["gradient"])
+        return Screentone(**data)
     if raw.get("schema") == STYLED_INK_SCHEMA:
         fields = {"points", "pressure", "min_width", "max_width", "gamma", "paint",
                   "start_cap", "end_cap", "join", "miter_limit"}

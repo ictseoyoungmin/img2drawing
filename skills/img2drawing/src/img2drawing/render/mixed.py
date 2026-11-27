@@ -13,8 +13,8 @@ import math
 from PIL import Image
 
 from ..core.ir import Stroke, StrokeIR
-from ..core.material import InkElement, MIXED_HISTORY_CONTRACT, MAX_PATH_POINTS, MAX_WIDTH, StyledInkPath
-from .contract import CONTACT_WIDTH_CONTRACT, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, validate_mixed_raster_budget
+from ..core.material import InkElement, MIXED_HISTORY_CONTRACT, MAX_PATH_POINTS, MAX_WIDTH, StyledInkPath, Screentone
+from .contract import CONTACT_WIDTH_CONTRACT, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, SCREENTONE_CONTRACT, validate_mixed_raster_budget
 from .eraser import erase_local, is_eraser, is_explicit_path_eraser
 from .ink import build_ink_patch, validate_ink_work
 from .paper import paper_settings
@@ -116,7 +116,10 @@ def render_mixed_image(ir, *, background, scale, supersample, graphite, grade=No
                             renderer_version=CONTACT_WIDTH_CONTRACT.renderer_version)
     hi_size = (ir.width * factor, ir.height * factor)
     for item in ir.ink_elements:
-        if isinstance(item.mark,StyledInkPath) and renderer_version!=STYLED_INK_CONTRACT.renderer_version:
+        if isinstance(item.mark,Screentone) and renderer_version!=SCREENTONE_CONTRACT.renderer_version:
+            raise ValueError("screentone requires its explicit mixed-media renderer contract")
+        if isinstance(item.mark,StyledInkPath) and renderer_version not in (
+                STYLED_INK_CONTRACT.renderer_version,SCREENTONE_CONTRACT.renderer_version):
             raise ValueError("styled ink requires its explicit mixed-media renderer contract")
         validate_ink_work(item.mark, factor=factor, hi_size=hi_size)
     tooth, paper_scale, paper_seed = paper_settings(ir)
