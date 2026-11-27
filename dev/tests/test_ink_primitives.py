@@ -160,3 +160,49 @@ def test_session_legacy_authority_does_not_advertise_unintegrated_ink():
     from img2drawing.runtime import runtime_capabilities
     assert RenderProfile.canonical(16, 16).renderer_version == "11"
     assert not any("ink" in op for op in runtime_capabilities().authoring_operations)
+
+
+def test_edge_sweep_retains_exact_narrow_phase_hits():
+    import random
+    from img2drawing.core.material import _edge_candidates,_intersects
+    rng=random.Random(6401)
+    for _ in range(180):
+        n=rng.randint(4,32)
+        ring=[(rng.uniform(-100,100),rng.uniform(-100,100)) for _ in range(n)]
+        ring.append(ring[0])
+        es=tuple(zip(ring,ring[1:]))
+        brute={(i,j) for i,e in enumerate(es) for j in range(i+2,n)
+               if not (i==0 and j==n-1) and _intersects(*e,*es[j])}
+        candidates=list(_edge_candidates(es))
+        pairs=[(i,j) for i,j,_,_ in candidates]
+        assert len(pairs)==len(set(pairs))
+        actual={(i,j) for i,j,a,b in candidates if _intersects(*a,*b)}
+        assert actual==brute
+        # Two different rings, including overlaps and disjoint edges.
+        other=tuple(((x+2.5,y-3.5),(u+2.5,v-3.5)) for (x,y),(u,v) in es)
+        cross={(i,j) for i,e in enumerate(es) for j,q in enumerate(other) if _intersects(*e,*q)}
+        assert {(i,j) for i,j,a,b in _edge_candidates(es,other) if _intersects(*a,*b)}==cross
+
+
+def test_edge_sweep_sparse_ring_and_epsilon_touches():
+    import math
+    from img2drawing.core.material import _edge_candidates,_intersects
+    n=663
+    ring=tuple((100*math.cos(2*math.pi*i/n),100*math.sin(2*math.pi*i/n)) for i in range(n))
+    ring=ring+(ring[0],)
+    es=tuple(zip(ring,ring[1:]))
+    pairs=list(_edge_candidates(es))
+    assert len(pairs)<n*4
+    assert not any(_intersects(*a,*b) for _,_,a,b in pairs)
+    mark=InkArea(ring)
+    assert mark.outer==ring
+    # Epsilon-inclusive cross-ring contact and exact boundary touch.
+    a=(((0.,0.),(1.,0.)),)
+    for delta in (0.,5e-10,2e-9):
+        b=(((1.+delta,0.),(2.,0.)),)
+        assert any(_intersects(*p,*q) for _,_,p,q in _edge_candidates(a,b))==_intersects(*a[0],*b[0])
+
+
+def test_self_intersection_error_names_authored_edges():
+    with pytest.raises(ValueError,match=r"self-intersects or touches at edges 0 and 2"):
+        InkArea(((0,0),(20,20),(0,20),(20,0),(0,0)))
