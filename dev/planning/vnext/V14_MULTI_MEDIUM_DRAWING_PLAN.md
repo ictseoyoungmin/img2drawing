@@ -378,9 +378,13 @@ renderer/session/exporter. These would require separate authorization.
 S06c implementation scope: ink-only opaque-background histories use exact
 incremental native ink patch composition, stable layer order, old/new dirty
 bounds and guarded local Lanczos downsampling. Use the existing RGB delta pack
-and GIF encoder; no frame PNGs unless requested. Per-source patch cache is
-memory-only (32 MiB, 256 entries; oversized patches ephemeral), keyed by full
-profile, effective sampling and mark digest. Preserve canonical composite work
+and GIF encoder; no frame PNGs unless requested. Per-source patch cache is memory-only, keyed by full profile, effective
+sampling and mark digest. S06d replaces retained RGBA images with exact
+bit-packed binary alpha masks and constant ink RGB (32 MiB packed payload,
+2048 entries; oversized patches ephemeral). Native kernel and canonical
+contract are unchanged; live build/decode memory is separately bounded by
+existing patch limits. Bounds preflight does not allocate pixels; each mark
+is borrowed once per dirty advance across disjoint regions. Preserve canonical composite work
 limits, final PNG verification and profile-specific GIF policy. Histories with
 any graphite/eraser action (even retired), unsealed mixed records or transparent
 backgrounds remain canonical-only. No claims of full mixed acceleration or

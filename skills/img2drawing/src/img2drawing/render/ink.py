@@ -337,19 +337,27 @@ def _tone_plan(mark, factor, size):
     return bounds,starts,ends
 
 
-def validate_ink_work(mark: InkPath | InkArea, *, factor, hi_size):
-    """Check the exact local geometry plan before any mask allocation or mutation."""
+def ink_patch_bounds(mark: InkPath | InkArea, *, factor, hi_size):
+    """Validated exact native patch bounds without allocating raster pixels."""
     factor, size = _grid(factor, hi_size)
     if isinstance(mark, StyledInkPath):
-        _styled_plan(mark, factor, size)
+        bounds, _ = _styled_plan(mark, factor, size)
     elif isinstance(mark, InkPath):
-        _path_plan(mark, factor, size)
+        bounds, _ = _path_plan(mark, factor, size)
     elif isinstance(mark, Screentone):
-        _tone_plan(mark,factor,size)
+        bounds, _, _ = _tone_plan(mark, factor, size)
+        if constant_coverage(mark) == 0.:
+            bounds = None
     elif isinstance(mark, InkArea):
-        _area_plan(mark, factor, size)
+        bounds, _, _ = _area_plan(mark, factor, size)
     else:
         raise ValueError("unsupported ink geometry")
+    return bounds if bounds is not None and _pixels(bounds) else (0, 0, 0, 0)
+
+
+def validate_ink_work(mark: InkPath | InkArea, *, factor, hi_size):
+    """Check the exact local geometry plan before any mask allocation or mutation."""
+    ink_patch_bounds(mark, factor=factor, hi_size=hi_size)
 
 
 def build_ink_patch(mark: InkPath | InkArea, *, factor, hi_size):

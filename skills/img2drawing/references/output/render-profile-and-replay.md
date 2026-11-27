@@ -46,7 +46,9 @@ state, never drawing authority.
 
 Opaque-background ink-only mixed histories (including areas, white paint, tones and edits)
 are eligible for incremental replay. A bounded memory-only ink patch cache reuses the
-canonical kernels, and the exact RGB delta pack avoids a PNG sequence unless requested.
+canonical kernels with lossless bit-packed binary alpha (32 MiB retained payload, 2048
+entries; live build/decode memory is separate). The exact RGB delta pack avoids a PNG
+sequence unless requested.
 Any graphite/eraser action, including retired graphite, requires canonical mixed replay;
 transparent backgrounds also require canonical staging. Explicit `fast` rejects these
 cases. Use `auto` or `canonical` without changing the persisted profile. The existing

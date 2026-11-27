@@ -209,7 +209,7 @@ class PatchCache:
 # patches and cannot accidentally reuse a graphite or another profile's entry.
 class InkPatchCache:
     DEFAULT_MAX_BYTES = 32 * 1024 * 1024
-    MAX_ENTRIES = 256
+    MAX_ENTRIES = 2048
 
     def __init__(self, profile, *, supersample=None, max_bytes=DEFAULT_MAX_BYTES):
         from ..render.contract import validate_mixed_raster_budget
@@ -239,6 +239,11 @@ class InkPatchCache:
     def key(self, mark):
         return (self._scope,mark.digest())
 
+    def bounds(self, mark):
+        from ..render.ink import ink_patch_bounds
+        self.profile.validate_ink_mark(mark)
+        return ink_patch_bounds(mark, factor=self.factor, hi_size=self.hi_size)
+
     @contextmanager
     def patch(self, mark, *, key=None):
         from ..render.ink import build_ink_patch
@@ -258,35 +263,48 @@ class InkPatchCache:
         if hit is not None:
             self._entries.move_to_end(key)
             self.stats["cache_hits"]+=1
-            yield hit[:2]
+            bounds, size, value, packed=hit
+            # Native ink is constant RGB with binary alpha. Reconstruct a
+            # single borrowed RGBA patch; never keep decoded images in the LRU.
+            with Image.frombytes("1", size, packed) as bits, bits.convert("L") as alpha:
+                with Image.new("RGBA",size,(value,value,value,0)) as layer:
+                    layer.putalpha(alpha)
+                    yield bounds,layer
             return
         start=time.perf_counter()
         bounds,layer=build_ink_patch(mark,factor=self.factor,hi_size=self.hi_size)
         self.stats["patch_build_wall_sec"]+=time.perf_counter()-start
         self.stats["cache_misses"]+=1
-        size=layer.width*layer.height*4
-        if size>self.max_bytes:
-            self.stats["oversize_uncached"]+=1
-            try:
-                yield bounds,layer
-            finally:
-                layer.close()
-            return
-        while self._entries and (self._bytes+size>self.max_bytes or
-                                len(self._entries)>=self.MAX_ENTRIES):
-            _,(_,image,n)=self._entries.popitem(last=False)
-            image.close()
-            self._bytes-=n
-            self.stats["evictions"]+=1
-        self._entries[key]=(bounds,layer,size)
-        self._bytes+=size
-        self.stats["cache_bytes"]=self._bytes
-        self.stats["peak_cache_bytes"]=max(self.stats["peak_cache_bytes"],self._bytes)
-        yield bounds,layer
+        try:
+            # Pack the exact binary alpha plane, without resampling or lossy
+            # compression. Empty patches use the kernel's original RGB value.
+            # Budget covers retained packed payloads; live decode/build memory
+            # remains subject to the existing native patch work limits.
+            size=((layer.width+7)//8)*layer.height
+            if size>self.max_bytes:
+                self.stats["oversize_uncached"]+=1
+            else:
+                with layer.getchannel("A") as alpha:
+                    if any(alpha.histogram()[1:255]):
+                        raise RuntimeError("ink cache requires native binary alpha")
+                    with alpha.convert("1",dither=Image.Dither.NONE) as bits:
+                        packed=bits.tobytes()
+                if len(packed)!=size:
+                    raise RuntimeError("unexpected packed ink mask length")
+                while self._entries and (self._bytes+size>self.max_bytes or
+                                        len(self._entries)>=self.MAX_ENTRIES):
+                    _,(_,_,_,old)=self._entries.popitem(last=False)
+                    self._bytes-=len(old)
+                    self.stats["evictions"]+=1
+                self._entries[key]=(bounds,layer.size,layer.getpixel((0,0))[0],packed)
+                self._bytes+=size
+                self.stats["cache_bytes"]=self._bytes
+                self.stats["peak_cache_bytes"]=max(self.stats["peak_cache_bytes"],self._bytes)
+            yield bounds,layer
+        finally:
+            layer.close()
 
     def close(self):
-        for _,image,_ in self._entries.values():
-            image.close()
         self._entries.clear()
         self._bytes=0
         self.stats["cache_bytes"]=0
