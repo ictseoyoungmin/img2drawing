@@ -85,6 +85,29 @@ def verify_runtime_freeze(freeze: dict) -> None:
     )
     assert sorted(freeze["root_exports"]) == sorted(img2drawing.__all__), "root export drift"
 
+    # Older freezes predate these opt-in contracts and intentionally retain their
+    # original surface. A new mixed freeze must bind all three public selections.
+    release = re.match(r"^(\d+)\.(\d+)(?:\.|$)", freeze["package_version"])
+    assert release, "invalid freeze package version"
+    if tuple(map(int, release.groups())) >= (1, 4):
+        assert "mixed_media" in freeze, "mixed-media authority missing from release freeze"
+    if "mixed_media" in freeze:
+        from img2drawing import DrawingSession, authoring
+
+        width, height = frozen["canvas_width"], frozen["canvas_height"]
+        profiles = (
+            RenderProfile.mixed_media(width, height, styled_paths=False),
+            RenderProfile.mixed_media(width, height, screentones=False),
+            RenderProfile.mixed_media(width, height),
+        )
+        assert freeze["mixed_media"] == {
+            "default_profile": profiles[-1].renderer_version,
+            "profiles": {profile.renderer_version: profile.to_dict() for profile in profiles},
+        }, "mixed render profile drift"
+        assert sorted(freeze["authoring_exports"]) == sorted(authoring.__all__), "authoring export drift"
+        members = sorted(name for name in dir(DrawingSession) if not name.startswith("_"))
+        assert sorted(freeze["drawing_session_members"]) == members, "session surface drift"
+
 
 def main() -> None:
     assert not (ROOT / "GATES.md").exists(), "retired root GATES.md reappeared"

@@ -1,0 +1,70 @@
+{
+  "schema": "img2drawing.v1.4.s07.material_evidence.v1",
+  "candidate_source": "1e34ecb573cedbcdd1a7579442402252eaa691a6",
+  "baseline_wheel_sha256": "0cdcb1c657e340e40f68757c6997e97904bc5d0711f49900302992df9cba210e",
+  "candidate_wheel_sha256": "b9c04f3e7675ea2bee4e6aaf5337a7b66004b4ce5731d3ca8ca66be8f356f0f1",
+  "script_sha256": "62f1e15fa815c9c6112697d881d7bc37c3a00eec961e320d6156767bc3340a01",
+  "matched_authored_geometry": true,
+  "limitations": [
+    "synthetic material comparison, not reference reproduction",
+    "nominal width and pressure intent preserved, physical appearance differs",
+    "timing omitted: no controlled performance claim",
+    "mechanical parity is not artistic acceptance"
+  ],
+  "runs": {
+    "graphite": {
+      "schema": "img2drawing.v1.4.s07.material_probe.v1",
+      "medium": "graphite",
+      "package_version": "1.3.0",
+      "python": "3.12.14",
+      "numpy": "2.3.5",
+      "pillow": "13.0.0",
+      "geometry_sha256": "2446490bc7dad16f3a3c1b148c42bcac65f130dd9db3c6791c66d5bdd36726af",
+      "profile_sha256": "4cf4c4fef8edfb79b61bb069174802f68b705de5b63fc6665955bd6021cbe821",
+      "actions": 8,
+      "sampled_frames": 5,
+      "final_pixel_sha256": "b53cf538c09e77964a9e17da6a39e750e73f6134b288d5202700819f63339162",
+      "resume_exact": true,
+      "gif_within_tolerance": true,
+      "artistic_verdict": "REVIEWER_ONLY",
+      "scope": "synthetic; not a reference reproduction",
+      "final_png_sha256": "dac40fd5f57d9840e0fb1ed0baefdb67b1717eb755cfde5334a63c6fbc49b3f8"
+    },
+    "ink": {
+      "schema": "img2drawing.v1.4.s07.material_probe.v1",
+      "medium": "ink",
+      "package_version": "1.3.1",
+      "python": "3.12.14",
+      "numpy": "2.3.5",
+      "pillow": "13.0.0",
+      "geometry_sha256": "2446490bc7dad16f3a3c1b148c42bcac65f130dd9db3c6791c66d5bdd36726af",
+      "profile_sha256": "e145d4ee431f3974f59071d3253600b7f53caad932b6b90227cd30ee285985fa",
+      "actions": 8,
+      "sampled_frames": 5,
+      "final_pixel_sha256": "0260e121c826825b85d9dcea28489c1aa930ffd47e1447c099fbc1fe25bb6500",
+      "resume_exact": true,
+      "gif_within_tolerance": true,
+      "artistic_verdict": "REVIEWER_ONLY",
+      "scope": "synthetic; not a reference reproduction",
+      "final_png_sha256": "86d31ecfca04ad30d4e21e98422ece473856dee3c54b7604844b2bbf7f514c15"
+    },
+    "capabilities": {
+      "schema": "img2drawing.v1.4.s07.material_probe.v1",
+      "medium": "capabilities",
+      "package_version": "1.3.1",
+      "python": "3.12.14",
+      "numpy": "2.3.5",
+      "pillow": "13.0.0",
+      "geometry_sha256": null,
+      "profile_sha256": "e145d4ee431f3974f59071d3253600b7f53caad932b6b90227cd30ee285985fa",
+      "actions": 7,
+      "sampled_frames": 5,
+      "final_pixel_sha256": "8537a71184e7b477281dff192aaaf1a6469606c6a96d6bc24f61515e97be71ab",
+      "resume_exact": true,
+      "gif_within_tolerance": true,
+      "artistic_verdict": "REVIEWER_ONLY",
+      "scope": "synthetic; not a reference reproduction",
+      "final_png_sha256": "54c6b08597ad5b5aab6065f51716cd3e1358136f18aaef4d3c5dc7417b9c97a9"
+    }
+  }
+}

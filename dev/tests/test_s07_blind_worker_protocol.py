@@ -2,6 +2,8 @@
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
+import sys
 import zipfile
 
 import pytest
@@ -21,14 +23,20 @@ def fixture(tmp_path):
     budget.write_text(json.dumps({"canvas": [2048, 2048], "supersample": 2,
                                   "max_actions": 1358, "max_wall_sec": 14400, "worker_model": "gpt-6", "max_tokens": 100000}))
     archives = []
-    for tag in ("a", "b"):
+    for tag in ("0", "1"):
         skill = tmp_path / f"{tag}-skill.zip"
         with zipfile.ZipFile(skill, "w") as zf:
             zf.writestr("img2drawing/SKILL.md", "explicit direct drawing")
-        wheel = tmp_path / f"img2drawing-{tag}.whl"
+        version = f"1.3.{tag}"
+        wheel = tmp_path / f"img2drawing-{version}-py3-none-any.whl"
+        dist_info = f"img2drawing-{version}.dist-info"
         with zipfile.ZipFile(wheel, "w") as zf:
-            zf.writestr(f"img2drawing-1.3.{tag}.dist-info/METADATA", "metadata")
-            zf.writestr("img2drawing/__init__.py", tag)
+            zf.writestr(f"{dist_info}/METADATA",
+                        f"Metadata-Version: 2.1\nName: img2drawing\nVersion: {version}\n")
+            zf.writestr(f"{dist_info}/WHEEL",
+                        "Wheel-Version: 1.0\nRoot-Is-Purelib: true\nTag: py3-none-any\n")
+            zf.writestr(f"{dist_info}/RECORD", "")
+            zf.writestr("img2drawing/__init__.py", f"__version__ = '{version}'\n")
         archives.append((skill, wheel))
     old, new = archives
     return {
@@ -41,6 +49,21 @@ def fixture(tmp_path):
     }
 
 
+def test_packet_wheel_installs_offline_without_renaming(tmp_path):
+    args = fixture(tmp_path)
+    result = module.prepare(**args)
+    folder = args["out_dir"] / "workers" / result["worker_codes"][0]
+    wheel = next(folder.glob("*.whl"))
+    installed = tmp_path / "installed"
+    result = subprocess.run(
+        [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
+         "--disable-pip-version-check", "--target", str(installed), str(wheel)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert (installed / "img2drawing" / "__init__.py").is_file()
+
+
 def test_worker_pair_isolated_and_identical_reference_budget(tmp_path):
     args = fixture(tmp_path)
     result = module.prepare(**args)
@@ -51,24 +74,28 @@ def test_worker_pair_isolated_and_identical_reference_budget(tmp_path):
     assert {v["medium"] for v in evaluator["assignments"]} == {"graphite", "mixed"}
     assert {v["worker_code"] for v in evaluator["assignments"]} == set(result["worker_codes"])
     prompts = []
+    runtime_hashes = set()
     for code in result["worker_codes"]:
         folder = root / "workers" / code
-        assert {p.name for p in folder.iterdir()} == module.ALLOWED
         assert not (folder / "evaluator_only.json").exists()
         spec = json.loads((folder / "worker.json").read_text())
+        assert {p.name for p in folder.iterdir()} == set(spec["allowed_inputs"])
+        assert spec["runtime_filename"] in {args["graphite_wheel"].name, args["mixed_wheel"].name}
+        assert spec["allowed_skill_reads"] == list(module.SKILL_READS)
+        assert "implementation_source" in spec["forbidden_inputs"]
         assert spec["reference_sha256"] == module.sha256(args["reference"])
         assert spec["shared_goal_sha256"] == module.sha256(args["goal_file"])
         assert spec["budget_sha256"] == module.sha256(folder / "budget.json")
         assert spec["skill_sha256"] == module.sha256(folder / "skill.zip")
-        assert spec["runtime_sha256"] == module.sha256(folder / "runtime.whl")
+        assert spec["runtime_sha256"] == module.sha256(folder / spec["runtime_filename"])
+        runtime_hashes.add(spec["runtime_sha256"])
         assert "end-to-end GIF" in spec["required_outputs"]
         assert spec["visual_verdict"] == "REVIEWER_ONLY_NOT_RUN"
         assert "evaluator" not in {p.name for p in folder.iterdir()}
         prompts.append((folder / "goal.md").read_text())
     assert all(s.startswith(args["goal_file"].read_text().rstrip()) for s in prompts)
     assert prompts[0] != prompts[1]
-    assert len({module.sha256(root / "workers" / code / "runtime.whl")
-                for code in result["worker_codes"]}) == 2
+    assert len(runtime_hashes) == 2
 
 
 def test_mismatched_pin_fails_without_outputs(tmp_path):
@@ -95,6 +122,58 @@ def test_no_overwrite_existing_output(tmp_path):
     with pytest.raises(FileExistsError):
         module.prepare(**args)
     assert (args["out_dir"] / "keep").read_text() == "original"
+
+
+def test_existing_dangling_destination_symlink_is_refused(tmp_path):
+    args = fixture(tmp_path)
+    target = tmp_path / "uncreated-target"
+    args["out_dir"].symlink_to(target, target_is_directory=True)
+    with pytest.raises(FileExistsError):
+        module.prepare(**args)
+    assert args["out_dir"].is_symlink() and not target.exists()
+
+
+def test_destination_appearing_during_seal_is_not_nested_or_overwritten(tmp_path, monkeypatch):
+    args = fixture(tmp_path)
+    seal_file = module._seal_file
+
+    def concurrent_output(*values):
+        result = seal_file(*values)
+        if not args["out_dir"].exists():
+            args["out_dir"].mkdir()
+            (args["out_dir"] / "keep").write_text("concurrent")
+        return result
+
+    monkeypatch.setattr(module, "_seal_file", concurrent_output)
+    with pytest.raises(FileExistsError):
+        module.prepare(**args)
+    assert {p.name for p in args["out_dir"].iterdir()} == {"keep"}
+    assert (args["out_dir"] / "keep").read_text() == "concurrent"
+
+
+@pytest.mark.parametrize("name", [".", "./"])
+def test_dot_zip_member_is_refused_before_output(tmp_path, name):
+    args = fixture(tmp_path)
+    with zipfile.ZipFile(args["graphite_skill"], "a") as zf:
+        zf.writestr(name, "unsafe")
+    with pytest.raises(ValueError, match="unsafe path"):
+        module.prepare(**args)
+    assert not args["out_dir"].exists()
+
+
+def test_changed_copy_cannot_claim_input_hash(tmp_path, monkeypatch):
+    args = fixture(tmp_path)
+    copyfile = module.shutil.copyfile
+
+    def changed_copy(source, destination):
+        result = copyfile(source, destination)
+        Path(destination).write_bytes(Path(destination).read_bytes() + b"changed")
+        return result
+
+    monkeypatch.setattr(module.shutil, "copyfile", changed_copy)
+    with pytest.raises(ValueError, match="input changed"):
+        module.prepare(**args)
+    assert not args["out_dir"].exists()
 
 
 def test_reject_invalid_png_and_unsafe_zip(tmp_path):
