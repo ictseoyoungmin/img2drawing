@@ -49,6 +49,8 @@ def render_image(
 ) -> Image.Image:
     """Render ``ir`` and return the RGBA image at ``scale`` x canvas size."""
 
+    if ir.media_contract is not None or ir.ink_elements or ir.element_order:
+        raise ValueError("mixed history requires an integrated mixed-media renderer")
     if int(scale) != scale or scale < 1:
         raise ValueError("scale must be a positive integer")
     if int(supersample) != supersample or supersample < 2:

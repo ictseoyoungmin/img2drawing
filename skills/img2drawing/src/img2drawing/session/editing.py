@@ -15,7 +15,7 @@ from ..core.history import CanvasAction, CanvasHistory
 
 AUTHORED_ELEMENT_SCHEMA = "img2drawing.vnext.authored_element.v1"
 AUTHORING_SUMMARY_SCHEMA = "img2drawing.vnext.authoring_summary.v1"
-ELEMENT_TYPES = ("stroke",)
+ELEMENT_TYPES = ("stroke", "ink")
 ELEMENT_STATUSES = ("current", "superseded", "deleted")
 
 
@@ -241,7 +241,24 @@ def authored_elements(history: CanvasHistory) -> tuple[AuthoredElement, ...]:
     order: list[tuple[str, str]] = []
     for action in history.actions[: history.cursor]:
         payload = action.payload
-        if action.action == "stroke.add":
+        if action.action in {"ink.add", "ink.replace", "ink.delete"}:
+            sid = _identity(payload.get("element_id"), "element_id")
+            key = ("ink", sid)
+            if action.action == "ink.add":
+                if key in records:
+                    raise ValueError(f"duplicate authored ink identity: {sid}")
+                records[key] = _new_element(element_type="ink", element_id=sid,
+                                            action=action, part=action.part, role=action.role)
+                order.append(key)
+            else:
+                if key not in records or records[key].status != "current":
+                    raise ValueError(f"edit targets non-current ink element: {sid}")
+                records[key] = replace(
+                    _touch(records[key], action,
+                           status="deleted" if action.action == "ink.delete" else None,
+                           revision_increment=int(action.action == "ink.replace")),
+                    part=action.part, role=action.role)
+        elif action.action == "stroke.add":
             raw = payload.get("stroke") or {}
             stroke_id = _identity(raw.get("stroke_id"), "stroke_id")
             key = ("stroke", stroke_id)

@@ -195,6 +195,8 @@ class DrawingSession:
         self.subject = None if subject is None else Path(subject)
         self.output_dir = Path(output_dir)
         self._agent = agent_session
+        if self._agent.history.media_contract is not None:
+            raise ValueError("mixed history is not enabled in DrawingSession until its rendering contract is integrated")
         self.metadata = deepcopy(metadata or {})
         self._observations = deepcopy(observations or [])
         self._inspection_history = deepcopy(inspection_history or [])
