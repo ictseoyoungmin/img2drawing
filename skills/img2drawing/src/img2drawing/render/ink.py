@@ -12,7 +12,8 @@ import math
 import numpy as np
 from PIL import Image
 
-from ..core.material import InkArea, InkPath, StyledInkPath
+from ..core.material import InkArea, InkPath, StyledInkPath, Screentone
+from .screentone import MIN_WORKING_PERIOD, constant_coverage, intersect_dot_pattern
 
 INK_KERNEL_REVISION = "opaque-swept-disks-even-odd-v1"
 MAX_PATCH_PIXELS = 16 * 1024 * 1024
@@ -322,6 +323,20 @@ def _area_mask(bounds, starts, ends):
     return mask
 
 
+def _tone_plan(mark, factor, size):
+    if mark.pitch*factor<MIN_WORKING_PERIOD:
+        raise ValueError("screentone pitch below working sample limit")
+    bounds,starts,ends=_area_plan(mark,factor,size)
+    # Include both contour scanline work and pattern evaluations. Check before
+    # allocating the area mask; no work proportional to the number of dots.
+    edge_work=sum(key[1]-key[0] for entries in starts.values() for key,_ in entries)
+    c=constant_coverage(mark)
+    per_pixel=0 if c==0. else 1 if c==1. else 4 if c is None else 2
+    if edge_work+per_pixel*_pixels(bounds)>MAX_KERNEL_WORK:
+        raise ValueError("screentone work budget exceeded")
+    return bounds,starts,ends
+
+
 def validate_ink_work(mark: InkPath | InkArea, *, factor, hi_size):
     """Check the exact local geometry plan before any mask allocation or mutation."""
     factor, size = _grid(factor, hi_size)
@@ -329,6 +344,8 @@ def validate_ink_work(mark: InkPath | InkArea, *, factor, hi_size):
         _styled_plan(mark, factor, size)
     elif isinstance(mark, InkPath):
         _path_plan(mark, factor, size)
+    elif isinstance(mark, Screentone):
+        _tone_plan(mark,factor,size)
     elif isinstance(mark, InkArea):
         _area_plan(mark, factor, size)
     else:
@@ -352,6 +369,12 @@ def build_ink_patch(mark: InkPath | InkArea, *, factor, hi_size):
         if bounds is None:
             return _empty()
         mask = _path_mask(bounds, jobs)
+    elif isinstance(mark, Screentone):
+        bounds,starts,ends=_tone_plan(mark,factor,size)
+        if not _pixels(bounds) or constant_coverage(mark)==0.:
+            return _empty()
+        mask=_area_mask(bounds,starts,ends)
+        intersect_dot_pattern(mask,bounds,mark,factor)
     elif isinstance(mark, InkArea):
         bounds, starts, ends = _area_plan(mark, factor, size)
         if not _pixels(bounds):

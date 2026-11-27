@@ -110,7 +110,7 @@ def test_profile_boundary_resume_preview_and_legacy_pixel_parity(tmp_path):
     ref=tmp_path/"ref.png"
     Image.new("RGB",(128,96),"white").save(ref)
     a=RenderProfile.mixed_media(128,96,styled_paths=False)
-    b=RenderProfile.mixed_media(128,96)
+    b=RenderProfile.mixed_media(128,96,screentones=False)
     assert a.renderer_contract_digest==MIXED_MEDIA_CONTRACT.digest()
     assert b.renderer_contract_digest==STYLED_INK_CONTRACT.digest()
     assert RenderProfile.from_dict(a.to_dict())==a

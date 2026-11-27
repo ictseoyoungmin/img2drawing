@@ -13,9 +13,9 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
-from ..core.material import MIXED_HISTORY_CONTRACT, StyledInkPath
+from ..core.material import MIXED_HISTORY_CONTRACT, StyledInkPath, Screentone
 from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
-                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, validate_mixed_raster_budget)
+                       canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, SCREENTONE_CONTRACT, validate_mixed_raster_budget)
 from .paper import DEFAULT_PAPER_SCALE, DEFAULT_PAPER_SEED, DEFAULT_PAPER_TOOTH
 from .pencil import DEFAULT_SUPERSAMPLE
 
@@ -191,27 +191,44 @@ class RenderProfile:
 
     @property
     def is_mixed_media(self) -> bool:
-        return (self.renderer_id,self.renderer_version) in (MIXED_MEDIA_CONTRACT.identity,STYLED_INK_CONTRACT.identity)
+        return (self.renderer_id,self.renderer_version) in (
+            MIXED_MEDIA_CONTRACT.identity,STYLED_INK_CONTRACT.identity,SCREENTONE_CONTRACT.identity)
 
     @property
     def supports_styled_ink(self) -> bool:
-        return (self.renderer_id,self.renderer_version)==STYLED_INK_CONTRACT.identity
+        return (self.renderer_id,self.renderer_version) in (
+            STYLED_INK_CONTRACT.identity,SCREENTONE_CONTRACT.identity)
+
+    @property
+    def supports_screentone(self) -> bool:
+        return (self.renderer_id,self.renderer_version)==SCREENTONE_CONTRACT.identity
 
     def validate_ink_mark(self, mark) -> None:
         if not self.is_mixed_media:
             raise ValueError("ink requires mixed-media profile")
+        if isinstance(mark,Screentone) and not self.supports_screentone:
+            raise ValueError("screentone requires RenderProfile.mixed_media(..., screentones=True)")
         if isinstance(mark,StyledInkPath) and not self.supports_styled_ink:
             raise ValueError("styled ink requires RenderProfile.mixed_media(..., styled_paths=True)")
 
     @classmethod
     def mixed_media(cls, width: int, height: int, *, supersample: int = 4,
                     output_scale: int = 1, background_rgba=(255, 255, 255, 255),
-                    styled_paths: bool = True) -> "RenderProfile":
-        """New mixed sessions support styled paths; select False for exact v1 contract."""
+                    styled_paths: bool = True, screentones: bool | None = None) -> "RenderProfile":
+        """Default mixed v3; screentones=False selects v2, styled_paths=False selects v1.
+
+        The None default follows styled_paths for backward-compatible v1 selection.
+        Explicitly enabling screentones requires styled_paths=True.
+        """
         if type(styled_paths) is not bool:
             raise ValueError("styled_paths must be boolean")
+        if screentones is None:
+            screentones=styled_paths
+        if type(screentones) is not bool or (screentones and not styled_paths):
+            raise ValueError("screentones must be boolean and require styled_paths")
         validate_mixed_raster_budget(width, height, supersample, output_scale)
-        contract=STYLED_INK_CONTRACT if styled_paths else MIXED_MEDIA_CONTRACT
+        contract=(SCREENTONE_CONTRACT if screentones else
+                  STYLED_INK_CONTRACT if styled_paths else MIXED_MEDIA_CONTRACT)
         return cls(profile_id=contract.renderer_version, renderer_id=contract.renderer_id,
                    renderer_version=contract.renderer_version,
                    renderer_contract_digest=contract.digest(),

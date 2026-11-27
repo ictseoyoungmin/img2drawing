@@ -194,7 +194,9 @@ def runtime_capabilities(render_profile=None) -> RuntimeCapabilities:
                        "img2drawing.authoring.sample_ink_contour", "img2drawing.authoring.current_ink_element",
                        "img2drawing.authoring.prepare_ink_transform",
                        "img2drawing.authoring.prepare_ink_group_transform")
-                   + (("img2drawing.authoring.StyledInkPath",) if render_profile.supports_styled_ink else ()),
+                   + (("img2drawing.authoring.StyledInkPath",) if render_profile.supports_styled_ink else ())
+                   + (("img2drawing.authoring.Screentone","img2drawing.authoring.ToneGradient",
+                       "img2drawing.authoring.dot_screentone") if render_profile.supports_screentone else ()),
                    render_profile_entrypoints=caps.render_profile_entrypoints + ("RenderProfile.mixed_media",))
 
 

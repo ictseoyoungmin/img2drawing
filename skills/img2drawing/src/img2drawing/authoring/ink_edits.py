@@ -7,7 +7,7 @@ import math
 
 from ..core.action import AgentDrawingSession
 from ..core.digest import sha256_obj
-from ..core.material import InkAction, InkArea, InkPath, _number, _identity_text
+from ..core.material import InkAction, InkArea, InkPath, Screentone, _number, _identity_text
 from ..render.artifact import render_history_at
 
 
@@ -95,6 +95,15 @@ def _transformed_mark(mark, matrix):
     def point(p):
         x,y=p
         return a*x+b*y+tx,c*x+d*y+ty
+    if isinstance(mark,Screentone):
+        sx,sy=math.hypot(a,c),math.hypot(b,d)
+        if (not sx or not sy or abs(sx-sy)>1e-10*max(sx,sy)
+                or abs((a/sx)*(b/sy)+(c/sx)*(d/sy))>1e-10):
+            raise ValueError("screentone transform requires a similarity; page pattern stays fixed")
+        # Only authored boundaries move. Pitch, angle, phase and gradient axis
+        # remain page-anchored, even under rotation or uniform scale.
+        return replace(mark,outer=tuple(map(point,mark.outer)),
+                       holes=tuple(tuple(map(point,ring)) for ring in mark.holes))
     if isinstance(mark,InkArea):
         return replace(mark,outer=tuple(map(point,mark.outer)),
                        holes=tuple(tuple(map(point,ring)) for ring in mark.holes))
@@ -115,8 +124,9 @@ def prepare_ink_transform(session, element_ids, matrix, *, action_ids,
                           source_observation="explicit ink geometry transform"):
     """Prepare guarded same-ID replacements; no mutation or implicit selection.
 
-    Areas support nonsingular affine maps. Paths support similarity transforms,
-    including uniform width scaling. Explicit resolved geometry is transformed
+    Solid areas support nonsingular affine maps. Screentone boundaries support
+    similarity transforms with unchanged page-space pattern/gradient. Paths
+    support similarity transforms, including uniform width scaling. Explicit resolved geometry is transformed
     exactly; a raw replacement intentionally retires any optional pen recipe
     from the current element (the original recipe remains in earlier history).
     Commit via preview_ink_actions/apply_ink_actions with returned guards.

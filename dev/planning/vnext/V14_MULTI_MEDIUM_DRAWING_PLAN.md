@@ -228,6 +228,24 @@ nonuniform transforms that cannot preserve the declared rule. Ensure no phase
 jump on incremental recomposition. Patterns beyond dots/linear gradient, moiré
 avoidance beyond bounded resolution rules, arbitrary textures and auto shading
 are deferred.
+S04 implementation choice: square-lattice dot centres, page origin is a dot
+centre, clockwise angle in y-down coordinates. Coverage equals disk area
+intersected with a unit square; beyond pi/4, dots touch and become connected
+ink with shrinking uncovered corners. Invert constant coverage by 52 bounded
+bisection steps above pi/4; gradient compares analytic area rank per working
+pixel centre to a clamped page-space linear coverage field. Steep gradients
+can deform dots; discretization/aliasing depends on pitch, angle, phase,
+sampling and averaging window. Pitch 4–512 logical pixels, at least 8 working
+samples per period, existing patch/work budgets and bounded two-dimensional
+tiles (262144 samples); transparent/solid endpoints exact. No stored dots.
+Exactly one constant coverage or explicit gradient. Similarity transforms
+move only rings/holes, leaving pitch/phase/angle/gradient fixed in page space;
+nonuniform/shear refused. New mixed-media-v3 contract, default only for new
+mixed sessions; screentones=False chooses v2, styled_paths=False chooses v1.
+Old contracts and pixel kernels unchanged. Patch clipping and old/new
+affected bounds checked, full canonical recomposition/replay used until
+S06 proves an eligible Fast path. No automatic tone selection or new dependency.
+
 Acceptance: measured coverage at specified pitches/angles/densities with
 declared discretization tolerance; monotone linear gradient; 0/1 endpoints,
 deterministic phase across adjacent tiles/crops/resume; no leakage to holes/reserves;
