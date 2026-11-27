@@ -116,7 +116,8 @@ def _align_up(v: int, m: int) -> int:
 
 
 def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Image, regions,
-                          influence_px: int = 12, guard_px: int = 24):
+                          influence_px: int = 12, guard_px: int = 24, *,
+                          precomposited: bool = False):
     ratio = int(round(renderer.hi_size[0] / renderer.out_size[0]))
     if ratio < 1 or abs(renderer.hi_size[0] / renderer.out_size[0] - ratio) > 1e-9 \
             or abs(renderer.hi_size[1] / renderer.out_size[1] - ratio) > 1e-9:
@@ -139,9 +140,12 @@ def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Im
         sx1 = min(renderer.hi_size[0], _align_up(tx1 + guard, ratio))
         sy1 = min(renderer.hi_size[1], _align_up(ty1 + guard, ratio))
         crop = hi_canvas.crop((sx0, sy0, sx1, sy1))
-        base = Image.new("RGBA", crop.size, renderer.background)
-        composited = Image.alpha_composite(base, crop)
-        base.close(); crop.close()
+        if precomposited:
+            composited = crop
+        else:
+            base = Image.new("RGBA", crop.size, renderer.background)
+            composited = Image.alpha_composite(base, crop)
+            base.close(); crop.close()
         small = composited.resize(((sx1 - sx0) // ratio, (sy1 - sy0) // ratio), Image.Resampling.LANCZOS)
         composited.close()
         cx0, cy0 = (tx0 - sx0) // ratio, (ty0 - sy0) // ratio

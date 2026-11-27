@@ -22,7 +22,7 @@ from ..core.digest import sha256_file
 from ..render.artifact import action_log_sha256, render_history_at, rgb_sha256
 from ..render.profile import RenderProfile
 from .delta_pack import DeltaPackWriter, iter_frames, read_info
-from .frames import FastFrameSource, inspect_fast_path_eligibility
+from .frames import FastFrameSource, InkFrameSource, inspect_fast_path_eligibility
 from .gif import encode_gif, gif_final_frame_error, save_gif, save_gif_frames
 
 REPLAY_EXPORT_SCHEMA = "img2drawing.replay_export.v2"
@@ -158,10 +158,12 @@ def _export_canonical(history, profile: RenderProfile, output: Path, cursors: li
 
 def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[int], *, fps: int,
                  cache_dir: Path, materialize_frames: bool, rectangle: bool, progress=None) -> tuple[list, Path, dict, dict]:
-    source = FastFrameSource(history, profile, persistent_cache_dir=cache_dir / "patches")
+    source = (InkFrameSource(history,profile) if profile.is_mixed_media else
+              FastFrameSource(history, profile, persistent_cache_dir=cache_dir / "patches"))
     out_size = (profile.canvas_width * profile.output_scale, profile.canvas_height * profile.output_scale)
     pack_path = output / "frames.idp"
     frame_hashes: list[str] = []
+    state_hashes: list[str | None] = []
     t0 = time.perf_counter()
     try:
         with DeltaPackWriter(pack_path, width=out_size[0], height=out_size[1], frame_count=len(cursors), level=1) as writer:
@@ -172,6 +174,7 @@ def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[in
                     rects = [(0, 0, frame.width, frame.height)] if index == 0 else info["output_regions"]
                     writer.write_frame(frame, rects)
                     frame_hashes.append(rgb_sha256(frame))
+                    state_hashes.append(source.state_hash if isinstance(source,InkFrameSource) else None)
                     if progress is not None:
                         progress({"phase": "render", "completed": index + 1, "total": len(cursors)})
                 finally:
@@ -208,7 +211,7 @@ def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[in
         _frame_record(
             history, index, cursor,
             duration_ms=frame_ms, file=files[index], png_sha256=None,
-            pixel_sha256=frame_hashes[index], pixel_hash_mode="RGB", drawing_state_hash=None,
+            pixel_sha256=frame_hashes[index], pixel_hash_mode="RGB", drawing_state_hash=state_hashes[index],
         )
         for index, cursor in enumerate(cursors)
     ]
@@ -221,7 +224,8 @@ def _export_fast(history, profile: RenderProfile, output: Path, cursors: list[in
         else "mixed"
     )
     fast = {
-        "engine": "local-first-exact-delta-pack-v1",
+        "engine": ("ink-only-exact-delta-pack-v1" if profile.is_mixed_media else
+                   "local-first-exact-delta-pack-v1"),
         "img2drawing_version": __version__,
         "cache_state": cache_state,
         "performance": {

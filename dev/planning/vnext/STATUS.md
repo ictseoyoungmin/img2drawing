@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S06b geometry validation and explicit registration fit (WIP)
+ACTIVE BOTTLENECK:  v1.4.0 S06c ink-only incremental replay and bounded patch cache (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -51,7 +51,8 @@ Authority is intentionally split by purpose:
 - S04 CLOSED: #113 merged 1e178b1; PR CI 45984215468 and merge CI 45984670001 SUCCESS (606 active + 44 runtime). Typed calibrated dot screen, page-fixed phase and gradient, bounded tile evaluation, mixed-media-v3. Older contracts unchanged.
 - S05 #114 merged 46180ad; PR CI 45986027734 and merge CI 45986307849 SUCCESS (611 active + 44 runtime), installed guide example PASS. A maintainer-supplied independent Agent session contains 563 explicit ink additions (287 areas, 213 paths, 63 screens), 30,704 geometry samples, no inspection, correction or finish record. Private diagnostic rerender matched its final RGBA hash; no GIF provided or full installed resume verified in that review. Partial independent-use evidence, S05 REVIEW remains (not complete worker loop or artistic PASS). No private source/session assets retained in Git.
 - S06a #115 merged 68f9b8f; PR CI 45992266141 SUCCESS (616 active + 44 runtime). Validated incremental prefix, sealed rollback references and serialization reuse; exact 64 decode calls for 64 append actions tested. Private 563-action single-commit model predicts 317,532 -> 563 decode calls, not an elapsed-time claim.
-- S06b candidate: epsilon-inclusive edge AABB sweep before unchanged narrow predicate, zero-based offending edge indices, explicit centered Registration.fit contain/cover/stretch, sealed scalar-field hardening. Private local diagnostic (350 rings, no holes): 2,409,247 -> 752 narrow-phase calls, 2.0344s -> 0.01636s for pair testing only, same zero intersections. No private coordinates or artifacts retained. Full runtime performance and mixed Fast/stress remain unverified.
+- S06b #116 merged 05ce36b, PR CI 45992848433 and merge CI 45993275822 SUCCESS (626 active + 44 runtime). Conservative edge sweep, diagnostic indices, explicit Registration.fit, sealed scalar validation. Private pair-test evidence unchanged: 2,409,247 -> 752 predicate calls, 2.0344s -> 0.01636s; not whole-runtime speed.
+- S06c candidate adds ink-only, opaque-background exact incremental frame source using the shared native ink kernels and existing delta pack/GIF encoder. Stable layer ordering, old/new dirty bounds, local guarded resampling, 32 MiB/256-entry memory-only patch LRU, independent final canonical PNG, per-frame state/RGB hashes. No graphite/eraser or transparent mixed Fast; use canonical fallback. Existing work budgets, legacy Fast and all profile digests remain unchanged. Full 2048-square/1358+ stress and private 563-action end-to-end timing remain pending.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 
