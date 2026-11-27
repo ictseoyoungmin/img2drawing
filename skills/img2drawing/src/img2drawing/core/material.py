@@ -8,6 +8,10 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .pen import PenDefinition
 
 from .digest import sha256_obj
 
@@ -267,6 +271,7 @@ class InkAction:
     observation_id: str
     source_observation: str
     reason: str
+    pen_definition: PenDefinition | None = None
 
     def __post_init__(self):
         _identity_text(self.action_id, "action_id")
@@ -281,10 +286,22 @@ class InkAction:
                 raise ValueError("ink deletion cannot include replacement geometry")
         elif not isinstance(self.element, InkElement) or self.element.element_id != self.element_id:
             raise ValueError("ink action requires an element with the same identity")
+        if self.pen_definition is not None:
+            from .pen import PenDefinition
+            if (not isinstance(self.pen_definition,PenDefinition) or self.element is None
+                    or not isinstance(self.element.mark,InkPath)):
+                raise ValueError("pen definition requires an authored ink path")
+
+    def validate_pen_definition(self):
+        if self.pen_definition is not None and self.pen_definition.resolve()!=self.element.mark:
+            raise ValueError("pen definition does not match resolved ink geometry")
 
     def provenance(self):
-        return {"action_id": self.action_id, "observation_id": self.observation_id,
-                "source_observation": self.source_observation, "reason": self.reason}
+        result = {"action_id": self.action_id, "observation_id": self.observation_id,
+                  "source_observation": self.source_observation, "reason": self.reason}
+        if self.pen_definition is not None:
+            result["pen_definition"] = self.pen_definition.to_dict()
+        return result
 
     def payload(self):
         return {"element_id": self.element_id,
@@ -298,8 +315,13 @@ class InkAction:
     def from_dict(cls, raw):
         fields = {"schema", "kind", "element_id", "element", "action_id",
                   "observation_id", "source_observation", "reason"}
-        if not isinstance(raw, Mapping) or set(raw) != fields or raw["schema"] != INK_ACTION_SCHEMA:
+        if (not isinstance(raw, Mapping) or set(raw) not in (fields,fields|{"pen_definition"})
+                or raw["schema"] != INK_ACTION_SCHEMA):
             raise ValueError("unsupported ink action schema or fields")
+        recipe = None
+        if "pen_definition" in raw:
+            from .pen import PenDefinition
+            recipe = PenDefinition.from_dict(raw["pen_definition"])
         return cls(raw["action_id"], raw["kind"], raw["element_id"],
                    None if raw["element"] is None else InkElement.from_dict(raw["element"]),
-                   raw["observation_id"], raw["source_observation"], raw["reason"])
+                   raw["observation_id"], raw["source_observation"], raw["reason"],recipe)

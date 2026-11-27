@@ -75,7 +75,7 @@ signatures):
   legacy ToolState/pencil grade schema unchanged for legacy marks. Ink is not a
   fake pencil grade. No general plugin-defined executable material code.
 - New opt-in mixed-media RenderProfile/contract identity and digest; proposed
-  constructor `RenderProfile.mixed_media(...)` (NOT a current API). It pins the
+  constructor `RenderProfile.mixed_media(...)` (implemented in S01). It pins the
   graphite sub-contract, compositing and every material/pattern revision that can
   affect pixels. Legacy default remains canonical v11; all published normalized
   variants and historical profiles remain readable under their original contracts.
@@ -150,6 +150,19 @@ diameter, constant fineliner diameter within declared AA measurement tolerance;
 opaque interior, stable cap/join/taper/curve crossings; no halos or opacity seams
 on same-black overlap; exact repeat/render/preview/resume on supported environment.
 Compare same geometry using v1.3.0 graphite, separately label artistic judgment.
+
+S02 implementation choice: keep the S01 opaque swept-disk kernel and its pixel
+contract. G-pen supports explicitly authored round or zero-radius point terminals,
+round joins, and bounded curvature/diameter approximation; fineliner has a fixed
+diameter with round terminals/joins. Unsupported butt/square caps and miter/bevel
+joins fail explicitly rather than being approximated. Point tapers that are too
+steep for the adjacent disk envelope are rejected. Agent-authored polyline
+corners and cubic-chain junctions are retained; pressure knots are inserted at
+normalized arc positions. Straight constant-width paths do not need dense uniform
+sampling. The optional versioned pen recipe is action provenance, validated
+against the authoritative resolved InkPath on authoring/load and explicit read;
+normal replay uses the resolved mark, not newly sampled geometry. No SciPy
+dependency or additional raster engine is required for this bounded model.
 
 ### S03 — Ink brush, solid ink contour, white ink
 
