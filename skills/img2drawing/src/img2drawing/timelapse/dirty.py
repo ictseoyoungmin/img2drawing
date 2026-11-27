@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import PIL
 from PIL import Image
 
 from ..render.eraser import erase, is_eraser
@@ -115,6 +116,14 @@ def _align_up(v: int, m: int) -> int:
     return ((v + m - 1) // m) * m
 
 
+def _guarded_resample_supported() -> bool:
+    try:
+        major = int(PIL.__version__.split(".", 1)[0])
+    except (AttributeError, TypeError, ValueError):
+        return False
+    return 0 < major < 13
+
+
 def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Image, regions,
                           influence_px: int = 12, guard_px: int = 24, *,
                           precomposited: bool = False):
@@ -132,6 +141,19 @@ def update_output_regions(renderer, hi_canvas: Image.Image, out_canvas: Image.Im
         if tx1 > tx0 and ty1 > ty0:
             targets.append((tx0, ty0, tx1, ty1))
     targets = merge_regions(targets)
+    if not targets:
+        return targets, 0
+    if not _guarded_resample_supported():
+        # Pillow 13 chooses separable-filter pass order from image dimensions.
+        # A guarded crop can therefore round differently from the canonical
+        # full page. Newer or unknown versions use the same conservative path.
+        image = (hi_canvas.resize(renderer.out_size, Image.Resampling.LANCZOS)
+                 if precomposited else finalize_full(renderer, hi_canvas))
+        with image:
+            out_canvas.paste(image)
+        return targets, renderer.out_size[0] * renderer.out_size[1]
+    # Older Pillow versions have fixed horizontal-first resampling. Retain the
+    # proven guarded-crop optimization without changing composition or pixels.
     guard = max(guard_px, 8 * ratio)
     total_out_area = 0
     for tx0, ty0, tx1, ty1 in targets:

@@ -1,8 +1,10 @@
 """Forward-only frame sources for timelapse export.
 
 ``FastFrameSource`` advances through history incrementally: appended strokes composite their
-cached patches, edits recomposite only the dirty rectangles, and only changed output regions
-are resampled. It is pixel-exact with a full canonical render at every cursor.
+cached patches and edits recomposite only the dirty rectangles. Guarded dirty resampling is
+used on Pillow before 13; newer or unknown versions downsample at canonical page dimensions
+to preserve filter order. Only changed output regions enter the delta pack.
+It is pixel-exact with a full canonical render at every cursor.
 ``CanonicalFrameSource`` re-renders the whole drawing per frame and is used when a history
 contains unsupported semantics. Explicit path lifts use the same eraser in both sources.
 """

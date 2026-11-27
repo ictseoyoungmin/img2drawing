@@ -4,6 +4,7 @@ import hashlib
 import shutil
 
 import pytest
+import PIL
 from PIL import Image
 
 from img2drawing import RenderProfile
@@ -109,6 +110,37 @@ def test_append_layer_reorder_delete_and_cache_reuse():
         assert source.renderer.stats["peak_cache_bytes"]<=32*1024*1024
     finally:
         source.close()
+
+
+@pytest.mark.parametrize("size,points", [
+    ((128,192),((24,8),(40,184))),
+    ((96,256),((8,100),(88,116))),
+])
+def test_narrow_ink_dirty_resample_matches_full_page(size,points):
+    # A tall crop on a wider page, or a wide crop on a tall page, can choose
+    # a different separable-filter pass order in Pillow. Geometry is synthetic.
+    h=AgentDrawingSession(*size,media_contract=MIXED_HISTORY_CONTRACT).history
+    action(h,"line-add","line",fineliner(points,width=1.3).resolve())
+    p=RenderProfile.mixed_media(*size,supersample=2)
+    src=InkFrameSource(h,p)
+    previous=src.image()
+    try:
+        info=src.advance_to(1)
+        assert info["mode"]=="append"
+        assert info["output_regions"]!=[(0,0,*size)]
+        if int(PIL.__version__.split(".",1)[0])<13:
+            assert 0<src.stats["dirty_output_pixels"]<size[0]*size[1]
+        else:
+            assert src.stats["dirty_output_pixels"]==size[0]*size[1]
+        with src.image() as got,canonical(h,p,1) as want:
+            assert got.tobytes()==want.tobytes()
+            for box in info["output_regions"]:
+                with got.crop(box) as crop:
+                    previous.paste(crop,box[:2])
+            assert previous.tobytes()==want.tobytes()
+    finally:
+        previous.close()
+        src.close()
 
 
 def test_cache_isolation_and_eviction():
