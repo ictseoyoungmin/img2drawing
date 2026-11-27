@@ -1087,7 +1087,7 @@ class DrawingSession:
             "intent_history": _portable(self._intent_history),
             "evidence_telemetry": self._evidence_telemetry.to_dict(),
             "digests": {
-                "action_log_sha256": sha256_obj([a.to_dict() for a in self._agent.history.actions]),
+                "action_log_sha256": sha256_obj(history["actions"]),
                 "drawing_state_hash": drawing_state_hash(snapshot),
             },
             "artifacts": {

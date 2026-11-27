@@ -283,7 +283,19 @@ fresh-worker run or artistic quality verdict; record that distinction explicitly
 ## 5. S06 — Replay, regression, install and performance
 
 S01–S05 carry per-feature mechanical tests; S06 is final integration, not first
-replay support. Audit all actual consumers: canonical render, inspection, preview,
+replay support. The maintainer's private 563-element independent Agent example
+revealed repeated prefix decoding and polygon validation at every commit.
+S06a addresses that first: sealed mixed action records and a transient one-prefix
+reducer, validate newly loaded/authored records once, invalidate on backward
+seek or external replacement, preserve fail-closed mutable-record fallback.
+Rollback copies the log's sealed references rather than serializing geometry.
+Checkpoint digests and file format remain unchanged; serialization itself still
+costs O(total authored data) per commit. Preserve legacy mutable record behavior.
+Test operation counts (64 appended ink actions decode 64, not a triangular count)
+before claiming performance improvement. S06b will address remaining geometry,
+replay/cache and registration costs; full stress/installed evidence remains
+required. No private example coordinates, reference pixels or session artifacts
+are added to Git. Audit all actual consumers: canonical render, inspection, preview,
 completion/residual provenance, semantic groups, CanvasHistory state_at,
 ForwardHistoryReplay, patch cache, dirty rectangles, exporter and manifest.
 Fast must share material kernels/compositing and typed dispatch; cache keys and

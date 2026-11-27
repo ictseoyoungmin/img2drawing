@@ -41,6 +41,70 @@ class CanvasAction:
         return _json_native(data)
 
 
+# Mixed history records are owned, read-only JSON values. Legacy CanvasAction
+# remains mutable for historical low-level callers. The sealed mixed record
+# allows identity-based prefix validation without trusting mutable nested data.
+def _immutable_error(*args, **kwargs):
+    raise TypeError("mixed history records are read-only; author a replacement action")
+
+
+class _ReadOnlyDict(dict):
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = __ior__ = _immutable_error
+
+    def __deepcopy__(self, memo):
+        return {deepcopy(k, memo): deepcopy(v, memo) for k,v in self.items()}
+
+
+class _ReadOnlyList(list):
+    __setitem__ = __delitem__ = __iadd__ = __imul__ = append = clear = extend = insert = pop = remove = reverse = sort = _immutable_error
+
+    def __deepcopy__(self, memo):
+        return [deepcopy(v, memo) for v in self]
+
+
+def _readonly_json(value):
+    if isinstance(value, dict):
+        return _ReadOnlyDict((str(k), _readonly_json(v)) for k,v in value.items())
+    if isinstance(value, (list, tuple)):
+        return _ReadOnlyList(_readonly_json(v) for v in value)
+    if value is None or type(value) in (str, bool, int, float):
+        return value
+    raise TypeError("mixed history requires JSON-native action records")
+
+
+class _MixedCanvasAction(CanvasAction):
+    """Internal immutable record; serialization always returns detached values."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name in ("payload", "tool_state", "provenance"):
+            object.__setattr__(self, name, _readonly_json(getattr(self, name)))
+        object.__setattr__(self, "_sealed", True)
+
+    def __setattr__(self, name, value):
+        if getattr(self, "_sealed", False):
+            _immutable_error()
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name):
+        if getattr(self, "_sealed", False):
+            _immutable_error()
+        object.__delattr__(self, name)
+
+    def to_dict(self):
+        result = {name: _json_native(getattr(self, name))
+                  for name in ("seq","action","stage","payload","logical_time",
+                               "part","role","tool_state","provenance")}
+        if self.provenance is None:
+            result.pop("provenance")
+        return result
+
+    def __deepcopy__(self, memo):
+        # Explicit copies are editable detached CanvasAction records, not aliases
+        # to the authority. Rollback itself shares sealed records by reference.
+        return CanvasAction(**self.to_dict())
+
+
 def _persisted_stroke(stroke: Stroke) -> dict[str, Any]:
     """Serialize a stroke without the parts that are recomputed on load.
 
@@ -214,6 +278,8 @@ class MixedReplayState:
         self.order: list[str] = []
         self.state: dict[str, Stroke | InkElement] = {}
         self.seen: set[str] = set()
+        self.action_ids: set[str] = set()
+        self.count = 0
 
     def _add(self, sid, element):
         if not isinstance(sid, str) or not sid.strip() or sid in self.seen:
@@ -229,6 +295,17 @@ class MixedReplayState:
         return value
 
     def apply(self, item: CanvasAction, *, validate_recipe=False):
+        if item.seq != self.count + 1:
+            raise ValueError("mixed action seq must be contiguous and 1-based")
+        aid = (item.provenance or {}).get("action_id")
+        if aid is not None and (not isinstance(aid,str) or not aid.strip() or aid in self.action_ids):
+            raise ValueError("invalid or duplicate mixed action identity")
+        self._apply(item, validate_recipe=validate_recipe)
+        if aid is not None:
+            self.action_ids.add(aid)
+        self.count += 1
+
+    def _apply(self, item: CanvasAction, *, validate_recipe=False):
         kind, p = item.action, item.payload
         if kind in INK_ACTION_KINDS:
             provenance = item.provenance
@@ -334,6 +411,26 @@ class CanvasHistory:
         self._next_id = 1
         # Transient loader evidence only. It is never persisted into history metadata.
         self._legacy_inline_pressure = False
+        # A derived one-prefix cache, never persisted and never exposed as IR.
+        self._mixed_cached = MixedReplayState() if media_contract is not None else None
+        self._mixed_prefix: list[CanvasAction] = []
+
+    def _reset_mixed_cache(self):
+        self._mixed_cached = MixedReplayState()
+        self._mixed_prefix = []
+
+    def _sealed_transaction_copy(self):
+        """Cheap exact rollback snapshot for owned mixed actions only."""
+        if self.media_contract != MIXED_HISTORY_CONTRACT or not all(
+                type(a) is _MixedCanvasAction for a in self.actions):
+            return None
+        backup=CanvasHistory(self.width,self.height,deepcopy(self.metadata),
+                             media_contract=self.media_contract)
+        backup.actions=list(self.actions)
+        backup.cursor=self.cursor
+        backup._next_id=self._next_id
+        backup._legacy_inline_pressure=self._legacy_inline_pressure
+        return backup
 
     def _append(
         self,
@@ -346,6 +443,27 @@ class CanvasHistory:
         tool_state: dict[str, Any] | None = None,
         provenance: dict[str, Any] | None = None,
     ) -> CanvasAction:
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            seq=self.cursor+1
+            item=_MixedCanvasAction(seq,action,stage,payload,float(seq-1),part,role,
+                                    tool_state,provenance)
+            replay=self._mixed_replay_at(self.cursor)
+            # Validate the new record before truncating the redo tail or changing
+            # the authoritative log. Invalidate a possibly partial derived state
+            # on failure; the log itself is still unchanged.
+            try:
+                replay.apply(item,validate_recipe=True)
+            except Exception:
+                self._reset_mixed_cache()
+                raise
+            if self.cursor < len(self.actions):
+                self.actions=self.actions[:self.cursor]
+            self.actions.append(item)
+            self.cursor=len(self.actions)
+            if replay is self._mixed_cached:
+                self._mixed_prefix.append(item)
+            return item
+
         if self.cursor < len(self.actions):
             self.actions = self.actions[: self.cursor]
         seq = len(self.actions) + 1
@@ -372,6 +490,8 @@ class CanvasHistory:
 
     def _stroke_identity_exists(self, stroke_id: str) -> bool:
         requested = str(stroke_id)
+        if self.media_contract == MIXED_HISTORY_CONTRACT:
+            return requested in self._mixed_replay_at(self.cursor).seen
         for item in self.actions[: self.cursor]:
             if item.action == "stroke.add":
                 if str((item.payload.get("stroke") or {}).get("stroke_id")) == requested:
@@ -384,9 +504,31 @@ class CanvasHistory:
         return False
 
     def _mixed_replay_at(self, limit: int, *, validate_recipes=False) -> MixedReplayState:
-        replay = MixedReplayState()
-        for item in self.actions[:limit]:
-            replay.apply(item,validate_recipe=validate_recipes)
+        # Cache only owned immutable records. A low-level caller may replace or
+        # reorder the public action list; identity comparison detects that even
+        # when length/cursor stay the same. Unsealed records are never trusted.
+        if limit < len(self._mixed_prefix) or self._mixed_cached is None or not all(
+                a is b for a,b in zip(self.actions,self._mixed_prefix)):
+            self._reset_mixed_cache()
+        start=len(self._mixed_prefix)
+        suffix=self.actions[start:limit]
+        if not all(type(a) is _MixedCanvasAction for a in suffix):
+            self._reset_mixed_cache()
+            replay=MixedReplayState()
+            for item in self.actions[:limit]:
+                replay.apply(item,validate_recipe=True)
+            return replay
+        replay=self._mixed_cached
+        try:
+            for item in suffix:
+                # Newly decoded records, including loaded redo tails, are
+                # validated exactly once. No geometry check is skipped for
+                # mutable/untrusted input.
+                replay.apply(item,validate_recipe=True)
+                self._mixed_prefix.append(item)
+        except Exception:
+            self._reset_mixed_cache()
+            raise
         return replay
 
     def apply_ink_action(self, action: InkAction) -> str:
@@ -395,8 +537,7 @@ class CanvasHistory:
         if not isinstance(action, InkAction):
             raise ValueError("typed InkAction required")
         replay = self._mixed_replay_at(self.cursor)
-        if any((a.provenance or {}).get("action_id") == action.action_id
-               for a in self.actions[:self.cursor]):
+        if action.action_id in replay.action_ids:
             raise ValueError("duplicate ink action identity")
         element = action.element
         if action.kind == "ink.delete":
@@ -404,7 +545,6 @@ class CanvasHistory:
         record = CanvasAction(self.cursor + 1, action.kind, "unspecified", action.payload(),
                               float(self.cursor), element.part, element.role,
                               provenance=action.provenance())
-        replay.apply(record,validate_recipe=True)
         self._append(action.kind, record.payload, stage=record.stage, part=record.part,
                      role=record.role, provenance=record.provenance)
         return action.element_id
@@ -675,8 +815,9 @@ class CanvasHistory:
                     # Pre-B07-R1 sessions persisted both derived pressure and tool state
                     # inline. Keep this only as transient compatibility evidence.
                     legacy_inline_pressure = True
+            record_cls=_MixedCanvasAction if h.media_contract is not None else CanvasAction
             actions.append(
-                CanvasAction(
+                record_cls(
                     seq=int(raw["seq"]),
                     action=str(raw["action"]),
                     stage=stage,

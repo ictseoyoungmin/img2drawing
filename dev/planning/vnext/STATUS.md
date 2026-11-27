@@ -8,7 +8,7 @@ RELEASE TAG:        v1.3.1 · pending manifest-driven publication
 CURRENT SOURCE:     1.3.1 · release and contract maintenance
 CURRENT RENDERER:   img2drawing-pencil/11 default · exact v11 replay; opt-in normalized v1/v2/v3
 RENDERER POLICY:    one engine · immutable per-session material contracts · no automatic migration or v12
-ACTIVE BOTTLENECK:  v1.4.0 S05 conditional mixed-media skill/API and worker workflow (WIP)
+ACTIVE BOTTLENECK:  v1.4.0 S06a mixed history incremental validation and rollback (WIP)
 S01 DESIGN:         CLOSED
 S02 INSTRUCTIONS:   CLOSED · bounded anti-normalization reopen merged; further behavioral proof deferred by user acceptance
 S03 CAMPAIGN:      PASS / USER_ACCEPTED · class runs remain NOT_RUN; no new visual-quality claim
@@ -44,12 +44,13 @@ Authority is intentionally split by purpose:
 
 - Target: v1.4.0 Multi-Medium Drawing; branch `dev/v1.4.0-multi-medium-drawing` original design from stable `fdaf6b1`; synchronized to v1.3.1 maintenance main `820c88c`.
 - [Design contract](V14_MULTI_MEDIUM_DRAWING_PLAN.md) · [Work OS](https://app.notion.com/p/424c6a3b5bf1814ca9abe1ba2e3b60b1).
-- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02–S04 CLOSED; S05 WIP; S06–S07 OPEN. Weighted verified completion 70% (4/7).
+- S01 CLOSED: #107, #108, #109 merged; integration head 4663a14, CI 45976885593 SUCCESS (517 active + 44 runtime tests in final PR CI). Typed ink geometry, mixed history/profile, canonical composition, preview/apply/resume, selective graphite lifts and canonical GIF vertical path verified. S02–S04 CLOSED; S05 REVIEW; S06 WIP; S07 OPEN. Weighted closed gates 70% (4/7); implemented/mechanically verified S01–S05 80%.
 - v1.3.0 final main CI 473 active + 44 runtime passed, release workflow succeeded, 4/4 assets. All nine v1.3 tasks CLOSED: S01–S06/S08 evidence-based (80% weight), S00/S07 USER_ACCEPTED (20%, independent comparison/high-resolution performance NOT_RUN/uncertified). This does not reopen them.
 - S02 CLOSED: #110 and #111 merged; latest integration 684ca8a, PR CI 45979974212 and merge CI 45980250961 SUCCESS (554 active + 44 runtime on #111). G-pen/fineliner, adaptive recipes and explicit miter/bevel, butt/square, point tapers. Mixed-media-v2 defaults for new mixed sessions; v1 and legacy exact contracts preserved.
 - S03 CLOSED: #112 merged 77e8ca0, PR CI 45983056787 and merge CI 45983382282 SUCCESS (572 active + 44 runtime). Wet brush, explicit cubic/solid contour, white paint and guarded ink transforms. Existing profile pixels preserved.
 - S04 CLOSED: #113 merged 1e178b1; PR CI 45984215468 and merge CI 45984670001 SUCCESS (606 active + 44 runtime). Typed calibrated dot screen, page-fixed phase and gradient, bounded tile evaluation, mixed-media-v3. Older contracts unchanged.
-- S05 candidate adds two conditional specialist leaves (material decisions and mixed public API), exact installed-guide example verification, and correct mixed-only completion/navigation counts. Legacy router budgets and root/default capabilities remain unchanged. Independent fresh-worker artistic evidence is NOT_RUN until a real isolated worker is available; do not infer it from the executable example.
+- S05 #114 merged 46180ad; PR CI 45986027734 and merge CI 45986307849 SUCCESS (611 active + 44 runtime), installed guide example PASS. A maintainer-supplied independent Agent session contains 563 explicit ink additions (287 areas, 213 paths, 63 screens), 30,704 geometry samples, no inspection, correction or finish record. Private diagnostic rerender matched its final RGBA hash; no GIF provided or full installed resume verified in that review. Partial independent-use evidence, S05 REVIEW remains (not complete worker loop or artistic PASS). No private source/session assets retained in Git.
+- S06a candidate: seal owned mixed history records, reuse one validated reducer prefix, detect replaced/reordered/unsealed records, shallow sealed-record rollback snapshot, reuse serialized action log for checkpoint digest, avoid copying immutable ink geometry in prepared render views. Preserve exact legacy serialization/renderer/profile and strict redo-tail/recipe validation. Full Fast, registration convenience, synthetic large-session stress and actual private-session end-to-end timing remain pending.
 
 ## Current v1.3.1 maintenance (inherited release checkpoint)
 

@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from ..core.digest import sha256_obj
+from ..core.ir import StrokeIR
 from ..core.material import MIXED_HISTORY_CONTRACT, StyledInkPath, Screentone
 from .contract import (CONTACT_WIDTH_CONTRACT, OPACITY_NORMALIZED_CONTRACT, PRESSURE_LIFT_CONTRACT, RENDERER_ID, RENDERER_VERSION,
                        canonical_identity, verify_contract_digest, MIXED_MEDIA_CONTRACT, STYLED_INK_CONTRACT, SCREENTONE_CONTRACT, validate_mixed_raster_budget)
@@ -298,7 +299,16 @@ class RenderProfile:
         ir.ordered_elements()
         for element in ir.ink_elements:
             self.validate_ink_mark(element.mark)
-        prepared = deepcopy(ir)
+        if self.is_mixed_media:
+            # InkElement and its decoded mark are frozen value objects; copy the
+            # lists and mutable graphite/metadata, not every immutable point.
+            prepared = StrokeIR(ir.width, ir.height, deepcopy(ir.strokes), deepcopy(ir.metadata),
+                                media_contract=ir.media_contract, ink_elements=list(ir.ink_elements),
+                                element_order=list(ir.element_order))
+            if getattr(ir,"_legacy_inline_pressure",False):
+                setattr(prepared,"_legacy_inline_pressure",True)
+        else:
+            prepared = deepcopy(ir)
         metadata = deepcopy(prepared.metadata if isinstance(prepared.metadata, dict) else {})
         metadata["paper"] = {
             "tooth": self.paper_tooth,
