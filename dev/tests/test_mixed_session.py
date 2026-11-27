@@ -96,8 +96,19 @@ def test_selective_graphite_lift_does_not_erase_ink(tmp_path):
     s.erase_path([(8,35),(88,35)],stroke_id="lift",width=20,tool="hard_eraser",
                  pressure=[1,1],strength=1,reason="remove graphite guide",observation_id=oid)
     after = _pixels(s,tmp_path/"after.png")
-    assert np.all(after[29:41,44:52,:3] == 0)
+    # The graphite deposited ABOVE the ink may leave a minute gray residue:
+    # the existing eraser deliberately caps pickup below 100%. That residue is
+    # not ink loss. Check both the overlapping result and exact ink-only parity.
+    assert after[29:41,44:52,:3].max() <= 4
+    assert after[29:41,44:52,:3].mean() < before[29:41,44:52,:3].mean()
     assert after[32:38,15:35,:3].mean() > before[32:38,15:35,:3].mean() + 10
+    for sid in ("g1", "g2"):
+        s.delete_stroke(sid, observation_id=oid, reason="isolate surviving ink")
+    ink_with_lift = _pixels(s, tmp_path/"ink-with-lift.png")
+    s.delete_stroke("lift", observation_id=oid, reason="isolate ink baseline")
+    ink_without_lift = _pixels(s, tmp_path/"ink-without-lift.png")
+    assert np.array_equal(ink_with_lift, ink_without_lift)
+    assert np.all(ink_with_lift[29:41,44:52,:3] == 0)
 
 
 def test_white_paint_is_not_erase_and_layer_order(tmp_path):
@@ -151,3 +162,14 @@ def test_graphite_only_mixed_profile_retains_v3_pixels(tmp_path):
         kw["renderer_version"] = CONTACT_WIDTH_CONTRACT.renderer_version
         with render_image(old,**kw) as graphite:
             assert mixed.tobytes() == graphite.tobytes()
+
+
+def test_ink_patch_preflight_rejects_before_checkpoint_mutation(tmp_path, monkeypatch):
+    from img2drawing.render import ink
+    s, oid, _ = _make(tmp_path)
+    before = s.checkpoint_path.read_bytes()
+    monkeypatch.setattr(ink, "MAX_PATCH_PIXELS", 64)
+    with pytest.raises(ValueError, match="budget"):
+        apply_ink_actions(s, [_action(oid, "a", "large", InkArea(_rect(2,2,40,40)))])
+    assert s.history_cursor == 0
+    assert s.checkpoint_path.read_bytes() == before

@@ -116,7 +116,7 @@ class RenderProfile:
         material = _text(self.material_profile, "material_profile")
         expected_material = "builtin:mixed-media" if self.is_mixed_media else "builtin:pencil-contact"
         if material != expected_material:
-            raise ValueError("unsupported material_profile for the selected renderer identity")
+            raise ValueError("unsupported material_profile for the selected renderer identity; custom file paths are not portable")
         object.__setattr__(self, "material_profile", material)
         tooth = float(self.paper_tooth)
         scale = float(self.paper_scale)
