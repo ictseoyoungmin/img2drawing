@@ -158,12 +158,13 @@ rounding or color handling can differ further. Do not claim identical external f
 unless it has been checked in that application.
 
 For ongoing raster work in Krita, save a native `.kra` project and retain the original ORA
-delivery and img2drawing checkpoint. In the measured Krita 5.2.9 document-engine check,
-layer edits survived KRA save/reopen with identical properties and pixels. Krita's own ORA
-save/reopen rounded one fractional group opacity from 127/255 to 126/255; other tested
-structure and raw layer pixels were retained. This is a version-specific observation, not
-a universal error bound. Keep native working projects when repeated exchange saves would
-make such rounding significant.
+delivery and img2drawing checkpoint. In the measured Krita 5.2.9 document-engine checks,
+fractional input opacity was quantized to the editor's 8-bit opacity. Layer edits then
+survived KRA save/reopen with identical properties and pixels. Krita's own ORA save/reopen
+reduced some opacities by another level: 127→126 in a synthetic group and 150→149,
+178→177, 224→223 in a real page. Other tested structure and raw layer pixels were retained.
+These are version-specific observations, not a universal error bound. Keep native working
+projects when repeated exchange saves would make such rounding significant.
 
 Raster exchange preserves editable raster layers. Points, pressure, tools, procedural tone
 parameters and action replay remain in the native checkpoint. External raster modifications

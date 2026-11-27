@@ -2,7 +2,9 @@
 
 All notable public changes to `img2drawing` are documented here. Internal development history and older dogfood notes remain in [`dev/CHANGELOG.md`](dev/CHANGELOG.md).
 
-## Unreleased — v1.5.0
+## v1.5.0 — Optional layered editing and exchange
+
+Selected for manifest-driven publication after successful main CI.
 
 - Add optional native paint layers and isolated groups with ordered membership, names,
   visibility, inherited content locks, opacity and one existing action history.
@@ -13,8 +15,13 @@ All notable public changes to `img2drawing` are documented here. Internal develo
   reflattening differences and native checkpoint sidecars for continued stroke editing.
 - Add public cursor undo/redo with atomic checkpointing; protect retained audit evidence from
   orphaning when a new edit would discard redo history.
-- Keep source development identity separate from published stable metadata. This development
-  line is not a published release; v1.4.0 remains the current stable release.
+- Bound sparse source-over composition to occupied alpha regions, preserving exact pixels and
+  the existing work limit while keeping a real 27-node page editable.
+- Verify an installed 1,178-action page workflow, portable native handoffs, full-span canonical
+  GIF and actual Krita 5.2.9 editing. Document measured raster and opacity differences; KRA
+  preserves the tested imported state on reopen.
+- Keep development and stable contract records separate. Publication requires successful
+  main CI and the actual manifest-selected GitHub Release; preparation does not establish release.
 
 Normal is the initial blend mode. Additional blend modes, PSD and a visual layer editor are
 follow-up work; external raster edits are not converted back into native strokes.

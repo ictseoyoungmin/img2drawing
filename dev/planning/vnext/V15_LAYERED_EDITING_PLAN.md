@@ -194,3 +194,52 @@ Independent review also produced regressions for reused retired IDs in imported 
 graphite histories, observation/intent provenance after undo, redo-tail layer replay, portable
 inspection evidence, and empty-group surface accounting. Small synthetic worker use does not
 certify professional editor completeness. External Krita opening/reflattening remains NOT_RUN.
+
+
+## Stable-candidate preparation — 2026-11-28
+
+[PR #124](https://github.com/ictseoyoungmin/img2drawing/pull/124) was integrated at `b1ca145`;
+[development integration CI](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46051134484)
+passed the initial implementation and package gates. A separate stable freeze and publish
+manifest are now prepared for 1.5.0; the development records remain unchanged.
+
+Current-reference manga authoring, layered revision, portable native resumption and full replay
+are PENDING assessment. Actual Krita open/edit/save/reopen and flatten comparison are PENDING.
+No new artwork acceptance, external interoperability PASS, final candidate CI or publication is
+claimed by this preparation. Record observed outcomes before selecting the promotion commit.
+The actual GitHub Release/tag/assets remain the final publication authority.
+
+## Practical workflow and release selection — 2026-11-28
+
+S06 is complete with the limitations below; S07 final CI and actual publication remain
+separate gates recorded in `STATUS.md`.
+
+- [PR #125](https://github.com/ictseoyoungmin/img2drawing/pull/125) merged at `3bdce30` after
+  [exact-head CI](https://github.com/ictseoyoungmin/img2drawing/actions/runs/46058543138) passed
+  851 active, 49 runtime and 45 Pillow 13 replay checks and package/repository gates. These runs
+  overlap. The original 27-node page exposed full-canvas composition cost; occupied-alpha
+  composition keeps its pixels exact while reducing work from 348,340,985 to 230,710,832 under
+  the unchanged 268,435,456 limit. No native layer consolidation is required for the final page.
+- The new installed public-API page finishes at cursor 1178 with 921 ink/area/tone elements,
+  27 nodes, seven retained inspections and three actual material corrections. Preview/apply,
+  fresh evidence and finish cover value hierarchy, hair/eye overlap and boot-ground contact.
+  Independent visual review accepts that bounded correction scope; simplified hair, hands,
+  cloth, ruins and coarse dot tone remain. Review feedback was supplied during the workflow.
+- Copied PNG and ORA native handoffs resume with original-path reads blocked and reproduce
+  exact final RGBA while preserving finish and inspection evidence; 116 delivery files remain
+  unchanged. Full-span 0→1178 canonical replay samples every 16 actions: all 75 staged PNG and
+  decoded GIF frames match, and eight independent cursor renders match pixel/state hashes.
+- Actual Krita 5.2.9 document-engine checks verify 23 raw paint rasters, non-opacity hierarchy,
+  real name/visibility/opacity/position edits and exact baseline/edited KRA reopen. GUI use was
+  not tested. Fractional input opacity is converted to 8 bits; Krita ORA re-save further changes
+  three final-page values by one level. Native→Krita has 351,807 differing pixels, maximum 79,
+  mean RGBA8 error 0.98724270. Exported-layer recomposition→Krita has maximum 2 and mean
+  0.06452322. Repeated tone differences cause mild broad brightening, not only boundary changes.
+- The [release notes](../../../docs/releases/v1.5.0.md) retain full comparison values and
+  scope. Exact native appearance belongs to the canonical PNG and checkpoint; KRA preserves
+  the tested imported editing state. This is bounded practical evidence, not a promise of
+  pixel-exact external exchange or universal professional artwork/print fidelity.
+
+Stable source/plugin versions, additive freeze and publish manifest select 1.5.0. Prior
+development and release records remain unchanged. Successful final/main CI and observation
+of the tag plus four release assets are required to close S07.
